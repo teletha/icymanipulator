@@ -44,7 +44,7 @@ public class IcyManipulator extends AbstractProcessor {
     @Override
     public boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv) {
         if (annotations.isEmpty()) {
-            System.out.println("no annotations");
+            System.out.println("no annotationss");
             return true;
         }
         log("HUAAAAAAAAAAAAAAAAAAAAA");
