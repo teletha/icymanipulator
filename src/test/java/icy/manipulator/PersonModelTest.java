@@ -12,11 +12,11 @@ package icy.manipulator;
 import static com.google.common.truth.Truth.*;
 import static com.google.testing.compile.JavaSourceSubjectFactory.*;
 
-import java.nio.file.Paths;
-
 import org.junit.Test;
 
-import com.google.testing.compile.JavaFileObjects;
+import icy.manipulator.compiler.SourceFile;
+import icy.manipulator.model.Person;
+import icy.manipulator.model.PersonModel;
 
 /**
  * @version 2015/06/02 16:43:02
@@ -25,18 +25,14 @@ public class PersonModelTest {
 
     @Test
     public void testProcess() throws Exception {
-        // Compiler option coming soon.
-        // https://github.com/google/compile-testing/pull/64
+        SourceFile source = SourceFile.of(PersonModel.class);
+        SourceFile expected = SourceFile.of(Person.class);
 
         assert_().about(javaSource())
-                .that(JavaFileObjects.forResource(Paths.get("src/test/java/icy/manipulator/HelloWorld.java")
-                        .toAbsolutePath()
-                        .toUri()
-                        .toURL()))
+                .that(source)
                 .processedWith(new IcyManipulator())
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects
-                        .forSourceString("icy.manipulator.Blah", "package icy.manipulator;\n" + "\n" + "import java.lang.String;\n" + "import javax.annotation.Generated;\n" + "\n" + "@Generated({\"me.geso.sample.hello.MyProcessor\"})\n" + "public class Blah {\n" + "  public String hello() {\n" + "    return \"hello\";\n" + "  }\n" + "}"));
+                .generatesSources(expected);
     }
 }

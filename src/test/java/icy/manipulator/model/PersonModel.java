@@ -15,7 +15,7 @@ import icy.manipulator.Icy;
  * @version 2015/06/02 20:28:54
  */
 @Icy
-class PersonModel {
+public class PersonModel {
 
     public String name;
 

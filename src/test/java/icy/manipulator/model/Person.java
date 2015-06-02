@@ -22,11 +22,7 @@ public abstract class Person implements Operatable<Person> {
     PersonModel model;
 
     /**
-     * <p>
-     * Create model with the specified property holder.
-     * </p>
-     * 
-     * @param model
+     * HIDDEN CONSTRUCTOR
      */
     private Person() {
     }
