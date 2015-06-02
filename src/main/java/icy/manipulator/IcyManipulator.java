@@ -492,7 +492,7 @@ public class IcyManipulator extends AbstractProcessor {
             write();
             write(imports);
             write();
-            write("public abstract class ", clazz.className, " implements ", parameterize(ModelOperator.class, clazz), "{");
+            write("public abstract class ", clazz.className, " implements ", parameterize(Operatable.class, clazz), "{");
             write();
             write("     /** The current model. */");
             write("     private ", imports.use(analyzer.model), " model;");
@@ -502,6 +502,29 @@ public class IcyManipulator extends AbstractProcessor {
             write("      */");
             write("     private ", clazz.className, "() {");
             write("     }");
+            write();
+            for (Property property : analyzer.properties) {
+                // getter
+                write("     /**");
+                write("     * Retrieve ", property.name, " property.");
+                write("     */");
+                write("     public ", property.type, " ", property.name, "() {");
+                write("         return model.", property.name, ";");
+                write("     }");
+                write();
+
+                // setter
+                write("     /**");
+                write("     * Apply ", property.name, " property.");
+                write("     */");
+                write("     public ", clazz, " ", property.name, "(", property.type, " value) {");
+                write("         if (model.", property.name, " == value) {");
+                write("             return this;");
+                write("         }");
+                write("         return with(this).", property.name, "(value).ice();");
+                write("     }");
+                write();
+            }
             write("}");
 
             // generate code fragments
@@ -531,6 +554,9 @@ public class IcyManipulator extends AbstractProcessor {
                     return;
                 } else if (code instanceof Class) {
                     Class clazz = (Class) code;
+                    body.append(imports.use(clazz));
+                } else if (code instanceof FQCN) {
+                    FQCN clazz = (FQCN) code;
                     body.append(imports.use(clazz));
                 } else {
                     body.append(code.toString());
