@@ -64,6 +64,8 @@ public class IcyManipulator extends AbstractProcessor {
                             .returns(TypeName.get(String.class))
                             .build())
                     .build();
+            System.out.println(blah.toString());
+            System.out.println(aPackage.getQualifiedName().toString());
             JavaFile javaFile = JavaFile.builder(aPackage.getQualifiedName().toString(), blah).build();
 
             try {

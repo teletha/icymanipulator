@@ -21,7 +21,7 @@ import com.google.testing.compile.JavaFileObjects;
 /**
  * @version 2015/06/02 16:43:02
  */
-public class ProcessorTest {
+public class PersonModelTest {
 
     @Test
     public void testProcess() throws Exception {
@@ -37,6 +37,6 @@ public class ProcessorTest {
                 .compilesWithoutError()
                 .and()
                 .generatesSources(JavaFileObjects
-                        .forSourceString("foo.bar.baz.Blah", "package foo.bar.baz;\n" + "\n" + "import java.lang.String;\n" + "import javax.annotation.Generated;\n" + "\n" + "@Generated({\"me.geso.sample.hello.MyProcessor\"})\n" + "public class Blah {\n" + "  public String hello() {\n" + "    return \"hello\";\n" + "  }\n" + "}"));
+                        .forSourceString("icy.manipulator.Blah", "package icy.manipulator;\n" + "\n" + "import java.lang.String;\n" + "import javax.annotation.Generated;\n" + "\n" + "@Generated({\"me.geso.sample.hello.MyProcessor\"})\n" + "public class Blah {\n" + "  public String hello() {\n" + "    return \"hello\";\n" + "  }\n" + "}"));
     }
 }

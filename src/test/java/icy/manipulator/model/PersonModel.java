@@ -7,11 +7,19 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator;
+package icy.manipulator.model;
+
+import icy.manipulator.Icy;
 
 /**
- * @version 2015/06/02 16:49:25
+ * @version 2015/06/02 20:28:54
  */
 @Icy
-public class HelloWorld {
+class PersonModel {
+
+    public String name;
+
+    public int age;
+
+    public Gender gender;
 }
