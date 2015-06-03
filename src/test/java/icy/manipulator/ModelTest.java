@@ -13,6 +13,8 @@ import org.junit.Test;
 
 import icy.manipulator.model.Couple;
 import icy.manipulator.model.CoupleDefinition;
+import icy.manipulator.model.GenericVariable;
+import icy.manipulator.model.GenericVariableDefinition;
 import icy.manipulator.model.Person;
 import icy.manipulator.model.PersonDefinition;
 import icy.manipulator.model.UserDefinedDefaultValue;
@@ -31,6 +33,11 @@ public class ModelTest extends ModelTestBase {
     @Test
     public void couple() {
         testCodeGeneration(CoupleDefinition.class, Couple.class);
+    }
+
+    @Test
+    public void genericVariable() {
+        testCodeGeneration(GenericVariableDefinition.class, GenericVariable.class);
     }
 
     @Test

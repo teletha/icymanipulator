@@ -352,6 +352,7 @@ public class IcyManipulator extends AbstractProcessor {
          */
         @Override
         public Property visitTypeVariable(TypeVariable t, Void p) {
+            type = TYPE = FQCN.of(t.toString());
             return this;
         }
 
