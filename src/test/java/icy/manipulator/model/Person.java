@@ -15,6 +15,9 @@ import icy.manipulator.Operatable;
 
 public abstract class Person implements Operatable<Person> {
 
+    /** The model operator. */
+    public static final Operator<Person> Operator = new Operator(null);
+
     /** The current model. */
     PersonModel model;
 

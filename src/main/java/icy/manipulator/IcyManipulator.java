@@ -42,6 +42,8 @@ import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.TypeVisitor;
 import javax.lang.model.type.UnionType;
 import javax.lang.model.type.WildcardType;
+import javax.lang.model.util.Elements;
+import javax.lang.model.util.Types;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 
@@ -52,17 +54,35 @@ import javax.tools.JavaFileObject;
 @SupportedAnnotationTypes("icy.manipulator.Icy")
 public class IcyManipulator extends AbstractProcessor {
 
+    /** The suffix of model definition. */
+    private static final String ModelDefinitionSuffix = "Model";
+
     /** The indent. */
     private static final String __ = "    ";
 
     /** The line feed. */
     private static final String END = "\r\n";
 
+    /** The utility. */
+    private static Types types;
+
+    /** The utility. */
+    private static Elements elements;
+
+    /** The {@link Operatable} type. */
+    private static TypeMirror OPERATABLE;
+
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
         if (annotations.isEmpty()) {
             return true;
         }
+
+        // save utilities and constants
+        types = processingEnv.getTypeUtils();
+        elements = processingEnv.getElementUtils();
+
+        OPERATABLE = elements.getTypeElement(Operatable.class.getCanonicalName()).asType();
 
         for (Element element : env.getElementsAnnotatedWith(Icy.class)) {
             SourceCodeReader analyzer = element.accept(new SourceCodeReader(), null);
@@ -71,7 +91,7 @@ public class IcyManipulator extends AbstractProcessor {
 
             try {
                 JavaFileObject generated = processingEnv.getFiler()
-                        .createSourceFile(element.toString().replaceAll("Model$", ""));
+                        .createSourceFile(element.toString().replaceAll(ModelDefinitionSuffix + "$", ""));
                 Writer writer = generated.openWriter();
                 writer.write(coder.body.toString());
                 writer.close();
@@ -216,7 +236,11 @@ public class IcyManipulator extends AbstractProcessor {
         /** The type name. */
         private FQCN TYPE;
 
+        /** The state. */
+        private boolean isModel;
+
         /**
+         * @param model
          * @param type
          * @param name
          */
@@ -224,6 +248,11 @@ public class IcyManipulator extends AbstractProcessor {
             this.name = name;
             this.NAME = name.toUpperCase();
 
+            try {
+                this.isModel = Class.forName(type + ModelDefinitionSuffix).isAnnotationPresent(Icy.class);
+            } catch (ClassNotFoundException e) {
+                this.isModel = false;
+            }
             type.accept(this, null);
         }
 
@@ -443,7 +472,7 @@ public class IcyManipulator extends AbstractProcessor {
          */
         private void visitClass(TypeElement e) {
             model = FQCN.of(e.getQualifiedName());
-            fqcn = FQCN.of(model.toString().replaceAll("Model$", ""));
+            fqcn = FQCN.of(model.toString().replaceAll(ModelDefinitionSuffix + "$", ""));
         }
 
         /**
@@ -527,8 +556,11 @@ public class IcyManipulator extends AbstractProcessor {
             write();
             write("public abstract class ", clazz.className, " implements ", parameterize(Operatable.class, clazz), "{");
             write();
+            write("     /** The model operator. */");
+            write("     public static final Operator<", clazz, "> Operator = new Operator(null);");
+            write();
             write("     /** The current model. */");
-            write("     ", imports.use(reader.model), " model;");
+            write("     ", reader.model, " model;");
             write();
             write("     /**");
             write("      * HIDDEN CONSTRUCTOR");
@@ -666,9 +698,15 @@ public class IcyManipulator extends AbstractProcessor {
                 write("         /**");
                 write("          * Property operator.");
                 write("          */");
-                write("         public ", Lens.class, "<M,", property.TYPE, "> ", property.name, "() {");
-                write("             return parent.then(", property.NAME, ");");
-                write("         }");
+                if (property.isModel) {
+                    write("         public ", property.TYPE, ".Operator<", clazz, "> ", property.name, "() {");
+                    write("             return new ", property.TYPE, ".Operator(parent.then(", property.NAME, "));");
+                    write("         }");
+                } else {
+                    write("         public ", Lens.class, "<M,", property.TYPE, "> ", property.name, "() {");
+                    write("             return parent.then(", property.NAME, ");");
+                    write("         }");
+                }
                 write();
             }
             write("     }");

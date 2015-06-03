@@ -24,7 +24,6 @@ public class PersonTest {
         Person modified = melty.name("あやや");
         assert melty == modified;
         assert melty.name().equals("あやや");
-
     }
 
     @Test
