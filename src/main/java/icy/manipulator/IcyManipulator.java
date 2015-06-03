@@ -565,7 +565,7 @@ public class IcyManipulator extends AbstractProcessor {
             write(" */");
             write("public abstract class ", clazz.className, " extends ", reader.model, " implements ", parameterize(Manipulatable.class, clazz), "{");
             write();
-            write("     /** The model operator for reuse. */");
+            write("     /** The model manipulator for reuse. */");
             write("     public static final Manipulator<", clazz, "> Manipulator = new Manipulator(null);");
             write();
             write("     /**");
@@ -678,9 +678,9 @@ public class IcyManipulator extends AbstractProcessor {
             write("         }");
             write("     }");
 
-            // Operatoion
+            // MANIPULATOR
             write("     /**");
-            write("      * Operation Model.");
+            write("      * Model Manipulator.");
             write("      */");
             write("     public static final class Manipulator<M> extends ", Manipulator.class
                     .getName(), "<M,", clazz, "> {");
