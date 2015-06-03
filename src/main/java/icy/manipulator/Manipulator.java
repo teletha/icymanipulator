@@ -14,7 +14,7 @@ package icy.manipulator;
  * 
  * @version 2015/06/03 14:06:02
  */
-public abstract class Operator<M, V> implements Accessor<M, V> {
+public abstract class Manipulator<M, V> implements Accessor<M, V> {
 
     /** The parent accessor. */
     protected Accessor<M, V> parent;
@@ -24,7 +24,7 @@ public abstract class Operator<M, V> implements Accessor<M, V> {
      * 
      * @param parent A parent accessor.
      */
-    protected Operator(Accessor<M, V> parent) {
+    protected Manipulator(Accessor<M, V> parent) {
         this.parent = parent == null ? Accessor.Φ : parent;
     }
 

@@ -19,7 +19,7 @@ import java.util.function.UnaryOperator;
 /**
  * @version 2015/04/21 10:45:23
  */
-public abstract class Seq<E> implements Operatable<Seq<E>> {
+public abstract class Seq<E> implements Manipulatable<Seq<E>> {
 
     protected List<E> list;
 
@@ -91,8 +91,8 @@ public abstract class Seq<E> implements Operatable<Seq<E>> {
 
             if (base != null) {
                 for (E item : base.list) {
-                    if (item instanceof Operatable) {
-                        list.add((E) ((Operatable) item).ice());
+                    if (item instanceof Manipulatable) {
+                        list.add((E) ((Manipulatable) item).ice());
                     } else {
                         list.add(item);
                     }
@@ -172,8 +172,8 @@ public abstract class Seq<E> implements Operatable<Seq<E>> {
 
             } else {
                 for (E item : base.list) {
-                    if (item instanceof Operatable) {
-                        list.add((E) ((Operatable) item).melt());
+                    if (item instanceof Manipulatable) {
+                        list.add((E) ((Manipulatable) item).melt());
                     } else {
                         list.add(item);
                     }
@@ -236,7 +236,7 @@ public abstract class Seq<E> implements Operatable<Seq<E>> {
     /**
      * @version 2015/04/28 11:53:32
      */
-    public static class Operation<M, V, O extends Operator<M, V>> extends Operator<M, Seq<V>> {
+    public static class Operation<M, V, O extends Manipulator<M, V>> extends Manipulator<M, Seq<V>> {
 
         private O sub;
 

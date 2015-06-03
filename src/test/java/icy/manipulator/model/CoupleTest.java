@@ -21,7 +21,7 @@ public class CoupleTest {
         Person AYA = Person.with().name("小路 綾").ice();
         Person YOUKO = Person.with().name("猪熊 陽子").ice();
         Couple melty = Couple.with().husband(YOUKO).wife(AYA).ice();
-        Couple modified = Couple.Operator.husband().name().set(melty, "ようこ");
+        Couple modified = Couple.Manipulator.husband().name().set(melty, "ようこ");
 
         assert melty != modified;
         assert melty.husband() == YOUKO;
@@ -34,7 +34,7 @@ public class CoupleTest {
         Person AYA = Person.with().name("小路 綾");
         Person YOUKO = Person.with().name("猪熊 陽子");
         Couple melty = Couple.with().husband(YOUKO).wife(AYA);
-        Couple modified = Couple.Operator.husband().name().set(melty, "ようこ");
+        Couple modified = Couple.Manipulator.husband().name().set(melty, "ようこ");
 
         assert melty == modified;
         assert melty.husband().name().equals("ようこ");

@@ -12,7 +12,7 @@ package icy.manipulator;
 /**
  * @version 2015/04/28 13:19:49
  */
-public interface Operatable<M extends Operatable> {
+public interface Manipulatable<M extends Manipulatable> {
 
     /**
      * <p>

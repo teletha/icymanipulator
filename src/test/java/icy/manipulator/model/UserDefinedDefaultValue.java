@@ -1,18 +1,18 @@
 package icy.manipulator.model;
 
 import icy.manipulator.Accessor;
-import icy.manipulator.Operatable;
+import icy.manipulator.Manipulatable;
 
 /**
- * {@link Operatable} model for {@link UserDefinedDefaultValueDefinition}.
+ * {@link Manipulatable} model for {@link UserDefinedDefaultValueDefinition}.
  *
- * @version 2015-06-03T16:16:54.12
+ * @version 2015-06-03T23:35:00.219
  */
 public abstract class UserDefinedDefaultValue extends UserDefinedDefaultValueDefinition
-        implements Operatable<UserDefinedDefaultValue> {
+        implements Manipulatable<UserDefinedDefaultValue> {
 
     /** The model operator for reuse. */
-    public static final Operator<UserDefinedDefaultValue> Operator = new Operator(null);
+    public static final Manipulator<UserDefinedDefaultValue> Manipulator = new Manipulator(null);
 
     /**
      * HIDE CONSTRUCTOR
@@ -109,7 +109,7 @@ public abstract class UserDefinedDefaultValue extends UserDefinedDefaultValueDef
     /**
      * Operation Model.
      */
-    public static final class Operator<M> extends icy.manipulator.Operator<M, UserDefinedDefaultValue> {
+    public static final class Manipulator<M> extends icy.manipulator.Manipulator<M, UserDefinedDefaultValue> {
 
         /** The lens for value property. */
         private static final Accessor<UserDefinedDefaultValue, String> VALUE = Accessor
@@ -118,7 +118,7 @@ public abstract class UserDefinedDefaultValue extends UserDefinedDefaultValueDef
         /**
          * Construct operator.
          */
-        public Operator(Accessor<M, UserDefinedDefaultValue> parent) {
+        public Manipulator(Accessor<M, UserDefinedDefaultValue> parent) {
             super(parent);
         }
 

@@ -559,14 +559,14 @@ public class IcyManipulator extends AbstractProcessor {
             write(imports);
             write();
             write("/**");
-            write(" * {@link ", Operatable.class, "} model for {@link ", reader.model, "}.");
+            write(" * {@link ", Manipulatable.class, "} model for {@link ", reader.model, "}.");
             write(" *");
             write(" * @version ", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
             write(" */");
-            write("public abstract class ", clazz.className, " extends ", reader.model, " implements ", parameterize(Operatable.class, clazz), "{");
+            write("public abstract class ", clazz.className, " extends ", reader.model, " implements ", parameterize(Manipulatable.class, clazz), "{");
             write();
             write("     /** The model operator for reuse. */");
-            write("     public static final Operator<", clazz, "> Operator = new Operator(null);");
+            write("     public static final Manipulator<", clazz, "> Manipulator = new Manipulator(null);");
             write();
             write("     /**");
             write("      * HIDE CONSTRUCTOR");
@@ -623,7 +623,8 @@ public class IcyManipulator extends AbstractProcessor {
             write("          */");
             write("         private Icy(", parameterWithType(reader.properties), ") {");
             for (Property property : reader.properties) {
-                write("                 this.", property.name, " = ", property.name, property.isModel ? ".ice()" : "", ";");
+                write("                 this.", property.name, " = ", property.name, property.isModel ? ".ice()"
+                        : "", ";");
             }
             write("         }");
             write();
@@ -681,7 +682,8 @@ public class IcyManipulator extends AbstractProcessor {
             write("     /**");
             write("      * Operation Model.");
             write("      */");
-            write("     public static final class Operator<M> extends ", Operator.class.getName(), "<M,", clazz, "> {");
+            write("     public static final class Manipulator<M> extends ", Manipulator.class
+                    .getName(), "<M,", clazz, "> {");
             write();
             for (Property property : reader.properties) {
                 write("         /** The lens for ", property.name, " property. */");
@@ -691,7 +693,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("         /**");
             write("          * Construct operator.");
             write("          */");
-            write("         public Operator(", Accessor.class, "<M,", clazz, "> parent) {");
+            write("         public Manipulator(", Accessor.class, "<M,", clazz, "> parent) {");
             write("             super(parent);");
             write("         }");
             write();
@@ -700,8 +702,8 @@ public class IcyManipulator extends AbstractProcessor {
                 write("          * Property operator.");
                 write("          */");
                 if (property.isModel) {
-                    write("         public ", property.TYPE, ".Operator<", clazz, "> ", property.name, "() {");
-                    write("             return new ", property.TYPE, ".Operator(parent.then(", property.NAME, "));");
+                    write("         public ", property.TYPE, ".Manipulator<", clazz, "> ", property.name, "() {");
+                    write("             return new ", property.TYPE, ".Manipulator(parent.then(", property.NAME, "));");
                     write("         }");
                 } else {
                     write("         public ", Accessor.class, "<M,", property.TYPE, "> ", property.name, "() {");

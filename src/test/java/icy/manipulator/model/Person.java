@@ -1,17 +1,17 @@
 package icy.manipulator.model;
 
 import icy.manipulator.Accessor;
-import icy.manipulator.Operatable;
+import icy.manipulator.Manipulatable;
 
 /**
- * {@link Operatable} model for {@link PersonDefinition}.
+ * {@link Manipulatable} model for {@link PersonDefinition}.
  *
- * @version 2015-06-03T16:17:30.199
+ * @version 2015-06-03T23:34:22.849
  */
-public abstract class Person extends PersonDefinition implements Operatable<Person> {
+public abstract class Person extends PersonDefinition implements Manipulatable<Person> {
 
     /** The model operator for reuse. */
-    public static final Operator<Person> Operator = new Operator(null);
+    public static final Manipulator<Person> Manipulator = new Manipulator(null);
 
     /**
      * HIDE CONSTRUCTOR
@@ -166,7 +166,7 @@ public abstract class Person extends PersonDefinition implements Operatable<Pers
     /**
      * Operation Model.
      */
-    public static final class Operator<M> extends icy.manipulator.Operator<M, Person> {
+    public static final class Manipulator<M> extends icy.manipulator.Manipulator<M, Person> {
 
         /** The lens for name property. */
         private static final Accessor<Person, String> NAME = Accessor.of(Person::name, Person::name);
@@ -180,7 +180,7 @@ public abstract class Person extends PersonDefinition implements Operatable<Pers
         /**
          * Construct operator.
          */
-        public Operator(Accessor<M, Person> parent) {
+        public Manipulator(Accessor<M, Person> parent) {
             super(parent);
         }
 

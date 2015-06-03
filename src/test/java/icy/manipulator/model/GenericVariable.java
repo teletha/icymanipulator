@@ -1,17 +1,17 @@
 package icy.manipulator.model;
 
 import icy.manipulator.Accessor;
-import icy.manipulator.Operatable;
+import icy.manipulator.Manipulatable;
 
 /**
- * {@link Operatable} model for {@link GenericVariableDefinition}.
+ * {@link Manipulatable} model for {@link GenericVariableDefinition}.
  *
  * @version 2015-06-03T16:50:56.754
  */
-public abstract class GenericVariable<V> extends GenericVariableDefinition<V>implements Operatable<GenericVariable> {
+public abstract class GenericVariable<V> extends GenericVariableDefinition<V>implements Manipulatable<GenericVariable> {
 
     /** The model operator for reuse. */
-    public static final Operator<GenericVariable> Operator = new Operator(null);
+    public static final Operator<GenericVariable> Manipulator = new Operator(null);
 
     /**
      * HIDE CONSTRUCTOR
@@ -50,7 +50,7 @@ public abstract class GenericVariable<V> extends GenericVariableDefinition<V>imp
     }
 
     public static final <V> Operator<GenericVariable<V>> operator() {
-        return (Operator<GenericVariable<V>>) (Object) Operator;
+        return (Operator<GenericVariable<V>>) (Object) Manipulator;
     }
 
     /**
@@ -112,7 +112,7 @@ public abstract class GenericVariable<V> extends GenericVariableDefinition<V>imp
     /**
      * Operation Model.
      */
-    public static final class Operator<M> extends icy.manipulator.Operator<M, GenericVariable> {
+    public static final class Operator<M> extends icy.manipulator.Manipulator<M, GenericVariable> {
 
         /** The lens for value property. */
         private static final Accessor<GenericVariable, Object> VALUE = Accessor

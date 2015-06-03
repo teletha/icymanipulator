@@ -1,17 +1,17 @@
 package icy.manipulator.model;
 
 import icy.manipulator.Accessor;
-import icy.manipulator.Operatable;
+import icy.manipulator.Manipulatable;
 
 /**
- * {@link Operatable} model for {@link CoupleDefinition}.
+ * {@link Manipulatable} model for {@link CoupleDefinition}.
  *
- * @version 2015-06-03T16:17:06.416
+ * @version 2015-06-03T23:34:36.449
  */
-public abstract class Couple extends CoupleDefinition implements Operatable<Couple> {
+public abstract class Couple extends CoupleDefinition implements Manipulatable<Couple> {
 
     /** The model operator for reuse. */
-    public static final Operator<Couple> Operator = new Operator(null);
+    public static final Manipulator<Couple> Manipulator = new Manipulator(null);
 
     /**
      * HIDE CONSTRUCTOR
@@ -137,7 +137,7 @@ public abstract class Couple extends CoupleDefinition implements Operatable<Coup
     /**
      * Operation Model.
      */
-    public static final class Operator<M> extends icy.manipulator.Operator<M, Couple> {
+    public static final class Manipulator<M> extends icy.manipulator.Manipulator<M, Couple> {
 
         /** The lens for husband property. */
         private static final Accessor<Couple, Person> HUSBAND = Accessor.of(Couple::husband, Couple::husband);
@@ -148,22 +148,22 @@ public abstract class Couple extends CoupleDefinition implements Operatable<Coup
         /**
          * Construct operator.
          */
-        public Operator(Accessor<M, Couple> parent) {
+        public Manipulator(Accessor<M, Couple> parent) {
             super(parent);
         }
 
         /**
          * Property operator.
          */
-        public Person.Operator<Couple> husband() {
-            return new Person.Operator(parent.then(HUSBAND));
+        public Person.Manipulator<Couple> husband() {
+            return new Person.Manipulator(parent.then(HUSBAND));
         }
 
         /**
          * Property operator.
          */
-        public Person.Operator<Couple> wife() {
-            return new Person.Operator(parent.then(WIFE));
+        public Person.Manipulator<Couple> wife() {
+            return new Person.Manipulator(parent.then(WIFE));
         }
 
     }
