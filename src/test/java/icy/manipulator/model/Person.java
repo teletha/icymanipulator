@@ -13,9 +13,6 @@ import icy.manipulator.Lens;
 import icy.manipulator.ModelOperator;
 import icy.manipulator.Operatable;
 
-/**
- * @version 2015/04/24 16:34:57
- */
 public abstract class Person implements Operatable<Person> {
 
     /** The current model. */
@@ -28,23 +25,14 @@ public abstract class Person implements Operatable<Person> {
     }
 
     /**
-     * <p>
      * Retrieve name property.
-     * </p>
-     * 
-     * @return A name property
      */
     public String name() {
         return model.name;
     }
 
     /**
-     * <p>
-     * Create new model with the specified property.
-     * </p>
-     * 
-     * @param value A new property.
-     * @return A created model.
+     * Apply name property.
      */
     public Person name(String value) {
         if (model.name == value) {
@@ -54,23 +42,14 @@ public abstract class Person implements Operatable<Person> {
     }
 
     /**
-     * <p>
      * Retrieve age property.
-     * </p>
-     * 
-     * @return A age property
      */
     public int age() {
         return model.age;
     }
 
     /**
-     * <p>
-     * Create new model with the specified property.
-     * </p>
-     * 
-     * @param value A new property.
-     * @return A created model.
+     * Apply age property.
      */
     public Person age(int value) {
         if (model.age == value) {
@@ -80,23 +59,14 @@ public abstract class Person implements Operatable<Person> {
     }
 
     /**
-     * <p>
      * Retrieve gender property.
-     * </p>
-     * 
-     * @return A gender property
      */
     public Gender gender() {
         return model.gender;
     }
 
     /**
-     * <p>
-     * Create new model with the specified property.
-     * </p>
-     * 
-     * @param value A new property.
-     * @return A created model.
+     * Apply gender property.
      */
     public Person gender(Gender value) {
         if (model.gender == value) {
@@ -106,42 +76,26 @@ public abstract class Person implements Operatable<Person> {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return model.name + "  " + model.age + "  " + model.gender;
-    }
-
-    /**
-     * <p>
      * Create model builder without base model.
-     * </p>
-     * 
-     * @return A new model builder.
      */
     public static final Person with() {
         return with(null);
     }
 
     /**
-     * <p>
      * Create model builder using the specified definition as base model.
-     * </p>
-     * 
-     * @return A new model builder.
      */
     public static final Person with(Person base) {
         return new Melty(base);
     }
 
     /**
-     * @version 2015/04/26 16:49:59
+     * Immutable Model.
      */
     private static final class Icy extends Person {
 
         /**
-         * 
+         * HIDEEN CONSTRUCTOR
          */
         private Icy(Person base) {
             model = new PersonModel();
@@ -154,11 +108,7 @@ public abstract class Person implements Operatable<Person> {
         }
 
         /**
-         * <p>
-         * Create new mutable model.
-         * </p>
-         * 
-         * @return An immutable model.
+         * {@inheritDoc}
          */
         @Override
         public Person melt() {
@@ -167,12 +117,12 @@ public abstract class Person implements Operatable<Person> {
     }
 
     /**
-     * @version 2015/04/24 16:41:14
+     * Mutable Model.
      */
     private static final class Melty extends Person {
 
         /**
-         * @param base
+         * HIDEEN CONSTRUCTOR
          */
         private Melty(Person base) {
             model = new PersonModel();
@@ -185,45 +135,30 @@ public abstract class Person implements Operatable<Person> {
         }
 
         /**
-         * <p>
-         * Assign name property.
-         * </p>
-         * 
-         * @param name A property to assign.
-         * @return Chainable API.
+         * {@inheritDoc}
          */
         @Override
-        public Melty name(String name) {
+        public Person name(String name) {
             model.name = name;
 
             return this;
         }
 
         /**
-         * <p>
-         * Assign age property.
-         * </p>
-         * 
-         * @param age A property to assign.
-         * @return Chainable API.
+         * {@inheritDoc}
          */
         @Override
-        public Melty age(int age) {
+        public Person age(int age) {
             model.age = age;
 
             return this;
         }
 
         /**
-         * <p>
-         * Assign gender property.
-         * </p>
-         * 
-         * @param gender A property to assign.
-         * @return Chainable API.
+         * {@inheritDoc}
          */
         @Override
-        public Melty gender(Gender gender) {
+        public Person gender(Gender gender) {
             model.gender = gender;
 
             return this;
@@ -239,57 +174,46 @@ public abstract class Person implements Operatable<Person> {
     }
 
     /**
-     * @version 2015/04/24 16:52:22
+     * Operation Model.
      */
     public static final class Operator<M> extends ModelOperator<M, Person> {
 
-        /** The lens for leader property. */
+        /** The lens for name property. */
         private static final Lens<Person, String> NAME = Lens.of(Person::name, Person::name);
 
         /** The lens for age property. */
         private static final Lens<Person, Integer> AGE = Lens.of(Person::age, Person::age);
 
-        /** The lens for age property. */
+        /** The lens for gender property. */
         private static final Lens<Person, Gender> GENDER = Lens.of(Person::gender, Person::gender);
 
         /**
-         * @param lens
+         * Construct operator.
          */
-        public Operator(Lens<M, Person> lens) {
-            super(lens);
+        public Operator(Lens<M, Person> parent) {
+            super(parent);
         }
 
         /**
-         * <p>
          * Property operator.
-         * </p>
-         * 
-         * @return
          */
         public Lens<M, String> name() {
             return parent.then(NAME);
         }
 
         /**
-         * <p>
          * Property operator.
-         * </p>
-         * 
-         * @return
          */
         public Lens<M, Integer> age() {
             return parent.then(AGE);
         }
 
         /**
-         * <p>
          * Property operator.
-         * </p>
-         * 
-         * @return
          */
         public Lens<M, Gender> gender() {
             return parent.then(GENDER);
         }
+
     }
 }

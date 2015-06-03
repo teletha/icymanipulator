@@ -42,12 +42,8 @@ import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.TypeVisitor;
 import javax.lang.model.type.UnionType;
 import javax.lang.model.type.WildcardType;
-import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
-
-import icy.manipulator.compiler.SourceFile;
-import icy.manipulator.model.Person;
 
 /**
  * @version 2015/06/02 16:33:00
@@ -68,16 +64,12 @@ public class IcyManipulator extends AbstractProcessor {
             return true;
         }
 
-        Elements util = processingEnv.getElementUtils();
-
         for (Element element : env.getElementsAnnotatedWith(Icy.class)) {
-            SourceCodeAnalyzer analyzer = element.accept(new SourceCodeAnalyzer(), null);
+            SourceCodeReader analyzer = element.accept(new SourceCodeReader(), null);
             SourceCodeWriter coder = new SourceCodeWriter(analyzer);
-
             System.out.println(coder.body);
 
             try {
-                SourceFile source = SourceFile.of(Person.class);
                 JavaFileObject generated = processingEnv.getFiler()
                         .createSourceFile(element.toString().replaceAll("Model$", ""));
                 Writer writer = generated.openWriter();
@@ -215,8 +207,14 @@ public class IcyManipulator extends AbstractProcessor {
         /** The property name. */
         private final String name;
 
+        /** The property name. */
+        private final String NAME;
+
         /** The type name. */
         private FQCN type;
+
+        /** The type name. */
+        private FQCN TYPE;
 
         /**
          * @param type
@@ -224,6 +222,7 @@ public class IcyManipulator extends AbstractProcessor {
          */
         public Property(TypeMirror type, String name) {
             this.name = name;
+            this.NAME = name.toUpperCase();
 
             type.accept(this, null);
         }
@@ -250,6 +249,40 @@ public class IcyManipulator extends AbstractProcessor {
         @Override
         public Property visitPrimitive(PrimitiveType t, Void p) {
             type = FQCN.of(t.toString());
+
+            switch (t.toString()) {
+            case "int":
+                TYPE = FQCN.of(Integer.class);
+                break;
+
+            case "long":
+                TYPE = FQCN.of(Long.class);
+                break;
+
+            case "float":
+                TYPE = FQCN.of(Float.class);
+                break;
+
+            case "double":
+                TYPE = FQCN.of(Double.class);
+                break;
+
+            case "byte":
+                TYPE = FQCN.of(Byte.class);
+                break;
+
+            case "char":
+                TYPE = FQCN.of(Character.class);
+                break;
+
+            case "boolean":
+                TYPE = FQCN.of(Boolean.class);
+                break;
+
+            case "void":
+                TYPE = FQCN.of(Void.class);
+                break;
+            }
             return this;
         }
 
@@ -274,7 +307,7 @@ public class IcyManipulator extends AbstractProcessor {
          */
         @Override
         public Property visitDeclared(DeclaredType t, Void p) {
-            type = FQCN.of(((TypeElement) t.asElement()).getQualifiedName());
+            type = TYPE = FQCN.of(((TypeElement) t.asElement()).getQualifiedName());
             return this;
         }
 
@@ -346,7 +379,7 @@ public class IcyManipulator extends AbstractProcessor {
     /**
      * @version 2015/06/02 22:27:11
      */
-    private static class SourceCodeAnalyzer implements ElementVisitor<SourceCodeAnalyzer, Void> {
+    private static class SourceCodeReader implements ElementVisitor<SourceCodeReader, Void> {
 
         /** The fully qualified model class name. */
         private FQCN model;
@@ -361,7 +394,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeAnalyzer visit(Element e, Void p) {
+        public SourceCodeReader visit(Element e, Void p) {
             return this;
         }
 
@@ -369,7 +402,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeAnalyzer visit(Element e) {
+        public SourceCodeReader visit(Element e) {
             return visit(e, null);
         }
 
@@ -377,7 +410,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeAnalyzer visitPackage(PackageElement e, Void p) {
+        public SourceCodeReader visitPackage(PackageElement e, Void p) {
             return this;
         }
 
@@ -385,7 +418,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeAnalyzer visitType(TypeElement e, Void p) {
+        public SourceCodeReader visitType(TypeElement e, Void p) {
             switch (e.getKind()) {
             case CLASS:
                 visitClass(e);
@@ -417,7 +450,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeAnalyzer visitVariable(VariableElement e, Void p) {
+        public SourceCodeReader visitVariable(VariableElement e, Void p) {
             switch (e.getKind()) {
             case FIELD:
                 visitField(e);
@@ -444,7 +477,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeAnalyzer visitExecutable(ExecutableElement e, Void p) {
+        public SourceCodeReader visitExecutable(ExecutableElement e, Void p) {
             return this;
         }
 
@@ -452,7 +485,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeAnalyzer visitTypeParameter(TypeParameterElement e, Void p) {
+        public SourceCodeReader visitTypeParameter(TypeParameterElement e, Void p) {
             return this;
         }
 
@@ -460,7 +493,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeAnalyzer visitUnknown(Element e, Void p) {
+        public SourceCodeReader visitUnknown(Element e, Void p) {
             return this;
         }
     }
@@ -483,10 +516,10 @@ public class IcyManipulator extends AbstractProcessor {
         private int indent;
 
         /**
-         * @param analyzer
+         * @param reader
          */
-        private SourceCodeWriter(SourceCodeAnalyzer analyzer) {
-            this.imports = new Imports(clazz = analyzer.fqcn);
+        private SourceCodeWriter(SourceCodeReader reader) {
+            this.imports = new Imports(clazz = reader.fqcn);
 
             write("package ", clazz.packageName, ";");
             write();
@@ -495,7 +528,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("public abstract class ", clazz.className, " implements ", parameterize(Operatable.class, clazz), "{");
             write();
             write("     /** The current model. */");
-            write("     private ", imports.use(analyzer.model), " model;");
+            write("     ", imports.use(reader.model), " model;");
             write();
             write("     /**");
             write("      * HIDDEN CONSTRUCTOR");
@@ -503,7 +536,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("     private ", clazz.className, "() {");
             write("     }");
             write();
-            for (Property property : analyzer.properties) {
+            for (Property property : reader.properties) {
                 // getter
                 write("     /**");
                 write("     * Retrieve ", property.name, " property.");
@@ -525,6 +558,121 @@ public class IcyManipulator extends AbstractProcessor {
                 write("     }");
                 write();
             }
+
+            // builder methods
+            write("     /**");
+            write("      * Create model builder without base model.");
+            write("      */");
+            write("     public static final ", clazz.className, " with() {");
+            write("         return with(null);");
+            write("     }");
+            write();
+            write("     /**");
+            write("      * Create model builder using the specified definition as base model.");
+            write("      */");
+            write("     public static final ", clazz.className, " with(", clazz.className, " base) {");
+            write("         return new Melty(base);");
+            write("     }");
+            write();
+
+            // Immutable model
+            write("     /**");
+            write("      * Immutable Model.");
+            write("      */");
+            write("     private static final class Icy extends ", clazz.className, " {");
+            write();
+            write("         /**");
+            write("          * HIDEEN CONSTRUCTOR");
+            write("          */");
+            write("         private Icy(", clazz, " base) {");
+            write("             model = new ", reader.model, "();");
+            write();
+            write("             if (base != null) {");
+            for (Property property : reader.properties) {
+                write("                 model.", property.name, " = base.", property.name, "();");
+            }
+            write("             }");
+            write("         }");
+            write();
+            write("         /**");
+            write("          * {@inheritDoc}");
+            write("          */");
+            write("         @Override");
+            write("         public ", clazz, " melt() {");
+            write("             return new Melty(this);");
+            write("         }");
+            write("     }");
+
+            // Mutable model
+            write("     /**");
+            write("      * Mutable Model.");
+            write("      */");
+            write("     private static final class Melty extends ", clazz.className, " {");
+            write();
+            write("         /**");
+            write("          * HIDEEN CONSTRUCTOR");
+            write("          */");
+            write("         private Melty(", clazz, " base) {");
+            write("             model = new ", reader.model, "();");
+            write();
+            write("             if (base != null) {");
+            for (Property property : reader.properties) {
+                write("                 model.", property.name, " = base.", property.name, "();");
+            }
+            write("             }");
+            write("         }");
+            write();
+            for (Property property : reader.properties) {
+                // Override Setters
+                write("         /**");
+                write("          * {@inheritDoc}");
+                write("          */");
+                write("         @Override");
+                write("         public ", clazz, " ", property.name, "(", property.type, " ", property.name, ") {");
+                write("             model.", property.name, " = ", property.name, ";");
+                write();
+                write("             return this;");
+                write("         }");
+                write();
+            }
+            write("         /**");
+            write("          * {@inheritDoc}");
+            write("          */");
+            write("         @Override");
+            write("         public ", clazz, " ice() {");
+            write("             return new Icy(this);");
+            write("         }");
+            write("     }");
+
+            // Operator
+            write("     /**");
+            write("      * Operation Model.");
+            write("      */");
+            write("     public static final class Operator<M> extends ", ModelOperator.class, "<M,", clazz, "> {");
+            write();
+            for (Property property : reader.properties) {
+                write("         /** The lens for ", property.name, " property. */");
+                write("         private static final ", Lens.class, "<", clazz, ",", property.TYPE, "> ", property.NAME, " = ", Lens.class, ".of(", clazz, "::", property.name, ",  ", clazz, "::", property.name, ");");
+                write();
+            }
+            write("         /**");
+            write("          * Construct operator.");
+            write("          */");
+            write("         public Operator(", Lens.class, "<M,", clazz, "> parent) {");
+            write("             super(parent);");
+            write("         }");
+            write();
+            for (Property property : reader.properties) {
+                write("         /**");
+                write("          * Property operator.");
+                write("          */");
+                write("         public ", Lens.class, "<M,", property.TYPE, "> ", property.name, "() {");
+                write("             return parent.then(", property.NAME, ");");
+                write("         }");
+                write();
+            }
+            write("     }");
+
             write("}");
 
             // generate code fragments
