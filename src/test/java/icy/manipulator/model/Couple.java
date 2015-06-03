@@ -6,18 +6,12 @@ import icy.manipulator.Operatable;
 /**
  * {@link Operatable} model for {@link CoupleDefinition}.
  *
- * @version 2015-06-03T15:50:57.219
+ * @version 2015-06-03T16:17:06.416
  */
-public abstract class Couple implements Operatable<Couple> {
+public abstract class Couple extends CoupleDefinition implements Operatable<Couple> {
 
     /** The model operator for reuse. */
     public static final Operator<Couple> Operator = new Operator(null);
-
-    /** The property holder. */
-    protected Person husband;
-
-    /** The property holder. */
-    protected Person wife;
 
     /**
      * HIDE CONSTRUCTOR

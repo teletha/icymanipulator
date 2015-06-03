@@ -6,21 +6,12 @@ import icy.manipulator.Operatable;
 /**
  * {@link Operatable} model for {@link PersonDefinition}.
  *
- * @version 2015-06-03T15:48:09.237
+ * @version 2015-06-03T16:17:30.199
  */
-public abstract class Person implements Operatable<Person> {
+public abstract class Person extends PersonDefinition implements Operatable<Person> {
 
     /** The model operator for reuse. */
     public static final Operator<Person> Operator = new Operator(null);
-
-    /** The property holder. */
-    protected String name;
-
-    /** The property holder. */
-    protected int age;
-
-    /** The property holder. */
-    protected Gender gender;
 
     /**
      * HIDE CONSTRUCTOR

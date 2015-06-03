@@ -15,6 +15,8 @@ import icy.manipulator.model.Couple;
 import icy.manipulator.model.CoupleDefinition;
 import icy.manipulator.model.Person;
 import icy.manipulator.model.PersonDefinition;
+import icy.manipulator.model.UserDefinedDefaultValue;
+import icy.manipulator.model.UserDefinedDefaultValueDefinition;
 
 /**
  * @version 2015/06/02 16:43:02
@@ -29,5 +31,10 @@ public class ModelTest extends ModelTestBase {
     @Test
     public void couple() {
         testCodeGeneration(CoupleDefinition.class, Couple.class);
+    }
+
+    @Test
+    public void userDefiendDefaultValue() {
+        testCodeGeneration(UserDefinedDefaultValueDefinition.class, UserDefinedDefaultValue.class);
     }
 }

@@ -27,6 +27,7 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementVisitor;
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
@@ -497,7 +498,11 @@ public class IcyManipulator extends AbstractProcessor {
          * @param e
          */
         private void visitField(VariableElement e) {
-            properties.add(new Property(e.asType(), e.getSimpleName().toString()));
+            Set<Modifier> modifiers = e.getModifiers();
+
+            if (!modifiers.contains(Modifier.PRIVATE) && !modifiers.contains(Modifier.FINAL)) {
+                properties.add(new Property(e.asType(), e.getSimpleName().toString()));
+            }
         }
 
         /**
@@ -557,16 +562,11 @@ public class IcyManipulator extends AbstractProcessor {
             write(" *");
             write(" * @version ", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
             write(" */");
-            write("public abstract class ", clazz.className, " implements ", parameterize(Operatable.class, clazz), "{");
+            write("public abstract class ", clazz.className, " extends ", reader.model, " implements ", parameterize(Operatable.class, clazz), "{");
             write();
             write("     /** The model operator for reuse. */");
             write("     public static final Operator<", clazz, "> Operator = new Operator(null);");
             write();
-            for (Property property : reader.properties) {
-                write("     /** The property holder. */");
-                write("     protected ", property.type, " ", property.name, ";");
-                write();
-            }
             write("     /**");
             write("      * HIDE CONSTRUCTOR");
             write("      */");
