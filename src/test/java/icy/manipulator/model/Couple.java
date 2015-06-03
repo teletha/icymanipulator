@@ -9,8 +9,7 @@
  */
 package icy.manipulator.model;
 
-import icy.manipulator.Lens;
-import icy.manipulator.ModelOperator;
+import icy.manipulator.Accessor;
 import icy.manipulator.Operatable;
 
 public abstract class Couple implements Operatable<Couple> {
@@ -150,18 +149,18 @@ public abstract class Couple implements Operatable<Couple> {
     /**
      * Operation Model.
      */
-    public static final class Operator<M> extends ModelOperator<M, Couple> {
+    public static final class Operator<M> extends icy.manipulator.Operator<M, Couple> {
 
         /** The lens for husband property. */
-        private static final Lens<Couple, Person> HUSBAND = Lens.of(Couple::husband, Couple::husband);
+        private static final Accessor<Couple, Person> HUSBAND = Accessor.of(Couple::husband, Couple::husband);
 
         /** The lens for wife property. */
-        private static final Lens<Couple, Person> WIFE = Lens.of(Couple::wife, Couple::wife);
+        private static final Accessor<Couple, Person> WIFE = Accessor.of(Couple::wife, Couple::wife);
 
         /**
          * Construct operator.
          */
-        public Operator(Lens<M, Couple> parent) {
+        public Operator(Accessor<M, Couple> parent) {
             super(parent);
         }
 
@@ -178,5 +177,6 @@ public abstract class Couple implements Operatable<Couple> {
         public Person.Operator<Couple> wife() {
             return new Person.Operator(parent.then(WIFE));
         }
+
     }
 }

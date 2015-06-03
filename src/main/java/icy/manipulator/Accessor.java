@@ -14,47 +14,27 @@ import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 /**
- * @version 2015/04/19 22:00:04
+ * @version 2015/06/03 14:06:09
  */
-public interface Lens<M, V> {
+public interface Accessor<M, V> {
 
-    Lens Φ = new Lens() {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Object get(Object model) {
-            return model;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Object set(Object model, Object property) {
-            return property;
-        }
-    };
+    /** The empty accessor. */
+    Accessor Φ = of(model -> model, (model, property) -> property);
 
     /**
-     * <p>
      * Getter.
-     * </p>
      * 
-     * @param model
-     * @return
+     * @param model A target model to operate.
+     * @return A value.
      */
     V get(M model);
 
     /**
-     * <p>
-     * Operation.
-     * </p>
+     * Operation by using new value only.
      * 
-     * @param model
-     * @param property
-     * @return
+     * @param model A target model to operate.
+     * @param property A new value to set.
+     * @return An applied model.
      */
     M set(M model, V property);
 
@@ -65,31 +45,31 @@ public interface Lens<M, V> {
      * <p>
      * </p>
      * 
-     * @param model
-     * @param property
-     * @return
+     * @param model A target model to operate.
+     * @param property A value apllicative function.
+     * @return An applied model.
      */
-    default M set(M model, Function<V, V> property) {
+    default M set(M model, UnaryOperator<V> property) {
         return set(model, property.apply(get(model)));
     }
 
     /**
      * <p>
-     * Compose {@link Lens}.
+     * Compose {@link Accessor}.
      * </p>
      * 
      * @param lens
      * @return
      */
-    public default <P> Lens<M, P> then(Lens<V, P> lens) {
-        return new Lens<M, P>() {
+    public default <P> Accessor<M, P> then(Accessor<V, P> lens) {
+        return new Accessor<M, P>() {
 
             /**
              * {@inheritDoc}
              */
             @Override
             public P get(M model) {
-                return lens.get(Lens.this.get(model));
+                return lens.get(Accessor.this.get(model));
             }
 
             /**
@@ -97,7 +77,7 @@ public interface Lens<M, V> {
              */
             @Override
             public M set(M model, P property) {
-                return Lens.this.set(model, lens.set(Lens.this.get(model), property));
+                return Accessor.this.set(model, lens.set(Accessor.this.get(model), property));
             }
         };
     }
@@ -115,8 +95,8 @@ public interface Lens<M, V> {
      * @param setter
      * @return
      */
-    public static <M, V> Lens<M, V> of(Function<M, V> getter, BiFunction<M, V, M> setter) {
-        return new Lens<M, V>() {
+    public static <M, V> Accessor<M, V> of(Function<M, V> getter, BiFunction<M, V, M> setter) {
+        return new Accessor<M, V>() {
 
             /**
              * {@inheritDoc}

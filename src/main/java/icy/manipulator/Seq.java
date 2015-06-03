@@ -236,33 +236,33 @@ public abstract class Seq<E> implements Operatable<Seq<E>> {
     /**
      * @version 2015/04/28 11:53:32
      */
-    public static class Operator<M, V, O extends ModelOperator<M, V>> extends ModelOperator<M, Seq<V>> {
+    public static class Operation<M, V, O extends Operator<M, V>> extends Operator<M, Seq<V>> {
 
         private O sub;
 
         /**
          * @param lens
          */
-        public Operator(Lens<M, Seq<V>> lens, O sub) {
+        public Operation(Accessor<M, Seq<V>> lens, O sub) {
             super(lens);
 
             this.sub = sub;
         }
 
         public O at(int index) {
-            sub.parent = parent.then(Lens.of(model -> model.get(index), (model, value) -> model.set(index, value)));
+            sub.parent = parent.then(Accessor.of(model -> model.get(index), (model, value) -> model.set(index, value)));
 
             return sub;
         }
 
-        public Lens<M, V> add() {
-            sub.parent = parent.then(Lens.of(null, Seq::add));
+        public Accessor<M, V> add() {
+            sub.parent = parent.then(Accessor.of(null, Seq::add));
 
             return sub;
         }
 
-        public Lens<M, V> remove() {
-            sub.parent = parent.then(Lens.of(null, Seq::remove));
+        public Accessor<M, V> remove() {
+            sub.parent = parent.then(Accessor.of(null, Seq::remove));
 
             return sub;
         }

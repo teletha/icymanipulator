@@ -10,18 +10,22 @@
 package icy.manipulator;
 
 /**
- * @version 2015/04/28 11:24:11
+ * Model {@link Accessor} as operator.
+ * 
+ * @version 2015/06/03 14:06:02
  */
-public abstract class ModelOperator<M, V> implements Lens<M, V> {
+public abstract class Operator<M, V> implements Accessor<M, V> {
 
-    /** The parent lens. */
-    protected Lens<M, V> parent;
+    /** The parent accessor. */
+    protected Accessor<M, V> parent;
 
     /**
-     * @param parent A previous lens.
+     * Create base accessor.
+     * 
+     * @param parent A parent accessor.
      */
-    protected ModelOperator(Lens<M, V> parent) {
-        this.parent = parent == null ? Lens.Φ : parent;
+    protected Operator(Accessor<M, V> parent) {
+        this.parent = parent == null ? Accessor.Φ : parent;
     }
 
     /**

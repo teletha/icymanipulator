@@ -9,8 +9,7 @@
  */
 package icy.manipulator.model;
 
-import icy.manipulator.Lens;
-import icy.manipulator.ModelOperator;
+import icy.manipulator.Accessor;
 import icy.manipulator.Operatable;
 
 public abstract class Person implements Operatable<Person> {
@@ -179,42 +178,42 @@ public abstract class Person implements Operatable<Person> {
     /**
      * Operation Model.
      */
-    public static final class Operator<M> extends ModelOperator<M, Person> {
+    public static final class Operator<M> extends icy.manipulator.Operator<M, Person> {
 
         /** The lens for name property. */
-        private static final Lens<Person, String> NAME = Lens.of(Person::name, Person::name);
+        private static final Accessor<Person, String> NAME = Accessor.of(Person::name, Person::name);
 
         /** The lens for age property. */
-        private static final Lens<Person, Integer> AGE = Lens.of(Person::age, Person::age);
+        private static final Accessor<Person, Integer> AGE = Accessor.of(Person::age, Person::age);
 
         /** The lens for gender property. */
-        private static final Lens<Person, Gender> GENDER = Lens.of(Person::gender, Person::gender);
+        private static final Accessor<Person, Gender> GENDER = Accessor.of(Person::gender, Person::gender);
 
         /**
          * Construct operator.
          */
-        public Operator(Lens<M, Person> parent) {
+        public Operator(Accessor<M, Person> parent) {
             super(parent);
         }
 
         /**
          * Property operator.
          */
-        public Lens<M, String> name() {
+        public Accessor<M, String> name() {
             return parent.then(NAME);
         }
 
         /**
          * Property operator.
          */
-        public Lens<M, Integer> age() {
+        public Accessor<M, Integer> age() {
             return parent.then(AGE);
         }
 
         /**
          * Property operator.
          */
-        public Lens<M, Gender> gender() {
+        public Accessor<M, Gender> gender() {
             return parent.then(GENDER);
         }
 

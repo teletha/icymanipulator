@@ -676,21 +676,21 @@ public class IcyManipulator extends AbstractProcessor {
             write("         }");
             write("     }");
 
-            // Operator
+            // Operatoion
             write("     /**");
             write("      * Operation Model.");
             write("      */");
-            write("     public static final class Operator<M> extends ", ModelOperator.class, "<M,", clazz, "> {");
+            write("     public static final class Operator<M> extends ", Operator.class.getName(), "<M,", clazz, "> {");
             write();
             for (Property property : reader.properties) {
                 write("         /** The lens for ", property.name, " property. */");
-                write("         private static final ", Lens.class, "<", clazz, ",", property.TYPE, "> ", property.NAME, " = ", Lens.class, ".of(", clazz, "::", property.name, ",  ", clazz, "::", property.name, ");");
+                write("         private static final ", Accessor.class, "<", clazz, ",", property.TYPE, "> ", property.NAME, " = ", Accessor.class, ".of(", clazz, "::", property.name, ",  ", clazz, "::", property.name, ");");
                 write();
             }
             write("         /**");
             write("          * Construct operator.");
             write("          */");
-            write("         public Operator(", Lens.class, "<M,", clazz, "> parent) {");
+            write("         public Operator(", Accessor.class, "<M,", clazz, "> parent) {");
             write("             super(parent);");
             write("         }");
             write();
@@ -703,7 +703,7 @@ public class IcyManipulator extends AbstractProcessor {
                     write("             return new ", property.TYPE, ".Operator(parent.then(", property.NAME, "));");
                     write("         }");
                 } else {
-                    write("         public ", Lens.class, "<M,", property.TYPE, "> ", property.name, "() {");
+                    write("         public ", Accessor.class, "<M,", property.TYPE, "> ", property.name, "() {");
                     write("             return parent.then(", property.NAME, ");");
                     write("         }");
                 }
