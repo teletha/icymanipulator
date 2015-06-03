@@ -1,87 +1,86 @@
-/*
- * Copyright (C) 2015 Nameless Production Committee
- *
- * Licensed under the MIT License (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *          http://opensource.org/licenses/mit-license.php
- */
 package icy.manipulator.model;
 
 import icy.manipulator.Accessor;
 import icy.manipulator.Operatable;
 
+/**
+ * {@link Operatable} model for {@link PersonDefinition}.
+ *
+ * @version 2015-06-03T15:48:09.237
+ */
 public abstract class Person implements Operatable<Person> {
 
-    /** The model operator. */
+    /** The model operator for reuse. */
     public static final Operator<Person> Operator = new Operator(null);
 
-    /** The current model. */
-    PersonDefinition model;
+    /** The property holder. */
+    protected String name;
+
+    /** The property holder. */
+    protected int age;
+
+    /** The property holder. */
+    protected Gender gender;
 
     /**
-     * HIDDEN CONSTRUCTOR
+     * HIDE CONSTRUCTOR
      */
-    private Person() {
+    protected Person() {
     }
 
     /**
      * Retrieve name property.
      */
     public String name() {
-        return model.name;
+        return this.name;
     }
 
     /**
-     * Apply name property.
+     * Modify name property.
      */
     public Person name(String value) {
-        if (model.name == value) {
-            return this;
-        }
-        return with(this).name(value).ice();
+        this.name = value;
+
+        return this;
     }
 
     /**
      * Retrieve age property.
      */
     public int age() {
-        return model.age;
+        return this.age;
     }
 
     /**
-     * Apply age property.
+     * Modify age property.
      */
     public Person age(int value) {
-        if (model.age == value) {
-            return this;
-        }
-        return with(this).age(value).ice();
+        this.age = value;
+
+        return this;
     }
 
     /**
      * Retrieve gender property.
      */
     public Gender gender() {
-        return model.gender;
+        return this.gender;
     }
 
     /**
-     * Apply gender property.
+     * Modify gender property.
      */
     public Person gender(Gender value) {
-        if (model.gender == value) {
-            return this;
-        }
-        return with(this).gender(value).ice();
+        this.gender = value;
+
+        return this;
     }
 
     /**
      * Create model builder without base model.
      */
     public static final Person with() {
-        return with(null);
+        return new Melty(null);
     }
 
     /**
@@ -97,16 +96,12 @@ public abstract class Person implements Operatable<Person> {
     private static final class Icy extends Person {
 
         /**
-         * HIDEEN CONSTRUCTOR
+         * HIDE CONSTRUCTOR
          */
-        private Icy(Person base) {
-            model = new PersonDefinition();
-
-            if (base != null) {
-                model.name = base.name();
-                model.age = base.age();
-                model.gender = base.gender();
-            }
+        private Icy(String name, int age, Gender gender) {
+            this.name = name;
+            this.age = age;
+            this.gender = gender;
         }
 
         /**
@@ -116,6 +111,40 @@ public abstract class Person implements Operatable<Person> {
         public Person melt() {
             return new Melty(this);
         }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Person name(String value) {
+            if (this.name == value) {
+                return this;
+            }
+            return new Icy(value, this.age, this.gender);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Person age(int value) {
+            if (this.age == value) {
+                return this;
+            }
+            return new Icy(this.name, value, this.gender);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Person gender(Gender value) {
+            if (this.gender == value) {
+                return this;
+            }
+            return new Icy(this.name, this.age, value);
+        }
+
     }
 
     /**
@@ -124,15 +153,13 @@ public abstract class Person implements Operatable<Person> {
     private static final class Melty extends Person {
 
         /**
-         * HIDEEN CONSTRUCTOR
+         * HIDE CONSTRUCTOR
          */
         private Melty(Person base) {
-            model = new PersonDefinition();
-
             if (base != null) {
-                model.name = base.name();
-                model.age = base.age();
-                model.gender = base.gender();
+                this.name = base.name;
+                this.age = base.age;
+                this.gender = base.gender;
             }
         }
 
@@ -140,38 +167,8 @@ public abstract class Person implements Operatable<Person> {
          * {@inheritDoc}
          */
         @Override
-        public Person name(String name) {
-            model.name = name;
-
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Person age(int age) {
-            model.age = age;
-
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Person gender(Gender gender) {
-            model.gender = gender;
-
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
         public Person ice() {
-            return new Icy(this);
+            return new Icy(name, age, gender);
         }
     }
 

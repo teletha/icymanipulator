@@ -1,70 +1,67 @@
-/*
- * Copyright (C) 2015 Nameless Production Committee
- *
- * Licensed under the MIT License (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *          http://opensource.org/licenses/mit-license.php
- */
 package icy.manipulator.model;
 
 import icy.manipulator.Accessor;
 import icy.manipulator.Operatable;
 
+/**
+ * {@link Operatable} model for {@link CoupleDefinition}.
+ *
+ * @version 2015-06-03T15:50:57.219
+ */
 public abstract class Couple implements Operatable<Couple> {
 
-    /** The model operator. */
+    /** The model operator for reuse. */
     public static final Operator<Couple> Operator = new Operator(null);
 
-    /** The current model. */
-    CoupleDefinition model;
+    /** The property holder. */
+    protected Person husband;
+
+    /** The property holder. */
+    protected Person wife;
 
     /**
-     * HIDDEN CONSTRUCTOR
+     * HIDE CONSTRUCTOR
      */
-    private Couple() {
+    protected Couple() {
     }
 
     /**
      * Retrieve husband property.
      */
     public Person husband() {
-        return model.husband;
+        return this.husband;
     }
 
     /**
-     * Apply husband property.
+     * Modify husband property.
      */
     public Couple husband(Person value) {
-        if (model.husband == value) {
-            return this;
-        }
-        return with(this).husband(value).ice();
+        this.husband = value;
+
+        return this;
     }
 
     /**
      * Retrieve wife property.
      */
     public Person wife() {
-        return model.wife;
+        return this.wife;
     }
 
     /**
-     * Apply wife property.
+     * Modify wife property.
      */
     public Couple wife(Person value) {
-        if (model.wife == value) {
-            return this;
-        }
-        return with(this).wife(value).ice();
+        this.wife = value;
+
+        return this;
     }
 
     /**
      * Create model builder without base model.
      */
     public static final Couple with() {
-        return with(null);
+        return new Melty(null);
     }
 
     /**
@@ -80,15 +77,11 @@ public abstract class Couple implements Operatable<Couple> {
     private static final class Icy extends Couple {
 
         /**
-         * HIDEEN CONSTRUCTOR
+         * HIDE CONSTRUCTOR
          */
-        private Icy(Couple base) {
-            model = new CoupleDefinition();
-
-            if (base != null) {
-                model.husband = base.husband();
-                model.wife = base.wife();
-            }
+        private Icy(Person husband, Person wife) {
+            this.husband = husband.ice();
+            this.wife = wife.ice();
         }
 
         /**
@@ -98,6 +91,29 @@ public abstract class Couple implements Operatable<Couple> {
         public Couple melt() {
             return new Melty(this);
         }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Couple husband(Person value) {
+            if (this.husband == value) {
+                return this;
+            }
+            return new Icy(value, this.wife);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Couple wife(Person value) {
+            if (this.wife == value) {
+                return this;
+            }
+            return new Icy(this.husband, value);
+        }
+
     }
 
     /**
@@ -106,14 +122,12 @@ public abstract class Couple implements Operatable<Couple> {
     private static final class Melty extends Couple {
 
         /**
-         * HIDEEN CONSTRUCTOR
+         * HIDE CONSTRUCTOR
          */
         private Melty(Couple base) {
-            model = new CoupleDefinition();
-
             if (base != null) {
-                model.husband = base.husband();
-                model.wife = base.wife();
+                this.husband = base.husband;
+                this.wife = base.wife;
             }
         }
 
@@ -121,28 +135,8 @@ public abstract class Couple implements Operatable<Couple> {
          * {@inheritDoc}
          */
         @Override
-        public Couple husband(Person husband) {
-            model.husband = husband;
-
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Couple wife(Person wife) {
-            model.wife = wife;
-
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
         public Couple ice() {
-            return new Icy(this);
+            return new Icy(husband, wife);
         }
     }
 

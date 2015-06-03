@@ -11,9 +11,12 @@ package icy.manipulator;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.StringJoiner;
 import java.util.TreeSet;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -69,9 +72,6 @@ public class IcyManipulator extends AbstractProcessor {
     /** The utility. */
     private static Elements elements;
 
-    /** The {@link Operatable} type. */
-    private static TypeMirror OPERATABLE;
-
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
         if (annotations.isEmpty()) {
@@ -81,8 +81,6 @@ public class IcyManipulator extends AbstractProcessor {
         // save utilities and constants
         types = processingEnv.getTypeUtils();
         elements = processingEnv.getElementUtils();
-
-        OPERATABLE = elements.getTypeElement(Operatable.class.getCanonicalName()).asType();
 
         for (Element element : env.getElementsAnnotatedWith(Icy.class)) {
             SourceCodeReader analyzer = element.accept(new SourceCodeReader(), null);
@@ -554,49 +552,55 @@ public class IcyManipulator extends AbstractProcessor {
             write();
             write(imports);
             write();
+            write("/**");
+            write(" * {@link ", Operatable.class, "} model for {@link ", reader.model, "}.");
+            write(" *");
+            write(" * @version ", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+            write(" */");
             write("public abstract class ", clazz.className, " implements ", parameterize(Operatable.class, clazz), "{");
             write();
-            write("     /** The model operator. */");
+            write("     /** The model operator for reuse. */");
             write("     public static final Operator<", clazz, "> Operator = new Operator(null);");
             write();
-            write("     /** The current model. */");
-            write("     ", reader.model, " model;");
-            write();
+            for (Property property : reader.properties) {
+                write("     /** The property holder. */");
+                write("     protected ", property.type, " ", property.name, ";");
+                write();
+            }
             write("     /**");
-            write("      * HIDDEN CONSTRUCTOR");
+            write("      * HIDE CONSTRUCTOR");
             write("      */");
-            write("     private ", clazz.className, "() {");
+            write("     protected ", clazz.className, "() {");
             write("     }");
             write();
             for (Property property : reader.properties) {
-                // getter
+                // GETTER
                 write("     /**");
                 write("     * Retrieve ", property.name, " property.");
                 write("     */");
                 write("     public ", property.type, " ", property.name, "() {");
-                write("         return model.", property.name, ";");
+                write("         return this.", property.name, ";");
                 write("     }");
                 write();
 
-                // setter
+                // SETTER
                 write("     /**");
-                write("     * Apply ", property.name, " property.");
+                write("     * Modify ", property.name, " property.");
                 write("     */");
                 write("     public ", clazz, " ", property.name, "(", property.type, " value) {");
-                write("         if (model.", property.name, " == value) {");
-                write("             return this;");
-                write("         }");
-                write("         return with(this).", property.name, "(value).ice();");
+                write("         this.", property.name, " = value;");
+                write();
+                write("         return this;");
                 write("     }");
                 write();
             }
 
-            // builder methods
+            // Builder methods
             write("     /**");
             write("      * Create model builder without base model.");
             write("      */");
             write("     public static final ", clazz.className, " with() {");
-            write("         return with(null);");
+            write("         return new Melty(null);");
             write("     }");
             write();
             write("     /**");
@@ -614,16 +618,12 @@ public class IcyManipulator extends AbstractProcessor {
             write("     private static final class Icy extends ", clazz.className, " {");
             write();
             write("         /**");
-            write("          * HIDEEN CONSTRUCTOR");
+            write("          * HIDE CONSTRUCTOR");
             write("          */");
-            write("         private Icy(", clazz, " base) {");
-            write("             model = new ", reader.model, "();");
-            write();
-            write("             if (base != null) {");
+            write("         private Icy(", parameterWithType(reader.properties), ") {");
             for (Property property : reader.properties) {
-                write("                 model.", property.name, " = base.", property.name, "();");
+                write("                 this.", property.name, " = ", property.name, property.isModel ? ".ice()" : "", ";");
             }
-            write("             }");
             write("         }");
             write();
             write("         /**");
@@ -633,6 +633,21 @@ public class IcyManipulator extends AbstractProcessor {
             write("         public ", clazz, " melt() {");
             write("             return new Melty(this);");
             write("         }");
+            write();
+            // Override Setters
+            for (Property property : reader.properties) {
+                write("         /**");
+                write("          * {@inheritDoc}");
+                write("          */");
+                write("         @Override");
+                write("         public ", clazz, " ", property.name, "(", property.type, " value) {");
+                write("             if (this.", property.name, " == value) {");
+                write("                 return this;");
+                write("             }");
+                write("             return new Icy(", parameterReplaceable(reader.properties, property), ");");
+                write("         }");
+                write();
+            }
             write("     }");
 
             // Mutable model
@@ -642,37 +657,22 @@ public class IcyManipulator extends AbstractProcessor {
             write("     private static final class Melty extends ", clazz.className, " {");
             write();
             write("         /**");
-            write("          * HIDEEN CONSTRUCTOR");
+            write("          * HIDE CONSTRUCTOR");
             write("          */");
             write("         private Melty(", clazz, " base) {");
-            write("             model = new ", reader.model, "();");
-            write();
             write("             if (base != null) {");
             for (Property property : reader.properties) {
-                write("                 model.", property.name, " = base.", property.name, "();");
+                write("                 this.", property.name, " = base.", property.name, ";");
             }
             write("             }");
             write("         }");
             write();
-            for (Property property : reader.properties) {
-                // Override Setters
-                write("         /**");
-                write("          * {@inheritDoc}");
-                write("          */");
-                write("         @Override");
-                write("         public ", clazz, " ", property.name, "(", property.type, " ", property.name, ") {");
-                write("             model.", property.name, " = ", property.name, ";");
-                write();
-                write("             return this;");
-                write("         }");
-                write();
-            }
             write("         /**");
             write("          * {@inheritDoc}");
             write("          */");
             write("         @Override");
             write("         public ", clazz, " ice() {");
-            write("             return new Icy(this);");
+            write("             return new Icy(", parameter(reader.properties), ");");
             write("         }");
             write("     }");
 
@@ -715,6 +715,58 @@ public class IcyManipulator extends AbstractProcessor {
 
             // generate code fragments
             imports.generate();
+        }
+
+        /**
+         * <p>
+         * Write paramter without type.
+         * </p>
+         * 
+         * @return
+         */
+        private String parameter(List<Property> properties) {
+            StringJoiner joiner = new StringJoiner(", ");
+
+            for (Property property : properties) {
+                joiner.add(property.name);
+            }
+            return joiner.toString();
+        }
+
+        /**
+         * <p>
+         * Write paramter without type.
+         * </p>
+         * 
+         * @return
+         */
+        private String parameterReplaceable(List<Property> properties, Property current) {
+            StringJoiner joiner = new StringJoiner(", ");
+
+            for (Property property : properties) {
+                if (property == current) {
+                    joiner.add("value");
+                } else {
+                    joiner.add("this." + property.name);
+                }
+            }
+            return joiner.toString();
+        }
+
+        /**
+         * <p>
+         * Write paramter with type.
+         * </p>
+         * 
+         * @return
+         */
+        private String parameterWithType(List<Property> properties) {
+            StringJoiner joiner = new StringJoiner(", ");
+
+            for (Property property : properties) {
+                joiner.add(property.type.className + " " + property.name);
+            }
+            return joiner.toString();
         }
 
         /**
