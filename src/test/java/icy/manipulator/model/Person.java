@@ -18,7 +18,7 @@ public abstract class Person implements Operatable<Person> {
     public static final Operator<Person> Operator = new Operator(null);
 
     /** The current model. */
-    PersonModel model;
+    PersonDefinition model;
 
     /**
      * HIDDEN CONSTRUCTOR
@@ -100,7 +100,7 @@ public abstract class Person implements Operatable<Person> {
          * HIDEEN CONSTRUCTOR
          */
         private Icy(Person base) {
-            model = new PersonModel();
+            model = new PersonDefinition();
 
             if (base != null) {
                 model.name = base.name();
@@ -127,7 +127,7 @@ public abstract class Person implements Operatable<Person> {
          * HIDEEN CONSTRUCTOR
          */
         private Melty(Person base) {
-            model = new PersonModel();
+            model = new PersonDefinition();
 
             if (base != null) {
                 model.name = base.name();

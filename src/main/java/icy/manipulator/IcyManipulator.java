@@ -55,7 +55,7 @@ import javax.tools.JavaFileObject;
 public class IcyManipulator extends AbstractProcessor {
 
     /** The suffix of model definition. */
-    private static final String ModelDefinitionSuffix = "Model";
+    private static final String ModelDefinitionSuffix = "Definition";
 
     /** The indent. */
     private static final String __ = "    ";

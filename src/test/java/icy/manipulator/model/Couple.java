@@ -18,7 +18,7 @@ public abstract class Couple implements Operatable<Couple> {
     public static final Operator<Couple> Operator = new Operator(null);
 
     /** The current model. */
-    CoupleModel model;
+    CoupleDefinition model;
 
     /**
      * HIDDEN CONSTRUCTOR
@@ -83,7 +83,7 @@ public abstract class Couple implements Operatable<Couple> {
          * HIDEEN CONSTRUCTOR
          */
         private Icy(Couple base) {
-            model = new CoupleModel();
+            model = new CoupleDefinition();
 
             if (base != null) {
                 model.husband = base.husband();
@@ -109,7 +109,7 @@ public abstract class Couple implements Operatable<Couple> {
          * HIDEEN CONSTRUCTOR
          */
         private Melty(Couple base) {
-            model = new CoupleModel();
+            model = new CoupleDefinition();
 
             if (base != null) {
                 model.husband = base.husband();

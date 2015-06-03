@@ -12,9 +12,9 @@ package icy.manipulator;
 import org.junit.Test;
 
 import icy.manipulator.model.Couple;
-import icy.manipulator.model.CoupleModel;
+import icy.manipulator.model.CoupleDefinition;
 import icy.manipulator.model.Person;
-import icy.manipulator.model.PersonModel;
+import icy.manipulator.model.PersonDefinition;
 
 /**
  * @version 2015/06/02 16:43:02
@@ -23,11 +23,11 @@ public class ModelTest extends ModelTestBase {
 
     @Test
     public void person() {
-        testCodeGeneration(PersonModel.class, Person.class);
+        testCodeGeneration(PersonDefinition.class, Person.class);
     }
 
     @Test
     public void couple() {
-        testCodeGeneration(CoupleModel.class, Couple.class);
+        testCodeGeneration(CoupleDefinition.class, Couple.class);
     }
 }
