@@ -6,12 +6,12 @@ import icy.manipulator.Manipulatable;
 /**
  * {@link Manipulatable} model for {@link CoupleDefinition}.
  *
- * @version 2015-06-03T23:34:36.449
+ * @version 2015-06-04T09:46:31.435
  */
 public abstract class Couple extends CoupleDefinition implements Manipulatable<Couple> {
 
-    /** The model operator for reuse. */
-    public static final Manipulator<Couple> Manipulator = new Manipulator(null);
+    /** The model manipulator for reuse. */
+    private static final Manipulator<Couple> MANIPULATOR = new Manipulator(null);
 
     /**
      * HIDE CONSTRUCTOR
@@ -63,6 +63,13 @@ public abstract class Couple extends CoupleDefinition implements Manipulatable<C
      */
     public static final Couple with(Couple base) {
         return new Melty(base);
+    }
+
+    /**
+     * Create model manipulator.
+     */
+    public static final Manipulator<Couple> in() {
+        return MANIPULATOR;
     }
 
     /**
@@ -135,7 +142,7 @@ public abstract class Couple extends CoupleDefinition implements Manipulatable<C
     }
 
     /**
-     * Operation Model.
+     * Model Manipulator.
      */
     public static final class Manipulator<M> extends icy.manipulator.Manipulator<M, Couple> {
 

@@ -6,12 +6,12 @@ import icy.manipulator.Manipulatable;
 /**
  * {@link Manipulatable} model for {@link PersonDefinition}.
  *
- * @version 2015-06-03T23:34:22.849
+ * @version 2015-06-04T09:46:09.967
  */
 public abstract class Person extends PersonDefinition implements Manipulatable<Person> {
 
-    /** The model operator for reuse. */
-    public static final Manipulator<Person> Manipulator = new Manipulator(null);
+    /** The model manipulator for reuse. */
+    private static final Manipulator<Person> MANIPULATOR = new Manipulator(null);
 
     /**
      * HIDE CONSTRUCTOR
@@ -79,6 +79,13 @@ public abstract class Person extends PersonDefinition implements Manipulatable<P
      */
     public static final Person with(Person base) {
         return new Melty(base);
+    }
+
+    /**
+     * Create model manipulator.
+     */
+    public static final Manipulator<Person> in() {
+        return MANIPULATOR;
     }
 
     /**
@@ -164,7 +171,7 @@ public abstract class Person extends PersonDefinition implements Manipulatable<P
     }
 
     /**
-     * Operation Model.
+     * Model Manipulator.
      */
     public static final class Manipulator<M> extends icy.manipulator.Manipulator<M, Person> {
 

@@ -11,7 +11,7 @@ import icy.manipulator.Manipulatable;
 public abstract class GenericVariable<V> extends GenericVariableDefinition<V>implements Manipulatable<GenericVariable> {
 
     /** The model operator for reuse. */
-    public static final Operator<GenericVariable> Manipulator = new Operator(null);
+    private static final Manipulator Manipulator = new Manipulator(null);
 
     /**
      * HIDE CONSTRUCTOR
@@ -49,8 +49,8 @@ public abstract class GenericVariable<V> extends GenericVariableDefinition<V>imp
         return new Melty<V>(base);
     }
 
-    public static final <V> Operator<GenericVariable<V>> operator() {
-        return (Operator<GenericVariable<V>>) (Object) Manipulator;
+    public static final <Param1> Manipulator<GenericVariable<Param1>, Param1> in() {
+        return Manipulator;
     }
 
     /**
@@ -112,7 +112,7 @@ public abstract class GenericVariable<V> extends GenericVariableDefinition<V>imp
     /**
      * Operation Model.
      */
-    public static final class Operator<M> extends icy.manipulator.Manipulator<M, GenericVariable> {
+    public static final class Manipulator<M, Param1> extends icy.manipulator.Manipulator<M, GenericVariable<Param1>> {
 
         /** The lens for value property. */
         private static final Accessor<GenericVariable, Object> VALUE = Accessor
@@ -121,16 +121,19 @@ public abstract class GenericVariable<V> extends GenericVariableDefinition<V>imp
         /**
          * Construct operator.
          */
-        public Operator(Accessor<M, GenericVariable> parent) {
+        public Manipulator(Accessor<M, GenericVariable<Param1>> parent) {
             super(parent);
         }
 
         /**
          * Property operator.
          */
-        public <V> Accessor<M, V> value() {
-            return parent.then((Accessor<GenericVariable, V>) VALUE);
+        public Accessor<M, Param1> value() {
+            return parent.then(VALUE());
         }
 
+        private Accessor<GenericVariable<Param1>, Param1> VALUE() {
+            return Accessor.of(GenericVariable::value, GenericVariable::value);
+        }
     }
 }

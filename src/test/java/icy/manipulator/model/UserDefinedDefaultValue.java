@@ -6,13 +6,13 @@ import icy.manipulator.Manipulatable;
 /**
  * {@link Manipulatable} model for {@link UserDefinedDefaultValueDefinition}.
  *
- * @version 2015-06-03T23:35:00.219
+ * @version 2015-06-04T09:46:49.424
  */
 public abstract class UserDefinedDefaultValue extends UserDefinedDefaultValueDefinition
         implements Manipulatable<UserDefinedDefaultValue> {
 
-    /** The model operator for reuse. */
-    public static final Manipulator<UserDefinedDefaultValue> Manipulator = new Manipulator(null);
+    /** The model manipulator for reuse. */
+    private static final Manipulator<UserDefinedDefaultValue> MANIPULATOR = new Manipulator(null);
 
     /**
      * HIDE CONSTRUCTOR
@@ -48,6 +48,13 @@ public abstract class UserDefinedDefaultValue extends UserDefinedDefaultValueDef
      */
     public static final UserDefinedDefaultValue with(UserDefinedDefaultValue base) {
         return new Melty(base);
+    }
+
+    /**
+     * Create model manipulator.
+     */
+    public static final Manipulator<UserDefinedDefaultValue> in() {
+        return MANIPULATOR;
     }
 
     /**
@@ -107,7 +114,7 @@ public abstract class UserDefinedDefaultValue extends UserDefinedDefaultValueDef
     }
 
     /**
-     * Operation Model.
+     * Model Manipulator.
      */
     public static final class Manipulator<M> extends icy.manipulator.Manipulator<M, UserDefinedDefaultValue> {
 

@@ -566,7 +566,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("public abstract class ", clazz.className, " extends ", reader.model, " implements ", parameterize(Manipulatable.class, clazz), "{");
             write();
             write("     /** The model manipulator for reuse. */");
-            write("     public static final Manipulator<", clazz, "> Manipulator = new Manipulator(null);");
+            write("     private static final Manipulator<", clazz, "> MANIPULATOR = new Manipulator(null);");
             write();
             write("     /**");
             write("      * HIDE CONSTRUCTOR");
@@ -612,6 +612,15 @@ public class IcyManipulator extends AbstractProcessor {
             write("     }");
             write();
 
+            // Manipulator methods
+            write("     /**");
+            write("      * Create model manipulator.");
+            write("      */");
+            write("     public static final Manipulator<", clazz.className, "> in() {");
+            write("         return MANIPULATOR;");
+            write("     }");
+            write();
+
             // Immutable model
             write("     /**");
             write("      * Immutable Model.");
@@ -623,8 +632,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("          */");
             write("         private Icy(", parameterWithType(reader.properties), ") {");
             for (Property property : reader.properties) {
-                write("                 this.", property.name, " = ", property.name, property.isModel ? ".ice()"
-                        : "", ";");
+                write("                 this.", property.name, " = ", property.name, property.isModel ? ".ice()" : "", ";");
             }
             write("         }");
             write();
