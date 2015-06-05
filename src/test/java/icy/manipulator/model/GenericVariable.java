@@ -4,14 +4,15 @@ import icy.manipulator.Accessor;
 import icy.manipulator.Manipulatable;
 
 /**
- * {@link Manipulatable} model for {@link GenericVariableDefinition}.
+ * {@link Manipulatable} model for {@link GenericVariableDefinition<V>}.
  *
- * @version 2015-06-03T16:50:56.754
+ * @version 2015-06-05T15:57:49.567
  */
-public abstract class GenericVariable<V> extends GenericVariableDefinition<V>implements Manipulatable<GenericVariable> {
+public abstract class GenericVariable<V> extends GenericVariableDefinition<V>
+        implements Manipulatable<GenericVariable<V>> {
 
-    /** The model operator for reuse. */
-    private static final Manipulator Manipulator = new Manipulator(null);
+    /** The model manipulator for reuse. */
+    private static final Manipulator MANIPULATOR = new Manipulator(null);
 
     /**
      * HIDE CONSTRUCTOR
@@ -46,11 +47,14 @@ public abstract class GenericVariable<V> extends GenericVariableDefinition<V>imp
      * Create model builder using the specified definition as base model.
      */
     public static final <V> GenericVariable<V> with(GenericVariable<V> base) {
-        return new Melty<V>(base);
+        return new Melty(base);
     }
 
-    public static final <Param1> Manipulator<GenericVariable<Param1>, Param1> in() {
-        return Manipulator;
+    /**
+     * Create model manipulator.
+     */
+    public static final <V> Manipulator<GenericVariable<V>, V> in() {
+        return MANIPULATOR;
     }
 
     /**
@@ -69,7 +73,7 @@ public abstract class GenericVariable<V> extends GenericVariableDefinition<V>imp
          * {@inheritDoc}
          */
         @Override
-        public GenericVariable melt() {
+        public GenericVariable<V> melt() {
             return new Melty(this);
         }
 
@@ -77,7 +81,7 @@ public abstract class GenericVariable<V> extends GenericVariableDefinition<V>imp
          * {@inheritDoc}
          */
         @Override
-        public GenericVariable value(V value) {
+        public GenericVariable<V> value(V value) {
             if (this.value == value) {
                 return this;
             }
@@ -110,30 +114,28 @@ public abstract class GenericVariable<V> extends GenericVariableDefinition<V>imp
     }
 
     /**
-     * Operation Model.
+     * Model Manipulator.
      */
-    public static final class Manipulator<M, Param1> extends icy.manipulator.Manipulator<M, GenericVariable<Param1>> {
+    public static final class Manipulator<RootModel, V>
+            extends icy.manipulator.Manipulator<RootModel, GenericVariable<V>> {
 
-        /** The lens for value property. */
-        private static final Accessor<GenericVariable, Object> VALUE = Accessor
-                .of(GenericVariable::value, GenericVariable::value);
+        /** The accessor for value property. */
+        private static final Accessor VALUE = Accessor
+                .<GenericVariable, Object> of(GenericVariable::value, GenericVariable::value);
 
         /**
          * Construct operator.
          */
-        public Manipulator(Accessor<M, GenericVariable<Param1>> parent) {
+        public Manipulator(Accessor<RootModel, GenericVariable<V>> parent) {
             super(parent);
         }
 
         /**
          * Property operator.
          */
-        public Accessor<M, Param1> value() {
-            return parent.then(VALUE());
+        public Accessor<RootModel, V> value() {
+            return parent.then(VALUE);
         }
 
-        private Accessor<GenericVariable<Param1>, Param1> VALUE() {
-            return Accessor.of(GenericVariable::value, GenericVariable::value);
-        }
     }
 }

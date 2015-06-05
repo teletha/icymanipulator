@@ -6,12 +6,12 @@ import icy.manipulator.Manipulatable;
 /**
  * {@link Manipulatable} model for {@link CoupleDefinition}.
  *
- * @version 2015-06-04T09:46:31.435
+ * @version 2015-06-05T15:58:02.502
  */
 public abstract class Couple extends CoupleDefinition implements Manipulatable<Couple> {
 
     /** The model manipulator for reuse. */
-    private static final Manipulator<Couple> MANIPULATOR = new Manipulator(null);
+    private static final Manipulator MANIPULATOR = new Manipulator(null);
 
     /**
      * HIDE CONSTRUCTOR
@@ -144,18 +144,18 @@ public abstract class Couple extends CoupleDefinition implements Manipulatable<C
     /**
      * Model Manipulator.
      */
-    public static final class Manipulator<M> extends icy.manipulator.Manipulator<M, Couple> {
+    public static final class Manipulator<RootModel> extends icy.manipulator.Manipulator<RootModel, Couple> {
 
-        /** The lens for husband property. */
-        private static final Accessor<Couple, Person> HUSBAND = Accessor.of(Couple::husband, Couple::husband);
+        /** The accessor for husband property. */
+        private static final Accessor HUSBAND = Accessor.<Couple, Person> of(Couple::husband, Couple::husband);
 
-        /** The lens for wife property. */
-        private static final Accessor<Couple, Person> WIFE = Accessor.of(Couple::wife, Couple::wife);
+        /** The accessor for wife property. */
+        private static final Accessor WIFE = Accessor.<Couple, Person> of(Couple::wife, Couple::wife);
 
         /**
          * Construct operator.
          */
-        public Manipulator(Accessor<M, Couple> parent) {
+        public Manipulator(Accessor<RootModel, Couple> parent) {
             super(parent);
         }
 

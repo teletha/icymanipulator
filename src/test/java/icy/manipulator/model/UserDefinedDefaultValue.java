@@ -6,13 +6,13 @@ import icy.manipulator.Manipulatable;
 /**
  * {@link Manipulatable} model for {@link UserDefinedDefaultValueDefinition}.
  *
- * @version 2015-06-04T09:46:49.424
+ * @version 2015-06-05T15:59:44.767
  */
 public abstract class UserDefinedDefaultValue extends UserDefinedDefaultValueDefinition
         implements Manipulatable<UserDefinedDefaultValue> {
 
     /** The model manipulator for reuse. */
-    private static final Manipulator<UserDefinedDefaultValue> MANIPULATOR = new Manipulator(null);
+    private static final Manipulator MANIPULATOR = new Manipulator(null);
 
     /**
      * HIDE CONSTRUCTOR
@@ -116,23 +116,24 @@ public abstract class UserDefinedDefaultValue extends UserDefinedDefaultValueDef
     /**
      * Model Manipulator.
      */
-    public static final class Manipulator<M> extends icy.manipulator.Manipulator<M, UserDefinedDefaultValue> {
+    public static final class Manipulator<RootModel>
+            extends icy.manipulator.Manipulator<RootModel, UserDefinedDefaultValue> {
 
-        /** The lens for value property. */
-        private static final Accessor<UserDefinedDefaultValue, String> VALUE = Accessor
-                .of(UserDefinedDefaultValue::value, UserDefinedDefaultValue::value);
+        /** The accessor for value property. */
+        private static final Accessor VALUE = Accessor
+                .<UserDefinedDefaultValue, String> of(UserDefinedDefaultValue::value, UserDefinedDefaultValue::value);
 
         /**
          * Construct operator.
          */
-        public Manipulator(Accessor<M, UserDefinedDefaultValue> parent) {
+        public Manipulator(Accessor<RootModel, UserDefinedDefaultValue> parent) {
             super(parent);
         }
 
         /**
          * Property operator.
          */
-        public Accessor<M, String> value() {
+        public Accessor<RootModel, String> value() {
             return parent.then(VALUE);
         }
 

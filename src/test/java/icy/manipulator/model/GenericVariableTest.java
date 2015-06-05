@@ -35,7 +35,7 @@ public class GenericVariableTest {
     @Test
     public void manipulator() {
         GenericVariable<String> melty = GenericVariable.<String> with().value("小路 綾").ice();
-        GenericVariable<String> modified = GenericVariable.<String> in().value().set(melty, "TEST");
+        GenericVariable<String> modified = GenericVariable.<String> in().value().set(melty, "あやや");
         assert melty != modified;
         assert modified.value().equals("あやや");
     }

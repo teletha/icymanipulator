@@ -6,12 +6,12 @@ import icy.manipulator.Manipulatable;
 /**
  * {@link Manipulatable} model for {@link PersonDefinition}.
  *
- * @version 2015-06-04T09:46:09.967
+ * @version 2015-06-05T15:58:58.542
  */
 public abstract class Person extends PersonDefinition implements Manipulatable<Person> {
 
     /** The model manipulator for reuse. */
-    private static final Manipulator<Person> MANIPULATOR = new Manipulator(null);
+    private static final Manipulator MANIPULATOR = new Manipulator(null);
 
     /**
      * HIDE CONSTRUCTOR
@@ -173,42 +173,42 @@ public abstract class Person extends PersonDefinition implements Manipulatable<P
     /**
      * Model Manipulator.
      */
-    public static final class Manipulator<M> extends icy.manipulator.Manipulator<M, Person> {
+    public static final class Manipulator<RootModel> extends icy.manipulator.Manipulator<RootModel, Person> {
 
-        /** The lens for name property. */
-        private static final Accessor<Person, String> NAME = Accessor.of(Person::name, Person::name);
+        /** The accessor for name property. */
+        private static final Accessor NAME = Accessor.<Person, String> of(Person::name, Person::name);
 
-        /** The lens for age property. */
-        private static final Accessor<Person, Integer> AGE = Accessor.of(Person::age, Person::age);
+        /** The accessor for age property. */
+        private static final Accessor AGE = Accessor.<Person, Integer> of(Person::age, Person::age);
 
-        /** The lens for gender property. */
-        private static final Accessor<Person, Gender> GENDER = Accessor.of(Person::gender, Person::gender);
+        /** The accessor for gender property. */
+        private static final Accessor GENDER = Accessor.<Person, Gender> of(Person::gender, Person::gender);
 
         /**
          * Construct operator.
          */
-        public Manipulator(Accessor<M, Person> parent) {
+        public Manipulator(Accessor<RootModel, Person> parent) {
             super(parent);
         }
 
         /**
          * Property operator.
          */
-        public Accessor<M, String> name() {
+        public Accessor<RootModel, String> name() {
             return parent.then(NAME);
         }
 
         /**
          * Property operator.
          */
-        public Accessor<M, Integer> age() {
+        public Accessor<RootModel, Integer> age() {
             return parent.then(AGE);
         }
 
         /**
          * Property operator.
          */
-        public Accessor<M, Gender> gender() {
+        public Accessor<RootModel, Gender> gender() {
             return parent.then(GENDER);
         }
 

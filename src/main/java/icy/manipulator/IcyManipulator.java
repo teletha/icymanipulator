@@ -119,13 +119,46 @@ public class IcyManipulator extends AbstractProcessor {
         /** The class name. */
         private final String className;
 
+        /** The class name. */
+        private final String classNameVariables;
+
+        /** The variable expression. */
+        private final String variables;
+
+        /** The generic flag. */
+        private final boolean generic;
+
+        /**
+         * @param variable
+         */
+        private FQCN(TypeVariable variable) {
+            packageName = "";
+            className = "Object";
+            classNameVariables = variable.toString();
+            variables = "";
+            generic = true;
+        }
+
         /**
          * @param packageName
          * @param className
+         * @param generics
          */
-        private FQCN(String packageName, String className) {
+        private FQCN(String packageName, String className, List<? extends TypeMirror> generics) {
+            if (generics == null || generics.isEmpty()) {
+                variables = "";
+            } else {
+                StringJoiner joiner = new StringJoiner(", ", "<", ">");
+                for (TypeMirror generic : generics) {
+                    joiner.add(generic.toString());
+                }
+                variables = joiner.toString();
+            }
+
             this.packageName = packageName;
             this.className = className;
+            this.classNameVariables = className.concat(variables);
+            this.generic = false;
         }
 
         /**
@@ -173,12 +206,24 @@ public class IcyManipulator extends AbstractProcessor {
          * @return
          */
         private static FQCN of(String fqcn) {
+            return of(fqcn, null);
+        }
+
+        /**
+         * <p>
+         * Resolve {@link FQCN} by {@link Name}.
+         * </p>
+         * 
+         * @param type
+         * @return
+         */
+        private static FQCN of(String fqcn, List<? extends TypeMirror> generics) {
             int index = fqcn.lastIndexOf(".");
 
             if (index == -1) {
-                return new FQCN("", fqcn);
+                return new FQCN("", fqcn, generics);
             } else {
-                return new FQCN(fqcn.substring(0, index), fqcn.substring(index + 1));
+                return new FQCN(fqcn.substring(0, index), fqcn.substring(index + 1), generics);
             }
         }
 
@@ -215,6 +260,17 @@ public class IcyManipulator extends AbstractProcessor {
             default:
                 return false;
             }
+        }
+
+        /**
+         * <p>
+         * Check generic type.
+         * </p>
+         * 
+         * @return
+         */
+        private boolean isGeneric() {
+            return generic;
         }
     }
 
@@ -352,7 +408,7 @@ public class IcyManipulator extends AbstractProcessor {
          */
         @Override
         public Property visitTypeVariable(TypeVariable t, Void p) {
-            type = TYPE = FQCN.of(t.toString());
+            type = TYPE = new FQCN(t);
             return this;
         }
 
@@ -471,8 +527,12 @@ public class IcyManipulator extends AbstractProcessor {
          * @param e
          */
         private void visitClass(TypeElement e) {
-            model = FQCN.of(e.getQualifiedName());
-            fqcn = FQCN.of(model.toString().replaceAll(ModelDefinitionSuffix + "$", ""));
+            String name = e.getQualifiedName().toString();
+            DeclaredType declared = (DeclaredType) e.asType();
+            List<? extends TypeMirror> variables = declared.getTypeArguments();
+
+            model = FQCN.of(name, variables);
+            fqcn = FQCN.of(name.replaceAll(ModelDefinitionSuffix + "$", ""), variables);
         }
 
         /**
@@ -563,10 +623,10 @@ public class IcyManipulator extends AbstractProcessor {
             write(" *");
             write(" * @version ", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
             write(" */");
-            write("public abstract class ", clazz.className, " extends ", reader.model, " implements ", parameterize(Manipulatable.class, clazz), "{");
+            write("public abstract class ", clazz, " extends ", reader.model, " implements ", Manipulatable.class, "<", clazz, "> {");
             write();
             write("     /** The model manipulator for reuse. */");
-            write("     private static final Manipulator<", clazz, "> MANIPULATOR = new Manipulator(null);");
+            write("     private static final Manipulator MANIPULATOR = new Manipulator(null);");
             write();
             write("     /**");
             write("      * HIDE CONSTRUCTOR");
@@ -600,23 +660,30 @@ public class IcyManipulator extends AbstractProcessor {
             write("     /**");
             write("      * Create model builder without base model.");
             write("      */");
-            write("     public static final ", clazz.className, " with() {");
+            write("     public static final ", $(clazz.variables), clazz, " with() {");
             write("         return new Melty(null);");
             write("     }");
             write();
             write("     /**");
             write("      * Create model builder using the specified definition as base model.");
             write("      */");
-            write("     public static final ", clazz.className, " with(", clazz.className, " base) {");
+            write("     public static final ", $(clazz.variables), clazz, " with(", clazz, " base) {");
             write("         return new Melty(base);");
             write("     }");
             write();
 
             // Manipulator methods
+            String manipulatorType;
+            if (clazz.variables.isEmpty()) {
+                manipulatorType = "Manipulator<" + clazz.className + ">";
+            } else {
+                manipulatorType = "Manipulator<" + clazz.className + clazz.variables + ", " + clazz.variables
+                        .substring(1);
+            }
             write("     /**");
             write("      * Create model manipulator.");
             write("      */");
-            write("     public static final Manipulator<", clazz.className, "> in() {");
+            write("     public static final ", $(clazz.variables), manipulatorType, " in() {");
             write("         return MANIPULATOR;");
             write("     }");
             write();
@@ -625,7 +692,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("     /**");
             write("      * Immutable Model.");
             write("      */");
-            write("     private static final class Icy extends ", clazz.className, " {");
+            write("     private static final class Icy", clazz.variables, " extends ", clazz, " {");
             write();
             write("         /**");
             write("          * HIDE CONSTRUCTOR");
@@ -664,7 +731,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("     /**");
             write("      * Mutable Model.");
             write("      */");
-            write("     private static final class Melty extends ", clazz.className, " {");
+            write("     private static final class Melty", clazz.variables, " extends ", clazz, " {");
             write();
             write("         /**");
             write("          * HIDE CONSTRUCTOR");
@@ -687,21 +754,26 @@ public class IcyManipulator extends AbstractProcessor {
             write("     }");
 
             // MANIPULATOR
+            String TYPES = "";
+            if (!clazz.variables.isEmpty()) {
+                TYPES = ", " + clazz.variables.substring(1, clazz.variables.length() - 1);
+            }
+
             write("     /**");
             write("      * Model Manipulator.");
             write("      */");
-            write("     public static final class Manipulator<M> extends ", Manipulator.class
-                    .getName(), "<M,", clazz, "> {");
+            write("     public static final class Manipulator<RootModel", TYPES, "> extends ", Manipulator.class
+                    .getName(), "<RootModel,", clazz, "> {");
             write();
             for (Property property : reader.properties) {
-                write("         /** The lens for ", property.name, " property. */");
-                write("         private static final ", Accessor.class, "<", clazz, ",", property.TYPE, "> ", property.NAME, " = ", Accessor.class, ".of(", clazz, "::", property.name, ",  ", clazz, "::", property.name, ");");
+                write("         /** The accessor for ", property.name, " property. */");
+                write("         private static final ", Accessor.class, " ", property.NAME, " = ", Accessor.class, ".<", clazz.className, ", ", property.TYPE.className, "> of(", clazz.className, "::", property.name, ",  ", clazz.className, "::", property.name, ");");
                 write();
             }
             write("         /**");
             write("          * Construct operator.");
             write("          */");
-            write("         public Manipulator(", Accessor.class, "<M,", clazz, "> parent) {");
+            write("         public Manipulator(", Accessor.class, "<RootModel,", clazz, "> parent) {");
             write("             super(parent);");
             write("         }");
             write();
@@ -714,7 +786,7 @@ public class IcyManipulator extends AbstractProcessor {
                     write("             return new ", property.TYPE, ".Manipulator(parent.then(", property.NAME, "));");
                     write("         }");
                 } else {
-                    write("         public ", Accessor.class, "<M,", property.TYPE, "> ", property.name, "() {");
+                    write("         public ", Accessor.class, "<RootModel,", property.TYPE, "> ", property.name, "() {");
                     write("             return parent.then(", property.NAME, ");");
                     write("         }");
                 }
@@ -775,7 +847,7 @@ public class IcyManipulator extends AbstractProcessor {
             StringJoiner joiner = new StringJoiner(", ");
 
             for (Property property : properties) {
-                joiner.add(property.type.className + " " + property.name);
+                joiner.add(property.type.classNameVariables + " " + property.name);
             }
             return joiner.toString();
         }
@@ -816,18 +888,18 @@ public class IcyManipulator extends AbstractProcessor {
 
         /**
          * <p>
-         * Write parameterized body.
+         * Helper method to append tailing space.
          * </p>
          * 
-         * @param clazz
-         * @param param
+         * @param code
          * @return
          */
-        private String parameterize(Class clazz, FQCN param) {
-            imports.use(FQCN.of(clazz));
-            imports.use(param);
-
-            return clazz.getSimpleName() + "<" + param.className + ">";
+        private String $(String code) {
+            if (code == null || code.isEmpty()) {
+                return "";
+            } else {
+                return code.concat(" ");
+            }
         }
     }
 
@@ -907,10 +979,11 @@ public class IcyManipulator extends AbstractProcessor {
          * </p>
          */
         private String use(FQCN imported) {
-            if (!imported.packageName.equals(clazz.packageName) && !imported.isDefault() && !imported.isPrimitive()) {
+            if (!imported.packageName.equals(clazz.packageName) && !imported.isDefault() && !imported
+                    .isPrimitive() && !imported.isGeneric()) {
                 imports.add(imported.toString());
             }
-            return imported.className;
+            return imported.classNameVariables;
         }
 
         /**
