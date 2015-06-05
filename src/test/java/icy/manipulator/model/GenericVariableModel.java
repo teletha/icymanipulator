@@ -15,7 +15,9 @@ import icy.manipulator.Icy;
  * @version 2015/06/03 16:39:41
  */
 @Icy
-public class GenericVariableDefinition<V> {
+public class GenericVariableModel<Value1, Value2> {
 
-    public V value;
+    public Value1 value1;
+
+    public Value2 value2;
 }

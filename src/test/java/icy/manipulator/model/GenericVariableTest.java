@@ -18,25 +18,27 @@ public class GenericVariableTest {
 
     @Test
     public void propertyChangeMelty() {
-        GenericVariable<String> melty = GenericVariable.<String> with().value("小路 綾");
-        GenericVariable<String> modified = melty.value("あやや");
+        GenericVariable<String, Integer> melty = GenericVariable.<String, Integer> with().value1("小路 綾");
+        GenericVariable<String, Integer> modified = melty.value1("あやや");
         assert melty == modified;
-        assert melty.value().equals("あやや");
+        assert melty.value1().equals("あやや");
     }
 
     @Test
     public void propertyChangeIcy() {
-        GenericVariable<String> melty = GenericVariable.<String> with().value("小路 綾").ice();
-        GenericVariable<String> modified = melty.value("あやや");
+        GenericVariable<String, Integer> melty = GenericVariable.<String, Integer> with().value1("小路 綾").ice();
+        GenericVariable<String, Integer> modified = melty.value1("あやや");
         assert melty != modified;
-        assert modified.value().equals("あやや");
+        assert modified.value1().equals("あやや");
     }
 
     @Test
     public void manipulator() {
-        GenericVariable<String> melty = GenericVariable.<String> with().value("小路 綾").ice();
-        GenericVariable<String> modified = GenericVariable.<String> manipulate().value().set(melty, "あやや");
+        GenericVariable<String, Integer> melty = GenericVariable.<String, Integer> with().value1("小路 綾").ice();
+        GenericVariable<String, Integer> modified = GenericVariable.<String, Integer> manipulate()
+                .value1()
+                .set(melty, "あやや");
         assert melty != modified;
-        assert modified.value().equals("あやや");
+        assert modified.value1().equals("あやや");
     }
 }

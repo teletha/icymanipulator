@@ -15,7 +15,7 @@ import icy.manipulator.Icy;
  * @version 2015/06/03 16:00:53
  */
 @Icy
-public class UserDefinedDefaultValueDefinition {
+public class UserDefinedDefaultValueModel {
 
     String value = "DEFAULT";
 }

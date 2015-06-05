@@ -4,11 +4,11 @@ import icy.manipulator.Accessor;
 import icy.manipulator.Manipulatable;
 
 /**
- * {@link Manipulatable} model for {@link UserDefinedDefaultValueDefinition}.
+ * {@link Manipulatable} model for {@link UserDefinedDefaultValueModel}.
  *
  * @version 2015-06-05T16:06:03.603
  */
-public abstract class UserDefinedDefaultValue extends UserDefinedDefaultValueDefinition
+public abstract class UserDefinedDefaultValue extends UserDefinedDefaultValueModel
         implements Manipulatable<UserDefinedDefaultValue> {
 
     /** The model manipulator for reuse. */

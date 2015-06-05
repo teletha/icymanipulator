@@ -12,14 +12,12 @@ package icy.manipulator.model;
 import icy.manipulator.Icy;
 
 /**
- * @version 2015/06/02 20:28:54
+ * @version 2015/04/25 11:58:21
  */
 @Icy
-public class PersonDefinition {
+public class CoupleModel {
 
-    public String name;
+    public Person husband;
 
-    public int age;
-
-    public Gender gender;
+    public Person wife;
 }

@@ -65,7 +65,7 @@ public class IcyManipulator extends AbstractProcessor {
     private static final String ManipulatorMethod = "manipulate";
 
     /** The suffix of model definition. */
-    private static final String ModelDefinitionSuffix = "Definition";
+    private static final String ModelDefinitionSuffix = "Model";
 
     /** The indent. */
     private static final String __ = "    ";

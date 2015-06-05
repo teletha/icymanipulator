@@ -4,11 +4,11 @@ import icy.manipulator.Accessor;
 import icy.manipulator.Manipulatable;
 
 /**
- * {@link Manipulatable} model for {@link CoupleDefinition}.
+ * {@link Manipulatable} model for {@link CoupleModel}.
  *
- * @version 2015-06-05T15:58:02.502
+ * @version 2015-06-05T17:00:20.236
  */
-public abstract class Couple extends CoupleDefinition implements Manipulatable<Couple> {
+public abstract class Couple extends CoupleModel implements Manipulatable<Couple> {
 
     /** The model manipulator for reuse. */
     private static final Manipulator MANIPULATOR = new Manipulator(null);

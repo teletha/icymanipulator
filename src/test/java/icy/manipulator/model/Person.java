@@ -4,11 +4,11 @@ import icy.manipulator.Accessor;
 import icy.manipulator.Manipulatable;
 
 /**
- * {@link Manipulatable} model for {@link PersonDefinition}.
+ * {@link Manipulatable} model for {@link PersonModel}.
  *
  * @version 2015-06-05T15:58:58.542
  */
-public abstract class Person extends PersonDefinition implements Manipulatable<Person> {
+public abstract class Person extends PersonModel implements Manipulatable<Person> {
 
     /** The model manipulator for reuse. */
     private static final Manipulator MANIPULATOR = new Manipulator(null);

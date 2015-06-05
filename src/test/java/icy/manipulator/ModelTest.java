@@ -16,13 +16,15 @@ import org.junit.Test;
 
 import icy.manipulator.compiler.SourceFile;
 import icy.manipulator.model.Couple;
-import icy.manipulator.model.CoupleDefinition;
+import icy.manipulator.model.CoupleModel;
 import icy.manipulator.model.GenericVariable;
-import icy.manipulator.model.GenericVariableDefinition;
+import icy.manipulator.model.GenericVariableModel;
 import icy.manipulator.model.Person;
-import icy.manipulator.model.PersonDefinition;
+import icy.manipulator.model.PersonModel;
+import icy.manipulator.model.Primitive;
+import icy.manipulator.model.PrimitiveModel;
 import icy.manipulator.model.UserDefinedDefaultValue;
-import icy.manipulator.model.UserDefinedDefaultValueDefinition;
+import icy.manipulator.model.UserDefinedDefaultValueModel;
 
 /**
  * @version 2015/06/02 16:43:02
@@ -31,22 +33,27 @@ public class ModelTest {
 
     @Test
     public void person() {
-        testCodeGeneration(PersonDefinition.class, Person.class);
+        testCodeGeneration(PersonModel.class, Person.class);
     }
 
     @Test
     public void couple() {
-        testCodeGeneration(CoupleDefinition.class, Couple.class);
+        testCodeGeneration(CoupleModel.class, Couple.class);
+    }
+
+    @Test
+    public void primitive() {
+        testCodeGeneration(PrimitiveModel.class, Primitive.class);
     }
 
     @Test
     public void genericVariable() {
-        testCodeGeneration(GenericVariableDefinition.class, GenericVariable.class);
+        testCodeGeneration(GenericVariableModel.class, GenericVariable.class);
     }
 
     @Test
     public void userDefiendDefaultValue() {
-        testCodeGeneration(UserDefinedDefaultValueDefinition.class, UserDefinedDefaultValue.class);
+        testCodeGeneration(UserDefinedDefaultValueModel.class, UserDefinedDefaultValue.class);
     }
 
     /**
