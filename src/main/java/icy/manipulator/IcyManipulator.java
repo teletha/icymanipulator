@@ -20,6 +20,7 @@ import java.util.StringJoiner;
 import java.util.TreeSet;
 
 import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.Messager;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
@@ -79,6 +80,9 @@ public class IcyManipulator extends AbstractProcessor {
     /** The utility. */
     private static Elements elements;
 
+    /** The utility. */
+    private static Messager messager;
+
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
         if (annotations.isEmpty()) {
@@ -88,9 +92,23 @@ public class IcyManipulator extends AbstractProcessor {
         // save utilities and constants
         types = processingEnv.getTypeUtils();
         elements = processingEnv.getElementUtils();
+        messager = processingEnv.getMessager();
 
         for (Element element : env.getElementsAnnotatedWith(Icy.class)) {
             SourceCodeReader analyzer = element.accept(new SourceCodeReader(), null);
+
+            if (analyzer.properties.isEmpty()) {
+                ErrorMessage.of("No property.", element);
+            }
+
+            if (!ErrorMessage.errors.isEmpty()) {
+                for (ErrorMessage error : ErrorMessage.errors) {
+                    processingEnv.getMessager().printMessage(Kind.ERROR, error.message, error.position);
+                }
+                ErrorMessage.errors.clear();
+                continue;
+            }
+
             SourceCodeWriter coder = new SourceCodeWriter(analyzer);
             System.out.println(coder.body);
 
@@ -106,11 +124,42 @@ public class IcyManipulator extends AbstractProcessor {
         }
 
         return true;
+
     }
 
-    private void log(String msg) {
-        if (processingEnv.getOptions().containsKey("debug")) {
-            processingEnv.getMessager().printMessage(Kind.NOTE, msg);
+    /**
+     * @version 2015/06/05 23:46:20
+     */
+    private static class ErrorMessage {
+
+        /** The error store. */
+        private static final List<ErrorMessage> errors = new ArrayList();
+
+        /** The error message. */
+        private final String message;
+
+        /** The error position. */
+        private final Element position;
+
+        /**
+         * @param message
+         * @param position
+         */
+        private ErrorMessage(String message, Element position) {
+            this.message = message;
+            this.position = position;
+        }
+
+        /**
+         * <p>
+         * Add error message.
+         * </p>
+         * 
+         * @param message
+         * @param position
+         */
+        private static void of(String message, Element position) {
+            errors.add(new ErrorMessage(message, position));
         }
     }
 
@@ -283,7 +332,7 @@ public class IcyManipulator extends AbstractProcessor {
     /**
      * @version 2015/06/02 22:49:43
      */
-    private static class Property implements TypeVisitor<Property, Void> {
+    private static class Property implements TypeVisitor<Property, VariableElement> {
 
         /** The property name. */
         private final String name;
@@ -305,23 +354,25 @@ public class IcyManipulator extends AbstractProcessor {
          * @param type
          * @param name
          */
-        public Property(TypeMirror type, String name) {
-            this.name = name;
+        public Property(VariableElement element) {
+            this.name = element.getSimpleName().toString();
             this.NAME = name.toUpperCase();
+
+            TypeMirror type = element.asType();
 
             try {
                 this.isModel = Class.forName(type + ModelDefinitionSuffix).isAnnotationPresent(Icy.class);
             } catch (ClassNotFoundException e) {
                 this.isModel = false;
             }
-            type.accept(this, null);
+            type.accept(this, element);
         }
 
         /**
          * {@inheritDoc}
          */
         @Override
-        public Property visit(TypeMirror t, Void p) {
+        public Property visit(TypeMirror t, VariableElement p) {
             return this;
         }
 
@@ -337,7 +388,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public Property visitPrimitive(PrimitiveType t, Void p) {
+        public Property visitPrimitive(PrimitiveType t, VariableElement p) {
             type = FQCN.of(t.toString());
 
             switch (t.toString()) {
@@ -370,7 +421,7 @@ public class IcyManipulator extends AbstractProcessor {
                 break;
 
             case "void":
-                TYPE = FQCN.of(Void.class);
+                TYPE = FQCN.of(VariableElement.class);
                 break;
             }
             return this;
@@ -380,7 +431,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public Property visitNull(NullType t, Void p) {
+        public Property visitNull(NullType t, VariableElement p) {
             return this;
         }
 
@@ -388,7 +439,8 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public Property visitArray(ArrayType t, Void p) {
+        public Property visitArray(ArrayType t, VariableElement p) {
+            ErrorMessage.of("Array property is no allowed.", p);
             return this;
         }
 
@@ -396,7 +448,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public Property visitDeclared(DeclaredType t, Void p) {
+        public Property visitDeclared(DeclaredType t, VariableElement p) {
             type = TYPE = FQCN.of(((TypeElement) t.asElement()).getQualifiedName());
             return this;
         }
@@ -405,7 +457,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public Property visitError(ErrorType t, Void p) {
+        public Property visitError(ErrorType t, VariableElement p) {
             return this;
         }
 
@@ -413,7 +465,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public Property visitTypeVariable(TypeVariable t, Void p) {
+        public Property visitTypeVariable(TypeVariable t, VariableElement p) {
             type = TYPE = new FQCN(t);
             return this;
         }
@@ -422,7 +474,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public Property visitWildcard(WildcardType t, Void p) {
+        public Property visitWildcard(WildcardType t, VariableElement p) {
             return this;
         }
 
@@ -430,7 +482,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public Property visitExecutable(ExecutableType t, Void p) {
+        public Property visitExecutable(ExecutableType t, VariableElement p) {
             return this;
         }
 
@@ -438,7 +490,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public Property visitNoType(NoType t, Void p) {
+        public Property visitNoType(NoType t, VariableElement p) {
             return this;
         }
 
@@ -446,7 +498,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public Property visitUnknown(TypeMirror t, Void p) {
+        public Property visitUnknown(TypeMirror t, VariableElement p) {
             return this;
         }
 
@@ -454,7 +506,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public Property visitUnion(UnionType t, Void p) {
+        public Property visitUnion(UnionType t, VariableElement p) {
             return this;
         }
 
@@ -462,7 +514,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public Property visitIntersection(IntersectionType t, Void p) {
+        public Property visitIntersection(IntersectionType t, VariableElement p) {
             return this;
         }
     }
@@ -470,7 +522,7 @@ public class IcyManipulator extends AbstractProcessor {
     /**
      * @version 2015/06/02 22:27:11
      */
-    private static class SourceCodeReader implements ElementVisitor<SourceCodeReader, Void> {
+    private static class SourceCodeReader implements ElementVisitor<SourceCodeReader, VariableElement> {
 
         /** The fully qualified model class name. */
         private FQCN model;
@@ -485,7 +537,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeReader visit(Element e, Void p) {
+        public SourceCodeReader visit(Element e, VariableElement p) {
             return this;
         }
 
@@ -501,7 +553,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeReader visitPackage(PackageElement e, Void p) {
+        public SourceCodeReader visitPackage(PackageElement e, VariableElement p) {
             return this;
         }
 
@@ -509,7 +561,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeReader visitType(TypeElement e, Void p) {
+        public SourceCodeReader visitType(TypeElement e, VariableElement p) {
             switch (e.getKind()) {
             case CLASS:
                 visitClass(e);
@@ -545,7 +597,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeReader visitVariable(VariableElement e, Void p) {
+        public SourceCodeReader visitVariable(VariableElement e, VariableElement p) {
             switch (e.getKind()) {
             case FIELD:
                 visitField(e);
@@ -568,7 +620,7 @@ public class IcyManipulator extends AbstractProcessor {
             Set<Modifier> modifiers = e.getModifiers();
 
             if (!modifiers.contains(Modifier.PRIVATE) && !modifiers.contains(Modifier.FINAL)) {
-                properties.add(new Property(e.asType(), e.getSimpleName().toString()));
+                properties.add(new Property(e));
             }
         }
 
@@ -576,7 +628,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeReader visitExecutable(ExecutableElement e, Void p) {
+        public SourceCodeReader visitExecutable(ExecutableElement e, VariableElement p) {
             return this;
         }
 
@@ -584,7 +636,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeReader visitTypeParameter(TypeParameterElement e, Void p) {
+        public SourceCodeReader visitTypeParameter(TypeParameterElement e, VariableElement p) {
             return this;
         }
 
@@ -592,7 +644,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeReader visitUnknown(Element e, Void p) {
+        public SourceCodeReader visitUnknown(Element e, VariableElement p) {
             return this;
         }
     }
@@ -705,7 +757,8 @@ public class IcyManipulator extends AbstractProcessor {
             write("          */");
             write("         private Icy(", parameterWithType(reader.properties), ") {");
             for (Property property : reader.properties) {
-                write("                 this.", property.name, " = ", property.name, property.isModel ? ".ice()" : "", ";");
+                write("                 this.", property.name, " = ", property.name, property.isModel ? ".ice()"
+                        : "", ";");
             }
             write("         }");
             write();

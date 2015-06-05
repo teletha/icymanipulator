@@ -19,6 +19,8 @@ import icy.manipulator.model.Couple;
 import icy.manipulator.model.CoupleModel;
 import icy.manipulator.model.GenericVariable;
 import icy.manipulator.model.GenericVariableModel;
+import icy.manipulator.model.IgnoreArrayModel;
+import icy.manipulator.model.NoPropertyModel;
 import icy.manipulator.model.Person;
 import icy.manipulator.model.PersonModel;
 import icy.manipulator.model.Primitive;
@@ -56,6 +58,16 @@ public class ModelTest {
         testCodeGeneration(UserDefinedDefaultValueModel.class, UserDefinedDefaultValue.class);
     }
 
+    @Test
+    public void ignoreArray() {
+        testInvalidCodeGeneration(IgnoreArrayModel.class, "Array property is no allowed.");
+    }
+
+    @Test
+    public void noProperty() {
+        testInvalidCodeGeneration(NoPropertyModel.class, "No property.");
+    }
+
     /**
      * <p>
      * Test code generation.
@@ -74,5 +86,23 @@ public class ModelTest {
                 .compilesWithoutError()
                 .and()
                 .generatesSources(expected);
+    }
+
+    /**
+     * <p>
+     * Test code generation.
+     * </p>
+     * 
+     * @param sourceModel
+     * @param expectedModel
+     */
+    private void testInvalidCodeGeneration(Class sourceModel, String message) {
+        SourceFile source = SourceFile.of(sourceModel);
+
+        assert_().about(javaSource())
+                .that(source)
+                .processedWith(new IcyManipulator())
+                .failsToCompile()
+                .withErrorContaining(message);
     }
 }
