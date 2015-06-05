@@ -68,7 +68,7 @@ public abstract class Couple extends CoupleDefinition implements Manipulatable<C
     /**
      * Create model manipulator.
      */
-    public static final Manipulator<Couple> in() {
+    public static final Manipulator<Couple> manipulate() {
         return MANIPULATOR;
     }
 

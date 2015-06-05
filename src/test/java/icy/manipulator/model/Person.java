@@ -84,7 +84,7 @@ public abstract class Person extends PersonDefinition implements Manipulatable<P
     /**
      * Create model manipulator.
      */
-    public static final Manipulator<Person> in() {
+    public static final Manipulator<Person> manipulate() {
         return MANIPULATOR;
     }
 

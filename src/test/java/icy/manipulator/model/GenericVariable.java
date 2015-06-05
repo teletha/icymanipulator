@@ -53,7 +53,7 @@ public abstract class GenericVariable<V> extends GenericVariableDefinition<V>
     /**
      * Create model manipulator.
      */
-    public static final <V> Manipulator<GenericVariable<V>, V> in() {
+    public static final <V> Manipulator<GenericVariable<V>, V> manipulate() {
         return MANIPULATOR;
     }
 

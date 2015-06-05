@@ -58,6 +58,12 @@ import javax.tools.JavaFileObject;
 @SupportedAnnotationTypes("icy.manipulator.Icy")
 public class IcyManipulator extends AbstractProcessor {
 
+    /** The name of model manipulator class. */
+    private static final String ManipulatorClass = "Manipulator";
+
+    /** The name of model manipulator method. */
+    private static final String ManipulatorMethod = "manipulate";
+
     /** The suffix of model definition. */
     private static final String ModelDefinitionSuffix = "Definition";
 
@@ -626,7 +632,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("public abstract class ", clazz, " extends ", reader.model, " implements ", Manipulatable.class, "<", clazz, "> {");
             write();
             write("     /** The model manipulator for reuse. */");
-            write("     private static final Manipulator MANIPULATOR = new Manipulator(null);");
+            write("     private static final ", ManipulatorClass, " MANIPULATOR = new ", ManipulatorClass, "(null);");
             write();
             write("     /**");
             write("      * HIDE CONSTRUCTOR");
@@ -675,15 +681,15 @@ public class IcyManipulator extends AbstractProcessor {
             // Manipulator methods
             String manipulatorType;
             if (clazz.variables.isEmpty()) {
-                manipulatorType = "Manipulator<" + clazz.className + ">";
+                manipulatorType = ManipulatorClass + "<" + clazz.className + ">";
             } else {
-                manipulatorType = "Manipulator<" + clazz.className + clazz.variables + ", " + clazz.variables
+                manipulatorType = ManipulatorClass + "<" + clazz.className + clazz.variables + ", " + clazz.variables
                         .substring(1);
             }
             write("     /**");
             write("      * Create model manipulator.");
             write("      */");
-            write("     public static final ", $(clazz.variables), manipulatorType, " in() {");
+            write("     public static final ", $(clazz.variables), manipulatorType, ManipulatorMethod, "() {");
             write("         return MANIPULATOR;");
             write("     }");
             write();
@@ -762,7 +768,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("     /**");
             write("      * Model Manipulator.");
             write("      */");
-            write("     public static final class Manipulator<RootModel", TYPES, "> extends ", Manipulator.class
+            write("     public static final class ", ManipulatorClass, "<RootModel", TYPES, "> extends ", Manipulator.class
                     .getName(), "<RootModel,", clazz, "> {");
             write();
             for (Property property : reader.properties) {
@@ -773,7 +779,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("         /**");
             write("          * Construct operator.");
             write("          */");
-            write("         public Manipulator(", Accessor.class, "<RootModel,", clazz, "> parent) {");
+            write("         public ", ManipulatorClass, "(", Accessor.class, "<RootModel,", clazz, "> parent) {");
             write("             super(parent);");
             write("         }");
             write();
@@ -782,8 +788,8 @@ public class IcyManipulator extends AbstractProcessor {
                 write("          * Property operator.");
                 write("          */");
                 if (property.isModel) {
-                    write("         public ", property.TYPE, ".Manipulator<", clazz, "> ", property.name, "() {");
-                    write("             return new ", property.TYPE, ".Manipulator(parent.then(", property.NAME, "));");
+                    write("         public ", property.TYPE, ".", ManipulatorClass, "<", clazz, "> ", property.name, "() {");
+                    write("             return new ", property.TYPE, ".", ManipulatorClass, "(parent.then(", property.NAME, "));");
                     write("         }");
                 } else {
                     write("         public ", Accessor.class, "<RootModel,", property.TYPE, "> ", property.name, "() {");

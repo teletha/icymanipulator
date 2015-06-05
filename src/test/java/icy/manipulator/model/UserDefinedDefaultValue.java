@@ -6,7 +6,7 @@ import icy.manipulator.Manipulatable;
 /**
  * {@link Manipulatable} model for {@link UserDefinedDefaultValueDefinition}.
  *
- * @version 2015-06-05T15:59:44.767
+ * @version 2015-06-05T16:06:03.603
  */
 public abstract class UserDefinedDefaultValue extends UserDefinedDefaultValueDefinition
         implements Manipulatable<UserDefinedDefaultValue> {
@@ -53,7 +53,7 @@ public abstract class UserDefinedDefaultValue extends UserDefinedDefaultValueDef
     /**
      * Create model manipulator.
      */
-    public static final Manipulator<UserDefinedDefaultValue> in() {
+    public static final Manipulator<UserDefinedDefaultValue> manipulate() {
         return MANIPULATOR;
     }
 
