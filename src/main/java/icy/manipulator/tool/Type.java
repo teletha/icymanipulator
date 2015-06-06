@@ -91,18 +91,6 @@ class Type {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        if (packageName.isEmpty()) {
-            return className;
-        } else {
-            return packageName + "." + className;
-        }
-    }
-
-    /**
      * <p>
      * Check default package.
      * </p>
@@ -135,17 +123,6 @@ class Type {
         default:
             return false;
         }
-    }
-
-    /**
-     * <p>
-     * Check generic type.
-     * </p>
-     * 
-     * @return
-     */
-    boolean isGeneric() {
-        return generic;
     }
 
     /**
@@ -184,6 +161,18 @@ class Type {
 
         default:
             return this;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        if (packageName.isEmpty()) {
+            return className;
+        } else {
+            return packageName + "." + className;
         }
     }
 

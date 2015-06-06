@@ -51,8 +51,8 @@ class ClassImporter {
      * </p>
      */
     String use(Type imported) {
-        if (!imported.packageName.equals(basePackage) && !imported.isDefault() && !imported.isPrimitive() && !imported
-                .isGeneric()) {
+        if (!imported.packageName.equals(basePackage) && !imported.isDefault() && !imported
+                .isPrimitive() && !imported.generic) {
             imports.add(imported.toString());
         }
         return imported.className.concat(imported.variables);

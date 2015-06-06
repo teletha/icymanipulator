@@ -436,9 +436,9 @@ public class IcyManipulator extends AbstractProcessor {
             write();
             for (Property property : reader.properties) {
                 write("         /** The accessor for ", property.name, " property. */");
-                write("         private static final ", Accessor.class, " ", property.NAME, " = ", Accessor.class, ".<", clazz.className, ", ", property.type
-                        .isGeneric() ? "Object"
-                                : property.TYPE.className, "> of(", clazz.className, "::", property.name, ",  ", clazz.className, "::", property.name, ");");
+                write("         private static final ", Accessor.class, " ", property.NAME, " = ", Accessor.class, ".<", clazz.className, ", ", property.type.generic
+                        ? "Object"
+                        : property.TYPE.className, "> of(", clazz.className, "::", property.name, ",  ", clazz.className, "::", property.name, ");");
                 write();
             }
             write("         /**");
