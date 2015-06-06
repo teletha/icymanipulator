@@ -58,6 +58,10 @@ class ErrorNotifier {
      * @return
      */
     static boolean hasNoError() {
-        return existError;
+        try {
+            return !existError;
+        } finally {
+            existError = false;
+        }
     }
 }

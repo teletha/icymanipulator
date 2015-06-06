@@ -15,9 +15,15 @@ import icy.manipulator.Icy;
  * @version 2015/06/05 16:48:34
  */
 @Icy
-public class IgnoreArrayModel {
+public class IgnorablePropertyModel {
 
-    public String[] names;
+    public static String ignoreStatic;
 
-    public int[] ints;
+    public final String ignoreFinal = "FINAL";
+
+    private String ignorePrivate;
+
+    public String[] ignoreArray;
+
+    public int[] ignorePrimitiveArray;
 }

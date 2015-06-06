@@ -34,19 +34,9 @@ import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.element.VariableElement;
-import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
-import javax.lang.model.type.ErrorType;
-import javax.lang.model.type.ExecutableType;
-import javax.lang.model.type.IntersectionType;
-import javax.lang.model.type.NoType;
-import javax.lang.model.type.NullType;
-import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
-import javax.lang.model.type.TypeVisitor;
-import javax.lang.model.type.UnionType;
-import javax.lang.model.type.WildcardType;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.JavaFileObject;
@@ -70,7 +60,7 @@ public class IcyManipulator extends AbstractProcessor {
     private static final String ManipulatorMethod = "manipulate";
 
     /** The suffix of model definition. */
-    private static final String ModelDefinitionSuffix = "Model";
+    static final String ModelDefinitionSuffix = "Model";
 
     /** The indent. */
     private static final String __ = "    ";
@@ -127,27 +117,27 @@ public class IcyManipulator extends AbstractProcessor {
     /**
      * @version 2015/06/02 23:07:45
      */
-    private static class FQCN {
+    static class FQCN {
 
         /** The package name. */
-        private final String packageName;
+        final String packageName;
 
         /** The class name. */
-        private final String className;
+        final String className;
 
         /** The class name. */
-        private final String classNameVariables;
+        final String classNameVariables;
 
         /** The variable expression. */
-        private final String variables;
+        final String variables;
 
         /** The generic flag. */
-        private final boolean generic;
+        final boolean generic;
 
         /**
          * @param variable
          */
-        private FQCN(TypeVariable variable) {
+        FQCN(TypeVariable variable) {
             packageName = "";
             className = "Object";
             classNameVariables = variable.toString();
@@ -160,7 +150,7 @@ public class IcyManipulator extends AbstractProcessor {
          * @param className
          * @param generics
          */
-        private FQCN(String packageName, String className, List<? extends TypeMirror> generics) {
+        FQCN(String packageName, String className, List<? extends TypeMirror> generics) {
             if (generics == null || generics.isEmpty()) {
                 variables = "";
             } else {
@@ -197,7 +187,7 @@ public class IcyManipulator extends AbstractProcessor {
          * @param name
          * @return
          */
-        private static FQCN of(Name name) {
+        static FQCN of(Name name) {
             return of(name.toString());
         }
 
@@ -209,7 +199,7 @@ public class IcyManipulator extends AbstractProcessor {
          * @param name
          * @return
          */
-        private static FQCN of(Class name) {
+        static FQCN of(Class name) {
             return of(name.getName());
         }
 
@@ -221,7 +211,7 @@ public class IcyManipulator extends AbstractProcessor {
          * @param type
          * @return
          */
-        private static FQCN of(String fqcn) {
+        static FQCN of(String fqcn) {
             return of(fqcn, null);
         }
 
@@ -288,196 +278,44 @@ public class IcyManipulator extends AbstractProcessor {
         private boolean isGeneric() {
             return generic;
         }
-    }
-
-    /**
-     * @version 2015/06/02 22:49:43
-     */
-    private static class Property implements TypeVisitor<Property, VariableElement> {
-
-        /** The property name. */
-        private final String name;
-
-        /** The property name. */
-        private final String NAME;
-
-        /** The type name. */
-        private FQCN type;
-
-        /** The type name. */
-        private FQCN TYPE;
-
-        /** The state. */
-        private boolean isModel;
 
         /**
-         * @param model
+         * <p>
+         * Wrap type.
+         * </p>
+         * 
          * @param type
-         * @param name
+         * @return
          */
-        public Property(VariableElement element) {
-
-            this.name = element.getSimpleName().toString();
-            this.NAME = name.toUpperCase();
-
-            TypeMirror type = element.asType();
-
-            try {
-                this.isModel = Class.forName(type + ModelDefinitionSuffix).isAnnotationPresent(Icy.class);
-            } catch (ClassNotFoundException e) {
-                this.isModel = false;
-            }
-            type.accept(this, element);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Property visit(TypeMirror t, VariableElement p) {
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Property visit(TypeMirror t) {
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Property visitPrimitive(PrimitiveType t, VariableElement p) {
-            type = FQCN.of(t.toString());
-
-            switch (t.toString()) {
+        FQCN wrap() {
+            switch (className) {
             case "int":
-                TYPE = FQCN.of(Integer.class);
-                break;
+                return of(Integer.class);
 
             case "long":
-                TYPE = FQCN.of(Long.class);
-                break;
+                return of(Long.class);
 
             case "float":
-                TYPE = FQCN.of(Float.class);
-                break;
+                return of(Float.class);
 
             case "double":
-                TYPE = FQCN.of(Double.class);
-                break;
+                return of(Double.class);
 
             case "byte":
-                TYPE = FQCN.of(Byte.class);
-                break;
+                return of(Byte.class);
 
             case "char":
-                TYPE = FQCN.of(Character.class);
-                break;
+                return of(Character.class);
 
             case "boolean":
-                TYPE = FQCN.of(Boolean.class);
-                break;
+                return of(Boolean.class);
 
             case "void":
-                TYPE = FQCN.of(VariableElement.class);
-                break;
+                return of(Void.class);
+
+            default:
+                return this;
             }
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Property visitNull(NullType t, VariableElement p) {
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Property visitArray(ArrayType t, VariableElement p) {
-            ErrorNotifier.notify("Array property is no allowed.", p);
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Property visitDeclared(DeclaredType t, VariableElement p) {
-            type = TYPE = FQCN.of(((TypeElement) t.asElement()).getQualifiedName());
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Property visitError(ErrorType t, VariableElement p) {
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Property visitTypeVariable(TypeVariable t, VariableElement p) {
-            type = TYPE = new FQCN(t);
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Property visitWildcard(WildcardType t, VariableElement p) {
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Property visitExecutable(ExecutableType t, VariableElement p) {
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Property visitNoType(NoType t, VariableElement p) {
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Property visitUnknown(TypeMirror t, VariableElement p) {
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Property visitUnion(UnionType t, VariableElement p) {
-            return this;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Property visitIntersection(IntersectionType t, VariableElement p) {
-            return this;
         }
     }
 
@@ -581,8 +419,22 @@ public class IcyManipulator extends AbstractProcessor {
         private void visitField(VariableElement e) {
             Set<Modifier> modifiers = e.getModifiers();
 
-            if (!modifiers.contains(Modifier.PRIVATE) && !modifiers.contains(Modifier.FINAL)) {
-                properties.add(new Property(e));
+            if (modifiers.contains(Modifier.FINAL)) {
+                return;
+            }
+
+            if (modifiers.contains(Modifier.PRIVATE)) {
+                return;
+            }
+
+            if (modifiers.contains(Modifier.STATIC)) {
+                return;
+            }
+
+            FQCN type = e.asType().accept(new PropertyTypeDetector(), null);
+
+            if (type != null) {
+                properties.add(new Property(type, e.getSimpleName().toString()));
             }
         }
 

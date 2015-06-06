@@ -17,10 +17,9 @@ import org.junit.Test;
 import icy.manipulator.compiler.SourceFile;
 import icy.manipulator.model.Couple;
 import icy.manipulator.model.CoupleModel;
-import icy.manipulator.model.FinalPropertyModel;
 import icy.manipulator.model.GenericVariable;
 import icy.manipulator.model.GenericVariableModel;
-import icy.manipulator.model.IgnoreArrayModel;
+import icy.manipulator.model.IgnorablePropertyModel;
 import icy.manipulator.model.NoPropertyModel;
 import icy.manipulator.model.Person;
 import icy.manipulator.model.PersonModel;
@@ -61,13 +60,8 @@ public class ModelTest {
     }
 
     @Test
-    public void ignoreArray() {
-        testInvalidCodeGeneration(IgnoreArrayModel.class, "Array property is no allowed.");
-    }
-
-    @Test
-    public void finalProperty() {
-        testInvalidCodeGeneration(FinalPropertyModel.class, "Final modifier is no allowed.");
+    public void ignorable() {
+        testInvalidCodeGeneration(IgnorablePropertyModel.class, "No property.");
     }
 
     @Test
