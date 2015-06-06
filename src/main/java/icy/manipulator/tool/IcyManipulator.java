@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.StringJoiner;
-import java.util.TreeSet;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Messager;
@@ -29,7 +28,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementVisitor;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
-import javax.lang.model.element.Name;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.TypeParameterElement;
@@ -66,7 +64,7 @@ public class IcyManipulator extends AbstractProcessor {
     private static final String __ = "    ";
 
     /** The line feed. */
-    private static final String END = "\r\n";
+    static final String END = "\r\n";
 
     /** The utility. */
     static Types types;
@@ -76,6 +74,8 @@ public class IcyManipulator extends AbstractProcessor {
 
     /** The utility. */
     static Messager messager;
+
+    static ClassImporter importer;
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
@@ -89,6 +89,8 @@ public class IcyManipulator extends AbstractProcessor {
         messager = processingEnv.getMessager();
 
         for (Element element : env.getElementsAnnotatedWith(Icy.class)) {
+            importer = new ClassImporter(element.toString());
+
             SourceCodeReader analyzer = element.accept(new SourceCodeReader(), null);
 
             if (analyzer.properties.isEmpty()) {
@@ -135,6 +137,16 @@ public class IcyManipulator extends AbstractProcessor {
         final boolean generic;
 
         /**
+         * 
+         */
+        FQCN(Class type) {
+            packageName = type.getPackage().getName();
+            className = classNameVariables = type.getSimpleName();
+            variables = "";
+            generic = false;
+        }
+
+        /**
          * @param variable
          */
         FQCN(TypeVariable variable) {
@@ -150,19 +162,26 @@ public class IcyManipulator extends AbstractProcessor {
          * @param className
          * @param generics
          */
-        FQCN(String packageName, String className, List<? extends TypeMirror> generics) {
+        FQCN(String fqcn, List<? extends TypeMirror> generics) {
             if (generics == null || generics.isEmpty()) {
                 variables = "";
             } else {
                 StringJoiner joiner = new StringJoiner(", ", "<", ">");
                 for (TypeMirror generic : generics) {
-                    joiner.add(generic.toString());
+                    joiner.add(importer.use(FQCN.of(generic)));
                 }
                 variables = joiner.toString();
             }
 
-            this.packageName = packageName;
-            this.className = className;
+            int index = fqcn.lastIndexOf(".");
+
+            if (index == -1) {
+                packageName = "";
+                className = fqcn;
+            } else {
+                packageName = fqcn.substring(0, index);
+                className = fqcn.substring(index + 1);
+            }
             this.classNameVariables = className.concat(variables);
             this.generic = false;
         }
@@ -179,58 +198,8 @@ public class IcyManipulator extends AbstractProcessor {
             }
         }
 
-        /**
-         * <p>
-         * Resolve {@link FQCN} by {@link Name}.
-         * </p>
-         * 
-         * @param name
-         * @return
-         */
-        static FQCN of(Name name) {
-            return of(name.toString());
-        }
-
-        /**
-         * <p>
-         * Resolve {@link FQCN} by {@link Name}.
-         * </p>
-         * 
-         * @param name
-         * @return
-         */
-        static FQCN of(Class name) {
-            return of(name.getName());
-        }
-
-        /**
-         * <p>
-         * Resolve {@link FQCN} by {@link Name}.
-         * </p>
-         * 
-         * @param type
-         * @return
-         */
-        static FQCN of(String fqcn) {
-            return of(fqcn, null);
-        }
-
-        /**
-         * <p>
-         * Resolve {@link FQCN} by {@link Name}.
-         * </p>
-         * 
-         * @param type
-         * @return
-         */
-        private static FQCN of(String fqcn, List<? extends TypeMirror> generics) {
-            int index = fqcn.lastIndexOf(".");
-
-            if (index == -1) {
-                return new FQCN("", fqcn, generics);
-            } else {
-                return new FQCN(fqcn.substring(0, index), fqcn.substring(index + 1), generics);
-            }
+        static FQCN of(TypeMirror type) {
+            return type.accept(new TypeDetector(), null);
         }
 
         /**
@@ -240,7 +209,7 @@ public class IcyManipulator extends AbstractProcessor {
          * 
          * @return
          */
-        private boolean isDefault() {
+        boolean isDefault() {
             return packageName.equals("java.lang");
         }
 
@@ -251,7 +220,7 @@ public class IcyManipulator extends AbstractProcessor {
          * 
          * @return
          */
-        private boolean isPrimitive() {
+        boolean isPrimitive() {
             switch (className) {
             case "int":
             case "long":
@@ -275,7 +244,7 @@ public class IcyManipulator extends AbstractProcessor {
          * 
          * @return
          */
-        private boolean isGeneric() {
+        boolean isGeneric() {
             return generic;
         }
 
@@ -290,28 +259,28 @@ public class IcyManipulator extends AbstractProcessor {
         FQCN wrap() {
             switch (className) {
             case "int":
-                return of(Integer.class);
+                return new FQCN(Integer.class);
 
             case "long":
-                return of(Long.class);
+                return new FQCN(Long.class);
 
             case "float":
-                return of(Float.class);
+                return new FQCN(Float.class);
 
             case "double":
-                return of(Double.class);
+                return new FQCN(Double.class);
 
             case "byte":
-                return of(Byte.class);
+                return new FQCN(Byte.class);
 
             case "char":
-                return of(Character.class);
+                return new FQCN(Character.class);
 
             case "boolean":
-                return of(Boolean.class);
+                return new FQCN(Boolean.class);
 
             case "void":
-                return of(Void.class);
+                return new FQCN(Void.class);
 
             default:
                 return this;
@@ -389,8 +358,8 @@ public class IcyManipulator extends AbstractProcessor {
             DeclaredType declared = (DeclaredType) e.asType();
             List<? extends TypeMirror> variables = declared.getTypeArguments();
 
-            model = FQCN.of(name, variables);
-            fqcn = FQCN.of(name.replaceAll(ModelDefinitionSuffix + "$", ""), variables);
+            model = new FQCN(name, variables);
+            fqcn = new FQCN(name.replaceAll(ModelDefinitionSuffix + "$", ""), variables);
         }
 
         /**
@@ -431,7 +400,7 @@ public class IcyManipulator extends AbstractProcessor {
                 return;
             }
 
-            FQCN type = e.asType().accept(new PropertyTypeDetector(), null);
+            FQCN type = e.asType().accept(new TypeDetector(), null);
 
             if (type != null) {
                 properties.add(new Property(type, e.getSimpleName().toString()));
@@ -471,9 +440,6 @@ public class IcyManipulator extends AbstractProcessor {
         /** The target model class. */
         private final FQCN clazz;
 
-        /** The import manager. */
-        private final Imports imports;
-
         /** The code body. */
         private StringBuilder body = new StringBuilder();
 
@@ -484,11 +450,11 @@ public class IcyManipulator extends AbstractProcessor {
          * @param reader
          */
         private SourceCodeWriter(SourceCodeReader reader) {
-            this.imports = new Imports(clazz = reader.fqcn);
+            clazz = reader.fqcn;
 
             write("package ", clazz.packageName, ";");
             write();
-            write(imports);
+            int importPosition = body.length();
             write();
             write("/**");
             write(" * {@link ", Manipulatable.class, "} model for {@link ", reader.model, "}.");
@@ -571,7 +537,11 @@ public class IcyManipulator extends AbstractProcessor {
             write("          */");
             write("         private Icy(", parameterWithType(reader.properties), ") {");
             for (Property property : reader.properties) {
-                write("                 this.", property.name, " = ", property.name, property.isModel ? ".ice()" : "", ";");
+                if (property.isModel) {
+                    write("                 this.", property.name, " = ", property.name, " == null ? null : " + property.name, ".ice();");
+                } else {
+                    write("                 this.", property.name, " = ", property.name, ";");
+                }
             }
             write("         }");
             write();
@@ -654,8 +624,12 @@ public class IcyManipulator extends AbstractProcessor {
                 write("          * Property operator.");
                 write("          */");
                 if (property.isModel) {
-                    write("         public ", property.TYPE, ".", ManipulatorClass, "<", clazz, "> ", property.name, "() {");
-                    write("             return new ", property.TYPE, ".", ManipulatorClass, "(parent.then(", property.NAME, "));");
+                    if (property.TYPE.variables.isEmpty()) {
+                        write("         public ", property.TYPE.className, ".", ManipulatorClass, "<", clazz, "> ", property.name, "() {");
+                    } else {
+                        write("         public ", property.TYPE.className, ".", ManipulatorClass, "<", clazz, ", ", property.TYPE, "> ", property.name, "() {");
+                    }
+                    write("             return new ", property.TYPE.className, ".", ManipulatorClass, "(parent.then(", property.NAME, "));");
                     write("         }");
                 } else {
                     write("         public ", Accessor.class, "<RootModel,", property.TYPE, "> ", property.name, "() {");
@@ -665,11 +639,10 @@ public class IcyManipulator extends AbstractProcessor {
                 write();
             }
             write("     }");
-
             write("}");
 
             // generate code fragments
-            imports.generate();
+            body.insert(importPosition, importer);
         }
 
         /**
@@ -742,15 +715,12 @@ public class IcyManipulator extends AbstractProcessor {
          */
         private void write(Object... codes) {
             for (Object code : codes) {
-                if (code instanceof CodeFragment) {
-                    ((CodeFragment) code).mark(body);
-                    return;
-                } else if (code instanceof Class) {
+                if (code instanceof Class) {
                     Class clazz = (Class) code;
-                    body.append(imports.use(clazz));
+                    body.append(importer.use(clazz));
                 } else if (code instanceof FQCN) {
                     FQCN clazz = (FQCN) code;
-                    body.append(imports.use(clazz));
+                    body.append(importer.use(clazz));
                 } else {
                     body.append(code.toString());
                 }
@@ -771,100 +741,6 @@ public class IcyManipulator extends AbstractProcessor {
                 return "";
             } else {
                 return code.concat(" ");
-            }
-        }
-    }
-
-    /**
-     * @version 2015/06/03 2:29:03
-     */
-    private static abstract class CodeFragment {
-
-        /** The index to append code. */
-        private int insertionPoint;
-
-        /** The code fragment. */
-        private StringBuilder code;
-
-        /**
-         * <p>
-         * Mark insertion point.
-         * </p>
-         * 
-         * @param code
-         */
-        private void mark(StringBuilder code) {
-            this.code = code;
-            this.insertionPoint = code.length();
-        }
-
-        /**
-         * <p>
-         * Generate code.
-         * </p>
-         */
-        final void generate() {
-            StringBuilder code = new StringBuilder();
-            generate(code);
-
-            this.code.insert(insertionPoint, code);
-        }
-
-        /**
-         * <p>
-         * Generate code.
-         * </p>
-         */
-        protected abstract void generate(StringBuilder code);
-    }
-
-    /**
-     * @version 2015/06/03 2:24:50
-     */
-    private static class Imports extends CodeFragment {
-
-        /** The target model class. */
-        private final FQCN clazz;
-
-        /** The imported classes. */
-        private final Set<String> imports = new TreeSet();
-
-        /**
-         * @param clazz
-         */
-        private Imports(FQCN clazz) {
-            this.clazz = clazz;
-        }
-
-        /**
-         * <p>
-         * Import class.
-         * </p>
-         */
-        private String use(Class imported) {
-            return use(FQCN.of(imported));
-        }
-
-        /**
-         * <p>
-         * Import class.
-         * </p>
-         */
-        private String use(FQCN imported) {
-            if (!imported.packageName.equals(clazz.packageName) && !imported.isDefault() && !imported
-                    .isPrimitive() && !imported.isGeneric()) {
-                imports.add(imported.toString());
-            }
-            return imported.classNameVariables;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected void generate(StringBuilder code) {
-            for (String fqcn : imports) {
-                code.append("import ").append(fqcn).append(";").append(END);
             }
         }
     }

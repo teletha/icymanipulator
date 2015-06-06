@@ -12,14 +12,10 @@ package icy.manipulator.model;
 import icy.manipulator.Icy;
 
 /**
- * @version 2015/06/03 16:39:41
+ * @version 2015/06/06 18:24:52
  */
 @Icy
-public class GenericVariableModel<Value1, Value2> {
+public class BoxModel<V> {
 
-    public Value1 value1;
-
-    public Box<Value2> value2;
-
-    public Box<Box<Value2>> nestedValue2;
+    public V value;
 }

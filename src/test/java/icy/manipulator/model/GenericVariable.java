@@ -4,9 +4,9 @@ import icy.manipulator.Accessor;
 import icy.manipulator.Manipulatable;
 
 /**
- * {@link Manipulatable} model for {@link GenericVariableDefinition<Value1, Value2>}.
+ * {@link Manipulatable} model for {@link GenericVariableModel<Value1, Value2>}.
  *
- * @version 2015-06-05T16:36:55.59
+ * @version 2015-06-06T23:15:34.092
  */
 public abstract class GenericVariable<Value1, Value2> extends GenericVariableModel<Value1, Value2>
         implements Manipulatable<GenericVariable<Value1, Value2>> {
@@ -39,15 +39,31 @@ public abstract class GenericVariable<Value1, Value2> extends GenericVariableMod
     /**
      * Retrieve value2 property.
      */
-    public Value2 value2() {
+    public Box<Value2> value2() {
         return this.value2;
     }
 
     /**
      * Modify value2 property.
      */
-    public GenericVariable<Value1, Value2> value2(Value2 value) {
+    public GenericVariable<Value1, Value2> value2(Box<Value2> value) {
         this.value2 = value;
+
+        return this;
+    }
+
+    /**
+     * Retrieve nestedValue2 property.
+     */
+    public Box<Box<Value2>> nestedValue2() {
+        return this.nestedValue2;
+    }
+
+    /**
+     * Modify nestedValue2 property.
+     */
+    public GenericVariable<Value1, Value2> nestedValue2(Box<Box<Value2>> value) {
+        this.nestedValue2 = value;
 
         return this;
     }
@@ -81,9 +97,10 @@ public abstract class GenericVariable<Value1, Value2> extends GenericVariableMod
         /**
          * HIDE CONSTRUCTOR
          */
-        private Icy(Value1 value1, Value2 value2) {
+        private Icy(Value1 value1, Box<Value2> value2, Box<Box<Value2>> nestedValue2) {
             this.value1 = value1;
-            this.value2 = value2;
+            this.value2 = value2 == null ? null : value2.ice();
+            this.nestedValue2 = nestedValue2 == null ? null : nestedValue2.ice();
         }
 
         /**
@@ -102,18 +119,29 @@ public abstract class GenericVariable<Value1, Value2> extends GenericVariableMod
             if (this.value1 == value) {
                 return this;
             }
-            return new Icy(value, this.value2);
+            return new Icy(value, this.value2, this.nestedValue2);
         }
 
         /**
          * {@inheritDoc}
          */
         @Override
-        public GenericVariable<Value1, Value2> value2(Value2 value) {
+        public GenericVariable<Value1, Value2> value2(Box<Value2> value) {
             if (this.value2 == value) {
                 return this;
             }
-            return new Icy(this.value1, value);
+            return new Icy(this.value1, value, this.nestedValue2);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public GenericVariable<Value1, Value2> nestedValue2(Box<Box<Value2>> value) {
+            if (this.nestedValue2 == value) {
+                return this;
+            }
+            return new Icy(this.value1, this.value2, value);
         }
 
     }
@@ -130,6 +158,7 @@ public abstract class GenericVariable<Value1, Value2> extends GenericVariableMod
             if (base != null) {
                 this.value1 = base.value1;
                 this.value2 = base.value2;
+                this.nestedValue2 = base.nestedValue2;
             }
         }
 
@@ -138,7 +167,7 @@ public abstract class GenericVariable<Value1, Value2> extends GenericVariableMod
          */
         @Override
         public GenericVariable<Value1, Value2> ice() {
-            return new Icy(value1, value2);
+            return new Icy(value1, value2, nestedValue2);
         }
     }
 
@@ -154,7 +183,11 @@ public abstract class GenericVariable<Value1, Value2> extends GenericVariableMod
 
         /** The accessor for value2 property. */
         private static final Accessor VALUE2 = Accessor
-                .<GenericVariable, Object> of(GenericVariable::value2, GenericVariable::value2);
+                .<GenericVariable, Box> of(GenericVariable::value2, GenericVariable::value2);
+
+        /** The accessor for nestedValue2 property. */
+        private static final Accessor NESTEDVALUE2 = Accessor
+                .<GenericVariable, Box> of(GenericVariable::nestedValue2, GenericVariable::nestedValue2);
 
         /**
          * Construct operator.
@@ -173,8 +206,15 @@ public abstract class GenericVariable<Value1, Value2> extends GenericVariableMod
         /**
          * Property operator.
          */
-        public Accessor<RootModel, Value2> value2() {
-            return parent.then(VALUE2);
+        public Box.Manipulator<GenericVariable<Value1, Value2>, Box<Value2>> value2() {
+            return new Box.Manipulator(parent.then(VALUE2));
+        }
+
+        /**
+         * Property operator.
+         */
+        public Box.Manipulator<GenericVariable<Value1, Value2>, Box<Box<Value2>>> nestedValue2() {
+            return new Box.Manipulator(parent.then(NESTEDVALUE2));
         }
 
     }

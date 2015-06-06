@@ -6,7 +6,7 @@ import icy.manipulator.Manipulatable;
 /**
  * {@link Manipulatable} model for {@link CoupleModel}.
  *
- * @version 2015-06-05T17:00:20.236
+ * @version 2015-06-06T22:56:46.295
  */
 public abstract class Couple extends CoupleModel implements Manipulatable<Couple> {
 
@@ -81,8 +81,8 @@ public abstract class Couple extends CoupleModel implements Manipulatable<Couple
          * HIDE CONSTRUCTOR
          */
         private Icy(Person husband, Person wife) {
-            this.husband = husband.ice();
-            this.wife = wife.ice();
+            this.husband = husband == null ? null : husband.ice();
+            this.wife = wife == null ? null : wife.ice();
         }
 
         /**
