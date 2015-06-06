@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator;
+package icy.manipulator.tool;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -49,8 +49,12 @@ import javax.lang.model.type.UnionType;
 import javax.lang.model.type.WildcardType;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
-import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
+
+import icy.manipulator.Accessor;
+import icy.manipulator.Icy;
+import icy.manipulator.Manipulatable;
+import icy.manipulator.Manipulator;
 
 /**
  * @version 2015/06/02 16:33:00
@@ -75,13 +79,13 @@ public class IcyManipulator extends AbstractProcessor {
     private static final String END = "\r\n";
 
     /** The utility. */
-    private static Types types;
+    static Types types;
 
     /** The utility. */
-    private static Elements elements;
+    static Elements elements;
 
     /** The utility. */
-    private static Messager messager;
+    static Messager messager;
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
@@ -98,69 +102,26 @@ public class IcyManipulator extends AbstractProcessor {
             SourceCodeReader analyzer = element.accept(new SourceCodeReader(), null);
 
             if (analyzer.properties.isEmpty()) {
-                ErrorMessage.of("No property.", element);
+                ErrorNotifier.notify("No property.", element);
             }
 
-            if (!ErrorMessage.errors.isEmpty()) {
-                for (ErrorMessage error : ErrorMessage.errors) {
-                    processingEnv.getMessager().printMessage(Kind.ERROR, error.message, error.position);
+            if (ErrorNotifier.hasNoError()) {
+                SourceCodeWriter coder = new SourceCodeWriter(analyzer);
+                System.out.println(coder.body);
+
+                try {
+                    JavaFileObject generated = processingEnv.getFiler()
+                            .createSourceFile(element.toString().replaceAll(ModelDefinitionSuffix + "$", ""));
+                    Writer writer = generated.openWriter();
+                    writer.write(coder.body.toString());
+                    writer.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-                ErrorMessage.errors.clear();
-                continue;
-            }
-
-            SourceCodeWriter coder = new SourceCodeWriter(analyzer);
-            System.out.println(coder.body);
-
-            try {
-                JavaFileObject generated = processingEnv.getFiler()
-                        .createSourceFile(element.toString().replaceAll(ModelDefinitionSuffix + "$", ""));
-                Writer writer = generated.openWriter();
-                writer.write(coder.body.toString());
-                writer.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             }
         }
-
         return true;
 
-    }
-
-    /**
-     * @version 2015/06/05 23:46:20
-     */
-    private static class ErrorMessage {
-
-        /** The error store. */
-        private static final List<ErrorMessage> errors = new ArrayList();
-
-        /** The error message. */
-        private final String message;
-
-        /** The error position. */
-        private final Element position;
-
-        /**
-         * @param message
-         * @param position
-         */
-        private ErrorMessage(String message, Element position) {
-            this.message = message;
-            this.position = position;
-        }
-
-        /**
-         * <p>
-         * Add error message.
-         * </p>
-         * 
-         * @param message
-         * @param position
-         */
-        private static void of(String message, Element position) {
-            errors.add(new ErrorMessage(message, position));
-        }
     }
 
     /**
@@ -355,6 +316,7 @@ public class IcyManipulator extends AbstractProcessor {
          * @param name
          */
         public Property(VariableElement element) {
+
             this.name = element.getSimpleName().toString();
             this.NAME = name.toUpperCase();
 
@@ -440,7 +402,7 @@ public class IcyManipulator extends AbstractProcessor {
          */
         @Override
         public Property visitArray(ArrayType t, VariableElement p) {
-            ErrorMessage.of("Array property is no allowed.", p);
+            ErrorNotifier.notify("Array property is no allowed.", p);
             return this;
         }
 
@@ -757,8 +719,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("          */");
             write("         private Icy(", parameterWithType(reader.properties), ") {");
             for (Property property : reader.properties) {
-                write("                 this.", property.name, " = ", property.name, property.isModel ? ".ice()"
-                        : "", ";");
+                write("                 this.", property.name, " = ", property.name, property.isModel ? ".ice()" : "", ";");
             }
             write("         }");
             write();

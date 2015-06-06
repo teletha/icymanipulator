@@ -17,6 +17,7 @@ import org.junit.Test;
 import icy.manipulator.compiler.SourceFile;
 import icy.manipulator.model.Couple;
 import icy.manipulator.model.CoupleModel;
+import icy.manipulator.model.FinalPropertyModel;
 import icy.manipulator.model.GenericVariable;
 import icy.manipulator.model.GenericVariableModel;
 import icy.manipulator.model.IgnoreArrayModel;
@@ -27,6 +28,7 @@ import icy.manipulator.model.Primitive;
 import icy.manipulator.model.PrimitiveModel;
 import icy.manipulator.model.UserDefinedDefaultValue;
 import icy.manipulator.model.UserDefinedDefaultValueModel;
+import icy.manipulator.tool.IcyManipulator;
 
 /**
  * @version 2015/06/02 16:43:02
@@ -61,6 +63,11 @@ public class ModelTest {
     @Test
     public void ignoreArray() {
         testInvalidCodeGeneration(IgnoreArrayModel.class, "Array property is no allowed.");
+    }
+
+    @Test
+    public void finalProperty() {
+        testInvalidCodeGeneration(FinalPropertyModel.class, "Final modifier is no allowed.");
     }
 
     @Test
