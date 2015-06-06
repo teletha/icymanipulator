@@ -185,9 +185,8 @@ public class IcyManipulator extends AbstractProcessor {
             DeclaredType declared = (DeclaredType) e.asType();
             List<? extends TypeMirror> variables = declared.getTypeArguments();
 
-            model = Type.of(e);
-            fqcn = new Type(model.packageName, model.className
-                    .replaceAll(ModelDefinitionSuffix + "$", ""), model.variables, model.generic);
+            model = new Type(name, variables);
+            fqcn = new Type(name.replaceAll(ModelDefinitionSuffix + "$", ""), variables);
         }
 
         /**
@@ -228,7 +227,7 @@ public class IcyManipulator extends AbstractProcessor {
                 return;
             }
 
-            Type type = Type.of(e.asType());
+            Type type = TypeDetector.detect(e.asType());
 
             if (type != null) {
                 properties.add(new Property(type, e.getSimpleName().toString()));

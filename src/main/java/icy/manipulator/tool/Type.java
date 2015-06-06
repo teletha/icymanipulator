@@ -12,13 +12,10 @@ package icy.manipulator.tool;
 import java.util.List;
 import java.util.StringJoiner;
 
-import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
-import javax.lang.model.type.TypeVariable;
 
 /**
- * @version 2015/06/02 23:07:45
+ * @version 2015/06/07 0:34:00
  */
 class Type {
 
@@ -35,8 +32,22 @@ class Type {
     final boolean generic;
 
     /**
-     * @param packageName
-     * @param className
+     * <p>
+     * Immutable Type.
+     * </p>
+     * 
+     * @param type
+     */
+    Type(Class type) {
+        this(type.getPackage().getName(), type.getSimpleName(), "", false);
+    }
+
+    /**
+     * <p>
+     * Immutable Type.
+     * </p>
+     * 
+     * @param fqcn
      * @param generics
      */
     Type(String fqcn, List<? extends TypeMirror> generics) {
@@ -45,7 +56,7 @@ class Type {
         } else {
             StringJoiner joiner = new StringJoiner(", ", "<", ">");
             for (TypeMirror generic : generics) {
-                joiner.add(IcyManipulator.importer.use(Type.of(generic)));
+                joiner.add(IcyManipulator.importer.use(TypeDetector.detect(generic)));
             }
             variables = joiner.toString();
         }
@@ -89,66 +100,6 @@ class Type {
         } else {
             return packageName + "." + className;
         }
-    }
-
-    /**
-     * <p>
-     * Create {@link Type} from {@link Class}.
-     * </p>
-     * 
-     * @param type
-     * @return
-     */
-    static Type of(Class type) {
-        return new Type(type.getPackage().getName(), type.getSimpleName(), "", false);
-    }
-
-    /**
-     * <p>
-     * Create {@link Type} from {@link TypeVariable}.
-     * </p>
-     * 
-     * @param type
-     * @return
-     */
-    static Type of(TypeVariable type) {
-        return new Type("", type.toString(), "", true);
-    }
-
-    /**
-     * <p>
-     * Create {@link Type} from {@link TypeMirror}.
-     * </p>
-     * 
-     * @param type
-     * @return
-     */
-    static Type of(TypeMirror type) {
-        return type.accept(new TypeDetector(), null);
-    }
-
-    /**
-     * <p>
-     * Create {@link Type} from {@link TypeVariable}.
-     * </p>
-     * 
-     * @param type
-     * @return
-     */
-    static Type of(TypeElement type) {
-        return new Type(type.getQualifiedName().toString(), ((DeclaredType) type.asType()).getTypeArguments());
-    }
-
-    /**
-     * <p>
-     * Create {@link Type} from {@link TypeVariable}.
-     * </p>
-     * 
-     * @param type
-     * @return
-     */
-    static Type of(DeclaredType type) {
-        return new Type(((TypeElement) type.asElement()).getQualifiedName().toString(), type.getTypeArguments());
     }
 
     /**
@@ -208,31 +159,32 @@ class Type {
     Type wrap() {
         switch (className) {
         case "int":
-            return of(Integer.class);
+            return new Type(Integer.class);
 
         case "long":
-            return of(Long.class);
+            return new Type(Long.class);
 
         case "float":
-            return of(Float.class);
+            return new Type(Float.class);
 
         case "double":
-            return of(Double.class);
+            return new Type(Double.class);
 
         case "byte":
-            return of(Byte.class);
+            return new Type(Byte.class);
 
         case "char":
-            return of(Character.class);
+            return new Type(Character.class);
 
         case "boolean":
-            return of(Boolean.class);
+            return new Type(Boolean.class);
 
         case "void":
-            return of(Void.class);
+            return new Type(Void.class);
 
         default:
             return this;
         }
     }
+
 }

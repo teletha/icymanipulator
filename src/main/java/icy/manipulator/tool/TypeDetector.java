@@ -9,6 +9,7 @@
  */
 package icy.manipulator.tool;
 
+import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.ErrorType;
@@ -27,6 +28,14 @@ import javax.lang.model.type.WildcardType;
  * @version 2015/06/06 11:44:40
  */
 class TypeDetector implements TypeVisitor<Type, Void> {
+
+    /**
+     * @param asType
+     * @return
+     */
+    static final Type detect(TypeMirror type) {
+        return type.accept(new TypeDetector(), null);
+    }
 
     /**
      * {@inheritDoc}
@@ -73,7 +82,7 @@ class TypeDetector implements TypeVisitor<Type, Void> {
      */
     @Override
     public Type visitDeclared(DeclaredType t, Void p) {
-        return Type.of(t);
+        return new Type(((TypeElement) t.asElement()).getQualifiedName().toString(), t.getTypeArguments());
     }
 
     /**
@@ -89,7 +98,7 @@ class TypeDetector implements TypeVisitor<Type, Void> {
      */
     @Override
     public Type visitTypeVariable(TypeVariable t, Void p) {
-        return Type.of(t);
+        return new Type("", t.toString(), "", true);
     }
 
     /**

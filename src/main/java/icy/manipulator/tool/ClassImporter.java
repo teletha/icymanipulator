@@ -42,7 +42,7 @@ class ClassImporter {
      * </p>
      */
     String use(Class imported) {
-        return use(Type.of(imported));
+        return use(new Type(imported));
     }
 
     /**
