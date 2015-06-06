@@ -12,8 +12,6 @@ package icy.manipulator.tool;
 import java.util.Set;
 import java.util.TreeSet;
 
-import icy.manipulator.tool.IcyManipulator.FQCN;
-
 /**
  * @version 2015/06/06 22:47:16
  */
@@ -44,7 +42,7 @@ class ClassImporter {
      * </p>
      */
     String use(Class imported) {
-        return use(new FQCN(imported));
+        return use(Type.of(imported));
     }
 
     /**
@@ -52,12 +50,12 @@ class ClassImporter {
      * Import class.
      * </p>
      */
-    String use(FQCN imported) {
+    String use(Type imported) {
         if (!imported.packageName.equals(basePackage) && !imported.isDefault() && !imported.isPrimitive() && !imported
                 .isGeneric()) {
             imports.add(imported.toString());
         }
-        return imported.classNameVariables;
+        return imported.className.concat(imported.variables);
     }
 
     /**

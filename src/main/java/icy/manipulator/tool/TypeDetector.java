@@ -9,7 +9,6 @@
  */
 package icy.manipulator.tool;
 
-import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.ErrorType;
@@ -24,18 +23,16 @@ import javax.lang.model.type.TypeVisitor;
 import javax.lang.model.type.UnionType;
 import javax.lang.model.type.WildcardType;
 
-import icy.manipulator.tool.IcyManipulator.FQCN;
-
 /**
  * @version 2015/06/06 11:44:40
  */
-class TypeDetector implements TypeVisitor<FQCN, Void> {
+class TypeDetector implements TypeVisitor<Type, Void> {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public FQCN visit(TypeMirror t, Void p) {
+    public Type visit(TypeMirror t, Void p) {
         return null;
     }
 
@@ -43,7 +40,7 @@ class TypeDetector implements TypeVisitor<FQCN, Void> {
      * {@inheritDoc}
      */
     @Override
-    public FQCN visit(TypeMirror t) {
+    public Type visit(TypeMirror t) {
         return null;
     }
 
@@ -51,15 +48,15 @@ class TypeDetector implements TypeVisitor<FQCN, Void> {
      * {@inheritDoc}
      */
     @Override
-    public FQCN visitPrimitive(PrimitiveType t, Void p) {
-        return new FQCN(t.toString(), null);
+    public Type visitPrimitive(PrimitiveType t, Void p) {
+        return new Type(t.toString(), null);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public FQCN visitNull(NullType t, Void p) {
+    public Type visitNull(NullType t, Void p) {
         return null;
     }
 
@@ -67,7 +64,7 @@ class TypeDetector implements TypeVisitor<FQCN, Void> {
      * {@inheritDoc}
      */
     @Override
-    public FQCN visitArray(ArrayType t, Void p) {
+    public Type visitArray(ArrayType t, Void p) {
         return null;
     }
 
@@ -75,15 +72,15 @@ class TypeDetector implements TypeVisitor<FQCN, Void> {
      * {@inheritDoc}
      */
     @Override
-    public FQCN visitDeclared(DeclaredType t, Void p) {
-        return new FQCN(((TypeElement) t.asElement()).getQualifiedName().toString(), t.getTypeArguments());
+    public Type visitDeclared(DeclaredType t, Void p) {
+        return Type.of(t);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public FQCN visitError(ErrorType t, Void p) {
+    public Type visitError(ErrorType t, Void p) {
         return null;
     }
 
@@ -91,15 +88,15 @@ class TypeDetector implements TypeVisitor<FQCN, Void> {
      * {@inheritDoc}
      */
     @Override
-    public FQCN visitTypeVariable(TypeVariable t, Void p) {
-        return new FQCN(t);
+    public Type visitTypeVariable(TypeVariable t, Void p) {
+        return Type.of(t);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public FQCN visitWildcard(WildcardType t, Void p) {
+    public Type visitWildcard(WildcardType t, Void p) {
         return null;
     }
 
@@ -107,7 +104,7 @@ class TypeDetector implements TypeVisitor<FQCN, Void> {
      * {@inheritDoc}
      */
     @Override
-    public FQCN visitExecutable(ExecutableType t, Void p) {
+    public Type visitExecutable(ExecutableType t, Void p) {
         return null;
     }
 
@@ -115,7 +112,7 @@ class TypeDetector implements TypeVisitor<FQCN, Void> {
      * {@inheritDoc}
      */
     @Override
-    public FQCN visitNoType(NoType t, Void p) {
+    public Type visitNoType(NoType t, Void p) {
         return null;
     }
 
@@ -123,7 +120,7 @@ class TypeDetector implements TypeVisitor<FQCN, Void> {
      * {@inheritDoc}
      */
     @Override
-    public FQCN visitUnknown(TypeMirror t, Void p) {
+    public Type visitUnknown(TypeMirror t, Void p) {
         return null;
     }
 
@@ -131,7 +128,7 @@ class TypeDetector implements TypeVisitor<FQCN, Void> {
      * {@inheritDoc}
      */
     @Override
-    public FQCN visitUnion(UnionType t, Void p) {
+    public Type visitUnion(UnionType t, Void p) {
         return null;
     }
 
@@ -139,7 +136,7 @@ class TypeDetector implements TypeVisitor<FQCN, Void> {
      * {@inheritDoc}
      */
     @Override
-    public FQCN visitIntersection(IntersectionType t, Void p) {
+    public Type visitIntersection(IntersectionType t, Void p) {
         return null;
     }
 }

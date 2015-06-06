@@ -10,7 +10,6 @@
 package icy.manipulator.tool;
 
 import icy.manipulator.Icy;
-import icy.manipulator.tool.IcyManipulator.FQCN;
 
 /**
  * @version 2015/06/02 22:49:43
@@ -24,10 +23,10 @@ class Property {
     final String NAME;
 
     /** The type name. */
-    FQCN type;
+    Type type;
 
     /** The type name. */
-    FQCN TYPE;
+    Type TYPE;
 
     /** The state. */
     boolean isModel;
@@ -35,7 +34,7 @@ class Property {
     /**
      * 
      */
-    Property(FQCN type, String name) {
+    Property(Type type, String name) {
         this.type = type;
         this.TYPE = type.wrap();
         this.name = name;
