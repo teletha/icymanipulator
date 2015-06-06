@@ -19,7 +19,6 @@ import java.util.Set;
 import java.util.StringJoiner;
 
 import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.Messager;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
@@ -34,8 +33,7 @@ import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
-import javax.lang.model.util.Elements;
-import javax.lang.model.util.Types;
+import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 
 import icy.manipulator.Accessor;
@@ -59,52 +57,34 @@ public class IcyManipulator extends AbstractProcessor {
     /** The suffix of model definition. */
     static final String ModelDefinitionSuffix = "Model";
 
-    /** The indent. */
-    private static final String __ = "    ";
-
     /** The line feed. */
     static final String END = "\r\n";
 
     /** The utility. */
-    static Types types;
-
-    /** The utility. */
-    static Elements elements;
-
-    /** The utility. */
-    static Messager messager;
-
     static ClassImporter importer;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
         if (annotations.isEmpty()) {
             return true;
         }
 
-        // save utilities and constants
-        types = processingEnv.getTypeUtils();
-        elements = processingEnv.getElementUtils();
-        messager = processingEnv.getMessager();
-
         for (Element element : env.getElementsAnnotatedWith(Icy.class)) {
             importer = new ClassImporter(element.toString());
-
-            SourceCodeReader analyzer = element.accept(new SourceCodeReader(), null);
+            CodeAnalyzer analyzer = element.accept(new CodeAnalyzer(), null);
 
             if (analyzer.properties.isEmpty()) {
-                ErrorNotifier.notify("No property.", element);
+                analyzer.error("No property.", element);
             }
 
-            if (ErrorNotifier.hasNoError()) {
-                SourceCodeWriter coder = new SourceCodeWriter(analyzer);
-                System.out.println(coder.body);
-
+            if (analyzer.hasError == false) {
                 try {
-                    JavaFileObject generated = processingEnv.getFiler()
-                            .createSourceFile(element.toString().replaceAll(ModelDefinitionSuffix + "$", ""));
+                    JavaFileObject generated = processingEnv.getFiler().createSourceFile(analyzer.clazz.toString());
                     Writer writer = generated.openWriter();
-                    writer.write(coder.body.toString());
+                    writer.write(analyzer.generateCode());
                     writer.close();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -112,28 +92,27 @@ public class IcyManipulator extends AbstractProcessor {
             }
         }
         return true;
-
     }
 
     /**
-     * @version 2015/06/02 22:27:11
+     * @version 2015/06/07 3:04:48
      */
-    private static class SourceCodeReader implements ElementVisitor<SourceCodeReader, VariableElement> {
+    private class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
         /** The fully qualified model class name. */
         private Type model;
 
-        /** The fully qualified class name. */
-        private Type fqcn;
+        /** The fully qualified generated class name. */
+        private Type clazz;
 
         /** The property list. */
-        private final List<Property> properties = new ArrayList();
+        private List<Property> properties = new ArrayList();
 
         /**
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeReader visit(Element e, VariableElement p) {
+        public CodeAnalyzer visit(Element e, VariableElement p) {
             return this;
         }
 
@@ -141,7 +120,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeReader visit(Element e) {
+        public CodeAnalyzer visit(Element e) {
             return visit(e, null);
         }
 
@@ -149,7 +128,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeReader visitPackage(PackageElement e, VariableElement p) {
+        public CodeAnalyzer visitPackage(PackageElement e, VariableElement p) {
             return this;
         }
 
@@ -157,10 +136,15 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeReader visitType(TypeElement e, VariableElement p) {
+        public CodeAnalyzer visitType(TypeElement e, VariableElement p) {
             switch (e.getKind()) {
             case CLASS:
-                visitClass(e);
+                String name = e.getQualifiedName().toString();
+                DeclaredType declared = (DeclaredType) e.asType();
+                List<? extends TypeMirror> variables = declared.getTypeArguments();
+
+                model = new Type(name, variables);
+                clazz = new Type(name.replaceAll(ModelDefinitionSuffix + "$", ""), variables);
                 break;
 
             default:
@@ -174,29 +158,31 @@ public class IcyManipulator extends AbstractProcessor {
         }
 
         /**
-         * <p>
-         * Analyze Class.
-         * </p>
-         * 
-         * @param e
-         */
-        private void visitClass(TypeElement e) {
-            String name = e.getQualifiedName().toString();
-            DeclaredType declared = (DeclaredType) e.asType();
-            List<? extends TypeMirror> variables = declared.getTypeArguments();
-
-            model = new Type(name, variables);
-            fqcn = new Type(name.replaceAll(ModelDefinitionSuffix + "$", ""), variables);
-        }
-
-        /**
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeReader visitVariable(VariableElement e, VariableElement p) {
+        public CodeAnalyzer visitVariable(VariableElement e, VariableElement p) {
             switch (e.getKind()) {
             case FIELD:
-                visitField(e);
+                Set<Modifier> modifiers = e.getModifiers();
+
+                if (modifiers.contains(Modifier.FINAL)) {
+                    break;
+                }
+
+                if (modifiers.contains(Modifier.PRIVATE)) {
+                    break;
+                }
+
+                if (modifiers.contains(Modifier.STATIC)) {
+                    break;
+                }
+
+                Type type = TypeDetector.detect(e.asType());
+
+                if (type != null) {
+                    properties.add(new Property(type, e.getSimpleName().toString()));
+                }
                 break;
 
             default:
@@ -206,39 +192,10 @@ public class IcyManipulator extends AbstractProcessor {
         }
 
         /**
-         * <p>
-         * Analyze filed.
-         * </p>
-         * 
-         * @param e
-         */
-        private void visitField(VariableElement e) {
-            Set<Modifier> modifiers = e.getModifiers();
-
-            if (modifiers.contains(Modifier.FINAL)) {
-                return;
-            }
-
-            if (modifiers.contains(Modifier.PRIVATE)) {
-                return;
-            }
-
-            if (modifiers.contains(Modifier.STATIC)) {
-                return;
-            }
-
-            Type type = TypeDetector.detect(e.asType());
-
-            if (type != null) {
-                properties.add(new Property(type, e.getSimpleName().toString()));
-            }
-        }
-
-        /**
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeReader visitExecutable(ExecutableElement e, VariableElement p) {
+        public CodeAnalyzer visitExecutable(ExecutableElement e, VariableElement p) {
             return this;
         }
 
@@ -246,7 +203,7 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeReader visitTypeParameter(TypeParameterElement e, VariableElement p) {
+        public CodeAnalyzer visitTypeParameter(TypeParameterElement e, VariableElement p) {
             return this;
         }
 
@@ -254,41 +211,27 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public SourceCodeReader visitUnknown(Element e, VariableElement p) {
+        public CodeAnalyzer visitUnknown(Element e, VariableElement p) {
             return this;
         }
-    }
-
-    /**
-     * @version 2015/06/02 22:54:40
-     */
-    private static class SourceCodeWriter {
-
-        /** The target model class. */
-        private final Type clazz;
 
         /** The code body. */
         private StringBuilder body = new StringBuilder();
 
-        /** The indent size. */
-        private int indent;
-
         /**
          * @param reader
          */
-        private SourceCodeWriter(SourceCodeReader reader) {
-            clazz = reader.fqcn;
-
+        private String generateCode() {
             write("package ", clazz.packageName, ";");
             write();
             int importPosition = body.length();
             write();
             write("/**");
-            write(" * {@link ", Manipulatable.class, "} model for {@link ", reader.model, "}.");
+            write(" * {@link ", Manipulatable.class, "} model for {@link ", model, "}.");
             write(" *");
             write(" * @version ", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
             write(" */");
-            write("public abstract class ", clazz, " extends ", reader.model, " implements ", Manipulatable.class, "<", clazz, "> {");
+            write("public abstract class ", clazz, " extends ", model, " implements ", Manipulatable.class, "<", clazz, "> {");
             write();
             write("     /** The model manipulator for reuse. */");
             write("     private static final ", ManipulatorClass, " MANIPULATOR = new ", ManipulatorClass, "(null);");
@@ -299,7 +242,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("     protected ", clazz.className, "() {");
             write("     }");
             write();
-            for (Property property : reader.properties) {
+            for (Property property : properties) {
                 // GETTER
                 write("     /**");
                 write("     * Retrieve ", property.name, " property.");
@@ -362,8 +305,8 @@ public class IcyManipulator extends AbstractProcessor {
             write("         /**");
             write("          * HIDE CONSTRUCTOR");
             write("          */");
-            write("         private Icy(", parameterWithType(reader.properties), ") {");
-            for (Property property : reader.properties) {
+            write("         private Icy(", parameterWithType(properties), ") {");
+            for (Property property : properties) {
                 if (property.isModel) {
                     write("                 this.", property.name, " = ", property.name, " == null ? null : " + property.name, ".ice();");
                 } else {
@@ -381,7 +324,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("         }");
             write();
             // Override Setters
-            for (Property property : reader.properties) {
+            for (Property property : properties) {
                 write("         /**");
                 write("          * {@inheritDoc}");
                 write("          */");
@@ -390,7 +333,7 @@ public class IcyManipulator extends AbstractProcessor {
                 write("             if (this.", property.name, " == value) {");
                 write("                 return this;");
                 write("             }");
-                write("             return new Icy(", parameterReplaceable(reader.properties, property), ");");
+                write("             return new Icy(", parameterReplaceable(properties, property), ");");
                 write("         }");
                 write();
             }
@@ -407,7 +350,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("          */");
             write("         private Melty(", clazz, " base) {");
             write("             if (base != null) {");
-            for (Property property : reader.properties) {
+            for (Property property : properties) {
                 write("                 this.", property.name, " = base.", property.name, ";");
             }
             write("             }");
@@ -418,7 +361,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("          */");
             write("         @Override");
             write("         public ", clazz, " ice() {");
-            write("             return new Icy(", parameter(reader.properties), ");");
+            write("             return new Icy(", parameter(properties), ");");
             write("         }");
             write("     }");
 
@@ -434,7 +377,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("     public static final class ", ManipulatorClass, "<RootModel", TYPES, "> extends ", Manipulator.class
                     .getName(), "<RootModel,", clazz, "> {");
             write();
-            for (Property property : reader.properties) {
+            for (Property property : properties) {
                 write("         /** The accessor for ", property.name, " property. */");
                 write("         private static final ", Accessor.class, " ", property.NAME, " = ", Accessor.class, ".<", clazz.className, ", ", property.type.generic
                         ? "Object"
@@ -448,7 +391,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("             super(parent);");
             write("         }");
             write();
-            for (Property property : reader.properties) {
+            for (Property property : properties) {
                 write("         /**");
                 write("          * Property operator.");
                 write("          */");
@@ -472,6 +415,8 @@ public class IcyManipulator extends AbstractProcessor {
 
             // generate code fragments
             body.insert(importPosition, importer);
+
+            return body.toString();
         }
 
         /**
@@ -528,15 +473,6 @@ public class IcyManipulator extends AbstractProcessor {
 
         /**
          * <p>
-         * Write indent.
-         * </p>
-         */
-        private void indent() {
-
-        }
-
-        /**
-         * <p>
          * Write body.
          * </p>
          * 
@@ -570,6 +506,24 @@ public class IcyManipulator extends AbstractProcessor {
                 return "";
             } else {
                 return code.concat(" ");
+            }
+        }
+
+        /** The error existence state. */
+        private boolean hasError;
+
+        /**
+         * <p>
+         * Notify error.
+         * </p>
+         * 
+         * @param message
+         * @param position
+         */
+        private void error(String message, Element position) {
+            if (message != null && position != null) {
+                hasError = true;
+                processingEnv.getMessager().printMessage(Kind.ERROR, message, position);
             }
         }
     }
