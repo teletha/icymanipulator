@@ -57,8 +57,8 @@ class ClassImporter {
      */
     String use(Type imported) {
         if (!imported.isDefault() && !imported.isPrimitive() && !imported.generic) {
-            System.out.println(imported.className);
-            if (!imported.packageName.equals(basePackage) || imported.className.startsWith(baseClass.concat("."))) {
+            if (!imported.packageName.equals(basePackage) && !imported.toString()
+                    .startsWith(basePackage + "." + baseClass + ".")) {
                 imports.add(imported.toString());
             }
         }
