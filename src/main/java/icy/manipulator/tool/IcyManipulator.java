@@ -139,12 +139,14 @@ public class IcyManipulator extends AbstractProcessor {
         public CodeAnalyzer visitType(TypeElement e, VariableElement p) {
             switch (e.getKind()) {
             case CLASS:
-                String name = e.getQualifiedName().toString();
-                DeclaredType declared = (DeclaredType) e.asType();
-                List<? extends TypeMirror> variables = declared.getTypeArguments();
+                if (model == null) {
+                    String name = e.getQualifiedName().toString();
+                    DeclaredType declared = (DeclaredType) e.asType();
+                    List<? extends TypeMirror> variables = declared.getTypeArguments();
 
-                model = new Type(name, variables);
-                clazz = new Type(name.replaceAll(ModelDefinitionSuffix + "$", ""), variables);
+                    model = new Type(name, variables);
+                    clazz = new Type(name.replaceAll(ModelDefinitionSuffix + "$", ""), variables);
+                }
                 break;
 
             default:

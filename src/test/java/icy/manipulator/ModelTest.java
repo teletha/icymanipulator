@@ -27,6 +27,8 @@ import icy.manipulator.model.Primitive;
 import icy.manipulator.model.PrimitiveModel;
 import icy.manipulator.model.UserDefinedDefaultValue;
 import icy.manipulator.model.UserDefinedDefaultValueModel;
+import icy.manipulator.model.WithInnerClass;
+import icy.manipulator.model.WithInnerClassModel;
 import icy.manipulator.model.WithMethod;
 import icy.manipulator.model.WithMethodModel;
 import icy.manipulator.tool.IcyManipulator;
@@ -64,6 +66,11 @@ public class ModelTest {
     @Test
     public void withMethod() {
         testCodeGeneration(WithMethodModel.class, WithMethod.class);
+    }
+
+    @Test
+    public void withInnerClass() {
+        testCodeGeneration(WithInnerClassModel.class, WithInnerClass.class);
     }
 
     @Test

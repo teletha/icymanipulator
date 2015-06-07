@@ -20,6 +20,9 @@ class ClassImporter {
     /** The base package name. */
     private final String basePackage;
 
+    /** The base class name. */
+    private final String baseClass;
+
     /** The imported classes. */
     private final Set<String> imports = new TreeSet();
 
@@ -31,8 +34,10 @@ class ClassImporter {
 
         if (index == -1) {
             this.basePackage = "";
+            this.baseClass = baseClass;
         } else {
             this.basePackage = baseClass.substring(0, index);
+            this.baseClass = baseClass.substring(index + 1);
         }
     }
 
@@ -51,9 +56,11 @@ class ClassImporter {
      * </p>
      */
     String use(Type imported) {
-        if (!imported.packageName.equals(basePackage) && !imported.isDefault() && !imported
-                .isPrimitive() && !imported.generic) {
-            imports.add(imported.toString());
+        if (!imported.isDefault() && !imported.isPrimitive() && !imported.generic) {
+            System.out.println(imported.className);
+            if (!imported.packageName.equals(basePackage) || imported.className.startsWith(baseClass.concat("."))) {
+                imports.add(imported.toString());
+            }
         }
         return imported.className.concat(imported.variables);
     }
