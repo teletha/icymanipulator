@@ -10,7 +10,7 @@
 public class Project extends bee.api.Project {
 
     {
-        product("icy.manipulator", "Icy Manipulator", "0.1");
+        product("icy.manipulator", "IcyManipulator", "0.1");
 
         require("com.google.testing.compile", "compile-testing", "0.6").atTest();
         require("com.google.truth", "truth", "0.25").atTest();
