@@ -11,8 +11,6 @@ package icy.manipulator.tool;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -230,8 +228,6 @@ public class IcyManipulator extends AbstractProcessor {
             write();
             write("/**");
             write(" * {@link ", Manipulatable.class, "} model for {@link ", model, "}.");
-            write(" *");
-            write(" * @version ", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
             write(" */");
             write("public abstract class ", clazz, " extends ", model, " implements ", Manipulatable.class, "<", clazz, "> {");
             write();
@@ -381,9 +377,7 @@ public class IcyManipulator extends AbstractProcessor {
             write();
             for (Property property : properties) {
                 write("         /** The accessor for ", property.name, " property. */");
-                write("         private static final ", Accessor.class, " ", property.NAME, " = ", Accessor.class, ".<", clazz.className, ", ", property.type.generic
-                        ? "Object"
-                        : property.TYPE.className, "> of(", clazz.className, "::", property.name, ",  ", clazz.className, "::", property.name, ");");
+                write("         private static final ", Accessor.class, " ", property.NAME, " = ", Accessor.class, ".<", clazz.className, ", ", property.type.generic ? "Object" : property.TYPE.className, "> of(", clazz.className, "::", property.name, ",  ", clazz.className, "::", property.name, ");");
                 write();
             }
             write("         /**");
