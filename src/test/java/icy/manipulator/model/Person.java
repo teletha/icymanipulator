@@ -5,8 +5,6 @@ import icy.manipulator.Manipulatable;
 
 /**
  * {@link Manipulatable} model for {@link PersonModel}.
- *
- * @version 2015-06-05T15:58:58.542
  */
 public abstract class Person extends PersonModel implements Manipulatable<Person> {
 

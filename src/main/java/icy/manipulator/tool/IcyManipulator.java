@@ -80,9 +80,11 @@ public class IcyManipulator extends AbstractProcessor {
 
             if (analyzer.hasError == false) {
                 try {
+                    String code = analyzer.generateCode();
+
                     JavaFileObject generated = processingEnv.getFiler().createSourceFile(analyzer.clazz.toString());
                     Writer writer = generated.openWriter();
-                    writer.write(analyzer.generateCode());
+                    writer.write(code);
                     writer.close();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
