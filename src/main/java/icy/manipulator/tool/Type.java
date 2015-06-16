@@ -12,7 +12,20 @@ package icy.manipulator.tool;
 import java.util.List;
 import java.util.StringJoiner;
 
+import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.ArrayType;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.ErrorType;
+import javax.lang.model.type.ExecutableType;
+import javax.lang.model.type.IntersectionType;
+import javax.lang.model.type.NoType;
+import javax.lang.model.type.NullType;
+import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeMirror;
+import javax.lang.model.type.TypeVariable;
+import javax.lang.model.type.TypeVisitor;
+import javax.lang.model.type.UnionType;
+import javax.lang.model.type.WildcardType;
 
 /**
  * @version 2015/06/07 0:34:00
@@ -56,7 +69,7 @@ class Type {
         } else {
             StringJoiner joiner = new StringJoiner(", ", "<", ">");
             for (TypeMirror generic : generics) {
-                joiner.add(IcyManipulator.importer.use(TypeDetector.detect(generic)));
+                joiner.add(IcyManipulator.importer.use(of(generic)));
             }
             variables = joiner.toString();
         }
@@ -173,6 +186,136 @@ class Type {
             return className;
         } else {
             return packageName + "." + className;
+        }
+    }
+
+    /**
+     * <p>
+     * Resoleve {@link Type} by {@link TypeMirror}.
+     * </p>
+     * 
+     * @param asType
+     * @return
+     */
+    static final Type of(TypeMirror type) {
+        return type.accept(new TypeDetector(), null);
+    }
+
+    /**
+     * @version 2015/06/06 11:44:40
+     */
+    private static class TypeDetector implements TypeVisitor<Type, Void> {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visit(TypeMirror t, Void p) {
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visit(TypeMirror t) {
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visitPrimitive(PrimitiveType t, Void p) {
+            return new Type(t.toString(), null);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visitNull(NullType t, Void p) {
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visitArray(ArrayType t, Void p) {
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visitDeclared(DeclaredType t, Void p) {
+            return new Type(((TypeElement) t.asElement()).getQualifiedName().toString(), t.getTypeArguments());
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visitError(ErrorType t, Void p) {
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visitTypeVariable(TypeVariable t, Void p) {
+            return new Type("", t.toString(), "", true);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visitWildcard(WildcardType t, Void p) {
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visitExecutable(ExecutableType t, Void p) {
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visitNoType(NoType t, Void p) {
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visitUnknown(TypeMirror t, Void p) {
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visitUnion(UnionType t, Void p) {
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visitIntersection(IntersectionType t, Void p) {
+            return null;
         }
     }
 

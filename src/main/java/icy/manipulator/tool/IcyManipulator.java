@@ -180,7 +180,7 @@ public class IcyManipulator extends AbstractProcessor {
                     break;
                 }
 
-                Type type = TypeDetector.detect(e.asType());
+                Type type = Type.of(e.asType());
 
                 if (type != null) {
                     properties.add(new Property(type, e.getSimpleName().toString()));
