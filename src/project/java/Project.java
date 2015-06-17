@@ -14,7 +14,7 @@ public class Project extends bee.api.Project {
 
         require("com.google.testing.compile", "compile-testing", "0.6").atTest();
         require("com.google.truth", "truth", "0.25").atTest();
-        require("junit", "junit", "4.11").atTest();
-        require("com.sun", "tools", "1.8").atTest();
+        require("npc", "antibug", "0.3").atTest();
+        require("sun.jdk", "tools", "8.0").atTest();
     }
 }
