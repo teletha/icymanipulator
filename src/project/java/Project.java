@@ -14,7 +14,7 @@ public class Project extends bee.api.Project {
 
         require("com.google.testing.compile", "compile-testing", "0.8").atTest();
         require("com.google.truth", "truth", "0.30").atTest();
-        require("npc", "antibug", "0.3").atTest();
+        require("com.github.teletha", "antibug", "0.3").atTest();
         require("sun.jdk", "tools", "8.0").atTest();
     }
 }
