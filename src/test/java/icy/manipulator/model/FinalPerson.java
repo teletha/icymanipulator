@@ -11,6 +11,13 @@ public abstract class FinalPerson extends FinalPersonModel implements Manipulata
     /** The final property updater. */
     private static final java.lang.invoke.MethodHandle nameUpdater = icy.manipulator.Manipulator.updater(FinalPersonModel.class, "name");
 
+    /** The final property updater. */
+    private static final java.lang.invoke.MethodHandle ageUpdater = icy.manipulator.Manipulator.updater(FinalPersonModel.class, "age");
+
+    /** The final property updater. */
+    private static final java.lang.invoke.MethodHandle genderUpdater = icy.manipulator.Manipulator
+            .updater(FinalPersonModel.class, "gender");
+
     /** The model manipulator for reuse. */
     private static final Manipulator MANIPULATOR = new Manipulator(null);
 
@@ -51,7 +58,11 @@ public abstract class FinalPerson extends FinalPersonModel implements Manipulata
      * Modify age property.
      */
     public FinalPerson age(int value) {
-        this.age = value;
+        try {
+            ageUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
 
         return this;
     }
@@ -67,8 +78,11 @@ public abstract class FinalPerson extends FinalPersonModel implements Manipulata
      * Modify gender property.
      */
     public FinalPerson gender(Gender value) {
-        this.gender = value;
-
+        try {
+            genderUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
         return this;
     }
 
@@ -103,8 +117,8 @@ public abstract class FinalPerson extends FinalPersonModel implements Manipulata
          */
         private Icy(String name, int age, Gender gender) {
             super.name(name);
-            this.age = age;
-            this.gender = gender;
+            super.age(age);
+            super.gender(gender);
         }
 
         /**
@@ -161,8 +175,8 @@ public abstract class FinalPerson extends FinalPersonModel implements Manipulata
         private Melty(FinalPerson base) {
             if (base != null) {
                 super.name(base.name);
-                this.age = base.age;
-                this.gender = base.gender;
+                super.age(base.age);
+                super.gender(base.gender);
             }
         }
 

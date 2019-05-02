@@ -16,7 +16,7 @@ public class FinalPersonModel {
 
     public final String name = null;
 
-    public int age;
+    public final int age = 0;
 
-    public Gender gender;
+    public final Gender gender = Gender.Female;
 }
