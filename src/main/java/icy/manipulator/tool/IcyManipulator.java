@@ -92,7 +92,7 @@ public class IcyManipulator extends AbstractProcessor {
     }
 
     /**
-     * @version 2015/06/07 3:04:48
+     * 
      */
     private class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
