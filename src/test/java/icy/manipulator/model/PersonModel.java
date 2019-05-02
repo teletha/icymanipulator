@@ -11,13 +11,10 @@ package icy.manipulator.model;
 
 import icy.manipulator.Icy;
 
-/**
- * @version 2015/06/02 20:28:54
- */
 @Icy
 public class PersonModel {
 
-    public String name;
+    public final String name = null;
 
     public int age;
 

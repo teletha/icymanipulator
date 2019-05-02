@@ -8,6 +8,9 @@ import icy.manipulator.Manipulatable;
  */
 public abstract class Person extends PersonModel implements Manipulatable<Person> {
 
+    /** The final property updater. */
+    private static final java.lang.invoke.MethodHandle nameUpdater = icy.manipulator.Manipulator.updater(PersonModel.class, "name");
+
     /** The model manipulator for reuse. */
     private static final Manipulator MANIPULATOR = new Manipulator(null);
 
@@ -28,7 +31,11 @@ public abstract class Person extends PersonModel implements Manipulatable<Person
      * Modify name property.
      */
     public Person name(String value) {
-        this.name = value;
+        try {
+            nameUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
 
         return this;
     }
@@ -95,7 +102,7 @@ public abstract class Person extends PersonModel implements Manipulatable<Person
          * HIDE CONSTRUCTOR
          */
         private Icy(String name, int age, Gender gender) {
-            this.name = name;
+            super.name(name);
             this.age = age;
             this.gender = gender;
         }
@@ -153,7 +160,7 @@ public abstract class Person extends PersonModel implements Manipulatable<Person
          */
         private Melty(Person base) {
             if (base != null) {
-                this.name = base.name;
+                super.name(base.name);
                 this.age = base.age;
                 this.gender = base.gender;
             }

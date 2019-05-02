@@ -9,10 +9,13 @@
  */
 package icy.manipulator;
 
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodHandles.Lookup;
+import java.lang.reflect.Field;
+
 /**
  * Model {@link Accessor} as operator.
- * 
- * @version 2015/06/03 14:06:02
  */
 public abstract class Manipulator<M, V> implements Accessor<M, V> {
 
@@ -42,5 +45,25 @@ public abstract class Manipulator<M, V> implements Accessor<M, V> {
     @Override
     public final M set(M model, V property) {
         return parent.set(model, property);
+    }
+
+    /** Re-use LoopUp */
+    private static final Lookup lookup = MethodHandles.lookup();
+
+    /**
+     * Create special property updater.
+     * 
+     * @param type A target type.
+     * @param name A target property name.
+     * @return A special property updater.
+     */
+    public static final MethodHandle updater(Class type, String name) {
+        try {
+            Field field = type.getDeclaredField(name);
+            field.setAccessible(true);
+            return lookup.unreflectSetter(field);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 }

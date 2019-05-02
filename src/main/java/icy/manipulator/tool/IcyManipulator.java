@@ -39,10 +39,7 @@ import icy.manipulator.Icy;
 import icy.manipulator.Manipulatable;
 import icy.manipulator.Manipulator;
 
-/**
- * @version 2015/06/02 16:33:00
- */
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
+@SupportedSourceVersion(SourceVersion.RELEASE_13)
 @SupportedAnnotationTypes("icy.manipulator.Icy")
 public class IcyManipulator extends AbstractProcessor {
 
@@ -168,10 +165,6 @@ public class IcyManipulator extends AbstractProcessor {
             case FIELD:
                 Set<Modifier> modifiers = e.getModifiers();
 
-                if (modifiers.contains(Modifier.FINAL)) {
-                    break;
-                }
-
                 if (modifiers.contains(Modifier.PRIVATE)) {
                     break;
                 }
@@ -183,7 +176,7 @@ public class IcyManipulator extends AbstractProcessor {
                 Type type = Type.of(e.asType());
 
                 if (type != null) {
-                    properties.add(new Property(type, e.getSimpleName().toString()));
+                    properties.add(new Property(type, e.getSimpleName().toString(), modifiers.contains(Modifier.FINAL)));
                 }
                 break;
 
@@ -233,6 +226,15 @@ public class IcyManipulator extends AbstractProcessor {
             write(" */");
             write("public abstract class ", clazz, " extends ", model, " implements ", Manipulatable.class, "<", clazz, "> {");
             write();
+            for (Property property : properties) {
+                // SETTER HANDLE
+                if (property.isFinal) {
+                    System.out.println(property.name);
+                    write("     /** The final property updater. */");
+                    write("     private static final java.lang.invoke.MethodHandle ", property.name, "Updater = icy.manipulator.Manipulator.updater(", model, ".class, \"", property.name + "\");");
+                    write();
+                }
+            }
             write("     /** The model manipulator for reuse. */");
             write("     private static final ", ManipulatorClass, " MANIPULATOR = new ", ManipulatorClass, "(null);");
             write();
@@ -257,7 +259,15 @@ public class IcyManipulator extends AbstractProcessor {
                 write("     * Modify ", property.name, " property.");
                 write("     */");
                 write("     public ", clazz, " ", property.name, "(", property.type, " value) {");
-                write("         this.", property.name, " = value;");
+                if (property.isFinal == false) {
+                    write("         this.", property.name, " = value;");
+                } else {
+                    write("         try {");
+                    write("             ", property.name, "Updater.invoke(this, value);");
+                    write("         } catch (Throwable e) {");
+                    write("             throw new Error(e);");
+                    write("         }");
+                }
                 write();
                 write("         return this;");
                 write("     }");
@@ -285,8 +295,7 @@ public class IcyManipulator extends AbstractProcessor {
             if (clazz.variables.isEmpty()) {
                 manipulatorType = ManipulatorClass + "<" + clazz.className + ">";
             } else {
-                manipulatorType = ManipulatorClass + "<" + clazz.className + clazz.variables + ", " + clazz.variables
-                        .substring(1);
+                manipulatorType = ManipulatorClass + "<" + clazz.className + clazz.variables + ", " + clazz.variables.substring(1);
             }
             write("     /**");
             write("      * Create model manipulator.");
@@ -309,6 +318,8 @@ public class IcyManipulator extends AbstractProcessor {
             for (Property property : properties) {
                 if (property.isModel) {
                     write("                 this.", property.name, " = ", property.name, " == null ? null : " + property.name, ".ice();");
+                } else if (property.isFinal) {
+                    write("                 super.", property.name, "(", property.name, ");");
                 } else {
                     write("                 this.", property.name, " = ", property.name, ";");
                 }
@@ -351,7 +362,11 @@ public class IcyManipulator extends AbstractProcessor {
             write("         private Melty(", clazz, " base) {");
             write("             if (base != null) {");
             for (Property property : properties) {
-                write("                 this.", property.name, " = base.", property.name, ";");
+                if (property.isFinal) {
+                    write("                 super.", property.name, "(base.", property.name, ");");
+                } else {
+                    write("                 this.", property.name, " = base.", property.name, ";");
+                }
             }
             write("             }");
             write("         }");
@@ -379,7 +394,9 @@ public class IcyManipulator extends AbstractProcessor {
             write();
             for (Property property : properties) {
                 write("         /** The accessor for ", property.name, " property. */");
-                write("         private static final ", Accessor.class, " ", property.NAME, " = ", Accessor.class, ".<", clazz.className, ", ", property.type.generic ? "Object" : property.TYPE.className, "> of(", clazz.className, "::", property.name, ",  ", clazz.className, "::", property.name, ");");
+                write("         private static final ", Accessor.class, " ", property.NAME, " = ", Accessor.class, ".<", clazz.className, ", ", property.type.generic
+                        ? "Object"
+                        : property.TYPE.className, "> of(", clazz.className, "::", property.name, ",  ", clazz.className, "::", property.name, ");");
                 write();
             }
             write("         /**");

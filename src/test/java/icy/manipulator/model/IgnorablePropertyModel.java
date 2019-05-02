@@ -11,15 +11,10 @@ package icy.manipulator.model;
 
 import icy.manipulator.Icy;
 
-/**
- * @version 2015/06/05 16:48:34
- */
 @Icy
 public class IgnorablePropertyModel {
 
     public static String ignoreStatic;
-
-    public final String ignoreFinal = "FINAL";
 
     private String ignorePrivate;
 
