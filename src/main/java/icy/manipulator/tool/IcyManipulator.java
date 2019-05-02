@@ -229,7 +229,6 @@ public class IcyManipulator extends AbstractProcessor {
             for (Property property : properties) {
                 // SETTER HANDLE
                 if (property.isFinal) {
-                    System.out.println(property.name);
                     write("     /** The final property updater. */");
                     write("     private static final java.lang.invoke.MethodHandle ", property.name, "Updater = icy.manipulator.Manipulator.updater(", model, ".class, \"", property.name + "\");");
                     write();
