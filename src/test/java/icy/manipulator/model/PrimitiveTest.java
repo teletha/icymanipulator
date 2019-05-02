@@ -9,7 +9,7 @@
  */
 package icy.manipulator.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @version 2015/06/05 16:51:29

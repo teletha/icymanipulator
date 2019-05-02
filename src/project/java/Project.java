@@ -12,9 +12,8 @@ public class Project extends bee.api.Project {
     {
         product("icy.manipulator", "IcyManipulator", "0.1");
 
-        require("com.google.testing.compile", "compile-testing", "0.8").atTest();
-        require("com.google.truth", "truth", "0.30").atTest();
-        require("com.github.teletha", "antibug", "0.3").atTest();
-        require("sun.jdk", "tools", "8.0").atTest();
+        require("com.google.testing.compile", "compile-testing").atTest();
+        require("com.google.truth", "truth").atTest();
+        require("com.github.teletha", "antibug").atTest();
     }
 }

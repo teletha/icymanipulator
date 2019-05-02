@@ -9,10 +9,10 @@
  */
 package icy.manipulator;
 
-import static com.google.common.truth.Truth.*;
-import static com.google.testing.compile.JavaSourceSubjectFactory.*;
+import static com.google.common.truth.Truth.assert_;
+import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import icy.manipulator.compiler.SourceFile;
 import icy.manipulator.model.Couple;
@@ -114,10 +114,6 @@ public class ModelTest {
     private void testInvalidCodeGeneration(Class sourceModel, String message) {
         SourceFile source = SourceFile.of(sourceModel);
 
-        assert_().about(javaSource())
-                .that(source)
-                .processedWith(new IcyManipulator())
-                .failsToCompile()
-                .withErrorContaining(message);
+        assert_().about(javaSource()).that(source).processedWith(new IcyManipulator()).failsToCompile().withErrorContaining(message);
     }
 }

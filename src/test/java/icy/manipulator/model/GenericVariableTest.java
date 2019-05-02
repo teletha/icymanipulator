@@ -9,7 +9,7 @@
  */
 package icy.manipulator.model;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @version 2015/06/03 17:06:43
@@ -35,9 +35,7 @@ public class GenericVariableTest {
     @Test
     public void manipulator() {
         GenericVariable<String, Integer> melty = GenericVariable.<String, Integer> with().value1("小路 綾").ice();
-        GenericVariable<String, Integer> modified = GenericVariable.<String, Integer> manipulate()
-                .value1()
-                .set(melty, "あやや");
+        GenericVariable<String, Integer> modified = GenericVariable.<String, Integer> manipulate().value1().set(melty, "あやや");
         assert melty != modified;
         assert modified.value1().equals("あやや");
     }
