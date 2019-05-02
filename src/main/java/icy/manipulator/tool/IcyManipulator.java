@@ -22,6 +22,7 @@ import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ElementVisitor;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
@@ -30,6 +31,7 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.ExecutableType;
 import javax.lang.model.type.TypeMirror;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
@@ -104,6 +106,9 @@ public class IcyManipulator extends AbstractProcessor {
 
         /** The property list. */
         private List<Property> properties = new ArrayList();
+
+        /** The method holder. */
+        private List<ExecutableElement> methods = new ArrayList();
 
         /**
          * {@inheritDoc}
@@ -191,6 +196,9 @@ public class IcyManipulator extends AbstractProcessor {
          */
         @Override
         public CodeAnalyzer visitExecutable(ExecutableElement e, VariableElement p) {
+            if (e.getKind() == ElementKind.METHOD) {
+                methods.add(e);
+            }
             return this;
         }
 
@@ -254,15 +262,18 @@ public class IcyManipulator extends AbstractProcessor {
                 write();
 
                 // SETTER
+                ExecutableElement interceptor = findInterceptor(property);
                 write("     /**");
                 write("     * Modify ", property.name, " property.");
                 write("     */");
                 write("     public ", clazz, " ", property.name, "(", property.type, " value) {");
                 if (property.isFinal == false) {
                     write("         this.", property.name, " = value;");
+                    if (interceptor != null) write("             super.", property.name, "(value, this);");
                 } else {
                     write("         try {");
                     write("             ", property.name, "Updater.invoke(this, value);");
+                    if (interceptor != null) write("             super.", property.name, "(value, this);");
                     write("         } catch (Throwable e) {");
                     write("             throw new Error(e);");
                     write("         }");
@@ -539,6 +550,34 @@ public class IcyManipulator extends AbstractProcessor {
                 hasError = true;
                 processingEnv.getMessager().printMessage(Kind.ERROR, message, position);
             }
+        }
+
+        private ExecutableElement findInterceptor(Property property) {
+            for (ExecutableElement method : methods) {
+                if (!method.getSimpleName().contentEquals(property.name)) {
+                    continue;
+                }
+
+                ExecutableType exe = (ExecutableType) method.asType();
+                List<? extends TypeMirror> parameters = exe.getParameterTypes();
+
+                if (parameters.size() != 2) {
+                    continue;
+                }
+
+                Type propertyType = Type.of(parameters.get(0));
+                Type modelType = Type.of(parameters.get(1));
+
+                if (!propertyType.equals(property.type)) {
+                    continue;
+                }
+
+                if (!modelType.equals(clazz)) {
+                    continue;
+                }
+                return method;
+            }
+            return null;
         }
     }
 }

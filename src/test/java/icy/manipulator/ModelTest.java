@@ -22,6 +22,8 @@ import icy.manipulator.model.FinalPersonModel;
 import icy.manipulator.model.GenericVariable;
 import icy.manipulator.model.GenericVariableModel;
 import icy.manipulator.model.IgnorablePropertyModel;
+import icy.manipulator.model.IntercepteSetter;
+import icy.manipulator.model.IntercepteSetterModel;
 import icy.manipulator.model.NoPropertyModel;
 import icy.manipulator.model.Person;
 import icy.manipulator.model.PersonModel;
@@ -35,9 +37,6 @@ import icy.manipulator.model.WithMethod;
 import icy.manipulator.model.WithMethodModel;
 import icy.manipulator.tool.IcyManipulator;
 
-/**
- * @version 2015/06/02 16:43:02
- */
 public class ModelTest {
 
     @Test
@@ -48,6 +47,11 @@ public class ModelTest {
     @Test
     public void finalProperty() {
         testCodeGeneration(FinalPersonModel.class, FinalPerson.class);
+    }
+
+    @Test
+    public void intercepteSetter() {
+        testCodeGeneration(IntercepteSetterModel.class, IntercepteSetter.class);
     }
 
     @Test

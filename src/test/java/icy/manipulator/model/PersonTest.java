@@ -11,9 +11,6 @@ package icy.manipulator.model;
 
 import org.junit.jupiter.api.Test;
 
-/**
- * @version 2015/06/02 20:30:55
- */
 public class PersonTest {
 
     @Test

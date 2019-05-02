@@ -9,15 +9,15 @@
  */
 package icy.manipulator.model;
 
-import icy.manipulator.Icy;
-import icy.manipulator.Initializer;
+import org.junit.jupiter.api.Test;
 
-@Icy
-public class FinalPersonModel {
+public class IntercepteSetterTest {
 
-    public final String name = null;
-
-    public final int age = Initializer.Int();
-
-    public final Gender gender = Gender.Female;
+    @Test
+    void intercept() {
+        IntercepteSetter melty = IntercepteSetter.with().text("abcde");
+        assert melty.text.equals("abcde");
+        assert melty.upper.equals("ABCDE");
+        assert melty.size == 5;
+    }
 }

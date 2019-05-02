@@ -13,11 +13,22 @@ import icy.manipulator.Icy;
 import icy.manipulator.Initializer;
 
 @Icy
-public class FinalPersonModel {
+public class IntercepteSetterModel {
 
-    public final String name = null;
+    public final String text = null;
 
-    public final int age = Initializer.Int();
+    public final String upper = null;
 
-    public final Gender gender = Gender.Female;
+    public final int size = Initializer.Int();
+
+    /**
+     * Update by text.
+     * 
+     * @param text
+     * @param model
+     */
+    void text(String text, IntercepteSetter model) {
+        model.upper(text.toUpperCase());
+        model.size(text.length());
+    }
 }

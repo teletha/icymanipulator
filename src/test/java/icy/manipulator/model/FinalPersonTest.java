@@ -15,11 +15,11 @@ class FinalPersonTest {
 
     @Test
     void propertyChangeMelty() {
-        Person melty = Person.with().name("小路 綾").age(15);
+        FinalPerson melty = FinalPerson.with().name("小路 綾").age(15);
         assert melty.name.equals("小路 綾");
         assert melty.age == 15;
 
-        Person modified = melty.name("あやや").age(16);
+        FinalPerson modified = melty.name("あやや").age(16);
         assert melty == modified;
         assert melty.name.equals("あやや");
         assert melty.age == 16;
@@ -27,11 +27,11 @@ class FinalPersonTest {
 
     @Test
     void propertyChangeIcy() {
-        Person icy = Person.with().name("小路 綾").age(15).ice();
+        FinalPerson icy = FinalPerson.with().name("小路 綾").age(15).ice();
         assert icy.name.equals("小路 綾");
         assert icy.age == 15;
 
-        Person modified = icy.name("あやや").age(16);
+        FinalPerson modified = icy.name("あやや").age(16);
         assert icy.name.equals("小路 綾");
         assert icy.age == 15;
         assert modified.name.equals("あやや");

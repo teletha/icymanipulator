@@ -178,6 +178,43 @@ class Type {
     }
 
     /**
+     * @param propertyType
+     * @return
+     */
+    boolean match(TypeMirror propertyType) {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Type == false) {
+            return false;
+        }
+
+        Type other = (Type) obj;
+
+        if (!packageName.equals(other.packageName)) {
+            return false;
+        }
+
+        if (!className.equals(other.className)) {
+            return false;
+        }
+
+        if (!variables.equals(other.variables)) {
+            return false;
+        }
+
+        if (generic != other.generic) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

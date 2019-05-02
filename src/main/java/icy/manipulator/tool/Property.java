@@ -11,9 +11,6 @@ package icy.manipulator.tool;
 
 import icy.manipulator.Icy;
 
-/**
- * @version 2015/06/02 22:49:43
- */
 class Property {
 
     /** The property name. */
@@ -33,6 +30,9 @@ class Property {
 
     /** The state. */
     boolean isModel;
+
+    /** The state. */
+    boolean hasInterceptor;
 
     /**
      * 
