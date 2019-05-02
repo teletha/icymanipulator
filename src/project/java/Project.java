@@ -15,5 +15,7 @@ public class Project extends bee.api.Project {
         require("com.github.teletha", "antibug").atTest();
         require("com.google.testing.compile", "compile-testing").atTest();
         require("com.google.truth", "truth").atTest();
+
+        versionControlSystem("https://github.com/Teletha/IcyManipulator");
     }
 }
