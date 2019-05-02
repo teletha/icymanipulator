@@ -6,7 +6,10 @@ import icy.manipulator.Manipulatable;
 /**
  * {@link Manipulatable} model for {@link PersonModel}.
  */
-public abstract class Person extends PersonModel implements Manipulatable<Person> {
+public abstract class FinalPerson extends FinalPersonModel implements Manipulatable<FinalPerson> {
+
+    /** The final property updater. */
+    private static final java.lang.invoke.MethodHandle nameUpdater = icy.manipulator.Manipulator.updater(FinalPersonModel.class, "name");
 
     /** The model manipulator for reuse. */
     private static final Manipulator MANIPULATOR = new Manipulator(null);
@@ -14,7 +17,7 @@ public abstract class Person extends PersonModel implements Manipulatable<Person
     /**
      * HIDE CONSTRUCTOR
      */
-    protected Person() {
+    protected FinalPerson() {
     }
 
     /**
@@ -27,8 +30,12 @@ public abstract class Person extends PersonModel implements Manipulatable<Person
     /**
      * Modify name property.
      */
-    public Person name(String value) {
-        this.name = value;
+    public FinalPerson name(String value) {
+        try {
+            nameUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
 
         return this;
     }
@@ -43,7 +50,7 @@ public abstract class Person extends PersonModel implements Manipulatable<Person
     /**
      * Modify age property.
      */
-    public Person age(int value) {
+    public FinalPerson age(int value) {
         this.age = value;
 
         return this;
@@ -59,7 +66,7 @@ public abstract class Person extends PersonModel implements Manipulatable<Person
     /**
      * Modify gender property.
      */
-    public Person gender(Gender value) {
+    public FinalPerson gender(Gender value) {
         this.gender = value;
 
         return this;
@@ -68,34 +75,34 @@ public abstract class Person extends PersonModel implements Manipulatable<Person
     /**
      * Create model builder without base model.
      */
-    public static final Person with() {
+    public static final FinalPerson with() {
         return new Melty(null);
     }
 
     /**
      * Create model builder using the specified definition as base model.
      */
-    public static final Person with(Person base) {
+    public static final FinalPerson with(FinalPerson base) {
         return new Melty(base);
     }
 
     /**
      * Create model manipulator.
      */
-    public static final Manipulator<Person> manipulate() {
+    public static final Manipulator<FinalPerson> manipulate() {
         return MANIPULATOR;
     }
 
     /**
      * Immutable Model.
      */
-    private static final class Icy extends Person {
+    private static final class Icy extends FinalPerson {
 
         /**
          * HIDE CONSTRUCTOR
          */
         private Icy(String name, int age, Gender gender) {
-            this.name = name;
+            super.name(name);
             this.age = age;
             this.gender = gender;
         }
@@ -104,7 +111,7 @@ public abstract class Person extends PersonModel implements Manipulatable<Person
          * {@inheritDoc}
          */
         @Override
-        public Person melt() {
+        public FinalPerson melt() {
             return new Melty(this);
         }
 
@@ -112,7 +119,7 @@ public abstract class Person extends PersonModel implements Manipulatable<Person
          * {@inheritDoc}
          */
         @Override
-        public Person name(String value) {
+        public FinalPerson name(String value) {
             if (this.name == value) {
                 return this;
             }
@@ -123,7 +130,7 @@ public abstract class Person extends PersonModel implements Manipulatable<Person
          * {@inheritDoc}
          */
         @Override
-        public Person age(int value) {
+        public FinalPerson age(int value) {
             if (this.age == value) {
                 return this;
             }
@@ -134,7 +141,7 @@ public abstract class Person extends PersonModel implements Manipulatable<Person
          * {@inheritDoc}
          */
         @Override
-        public Person gender(Gender value) {
+        public FinalPerson gender(Gender value) {
             if (this.gender == value) {
                 return this;
             }
@@ -146,14 +153,14 @@ public abstract class Person extends PersonModel implements Manipulatable<Person
     /**
      * Mutable Model.
      */
-    private static final class Melty extends Person {
+    private static final class Melty extends FinalPerson {
 
         /**
          * HIDE CONSTRUCTOR
          */
-        private Melty(Person base) {
+        private Melty(FinalPerson base) {
             if (base != null) {
-                this.name = base.name;
+                super.name(base.name);
                 this.age = base.age;
                 this.gender = base.gender;
             }
@@ -163,7 +170,7 @@ public abstract class Person extends PersonModel implements Manipulatable<Person
          * {@inheritDoc}
          */
         @Override
-        public Person ice() {
+        public FinalPerson ice() {
             return new Icy(name, age, gender);
         }
     }
@@ -171,21 +178,21 @@ public abstract class Person extends PersonModel implements Manipulatable<Person
     /**
      * Model Manipulator.
      */
-    public static final class Manipulator<RootModel> extends icy.manipulator.Manipulator<RootModel, Person> {
+    public static final class Manipulator<RootModel> extends icy.manipulator.Manipulator<RootModel, FinalPerson> {
 
         /** The accessor for name property. */
-        private static final Accessor NAME = Accessor.<Person, String> of(Person::name, Person::name);
+        private static final Accessor NAME = Accessor.<FinalPerson, String> of(FinalPerson::name, FinalPerson::name);
 
         /** The accessor for age property. */
-        private static final Accessor AGE = Accessor.<Person, Integer> of(Person::age, Person::age);
+        private static final Accessor AGE = Accessor.<FinalPerson, Integer> of(FinalPerson::age, FinalPerson::age);
 
         /** The accessor for gender property. */
-        private static final Accessor GENDER = Accessor.<Person, Gender> of(Person::gender, Person::gender);
+        private static final Accessor GENDER = Accessor.<FinalPerson, Gender> of(FinalPerson::gender, FinalPerson::gender);
 
         /**
          * Construct operator.
          */
-        public Manipulator(Accessor<RootModel, Person> parent) {
+        public Manipulator(Accessor<RootModel, FinalPerson> parent) {
             super(parent);
         }
 

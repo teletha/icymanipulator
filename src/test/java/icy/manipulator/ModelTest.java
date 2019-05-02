@@ -17,6 +17,8 @@ import org.junit.jupiter.api.Test;
 import icy.manipulator.compiler.SourceFile;
 import icy.manipulator.model.Couple;
 import icy.manipulator.model.CoupleModel;
+import icy.manipulator.model.FinalPerson;
+import icy.manipulator.model.FinalPersonModel;
 import icy.manipulator.model.GenericVariable;
 import icy.manipulator.model.GenericVariableModel;
 import icy.manipulator.model.IgnorablePropertyModel;
@@ -41,6 +43,11 @@ public class ModelTest {
     @Test
     public void person() {
         testCodeGeneration(PersonModel.class, Person.class);
+    }
+
+    @Test
+    public void finalProperty() {
+        testCodeGeneration(FinalPersonModel.class, FinalPerson.class);
     }
 
     @Test

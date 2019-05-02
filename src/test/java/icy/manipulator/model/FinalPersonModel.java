@@ -12,9 +12,9 @@ package icy.manipulator.model;
 import icy.manipulator.Icy;
 
 @Icy
-public class PersonModel {
+public class FinalPersonModel {
 
-    public String name;
+    public final String name = null;
 
     public int age;
 
