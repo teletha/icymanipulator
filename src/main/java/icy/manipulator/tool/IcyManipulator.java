@@ -110,9 +110,6 @@ public class IcyManipulator extends AbstractProcessor {
         /** The property list. */
         private List<Property> properties = new ArrayList();
 
-        /** The method holder. */
-        private List<ExecutableElement> derives = new ArrayList();
-
         /**
          * {@inheritDoc}
          */
@@ -203,7 +200,6 @@ public class IcyManipulator extends AbstractProcessor {
                 Derive derive = e.getAnnotation(Icy.Derive.class);
 
                 if (derive != null && isDeriveMethod(e)) {
-                    derives.add(e);
                     Arrays.stream(derive.to()).map(this::findPropertyByName).flatMap(Optional::stream).forEach(p -> p.isDerived = true);
                     Arrays.stream(derive.by())
                             .map(this::findPropertyByName)
