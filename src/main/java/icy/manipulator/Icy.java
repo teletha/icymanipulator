@@ -20,27 +20,18 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Icy {
 
-    boolean hideGetter() default false;
-
-    boolean hideSetter() default false;
-
-    boolean nullable() default true;
-
     @Documented
     @Target(ElementType.FIELD)
     @Retention(RetentionPolicy.SOURCE)
     @interface Property {
-
-        boolean hideGetter() default false;
-
-        boolean hideSetter() default false;
-
-        boolean nullable() default true;
     }
 
     @Documented
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.SOURCE)
-    @interface Interceptor {
+    @interface Derive {
+        String[] by();
+
+        String[] to();
     }
 }

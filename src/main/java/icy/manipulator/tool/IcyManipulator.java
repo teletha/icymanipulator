@@ -12,7 +12,9 @@ package icy.manipulator.tool;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.StringJoiner;
 
@@ -38,6 +40,7 @@ import javax.tools.JavaFileObject;
 
 import icy.manipulator.Accessor;
 import icy.manipulator.Icy;
+import icy.manipulator.Icy.Derive;
 import icy.manipulator.Manipulatable;
 import icy.manipulator.Manipulator;
 
@@ -108,7 +111,7 @@ public class IcyManipulator extends AbstractProcessor {
         private List<Property> properties = new ArrayList();
 
         /** The method holder. */
-        private List<ExecutableElement> methods = new ArrayList();
+        private List<ExecutableElement> derives = new ArrayList();
 
         /**
          * {@inheritDoc}
@@ -195,9 +198,18 @@ public class IcyManipulator extends AbstractProcessor {
          * {@inheritDoc}
          */
         @Override
-        public CodeAnalyzer visitExecutable(ExecutableElement e, VariableElement p) {
+        public CodeAnalyzer visitExecutable(ExecutableElement e, VariableElement z) {
             if (e.getKind() == ElementKind.METHOD) {
-                methods.add(e);
+                Derive derive = e.getAnnotation(Icy.Derive.class);
+
+                if (derive != null && isDeriveMethod(e)) {
+                    derives.add(e);
+                    Arrays.stream(derive.to()).map(this::findPropertyByName).flatMap(Optional::stream).forEach(p -> p.isDerived = true);
+                    Arrays.stream(derive.by())
+                            .map(this::findPropertyByName)
+                            .flatMap(Optional::stream)
+                            .forEach(p -> p.derive = e.getSimpleName().toString());
+                }
             }
             return this;
         }
@@ -262,18 +274,17 @@ public class IcyManipulator extends AbstractProcessor {
                 write();
 
                 // SETTER
-                ExecutableElement interceptor = findInterceptor(property);
                 write("     /**");
                 write("     * Modify ", property.name, " property.");
                 write("     */");
-                write("     public ", clazz, " ", property.name, "(", property.type, " value) {");
+                write("     ", property.setterVisibility(), " ", clazz, " ", property.name, "(", property.type, " value) {");
                 if (property.isFinal == false) {
                     write("         this.", property.name, " = value;");
-                    if (interceptor != null) write("             super.", property.name, "(value, this);");
+                    if (property.derive != null) write("             super.", property.derive, "(this);");
                 } else {
                     write("         try {");
                     write("             ", property.name, "Updater.invoke(this, value);");
-                    if (interceptor != null) write("             super.", property.name, "(value, this);");
+                    if (property.derive != null) write("             super.", property.derive, "(this);");
                     write("         } catch (Throwable e) {");
                     write("             throw new Error(e);");
                     write("         }");
@@ -350,7 +361,7 @@ public class IcyManipulator extends AbstractProcessor {
                 write("          * {@inheritDoc}");
                 write("          */");
                 write("         @Override");
-                write("         public ", clazz, " ", property.name, "(", property.type, " value) {");
+                write("         ", property.setterVisibility(), " ", clazz, " ", property.name, "(", property.type, " value) {");
                 write("             if (this.", property.name, " == value) {");
                 write("                 return this;");
                 write("             }");
@@ -552,32 +563,30 @@ public class IcyManipulator extends AbstractProcessor {
             }
         }
 
-        private ExecutableElement findInterceptor(Property property) {
-            for (ExecutableElement method : methods) {
-                if (!method.getSimpleName().contentEquals(property.name)) {
-                    continue;
+        private Optional<Property> findPropertyByName(String name) {
+            for (Property property : properties) {
+                if (property.name.equals(name)) {
+                    return Optional.of(property);
                 }
-
-                ExecutableType exe = (ExecutableType) method.asType();
-                List<? extends TypeMirror> parameters = exe.getParameterTypes();
-
-                if (parameters.size() != 2) {
-                    continue;
-                }
-
-                Type propertyType = Type.of(parameters.get(0));
-                Type modelType = Type.of(parameters.get(1));
-
-                if (!propertyType.equals(property.type)) {
-                    continue;
-                }
-
-                if (!modelType.equals(clazz)) {
-                    continue;
-                }
-                return method;
             }
-            return null;
+            return Optional.empty();
+        }
+
+        private boolean isDeriveMethod(ExecutableElement method) {
+            ExecutableType exe = (ExecutableType) method.asType();
+
+            List<? extends TypeMirror> parameters = exe.getParameterTypes();
+
+            if (parameters.size() != 1) {
+                return false;
+            }
+
+            Type modelType = Type.of(parameters.get(0));
+
+            if (!modelType.equals(clazz)) {
+                return false;
+            }
+            return true;
         }
     }
 }

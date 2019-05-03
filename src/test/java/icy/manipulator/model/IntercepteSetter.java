@@ -42,7 +42,7 @@ public abstract class IntercepteSetter extends IntercepteSetterModel implements 
     public IntercepteSetter text(String value) {
         try {
             textUpdater.invoke(this, value);
-            super.text(value, this);
+            super.drive(this);
         } catch (Throwable e) {
             throw new Error(e);
         }
@@ -60,7 +60,7 @@ public abstract class IntercepteSetter extends IntercepteSetterModel implements 
     /**
      * Modify upper property.
      */
-    public IntercepteSetter upper(String value) {
+    protected IntercepteSetter upper(String value) {
         try {
             upperUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -80,7 +80,7 @@ public abstract class IntercepteSetter extends IntercepteSetterModel implements 
     /**
      * Modify size property.
      */
-    public IntercepteSetter size(int value) {
+    protected IntercepteSetter size(int value) {
         try {
             sizeUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -148,7 +148,7 @@ public abstract class IntercepteSetter extends IntercepteSetterModel implements 
          * {@inheritDoc}
          */
         @Override
-        public IntercepteSetter upper(String value) {
+        protected IntercepteSetter upper(String value) {
             if (this.upper == value) {
                 return this;
             }
@@ -159,7 +159,7 @@ public abstract class IntercepteSetter extends IntercepteSetterModel implements 
          * {@inheritDoc}
          */
         @Override
-        public IntercepteSetter size(int value) {
+        protected IntercepteSetter size(int value) {
             if (this.size == value) {
                 return this;
             }

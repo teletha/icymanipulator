@@ -21,14 +21,8 @@ public class IntercepteSetterModel {
 
     public final int size = Initializer.Int();
 
-    /**
-     * Update by text.
-     * 
-     * @param text
-     * @param model
-     */
-    @Icy.Interceptor
-    void text(String text, IntercepteSetter model) {
+    @Icy.Derive(by = "text", to = {"upper", "size"})
+    void drive(IntercepteSetter model) {
         model.upper(text.toUpperCase());
         model.size(text.length());
     }

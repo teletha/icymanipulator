@@ -32,7 +32,10 @@ class Property {
     boolean isModel;
 
     /** The state. */
-    boolean hasInterceptor;
+    String derive;
+
+    /** The state. */
+    boolean isDerived;
 
     /**
      * 
@@ -49,5 +52,14 @@ class Property {
         } catch (ClassNotFoundException e) {
             this.isModel = false;
         }
+    }
+
+    /**
+     * Compute visibilitt of setter method.
+     * 
+     * @return A visibility.
+     */
+    String setterVisibility() {
+        return isDerived ? "protected" : "public";
     }
 }
