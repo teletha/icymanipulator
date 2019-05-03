@@ -144,28 +144,6 @@ public abstract class IntercepteSetter extends IntercepteSetterModel implements 
             return new Icy(value, this.upper, this.size);
         }
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected IntercepteSetter upper(String value) {
-            if (this.upper == value) {
-                return this;
-            }
-            return new Icy(this.text, value, this.size);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected IntercepteSetter size(int value) {
-            if (this.size == value) {
-                return this;
-            }
-            return new Icy(this.text, this.upper, value);
-        }
-
     }
 
     /**

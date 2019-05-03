@@ -20,4 +20,20 @@ public class IntercepteSetterTest {
         assert melty.upper.equals("ABCDE");
         assert melty.size == 5;
     }
+
+    @Test
+    void meltyWith() {
+        IntercepteSetter model = IntercepteSetter.with().text("abc");
+        IntercepteSetter copy = IntercepteSetter.with(model);
+        assert copy.upper.equals(model.upper);
+        assert copy.size == model.size;
+    }
+
+    @Test
+    void icyWith() {
+        IntercepteSetter model = IntercepteSetter.with().text("abc").ice();
+        IntercepteSetter copy = IntercepteSetter.with(model);
+        assert copy.upper.equals(model.upper);
+        assert copy.size == model.size;
+    }
 }

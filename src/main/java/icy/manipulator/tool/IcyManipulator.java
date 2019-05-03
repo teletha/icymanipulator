@@ -353,17 +353,19 @@ public class IcyManipulator extends AbstractProcessor {
             write();
             // Override Setters
             for (Property property : properties) {
-                write("         /**");
-                write("          * {@inheritDoc}");
-                write("          */");
-                write("         @Override");
-                write("         ", property.setterVisibility(), " ", clazz, " ", property.name, "(", property.type, " value) {");
-                write("             if (this.", property.name, " == value) {");
-                write("                 return this;");
-                write("             }");
-                write("             return new Icy(", parameterReplaceable(properties, property), ");");
-                write("         }");
-                write();
+                if (!property.isDerived) {
+                    write("         /**");
+                    write("          * {@inheritDoc}");
+                    write("          */");
+                    write("         @Override");
+                    write("         ", property.setterVisibility(), " ", clazz, " ", property.name, "(", property.type, " value) {");
+                    write("             if (this.", property.name, " == value) {");
+                    write("                 return this;");
+                    write("             }");
+                    write("             return new Icy(", parameterReplaceable(properties, property), ");");
+                    write("         }");
+                    write();
+                }
             }
             write("     }");
 
