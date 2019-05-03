@@ -15,11 +15,32 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * @version 2015/06/02 16:32:55
- */
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Icy {
+
+    boolean hideGetter() default false;
+
+    boolean hideSetter() default false;
+
+    boolean nullable() default true;
+
+    @Documented
+    @Target(ElementType.FIELD)
+    @Retention(RetentionPolicy.SOURCE)
+    @interface Property {
+
+        boolean hideGetter() default false;
+
+        boolean hideSetter() default false;
+
+        boolean nullable() default true;
+    }
+
+    @Documented
+    @Target(ElementType.METHOD)
+    @Retention(RetentionPolicy.SOURCE)
+    @interface Interceptor {
+    }
 }

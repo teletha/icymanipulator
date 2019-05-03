@@ -27,6 +27,7 @@ public class IntercepteSetterModel {
      * @param text
      * @param model
      */
+    @Icy.Interceptor
     void text(String text, IntercepteSetter model) {
         model.upper(text.toUpperCase());
         model.size(text.length());
