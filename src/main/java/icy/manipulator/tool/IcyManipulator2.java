@@ -268,7 +268,7 @@ public class IcyManipulator2 extends AbstractProcessor {
                 write("     /**");
                 write("     * Modify ", property.name, " property.");
                 write("     */");
-                write("     ", clazz, " ", property.name, "(", property.type, " value) {");
+                write("     ", property.setterVisibility(), " final ", clazz, " ", property.name, "(", property.type, " value) {");
                 if (property.isFinal == false) {
                     write("         this.", property.name, " = value;");
                     if (property.derive != null) write("             super.", property.derive, "(this);");
@@ -290,65 +290,38 @@ public class IcyManipulator2 extends AbstractProcessor {
             write("     /**");
             write("      * Create model builder without base model.");
             write("      */");
-            write("     public static final ", $(clazz.variables), "Melty", clazz, " with() {");
-            write("         return new Melty", clazz, "(null);");
+            write("     public static final ", $(clazz.variables), clazz, " with() {");
+            write("         return new ", clazz, "();");
             write("     }");
             write();
             write("     /**");
             write("      * Create model builder using the specified definition as base model.");
             write("      */");
-            write("     public static final ", $(clazz.variables), "Melty", clazz, " with(", clazz, " base) {");
-            write("         return new Melty", clazz, "(base);");
+            write("     public static final ", $(clazz.variables), clazz, " with(", clazz, " base) {");
+            write("         return new ", clazz, "();");
             write("     }");
             write();
             write("     /**");
             write("      * Create model builder using the specified definition as base model.");
             write("      */");
-            write("     public static final ", $(clazz.variables), clazz, " with(", UnaryOperator.class, "<Melty", clazz, "> base) {");
-            write("         return base.apply(new Melty", clazz, "(null));");
+            write("     public static final ", $(clazz.variables), clazz, " with(", UnaryOperator.class, "<", clazz, "> base) {");
+            write("         return base.apply(new ", clazz, "());");
             write("     }");
             write();
 
-            // Mutable model
-            write("     /**");
-            write("      * Mutable {@link ", clazz, "} Model.");
-            write("      */");
-            write("     public static final class Melty", clazz, clazz.variables, " extends ", clazz, " {");
-            write();
-            write("         /**");
-            write("          * HIDE CONSTRUCTOR");
-            write("          */");
-            write("         private Melty", clazz, "(", clazz, " base) {");
-            write("             if (base != null) {");
-            for (Property property : properties) {
-                if (property.isFinal) {
-                    write("                 super.", property.name, "(base.", property.name, ");");
-                } else {
-                    write("                 this.", property.name, " = base.", property.name, ";");
-                }
-            }
-            write("             }");
-            write("         }");
-            write();
-            write("         /**");
-            write("          * Create immutable model.");
-            write("          */");
-            write("         public final ", clazz, " ice() {");
-            write("             return new ", clazz, "(", parameter(properties), ");");
-            write("         }");
-            write();
-            for (Property property : properties) {
-                // Expose setter
-                write("         /**");
-                write("         * Expose ", property.name, " setter.");
-                write("         */");
-                write("         public final Melty", clazz, " ", property.name, "(", property.type, " value) {");
-                write("             super.", property.name, "(value);");
-                write("             return this;");
-                write("         }");
-                write();
-            }
-            write("     }");
+            // // Define Assigner Interface
+            // for (int i = 0; i < properties.size(); i++) {
+            // Property property = properties.get(i);
+            // Property next = i == properties.size() - 1 ? null : properties.get(i + 1);
+            //
+            // write();
+            // write(" /**");
+            // write(" * Property setting interface.");
+            // write(" */");
+            // write(" public static interface ", property.NAME, " {");
+            // write(" ")
+            // write(" }");
+            // }
             write("}");
 
             // generate code fragments

@@ -47,7 +47,7 @@ public  class ObjectProperty extends ObjectPropertyModel {
      /**
      * Modify name property.
      */
-     ObjectProperty name(String value) {
+     public final ObjectProperty name(String value) {
          try {
              nameUpdater.invoke(this, value);
          } catch (Throwable e) {
@@ -68,7 +68,7 @@ public  class ObjectProperty extends ObjectPropertyModel {
      /**
      * Modify age property.
      */
-     ObjectProperty age(int value) {
+     public final ObjectProperty age(int value) {
          try {
              ageUpdater.invoke(this, value);
          } catch (Throwable e) {
@@ -81,61 +81,22 @@ public  class ObjectProperty extends ObjectPropertyModel {
      /**
       * Create model builder without base model.
       */
-     public static final MeltyObjectProperty with() {
-         return new MeltyObjectProperty(null);
+     public static final ObjectProperty with() {
+         return new ObjectProperty();
      }
 
      /**
       * Create model builder using the specified definition as base model.
       */
-     public static final MeltyObjectProperty with(ObjectProperty base) {
-         return new MeltyObjectProperty(base);
+     public static final ObjectProperty with(ObjectProperty base) {
+         return new ObjectProperty();
      }
 
      /**
       * Create model builder using the specified definition as base model.
       */
-     public static final ObjectProperty with(UnaryOperator<MeltyObjectProperty> base) {
-         return base.apply(new MeltyObjectProperty(null));
+     public static final ObjectProperty with(UnaryOperator<ObjectProperty> base) {
+         return base.apply(new ObjectProperty());
      }
 
-     /**
-      * Mutable {@link ObjectProperty} Model.
-      */
-     public static final class MeltyObjectProperty extends ObjectProperty {
-
-         /**
-          * HIDE CONSTRUCTOR
-          */
-         private MeltyObjectProperty(ObjectProperty base) {
-             if (base != null) {
-                 super.name(base.name);
-                 super.age(base.age);
-             }
-         }
-
-         /**
-          * Create immutable model.
-          */
-         public final ObjectProperty ice() {
-             return new ObjectProperty(name, age);
-         }
-
-         /**
-         * Expose name setter.
-         */
-         public final MeltyObjectProperty name(String value) {
-             super.name(value);
-             return this;
-         }
-
-         /**
-         * Expose age setter.
-         */
-         public final MeltyObjectProperty age(int value) {
-             super.age(value);
-             return this;
-         }
-
-     }
 }
