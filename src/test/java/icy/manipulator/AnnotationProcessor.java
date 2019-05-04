@@ -80,7 +80,13 @@ public class AnnotationProcessor {
         compiler.addSource(compilingClass, compilingSource.text());
         compiler.setOutput(room.root);
         compiler.setErrorListener(errors);
-        compiler.compile();
+        try {
+            compiler.compile();
+        } catch (Error e) {
+            System.out.println(errors.errors);
+            System.out.println(temporaryGeneratedSource.text());
+            throw I.quiet(e);
+        }
 
         // copy generated file to test source directory
         temporaryGeneratedSource.copyTo(generatedSource);

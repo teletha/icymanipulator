@@ -34,4 +34,10 @@ public @interface Icy {
 
         String[] to();
     }
+
+    @Documented
+    @Target(ElementType.METHOD)
+    @Retention(RetentionPolicy.SOURCE)
+    @interface Companion {
+    }
 }

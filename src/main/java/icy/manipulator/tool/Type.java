@@ -178,6 +178,38 @@ class Type {
     }
 
     /**
+     * Compute default value literal.
+     * 
+     * @return
+     */
+    String defaultValue() {
+        switch (className) {
+        case "int":
+        case "byte":
+        case "short":
+            return "0";
+
+        case "long":
+            return "0L";
+
+        case "float":
+            return "0";
+
+        case "double":
+            return "0D";
+
+        case "char":
+            return "' '";
+
+        case "boolean":
+            return "false";
+
+        default:
+            return "null";
+        }
+    }
+
+    /**
      * @param propertyType
      * @return
      */

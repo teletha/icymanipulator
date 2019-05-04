@@ -18,9 +18,11 @@ import icy.manipulator.tool.IcyManipulator2;
 class ObjectPropertyTest {
 
     @RegisterExtension
-    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator2.class, ObjectProperty.class);
+    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator2.class, ObjectPropertyModel.class);
 
     @Test
     void attribute() {
+        ObjectProperty instance = ObjectProperty.with(base -> base.name("String").age(12));
+        assert instance.name.equals("ok");
     }
 }

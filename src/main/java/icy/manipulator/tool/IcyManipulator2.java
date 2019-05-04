@@ -12,11 +12,11 @@ package icy.manipulator.tool;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.StringJoiner;
+import java.util.function.UnaryOperator;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
@@ -38,21 +38,12 @@ import javax.lang.model.type.TypeMirror;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 
-import icy.manipulator.Accessor;
 import icy.manipulator.Icy;
-import icy.manipulator.Icy.Derive;
 import icy.manipulator.Manipulatable;
-import icy.manipulator.Manipulator;
 
 @SupportedSourceVersion(SourceVersion.RELEASE_13)
 @SupportedAnnotationTypes("icy.manipulator.Icy")
 public class IcyManipulator2 extends AbstractProcessor {
-
-    /** The name of model manipulator class. */
-    private static final String ManipulatorClass = "Manipulator";
-
-    /** The name of model manipulator method. */
-    private static final String ManipulatorMethod = "manipulate";
 
     /** The suffix of model definition. */
     static final String ModelDefinitionSuffix = "Model";
@@ -166,28 +157,6 @@ public class IcyManipulator2 extends AbstractProcessor {
          */
         @Override
         public CodeAnalyzer visitVariable(VariableElement e, VariableElement p) {
-            switch (e.getKind()) {
-            case FIELD:
-                Set<Modifier> modifiers = e.getModifiers();
-
-                if (modifiers.contains(Modifier.PRIVATE)) {
-                    break;
-                }
-
-                if (modifiers.contains(Modifier.STATIC)) {
-                    break;
-                }
-
-                Type type = Type.of(e.asType());
-
-                if (type != null) {
-                    properties.add(new Property(type, e.getSimpleName().toString(), modifiers.contains(Modifier.FINAL)));
-                }
-                break;
-
-            default:
-                break;
-            }
             return this;
         }
 
@@ -197,14 +166,19 @@ public class IcyManipulator2 extends AbstractProcessor {
         @Override
         public CodeAnalyzer visitExecutable(ExecutableElement e, VariableElement z) {
             if (e.getKind() == ElementKind.METHOD) {
-                Derive derive = e.getAnnotation(Icy.Derive.class);
+                // Derive derive = e.getAnnotation(Icy.Derive.class);
+                //
+                // if (derive != null && isDeriveMethod(e)) {
+                // Arrays.stream(derive.to()).map(this::findPropertyByName).flatMap(Optional::stream).forEach(p
+                // -> p.isDerived = true);
+                // Arrays.stream(derive.by())
+                // .map(this::findPropertyByName)
+                // .flatMap(Optional::stream)
+                // .forEach(p -> p.derive = e.getSimpleName().toString());
+                // }
 
-                if (derive != null && isDeriveMethod(e)) {
-                    Arrays.stream(derive.to()).map(this::findPropertyByName).flatMap(Optional::stream).forEach(p -> p.isDerived = true);
-                    Arrays.stream(derive.by())
-                            .map(this::findPropertyByName)
-                            .flatMap(Optional::stream)
-                            .forEach(p -> p.derive = e.getSimpleName().toString());
+                if (isPropertyDefinition(e)) {
+                    properties.add(new Property(Type.of(e.getReturnType()), e.getSimpleName().toString(), true));
                 }
             }
             return this;
@@ -240,31 +214,52 @@ public class IcyManipulator2 extends AbstractProcessor {
             write("/**");
             write(" * {@link ", Manipulatable.class, "} model for {@link ", model, "}.");
             write(" */");
-            write("public abstract class ", clazz, " extends ", model, " implements ", Manipulatable.class, "<", clazz, "> {");
+            write("public  class ", clazz, " extends ", model, " {");
             write();
             for (Property property : properties) {
                 // SETTER HANDLE
                 if (property.isFinal) {
                     write("     /** The final property updater. */");
-                    write("     private static final java.lang.invoke.MethodHandle ", property.name, "Updater = icy.manipulator.Manipulator.updater(", model, ".class, \"", property.name + "\");");
+                    write("     private static final java.lang.invoke.MethodHandle ", property.name, "Updater = icy.manipulator.Manipulator.updater(", clazz, ".class, \"", property.name + "\");");
                     write();
                 }
             }
-            write("     /** The model manipulator for reuse. */");
-            write("     private static final ", ManipulatorClass, " MANIPULATOR = new ", ManipulatorClass, "(null);");
+            for (Property property : properties) {
+                // property field
+                write("     /** The exposed property. */");
+                write("     public final ", property.type, " ", property.name, ";");
+                write();
+            }
+
+            // CONSTRUCTOR
+            write("     /**");
+            write("      * HIDE CONSTRUCTOR");
+            write("      */");
+            write("     protected ", clazz, "() {");
+            for (Property property : properties) {
+                // initialize field
+                write("          this.", property.name, " = ", property.type.defaultValue(), ";");
+            }
+            write("     }");
             write();
             write("     /**");
             write("      * HIDE CONSTRUCTOR");
             write("      */");
-            write("     protected ", clazz.className, "() {");
+            write("     protected ", clazz, "(", parameterWithType(properties), ") {");
+            for (Property property : properties) {
+                // initialize field
+                write("          this.", property.name, " = ", property.name, ";");
+            }
             write("     }");
             write();
+
             for (Property property : properties) {
                 // GETTER
                 write("     /**");
                 write("     * Retrieve ", property.name, " property.");
                 write("     */");
-                write("     public ", property.type, " ", property.name, "() {");
+                write("     @Override");
+                write("     public final ", property.type, " ", property.name, "() {");
                 write("         return this.", property.name, ";");
                 write("     }");
                 write();
@@ -273,7 +268,7 @@ public class IcyManipulator2 extends AbstractProcessor {
                 write("     /**");
                 write("     * Modify ", property.name, " property.");
                 write("     */");
-                write("     ", property.setterVisibility(), " ", clazz, " ", property.name, "(", property.type, " value) {");
+                write("     ", clazz, " ", property.name, "(", property.type, " value) {");
                 if (property.isFinal == false) {
                     write("         this.", property.name, " = value;");
                     if (property.derive != null) write("             super.", property.derive, "(this);");
@@ -295,90 +290,35 @@ public class IcyManipulator2 extends AbstractProcessor {
             write("     /**");
             write("      * Create model builder without base model.");
             write("      */");
-            write("     public static final ", $(clazz.variables), clazz, " with() {");
-            write("         return new Melty(null);");
+            write("     public static final ", $(clazz.variables), "Melty", clazz, " with() {");
+            write("         return new Melty", clazz, "(null);");
             write("     }");
             write();
             write("     /**");
             write("      * Create model builder using the specified definition as base model.");
             write("      */");
-            write("     public static final ", $(clazz.variables), clazz, " with(", clazz, " base) {");
-            write("         return new Melty(base);");
+            write("     public static final ", $(clazz.variables), "Melty", clazz, " with(", clazz, " base) {");
+            write("         return new Melty", clazz, "(base);");
             write("     }");
             write();
-
-            // Manipulator methods
-            String manipulatorType;
-            if (clazz.variables.isEmpty()) {
-                manipulatorType = ManipulatorClass + "<" + clazz.className + ">";
-            } else {
-                manipulatorType = ManipulatorClass + "<" + clazz.className + clazz.variables + ", " + clazz.variables.substring(1);
-            }
             write("     /**");
-            write("      * Create model manipulator.");
+            write("      * Create model builder using the specified definition as base model.");
             write("      */");
-            write("     public static final ", $(clazz.variables), manipulatorType, ManipulatorMethod, "() {");
-            write("         return MANIPULATOR;");
+            write("     public static final ", $(clazz.variables), clazz, " with(", UnaryOperator.class, "<Melty", clazz, "> base) {");
+            write("         return base.apply(new Melty", clazz, "(null));");
             write("     }");
             write();
-
-            // Immutable model
-            write("     /**");
-            write("      * Immutable Model.");
-            write("      */");
-            write("     private static final class Icy", clazz.variables, " extends ", clazz, " {");
-            write();
-            write("         /**");
-            write("          * HIDE CONSTRUCTOR");
-            write("          */");
-            write("         private Icy(", parameterWithType(properties), ") {");
-            for (Property property : properties) {
-                if (property.isModel) {
-                    write("                 this.", property.name, " = ", property.name, " == null ? null : " + property.name, ".ice();");
-                } else if (property.isFinal) {
-                    write("                 super.", property.name, "(", property.name, ");");
-                } else {
-                    write("                 this.", property.name, " = ", property.name, ";");
-                }
-            }
-            write("         }");
-            write();
-            write("         /**");
-            write("          * {@inheritDoc}");
-            write("          */");
-            write("         @Override");
-            write("         public ", clazz, " melt() {");
-            write("             return new Melty(this);");
-            write("         }");
-            write();
-            // Override Setters
-            for (Property property : properties) {
-                if (!property.isDerived) {
-                    write("         /**");
-                    write("          * {@inheritDoc}");
-                    write("          */");
-                    write("         @Override");
-                    write("         ", property.setterVisibility(), " ", clazz, " ", property.name, "(", property.type, " value) {");
-                    write("             if (this.", property.name, " == value) {");
-                    write("                 return this;");
-                    write("             }");
-                    write("             return new Icy(", parameterReplaceable(properties, property), ");");
-                    write("         }");
-                    write();
-                }
-            }
-            write("     }");
 
             // Mutable model
             write("     /**");
-            write("      * Mutable Model.");
+            write("      * Mutable {@link ", clazz, "} Model.");
             write("      */");
-            write("     private static final class Melty", clazz.variables, " extends ", clazz, " {");
+            write("     public static final class Melty", clazz, clazz.variables, " extends ", clazz, " {");
             write();
             write("         /**");
             write("          * HIDE CONSTRUCTOR");
             write("          */");
-            write("         private Melty(", clazz, " base) {");
+            write("         private Melty", clazz, "(", clazz, " base) {");
             write("             if (base != null) {");
             for (Property property : properties) {
                 if (property.isFinal) {
@@ -391,57 +331,21 @@ public class IcyManipulator2 extends AbstractProcessor {
             write("         }");
             write();
             write("         /**");
-            write("          * {@inheritDoc}");
+            write("          * Create immutable model.");
             write("          */");
-            write("         @Override");
-            write("         public ", clazz, " ice() {");
-            write("             return new Icy(", parameter(properties), ");");
-            write("         }");
-            write("     }");
-
-            // MANIPULATOR
-            String TYPES = "";
-            if (!clazz.variables.isEmpty()) {
-                TYPES = ", " + clazz.variables.substring(1, clazz.variables.length() - 1);
-            }
-
-            write("     /**");
-            write("      * Model Manipulator.");
-            write("      */");
-            write("     public static final class ", ManipulatorClass, "<RootModel", TYPES, "> extends ", Manipulator.class
-                    .getName(), "<RootModel,", clazz, "> {");
-            write();
-            for (Property property : properties) {
-                write("         /** The accessor for ", property.name, " property. */");
-                write("         private static final ", Accessor.class, " ", property.NAME, " = ", Accessor.class, ".<", clazz.className, ", ", property.type.generic
-                        ? "Object"
-                        : property.TYPE.className, "> of(", clazz.className, "::", property.name, ",  ", clazz.className, "::", property.name, ");");
-                write();
-            }
-            write("         /**");
-            write("          * Construct operator.");
-            write("          */");
-            write("         public ", ManipulatorClass, "(", Accessor.class, "<RootModel,", clazz, "> parent) {");
-            write("             super(parent);");
+            write("         public final ", clazz, " ice() {");
+            write("             return new ", clazz, "(", parameter(properties), ");");
             write("         }");
             write();
             for (Property property : properties) {
+                // Expose setter
                 write("         /**");
-                write("          * Property operator.");
-                write("          */");
-                if (property.isModel) {
-                    if (property.TYPE.variables.isEmpty()) {
-                        write("         public ", property.TYPE.className, ".", ManipulatorClass, "<", clazz, "> ", property.name, "() {");
-                    } else {
-                        write("         public ", property.TYPE.className, ".", ManipulatorClass, "<", clazz, ", ", property.TYPE, "> ", property.name, "() {");
-                    }
-                    write("             return new ", property.TYPE.className, ".", ManipulatorClass, "(parent.then(", property.NAME, "));");
-                    write("         }");
-                } else {
-                    write("         public ", Accessor.class, "<RootModel,", property.TYPE, "> ", property.name, "() {");
-                    write("             return parent.then(", property.NAME, ");");
-                    write("         }");
-                }
+                write("         * Expose ", property.name, " setter.");
+                write("         */");
+                write("         public final Melty", clazz, " ", property.name, "(", property.type, " value) {");
+                write("             super.", property.name, "(value);");
+                write("             return this;");
+                write("         }");
                 write();
             }
             write("     }");
@@ -585,6 +489,16 @@ public class IcyManipulator2 extends AbstractProcessor {
                 return false;
             }
             return true;
+        }
+
+        /**
+         * Check definition.
+         * 
+         * @param method
+         * @return
+         */
+        private boolean isPropertyDefinition(ExecutableElement method) {
+            return method.getModifiers().contains(Modifier.ABSTRACT);
         }
     }
 }
