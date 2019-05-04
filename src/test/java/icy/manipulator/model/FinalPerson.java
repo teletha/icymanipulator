@@ -4,232 +4,230 @@ import icy.manipulator.Accessor;
 import icy.manipulator.Manipulatable;
 
 /**
- * {@link Manipulatable} model for {@link PersonModel}.
+ * {@link Manipulatable} model for {@link FinalPersonModel}.
  */
 public abstract class FinalPerson extends FinalPersonModel implements Manipulatable<FinalPerson> {
 
-    /** The final property updater. */
-    private static final java.lang.invoke.MethodHandle nameUpdater = icy.manipulator.Manipulator.updater(FinalPersonModel.class, "name");
+     /** The final property updater. */
+     private static final java.lang.invoke.MethodHandle nameUpdater = icy.manipulator.Manipulator.updater(FinalPersonModel.class, "name");
 
-    /** The final property updater. */
-    private static final java.lang.invoke.MethodHandle ageUpdater = icy.manipulator.Manipulator.updater(FinalPersonModel.class, "age");
+     /** The final property updater. */
+     private static final java.lang.invoke.MethodHandle ageUpdater = icy.manipulator.Manipulator.updater(FinalPersonModel.class, "age");
 
-    /** The final property updater. */
-    private static final java.lang.invoke.MethodHandle genderUpdater = icy.manipulator.Manipulator
-            .updater(FinalPersonModel.class, "gender");
+     /** The final property updater. */
+     private static final java.lang.invoke.MethodHandle genderUpdater = icy.manipulator.Manipulator.updater(FinalPersonModel.class, "gender");
 
-    /** The model manipulator for reuse. */
-    private static final Manipulator MANIPULATOR = new Manipulator(null);
+     /** The model manipulator for reuse. */
+     private static final Manipulator MANIPULATOR = new Manipulator(null);
 
-    /**
-     * HIDE CONSTRUCTOR
-     */
-    protected FinalPerson() {
-    }
+     /**
+      * HIDE CONSTRUCTOR
+      */
+     protected FinalPerson() {
+     }
 
-    /**
+     /**
      * Retrieve name property.
      */
-    public String name() {
-        return this.name;
-    }
+     public String name() {
+         return this.name;
+     }
 
-    /**
+     /**
      * Modify name property.
      */
-    public FinalPerson name(String value) {
-        try {
-            nameUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+     public FinalPerson name(String value) {
+         try {
+             nameUpdater.invoke(this, value);
+         } catch (Throwable e) {
+             throw new Error(e);
+         }
 
-        return this;
-    }
+         return this;
+     }
 
-    /**
+     /**
      * Retrieve age property.
      */
-    public int age() {
-        return this.age;
-    }
+     public int age() {
+         return this.age;
+     }
 
-    /**
+     /**
      * Modify age property.
      */
-    public FinalPerson age(int value) {
-        try {
-            ageUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+     public FinalPerson age(int value) {
+         try {
+             ageUpdater.invoke(this, value);
+         } catch (Throwable e) {
+             throw new Error(e);
+         }
 
-        return this;
-    }
+         return this;
+     }
 
-    /**
+     /**
      * Retrieve gender property.
      */
-    public Gender gender() {
-        return this.gender;
-    }
+     public Gender gender() {
+         return this.gender;
+     }
 
-    /**
+     /**
      * Modify gender property.
      */
-    public FinalPerson gender(Gender value) {
-        try {
-            genderUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
-        return this;
-    }
+     public FinalPerson gender(Gender value) {
+         try {
+             genderUpdater.invoke(this, value);
+         } catch (Throwable e) {
+             throw new Error(e);
+         }
 
-    /**
-     * Create model builder without base model.
-     */
-    public static final FinalPerson with() {
-        return new Melty(null);
-    }
+         return this;
+     }
 
-    /**
-     * Create model builder using the specified definition as base model.
-     */
-    public static final FinalPerson with(FinalPerson base) {
-        return new Melty(base);
-    }
+     /**
+      * Create model builder without base model.
+      */
+     public static final FinalPerson with() {
+         return new Melty(null);
+     }
 
-    /**
-     * Create model manipulator.
-     */
-    public static final Manipulator<FinalPerson> manipulate() {
-        return MANIPULATOR;
-    }
+     /**
+      * Create model builder using the specified definition as base model.
+      */
+     public static final FinalPerson with(FinalPerson base) {
+         return new Melty(base);
+     }
 
-    /**
-     * Immutable Model.
-     */
-    private static final class Icy extends FinalPerson {
+     /**
+      * Create model manipulator.
+      */
+     public static final Manipulator<FinalPerson>manipulate() {
+         return MANIPULATOR;
+     }
 
-        /**
-         * HIDE CONSTRUCTOR
-         */
-        private Icy(String name, int age, Gender gender) {
-            super.name(name);
-            super.age(age);
-            super.gender(gender);
-        }
+     /**
+      * Immutable Model.
+      */
+     private static final class Icy extends FinalPerson {
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public FinalPerson melt() {
-            return new Melty(this);
-        }
+         /**
+          * HIDE CONSTRUCTOR
+          */
+         private Icy(String name, int age, Gender gender) {
+                 super.name(name);
+                 super.age(age);
+                 super.gender(gender);
+         }
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public FinalPerson name(String value) {
-            if (this.name == value) {
-                return this;
-            }
-            return new Icy(value, this.age, this.gender);
-        }
+         /**
+          * {@inheritDoc}
+          */
+         @Override
+         public FinalPerson melt() {
+             return new Melty(this);
+         }
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public FinalPerson age(int value) {
-            if (this.age == value) {
-                return this;
-            }
-            return new Icy(this.name, value, this.gender);
-        }
+         /**
+          * {@inheritDoc}
+          */
+         @Override
+         public FinalPerson name(String value) {
+             if (this.name == value) {
+                 return this;
+             }
+             return new Icy(value, this.age, this.gender);
+         }
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public FinalPerson gender(Gender value) {
-            if (this.gender == value) {
-                return this;
-            }
-            return new Icy(this.name, this.age, value);
-        }
+         /**
+          * {@inheritDoc}
+          */
+         @Override
+         public FinalPerson age(int value) {
+             if (this.age == value) {
+                 return this;
+             }
+             return new Icy(this.name, value, this.gender);
+         }
 
-    }
+         /**
+          * {@inheritDoc}
+          */
+         @Override
+         public FinalPerson gender(Gender value) {
+             if (this.gender == value) {
+                 return this;
+             }
+             return new Icy(this.name, this.age, value);
+         }
 
-    /**
-     * Mutable Model.
-     */
-    private static final class Melty extends FinalPerson {
+     }
+     /**
+      * Mutable Model.
+      */
+     private static final class Melty extends FinalPerson {
 
-        /**
-         * HIDE CONSTRUCTOR
-         */
-        private Melty(FinalPerson base) {
-            if (base != null) {
-                super.name(base.name);
-                super.age(base.age);
-                super.gender(base.gender);
-            }
-        }
+         /**
+          * HIDE CONSTRUCTOR
+          */
+         private Melty(FinalPerson base) {
+             if (base != null) {
+                 super.name(base.name);
+                 super.age(base.age);
+                 super.gender(base.gender);
+             }
+         }
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public FinalPerson ice() {
-            return new Icy(name, age, gender);
-        }
-    }
+         /**
+          * {@inheritDoc}
+          */
+         @Override
+         public FinalPerson ice() {
+             return new Icy(name, age, gender);
+         }
+     }
+     /**
+      * Model Manipulator.
+      */
+     public static final class Manipulator<RootModel> extends icy.manipulator.Manipulator<RootModel,FinalPerson> {
 
-    /**
-     * Model Manipulator.
-     */
-    public static final class Manipulator<RootModel> extends icy.manipulator.Manipulator<RootModel, FinalPerson> {
+         /** The accessor for name property. */
+         private static final Accessor NAME = Accessor.<FinalPerson, String> of(FinalPerson::name,  FinalPerson::name);
 
-        /** The accessor for name property. */
-        private static final Accessor NAME = Accessor.<FinalPerson, String> of(FinalPerson::name, FinalPerson::name);
+         /** The accessor for age property. */
+         private static final Accessor AGE = Accessor.<FinalPerson, Integer> of(FinalPerson::age,  FinalPerson::age);
 
-        /** The accessor for age property. */
-        private static final Accessor AGE = Accessor.<FinalPerson, Integer> of(FinalPerson::age, FinalPerson::age);
+         /** The accessor for gender property. */
+         private static final Accessor GENDER = Accessor.<FinalPerson, Gender> of(FinalPerson::gender,  FinalPerson::gender);
 
-        /** The accessor for gender property. */
-        private static final Accessor GENDER = Accessor.<FinalPerson, Gender> of(FinalPerson::gender, FinalPerson::gender);
+         /**
+          * Construct operator.
+          */
+         public Manipulator(Accessor<RootModel,FinalPerson> parent) {
+             super(parent);
+         }
 
-        /**
-         * Construct operator.
-         */
-        public Manipulator(Accessor<RootModel, FinalPerson> parent) {
-            super(parent);
-        }
+         /**
+          * Property operator.
+          */
+         public Accessor<RootModel,String> name() {
+             return parent.then(NAME);
+         }
 
-        /**
-         * Property operator.
-         */
-        public Accessor<RootModel, String> name() {
-            return parent.then(NAME);
-        }
+         /**
+          * Property operator.
+          */
+         public Accessor<RootModel,Integer> age() {
+             return parent.then(AGE);
+         }
 
-        /**
-         * Property operator.
-         */
-        public Accessor<RootModel, Integer> age() {
-            return parent.then(AGE);
-        }
+         /**
+          * Property operator.
+          */
+         public Accessor<RootModel,Gender> gender() {
+             return parent.then(GENDER);
+         }
 
-        /**
-         * Property operator.
-         */
-        public Accessor<RootModel, Gender> gender() {
-            return parent.then(GENDER);
-        }
-
-    }
+     }
 }
