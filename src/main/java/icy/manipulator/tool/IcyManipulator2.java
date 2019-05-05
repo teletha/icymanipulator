@@ -102,6 +102,12 @@ public class IcyManipulator2 extends AbstractProcessor {
         /** The property list. */
         private List<Property> properties = new ArrayList();
 
+        /** The required properties. */
+        private List<Property> requires;
+
+        /** The optional properties. */
+        private List<Property> optionals;
+
         /**
          * {@inheritDoc}
          */
@@ -206,10 +212,19 @@ public class IcyManipulator2 extends AbstractProcessor {
          * Prepare to analyze.
          */
         private void prepare() {
-            for (int i = 0; i < properties.size() - 1; i++) {
-                properties.get(i).next = properties.get(i + 1).NAME;
+            requires = properties.stream().filter(p -> !p.hasDefault).collect(Collectors.toList());
+            optionals = properties.stream().filter(p -> p.hasDefault).collect(Collectors.toList());
+
+            if (requires.size() != 0) {
+                for (int i = 0; i < requires.size() - 1; i++) {
+                    requires.get(i).next = requires.get(i + 1).NAME;
+                }
+                requires.get(requires.size() - 1).next = clazz.className;
             }
-            properties.get(properties.size() - 1).next = clazz.className;
+
+            for (Property property : optionals) {
+                property.next = clazz.className;
+            }
         }
 
         /**
@@ -247,7 +262,8 @@ public class IcyManipulator2 extends AbstractProcessor {
             write("     protected ", clazz, "() {");
             for (Property property : properties) {
                 // initialize field
-                write("          this.", property.name, " = ", property.type.defaultValue(), ";");
+                write("          this.", property.name, " = ", (property.hasDefault ? "super." + property.name + "()"
+                        : property.type.defaultValue()), ";");
             }
             write("     }");
             write();
@@ -280,7 +296,7 @@ public class IcyManipulator2 extends AbstractProcessor {
             write("     /**");
             write("      * Create model builder without base model.");
             write("      */");
-            write("     public static final ", $(clazz.variables), properties.get(0).NAME, " create() {");
+            write("     public static final ", $(clazz.variables), firstRequiredProerptyType(), " create() {");
             write("         return new Melty();");
             write("     }");
             write();
@@ -502,6 +518,10 @@ public class IcyManipulator2 extends AbstractProcessor {
             property.hasDefault = !method.getModifiers().contains(Modifier.ABSTRACT);
 
             properties.add(property);
+        }
+
+        private String firstRequiredProerptyType() {
+            return requires.stream().map(p -> p.NAME).findFirst().orElse(clazz.className);
         }
     }
 }
