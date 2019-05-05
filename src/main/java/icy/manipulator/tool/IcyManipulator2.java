@@ -108,6 +108,8 @@ public class IcyManipulator2 extends AbstractProcessor {
         /** The optional properties. */
         private List<Property> optionals;
 
+        private StringJoiner apis = new StringJoiner(", ");
+
         /**
          * {@inheritDoc}
          */
@@ -219,11 +221,19 @@ public class IcyManipulator2 extends AbstractProcessor {
                 for (int i = 0; i < requires.size() - 1; i++) {
                     requires.get(i).next = requires.get(i + 1).NAME;
                 }
-                requires.get(requires.size() - 1).next = clazz.className;
+                requires.get(requires.size() - 1).next = self();
             }
 
             for (Property property : optionals) {
-                property.next = clazz.className;
+                property.next = self();
+            }
+
+            // compute api
+            for (Property property : requires) {
+                apis.add(property.NAME);
+            }
+            if (optionals.size() != 0) {
+                apis.add("OPTIONS");
             }
         }
 
@@ -297,7 +307,7 @@ public class IcyManipulator2 extends AbstractProcessor {
             write("      * Create model builder without base model.");
             write("      */");
             write("     public static final ", $(clazz.variables), firstRequiredProerptyType(), " create() {");
-            write("         return new Melty();");
+            write("         return", firstRequiredProerptyType().contains(" extends ") ? " (T)" : "", " new Melty();");
             write("     }");
             write();
 
@@ -307,15 +317,14 @@ public class IcyManipulator2 extends AbstractProcessor {
             write("    /**");
             write("     * Mutable Model.");
             write("    */");
-            write("    private static final class Melty", clazz.variables, " extends ", clazz, " implements ", properties.stream()
-                    .map(p -> p.NAME)
-                    .collect(Collectors.joining(", ")), " {");
+            write("    private static final class Melty", clazz.variables, " extends ", clazz, " implements ", apis, " {");
             for (Property property : properties) {
                 // Define Setters
                 write();
                 write("        /**");
                 write("         * Modify ", property.name, " property.");
                 write("        */");
+                write("        @Override");
                 write("        public final ", property.next, " ", property.name, "(", property.type, " value) {");
                 if (property.isFinal == false) {
                     write("            this.", property.name, " = value;");
@@ -329,7 +338,7 @@ public class IcyManipulator2 extends AbstractProcessor {
                     write("            }");
                 }
                 write();
-                write("            return this;");
+                write("            return", optionals.isEmpty() ? "" : " (T)", " this;");
                 write("        }");
             }
             write("     }");
@@ -337,7 +346,7 @@ public class IcyManipulator2 extends AbstractProcessor {
             // =======================================
             // Assignment API
             // =======================================
-            for (Property property : properties) {
+            for (Property property : requires) {
                 write();
                 write("    /**");
                 write("     * Property assignment API.");
@@ -346,6 +355,23 @@ public class IcyManipulator2 extends AbstractProcessor {
                 write("        ", property.next, " ", property.name, "(", property.type, " value);");
                 write("    }");
             }
+
+            if (optionals.size() != 0) {
+                write();
+                write("    /**");
+                write("     * Property assignment API.");
+                write("    */");
+                write("    public static interface OPTIONS {");
+                for (Property property : optionals) {
+                    write();
+                    write("    /**");
+                    write("     * Property assignment API.");
+                    write("    */");
+                    write("    ", property.next, " ", property.name, "(", property.type, " value);");
+                }
+                write("    }");
+            }
+
             write("}");
 
             // generate code fragments
@@ -521,7 +547,11 @@ public class IcyManipulator2 extends AbstractProcessor {
         }
 
         private String firstRequiredProerptyType() {
-            return requires.stream().map(p -> p.NAME).findFirst().orElse(clazz.className);
+            return requires.stream().map(p -> p.NAME).findFirst().orElse(self());
+        }
+
+        private String self() {
+            return optionals.isEmpty() ? clazz.className : "<T extends " + clazz.className + " & OPTIONS> T";
         }
     }
 }

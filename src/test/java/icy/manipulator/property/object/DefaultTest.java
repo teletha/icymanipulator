@@ -21,11 +21,20 @@ class DefaultTest {
     static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator2.class, DefaultModel.class);
 
     @Test
-    void property() {
+    void defaults() {
         Default instance = Default.create();
         assert instance.name.equals("Bruno Bucciarati");
         assert instance.name().equals("Bruno Bucciarati");
         assert instance.stand.equals("Sticky Fingers");
         assert instance.stand().equals("Sticky Fingers");
+    }
+
+    @Test
+    void property() {
+        Default instance = Default.create().name("Guido Mista").stand("Sex Pistols");
+        assert instance.name.equals("Guido Mista");
+        assert instance.name().equals("Guido Mista");
+        assert instance.stand.equals("Sex Pistols");
+        assert instance.stand().equals("Sex Pistols");
     }
 }

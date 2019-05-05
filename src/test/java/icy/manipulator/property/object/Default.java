@@ -54,53 +54,57 @@ public  class Default extends DefaultModel {
      /**
       * Create model builder without base model.
       */
-     public static final Default create() {
-         return new Melty();
+     public static final <T extends Default & OPTIONS> T create() {
+         return (T) new Melty();
      }
 
     /**
      * Mutable Model.
     */
-    private static final class Melty extends Default implements NAME, STAND {
+    private static final class Melty extends Default implements OPTIONS {
 
         /**
          * Modify name property.
         */
-        public final Default name(String value) {
+        @Override
+        public final <T extends Default & OPTIONS> T name(String value) {
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
 
-            return this;
+            return (T) this;
         }
 
         /**
          * Modify stand property.
         */
-        public final Default stand(String value) {
+        @Override
+        public final <T extends Default & OPTIONS> T stand(String value) {
             try {
                 standUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
 
-            return this;
+            return (T) this;
         }
      }
 
     /**
      * Property assignment API.
     */
-    public static interface NAME {
-        Default name(String value);
-    }
+    public static interface OPTIONS {
 
     /**
      * Property assignment API.
     */
-    public static interface STAND {
-        Default stand(String value);
+    <T extends Default & OPTIONS> T name(String value);
+
+    /**
+     * Property assignment API.
+    */
+    <T extends Default & OPTIONS> T stand(String value);
     }
 }

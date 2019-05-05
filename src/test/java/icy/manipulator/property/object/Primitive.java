@@ -162,6 +162,7 @@ public  class Primitive extends PrimitiveModel {
         /**
          * Modify intX property.
         */
+        @Override
         public final LONGX intX(int value) {
             try {
                 intXUpdater.invoke(this, value);
@@ -175,6 +176,7 @@ public  class Primitive extends PrimitiveModel {
         /**
          * Modify longX property.
         */
+        @Override
         public final FLOATX longX(long value) {
             try {
                 longXUpdater.invoke(this, value);
@@ -188,6 +190,7 @@ public  class Primitive extends PrimitiveModel {
         /**
          * Modify floatX property.
         */
+        @Override
         public final DOUBLEX floatX(float value) {
             try {
                 floatXUpdater.invoke(this, value);
@@ -201,6 +204,7 @@ public  class Primitive extends PrimitiveModel {
         /**
          * Modify doubleX property.
         */
+        @Override
         public final BYTEX doubleX(double value) {
             try {
                 doubleXUpdater.invoke(this, value);
@@ -214,6 +218,7 @@ public  class Primitive extends PrimitiveModel {
         /**
          * Modify byteX property.
         */
+        @Override
         public final SHORTX byteX(byte value) {
             try {
                 byteXUpdater.invoke(this, value);
@@ -227,6 +232,7 @@ public  class Primitive extends PrimitiveModel {
         /**
          * Modify shortX property.
         */
+        @Override
         public final CHARX shortX(short value) {
             try {
                 shortXUpdater.invoke(this, value);
@@ -240,6 +246,7 @@ public  class Primitive extends PrimitiveModel {
         /**
          * Modify charX property.
         */
+        @Override
         public final BOOLEANX charX(char value) {
             try {
                 charXUpdater.invoke(this, value);
@@ -253,6 +260,7 @@ public  class Primitive extends PrimitiveModel {
         /**
          * Modify booleanX property.
         */
+        @Override
         public final Primitive booleanX(boolean value) {
             try {
                 booleanXUpdater.invoke(this, value);

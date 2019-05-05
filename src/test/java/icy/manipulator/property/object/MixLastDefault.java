@@ -3,36 +3,36 @@ package icy.manipulator.property.object;
 import icy.manipulator.Manipulatable;
 
 /**
- * {@link Manipulatable} model for {@link MultipleModel}.
+ * {@link Manipulatable} model for {@link MixLastDefaultModel}.
  */
-public  class Multiple extends MultipleModel {
+public  class MixLastDefault extends MixLastDefaultModel {
 
      /** The final property updater. */
-     private static final java.lang.invoke.MethodHandle nameUpdater = icy.manipulator.Manipulator.updater(Multiple.class, "name");
+     private static final java.lang.invoke.MethodHandle nameUpdater = icy.manipulator.Manipulator.updater(MixLastDefault.class, "name");
 
      /** The final property updater. */
-     private static final java.lang.invoke.MethodHandle standUpdater = icy.manipulator.Manipulator.updater(Multiple.class, "stand");
+     private static final java.lang.invoke.MethodHandle ageUpdater = icy.manipulator.Manipulator.updater(MixLastDefault.class, "age");
 
      /** The exposed property. */
      public final String name;
 
      /** The exposed property. */
-     public final String stand;
+     public final int age;
 
      /**
       * HIDE CONSTRUCTOR
       */
-     protected Multiple() {
+     protected MixLastDefault() {
           this.name = null;
-          this.stand = null;
+          this.age = super.age();
      }
 
      /**
       * HIDE CONSTRUCTOR
       */
-     protected Multiple(String name, String stand) {
+     protected MixLastDefault(String name, int age) {
           this.name = name;
-          this.stand = stand;
+          this.age = age;
      }
 
      /**
@@ -44,11 +44,11 @@ public  class Multiple extends MultipleModel {
      }
 
      /**
-     * Retrieve stand property.
+     * Retrieve age property.
      */
      @Override
-     public final String stand() {
-         return this.stand;
+     public final int age() {
+         return this.age;
      }
 
      /**
@@ -61,34 +61,34 @@ public  class Multiple extends MultipleModel {
     /**
      * Mutable Model.
     */
-    private static final class Melty extends Multiple implements NAME, STAND {
+    private static final class Melty extends MixLastDefault implements NAME, OPTIONS {
 
         /**
          * Modify name property.
         */
         @Override
-        public final STAND name(String value) {
+        public final <T extends MixLastDefault & OPTIONS> T name(String value) {
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
 
-            return this;
+            return (T) this;
         }
 
         /**
-         * Modify stand property.
+         * Modify age property.
         */
         @Override
-        public final Multiple stand(String value) {
+        public final <T extends MixLastDefault & OPTIONS> T age(int value) {
             try {
-                standUpdater.invoke(this, value);
+                ageUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
 
-            return this;
+            return (T) this;
         }
      }
 
@@ -96,13 +96,17 @@ public  class Multiple extends MultipleModel {
      * Property assignment API.
     */
     public static interface NAME {
-        STAND name(String value);
+        <T extends MixLastDefault & OPTIONS> T name(String value);
     }
 
     /**
      * Property assignment API.
     */
-    public static interface STAND {
-        Multiple stand(String value);
+    public static interface OPTIONS {
+
+    /**
+     * Property assignment API.
+    */
+    <T extends MixLastDefault & OPTIONS> T age(int value);
     }
 }

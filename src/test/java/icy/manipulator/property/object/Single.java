@@ -50,6 +50,7 @@ public  class Single extends SingleModel {
         /**
          * Modify name property.
         */
+        @Override
         public final Single name(String value) {
             try {
                 nameUpdater.invoke(this, value);
