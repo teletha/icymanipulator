@@ -37,6 +37,12 @@ class Property {
     /** The state. */
     boolean isDerived;
 
+    /** The property state. */
+    boolean hasDefault;
+
+    /** The next property. */
+    String next;
+
     /**
      * 
      */

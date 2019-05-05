@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
 public @interface Icy {
 
     @Documented
-    @Target(ElementType.FIELD)
+    @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.SOURCE)
     @interface Property {
     }

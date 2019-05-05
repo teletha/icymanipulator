@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.StringJoiner;
-import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
@@ -73,6 +73,7 @@ public class IcyManipulator2 extends AbstractProcessor {
 
             if (analyzer.hasError == false) {
                 try {
+                    analyzer.prepare();
                     String code = analyzer.generateCode();
 
                     JavaFileObject generated = processingEnv.getFiler().createSourceFile(analyzer.clazz.toString());
@@ -177,9 +178,7 @@ public class IcyManipulator2 extends AbstractProcessor {
                 // .forEach(p -> p.derive = e.getSimpleName().toString());
                 // }
 
-                if (isPropertyDefinition(e)) {
-                    properties.add(new Property(Type.of(e.getReturnType()), e.getSimpleName().toString(), true));
-                }
+                createAsProperty(e);
             }
             return this;
         }
@@ -202,6 +201,16 @@ public class IcyManipulator2 extends AbstractProcessor {
 
         /** The code body. */
         private StringBuilder body = new StringBuilder();
+
+        /**
+         * Prepare to analyze.
+         */
+        private void prepare() {
+            for (int i = 0; i < properties.size() - 1; i++) {
+                properties.get(i).next = properties.get(i + 1).NAME;
+            }
+            properties.get(properties.size() - 1).next = clazz.className;
+        }
 
         /**
          * @param reader
@@ -263,65 +272,64 @@ public class IcyManipulator2 extends AbstractProcessor {
                 write("         return this.", property.name, ";");
                 write("     }");
                 write();
-
-                // SETTER
-                write("     /**");
-                write("     * Modify ", property.name, " property.");
-                write("     */");
-                write("     ", property.setterVisibility(), " final ", clazz, " ", property.name, "(", property.type, " value) {");
-                if (property.isFinal == false) {
-                    write("         this.", property.name, " = value;");
-                    if (property.derive != null) write("             super.", property.derive, "(this);");
-                } else {
-                    write("         try {");
-                    write("             ", property.name, "Updater.invoke(this, value);");
-                    if (property.derive != null) write("             super.", property.derive, "(this);");
-                    write("         } catch (Throwable e) {");
-                    write("             throw new Error(e);");
-                    write("         }");
-                }
-                write();
-                write("         return this;");
-                write("     }");
-                write();
             }
 
-            // Builder methods
+            // =======================================
+            // Builders
+            // =======================================
             write("     /**");
             write("      * Create model builder without base model.");
             write("      */");
-            write("     public static final ", $(clazz.variables), clazz, " with() {");
-            write("         return new ", clazz, "();");
-            write("     }");
-            write();
-            write("     /**");
-            write("      * Create model builder using the specified definition as base model.");
-            write("      */");
-            write("     public static final ", $(clazz.variables), clazz, " with(", clazz, " base) {");
-            write("         return new ", clazz, "();");
-            write("     }");
-            write();
-            write("     /**");
-            write("      * Create model builder using the specified definition as base model.");
-            write("      */");
-            write("     public static final ", $(clazz.variables), clazz, " with(", UnaryOperator.class, "<", clazz, "> base) {");
-            write("         return base.apply(new ", clazz, "());");
+            write("     public static final ", $(clazz.variables), properties.get(0).NAME, " create() {");
+            write("         return new Melty();");
             write("     }");
             write();
 
-            // // Define Assigner Interface
-            // for (int i = 0; i < properties.size(); i++) {
-            // Property property = properties.get(i);
-            // Property next = i == properties.size() - 1 ? null : properties.get(i + 1);
-            //
-            // write();
-            // write(" /**");
-            // write(" * Property setting interface.");
-            // write(" */");
-            // write(" public static interface ", property.NAME, " {");
-            // write(" ")
-            // write(" }");
-            // }
+            // =======================================
+            // Mutable Model
+            // =======================================
+            write("    /**");
+            write("     * Mutable Model.");
+            write("    */");
+            write("    private static final class Melty", clazz.variables, " extends ", clazz, " implements ", properties.stream()
+                    .map(p -> p.NAME)
+                    .collect(Collectors.joining(", ")), " {");
+            for (Property property : properties) {
+                // Define Setters
+                write();
+                write("        /**");
+                write("         * Modify ", property.name, " property.");
+                write("        */");
+                write("        public final ", property.next, " ", property.name, "(", property.type, " value) {");
+                if (property.isFinal == false) {
+                    write("            this.", property.name, " = value;");
+                    if (property.derive != null) write("            super.", property.derive, "(this);");
+                } else {
+                    write("            try {");
+                    write("                ", property.name, "Updater.invoke(this, value);");
+                    if (property.derive != null) write("                super.", property.derive, "(this);");
+                    write("            } catch (Throwable e) {");
+                    write("                throw new Error(e);");
+                    write("            }");
+                }
+                write();
+                write("            return this;");
+                write("        }");
+            }
+            write("     }");
+
+            // =======================================
+            // Assignment API
+            // =======================================
+            for (Property property : properties) {
+                write();
+                write("    /**");
+                write("     * Property assignment API.");
+                write("    */");
+                write("    public static interface ", property.NAME, " {");
+                write("        ", property.next, " ", property.name, "(", property.type, " value);");
+                write("    }");
+            }
             write("}");
 
             // generate code fragments
@@ -465,13 +473,35 @@ public class IcyManipulator2 extends AbstractProcessor {
         }
 
         /**
-         * Check definition.
+         * Check property declaring method.
          * 
          * @param method
-         * @return
          */
-        private boolean isPropertyDefinition(ExecutableElement method) {
-            return method.getModifiers().contains(Modifier.ABSTRACT);
+        private void createAsProperty(ExecutableElement method) {
+            // require annotation
+            icy.manipulator.Icy.Property annotation = method.getAnnotation(Icy.Property.class);
+
+            if (annotation == null) {
+                return;
+            }
+
+            // require no parameter
+            if (method.getParameters().size() != 0) {
+                error("Property declaring method must have no parameter.", method);
+                return;
+            }
+
+            Type returnType = Type.of(method.getReturnType());
+
+            if (returnType.className.equalsIgnoreCase("void")) {
+                error("Property declaring method must return something.", method);
+                return;
+            }
+
+            Property property = new Property(returnType, method.getSimpleName().toString(), true);
+            property.hasDefault = !method.getModifiers().contains(Modifier.ABSTRACT);
+
+            properties.add(property);
         }
     }
 }

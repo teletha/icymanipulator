@@ -15,14 +15,14 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import icy.manipulator.AnnotationProcessor;
 import icy.manipulator.tool.IcyManipulator2;
 
-class ObjectPropertyTest {
+class SingleTest {
 
     @RegisterExtension
-    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator2.class, ObjectPropertyModel.class);
+    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator2.class, SingleModel.class);
 
     @Test
-    void attribute() {
-        ObjectProperty instance = ObjectProperty.with(base -> base.name("String").age(12));
-        assert instance.name.equals("ok");
+    void property() {
+        Single instance = Single.create().name("Giorno Giovanna");
+        assert instance.name.equals("Giorno Giovanna");
     }
 }

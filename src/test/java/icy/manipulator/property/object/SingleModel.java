@@ -12,14 +12,8 @@ package icy.manipulator.property.object;
 import icy.manipulator.Icy;
 
 @Icy
-abstract class ObjectPropertyModel {
+abstract class SingleModel {
 
+    @Icy.Property
     public abstract String name();
-
-    public abstract int age();
-
-    @Icy.Companion
-    String name(CharSequence name) {
-        return name.toString();
-    }
 }

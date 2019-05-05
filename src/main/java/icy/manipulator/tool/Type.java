@@ -129,6 +129,7 @@ class Type {
         case "double":
         case "char":
         case "byte":
+        case "short":
         case "boolean":
         case "void":
             return true;
