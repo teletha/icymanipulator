@@ -10,6 +10,7 @@
 package icy.manipulator;
 
 import java.util.List;
+import java.util.StringJoiner;
 
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.ArrayType;
@@ -26,8 +27,6 @@ import javax.lang.model.type.TypeVisitor;
 import javax.lang.model.type.UnionType;
 import javax.lang.model.type.WildcardType;
 
-import icy.manipulator.tool.coder.ParameterVariable;
-
 /**
  * @version 2015/06/07 0:34:00
  */
@@ -40,7 +39,7 @@ class Type {
     final String className;
 
     /** The variable expression. */
-    final ParameterVariable variable = new ParameterVariable();
+    final StringJoiner variable = new StringJoiner(", ", "<", ">").setEmptyValue("");
 
     /** The generic flag. */
     final boolean generic;
