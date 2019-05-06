@@ -66,20 +66,20 @@ public class Default extends DefaultModel {
     /**
      * Create uninitialized {@link Default}.
      */
-    public static final <T extends Default & OPTIONS> T create() {
+    public static final <T extends Default & ÅssignArbitrary> T create() {
         return (T) new Melty();
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Melty extends Default implements OPTIONS {
+    private static final class Melty extends Default implements ÅssignArbitrary {
 
         /**
          * Modify name property.
          */
         @Override
-        public final <T extends Default & OPTIONS> T name(String value) {
+        public final <T extends Default & ÅssignArbitrary> T name(String value) {
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {
@@ -92,7 +92,7 @@ public class Default extends DefaultModel {
          * Modify stand property.
          */
         @Override
-        public final <T extends Default & OPTIONS> T stand(String value) {
+        public final <T extends Default & ÅssignArbitrary> T stand(String value) {
             try {
                 standUpdater.invoke(this, value);
             } catch (Throwable e) {
@@ -105,16 +105,16 @@ public class Default extends DefaultModel {
     /**
      * Property assignment API.
      */
-    public static interface OPTIONS {
+    public static interface ÅssignArbitrary {
 
         /**
          * Property assignment API.
          */
-        <T extends Default & OPTIONS> T name(String value);
+        <T extends Default & ÅssignArbitrary> T name(String value);
 
         /**
          * Property assignment API.
          */
-        <T extends Default & OPTIONS> T stand(String value);
+        <T extends Default & ÅssignArbitrary> T stand(String value);
     }
 }

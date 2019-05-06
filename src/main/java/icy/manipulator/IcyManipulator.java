@@ -22,6 +22,7 @@ import java.util.StringJoiner;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Generated;
+import javax.annotation.processing.Messager;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
@@ -65,7 +66,7 @@ public class IcyManipulator extends AbstractProcessor {
 
         for (Element element : env.getElementsAnnotatedWith(Icy.class)) {
             importer = new ClassImporter(element.toString());
-            CodeAnalyzer analyzer = element.accept(new CodeAnalyzer(), null);
+            CodeAnalyzer analyzer = element.accept(new CodeAnalyzer(processingEnv.getMessager()), null);
             analyzer.prepare();
 
             if (analyzer.properties.isEmpty()) {
@@ -91,7 +92,13 @@ public class IcyManipulator extends AbstractProcessor {
     /**
      * 
      */
-    private class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
+    static class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
+
+        /** The prefix of assignable interface. */
+        static final String AssignableInterfacePrefix = "Åssign";
+
+        /** The configuratino interface name for arbitrary perperties. */
+        private static final String ArbitraryInterface = AssignableInterfacePrefix + "Arbitrary";
 
         /** The fully qualified model class name. */
         private Type model;
@@ -108,9 +115,13 @@ public class IcyManipulator extends AbstractProcessor {
         /** The arbitrary properties. */
         private final List<Property> arbitrary = new ArrayList();
 
-        private StringJoiner apis = new StringJoiner(", ");
-
         private Coder code = new Coder(importer);
+
+        private final Messager messager;
+
+        private CodeAnalyzer(Messager messager) {
+            this.messager = messager;
+        }
 
         /**
          * {@inheritDoc}
@@ -218,21 +229,13 @@ public class IcyManipulator extends AbstractProcessor {
 
             if (required.size() != 0) {
                 for (int i = 0; i < required.size() - 1; i++) {
-                    required.get(i).next = required.get(i + 1).NAME;
+                    required.get(i).next = required.get(i + 1).assignableInterfaceName();
                 }
                 required.get(required.size() - 1).next = self();
             }
 
             for (Property property : arbitrary) {
                 property.next = self();
-            }
-
-            // compute api
-            for (Property property : required) {
-                apis.add(property.NAME);
-            }
-            if (arbitrary.size() != 0) {
-                apis.add("OPTIONS");
             }
         }
 
@@ -254,7 +257,7 @@ public class IcyManipulator extends AbstractProcessor {
                 defineAccessors();
                 defineBuilder();
                 defineMutableClass();
-                defineConfigurableInterfaces();
+                defineAssignableInterfaces();
             });
             return code.toCode();
         }
@@ -341,11 +344,19 @@ public class IcyManipulator extends AbstractProcessor {
          * Defien model builder methods.
          */
         private void defineBuilder() {
+            String initialType;
+
+            if (required.isEmpty()) {
+                initialType = self();
+            } else {
+                initialType = required.get(0).assignableInterfaceName();
+            }
+
             code.write();
             code.write("/**");
             code.write(" * Create uninitialized {@link ", clazz, "}.");
             code.write(" */");
-            code.write("public static final <T extends ", firstRequiredProerptyType(), "> T create()", () -> {
+            code.write("public static final <T extends ", initialType, "> T create()", () -> {
                 code.write("return (T) new Melty();");
             });
         }
@@ -354,11 +365,16 @@ public class IcyManipulator extends AbstractProcessor {
          * Define mutable model class.
          */
         private void defineMutableClass() {
+            // compute interfaces
+            StringJoiner interfaces = new StringJoiner(", ", " implements ", "");
+            required.forEach(e -> interfaces.add(e.assignableInterfaceName()));
+            if (!arbitrary.isEmpty()) interfaces.add(ArbitraryInterface);
+
             code.write();
             code.write("/**");
             code.write(" * Mutable Model.");
             code.write(" */");
-            code.write("private static final class Melty", clazz.variable, " extends ", clazz, " implements ", apis, () -> {
+            code.write("private static final class Melty", clazz.variable, " extends ", clazz, interfaces, () -> {
                 // Define Setters
                 for (Property property : properties) {
                     code.write();
@@ -385,15 +401,15 @@ public class IcyManipulator extends AbstractProcessor {
         }
 
         /**
-         * Define configuration API.
+         * Define assignable interfaces.
          */
-        private void defineConfigurableInterfaces() {
+        private void defineAssignableInterfaces() {
             for (Property property : required) {
                 code.write();
                 code.write("/**");
-                code.write(" * Property configuration API.");
+                code.write(" * .");
                 code.write(" */");
-                code.write("public static interface ", property.NAME, () -> {
+                code.write("public static interface ", property.assignableInterfaceName(), () -> {
                     code.write("<T extends ", property.next, "> T ", property.name, "(", property.type, " value);");
                 });
             }
@@ -403,7 +419,7 @@ public class IcyManipulator extends AbstractProcessor {
                 code.write("/**");
                 code.write(" * Property assignment API.");
                 code.write(" */");
-                code.write("public static interface OPTIONS", () -> {
+                code.write("public static interface ", ArbitraryInterface, () -> {
                     for (Property property : arbitrary) {
                         code.write();
                         code.write("/**");
@@ -481,7 +497,7 @@ public class IcyManipulator extends AbstractProcessor {
         private void error(String message, Element position) {
             if (message != null && position != null) {
                 hasError = true;
-                processingEnv.getMessager().printMessage(Kind.ERROR, message, position);
+                messager.printMessage(Kind.ERROR, message, position);
             }
         }
 
@@ -547,12 +563,8 @@ public class IcyManipulator extends AbstractProcessor {
             }
         }
 
-        private String firstRequiredProerptyType() {
-            return required.stream().map(p -> p.NAME).findFirst().orElse(self());
-        }
-
         private String self() {
-            return arbitrary.isEmpty() ? clazz.className : clazz.className + " & OPTIONS";
+            return arbitrary.isEmpty() ? clazz.className : clazz.className + " & " + ArbitraryInterface;
         }
     }
 }

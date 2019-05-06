@@ -66,20 +66,20 @@ public class Multiple extends MultipleModel {
     /**
      * Create uninitialized {@link Multiple}.
      */
-    public static final <T extends NAME> T create() {
+    public static final <T extends ÅssignName> T create() {
         return (T) new Melty();
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Melty extends Multiple implements NAME, STAND {
+    private static final class Melty extends Multiple implements ÅssignName, ÅssignStand {
 
         /**
          * Modify name property.
          */
         @Override
-        public final <T extends STAND> T name(String value) {
+        public final <T extends ÅssignStand> T name(String value) {
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {
@@ -103,16 +103,16 @@ public class Multiple extends MultipleModel {
     }
 
     /**
-     * Property configuration API.
+     * .
      */
-    public static interface NAME {
-        <T extends STAND> T name(String value);
+    public static interface ÅssignName {
+        <T extends ÅssignStand> T name(String value);
     }
 
     /**
-     * Property configuration API.
+     * .
      */
-    public static interface STAND {
+    public static interface ÅssignStand {
         <T extends Multiple> T stand(String value);
     }
 }

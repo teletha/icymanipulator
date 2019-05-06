@@ -9,6 +9,7 @@
  */
 package icy.manipulator;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,6 +81,7 @@ public class AnnotationProcessor {
         compiler.addSource(compilingClass, compilingSource.text());
         compiler.setOutput(room.root);
         compiler.setErrorListener(errors);
+        compiler.setEncoding(StandardCharsets.UTF_8);
         try {
             compiler.compile();
         } catch (Error e) {

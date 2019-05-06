@@ -9,6 +9,8 @@
  */
 package icy.manipulator;
 
+import icy.manipulator.IcyManipulator.CodeAnalyzer;
+
 class Property {
 
     /** The property name. */
@@ -65,5 +67,14 @@ class Property {
      */
     String setterVisibility() {
         return isDerived ? "protected" : "public";
+    }
+
+    /**
+     * Compute assignable interface name of this property.
+     * 
+     * @return An interface name.
+     */
+    String assignableInterfaceName() {
+        return CodeAnalyzer.AssignableInterfacePrefix + Character.toUpperCase(name.charAt(0)) + name.substring(1);
     }
 }
