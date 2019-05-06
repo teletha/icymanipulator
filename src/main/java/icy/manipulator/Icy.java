@@ -20,6 +20,14 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Icy {
 
+    /**
+     * Configure whether the generated class is package private or not. (default is false, the
+     * generated class has public visibility)
+     * 
+     * @return false means public (default), true means package-private.
+     */
+    boolean packagePrivate() default false;
+
     @Documented
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.SOURCE)

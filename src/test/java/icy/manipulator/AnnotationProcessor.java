@@ -65,10 +65,11 @@ public class AnnotationProcessor {
         File compilingSource = Locator.directory("src/test/java").file(computeSourceFile(compilingClass));
         File generatedSource = Locator.directory("src/test/java").file(computeSourceFile(generatedClass));
         File annotaionProcessorSource = Locator.directory("src/main/java").file(computeSourceFile(processor.getName()));
+        File analyzer = Locator.directory("src/main/java").file(computeSourceFile(CodeAnalyzer.class.getName()));
         File temporaryGeneratedSource = Locator.directory(room.root).file(computeSourceFile(generatedClass));
-        long lastModified = generatedSource.lastModified();
+        long date = generatedSource.lastModified();
 
-        if (compilingSource.lastModified() < lastModified && annotaionProcessorSource.lastModified() < lastModified) {
+        if (compilingSource.lastModified() < date && annotaionProcessorSource.lastModified() < date && analyzer.lastModified() < date) {
             return; // generated source file is up to date
         }
 

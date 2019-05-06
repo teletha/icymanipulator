@@ -63,16 +63,4 @@ class ClassImporter {
         }
         return imported.className.concat(imported.variable.toString());
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        for (String fqcn : imports) {
-            builder.append("import ").append(fqcn).append(";").append(IcyManipulator.END);
-        }
-        return builder.toString();
-    }
 }

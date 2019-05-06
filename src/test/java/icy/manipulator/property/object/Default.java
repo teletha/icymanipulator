@@ -66,20 +66,20 @@ public class Default extends DefaultModel {
     /**
      * Create uninitialized {@link Default}.
      */
-    public static final <T extends Default & ÅssignableArbitrary> T create() {
+    public static final <T extends Default & ÅssignableÅrbitrary> T create() {
         return (T) new Åssignable();
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Default implements ÅssignableArbitrary {
+    private static final class Åssignable extends Default implements ÅssignableÅrbitrary {
 
         /**
          * Modify name property.
          */
         @Override
-        public final <T extends Default & ÅssignableArbitrary> T name(String value) {
+        public final <T extends Default & ÅssignableÅrbitrary> T name(String value) {
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {
@@ -92,7 +92,7 @@ public class Default extends DefaultModel {
          * Modify stand property.
          */
         @Override
-        public final <T extends Default & ÅssignableArbitrary> T stand(String value) {
+        public final <T extends Default & ÅssignableÅrbitrary> T stand(String value) {
             try {
                 standUpdater.invoke(this, value);
             } catch (Throwable e) {
@@ -105,16 +105,16 @@ public class Default extends DefaultModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableArbitrary {
+    public static interface ÅssignableÅrbitrary {
 
         /**
          * Property assignment API.
          */
-        <T extends Default & ÅssignableArbitrary> T name(String value);
+        <T extends Default & ÅssignableÅrbitrary> T name(String value);
 
         /**
          * Property assignment API.
          */
-        <T extends Default & ÅssignableArbitrary> T stand(String value);
+        <T extends Default & ÅssignableÅrbitrary> T stand(String value);
     }
 }

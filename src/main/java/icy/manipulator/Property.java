@@ -9,8 +9,6 @@
  */
 package icy.manipulator;
 
-import icy.manipulator.IcyManipulator.CodeAnalyzer;
-
 class Property {
 
     /** The property name. */

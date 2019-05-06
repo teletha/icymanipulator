@@ -73,13 +73,13 @@ public class MixLastDefault extends MixLastDefaultModel {
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends MixLastDefault implements ÅssignableName, ÅssignableArbitrary {
+    private static final class Åssignable extends MixLastDefault implements ÅssignableName, ÅssignableÅrbitrary {
 
         /**
          * Modify name property.
          */
         @Override
-        public final <T extends MixLastDefault & ÅssignableArbitrary> T name(String value) {
+        public final <T extends MixLastDefault & ÅssignableÅrbitrary> T name(String value) {
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {
@@ -92,7 +92,7 @@ public class MixLastDefault extends MixLastDefaultModel {
          * Modify age property.
          */
         @Override
-        public final <T extends MixLastDefault & ÅssignableArbitrary> T age(int value) {
+        public final <T extends MixLastDefault & ÅssignableÅrbitrary> T age(int value) {
             try {
                 ageUpdater.invoke(this, value);
             } catch (Throwable e) {
@@ -106,17 +106,17 @@ public class MixLastDefault extends MixLastDefaultModel {
      * .
      */
     public static interface ÅssignableName {
-        <T extends MixLastDefault & ÅssignableArbitrary> T name(String value);
+        <T extends MixLastDefault & ÅssignableÅrbitrary> T name(String value);
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableArbitrary {
+    public static interface ÅssignableÅrbitrary {
 
         /**
          * Property assignment API.
          */
-        <T extends MixLastDefault & ÅssignableArbitrary> T age(int value);
+        <T extends MixLastDefault & ÅssignableÅrbitrary> T age(int value);
     }
 }
