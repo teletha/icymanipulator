@@ -71,7 +71,7 @@ class ClassImporter {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         for (String fqcn : imports) {
-            builder.append("import ").append(fqcn).append(";").append(IcyManipulator.END);
+            builder.append("import ").append(fqcn).append(";").append(IcyManipulator2.END);
         }
         return builder.toString();
     }

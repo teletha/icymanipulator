@@ -102,7 +102,7 @@ public class IcyManipulator2 extends AbstractProcessor {
         private Type clazz;
 
         /** The property list. */
-        private List<Property> properties = new ArrayList();
+        private final List<Property> properties = new ArrayList();
 
         /** The required properties. */
         private final List<Property> required = new ArrayList();
@@ -468,28 +468,6 @@ public class IcyManipulator2 extends AbstractProcessor {
                 joiner.add(property.type.className + property.type.variable + " " + property.name);
             }
             return joiner.toString();
-        }
-
-        /**
-         * <p>
-         * Helper method to append tailing space.
-         * </p>
-         * 
-         * @param code
-         * @return
-         */
-        private String $(Object code) {
-            if (code == null) {
-                return "";
-            }
-
-            String text = String.valueOf(code);
-
-            if (text.isEmpty()) {
-                return "";
-            } else {
-                return text.concat(" ");
-            }
         }
 
         /** The error existence state. */

@@ -54,7 +54,7 @@ class Property {
         this.isFinal = isFinal;
 
         try {
-            this.isModel = Class.forName(type + IcyManipulator.ModelDefinitionSuffix).isAnnotationPresent(Icy.class);
+            this.isModel = Class.forName(type + IcyManipulator2.ModelDefinitionSuffix).isAnnotationPresent(Icy.class);
         } catch (ClassNotFoundException e) {
             this.isModel = false;
         }
