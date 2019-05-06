@@ -54,8 +54,8 @@ public  class Multiple extends MultipleModel {
      /**
       * Create model builder without base model.
       */
-     public static final NAME create() {
-         return new Melty();
+     public static final <T extends NAME> T create() {
+         return (T) new Melty();
      }
 
     /**
@@ -67,28 +67,28 @@ public  class Multiple extends MultipleModel {
          * Modify name property.
         */
         @Override
-        public final STAND name(String value) {
+        public final <T extends STAND> T name(String value) {
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
 
-            return this;
+            return (T) this;
         }
 
         /**
          * Modify stand property.
         */
         @Override
-        public final Multiple stand(String value) {
+        public final <T extends Multiple> T stand(String value) {
             try {
                 standUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
 
-            return this;
+            return (T) this;
         }
      }
 
@@ -96,13 +96,13 @@ public  class Multiple extends MultipleModel {
      * Property assignment API.
     */
     public static interface NAME {
-        STAND name(String value);
+        <T extends STAND> T name(String value);
     }
 
     /**
      * Property assignment API.
     */
     public static interface STAND {
-        Multiple stand(String value);
+        <T extends Multiple> T stand(String value);
     }
 }

@@ -10,7 +10,6 @@
 package icy.manipulator.tool;
 
 import java.util.List;
-import java.util.StringJoiner;
 
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.ArrayType;
@@ -27,6 +26,8 @@ import javax.lang.model.type.TypeVisitor;
 import javax.lang.model.type.UnionType;
 import javax.lang.model.type.WildcardType;
 
+import icy.manipulator.tool.coder.ParameterVariable;
+
 /**
  * @version 2015/06/07 0:34:00
  */
@@ -39,7 +40,7 @@ class Type {
     final String className;
 
     /** The variable expression. */
-    final String variables;
+    final ParameterVariable variable = new ParameterVariable();
 
     /** The generic flag. */
     final boolean generic;
@@ -52,7 +53,7 @@ class Type {
      * @param type
      */
     Type(Class type) {
-        this(type.getPackage().getName(), type.getSimpleName(), "", false);
+        this(type.getPackage().getName(), type.getSimpleName(), false);
     }
 
     /**
@@ -64,14 +65,10 @@ class Type {
      * @param generics
      */
     Type(String fqcn, List<? extends TypeMirror> generics) {
-        if (generics == null || generics.isEmpty()) {
-            variables = "";
-        } else {
-            StringJoiner joiner = new StringJoiner(", ", "<", ">");
+        if (generics != null && !generics.isEmpty()) {
             for (TypeMirror generic : generics) {
-                joiner.add(IcyManipulator.importer.use(of(generic)));
+                variable.add(IcyManipulator.importer.use(of(generic)));
             }
-            variables = joiner.toString();
         }
 
         int index = fqcn.lastIndexOf(".");
@@ -93,13 +90,11 @@ class Type {
      * 
      * @param packageName
      * @param className
-     * @param variables
      * @param generic
      */
-    Type(String packageName, String className, String variables, boolean generic) {
+    Type(String packageName, String className, boolean generic) {
         this.packageName = packageName;
         this.className = className;
-        this.variables = variables;
         this.generic = generic;
     }
 
@@ -237,7 +232,7 @@ class Type {
             return false;
         }
 
-        if (!variables.equals(other.variables)) {
+        if (!variable.toString().equals(other.variable.toString())) {
             return false;
         }
 
@@ -337,7 +332,7 @@ class Type {
          */
         @Override
         public Type visitTypeVariable(TypeVariable t, Void p) {
-            return new Type("", t.toString(), "", true);
+            return new Type("", t.toString(), true);
         }
 
         /**

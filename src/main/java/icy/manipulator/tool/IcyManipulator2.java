@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.StringJoiner;
-import java.util.stream.Collectors;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
@@ -66,6 +65,7 @@ public class IcyManipulator2 extends AbstractProcessor {
         for (Element element : env.getElementsAnnotatedWith(Icy.class)) {
             importer = new ClassImporter(element.toString());
             CodeAnalyzer analyzer = element.accept(new CodeAnalyzer(), null);
+            analyzer.prepare();
 
             if (analyzer.properties.isEmpty()) {
                 analyzer.error("No property.", element);
@@ -73,7 +73,6 @@ public class IcyManipulator2 extends AbstractProcessor {
 
             if (analyzer.hasError == false) {
                 try {
-                    analyzer.prepare();
                     String code = analyzer.generateCode();
 
                     JavaFileObject generated = processingEnv.getFiler().createSourceFile(analyzer.clazz.toString());
@@ -103,10 +102,10 @@ public class IcyManipulator2 extends AbstractProcessor {
         private List<Property> properties = new ArrayList();
 
         /** The required properties. */
-        private List<Property> requires;
+        private final List<Property> required = new ArrayList();
 
-        /** The optional properties. */
-        private List<Property> optionals;
+        /** The arbitrary properties. */
+        private final List<Property> arbitrary = new ArrayList();
 
         private StringJoiner apis = new StringJoiner(", ");
 
@@ -214,25 +213,25 @@ public class IcyManipulator2 extends AbstractProcessor {
          * Prepare to analyze.
          */
         private void prepare() {
-            requires = properties.stream().filter(p -> !p.hasDefault).collect(Collectors.toList());
-            optionals = properties.stream().filter(p -> p.hasDefault).collect(Collectors.toList());
+            properties.addAll(required);
+            properties.addAll(arbitrary);
 
-            if (requires.size() != 0) {
-                for (int i = 0; i < requires.size() - 1; i++) {
-                    requires.get(i).next = requires.get(i + 1).NAME;
+            if (required.size() != 0) {
+                for (int i = 0; i < required.size() - 1; i++) {
+                    required.get(i).next = required.get(i + 1).NAME;
                 }
-                requires.get(requires.size() - 1).next = self();
+                required.get(required.size() - 1).next = self();
             }
 
-            for (Property property : optionals) {
+            for (Property property : arbitrary) {
                 property.next = self();
             }
 
             // compute api
-            for (Property property : requires) {
+            for (Property property : required) {
                 apis.add(property.NAME);
             }
-            if (optionals.size() != 0) {
+            if (arbitrary.size() != 0) {
                 apis.add("OPTIONS");
             }
         }
@@ -272,7 +271,7 @@ public class IcyManipulator2 extends AbstractProcessor {
             write("     protected ", clazz, "() {");
             for (Property property : properties) {
                 // initialize field
-                write("          this.", property.name, " = ", (property.hasDefault ? "super." + property.name + "()"
+                write("          this.", property.name, " = ", (property.isArbitrary ? "super." + property.name + "()"
                         : property.type.defaultValue()), ";");
             }
             write("     }");
@@ -306,8 +305,8 @@ public class IcyManipulator2 extends AbstractProcessor {
             write("     /**");
             write("      * Create model builder without base model.");
             write("      */");
-            write("     public static final ", $(clazz.variables), firstRequiredProerptyType(), " create() {");
-            write("         return", firstRequiredProerptyType().contains(" extends ") ? " (T)" : "", " new Melty();");
+            write("     public static final <T extends ", firstRequiredProerptyType(), "> T create() {");
+            write("         return (T) new Melty();");
             write("     }");
             write();
 
@@ -317,7 +316,7 @@ public class IcyManipulator2 extends AbstractProcessor {
             write("    /**");
             write("     * Mutable Model.");
             write("    */");
-            write("    private static final class Melty", clazz.variables, " extends ", clazz, " implements ", apis, " {");
+            write("    private static final class Melty", clazz.variable, " extends ", clazz, " implements ", apis, " {");
             for (Property property : properties) {
                 // Define Setters
                 write();
@@ -325,7 +324,7 @@ public class IcyManipulator2 extends AbstractProcessor {
                 write("         * Modify ", property.name, " property.");
                 write("        */");
                 write("        @Override");
-                write("        public final ", property.next, " ", property.name, "(", property.type, " value) {");
+                write("        public final <T extends ", property.next, "> T ", property.name, "(", property.type, " value) {");
                 if (property.isFinal == false) {
                     write("            this.", property.name, " = value;");
                     if (property.derive != null) write("            super.", property.derive, "(this);");
@@ -338,7 +337,7 @@ public class IcyManipulator2 extends AbstractProcessor {
                     write("            }");
                 }
                 write();
-                write("            return", optionals.isEmpty() ? "" : " (T)", " this;");
+                write("            return (T) this;");
                 write("        }");
             }
             write("     }");
@@ -346,28 +345,28 @@ public class IcyManipulator2 extends AbstractProcessor {
             // =======================================
             // Assignment API
             // =======================================
-            for (Property property : requires) {
+            for (Property property : required) {
                 write();
                 write("    /**");
                 write("     * Property assignment API.");
                 write("    */");
                 write("    public static interface ", property.NAME, " {");
-                write("        ", property.next, " ", property.name, "(", property.type, " value);");
+                write("        <T extends ", property.next, "> T ", property.name, "(", property.type, " value);");
                 write("    }");
             }
 
-            if (optionals.size() != 0) {
+            if (arbitrary.size() != 0) {
                 write();
                 write("    /**");
                 write("     * Property assignment API.");
                 write("    */");
                 write("    public static interface OPTIONS {");
-                for (Property property : optionals) {
+                for (Property property : arbitrary) {
                     write();
                     write("    /**");
                     write("     * Property assignment API.");
                     write("    */");
-                    write("    ", property.next, " ", property.name, "(", property.type, " value);");
+                    write("    <T extends ", property.next, "> T ", property.name, "(", property.type, " value);");
                 }
                 write("    }");
             }
@@ -427,7 +426,7 @@ public class IcyManipulator2 extends AbstractProcessor {
             StringJoiner joiner = new StringJoiner(", ");
 
             for (Property property : properties) {
-                joiner.add(property.type.className + property.type.variables + " " + property.name);
+                joiner.add(property.type.className + property.type.variable + " " + property.name);
             }
             return joiner.toString();
         }
@@ -462,11 +461,17 @@ public class IcyManipulator2 extends AbstractProcessor {
          * @param code
          * @return
          */
-        private String $(String code) {
-            if (code == null || code.isEmpty()) {
+        private String $(Object code) {
+            if (code == null) {
+                return "";
+            }
+
+            String text = String.valueOf(code);
+
+            if (text.isEmpty()) {
                 return "";
             } else {
-                return code.concat(" ");
+                return text.concat(" ");
             }
         }
 
@@ -541,17 +546,21 @@ public class IcyManipulator2 extends AbstractProcessor {
             }
 
             Property property = new Property(returnType, method.getSimpleName().toString(), true);
-            property.hasDefault = !method.getModifiers().contains(Modifier.ABSTRACT);
+            property.isArbitrary = !method.getModifiers().contains(Modifier.ABSTRACT);
 
-            properties.add(property);
+            if (property.isArbitrary) {
+                arbitrary.add(property);
+            } else {
+                required.add(property);
+            }
         }
 
         private String firstRequiredProerptyType() {
-            return requires.stream().map(p -> p.NAME).findFirst().orElse(self());
+            return required.stream().map(p -> p.NAME).findFirst().orElse(self());
         }
 
         private String self() {
-            return optionals.isEmpty() ? clazz.className : "<T extends " + clazz.className + " & OPTIONS> T";
+            return arbitrary.isEmpty() ? clazz.className : clazz.className + " & OPTIONS";
         }
     }
 }

@@ -150,8 +150,8 @@ public  class Primitive extends PrimitiveModel {
      /**
       * Create model builder without base model.
       */
-     public static final INTX create() {
-         return new Melty();
+     public static final <T extends INTX> T create() {
+         return (T) new Melty();
      }
 
     /**
@@ -163,112 +163,112 @@ public  class Primitive extends PrimitiveModel {
          * Modify intX property.
         */
         @Override
-        public final LONGX intX(int value) {
+        public final <T extends LONGX> T intX(int value) {
             try {
                 intXUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
 
-            return this;
+            return (T) this;
         }
 
         /**
          * Modify longX property.
         */
         @Override
-        public final FLOATX longX(long value) {
+        public final <T extends FLOATX> T longX(long value) {
             try {
                 longXUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
 
-            return this;
+            return (T) this;
         }
 
         /**
          * Modify floatX property.
         */
         @Override
-        public final DOUBLEX floatX(float value) {
+        public final <T extends DOUBLEX> T floatX(float value) {
             try {
                 floatXUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
 
-            return this;
+            return (T) this;
         }
 
         /**
          * Modify doubleX property.
         */
         @Override
-        public final BYTEX doubleX(double value) {
+        public final <T extends BYTEX> T doubleX(double value) {
             try {
                 doubleXUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
 
-            return this;
+            return (T) this;
         }
 
         /**
          * Modify byteX property.
         */
         @Override
-        public final SHORTX byteX(byte value) {
+        public final <T extends SHORTX> T byteX(byte value) {
             try {
                 byteXUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
 
-            return this;
+            return (T) this;
         }
 
         /**
          * Modify shortX property.
         */
         @Override
-        public final CHARX shortX(short value) {
+        public final <T extends CHARX> T shortX(short value) {
             try {
                 shortXUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
 
-            return this;
+            return (T) this;
         }
 
         /**
          * Modify charX property.
         */
         @Override
-        public final BOOLEANX charX(char value) {
+        public final <T extends BOOLEANX> T charX(char value) {
             try {
                 charXUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
 
-            return this;
+            return (T) this;
         }
 
         /**
          * Modify booleanX property.
         */
         @Override
-        public final Primitive booleanX(boolean value) {
+        public final <T extends Primitive> T booleanX(boolean value) {
             try {
                 booleanXUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
 
-            return this;
+            return (T) this;
         }
      }
 
@@ -276,55 +276,55 @@ public  class Primitive extends PrimitiveModel {
      * Property assignment API.
     */
     public static interface INTX {
-        LONGX intX(int value);
+        <T extends LONGX> T intX(int value);
     }
 
     /**
      * Property assignment API.
     */
     public static interface LONGX {
-        FLOATX longX(long value);
+        <T extends FLOATX> T longX(long value);
     }
 
     /**
      * Property assignment API.
     */
     public static interface FLOATX {
-        DOUBLEX floatX(float value);
+        <T extends DOUBLEX> T floatX(float value);
     }
 
     /**
      * Property assignment API.
     */
     public static interface DOUBLEX {
-        BYTEX doubleX(double value);
+        <T extends BYTEX> T doubleX(double value);
     }
 
     /**
      * Property assignment API.
     */
     public static interface BYTEX {
-        SHORTX byteX(byte value);
+        <T extends SHORTX> T byteX(byte value);
     }
 
     /**
      * Property assignment API.
     */
     public static interface SHORTX {
-        CHARX shortX(short value);
+        <T extends CHARX> T shortX(short value);
     }
 
     /**
      * Property assignment API.
     */
     public static interface CHARX {
-        BOOLEANX charX(char value);
+        <T extends BOOLEANX> T charX(char value);
     }
 
     /**
      * Property assignment API.
     */
     public static interface BOOLEANX {
-        Primitive booleanX(boolean value);
+        <T extends Primitive> T booleanX(boolean value);
     }
 }

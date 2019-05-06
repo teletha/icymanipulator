@@ -38,8 +38,8 @@ public  class Single extends SingleModel {
      /**
       * Create model builder without base model.
       */
-     public static final NAME create() {
-         return new Melty();
+     public static final <T extends NAME> T create() {
+         return (T) new Melty();
      }
 
     /**
@@ -51,14 +51,14 @@ public  class Single extends SingleModel {
          * Modify name property.
         */
         @Override
-        public final Single name(String value) {
+        public final <T extends Single> T name(String value) {
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
 
-            return this;
+            return (T) this;
         }
      }
 
@@ -66,6 +66,6 @@ public  class Single extends SingleModel {
      * Property assignment API.
     */
     public static interface NAME {
-        Single name(String value);
+        <T extends Single> T name(String value);
     }
 }

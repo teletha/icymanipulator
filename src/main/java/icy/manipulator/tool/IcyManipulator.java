@@ -295,29 +295,29 @@ public class IcyManipulator extends AbstractProcessor {
             write("     /**");
             write("      * Create model builder without base model.");
             write("      */");
-            write("     public static final ", $(clazz.variables), clazz, " with() {");
+            write("     public static final ", $(clazz.variable), clazz, " with() {");
             write("         return new Melty(null);");
             write("     }");
             write();
             write("     /**");
             write("      * Create model builder using the specified definition as base model.");
             write("      */");
-            write("     public static final ", $(clazz.variables), clazz, " with(", clazz, " base) {");
+            write("     public static final ", $(clazz.variable), clazz, " with(", clazz, " base) {");
             write("         return new Melty(base);");
             write("     }");
             write();
 
             // Manipulator methods
             String manipulatorType;
-            if (clazz.variables.isEmpty()) {
+            if (clazz.variable.toString().isEmpty()) {
                 manipulatorType = ManipulatorClass + "<" + clazz.className + ">";
             } else {
-                manipulatorType = ManipulatorClass + "<" + clazz.className + clazz.variables + ", " + clazz.variables.substring(1);
+                manipulatorType = ManipulatorClass + "<" + clazz.className + clazz.variable + ", " + clazz.variable.toString().substring(1);
             }
             write("     /**");
             write("      * Create model manipulator.");
             write("      */");
-            write("     public static final ", $(clazz.variables), manipulatorType, ManipulatorMethod, "() {");
+            write("     public static final ", $(clazz.variable), manipulatorType, ManipulatorMethod, "() {");
             write("         return MANIPULATOR;");
             write("     }");
             write();
@@ -326,7 +326,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("     /**");
             write("      * Immutable Model.");
             write("      */");
-            write("     private static final class Icy", clazz.variables, " extends ", clazz, " {");
+            write("     private static final class Icy", clazz.variable, " extends ", clazz, " {");
             write();
             write("         /**");
             write("          * HIDE CONSTRUCTOR");
@@ -373,7 +373,7 @@ public class IcyManipulator extends AbstractProcessor {
             write("     /**");
             write("      * Mutable Model.");
             write("      */");
-            write("     private static final class Melty", clazz.variables, " extends ", clazz, " {");
+            write("     private static final class Melty", clazz.variable, " extends ", clazz, " {");
             write();
             write("         /**");
             write("          * HIDE CONSTRUCTOR");
@@ -401,8 +401,8 @@ public class IcyManipulator extends AbstractProcessor {
 
             // MANIPULATOR
             String TYPES = "";
-            if (!clazz.variables.isEmpty()) {
-                TYPES = ", " + clazz.variables.substring(1, clazz.variables.length() - 1);
+            if (!clazz.variable.toString().isEmpty()) {
+                TYPES = ", " + clazz.variable.toString().substring(1, clazz.variable.toString().length() - 1);
             }
 
             write("     /**");
@@ -430,7 +430,7 @@ public class IcyManipulator extends AbstractProcessor {
                 write("          * Property operator.");
                 write("          */");
                 if (property.isModel) {
-                    if (property.TYPE.variables.isEmpty()) {
+                    if (property.TYPE.variable.toString().isEmpty()) {
                         write("         public ", property.TYPE.className, ".", ManipulatorClass, "<", clazz, "> ", property.name, "() {");
                     } else {
                         write("         public ", property.TYPE.className, ".", ManipulatorClass, "<", clazz, ", ", property.TYPE, "> ", property.name, "() {");
@@ -500,7 +500,7 @@ public class IcyManipulator extends AbstractProcessor {
             StringJoiner joiner = new StringJoiner(", ");
 
             for (Property property : properties) {
-                joiner.add(property.type.className + property.type.variables + " " + property.name);
+                joiner.add(property.type.className + property.type.variable + " " + property.name);
             }
             return joiner.toString();
         }
@@ -525,6 +525,13 @@ public class IcyManipulator extends AbstractProcessor {
                 }
             }
             body.append(END);
+        }
+
+        private String $(Object code) {
+            if (code == null) {
+                return "";
+            }
+            return $(String.valueOf(code));
         }
 
         /**

@@ -54,8 +54,8 @@ public  class MixLastDefault extends MixLastDefaultModel {
      /**
       * Create model builder without base model.
       */
-     public static final NAME create() {
-         return new Melty();
+     public static final <T extends NAME> T create() {
+         return (T) new Melty();
      }
 
     /**

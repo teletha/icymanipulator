@@ -57,12 +57,11 @@ class ClassImporter {
      */
     String use(Type imported) {
         if (!imported.isDefault() && !imported.isPrimitive() && !imported.generic) {
-            if (!imported.packageName.equals(basePackage) && !imported.toString()
-                    .startsWith(basePackage + "." + baseClass + ".")) {
+            if (!imported.packageName.equals(basePackage) && !imported.toString().startsWith(basePackage + "." + baseClass + ".")) {
                 imports.add(imported.toString());
             }
         }
-        return imported.className.concat(imported.variables);
+        return imported.className.concat(imported.variable.toString());
     }
 
     /**

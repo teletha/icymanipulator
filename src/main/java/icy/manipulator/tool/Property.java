@@ -38,7 +38,7 @@ class Property {
     boolean isDerived;
 
     /** The property state. */
-    boolean hasDefault;
+    boolean isArbitrary;
 
     /** The next property. */
     String next;
