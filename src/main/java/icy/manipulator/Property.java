@@ -7,9 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.tool;
-
-import icy.manipulator.Icy;
+package icy.manipulator;
 
 class Property {
 
@@ -54,7 +52,7 @@ class Property {
         this.isFinal = isFinal;
 
         try {
-            this.isModel = Class.forName(type + IcyManipulator2.ModelDefinitionSuffix).isAnnotationPresent(Icy.class);
+            this.isModel = Class.forName(type + IcyManipulator.ModelDefinitionSuffix).isAnnotationPresent(Icy.class);
         } catch (ClassNotFoundException e) {
             this.isModel = false;
         }

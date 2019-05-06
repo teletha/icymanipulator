@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.tool;
+package icy.manipulator;
 
 import java.util.List;
 
@@ -67,7 +67,7 @@ class Type {
     Type(String fqcn, List<? extends TypeMirror> generics) {
         if (generics != null && !generics.isEmpty()) {
             for (TypeMirror generic : generics) {
-                variable.add(IcyManipulator2.importer.use(of(generic)));
+                variable.add(IcyManipulator.importer.use(of(generic)));
             }
         }
 

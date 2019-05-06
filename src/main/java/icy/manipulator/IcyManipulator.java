@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.tool;
+package icy.manipulator;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -41,11 +41,9 @@ import javax.lang.model.type.TypeMirror;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 
-import icy.manipulator.Icy;
-
 @SupportedSourceVersion(SourceVersion.RELEASE_13)
 @SupportedAnnotationTypes("icy.manipulator.Icy")
-public class IcyManipulator2 extends AbstractProcessor {
+public class IcyManipulator extends AbstractProcessor {
 
     /** The suffix of model definition. */
     static final String ModelDefinitionSuffix = "Model";

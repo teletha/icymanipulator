@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.tool;
+package icy.manipulator;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -71,7 +71,7 @@ class ClassImporter {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         for (String fqcn : imports) {
-            builder.append("import ").append(fqcn).append(";").append(IcyManipulator2.END);
+            builder.append("import ").append(fqcn).append(";").append(IcyManipulator.END);
         }
         return builder.toString();
     }

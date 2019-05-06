@@ -13,12 +13,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import icy.manipulator.AnnotationProcessor;
-import icy.manipulator.tool.IcyManipulator2;
+import icy.manipulator.IcyManipulator;
 
 class MultipleTest {
 
     @RegisterExtension
-    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator2.class, MultipleModel.class);
+    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, MultipleModel.class);
 
     @Test
     void property() {

@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.tool;
+package icy.manipulator;
 
 import java.util.function.Consumer;
 
