@@ -94,11 +94,11 @@ public class IcyManipulator extends AbstractProcessor {
      */
     static class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
-        /** The prefix of assignable interface. */
-        static final String AssignableInterfacePrefix = "Åssign";
+        /** The prefix of assignable type. */
+        static final String Assignable = "Åssignable";
 
         /** The configuratino interface name for arbitrary perperties. */
-        private static final String ArbitraryInterface = AssignableInterfacePrefix + "Arbitrary";
+        private static final String ArbitraryInterface = Assignable + "Arbitrary";
 
         /** The fully qualified model class name. */
         private Type model;
@@ -357,7 +357,7 @@ public class IcyManipulator extends AbstractProcessor {
             code.write(" * Create uninitialized {@link ", clazz, "}.");
             code.write(" */");
             code.write("public static final <T extends ", initialType, "> T create()", () -> {
-                code.write("return (T) new Melty();");
+                code.write("return (T) new ", Assignable, "();");
             });
         }
 
@@ -374,7 +374,7 @@ public class IcyManipulator extends AbstractProcessor {
             code.write("/**");
             code.write(" * Mutable Model.");
             code.write(" */");
-            code.write("private static final class Melty", clazz.variable, " extends ", clazz, interfaces, () -> {
+            code.write("private static final class ", Assignable, clazz.variable, " extends ", clazz, interfaces, () -> {
                 // Define Setters
                 for (Property property : properties) {
                     code.write();

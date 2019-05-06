@@ -75,6 +75,6 @@ class Property {
      * @return An interface name.
      */
     String assignableInterfaceName() {
-        return CodeAnalyzer.AssignableInterfacePrefix + Character.toUpperCase(name.charAt(0)) + name.substring(1);
+        return CodeAnalyzer.Assignable + Character.toUpperCase(name.charAt(0)) + name.substring(1);
     }
 }

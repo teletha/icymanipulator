@@ -51,14 +51,14 @@ public class Single extends SingleModel {
     /**
      * Create uninitialized {@link Single}.
      */
-    public static final <T extends ÅssignName> T create() {
-        return (T) new Melty();
+    public static final <T extends ÅssignableName> T create() {
+        return (T) new Åssignable();
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Melty extends Single implements ÅssignName {
+    private static final class Åssignable extends Single implements ÅssignableName {
 
         /**
          * Modify name property.
@@ -77,7 +77,7 @@ public class Single extends SingleModel {
     /**
      * .
      */
-    public static interface ÅssignName {
+    public static interface ÅssignableName {
         <T extends Single> T name(String value);
     }
 }

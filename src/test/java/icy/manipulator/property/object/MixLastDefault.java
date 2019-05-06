@@ -66,20 +66,20 @@ public class MixLastDefault extends MixLastDefaultModel {
     /**
      * Create uninitialized {@link MixLastDefault}.
      */
-    public static final <T extends ÅssignName> T create() {
-        return (T) new Melty();
+    public static final <T extends ÅssignableName> T create() {
+        return (T) new Åssignable();
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Melty extends MixLastDefault implements ÅssignName, ÅssignArbitrary {
+    private static final class Åssignable extends MixLastDefault implements ÅssignableName, ÅssignableArbitrary {
 
         /**
          * Modify name property.
          */
         @Override
-        public final <T extends MixLastDefault & ÅssignArbitrary> T name(String value) {
+        public final <T extends MixLastDefault & ÅssignableArbitrary> T name(String value) {
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {
@@ -92,7 +92,7 @@ public class MixLastDefault extends MixLastDefaultModel {
          * Modify age property.
          */
         @Override
-        public final <T extends MixLastDefault & ÅssignArbitrary> T age(int value) {
+        public final <T extends MixLastDefault & ÅssignableArbitrary> T age(int value) {
             try {
                 ageUpdater.invoke(this, value);
             } catch (Throwable e) {
@@ -105,18 +105,18 @@ public class MixLastDefault extends MixLastDefaultModel {
     /**
      * .
      */
-    public static interface ÅssignName {
-        <T extends MixLastDefault & ÅssignArbitrary> T name(String value);
+    public static interface ÅssignableName {
+        <T extends MixLastDefault & ÅssignableArbitrary> T name(String value);
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignArbitrary {
+    public static interface ÅssignableArbitrary {
 
         /**
          * Property assignment API.
          */
-        <T extends MixLastDefault & ÅssignArbitrary> T age(int value);
+        <T extends MixLastDefault & ÅssignableArbitrary> T age(int value);
     }
 }
