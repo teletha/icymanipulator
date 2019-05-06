@@ -33,6 +33,8 @@ import javax.lang.model.type.ExecutableType;
 import javax.lang.model.type.TypeMirror;
 import javax.tools.Diagnostic.Kind;
 
+import icy.manipulator.Icy.Overload;
+
 class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
     /** The prefix of assignable type. */
@@ -61,6 +63,9 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
     /** The arbitrary properties. */
     private final List<Property> arbitrary = new ArrayList();
+
+    /** The overload method holder. */
+    private final List<ExecutableElement> overloads = new ArrayList();
 
     private Coder code = new Coder(IcyManipulator.importer);
 
@@ -155,6 +160,10 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             // }
 
             createAsProperty(e);
+
+            // collect overload methods
+            Overload overload = e.getAnnotation(Icy.Overload.class);
+            if (overload != null) overloads.add(e);
         }
         return this;
     }
@@ -191,6 +200,19 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
         for (Property property : arbitrary) {
             property.next = self();
+        }
+
+        validateOverload();
+    }
+
+    /**
+     * Validate overload method.
+     */
+    private void validateOverload() {
+        for (ExecutableElement method : overloads) {
+            String name = method.getSimpleName().toString();
+            Type returnType = Type.of(method.getReturnType());
+            System.out.println(name + "  " + returnType);
         }
     }
 

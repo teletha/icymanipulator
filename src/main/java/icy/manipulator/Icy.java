@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 
 @Documented
 @Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.SOURCE)
 public @interface Icy {
 
     /**
@@ -46,6 +46,6 @@ public @interface Icy {
     @Documented
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.SOURCE)
-    @interface Companion {
+    @interface Overload {
     }
 }
