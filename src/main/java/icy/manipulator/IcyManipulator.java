@@ -246,24 +246,23 @@ public class IcyManipulator extends AbstractProcessor {
             code.write(" * Generated model for {@link ", model, "}.");
             code.write(" */");
             code.write("@", Generated.class, "(\"Icy Manipulator\")");
-            code.write("public class ", clazz, " extends ", model, " {");
-            code.write(this::defineCreatingUpdaterMethod);
-            code.write(this::definePropertyUpdater);
-            code.write(this::definePropertyField);
-            code.write(this::defineZeroParamConstructor);
-            code.write(this::defineGetters);
-            code.write(this::defineBuilderMethods);
-            code.write(this::defineMutableModel);
-            code.write(this::defienConfigurationInterfaces);
-            code.write("}");
-
+            code.write("public class ", clazz, " extends ", model, () -> {
+                defineFiledUpdaterBuilder();
+                defineFieldUpdater();
+                defineField();
+                defineConstructor();
+                defineAccessors();
+                defineBuilder();
+                defineMutableClass();
+                defineConfigurableInterfaces();
+            });
             return code.toCode();
         }
 
         /**
          * Define query method for property updater.
          */
-        private void defineCreatingUpdaterMethod() {
+        private void defineFiledUpdaterBuilder() {
             code.write();
             code.write("/**");
             code.write(" * Create special property updater.");
@@ -285,7 +284,7 @@ public class IcyManipulator extends AbstractProcessor {
         /**
          * Define property updater.
          */
-        private void definePropertyUpdater() {
+        private void defineFieldUpdater() {
             for (Property property : properties) {
                 if (property.isFinal) {
                     code.write();
@@ -298,7 +297,7 @@ public class IcyManipulator extends AbstractProcessor {
         /**
          * Define property field.
          */
-        private void definePropertyField() {
+        private void defineField() {
             for (Property property : properties) {
                 code.write();
                 code.write("/** The exposed property. */");
@@ -309,7 +308,7 @@ public class IcyManipulator extends AbstractProcessor {
         /**
          * Define constructor.
          */
-        private void defineZeroParamConstructor() {
+        private void defineConstructor() {
             code.write();
             code.write("/**");
             code.write(" * HIDE CONSTRUCTOR");
@@ -325,7 +324,7 @@ public class IcyManipulator extends AbstractProcessor {
         /**
          * Define property getter methods.
          */
-        private void defineGetters() {
+        private void defineAccessors() {
             for (Property property : properties) {
                 code.write();
                 code.write("/**");
@@ -341,7 +340,7 @@ public class IcyManipulator extends AbstractProcessor {
         /**
          * Defien model builder methods.
          */
-        private void defineBuilderMethods() {
+        private void defineBuilder() {
             code.write();
             code.write("/**");
             code.write(" * Create uninitialized {@link ", clazz, "}.");
@@ -354,7 +353,7 @@ public class IcyManipulator extends AbstractProcessor {
         /**
          * Define mutable model class.
          */
-        private void defineMutableModel() {
+        private void defineMutableClass() {
             code.write();
             code.write("/**");
             code.write(" * Mutable Model.");
@@ -388,7 +387,7 @@ public class IcyManipulator extends AbstractProcessor {
         /**
          * Define configuration API.
          */
-        private void defienConfigurationInterfaces() {
+        private void defineConfigurableInterfaces() {
             for (Property property : required) {
                 code.write();
                 code.write("/**");
