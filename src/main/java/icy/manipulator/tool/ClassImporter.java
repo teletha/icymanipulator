@@ -18,13 +18,13 @@ import java.util.TreeSet;
 class ClassImporter {
 
     /** The base package name. */
-    private final String basePackage;
+    final String basePackage;
 
     /** The base class name. */
-    private final String baseClass;
+    final String baseClass;
 
     /** The imported classes. */
-    private final Set<String> imports = new TreeSet();
+    final Set<String> imports = new TreeSet();
 
     /**
      * @param basePackage

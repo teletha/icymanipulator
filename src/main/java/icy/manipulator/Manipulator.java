@@ -11,7 +11,6 @@ package icy.manipulator;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.reflect.Field;
 
 /**
@@ -47,9 +46,6 @@ public abstract class Manipulator<M, V> implements Accessor<M, V> {
         return parent.set(model, property);
     }
 
-    /** Re-use LoopUp */
-    private static final Lookup lookup = MethodHandles.lookup();
-
     /**
      * Create special property updater.
      * 
@@ -61,7 +57,7 @@ public abstract class Manipulator<M, V> implements Accessor<M, V> {
         try {
             Field field = type.getDeclaredField(name);
             field.setAccessible(true);
-            return lookup.unreflectSetter(field);
+            return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw new Error(e);
         }

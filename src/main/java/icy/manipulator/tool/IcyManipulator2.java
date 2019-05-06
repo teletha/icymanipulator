@@ -11,6 +11,9 @@ package icy.manipulator.tool;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +21,7 @@ import java.util.Set;
 import java.util.StringJoiner;
 
 import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.Generated;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
@@ -38,7 +42,6 @@ import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 
 import icy.manipulator.Icy;
-import icy.manipulator.Manipulatable;
 
 @SupportedSourceVersion(SourceVersion.RELEASE_13)
 @SupportedAnnotationTypes("icy.manipulator.Icy")
@@ -73,7 +76,7 @@ public class IcyManipulator2 extends AbstractProcessor {
 
             if (analyzer.hasError == false) {
                 try {
-                    String code = analyzer.generateCode();
+                    String code = analyzer.defineCode();
 
                     JavaFileObject generated = processingEnv.getFiler().createSourceFile(analyzer.clazz.toString());
                     Writer writer = generated.openWriter();
@@ -108,6 +111,8 @@ public class IcyManipulator2 extends AbstractProcessor {
         private final List<Property> arbitrary = new ArrayList();
 
         private StringJoiner apis = new StringJoiner(", ");
+
+        private Coder code = new Coder(importer);
 
         /**
          * {@inheritDoc}
@@ -206,9 +211,6 @@ public class IcyManipulator2 extends AbstractProcessor {
             return this;
         }
 
-        /** The code body. */
-        private StringBuilder body = new StringBuilder();
-
         /**
          * Prepare to analyze.
          */
@@ -237,146 +239,183 @@ public class IcyManipulator2 extends AbstractProcessor {
         }
 
         /**
-         * @param reader
+         * Generate source code.
+         * 
+         * @return
          */
-        private String generateCode() {
-            write("package ", clazz.packageName, ";");
-            write();
-            int importPosition = body.length();
-            write();
-            write("/**");
-            write(" * {@link ", Manipulatable.class, "} model for {@link ", model, "}.");
-            write(" */");
-            write("public  class ", clazz, " extends ", model, " {");
-            write();
+        private String defineCode() {
+            code.write("/**");
+            code.write(" * Generated model for {@link ", model, "}.");
+            code.write(" */");
+            code.write("@", Generated.class, "(\"Icy Manipulator\")");
+            code.write("public class ", clazz, " extends ", model, " {");
+            code.write(this::defineCreatingUpdaterMethod);
+            code.write(this::definePropertyUpdater);
+            code.write(this::definePropertyField);
+            code.write(this::defineZeroParamConstructor);
+            code.write(this::defineGetters);
+            code.write(this::defineBuilderMethods);
+            code.write(this::defineMutableModel);
+            code.write(this::defienConfigurationInterfaces);
+            code.write("}");
+
+            return code.toCode();
+        }
+
+        /**
+         * Define query method for property updater.
+         */
+        private void defineCreatingUpdaterMethod() {
+            code.write();
+            code.write("/**");
+            code.write(" * Create special property updater.");
+            code.write(" *");
+            code.write(" * @param name A target property name.");
+            code.write(" * @return A special property updater.");
+            code.write(" */");
+            code.write("private static final ", MethodHandle.class, " updater(String name) ", () -> {
+                code.writeTry(() -> {
+                    code.write(Field.class, " field = ", clazz, ".class.getDeclaredField(name);");
+                    code.write("field.setAccessible(true);");
+                    code.write("return ", MethodHandles.class, ".lookup().unreflectSetter(field);");
+                }, Throwable.class, e -> {
+                    code.write("throw new Error(", e, ");");
+                });
+            });
+        }
+
+        /**
+         * Define property updater.
+         */
+        private void definePropertyUpdater() {
             for (Property property : properties) {
-                // SETTER HANDLE
                 if (property.isFinal) {
-                    write("     /** The final property updater. */");
-                    write("     private static final java.lang.invoke.MethodHandle ", property.name, "Updater = icy.manipulator.Manipulator.updater(", clazz, ".class, \"", property.name + "\");");
-                    write();
+                    code.write();
+                    code.write("/** The final property updater. */");
+                    code.write("private static final ", MethodHandle.class, " ", property.name, "Updater = updater(\"", property.name, "\");");
                 }
             }
-            for (Property property : properties) {
-                // property field
-                write("     /** The exposed property. */");
-                write("     public final ", property.type, " ", property.name, ";");
-                write();
-            }
+        }
 
-            // CONSTRUCTOR
-            write("     /**");
-            write("      * HIDE CONSTRUCTOR");
-            write("      */");
-            write("     protected ", clazz, "() {");
+        /**
+         * Define property field.
+         */
+        private void definePropertyField() {
             for (Property property : properties) {
+                code.write();
+                code.write("/** The exposed property. */");
+                code.write("public final ", property.type, " ", property.name, ";");
+            }
+        }
+
+        /**
+         * Define constructor.
+         */
+        private void defineZeroParamConstructor() {
+            code.write();
+            code.write("/**");
+            code.write(" * HIDE CONSTRUCTOR");
+            code.write(" */");
+            code.write("protected ", clazz, "()", () -> {
                 // initialize field
-                write("          this.", property.name, " = ", (property.isArbitrary ? "super." + property.name + "()"
-                        : property.type.defaultValue()), ";");
-            }
-            write("     }");
-            write();
-            write("     /**");
-            write("      * HIDE CONSTRUCTOR");
-            write("      */");
-            write("     protected ", clazz, "(", parameterWithType(properties), ") {");
-            for (Property property : properties) {
-                // initialize field
-                write("          this.", property.name, " = ", property.name, ";");
-            }
-            write("     }");
-            write();
+                for (Property p : properties) {
+                    code.write("this.", p.name, " = ", (p.isArbitrary ? "super." + p.name + "()" : p.type.defaultValue()), ";");
+                }
+            });
+        }
 
+        /**
+         * Define property getter methods.
+         */
+        private void defineGetters() {
             for (Property property : properties) {
-                // GETTER
-                write("     /**");
-                write("     * Retrieve ", property.name, " property.");
-                write("     */");
-                write("     @Override");
-                write("     public final ", property.type, " ", property.name, "() {");
-                write("         return this.", property.name, ";");
-                write("     }");
-                write();
+                code.write();
+                code.write("/**");
+                code.write(" * Retrieve ", property.name, " property.");
+                code.write(" */");
+                code.write("@Override");
+                code.write("public final ", property.type, " ", property.name, "()", () -> {
+                    code.write("return this.", property.name, ";");
+                });
             }
+        }
 
-            // =======================================
-            // Builders
-            // =======================================
-            write("     /**");
-            write("      * Create model builder without base model.");
-            write("      */");
-            write("     public static final <T extends ", firstRequiredProerptyType(), "> T create() {");
-            write("         return (T) new Melty();");
-            write("     }");
-            write();
+        /**
+         * Defien model builder methods.
+         */
+        private void defineBuilderMethods() {
+            code.write();
+            code.write("/**");
+            code.write(" * Create uninitialized {@link ", clazz, "}.");
+            code.write(" */");
+            code.write("public static final <T extends ", firstRequiredProerptyType(), "> T create()", () -> {
+                code.write("return (T) new Melty();");
+            });
+        }
 
-            // =======================================
-            // Mutable Model
-            // =======================================
-            write("    /**");
-            write("     * Mutable Model.");
-            write("    */");
-            write("    private static final class Melty", clazz.variable, " extends ", clazz, " implements ", apis, " {");
-            for (Property property : properties) {
+        /**
+         * Define mutable model class.
+         */
+        private void defineMutableModel() {
+            code.write();
+            code.write("/**");
+            code.write(" * Mutable Model.");
+            code.write(" */");
+            code.write("private static final class Melty", clazz.variable, " extends ", clazz, " implements ", apis, () -> {
                 // Define Setters
-                write();
-                write("        /**");
-                write("         * Modify ", property.name, " property.");
-                write("        */");
-                write("        @Override");
-                write("        public final <T extends ", property.next, "> T ", property.name, "(", property.type, " value) {");
-                if (property.isFinal == false) {
-                    write("            this.", property.name, " = value;");
-                    if (property.derive != null) write("            super.", property.derive, "(this);");
-                } else {
-                    write("            try {");
-                    write("                ", property.name, "Updater.invoke(this, value);");
-                    if (property.derive != null) write("                super.", property.derive, "(this);");
-                    write("            } catch (Throwable e) {");
-                    write("                throw new Error(e);");
-                    write("            }");
+                for (Property property : properties) {
+                    code.write();
+                    code.write("/**");
+                    code.write(" * Modify ", property.name, " property.");
+                    code.write(" */");
+                    code.write("@Override");
+                    code.write("public final <T extends ", property.next, "> T ", property.name, "(", property.type, " value)", () -> {
+                        if (property.isFinal == false) {
+                            code.write("this.", property.name, " = value;");
+                            if (property.derive != null) code.write("super.", property.derive, "(this);");
+                        } else {
+                            code.writeTry(() -> {
+                                code.write(property.name, "Updater.invoke(this, value);");
+                                if (property.derive != null) code.write("super.", property.derive, "(this);");
+                            }, Throwable.class, e -> {
+                                code.write("throw new Error(", e, ");");
+                            });
+                        }
+                        code.write("return (T) this;");
+                    });
                 }
-                write();
-                write("            return (T) this;");
-                write("        }");
-            }
-            write("     }");
+            });
+        }
 
-            // =======================================
-            // Assignment API
-            // =======================================
+        /**
+         * Define configuration API.
+         */
+        private void defienConfigurationInterfaces() {
             for (Property property : required) {
-                write();
-                write("    /**");
-                write("     * Property assignment API.");
-                write("    */");
-                write("    public static interface ", property.NAME, " {");
-                write("        <T extends ", property.next, "> T ", property.name, "(", property.type, " value);");
-                write("    }");
+                code.write();
+                code.write("/**");
+                code.write(" * Property configuration API.");
+                code.write(" */");
+                code.write("public static interface ", property.NAME, () -> {
+                    code.write("<T extends ", property.next, "> T ", property.name, "(", property.type, " value);");
+                });
             }
 
             if (arbitrary.size() != 0) {
-                write();
-                write("    /**");
-                write("     * Property assignment API.");
-                write("    */");
-                write("    public static interface OPTIONS {");
-                for (Property property : arbitrary) {
-                    write();
-                    write("    /**");
-                    write("     * Property assignment API.");
-                    write("    */");
-                    write("    <T extends ", property.next, "> T ", property.name, "(", property.type, " value);");
-                }
-                write("    }");
+                code.write();
+                code.write("/**");
+                code.write(" * Property assignment API.");
+                code.write(" */");
+                code.write("public static interface OPTIONS", () -> {
+                    for (Property property : arbitrary) {
+                        code.write();
+                        code.write("/**");
+                        code.write(" * Property assignment API.");
+                        code.write(" */");
+                        code.write("<T extends ", property.next, "> T ", property.name, "(", property.type, " value);");
+                    }
+                });
             }
-
-            write("}");
-
-            // generate code fragments
-            body.insert(importPosition, importer);
-
-            return body.toString();
         }
 
         /**
@@ -429,28 +468,6 @@ public class IcyManipulator2 extends AbstractProcessor {
                 joiner.add(property.type.className + property.type.variable + " " + property.name);
             }
             return joiner.toString();
-        }
-
-        /**
-         * <p>
-         * Write body.
-         * </p>
-         * 
-         * @param texts
-         */
-        private void write(Object... codes) {
-            for (Object code : codes) {
-                if (code instanceof Class) {
-                    Class clazz = (Class) code;
-                    body.append(importer.use(clazz));
-                } else if (code instanceof Type) {
-                    Type clazz = (Type) code;
-                    body.append(importer.use(clazz));
-                } else {
-                    body.append(code.toString());
-                }
-            }
-            body.append(END);
         }
 
         /**
