@@ -4,6 +4,7 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import javax.annotation.processing.Generated;
 
@@ -31,7 +32,10 @@ public class Overload extends OverloadModel {
     }
 
     /** The overload method invoker. */
-    private static final MethodHandle numberjavalangString= updater("number", String.class);
+    private static final MethodHandle sizeint= updater("size", int.class);
+
+    /** The overload method invoker. */
+    private static final MethodHandle sizeByTextjavalangString= updater("sizeByText", String.class);
 
     /** The overload method invoker. */
     private static final MethodHandle dateintintint= updater("date", int.class, int.class, int.class);
@@ -53,13 +57,13 @@ public class Overload extends OverloadModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle numberUpdater = updater("number");
+    private static final MethodHandle sizeUpdater = updater("size");
 
     /** The final property updater. */
     private static final MethodHandle dateUpdater = updater("date");
 
     /** The exposed property. */
-    public final int number;
+    public final BigDecimal size;
 
     /** The exposed property. */
     public final LocalDate date;
@@ -67,17 +71,17 @@ public class Overload extends OverloadModel {
     /**
      * HIDE CONSTRUCTOR
      */
-    protected Overload(int number) {
-        this.number = number;
+    protected Overload(BigDecimal size) {
+        this.size = size;
         this.date = null;
     }
 
     /**
-     * Retrieve number property.
+     * Retrieve size property.
      */
     @Override
-    public final int number() {
-        return this.number;
+    public final BigDecimal size() {
+        return this.size;
     }
 
     /**
@@ -88,34 +92,30 @@ public class Overload extends OverloadModel {
         return this.date;
     }
 
-    /**
-     * Builder namespace for {@link Overload}.
-     */
-    public static final class with {
+    /** The singleton model builder. */
+    public static final ÅssignableSize with = new ÅssignableSize() {
 
-        /**
-         * Create uninitialized {@link Overload}.
-         */
-        public static final <T extends ÅssignableDate> T number(int value) {
+        @Override
+        public <T extends ÅssignableDate> T size(BigDecimal value) {
             return (T) new Åssignable(value);
         }
-    }
+    };
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Overload implements ÅssignableNumber, ÅssignableDate {
-        private Åssignable(int number) {
-            super(number);
+    private static final class Åssignable extends Overload implements ÅssignableSize, ÅssignableDate {
+        private Åssignable(BigDecimal size) {
+            super(size);
         }
 
         /**
-         * Modify number property.
+         * Modify size property.
          */
         @Override
-        public final <T extends ÅssignableDate> T number(int value) {
+        public final <T extends ÅssignableDate> T size(BigDecimal value) {
             try {
-                numberUpdater.invoke(this, value);
+                sizeUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
@@ -139,15 +139,22 @@ public class Overload extends OverloadModel {
     /**
      * .
      */
-    public static interface ÅssignableNumber {
-        default <T extends ÅssignableDate> T number(String number) {
+    public static interface ÅssignableSize {
+        default <T extends ÅssignableDate> T size(int number) {
             try {
-                return number((int) numberjavalangString.invoke(this, number));
+                return size((BigDecimal) sizeint.invoke(this, number));
             } catch (Throwable e) {
                 throw new Error(e);
             }
         }
-        <T extends ÅssignableDate> T number(int value);
+        default <T extends ÅssignableDate> T sizeByText(String number) {
+            try {
+                return size((BigDecimal) sizeByTextjavalangString.invoke(this, number));
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
+        }
+        <T extends ÅssignableDate> T size(BigDecimal value);
     }
 
     /**
@@ -168,7 +175,7 @@ public class Overload extends OverloadModel {
      * The identifier for properties.
      */
     static final class My {
-        static final String Number = "number";
+        static final String Size = "size";
         static final String Date = "date";
     }
 }

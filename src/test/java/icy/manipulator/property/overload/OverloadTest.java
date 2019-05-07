@@ -22,7 +22,5 @@ class OverloadTest {
 
     @Test
     void overload() {
-        Overload date = Overload.with.number(10).date(2010, 10, 10);
-        System.out.println(date.date());
     }
 }

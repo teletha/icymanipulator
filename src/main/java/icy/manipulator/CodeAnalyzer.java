@@ -248,8 +248,10 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         code.write(" */");
         code.write("@", Generated.class, "(\"Icy Manipulator\")");
         code.write(visibility, "class ", clazz, " extends ", model, () -> {
-            defineMethodInvokerBuilder();
-            defineOverloadMethodInvoker();
+            if (!overloads.isEmpty()) {
+                defineMethodInvokerBuilder();
+                defineOverloadMethodInvoker();
+            }
             defineFiledUpdaterBuilder();
             defineFieldUpdater();
             defineField();
@@ -384,31 +386,47 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         }
     }
 
+    // public static final ÅssignableSize with = new ÅssignableSize() {
+    //
+    // /**
+    // * {@inheritDoc}
+    // */
+    // @Override
+    // public <T extends ÅssignableDate> T size(BigDecimal value) {
+    // return (T) new Åssignable(value);
+    // }
+    // };
+
     /**
      * Defien model builder methods.
      */
     private void defineBuilder() {
         code.write();
-        code.write("/**");
-        code.write(" * Builder namespace for {@link ", clazz, "}.");
-        code.write(" */");
-        code.write("public static final class with", () -> {
-            code.write();
-            code.write("/**");
-            code.write(" * Create uninitialized {@link ", clazz, "}.");
-            code.write(" */");
 
-            if (required.isEmpty()) {
+        if (required.isEmpty()) {
+            code.write("/**");
+            code.write(" * Builder namespace for {@link ", clazz, "}.");
+            code.write(" */");
+            code.write("public static final class with", () -> {
+                code.write();
+                code.write("/**");
+                code.write(" * Create uninitialized {@link ", clazz, "}.");
+                code.write(" */");
                 code.write("public static final <T extends ", self(), "> T create()", () -> {
                     code.write("return (T) new ", Assignable, "();");
                 });
-            } else {
-                Property p = required.get(0);
-                code.write("public static final <T extends ", p.next, "> T ", p.name, "(", p.type, " value)", () -> {
+            });
+        } else {
+            Property p = required.get(0);
+            code.write("/** The singleton model builder. */");
+            code.write("public static final ", p.assignableInterfaceName(), " with = new ", p.assignableInterfaceName(), "()", () -> {
+                code.write();
+                code.write("@Override");
+                code.write("public <T extends ", p.next, "> T ", p.name, "(", p.type, " value)", () -> {
                     code.write("return (T) new ", Assignable, "(value);");
                 });
-            }
-        });
+            }).asStatement();
+        }
     }
 
     /**

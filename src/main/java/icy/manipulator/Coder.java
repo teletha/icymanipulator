@@ -62,10 +62,11 @@ public class Coder {
      * @param code A code fragment.
      * @param nest A nested code.
      */
-    public void write(Object code, Runnable nest) {
+    public Coder write(Object code, Runnable nest) {
         write(code, " {");
         write(nest);
         write("}");
+        return this;
     }
 
     /**
@@ -75,10 +76,11 @@ public class Coder {
      * @param code A code2 fragment.
      * @param nest A nested code.
      */
-    public void write(Object code1, Object code2, Runnable nest) {
+    public Coder write(Object code1, Object code2, Runnable nest) {
         write(code1, code2, " {");
         write(nest);
         write("}");
+        return this;
     }
 
     /**
@@ -89,10 +91,11 @@ public class Coder {
      * @param code A code3 fragment.
      * @param nest A nested code.
      */
-    public void write(Object code1, Object code2, Object code3, Runnable nest) {
+    public Coder write(Object code1, Object code2, Object code3, Runnable nest) {
         write(code1, code2, code3, " {");
         write(nest);
         write("}");
+        return this;
     }
 
     /**
@@ -104,10 +107,11 @@ public class Coder {
      * @param code A code4 fragment.
      * @param nest A nested code.
      */
-    public void write(Object code1, Object code2, Object code3, Object code4, Runnable nest) {
+    public Coder write(Object code1, Object code2, Object code3, Object code4, Runnable nest) {
         write(code1, code2, code3, code4, " {");
         write(nest);
         write("}");
+        return this;
     }
 
     /**
@@ -120,10 +124,11 @@ public class Coder {
      * @param code A code5 fragment.
      * @param nest A nested code.
      */
-    public void write(Object code1, Object code2, Object code3, Object code4, Object code5, Runnable nest) {
+    public Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Runnable nest) {
         write(code1, code2, code3, code4, code5, " {");
         write(nest);
         write("}");
+        return this;
     }
 
     /**
@@ -137,10 +142,11 @@ public class Coder {
      * @param code A code6 fragment.
      * @param nest A nested code.
      */
-    public void write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Runnable nest) {
+    public Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Runnable nest) {
         write(code1, code2, code3, code4, code5, code6, " {");
         write(nest);
         write("}");
+        return this;
     }
 
     /**
@@ -155,10 +161,11 @@ public class Coder {
      * @param code A code7 fragment.
      * @param nest A nested code.
      */
-    public void write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Object code7, Runnable nest) {
+    public Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Object code7, Runnable nest) {
         write(code1, code2, code3, code4, code5, code6, code7, " {");
         write(nest);
         write("}");
+        return this;
     }
 
     /**
@@ -203,6 +210,19 @@ public class Coder {
 
     public String use(Type clazz) {
         return importer.use(clazz);
+    }
+
+    /**
+     * Make the latest expression or block to statement by inserting semicolon.
+     */
+    public void asStatement() {
+        int index = source.lastIndexOf(END);
+
+        if (index + END.length() == source.length()) {
+            source.insert(index, ";");
+        } else {
+            source.append(";");
+        }
     }
 
     public String toCode() {

@@ -3,7 +3,6 @@ package icy.manipulator.property.object;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import javax.annotation.processing.Generated;
 
 /**
@@ -11,23 +10,6 @@ import javax.annotation.processing.Generated;
  */
 @Generated("Icy Manipulator")
 public class MixLastDefault extends MixLastDefaultModel {
-
-    /**
-     * Create special method invoker.
-     *
-     * @param name A target method name.
-     * @param parameterTypes A list of method parameter types.
-     * @return A special method invoker.
-     */
-    private static final MethodHandle updater(String name, Class... parameterTypes)  {
-        try {
-            Method method = MixLastDefaultModel.class.getDeclaredMethod(name, parameterTypes);
-            method.setAccessible(true);
-            return MethodHandles.lookup().unreflect(method);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
-    }
 
     /**
      * Create special property updater.
@@ -81,18 +63,14 @@ public class MixLastDefault extends MixLastDefaultModel {
         return this.age;
     }
 
-    /**
-     * Builder namespace for {@link MixLastDefault}.
-     */
-    public static final class with {
+    /** The singleton model builder. */
+    public static final ÅssignableName with = new ÅssignableName() {
 
-        /**
-         * Create uninitialized {@link MixLastDefault}.
-         */
-        public static final <T extends MixLastDefault & ÅssignableÅrbitrary> T name(String value) {
+        @Override
+        public <T extends MixLastDefault & ÅssignableÅrbitrary> T name(String value) {
             return (T) new Åssignable(value);
         }
-    }
+    };
 
     /**
      * Mutable Model.
