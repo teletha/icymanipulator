@@ -47,5 +47,11 @@ public @interface Icy {
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.SOURCE)
     @interface Overload {
+        /**
+         * The target property name to define overload setter.
+         * 
+         * @return
+         */
+        String value() default "";
     }
 }

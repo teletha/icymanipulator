@@ -22,8 +22,7 @@ class PrimitiveTest {
 
     @Test
     void property() {
-        Primitive instance = Primitive.create()
-                .intX(10)
+        Primitive instance = Primitive.with.intX(10)
                 .longX(20)
                 .floatX(3.2F)
                 .doubleX(0.12)

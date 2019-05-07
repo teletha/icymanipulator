@@ -22,7 +22,7 @@ class DefaultTest {
 
     @Test
     void defaults() {
-        Default instance = Default.create();
+        Default instance = Default.with.create();
         assert instance.name.equals("Bruno Bucciarati");
         assert instance.name().equals("Bruno Bucciarati");
         assert instance.stand.equals("Sticky Fingers");
@@ -31,7 +31,7 @@ class DefaultTest {
 
     @Test
     void property() {
-        Default instance = Default.create().name("Guido Mista").stand("Sex Pistols");
+        Default instance = Default.with.create().name("Guido Mista").stand("Sex Pistols");
         assert instance.name.equals("Guido Mista");
         assert instance.name().equals("Guido Mista");
         assert instance.stand.equals("Sex Pistols");

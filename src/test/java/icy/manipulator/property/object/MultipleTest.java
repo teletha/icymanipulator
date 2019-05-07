@@ -22,7 +22,7 @@ class MultipleTest {
 
     @Test
     void property() {
-        Multiple instance = Multiple.create().name("Giorno Giovanna").stand("Gold Experience");
+        Multiple instance = Multiple.with.name("Giorno Giovanna").stand("Gold Experience");
         assert instance.name.equals("Giorno Giovanna");
         assert instance.stand().equals("Gold Experience");
     }

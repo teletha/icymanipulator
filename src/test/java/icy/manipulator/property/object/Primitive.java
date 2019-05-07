@@ -3,6 +3,7 @@ package icy.manipulator.property.object;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import javax.annotation.processing.Generated;
 
 /**
@@ -10,6 +11,23 @@ import javax.annotation.processing.Generated;
  */
 @Generated("Icy Manipulator")
 public class Primitive extends PrimitiveModel {
+
+    /**
+     * Create special method invoker.
+     *
+     * @param name A target method name.
+     * @param parameterTypes A list of method parameter types.
+     * @return A special method invoker.
+     */
+    private static final MethodHandle updater(String name, Class... parameterTypes)  {
+        try {
+            Method method = PrimitiveModel.class.getDeclaredMethod(name, parameterTypes);
+            method.setAccessible(true);
+            return MethodHandles.lookup().unreflect(method);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
+    }
 
     /**
      * Create special property updater.
@@ -78,8 +96,8 @@ public class Primitive extends PrimitiveModel {
     /**
      * HIDE CONSTRUCTOR
      */
-    protected Primitive() {
-        this.intX = 0;
+    protected Primitive(int intX) {
+        this.intX = intX;
         this.longX = 0L;
         this.floatX = 0;
         this.doubleX = 0D;
@@ -154,16 +172,25 @@ public class Primitive extends PrimitiveModel {
     }
 
     /**
-     * Create uninitialized {@link Primitive}.
+     * Builder namespace for {@link Primitive}.
      */
-    public static final <T extends ÅssignableIntX> T create() {
-        return (T) new Åssignable();
+    public static final class with {
+
+        /**
+         * Create uninitialized {@link Primitive}.
+         */
+        public static final <T extends ÅssignableLongX> T intX(int value) {
+            return (T) new Åssignable(value);
+        }
     }
 
     /**
      * Mutable Model.
      */
     private static final class Åssignable extends Primitive implements ÅssignableIntX, ÅssignableLongX, ÅssignableFloatX, ÅssignableDoubleX, ÅssignableByteX, ÅssignableShortX, ÅssignableCharX, ÅssignableBooleanX {
+        private Åssignable(int intX) {
+            super(intX);
+        }
 
         /**
          * Modify intX property.
@@ -324,5 +351,19 @@ public class Primitive extends PrimitiveModel {
      */
     public static interface ÅssignableBooleanX {
         <T extends Primitive> T booleanX(boolean value);
+    }
+
+    /**
+     * The identifier for properties.
+     */
+    static final class My {
+        static final String IntX = "intX";
+        static final String LongX = "longX";
+        static final String FloatX = "floatX";
+        static final String DoubleX = "doubleX";
+        static final String ByteX = "byteX";
+        static final String ShortX = "shortX";
+        static final String CharX = "charX";
+        static final String BooleanX = "booleanX";
     }
 }

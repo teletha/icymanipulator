@@ -22,14 +22,14 @@ class MixLastDefaultTest {
 
     @Test
     void property() {
-        MixLastDefault instance = MixLastDefault.create().name("Giorno Giovanna");
+        MixLastDefault instance = MixLastDefault.with.name("Giorno Giovanna");
         assert instance.name.equals("Giorno Giovanna");
         assert instance.age == 15;
     }
 
     @Test
     void overrideDefault() {
-        MixLastDefault instance = MixLastDefault.create().name("Guido Mista").age(18);
+        MixLastDefault instance = MixLastDefault.with.name("Guido Mista").age(18);
         assert instance.name.equals("Guido Mista");
         assert instance.age == 18;
     }

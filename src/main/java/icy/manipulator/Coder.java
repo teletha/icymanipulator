@@ -9,6 +9,8 @@
  */
 package icy.manipulator;
 
+import java.util.List;
+import java.util.StringJoiner;
 import java.util.function.Consumer;
 
 public class Coder {
@@ -168,17 +170,39 @@ public class Coder {
         if (codes.length != 0) source.append(indent.repeat(depth));
 
         for (Object code : codes) {
-            if (code instanceof Class) {
-                Class clazz = (Class) code;
-                source.append(importer.use(clazz));
-            } else if (code instanceof Type) {
-                Type clazz = (Type) code;
-                source.append(importer.use(clazz));
-            } else {
-                source.append(code.toString());
-            }
+            source.append(code(code));
         }
         source.append(END);
+    }
+
+    private String code(Object code) {
+        if (code instanceof List) {
+            List list = (List) code;
+            StringJoiner joiner = new StringJoiner(", ");
+            for (Object object : list) {
+                joiner.add(code(object));
+            }
+            return joiner.toString();
+        } else if (code instanceof Method) {
+            Method e = (Method) code;
+            StringJoiner params = new StringJoiner(", ", "(", ")");
+            for (int i = 0; i < e.parameterTypes.size(); i++) {
+                params.add(importer.use(e.parameterTypes.get(i)) + " " + e.parameterNames.get(i));
+            }
+            return e.name.concat(params.toString());
+        } else if (code instanceof Class) {
+            Class clazz = (Class) code;
+            return importer.use(clazz);
+        } else if (code instanceof Type) {
+            Type clazz = (Type) code;
+            return importer.use(clazz);
+        } else {
+            return String.valueOf(code);
+        }
+    }
+
+    public String use(Type clazz) {
+        return importer.use(clazz);
     }
 
     public String toCode() {

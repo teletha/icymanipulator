@@ -3,6 +3,7 @@ package icy.manipulator.property.object;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import javax.annotation.processing.Generated;
 
 /**
@@ -10,6 +11,23 @@ import javax.annotation.processing.Generated;
  */
 @Generated("Icy Manipulator")
 public class Default extends DefaultModel {
+
+    /**
+     * Create special method invoker.
+     *
+     * @param name A target method name.
+     * @param parameterTypes A list of method parameter types.
+     * @return A special method invoker.
+     */
+    private static final MethodHandle updater(String name, Class... parameterTypes)  {
+        try {
+            Method method = DefaultModel.class.getDeclaredMethod(name, parameterTypes);
+            method.setAccessible(true);
+            return MethodHandles.lookup().unreflect(method);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
+    }
 
     /**
      * Create special property updater.
@@ -64,16 +82,25 @@ public class Default extends DefaultModel {
     }
 
     /**
-     * Create uninitialized {@link Default}.
+     * Builder namespace for {@link Default}.
      */
-    public static final <T extends Default & ÅssignableÅrbitrary> T create() {
-        return (T) new Åssignable();
+    public static final class with {
+
+        /**
+         * Create uninitialized {@link Default}.
+         */
+        public static final <T extends Default & ÅssignableÅrbitrary> T create() {
+            return (T) new Åssignable();
+        }
     }
 
     /**
      * Mutable Model.
      */
     private static final class Åssignable extends Default implements ÅssignableÅrbitrary {
+        private Åssignable() {
+            super();
+        }
 
         /**
          * Modify name property.
@@ -116,5 +143,13 @@ public class Default extends DefaultModel {
          * Property assignment API.
          */
         <T extends Default & ÅssignableÅrbitrary> T stand(String value);
+    }
+
+    /**
+     * The identifier for properties.
+     */
+    static final class My {
+        static final String Name = "name";
+        static final String Stand = "stand";
     }
 }

@@ -22,7 +22,7 @@ class SingleTest {
 
     @Test
     void property() {
-        Single instance = Single.create().name("Giorno Giovanna");
+        Single instance = Single.with.name("Giorno Giovanna");
         assert instance.name.equals("Giorno Giovanna");
     }
 }

@@ -75,4 +75,13 @@ class Property {
     String assignableInterfaceName() {
         return CodeAnalyzer.Assignable + Character.toUpperCase(name.charAt(0)) + name.substring(1);
     }
+
+    /**
+     * Compute capitalized property name.
+     * 
+     * @return
+     */
+    String capitalizeName() {
+        return Character.toUpperCase(name.charAt(0)) + name.substring(1);
+    }
 }

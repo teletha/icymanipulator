@@ -13,8 +13,8 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.StringJoiner;
 
 import javax.annotation.processing.Generated;
@@ -64,8 +64,13 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
     /** The arbitrary properties. */
     private final List<Property> arbitrary = new ArrayList();
 
+    private List<Property> first;
+
     /** The overload method holder. */
-    private final List<ExecutableElement> overloads = new ArrayList();
+    private final List<Method> overloads = new ArrayList();
+
+    /** The overload method for each property */
+    private final PropetyInfo<Method> overloadForProperty = new PropetyInfo();
 
     private Coder code = new Coder(IcyManipulator.importer);
 
@@ -163,7 +168,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
             // collect overload methods
             Overload overload = e.getAnnotation(Icy.Overload.class);
-            if (overload != null) overloads.add(e);
+            if (overload != null) overloads.add(new Method(e));
         }
         return this;
     }
@@ -202,6 +207,8 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             property.next = self();
         }
 
+        first = required.isEmpty() ? Collections.emptyList() : Collections.singletonList(required.get(0));
+
         validateOverload();
     }
 
@@ -209,10 +216,22 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
      * Validate overload method.
      */
     private void validateOverload() {
-        for (ExecutableElement method : overloads) {
-            String name = method.getSimpleName().toString();
-            Type returnType = Type.of(method.getReturnType());
-            System.out.println(name + "  " + returnType);
+        for (Method method : overloads) {
+            Overload overload = method.getAnnotation(Overload.class);
+            String targetProperty = overload.value().isEmpty() ? method.name : overload.value();
+
+            Property property = findPropertyByName(targetProperty);
+
+            if (property == null) {
+                error("Although you specify the property [" + targetProperty + "], it is not found. Specify the correct property name.", method.element);
+                return;
+            }
+
+            if (!method.returnType.equals(property.type)) {
+                error("Although the property [" + targetProperty + "] type is " + method.returnType + ", overload method [" + method + "] returns " + method.returnType + ".", method.element);
+                return;
+            }
+            overloadForProperty.add(property, method);
         }
     }
 
@@ -229,6 +248,8 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         code.write(" */");
         code.write("@", Generated.class, "(\"Icy Manipulator\")");
         code.write(visibility, "class ", clazz, " extends ", model, () -> {
+            defineMethodInvokerBuilder();
+            defineOverloadMethodInvoker();
             defineFiledUpdaterBuilder();
             defineFieldUpdater();
             defineField();
@@ -237,8 +258,48 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             defineBuilder();
             defineMutableClass();
             defineAssignableInterfaces();
+            definePropertyEnum();
         });
         return code.toCode();
+    }
+
+    /**
+     * Define query method for property updater.
+     */
+    private void defineMethodInvokerBuilder() {
+        code.write();
+        code.write("/**");
+        code.write(" * Create special method invoker.");
+        code.write(" *");
+        code.write(" * @param name A target method name.");
+        code.write(" * @param parameterTypes A list of method parameter types.");
+        code.write(" * @return A special method invoker.");
+        code.write(" */");
+        code.write("private static final ", MethodHandle.class, " updater(String name, Class... parameterTypes) ", () -> {
+            code.writeTry(() -> {
+                code.write(java.lang.reflect.Method.class, " method = ", model, ".class.getDeclaredMethod(name, parameterTypes);");
+                code.write("method.setAccessible(true);");
+                code.write("return ", MethodHandles.class, ".lookup().unreflect(method);");
+            }, Throwable.class, e -> {
+                code.write("throw new Error(", e, ");");
+            });
+        });
+    }
+
+    /**
+     * Define property updater.
+     */
+    private void defineOverloadMethodInvoker() {
+        for (Property property : properties) {
+            for (Method method : overloadForProperty.get(property)) {
+                StringJoiner types = new StringJoiner(", ", ", ", "").setEmptyValue("");
+                method.parameterTypes.forEach(t -> types.add(code.use(t) + ".class"));
+
+                code.write();
+                code.write("/** The overload method invoker. */");
+                code.write("private static final ", MethodHandle.class, " ", method.id, "= updater(\"", method.name, "\"", types, ");");
+            }
+        }
     }
 
     /**
@@ -295,10 +356,14 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         code.write("/**");
         code.write(" * HIDE CONSTRUCTOR");
         code.write(" */");
-        code.write("protected ", clazz, "()", () -> {
+        code.write("protected ", clazz, "(", parameterWithType(first), ")", () -> {
             // initialize field
             for (Property p : properties) {
-                code.write("this.", p.name, " = ", (p.isArbitrary ? "super." + p.name + "()" : p.type.defaultValue()), ";");
+                if (first.contains(p)) {
+                    code.write("this.", p.name, " = ", p.name, ";");
+                } else {
+                    code.write("this.", p.name, " = ", (p.isArbitrary ? "super." + p.name + "()" : p.type.defaultValue()), ";");
+                }
             }
         });
     }
@@ -323,20 +388,26 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
      * Defien model builder methods.
      */
     private void defineBuilder() {
-        String initialType;
-
-        if (required.isEmpty()) {
-            initialType = self();
-        } else {
-            initialType = required.get(0).assignableInterfaceName();
-        }
-
         code.write();
         code.write("/**");
-        code.write(" * Create uninitialized {@link ", clazz, "}.");
+        code.write(" * Builder namespace for {@link ", clazz, "}.");
         code.write(" */");
-        code.write("public static final <T extends ", initialType, "> T create()", () -> {
-            code.write("return (T) new ", Assignable, "();");
+        code.write("public static final class with", () -> {
+            code.write();
+            code.write("/**");
+            code.write(" * Create uninitialized {@link ", clazz, "}.");
+            code.write(" */");
+
+            if (required.isEmpty()) {
+                code.write("public static final <T extends ", self(), "> T create()", () -> {
+                    code.write("return (T) new ", Assignable, "();");
+                });
+            } else {
+                Property p = required.get(0);
+                code.write("public static final <T extends ", p.next, "> T ", p.name, "(", p.type, " value)", () -> {
+                    code.write("return (T) new ", Assignable, "(value);");
+                });
+            }
         });
     }
 
@@ -354,6 +425,10 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         code.write(" * Mutable Model.");
         code.write(" */");
         code.write("private static final class ", Assignable, clazz.variable, " extends ", clazz, interfaces, () -> {
+            code.write("private ", Assignable, "(", parameterWithType(first), ")", () -> {
+                code.write("super(", parameter(first), ");");
+            });
+
             // Define Setters
             for (Property property : properties) {
                 code.write();
@@ -383,13 +458,22 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
      * Define assignable interfaces.
      */
     private void defineAssignableInterfaces() {
-        for (Property property : required) {
+        for (Property p : required) {
             code.write();
             code.write("/**");
             code.write(" * .");
             code.write(" */");
-            code.write("public static interface ", property.assignableInterfaceName(), () -> {
-                code.write("<T extends ", property.next, "> T ", property.name, "(", property.type, " value);");
+            code.write("public static interface ", p.assignableInterfaceName(), () -> {
+                for (Method method : overloadForProperty.get(p)) {
+                    code.write("default <T extends ", p.next, "> T ", method, () -> {
+                        code.writeTry(() -> {
+                            code.write("return ", p.name, "((", method.returnType, ") ", method.id, ".invoke(this, ", method.parameterNames, "));");
+                        }, Throwable.class, e -> {
+                            code.write("throw new Error(", e, ");");
+                        });
+                    });
+                }
+                code.write("<T extends ", p.next, "> T ", p.name, "(", p.type, " value);");
             });
         }
 
@@ -411,6 +495,21 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
     }
 
     /**
+     * Define property identity.
+     */
+    private void definePropertyEnum() {
+        code.write();
+        code.write("/**");
+        code.write(" * The identifier for properties.");
+        code.write(" */");
+        code.write("static final class My", () -> {
+            for (Property property : properties) {
+                code.write("static final String ", property.capitalizeName(), " = \"", property.name, "\";");
+            }
+        });
+    }
+
+    /**
      * <p>
      * Write paramter without type.
      * </p>
@@ -422,6 +521,22 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
         for (Property property : properties) {
             joiner.add(property.name);
+        }
+        return joiner.toString();
+    }
+
+    /**
+     * <p>
+     * Write paramter without type.
+     * </p>
+     * 
+     * @return
+     */
+    private String parameter(ExecutableElement method) {
+        StringJoiner joiner = new StringJoiner(", ");
+
+        for (VariableElement param : method.getParameters()) {
+            joiner.add(param.getSimpleName());
         }
         return joiner.toString();
     }
@@ -462,6 +577,22 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         return joiner.toString();
     }
 
+    /**
+     * <p>
+     * Write paramter with type.
+     * </p>
+     * 
+     * @return
+     */
+    private String parameterWithType(ExecutableElement method) {
+        StringJoiner joiner = new StringJoiner(", ");
+
+        List<? extends TypeMirror> types = ((ExecutableType) method.asType()).getParameterTypes();
+        List<? extends VariableElement> names = method.getParameters();
+
+        return joiner.toString();
+    }
+
     /** The error existence state. */
     boolean hasError;
 
@@ -480,13 +611,13 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         }
     }
 
-    private Optional<Property> findPropertyByName(String name) {
+    private Property findPropertyByName(String name) {
         for (Property property : properties) {
             if (property.name.equals(name)) {
-                return Optional.of(property);
+                return property;
             }
         }
-        return Optional.empty();
+        return null;
     }
 
     private boolean isDeriveMethod(ExecutableElement method) {
