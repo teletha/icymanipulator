@@ -9,6 +9,8 @@
  */
 package icy.manipulator.property.overload;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -22,5 +24,8 @@ class OverloadTest {
 
     @Test
     void overload() {
+        Overload instance = Overload.with.sizeByText("12").date(2015, 7, 12);
+        assert instance.size.intValue() == 12;
+        assert instance.date.isEqual(LocalDate.of(2015, 7, 12));
     }
 }

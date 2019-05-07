@@ -386,17 +386,6 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         }
     }
 
-    // public static final ÅssignableSize with = new ÅssignableSize() {
-    //
-    // /**
-    // * {@inheritDoc}
-    // */
-    // @Override
-    // public <T extends ÅssignableDate> T size(BigDecimal value) {
-    // return (T) new Åssignable(value);
-    // }
-    // };
-
     /**
      * Defien model builder methods.
      */
@@ -425,9 +414,37 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
                 code.write("public <T extends ", p.next, "> T ", p.name, "(", p.type, " value)", () -> {
                     code.write("return (T) new ", Assignable, "(value);");
                 });
+
+                for (Method method : overloadForProperty.get(p)) {
+                    code.write();
+                    code.write("@Override");
+                    code.write("public <T extends ", p.next, "> T ", method, () -> {
+                        code.write(Assignable, " instnace = new ", Assignable, "(", p.type.defaultValue(), ");");
+                        code.writeTry(() -> {
+                            code.write("instnace.", p.name, "((", method.returnType, ") ", method.id, ".invoke(instnace, ", method.parameterNames, "));");
+                        }, Throwable.class, e -> {
+                            code.write("throw new Error(", e, ");");
+                        });
+                        code.write("return (T) instnace;");
+                    });
+                }
             }).asStatement();
         }
     }
+
+    // /**
+    // * {@inheritDoc}
+    // */
+    // @Override
+    // public <T extends ÅssignableDate> T sizeByText(String number) {
+    // Åssignable insntant = new Åssignable(null);
+    // try {
+    // insntant.size((BigDecimal) sizeByTextjavalangString.invoke(insntant, number));
+    // } catch (Throwable e) {
+    // throw new Error(e);
+    // }
+    // return (T) insntant;
+    // }
 
     /**
      * Define mutable model class.
@@ -479,7 +496,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         for (Property p : required) {
             code.write();
             code.write("/**");
-            code.write(" * .");
+            code.write(" * Property assignment API.");
             code.write(" */");
             code.write("public static interface ", p.assignableInterfaceName(), () -> {
                 for (Method method : overloadForProperty.get(p)) {

@@ -108,7 +108,7 @@ public class MixLastDefault extends MixLastDefaultModel {
     }
 
     /**
-     * .
+     * Property assignment API.
      */
     public static interface ÅssignableName {
         <T extends MixLastDefault & ÅssignableÅrbitrary> T name(String value);

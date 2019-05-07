@@ -80,7 +80,7 @@ public class Single extends SingleModel {
     }
 
     /**
-     * .
+     * Property assignment API.
      */
     public static interface ÅssignableName {
         <T extends Single> T name(String value);

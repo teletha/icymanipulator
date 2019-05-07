@@ -99,6 +99,28 @@ public class Overload extends OverloadModel {
         public <T extends ÅssignableDate> T size(BigDecimal value) {
             return (T) new Åssignable(value);
         }
+
+        @Override
+        public <T extends ÅssignableDate> T size(int number) {
+            Åssignable instnace = new Åssignable(null);
+            try {
+                instnace.size((BigDecimal) sizeint.invoke(instnace, number));
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
+            return (T) instnace;
+        }
+
+        @Override
+        public <T extends ÅssignableDate> T sizeByText(String number) {
+            Åssignable instnace = new Åssignable(null);
+            try {
+                instnace.size((BigDecimal) sizeByTextjavalangString.invoke(instnace, number));
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
+            return (T) instnace;
+        }
     };
 
     /**
@@ -137,7 +159,7 @@ public class Overload extends OverloadModel {
     }
 
     /**
-     * .
+     * Property assignment API.
      */
     public static interface ÅssignableSize {
         default <T extends ÅssignableDate> T size(int number) {
@@ -158,7 +180,7 @@ public class Overload extends OverloadModel {
     }
 
     /**
-     * .
+     * Property assignment API.
      */
     public static interface ÅssignableDate {
         default <T extends Overload> T date(int year, int month, int day) {

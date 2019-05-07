@@ -80,7 +80,7 @@ class ImplementationVisibility extends ImplementationVisibilityModel {
     }
 
     /**
-     * .
+     * Property assignment API.
      */
     public static interface ÅssignableName {
         <T extends ImplementationVisibility> T name(String value);

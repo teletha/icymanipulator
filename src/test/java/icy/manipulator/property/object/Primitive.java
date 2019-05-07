@@ -276,56 +276,56 @@ public class Primitive extends PrimitiveModel {
     }
 
     /**
-     * .
+     * Property assignment API.
      */
     public static interface ÅssignableIntX {
         <T extends ÅssignableLongX> T intX(int value);
     }
 
     /**
-     * .
+     * Property assignment API.
      */
     public static interface ÅssignableLongX {
         <T extends ÅssignableFloatX> T longX(long value);
     }
 
     /**
-     * .
+     * Property assignment API.
      */
     public static interface ÅssignableFloatX {
         <T extends ÅssignableDoubleX> T floatX(float value);
     }
 
     /**
-     * .
+     * Property assignment API.
      */
     public static interface ÅssignableDoubleX {
         <T extends ÅssignableByteX> T doubleX(double value);
     }
 
     /**
-     * .
+     * Property assignment API.
      */
     public static interface ÅssignableByteX {
         <T extends ÅssignableShortX> T byteX(byte value);
     }
 
     /**
-     * .
+     * Property assignment API.
      */
     public static interface ÅssignableShortX {
         <T extends ÅssignableCharX> T shortX(short value);
     }
 
     /**
-     * .
+     * Property assignment API.
      */
     public static interface ÅssignableCharX {
         <T extends ÅssignableBooleanX> T charX(char value);
     }
 
     /**
-     * .
+     * Property assignment API.
      */
     public static interface ÅssignableBooleanX {
         <T extends Primitive> T booleanX(boolean value);

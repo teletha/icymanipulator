@@ -108,14 +108,14 @@ public class Multiple extends MultipleModel {
     }
 
     /**
-     * .
+     * Property assignment API.
      */
     public static interface ÅssignableName {
         <T extends ÅssignableStand> T name(String value);
     }
 
     /**
-     * .
+     * Property assignment API.
      */
     public static interface ÅssignableStand {
         <T extends Multiple> T stand(String value);
