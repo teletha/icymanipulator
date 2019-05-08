@@ -101,20 +101,21 @@ public abstract class Multiple extends MultipleModel {
         this.stand(value);
     }
 
-    /** The singleton model builder. */
-    public static final ÅssignableName with = new ÅssignableName() {
+    /**
+     * Builder namespace for {@link Multiple}.
+     */
+    public static final class with {
 
         /** Create Uninitialized {@link Multiple}. */
-        @Override
-        public <T extends ÅssignableStand> T name(String value) {
-            return (T) new Åssignable(value);
+        public static final <Self extends ÅssignableStand<Multiple>> Self name(String value) {
+            return (Self) new Åssignable(value);
         }
-    };
+    }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Multiple implements ÅssignableName, ÅssignableStand {
+    private static final class Åssignable extends Multiple implements ÅssignableName<ÅssignableStand<Multiple>>, ÅssignableStand<Multiple> {
 
         /**
          * Initialize by first property.
@@ -127,45 +128,45 @@ public abstract class Multiple extends MultipleModel {
          * Modify name property.
          */
         @Override
-        public final <T extends ÅssignableStand> T name(String value) {
+        public final ÅssignableStand<Multiple> name(String value) {
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
 
         /**
          * Modify stand property.
          */
         @Override
-        public final <T extends Multiple> T stand(String value) {
+        public final Multiple stand(String value) {
             try {
                 standUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableName {
+    public static interface ÅssignableName<Next> {
 
         /** Setter */
-        <T extends ÅssignableStand> T name(String value);
+        Next name(String value);
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableStand {
+    public static interface ÅssignableStand<Next> {
 
         /** Setter */
-        <T extends Multiple> T stand(String value);
+        Next stand(String value);
     }
 
     /**

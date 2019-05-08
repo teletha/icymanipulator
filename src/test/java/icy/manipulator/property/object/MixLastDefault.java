@@ -101,20 +101,21 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
         this.age(value);
     }
 
-    /** The singleton model builder. */
-    public static final ÅssignableName with = new ÅssignableName() {
+    /**
+     * Builder namespace for {@link MixLastDefault}.
+     */
+    public static final class with {
 
         /** Create Uninitialized {@link MixLastDefault}. */
-        @Override
-        public <T extends MixLastDefault & ÅssignableÅrbitrary> T name(String value) {
-            return (T) new Åssignable(value);
+        public static final <Self extends MixLastDefault> Self name(String value) {
+            return (Self) new Åssignable(value);
         }
-    };
+    }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends MixLastDefault implements ÅssignableName, ÅssignableÅrbitrary {
+    private static final class Åssignable extends MixLastDefault implements ÅssignableName<MixLastDefault>, ÅssignableÅrbitrary {
 
         /**
          * Initialize by first property.
@@ -127,36 +128,36 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
          * Modify name property.
          */
         @Override
-        public final <T extends MixLastDefault & ÅssignableÅrbitrary> T name(String value) {
+        public final MixLastDefault name(String value) {
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
 
         /**
          * Modify age property.
          */
         @Override
-        public final <T extends MixLastDefault & ÅssignableÅrbitrary> T age(int value) {
+        public final MixLastDefault age(int value) {
             try {
                 ageUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableName {
+    public static interface ÅssignableName<Next> {
 
         /** Setter */
-        <T extends MixLastDefault & ÅssignableÅrbitrary> T name(String value);
+        Next name(String value);
     }
 
     /**

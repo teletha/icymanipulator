@@ -67,20 +67,21 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
         this.name(value);
     }
 
-    /** The singleton model builder. */
-    public static final ÅssignableName with = new ÅssignableName() {
+    /**
+     * Builder namespace for {@link ImplementationVisibility}.
+     */
+    public static final class with {
 
         /** Create Uninitialized {@link ImplementationVisibility}. */
-        @Override
-        public <T extends ImplementationVisibility> T name(String value) {
-            return (T) new Åssignable(value);
+        public static final <Self extends ImplementationVisibility> Self name(String value) {
+            return (Self) new Åssignable(value);
         }
-    };
+    }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends ImplementationVisibility implements ÅssignableName {
+    private static final class Åssignable extends ImplementationVisibility implements ÅssignableName<ImplementationVisibility> {
 
         /**
          * Initialize by first property.
@@ -93,23 +94,23 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
          * Modify name property.
          */
         @Override
-        public final <T extends ImplementationVisibility> T name(String value) {
+        public final ImplementationVisibility name(String value) {
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableName {
+    public static interface ÅssignableName<Next> {
 
         /** Setter */
-        <T extends ImplementationVisibility> T name(String value);
+        Next name(String value);
     }
 
     /**

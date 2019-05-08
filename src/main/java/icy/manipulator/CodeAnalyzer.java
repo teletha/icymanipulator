@@ -40,6 +40,9 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
     /** The prefix of assignable type. */
     static final String Assignable = "Åssignable";
 
+    /** The next type parameter. */
+    private static final String Next = "Next";
+
     /** The configuratino interface name for arbitrary perperties. */
     private static final String ArbitraryInterface = Assignable + "Årbitrary";
 
@@ -198,6 +201,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
         if (required.size() != 0) {
             for (int i = 0; i < required.size() - 1; i++) {
+                required.get(i).nextProperty = required.get(i + 1);
                 required.get(i).next = required.get(i + 1).assignableInterfaceName();
             }
             required.get(required.size() - 1).next = self();
@@ -416,45 +420,40 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
      * Defien model builder methods.
      */
     private void defineBuilder() {
-        code.write();
         String builder = icy.builder();
 
-        if (required.isEmpty()) {
-            code.write("/**");
-            code.write(" * Builder namespace for {@link ", clazz, "}.");
-            code.write(" */");
-            code.write("public static final class ", builder, () -> {
-                code.write();
+        code.write();
+        code.write("/**");
+        code.write(" * Builder namespace for {@link ", clazz, "}.");
+        code.write(" */");
+        code.write("public static final class ", builder, () -> {
+            code.write();
+
+            if (required.isEmpty()) {
                 code.write("/**");
                 code.write(" * Create uninitialized {@link ", clazz, "}.");
                 code.write(" */");
                 code.write("public static final <T extends ", self(), "> T create()", () -> {
                     code.write("return (T) new ", Assignable, "();");
                 });
-            });
-        } else {
-            Property p = required.get(0);
-            code.write("/** The singleton model builder. */");
-            code.write("public static final ", p.assignableInterfaceName(), " ", builder, " = new ", p
-                    .assignableInterfaceName(), "()", () -> {
-                        code.write();
-                        code.write("/** Create Uninitialized {@link ", clazz, "}. */");
-                        code.write("@Override");
-                        code.write("public <T extends ", p.next, "> T ", p.name, "(", p.type, " value)", () -> {
-                            code.write("return (T) new ", Assignable, "(value);");
+            } else {
+                Property p = required.get(0);
+                code.write("/** Create Uninitialized {@link ", clazz, "}. */");
+                code.write("public static final <Self extends ", p
+                        .nextAssignable(clazz.className), "> Self ", p.name, "(", p.type, " value)", () -> {
+                            code.write("return (Self) new ", Assignable, "(value);");
                         });
+                for (Method method : overloadForProperty.get(p)) {
+                    code.write();
+                    code.write("/** Create Uninitialized {@link ", clazz, "}. */");
+                    code.write("public static final <Self extends ", p.nextAssignable(clazz.className), "> Self ", method, () -> {
+                        code.write("return (Self) new ", Assignable, "(", p.type
+                                .defaultValue(), ").", method.name, "(", method.paramNames, ");");
+                    });
+                }
+            }
+        });
 
-                        for (Method method : overloadForProperty.get(p)) {
-                            code.write();
-                            code.write("/** Create Uninitialized {@link ", clazz, "}. */");
-                            code.write("@Override");
-                            code.write("public <T extends ", p.next, "> T ", method, () -> {
-                                code.write("return new ", Assignable, "(", p.type
-                                        .defaultValue(), ").", method.name, "(", method.paramNames, ");");
-                            });
-                        }
-                    }).asStatement();
-        }
     }
 
     // /**
@@ -477,7 +476,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
     private void defineMutableClass() {
         // compute interfaces
         StringJoiner interfaces = new StringJoiner(", ", " implements ", "");
-        required.forEach(e -> interfaces.add(e.assignableInterfaceName()));
+        required.forEach(e -> interfaces.add(e.assignableInterfaceType(clazz.className)));
         if (!arbitrary.isEmpty()) interfaces.add(ArbitraryInterface);
 
         code.write();
@@ -500,20 +499,21 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
                 code.write(" * Modify ", property.name, " property.");
                 code.write(" */");
                 code.write("@Override");
-                code.write("public final <T extends ", property.next, "> T ", property.name, "(", property.type, " value)", () -> {
-                    if (property.isFinal == false) {
-                        code.write("this.", property.name, " = value;");
-                        if (property.derive != null) code.write("super.", property.derive, "(this);");
-                    } else {
-                        code.writeTry(() -> {
-                            code.write(property.name, "Updater.invoke(this, value);");
-                            if (property.derive != null) code.write("super.", property.derive, "(this);");
-                        }, Throwable.class, e -> {
-                            code.write("throw new Error(", e, ");");
+                code.write("public final ", property
+                        .nextAssignable(clazz.className), " ", property.name, "(", property.type, " value)", () -> {
+                            if (property.isFinal == false) {
+                                code.write("this.", property.name, " = value;");
+                                if (property.derive != null) code.write("super.", property.derive, "(this);");
+                            } else {
+                                code.writeTry(() -> {
+                                    code.write(property.name, "Updater.invoke(this, value);");
+                                    if (property.derive != null) code.write("super.", property.derive, "(this);");
+                                }, Throwable.class, e -> {
+                                    code.write("throw new Error(", e, ");");
+                                });
+                            }
+                            code.write("return this;");
                         });
-                    }
-                    code.write("return (T) this;");
-                });
             }
         });
     }
@@ -527,13 +527,13 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             code.write("/**");
             code.write(" * Property assignment API.");
             code.write(" */");
-            code.write("public static interface ", p.assignableInterfaceName(), () -> {
+            code.write("public static interface ", p.assignableInterfaceName(), "<Next>", () -> {
                 for (Method method : overloadForProperty.get(p)) {
                     code.write();
                     code.write("/**");
                     code.write(" * The overload setter.");
                     code.write(" */");
-                    code.write("default <T extends ", p.next, "> T ", method, () -> {
+                    code.write("default Next ", method, () -> {
                         code.writeTry(() -> {
                             code.write("return ", p.name, "((", method.returnType, ") ", method.id, ".invoke(this, ", method.paramNames, "));");
                         }, Throwable.class, e -> {
@@ -543,7 +543,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
                 }
                 code.write();
                 code.write("/** Setter */");
-                code.write("<T extends ", p.next, "> T ", p.name, "(", p.type, " value);");
+                code.write("Next ", p.name, "(", p.type, " value);");
             });
         }
 

@@ -305,20 +305,21 @@ public abstract class Primitive extends PrimitiveModel {
         this.booleanX(value);
     }
 
-    /** The singleton model builder. */
-    public static final ÅssignableIntX with = new ÅssignableIntX() {
+    /**
+     * Builder namespace for {@link Primitive}.
+     */
+    public static final class with {
 
         /** Create Uninitialized {@link Primitive}. */
-        @Override
-        public <T extends ÅssignableLongX> T intX(int value) {
-            return (T) new Åssignable(value);
+        public static final <Self extends ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>>>> Self intX(int value) {
+            return (Self) new Åssignable(value);
         }
-    };
+    }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Primitive implements ÅssignableIntX, ÅssignableLongX, ÅssignableFloatX, ÅssignableDoubleX, ÅssignableByteX, ÅssignableShortX, ÅssignableCharX, ÅssignableBooleanX {
+    private static final class Åssignable extends Primitive implements ÅssignableIntX<ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>>>>, ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>>>, ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>>, ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>, ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>, ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>, ÅssignableCharX<ÅssignableBooleanX<Primitive>>, ÅssignableBooleanX<Primitive> {
 
         /**
          * Initialize by first property.
@@ -331,177 +332,177 @@ public abstract class Primitive extends PrimitiveModel {
          * Modify intX property.
          */
         @Override
-        public final <T extends ÅssignableLongX> T intX(int value) {
+        public final ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>>> intX(int value) {
             try {
                 intXUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
 
         /**
          * Modify longX property.
          */
         @Override
-        public final <T extends ÅssignableFloatX> T longX(long value) {
+        public final ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>> longX(long value) {
             try {
                 longXUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
 
         /**
          * Modify floatX property.
          */
         @Override
-        public final <T extends ÅssignableDoubleX> T floatX(float value) {
+        public final ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>> floatX(float value) {
             try {
                 floatXUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
 
         /**
          * Modify doubleX property.
          */
         @Override
-        public final <T extends ÅssignableByteX> T doubleX(double value) {
+        public final ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>> doubleX(double value) {
             try {
                 doubleXUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
 
         /**
          * Modify byteX property.
          */
         @Override
-        public final <T extends ÅssignableShortX> T byteX(byte value) {
+        public final ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>> byteX(byte value) {
             try {
                 byteXUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
 
         /**
          * Modify shortX property.
          */
         @Override
-        public final <T extends ÅssignableCharX> T shortX(short value) {
+        public final ÅssignableCharX<ÅssignableBooleanX<Primitive>> shortX(short value) {
             try {
                 shortXUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
 
         /**
          * Modify charX property.
          */
         @Override
-        public final <T extends ÅssignableBooleanX> T charX(char value) {
+        public final ÅssignableBooleanX<Primitive> charX(char value) {
             try {
                 charXUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
 
         /**
          * Modify booleanX property.
          */
         @Override
-        public final <T extends Primitive> T booleanX(boolean value) {
+        public final Primitive booleanX(boolean value) {
             try {
                 booleanXUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableIntX {
+    public static interface ÅssignableIntX<Next> {
 
         /** Setter */
-        <T extends ÅssignableLongX> T intX(int value);
+        Next intX(int value);
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableLongX {
+    public static interface ÅssignableLongX<Next> {
 
         /** Setter */
-        <T extends ÅssignableFloatX> T longX(long value);
+        Next longX(long value);
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableFloatX {
+    public static interface ÅssignableFloatX<Next> {
 
         /** Setter */
-        <T extends ÅssignableDoubleX> T floatX(float value);
+        Next floatX(float value);
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableDoubleX {
+    public static interface ÅssignableDoubleX<Next> {
 
         /** Setter */
-        <T extends ÅssignableByteX> T doubleX(double value);
+        Next doubleX(double value);
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableByteX {
+    public static interface ÅssignableByteX<Next> {
 
         /** Setter */
-        <T extends ÅssignableShortX> T byteX(byte value);
+        Next byteX(byte value);
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableShortX {
+    public static interface ÅssignableShortX<Next> {
 
         /** Setter */
-        <T extends ÅssignableCharX> T shortX(short value);
+        Next shortX(short value);
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableCharX {
+    public static interface ÅssignableCharX<Next> {
 
         /** Setter */
-        <T extends ÅssignableBooleanX> T charX(char value);
+        Next charX(char value);
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableBooleanX {
+    public static interface ÅssignableBooleanX<Next> {
 
         /** Setter */
-        <T extends Primitive> T booleanX(boolean value);
+        Next booleanX(boolean value);
     }
 
     /**

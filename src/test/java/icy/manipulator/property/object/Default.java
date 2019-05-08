@@ -130,26 +130,26 @@ public abstract class Default extends DefaultModel {
          * Modify name property.
          */
         @Override
-        public final <T extends Default & ÅssignableÅrbitrary> T name(String value) {
+        public final Default name(String value) {
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
 
         /**
          * Modify stand property.
          */
         @Override
-        public final <T extends Default & ÅssignableÅrbitrary> T stand(String value) {
+        public final Default stand(String value) {
             try {
                 standUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
     }
 

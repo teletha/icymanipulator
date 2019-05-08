@@ -130,32 +130,31 @@ public abstract class Overload extends OverloadModel {
         this.date(value);
     }
 
-    /** The singleton model builder. */
-    public static final ÅssignableSize with = new ÅssignableSize() {
+    /**
+     * Builder namespace for {@link Overload}.
+     */
+    public static final class with {
 
         /** Create Uninitialized {@link Overload}. */
-        @Override
-        public <T extends ÅssignableDate> T size(BigDecimal value) {
-            return (T) new Åssignable(value);
+        public static final <Self extends ÅssignableDate<Overload>> Self size(BigDecimal value) {
+            return (Self) new Åssignable(value);
         }
 
         /** Create Uninitialized {@link Overload}. */
-        @Override
-        public <T extends ÅssignableDate> T size(int number) {
-            return new Åssignable(null).size(number);
+        public static final <Self extends ÅssignableDate<Overload>> Self size(int number) {
+            return (Self) new Åssignable(null).size(number);
         }
 
         /** Create Uninitialized {@link Overload}. */
-        @Override
-        public <T extends ÅssignableDate> T sizeByText(String number) {
-            return new Åssignable(null).sizeByText(number);
+        public static final <Self extends ÅssignableDate<Overload>> Self sizeByText(String number) {
+            return (Self) new Åssignable(null).sizeByText(number);
         }
-    };
+    }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Overload implements ÅssignableSize, ÅssignableDate {
+    private static final class Åssignable extends Overload implements ÅssignableSize<ÅssignableDate<Overload>>, ÅssignableDate<Overload> {
 
         /**
          * Initialize by first property.
@@ -168,38 +167,38 @@ public abstract class Overload extends OverloadModel {
          * Modify size property.
          */
         @Override
-        public final <T extends ÅssignableDate> T size(BigDecimal value) {
+        public final ÅssignableDate<Overload> size(BigDecimal value) {
             try {
                 sizeUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
 
         /**
          * Modify date property.
          */
         @Override
-        public final <T extends Overload> T date(LocalDate value) {
+        public final Overload date(LocalDate value) {
             try {
                 dateUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableSize {
+    public static interface ÅssignableSize<Next> {
 
         /**
          * The overload setter.
          */
-        default <T extends ÅssignableDate> T size(int number) {
+        default Next size(int number) {
             try {
                 return size((BigDecimal) sizeint.invoke(this, number));
             } catch (Throwable e) {
@@ -210,7 +209,7 @@ public abstract class Overload extends OverloadModel {
         /**
          * The overload setter.
          */
-        default <T extends ÅssignableDate> T sizeByText(String number) {
+        default Next sizeByText(String number) {
             try {
                 return size((BigDecimal) sizeByTextjavalangString.invoke(this, number));
             } catch (Throwable e) {
@@ -219,18 +218,18 @@ public abstract class Overload extends OverloadModel {
         }
 
         /** Setter */
-        <T extends ÅssignableDate> T size(BigDecimal value);
+        Next size(BigDecimal value);
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableDate {
+    public static interface ÅssignableDate<Next> {
 
         /**
          * The overload setter.
          */
-        default <T extends Overload> T date(int year, int month, int day) {
+        default Next date(int year, int month, int day) {
             try {
                 return date((LocalDate) dateintintint.invoke(this, year, month, day));
             } catch (Throwable e) {
@@ -239,7 +238,7 @@ public abstract class Overload extends OverloadModel {
         }
 
         /** Setter */
-        <T extends Overload> T date(LocalDate value);
+        Next date(LocalDate value);
     }
 
     /**

@@ -3,6 +3,7 @@ package icy.manipulator.property.object;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+
 import javax.annotation.processing.Generated;
 
 /**
@@ -17,7 +18,7 @@ public abstract class Single extends SingleModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final MethodHandle updater(String name) {
         try {
             Field field = Single.class.getDeclaredField(name);
             field.setAccessible(true);
@@ -51,7 +52,14 @@ public abstract class Single extends SingleModel {
     /**
      * The internal access API for name property setter.
      */
-    protected abstract <T extends Single> T name(String value);
+    protected <T extends Single> T name(String value) {
+        try {
+            nameUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
+        return (T) this;
+    }
 
     /**
      * Provide classic getter API.
@@ -67,20 +75,21 @@ public abstract class Single extends SingleModel {
         this.name(value);
     }
 
-    /** The singleton model builder. */
-    public static final ÅssignableName with = new ÅssignableName() {
+    /**
+     * Builder namespace for {@link Single}.
+     */
+    public static final class with {
 
         /** Create Uninitialized {@link Single}. */
-        @Override
-        public <T extends Single> T name(String value) {
-            return (T) new Åssignable(value);
+        public static final <Self extends Single> Self name(String value) {
+            return (Self) new Åssignable(value);
         }
-    };
+    }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Single implements ÅssignableName {
+    private static final class Åssignable extends Single implements ÅssignableName<Single> {
 
         /**
          * Initialize by first property.
@@ -93,23 +102,18 @@ public abstract class Single extends SingleModel {
          * Modify name property.
          */
         @Override
-        public final <T extends Single> T name(String value) {
-            try {
-                nameUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
-            return (T) this;
+        public final Single name(String value) {
+            return super.name(value);
         }
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableName {
+    public static interface ÅssignableName<Next> {
 
         /** Setter */
-        <T extends Single> T name(String value);
+        Next name(String value);
     }
 
     /**

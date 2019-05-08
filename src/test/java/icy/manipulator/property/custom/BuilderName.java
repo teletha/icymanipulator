@@ -67,20 +67,21 @@ public abstract class BuilderName extends BuilderNameModel {
         this.name(value);
     }
 
-    /** The singleton model builder. */
-    public static final ÅssignableName build = new ÅssignableName() {
+    /**
+     * Builder namespace for {@link BuilderName}.
+     */
+    public static final class build {
 
         /** Create Uninitialized {@link BuilderName}. */
-        @Override
-        public <T extends BuilderName> T name(String value) {
-            return (T) new Åssignable(value);
+        public static final <Self extends BuilderName> Self name(String value) {
+            return (Self) new Åssignable(value);
         }
-    };
+    }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends BuilderName implements ÅssignableName {
+    private static final class Åssignable extends BuilderName implements ÅssignableName<BuilderName> {
 
         /**
          * Initialize by first property.
@@ -93,23 +94,23 @@ public abstract class BuilderName extends BuilderNameModel {
          * Modify name property.
          */
         @Override
-        public final <T extends BuilderName> T name(String value) {
+        public final BuilderName name(String value) {
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
-            return (T) this;
+            return this;
         }
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableName {
+    public static interface ÅssignableName<Next> {
 
         /** Setter */
-        <T extends BuilderName> T name(String value);
+        Next name(String value);
     }
 
     /**

@@ -169,6 +169,47 @@ public class Coder {
     }
 
     /**
+     * Write nested code.
+     * 
+     * @param code A code1 fragment.
+     * @param code A code2 fragment.
+     * @param code A code3 fragment.
+     * @param code A code4 fragment.
+     * @param code A code5 fragment.
+     * @param code A code6 fragment.
+     * @param code A code7 fragment.
+     * @param code A code8 fragment.
+     * @param nest A nested code.
+     */
+    public Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Object code7, Object code8, Runnable nest) {
+        write(code1, code2, code3, code4, code5, code6, code7, code8, " {");
+        write(nest);
+        write("}");
+        return this;
+    }
+
+    /**
+     * Write nested code.
+     * 
+     * @param code A code1 fragment.
+     * @param code A code2 fragment.
+     * @param code A code3 fragment.
+     * @param code A code4 fragment.
+     * @param code A code5 fragment.
+     * @param code A code6 fragment.
+     * @param code A code7 fragment.
+     * @param code A code8 fragment.
+     * @param code A code9 fragment.
+     * @param nest A nested code.
+     */
+    public Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Object code7, Object code8, Object code9, Runnable nest) {
+        write(code1, code2, code3, code4, code5, code6, code7, code8, code9, " {");
+        write(nest);
+        write("}");
+        return this;
+    }
+
+    /**
      * Write code.
      * 
      * @param codes
