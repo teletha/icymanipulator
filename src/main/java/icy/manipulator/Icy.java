@@ -28,6 +28,13 @@ public @interface Icy {
      */
     boolean packagePrivate() default false;
 
+    /**
+     * Configure the name of model builder. (default is "with").
+     * 
+     * @return
+     */
+    String builder() default "with";
+
     @Documented
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.SOURCE)

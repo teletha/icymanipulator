@@ -417,12 +417,13 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
      */
     private void defineBuilder() {
         code.write();
+        String builder = icy.builder();
 
         if (required.isEmpty()) {
             code.write("/**");
             code.write(" * Builder namespace for {@link ", clazz, "}.");
             code.write(" */");
-            code.write("public static final class with", () -> {
+            code.write("public static final class ", builder, () -> {
                 code.write();
                 code.write("/**");
                 code.write(" * Create uninitialized {@link ", clazz, "}.");
@@ -434,23 +435,25 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         } else {
             Property p = required.get(0);
             code.write("/** The singleton model builder. */");
-            code.write("public static final ", p.assignableInterfaceName(), " with = new ", p.assignableInterfaceName(), "()", () -> {
-                code.write();
-                code.write("/** Create Uninitialized {@link ", clazz, "}. */");
-                code.write("@Override");
-                code.write("public <T extends ", p.next, "> T ", p.name, "(", p.type, " value)", () -> {
-                    code.write("return (T) new ", Assignable, "(value);");
-                });
+            code.write("public static final ", p.assignableInterfaceName(), " ", builder, " = new ", p
+                    .assignableInterfaceName(), "()", () -> {
+                        code.write();
+                        code.write("/** Create Uninitialized {@link ", clazz, "}. */");
+                        code.write("@Override");
+                        code.write("public <T extends ", p.next, "> T ", p.name, "(", p.type, " value)", () -> {
+                            code.write("return (T) new ", Assignable, "(value);");
+                        });
 
-                for (Method method : overloadForProperty.get(p)) {
-                    code.write();
-                    code.write("/** Create Uninitialized {@link ", clazz, "}. */");
-                    code.write("@Override");
-                    code.write("public <T extends ", p.next, "> T ", method, () -> {
-                        code.write("return new ", Assignable, "(", p.type.defaultValue(), ").", method.name, "(", method.paramNames, ");");
-                    });
-                }
-            }).asStatement();
+                        for (Method method : overloadForProperty.get(p)) {
+                            code.write();
+                            code.write("/** Create Uninitialized {@link ", clazz, "}. */");
+                            code.write("@Override");
+                            code.write("public <T extends ", p.next, "> T ", method, () -> {
+                                code.write("return new ", Assignable, "(", p.type
+                                        .defaultValue(), ").", method.name, "(", method.paramNames, ");");
+                            });
+                        }
+                    }).asStatement();
         }
     }
 
