@@ -247,7 +247,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         code.write(" * Generated model for {@link ", model, "}.");
         code.write(" */");
         code.write("@", Generated.class, "(\"Icy Manipulator\")");
-        code.write(visibility, "class ", clazz, " extends ", model, () -> {
+        code.write(visibility, "abstract class ", clazz, " extends ", model, () -> {
             if (!overloads.isEmpty()) {
                 defineMethodInvokerBuilder();
                 defineOverloadMethodInvoker();
@@ -375,6 +375,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
      */
     private void defineAccessors() {
         for (Property property : properties) {
+            // Exposed getter
             code.write();
             code.write("/**");
             code.write(" * Retrieve ", property.name, " property.");
@@ -382,6 +383,31 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             code.write("@Override");
             code.write("public final ", property.type, " ", property.name, "()", () -> {
                 code.write("return this.", property.name, ";");
+            });
+
+            // Hidden setter
+            code.write();
+            code.write("/**");
+            code.write(" * The internal access API for ", property.name, " property setter.");
+            code.write(" */");
+            code.write("protected abstract <T extends ", property.next, "> T ", property.name, "(", property.type, " value);");
+
+            // Hidden classic getter
+            code.write();
+            code.write("/**");
+            code.write(" * Provide classic getter API.");
+            code.write(" */");
+            code.write("final ", property.type, " get", property.capitalizeName(), "()", () -> {
+                code.write("return this.", property.name, ";");
+            });
+
+            // Hidden classic setter
+            code.write();
+            code.write("/**");
+            code.write(" * Provide classic setter API.");
+            code.write(" */");
+            code.write("final void set", property.capitalizeName(), "(", property.type, " value)", () -> {
+                code.write("this.", property.name, "(value);");
             });
         }
     }

@@ -9,7 +9,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link MultipleModel}.
  */
 @Generated("Icy Manipulator")
-public class Multiple extends MultipleModel {
+public abstract class Multiple extends MultipleModel {
 
     /**
      * Create special property updater.
@@ -56,11 +56,49 @@ public class Multiple extends MultipleModel {
     }
 
     /**
+     * The internal access API for name property setter.
+     */
+    protected abstract <T extends ÅssignableStand> T name(String value);
+
+    /**
+     * Provide classic getter API.
+     */
+    final String getName() {
+        return this.name;
+    }
+
+    /**
+     * Provide classic setter API.
+     */
+    final void setName(String value) {
+        this.name(value);
+    }
+
+    /**
      * Retrieve stand property.
      */
     @Override
     public final String stand() {
         return this.stand;
+    }
+
+    /**
+     * The internal access API for stand property setter.
+     */
+    protected abstract <T extends Multiple> T stand(String value);
+
+    /**
+     * Provide classic getter API.
+     */
+    final String getStand() {
+        return this.stand;
+    }
+
+    /**
+     * Provide classic setter API.
+     */
+    final void setStand(String value) {
+        this.stand(value);
     }
 
     /** The singleton model builder. */

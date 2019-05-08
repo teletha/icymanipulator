@@ -9,7 +9,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link PrimitiveModel}.
  */
 @Generated("Icy Manipulator")
-public class Primitive extends PrimitiveModel {
+public abstract class Primitive extends PrimitiveModel {
 
     /**
      * Create special property updater.
@@ -98,11 +98,49 @@ public class Primitive extends PrimitiveModel {
     }
 
     /**
+     * The internal access API for intX property setter.
+     */
+    protected abstract <T extends ÅssignableLongX> T intX(int value);
+
+    /**
+     * Provide classic getter API.
+     */
+    final int getIntX() {
+        return this.intX;
+    }
+
+    /**
+     * Provide classic setter API.
+     */
+    final void setIntX(int value) {
+        this.intX(value);
+    }
+
+    /**
      * Retrieve longX property.
      */
     @Override
     public final long longX() {
         return this.longX;
+    }
+
+    /**
+     * The internal access API for longX property setter.
+     */
+    protected abstract <T extends ÅssignableFloatX> T longX(long value);
+
+    /**
+     * Provide classic getter API.
+     */
+    final long getLongX() {
+        return this.longX;
+    }
+
+    /**
+     * Provide classic setter API.
+     */
+    final void setLongX(long value) {
+        this.longX(value);
     }
 
     /**
@@ -114,11 +152,49 @@ public class Primitive extends PrimitiveModel {
     }
 
     /**
+     * The internal access API for floatX property setter.
+     */
+    protected abstract <T extends ÅssignableDoubleX> T floatX(float value);
+
+    /**
+     * Provide classic getter API.
+     */
+    final float getFloatX() {
+        return this.floatX;
+    }
+
+    /**
+     * Provide classic setter API.
+     */
+    final void setFloatX(float value) {
+        this.floatX(value);
+    }
+
+    /**
      * Retrieve doubleX property.
      */
     @Override
     public final double doubleX() {
         return this.doubleX;
+    }
+
+    /**
+     * The internal access API for doubleX property setter.
+     */
+    protected abstract <T extends ÅssignableByteX> T doubleX(double value);
+
+    /**
+     * Provide classic getter API.
+     */
+    final double getDoubleX() {
+        return this.doubleX;
+    }
+
+    /**
+     * Provide classic setter API.
+     */
+    final void setDoubleX(double value) {
+        this.doubleX(value);
     }
 
     /**
@@ -130,11 +206,49 @@ public class Primitive extends PrimitiveModel {
     }
 
     /**
+     * The internal access API for byteX property setter.
+     */
+    protected abstract <T extends ÅssignableShortX> T byteX(byte value);
+
+    /**
+     * Provide classic getter API.
+     */
+    final byte getByteX() {
+        return this.byteX;
+    }
+
+    /**
+     * Provide classic setter API.
+     */
+    final void setByteX(byte value) {
+        this.byteX(value);
+    }
+
+    /**
      * Retrieve shortX property.
      */
     @Override
     public final short shortX() {
         return this.shortX;
+    }
+
+    /**
+     * The internal access API for shortX property setter.
+     */
+    protected abstract <T extends ÅssignableCharX> T shortX(short value);
+
+    /**
+     * Provide classic getter API.
+     */
+    final short getShortX() {
+        return this.shortX;
+    }
+
+    /**
+     * Provide classic setter API.
+     */
+    final void setShortX(short value) {
+        this.shortX(value);
     }
 
     /**
@@ -146,11 +260,49 @@ public class Primitive extends PrimitiveModel {
     }
 
     /**
+     * The internal access API for charX property setter.
+     */
+    protected abstract <T extends ÅssignableBooleanX> T charX(char value);
+
+    /**
+     * Provide classic getter API.
+     */
+    final char getCharX() {
+        return this.charX;
+    }
+
+    /**
+     * Provide classic setter API.
+     */
+    final void setCharX(char value) {
+        this.charX(value);
+    }
+
+    /**
      * Retrieve booleanX property.
      */
     @Override
     public final boolean booleanX() {
         return this.booleanX;
+    }
+
+    /**
+     * The internal access API for booleanX property setter.
+     */
+    protected abstract <T extends Primitive> T booleanX(boolean value);
+
+    /**
+     * Provide classic getter API.
+     */
+    final boolean getBooleanX() {
+        return this.booleanX;
+    }
+
+    /**
+     * Provide classic setter API.
+     */
+    final void setBooleanX(boolean value) {
+        this.booleanX(value);
     }
 
     /** The singleton model builder. */

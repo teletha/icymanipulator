@@ -9,7 +9,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link SingleModel}.
  */
 @Generated("Icy Manipulator")
-public class Single extends SingleModel {
+public abstract class Single extends SingleModel {
 
     /**
      * Create special property updater.
@@ -46,6 +46,25 @@ public class Single extends SingleModel {
     @Override
     public final String name() {
         return this.name;
+    }
+
+    /**
+     * The internal access API for name property setter.
+     */
+    protected abstract <T extends Single> T name(String value);
+
+    /**
+     * Provide classic getter API.
+     */
+    final String getName() {
+        return this.name;
+    }
+
+    /**
+     * Provide classic setter API.
+     */
+    final void setName(String value) {
+        this.name(value);
     }
 
     /** The singleton model builder. */

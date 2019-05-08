@@ -9,7 +9,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link ImplementationVisibilityModel}.
  */
 @Generated("Icy Manipulator")
-class ImplementationVisibility extends ImplementationVisibilityModel {
+abstract class ImplementationVisibility extends ImplementationVisibilityModel {
 
     /**
      * Create special property updater.
@@ -46,6 +46,25 @@ class ImplementationVisibility extends ImplementationVisibilityModel {
     @Override
     public final String name() {
         return this.name;
+    }
+
+    /**
+     * The internal access API for name property setter.
+     */
+    protected abstract <T extends ImplementationVisibility> T name(String value);
+
+    /**
+     * Provide classic getter API.
+     */
+    final String getName() {
+        return this.name;
+    }
+
+    /**
+     * Provide classic setter API.
+     */
+    final void setName(String value) {
+        this.name(value);
     }
 
     /** The singleton model builder. */

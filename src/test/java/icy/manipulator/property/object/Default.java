@@ -9,7 +9,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link DefaultModel}.
  */
 @Generated("Icy Manipulator")
-public class Default extends DefaultModel {
+public abstract class Default extends DefaultModel {
 
     /**
      * Create special property updater.
@@ -56,11 +56,49 @@ public class Default extends DefaultModel {
     }
 
     /**
+     * The internal access API for name property setter.
+     */
+    protected abstract <T extends Default & ÅssignableÅrbitrary> T name(String value);
+
+    /**
+     * Provide classic getter API.
+     */
+    final String getName() {
+        return this.name;
+    }
+
+    /**
+     * Provide classic setter API.
+     */
+    final void setName(String value) {
+        this.name(value);
+    }
+
+    /**
      * Retrieve stand property.
      */
     @Override
     public final String stand() {
         return this.stand;
+    }
+
+    /**
+     * The internal access API for stand property setter.
+     */
+    protected abstract <T extends Default & ÅssignableÅrbitrary> T stand(String value);
+
+    /**
+     * Provide classic getter API.
+     */
+    final String getStand() {
+        return this.stand;
+    }
+
+    /**
+     * Provide classic setter API.
+     */
+    final void setStand(String value) {
+        this.stand(value);
     }
 
     /**

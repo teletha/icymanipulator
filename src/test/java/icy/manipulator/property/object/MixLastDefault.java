@@ -9,7 +9,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link MixLastDefaultModel}.
  */
 @Generated("Icy Manipulator")
-public class MixLastDefault extends MixLastDefaultModel {
+public abstract class MixLastDefault extends MixLastDefaultModel {
 
     /**
      * Create special property updater.
@@ -56,11 +56,49 @@ public class MixLastDefault extends MixLastDefaultModel {
     }
 
     /**
+     * The internal access API for name property setter.
+     */
+    protected abstract <T extends MixLastDefault & ÅssignableÅrbitrary> T name(String value);
+
+    /**
+     * Provide classic getter API.
+     */
+    final String getName() {
+        return this.name;
+    }
+
+    /**
+     * Provide classic setter API.
+     */
+    final void setName(String value) {
+        this.name(value);
+    }
+
+    /**
      * Retrieve age property.
      */
     @Override
     public final int age() {
         return this.age;
+    }
+
+    /**
+     * The internal access API for age property setter.
+     */
+    protected abstract <T extends MixLastDefault & ÅssignableÅrbitrary> T age(int value);
+
+    /**
+     * Provide classic getter API.
+     */
+    final int getAge() {
+        return this.age;
+    }
+
+    /**
+     * Provide classic setter API.
+     */
+    final void setAge(int value) {
+        this.age(value);
     }
 
     /** The singleton model builder. */
