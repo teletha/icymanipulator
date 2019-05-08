@@ -14,14 +14,8 @@ class Property {
     /** The property name. */
     final String name;
 
-    /** The property name. */
-    final String NAME;
-
     /** The type name. */
     Type type;
-
-    /** The type name. */
-    Type TYPE;
 
     /** The state. */
     boolean isModel;
@@ -45,9 +39,7 @@ class Property {
      */
     Property(Type type, String name) {
         this.type = type;
-        this.TYPE = type.wrap();
         this.name = name;
-        this.NAME = name.toUpperCase();
 
         try {
             this.isModel = Class.forName(type + IcyManipulator.ModelDefinitionSuffix).isAnnotationPresent(Icy.class);
@@ -103,7 +95,7 @@ class Property {
      * @param className
      * @return
      */
-    public String nextAssignable(String className) {
+    String nextAssignable(String className) {
         if (nextProperty == null) {
             return className;
         } else {
