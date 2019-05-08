@@ -3,6 +3,7 @@ package icy.manipulator.property.object;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+
 import javax.annotation.processing.Generated;
 
 /**
@@ -17,7 +18,7 @@ public abstract class Default extends DefaultModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final MethodHandle updater(String name) {
         try {
             Field field = Default.class.getDeclaredField(name);
             field.setAccessible(true);
@@ -107,13 +108,17 @@ public abstract class Default extends DefaultModel {
     /**
      * Builder namespace for {@link Default}.
      */
-    public static final class Ìnstantiator<Self extends Default & ÅssignableÅrbitrary<Self>> {
+    public static final class Ìnstantiator<Next extends Default & ÅssignableÅrbitrary<Next>> {
 
         /**
          * Create uninitialized {@link Default}.
          */
-        public final Self create() {
-            return (Self) new Åssignable();
+        public final Next create() {
+            return make();
+        }
+
+        protected Next make() {
+            return (Next) new Åssignable();
         }
     }
 
@@ -150,6 +155,7 @@ public abstract class Default extends DefaultModel {
      */
     static final class My {
         static final String Name = "name";
+
         static final String Stand = "stand";
     }
 }
