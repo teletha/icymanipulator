@@ -3,6 +3,7 @@ package icy.manipulator.property.object;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+
 import javax.annotation.processing.Generated;
 
 /**
@@ -17,7 +18,7 @@ public abstract class Single extends SingleModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final MethodHandle updater(String name) {
         try {
             Field field = Single.class.getDeclaredField(name);
             field.setAccessible(true);
@@ -73,10 +74,10 @@ public abstract class Single extends SingleModel {
     /**
      * Builder namespace for {@link Single}.
      */
-    public static final class Ìnstantiator<Self extends Single> {
+    public static class Ìnstantiator<Self extends Single> {
 
         /** Create Uninitialized {@link Single}. */
-        public final Self name(String value) {
+        public Self name(String value) {
             return (Self) new Åssignable().name(value);
         }
     }

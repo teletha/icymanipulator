@@ -48,10 +48,7 @@ class Method {
                 .stream()
                 .map(Type::of)
                 .collect(Collectors.toUnmodifiableList());
-        this.paramNames = element.getParameters()
-                .stream()
-                .map(e -> e.getSimpleName().toString())
-                .collect(Collectors.toUnmodifiableList());
+        this.paramNames = element.getParameters().stream().map(e -> e.getSimpleName().toString()).collect(Collectors.toUnmodifiableList());
     }
 
     /**

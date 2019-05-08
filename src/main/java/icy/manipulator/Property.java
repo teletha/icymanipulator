@@ -9,10 +9,15 @@
  */
 package icy.manipulator;
 
+import javax.lang.model.element.ExecutableElement;
+
 class Property {
 
     /** The property name. */
     final String name;
+
+    /** The actual source element. */
+    final ExecutableElement element;
 
     /** The type name. */
     Type type;
@@ -37,9 +42,10 @@ class Property {
     /**
      * 
      */
-    Property(Type type, String name) {
+    Property(Type type, String name, ExecutableElement element) {
         this.type = type;
         this.name = name;
+        this.element = element;
 
         try {
             this.isModel = Class.forName(type + IcyManipulator.ModelDefinitionSuffix).isAnnotationPresent(Icy.class);

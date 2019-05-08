@@ -30,6 +30,8 @@ import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.ExecutableType;
 import javax.lang.model.type.TypeMirror;
+import javax.lang.model.util.Elements;
+import javax.lang.model.util.Types;
 import javax.tools.Diagnostic.Kind;
 
 import icy.manipulator.Icy.Overload;
@@ -79,16 +81,39 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
     private final Messager messager;
 
+    private final Elements elements;
+
+    private final Types types;
+
     /**
      * Create code analyzer.
      * 
      * @param root
      * @param messager
+     * @param elements
      */
-    CodeAnalyzer(Element root, Messager messager) {
+    CodeAnalyzer(Element root, Messager messager, Elements elements, Types types) {
         this.root = root;
         this.icy = root.getAnnotation(Icy.class);
         this.messager = messager;
+        this.elements = elements;
+        this.types = types;
+
+        List<? extends TypeMirror> superTypes = types.directSupertypes(root.asType());
+
+        for (TypeMirror superType : superTypes) {
+            System.out.println(superType);
+
+            List<? extends Element> members = elements.getAllMembers((TypeElement) types.asElement(superType));
+
+            for (Element member : members) {
+                ElementKind kind = member.getKind();
+
+                if (kind == ElementKind.INTERFACE) {
+                    System.out.println(member);
+                }
+            }
+        }
     }
 
     /**
@@ -407,6 +432,20 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         }
     }
 
+    // /**
+    // * Builder namespace for {@link Subclass}.
+    // */
+    // public static class Ìnstantiator<Next extends
+    // Multiple.ÅssignableStand<Multiple.ÅssignableAge<ÅssignableNickname<Subclass>>>> {
+    //
+    // /**
+    // * {@inheritDoc}
+    // */
+    // public Next name(String value) {
+    // return (Next) new Åssignable().name(value);
+    // }
+    // }
+
     /**
      * Defien model builder methods.
      */
@@ -415,8 +454,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
         code.write();
         code.write("/** The singleton builder. */");
-        code.write("public static final ", Instantiator, "<?> ", builder, " = new ", Instantiator, "();");
-
+        code.write("public static final  ", Instantiator, "<?> ", builder, " = new ", Instantiator, "();");
         code.write();
         code.write("/**");
         code.write(" * Builder namespace for {@link ", clazz, "}.");
@@ -447,21 +485,14 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
                         }
                     }
                 });
-
     }
 
     // /**
-    // * {@inheritDoc}
+    // * Mutable Model.
     // */
-    // @Override
-    // public <T extends ÅssignableDate> T sizeByText(String number) {
-    // Åssignable insntant = new Åssignable(null);
-    // try {
-    // insntant.size((BigDecimal) sizeByTextjavalangString.invoke(insntant, number));
-    // } catch (Throwable e) {
-    // throw new Error(e);
-    // }
-    // return (T) insntant;
+    // private static final class Åssignable extends Subclass
+    // implements Multiple.ÅssignableName, Multiple.ÅssignableStand, Multiple.ÅssignableAge,
+    // ÅssignableNickname {
     // }
 
     /**
@@ -620,7 +651,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             return;
         }
 
-        Property property = new Property(returnType, method.getSimpleName().toString());
+        Property property = new Property(returnType, method.getSimpleName().toString(), method);
         property.isArbitrary = !method.getModifiers().contains(Modifier.ABSTRACT);
 
         if (property.isArbitrary) {

@@ -3,6 +3,7 @@ package icy.manipulator.property.object;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+
 import javax.annotation.processing.Generated;
 
 /**
@@ -17,7 +18,7 @@ public abstract class Subclass extends SubclassModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final MethodHandle updater(String name) {
         try {
             Field field = Subclass.class.getDeclaredField(name);
             field.setAccessible(true);
@@ -68,16 +69,20 @@ public abstract class Subclass extends SubclassModel {
     }
 
     /** The singleton builder. */
-    public static final Ìnstantiator<?> with = new Ìnstantiator();
+    public static final Ìnstantiator<?, ?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Subclass}.
      */
-    public static final class Ìnstantiator<Self extends Subclass> {
+    public static class Ìnstantiator<Next extends Multiple.ÅssignableStand<Multiple.ÅssignableAge<X>>, X extends Subclass & ÅssignableNickname<Subclass>>
+            extends Multiple.Ìnstantiator<Next, X> {
 
-        /** Create Uninitialized {@link Subclass}. */
-        public final Self nickname(String value) {
-            return (Self) new Åssignable().nickname(value);
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected ÅssignableName create() {
+            return new Åssignable();
         }
     }
 
@@ -98,7 +103,8 @@ public abstract class Subclass extends SubclassModel {
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Subclass implements ÅssignableNickname {
+    private static final class Åssignable extends Subclass
+            implements Multiple.ÅssignableName, Multiple.ÅssignableStand, Multiple.ÅssignableAge, ÅssignableNickname {
     }
 
     /**
