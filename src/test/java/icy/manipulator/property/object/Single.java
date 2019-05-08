@@ -3,7 +3,6 @@ package icy.manipulator.property.object;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
-
 import javax.annotation.processing.Generated;
 
 /**
@@ -18,7 +17,7 @@ public abstract class Single extends SingleModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name) {
+    private static final MethodHandle updater(String name)  {
         try {
             Field field = Single.class.getDeclaredField(name);
             field.setAccessible(true);
@@ -37,8 +36,8 @@ public abstract class Single extends SingleModel {
     /**
      * HIDE CONSTRUCTOR
      */
-    protected Single(String name) {
-        this.name = name;
+    protected Single() {
+        this.name = null;
     }
 
     /**
@@ -50,16 +49,9 @@ public abstract class Single extends SingleModel {
     }
 
     /**
-     * The internal access API for name property setter.
+     * 
      */
-    protected <T extends Single> T name(String value) {
-        try {
-            nameUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
-        return (T) this;
-    }
+    abstract Single name(String value);
 
     /**
      * Provide classic getter API.
@@ -72,7 +64,11 @@ public abstract class Single extends SingleModel {
      * Provide classic setter API.
      */
     final void setName(String value) {
-        this.name(value);
+        try {
+            nameUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -82,28 +78,20 @@ public abstract class Single extends SingleModel {
 
         /** Create Uninitialized {@link Single}. */
         public static final <Self extends Single> Self name(String value) {
-            return (Self) new Åssignable(value);
+            return (Self) new Åssignable().name(value);
         }
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Single implements ÅssignableName<Single> {
+    private static final class Åssignable extends Single implements ÅssignableName {
 
-        /**
-         * Initialize by first property.
-         */
-        private Åssignable(String name) {
-            super(name);
-        }
-
-        /**
-         * Modify name property.
-         */
+        /**  {@inheritDoc} */
         @Override
-        public final Single name(String value) {
-            return super.name(value);
+        public final Åssignable name(String value) {
+            setName(value);
+            return this;
         }
     }
 

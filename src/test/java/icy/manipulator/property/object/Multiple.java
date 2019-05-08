@@ -33,18 +33,25 @@ public abstract class Multiple extends MultipleModel {
     /** The final property updater. */
     private static final MethodHandle standUpdater = updater("stand");
 
+    /** The final property updater. */
+    private static final MethodHandle ageUpdater = updater("age");
+
     /** The exposed property. */
     public final String name;
 
     /** The exposed property. */
     public final String stand;
 
+    /** The exposed property. */
+    public final int age;
+
     /**
      * HIDE CONSTRUCTOR
      */
-    protected Multiple(String name) {
-        this.name = name;
+    protected Multiple() {
+        this.name = null;
         this.stand = null;
+        this.age = 0;
     }
 
     /**
@@ -56,9 +63,9 @@ public abstract class Multiple extends MultipleModel {
     }
 
     /**
-     * The internal access API for name property setter.
+     * 
      */
-    protected abstract <T extends ÅssignableStand> T name(String value);
+    abstract Multiple name(String value);
 
     /**
      * Provide classic getter API.
@@ -71,7 +78,11 @@ public abstract class Multiple extends MultipleModel {
      * Provide classic setter API.
      */
     final void setName(String value) {
-        this.name(value);
+        try {
+            nameUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -83,9 +94,9 @@ public abstract class Multiple extends MultipleModel {
     }
 
     /**
-     * The internal access API for stand property setter.
+     * 
      */
-    protected abstract <T extends Multiple> T stand(String value);
+    abstract Multiple stand(String value);
 
     /**
      * Provide classic getter API.
@@ -98,7 +109,42 @@ public abstract class Multiple extends MultipleModel {
      * Provide classic setter API.
      */
     final void setStand(String value) {
-        this.stand(value);
+        try {
+            standUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
+    }
+
+    /**
+     * Retrieve age property.
+     */
+    @Override
+    public final int age() {
+        return this.age;
+    }
+
+    /**
+     * 
+     */
+    abstract Multiple age(int value);
+
+    /**
+     * Provide classic getter API.
+     */
+    final int getAge() {
+        return this.age;
+    }
+
+    /**
+     * Provide classic setter API.
+     */
+    final void setAge(int value) {
+        try {
+            ageUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -107,46 +153,34 @@ public abstract class Multiple extends MultipleModel {
     public static final class with {
 
         /** Create Uninitialized {@link Multiple}. */
-        public static final <Self extends ÅssignableStand<Multiple>> Self name(String value) {
-            return (Self) new Åssignable(value);
+        public static final <Self extends ÅssignableStand<ÅssignableAge<Multiple>>> Self name(String value) {
+            return (Self) new Åssignable().name(value);
         }
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Multiple implements ÅssignableName<ÅssignableStand<Multiple>>, ÅssignableStand<Multiple> {
+    private static final class Åssignable extends Multiple implements ÅssignableName, ÅssignableStand, ÅssignableAge {
 
-        /**
-         * Initialize by first property.
-         */
-        private Åssignable(String name) {
-            super(name);
-        }
-
-        /**
-         * Modify name property.
-         */
+        /**  {@inheritDoc} */
         @Override
-        public final ÅssignableStand<Multiple> name(String value) {
-            try {
-                nameUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
+        public final Åssignable name(String value) {
+            setName(value);
             return this;
         }
 
-        /**
-         * Modify stand property.
-         */
+        /**  {@inheritDoc} */
         @Override
-        public final Multiple stand(String value) {
-            try {
-                standUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
+        public final Åssignable stand(String value) {
+            setStand(value);
+            return this;
+        }
+
+        /**  {@inheritDoc} */
+        @Override
+        public final Åssignable age(int value) {
+            setAge(value);
             return this;
         }
     }
@@ -170,10 +204,20 @@ public abstract class Multiple extends MultipleModel {
     }
 
     /**
+     * Property assignment API.
+     */
+    public static interface ÅssignableAge<Next> {
+
+        /** Setter */
+        Next age(int value);
+    }
+
+    /**
      * The identifier for properties.
      */
     static final class My {
         static final String Name = "name";
         static final String Stand = "stand";
+        static final String Age = "age";
     }
 }

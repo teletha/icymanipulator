@@ -36,8 +36,8 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
     /**
      * HIDE CONSTRUCTOR
      */
-    protected ImplementationVisibility(String name) {
-        this.name = name;
+    protected ImplementationVisibility() {
+        this.name = null;
     }
 
     /**
@@ -49,9 +49,9 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
     }
 
     /**
-     * The internal access API for name property setter.
+     * 
      */
-    protected abstract <T extends ImplementationVisibility> T name(String value);
+    abstract ImplementationVisibility name(String value);
 
     /**
      * Provide classic getter API.
@@ -64,7 +64,11 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
      * Provide classic setter API.
      */
     final void setName(String value) {
-        this.name(value);
+        try {
+            nameUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -74,32 +78,19 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
 
         /** Create Uninitialized {@link ImplementationVisibility}. */
         public static final <Self extends ImplementationVisibility> Self name(String value) {
-            return (Self) new Åssignable(value);
+            return (Self) new Åssignable().name(value);
         }
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends ImplementationVisibility implements ÅssignableName<ImplementationVisibility> {
+    private static final class Åssignable extends ImplementationVisibility implements ÅssignableName {
 
-        /**
-         * Initialize by first property.
-         */
-        private Åssignable(String name) {
-            super(name);
-        }
-
-        /**
-         * Modify name property.
-         */
+        /**  {@inheritDoc} */
         @Override
-        public final ImplementationVisibility name(String value) {
-            try {
-                nameUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
+        public final Åssignable name(String value) {
+            setName(value);
             return this;
         }
     }

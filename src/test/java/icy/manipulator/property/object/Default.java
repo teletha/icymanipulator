@@ -56,9 +56,9 @@ public abstract class Default extends DefaultModel {
     }
 
     /**
-     * The internal access API for name property setter.
+     * 
      */
-    protected abstract <T extends Default & ÅssignableÅrbitrary> T name(String value);
+    abstract Default name(String value);
 
     /**
      * Provide classic getter API.
@@ -71,7 +71,11 @@ public abstract class Default extends DefaultModel {
      * Provide classic setter API.
      */
     final void setName(String value) {
-        this.name(value);
+        try {
+            nameUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -83,9 +87,9 @@ public abstract class Default extends DefaultModel {
     }
 
     /**
-     * The internal access API for stand property setter.
+     * 
      */
-    protected abstract <T extends Default & ÅssignableÅrbitrary> T stand(String value);
+    abstract Default stand(String value);
 
     /**
      * Provide classic getter API.
@@ -98,7 +102,11 @@ public abstract class Default extends DefaultModel {
      * Provide classic setter API.
      */
     final void setStand(String value) {
-        this.stand(value);
+        try {
+            standUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -109,46 +117,27 @@ public abstract class Default extends DefaultModel {
         /**
          * Create uninitialized {@link Default}.
          */
-        public static final <T extends Default & ÅssignableÅrbitrary> T create() {
-            return (T) new Åssignable();
+        public static final <Self extends Default & ÅssignableÅrbitrary<Self>> Self create() {
+            return (Self) new Åssignable();
         }
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Default implements ÅssignableÅrbitrary {
+    private static final class Åssignable extends Default implements ÅssignableÅrbitrary<Åssignable> {
 
-        /**
-         * Initialize by first property.
-         */
-        private Åssignable() {
-            super();
-        }
-
-        /**
-         * Modify name property.
-         */
+        /**  {@inheritDoc} */
         @Override
-        public final Default name(String value) {
-            try {
-                nameUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
+        public final Åssignable name(String value) {
+            setName(value);
             return this;
         }
 
-        /**
-         * Modify stand property.
-         */
+        /**  {@inheritDoc} */
         @Override
-        public final Default stand(String value) {
-            try {
-                standUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
+        public final Åssignable stand(String value) {
+            setStand(value);
             return this;
         }
     }
@@ -156,17 +145,17 @@ public abstract class Default extends DefaultModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary {
+    public static interface ÅssignableÅrbitrary<Next extends Default> {
 
         /**
          * Property assignment API.
          */
-        <T extends Default & ÅssignableÅrbitrary> T name(String value);
+        Next name(String value);
 
         /**
          * Property assignment API.
          */
-        <T extends Default & ÅssignableÅrbitrary> T stand(String value);
+        Next stand(String value);
     }
 
     /**

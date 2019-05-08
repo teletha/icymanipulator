@@ -22,7 +22,7 @@ class SubclassTest {
 
     @Test
     void property() {
-        Subclass name = Subclass.with.name("test").nickname("ok");
+        // Subclass name = Subclass.with.name("test").nickname("ok");
         // Single instance = Subclass.with.name("Giorno Giovanna");
         // assert instance.name.equals("Giorno Giovanna");
     }

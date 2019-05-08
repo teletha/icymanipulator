@@ -13,7 +13,6 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -66,8 +65,6 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
     /** The arbitrary properties. */
     private final List<Property> arbitrary = new ArrayList();
-
-    private List<Property> first;
 
     /** The overload method holder. */
     private final List<Method> overloads = new ArrayList();
@@ -210,8 +207,6 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         for (Property property : arbitrary) {
             property.next = self();
         }
-
-        first = required.isEmpty() ? Collections.emptyList() : Collections.singletonList(required.get(0));
 
         validateOverload();
     }
@@ -362,14 +357,10 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         code.write("/**");
         code.write(" * HIDE CONSTRUCTOR");
         code.write(" */");
-        code.write("protected ", clazz, "(", parameterWithType(first), ")", () -> {
+        code.write("protected ", clazz, "()", () -> {
             // initialize field
             for (Property p : properties) {
-                if (first.contains(p)) {
-                    code.write("this.", p.name, " = ", p.name, ";");
-                } else {
-                    code.write("this.", p.name, " = ", (p.isArbitrary ? "super." + p.name + "()" : p.type.defaultValue()), ";");
-                }
+                code.write("this.", p.name, " = ", (p.isArbitrary ? "super." + p.name + "()" : p.type.defaultValue()), ";");
             }
         });
     }
@@ -389,12 +380,13 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
                 code.write("return this.", property.name, ";");
             });
 
+            // abstract <Next extends Default & ÅssignableÅrbitrary<Next>> Next name(String value);
             // Hidden setter
             code.write();
             code.write("/**");
-            code.write(" * The internal access API for ", property.name, " property setter.");
+            code.write(" * ");
             code.write(" */");
-            code.write("protected abstract <T extends ", property.next, "> T ", property.name, "(", property.type, " value);");
+            code.write("abstract ", clazz, " ", property.name, "(", property.type, " value);");
 
             // Hidden classic getter
             code.write();
@@ -411,7 +403,17 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             code.write(" * Provide classic setter API.");
             code.write(" */");
             code.write("final void set", property.capitalizeName(), "(", property.type, " value)", () -> {
-                code.write("this.", property.name, "(value);");
+                if (property.isFinal == false) {
+                    code.write("this.", property.name, " = value;");
+                    if (property.derive != null) code.write("super.", property.derive, "(this);");
+                } else {
+                    code.writeTry(() -> {
+                        code.write(property.name, "Updater.invoke(this, value);");
+                        if (property.derive != null) code.write("super.", property.derive, "(this);");
+                    }, Throwable.class, e -> {
+                        code.write("throw new Error(", e, ");");
+                    });
+                }
             });
         }
     }
@@ -433,22 +435,21 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
                 code.write("/**");
                 code.write(" * Create uninitialized {@link ", clazz, "}.");
                 code.write(" */");
-                code.write("public static final <T extends ", self(), "> T create()", () -> {
-                    code.write("return (T) new ", Assignable, "();");
+                code.write("public static final <Self extends ", self(), "> Self create()", () -> {
+                    code.write("return (Self) new ", Assignable, "();");
                 });
             } else {
                 Property p = required.get(0);
                 code.write("/** Create Uninitialized {@link ", clazz, "}. */");
                 code.write("public static final <Self extends ", p
                         .nextAssignable(clazz.className), "> Self ", p.name, "(", p.type, " value)", () -> {
-                            code.write("return (Self) new ", Assignable, "(value);");
+                            code.write("return (Self) new ", Assignable, "().", p.name, "(value);");
                         });
                 for (Method method : overloadForProperty.get(p)) {
                     code.write();
                     code.write("/** Create Uninitialized {@link ", clazz, "}. */");
                     code.write("public static final <Self extends ", p.nextAssignable(clazz.className), "> Self ", method, () -> {
-                        code.write("return (Self) new ", Assignable, "(", p.type
-                                .defaultValue(), ").", method.name, "(", method.paramNames, ");");
+                        code.write("return (Self) new ", Assignable, "().", method.name, "(", method.paramNames, ");");
                     });
                 }
             }
@@ -476,44 +477,23 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
     private void defineMutableClass() {
         // compute interfaces
         StringJoiner interfaces = new StringJoiner(", ", " implements ", "");
-        required.forEach(e -> interfaces.add(e.assignableInterfaceType(clazz.className)));
-        if (!arbitrary.isEmpty()) interfaces.add(ArbitraryInterface);
+        required.forEach(e -> interfaces.add(e.assignableInterfaceName()));
+        if (!arbitrary.isEmpty()) interfaces.add(ArbitraryInterface + "<" + Assignable + ">");
 
         code.write();
         code.write("/**");
         code.write(" * Mutable Model.");
         code.write(" */");
         code.write("private static final class ", Assignable, clazz.variable, " extends ", clazz, interfaces, () -> {
-            code.write();
-            code.write("/**");
-            code.write(" * Initialize by first property.");
-            code.write(" */");
-            code.write("private ", Assignable, "(", parameterWithType(first), ")", () -> {
-                code.write("super(", parameter(first), ");");
-            });
-
-            // Define Setters
-            for (Property property : properties) {
+            // Internal exposed setters
+            for (Property p : properties) {
                 code.write();
-                code.write("/**");
-                code.write(" * Modify ", property.name, " property.");
-                code.write(" */");
+                code.write("/**  {@inheritDoc} */");
                 code.write("@Override");
-                code.write("public final ", property
-                        .nextAssignable(clazz.className), " ", property.name, "(", property.type, " value)", () -> {
-                            if (property.isFinal == false) {
-                                code.write("this.", property.name, " = value;");
-                                if (property.derive != null) code.write("super.", property.derive, "(this);");
-                            } else {
-                                code.writeTry(() -> {
-                                    code.write(property.name, "Updater.invoke(this, value);");
-                                    if (property.derive != null) code.write("super.", property.derive, "(this);");
-                                }, Throwable.class, e -> {
-                                    code.write("throw new Error(", e, ");");
-                                });
-                            }
-                            code.write("return this;");
-                        });
+                code.write("public final ", Assignable, " ", p.name, "(", p.type, " value)", () -> {
+                    code.write("set", p.capitalizeName(), "(value);");
+                    code.write("return this;");
+                });
             }
         });
     }
@@ -552,13 +532,13 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             code.write("/**");
             code.write(" * Property assignment API.");
             code.write(" */");
-            code.write("public static interface ", ArbitraryInterface, () -> {
+            code.write("public static interface ", ArbitraryInterface, "<Next extends ", clazz, ">", () -> {
                 for (Property property : arbitrary) {
                     code.write();
                     code.write("/**");
                     code.write(" * Property assignment API.");
                     code.write(" */");
-                    code.write("<T extends ", property.next, "> T ", property.name, "(", property.type, " value);");
+                    code.write("Next ", property.name, "(", property.type, " value);");
                 }
             });
         }
@@ -744,6 +724,6 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
     }
 
     private String self() {
-        return arbitrary.isEmpty() ? clazz.className : clazz.className + " & " + ArbitraryInterface;
+        return arbitrary.isEmpty() ? clazz.className : clazz.className + " & " + ArbitraryInterface + "<Self>";
     }
 }

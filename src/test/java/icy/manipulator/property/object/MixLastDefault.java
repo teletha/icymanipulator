@@ -42,8 +42,8 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
     /**
      * HIDE CONSTRUCTOR
      */
-    protected MixLastDefault(String name) {
-        this.name = name;
+    protected MixLastDefault() {
+        this.name = null;
         this.age = super.age();
     }
 
@@ -56,9 +56,9 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
     }
 
     /**
-     * The internal access API for name property setter.
+     * 
      */
-    protected abstract <T extends MixLastDefault & ÅssignableÅrbitrary> T name(String value);
+    abstract MixLastDefault name(String value);
 
     /**
      * Provide classic getter API.
@@ -71,7 +71,11 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
      * Provide classic setter API.
      */
     final void setName(String value) {
-        this.name(value);
+        try {
+            nameUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -83,9 +87,9 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
     }
 
     /**
-     * The internal access API for age property setter.
+     * 
      */
-    protected abstract <T extends MixLastDefault & ÅssignableÅrbitrary> T age(int value);
+    abstract MixLastDefault age(int value);
 
     /**
      * Provide classic getter API.
@@ -98,7 +102,11 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
      * Provide classic setter API.
      */
     final void setAge(int value) {
-        this.age(value);
+        try {
+            ageUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -108,45 +116,26 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
 
         /** Create Uninitialized {@link MixLastDefault}. */
         public static final <Self extends MixLastDefault> Self name(String value) {
-            return (Self) new Åssignable(value);
+            return (Self) new Åssignable().name(value);
         }
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends MixLastDefault implements ÅssignableName<MixLastDefault>, ÅssignableÅrbitrary {
+    private static final class Åssignable extends MixLastDefault implements ÅssignableName, ÅssignableÅrbitrary<Åssignable> {
 
-        /**
-         * Initialize by first property.
-         */
-        private Åssignable(String name) {
-            super(name);
-        }
-
-        /**
-         * Modify name property.
-         */
+        /**  {@inheritDoc} */
         @Override
-        public final MixLastDefault name(String value) {
-            try {
-                nameUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
+        public final Åssignable name(String value) {
+            setName(value);
             return this;
         }
 
-        /**
-         * Modify age property.
-         */
+        /**  {@inheritDoc} */
         @Override
-        public final MixLastDefault age(int value) {
-            try {
-                ageUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
+        public final Åssignable age(int value) {
+            setAge(value);
             return this;
         }
     }
@@ -163,12 +152,12 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary {
+    public static interface ÅssignableÅrbitrary<Next extends MixLastDefault> {
 
         /**
          * Property assignment API.
          */
-        <T extends MixLastDefault & ÅssignableÅrbitrary> T age(int value);
+        Next age(int value);
     }
 
     /**

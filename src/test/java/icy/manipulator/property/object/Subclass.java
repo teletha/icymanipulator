@@ -3,7 +3,6 @@ package icy.manipulator.property.object;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
-
 import javax.annotation.processing.Generated;
 
 /**
@@ -18,7 +17,7 @@ public abstract class Subclass extends SubclassModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name) {
+    private static final MethodHandle updater(String name)  {
         try {
             Field field = Subclass.class.getDeclaredField(name);
             field.setAccessible(true);
@@ -37,9 +36,8 @@ public abstract class Subclass extends SubclassModel {
     /**
      * HIDE CONSTRUCTOR
      */
-    protected Subclass(String nickname) {
-        super(nickname);
-        this.nickname = nickname;
+    protected Subclass() {
+        this.nickname = null;
     }
 
     /**
@@ -51,9 +49,9 @@ public abstract class Subclass extends SubclassModel {
     }
 
     /**
-     * The internal access API for nickname property setter.
+     * 
      */
-    protected abstract <T extends Subclass> T nickname(String value);
+    abstract Subclass nickname(String value);
 
     /**
      * Provide classic getter API.
@@ -66,7 +64,11 @@ public abstract class Subclass extends SubclassModel {
      * Provide classic setter API.
      */
     final void setNickname(String value) {
-        this.nickname(value);
+        try {
+            nicknameUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -75,8 +77,8 @@ public abstract class Subclass extends SubclassModel {
     public static final class with {
 
         /** Create Uninitialized {@link Subclass}. */
-        public static final <Self extends ÅssignableNickname<Subclass>> Self name(String value) {
-            return (Self) new Åssignable(value);
+        public static final <Self extends Subclass> Self nickname(String value) {
+            return (Self) new Åssignable().nickname(value);
         }
     }
 
@@ -85,31 +87,10 @@ public abstract class Subclass extends SubclassModel {
      */
     private static final class Åssignable extends Subclass implements ÅssignableNickname<Subclass> {
 
-        /**
-         * Initialize by first property.
-         */
-        private Åssignable(String nickname) {
-            super(nickname);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
+        /**  {@inheritDoc} */
         @Override
-        public <T extends Single> T name(String value) {
-            return super.name(value);
-        }
-
-        /**
-         * Modify nickname property.
-         */
-        @Override
-        public final Subclass nickname(String value) {
-            try {
-                nicknameUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
+        public final Åssignable nickname(String value) {
+            setNickname(value);
             return this;
         }
     }

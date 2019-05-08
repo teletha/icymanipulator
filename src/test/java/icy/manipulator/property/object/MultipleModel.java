@@ -19,4 +19,7 @@ abstract class MultipleModel {
 
     @Icy.Property
     public abstract String stand();
+
+    @Icy.Property
+    public abstract int age();
 }

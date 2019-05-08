@@ -36,8 +36,8 @@ public abstract class BuilderName extends BuilderNameModel {
     /**
      * HIDE CONSTRUCTOR
      */
-    protected BuilderName(String name) {
-        this.name = name;
+    protected BuilderName() {
+        this.name = null;
     }
 
     /**
@@ -49,9 +49,9 @@ public abstract class BuilderName extends BuilderNameModel {
     }
 
     /**
-     * The internal access API for name property setter.
+     * 
      */
-    protected abstract <T extends BuilderName> T name(String value);
+    abstract BuilderName name(String value);
 
     /**
      * Provide classic getter API.
@@ -64,7 +64,11 @@ public abstract class BuilderName extends BuilderNameModel {
      * Provide classic setter API.
      */
     final void setName(String value) {
-        this.name(value);
+        try {
+            nameUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -74,32 +78,19 @@ public abstract class BuilderName extends BuilderNameModel {
 
         /** Create Uninitialized {@link BuilderName}. */
         public static final <Self extends BuilderName> Self name(String value) {
-            return (Self) new Åssignable(value);
+            return (Self) new Åssignable().name(value);
         }
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends BuilderName implements ÅssignableName<BuilderName> {
+    private static final class Åssignable extends BuilderName implements ÅssignableName {
 
-        /**
-         * Initialize by first property.
-         */
-        private Åssignable(String name) {
-            super(name);
-        }
-
-        /**
-         * Modify name property.
-         */
+        /**  {@inheritDoc} */
         @Override
-        public final BuilderName name(String value) {
-            try {
-                nameUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
+        public final Åssignable name(String value) {
+            setName(value);
             return this;
         }
     }

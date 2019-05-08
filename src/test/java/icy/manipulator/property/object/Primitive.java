@@ -78,8 +78,8 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * HIDE CONSTRUCTOR
      */
-    protected Primitive(int intX) {
-        this.intX = intX;
+    protected Primitive() {
+        this.intX = 0;
         this.longX = 0L;
         this.floatX = 0;
         this.doubleX = 0D;
@@ -98,9 +98,9 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /**
-     * The internal access API for intX property setter.
+     * 
      */
-    protected abstract <T extends ÅssignableLongX> T intX(int value);
+    abstract Primitive intX(int value);
 
     /**
      * Provide classic getter API.
@@ -113,7 +113,11 @@ public abstract class Primitive extends PrimitiveModel {
      * Provide classic setter API.
      */
     final void setIntX(int value) {
-        this.intX(value);
+        try {
+            intXUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -125,9 +129,9 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /**
-     * The internal access API for longX property setter.
+     * 
      */
-    protected abstract <T extends ÅssignableFloatX> T longX(long value);
+    abstract Primitive longX(long value);
 
     /**
      * Provide classic getter API.
@@ -140,7 +144,11 @@ public abstract class Primitive extends PrimitiveModel {
      * Provide classic setter API.
      */
     final void setLongX(long value) {
-        this.longX(value);
+        try {
+            longXUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -152,9 +160,9 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /**
-     * The internal access API for floatX property setter.
+     * 
      */
-    protected abstract <T extends ÅssignableDoubleX> T floatX(float value);
+    abstract Primitive floatX(float value);
 
     /**
      * Provide classic getter API.
@@ -167,7 +175,11 @@ public abstract class Primitive extends PrimitiveModel {
      * Provide classic setter API.
      */
     final void setFloatX(float value) {
-        this.floatX(value);
+        try {
+            floatXUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -179,9 +191,9 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /**
-     * The internal access API for doubleX property setter.
+     * 
      */
-    protected abstract <T extends ÅssignableByteX> T doubleX(double value);
+    abstract Primitive doubleX(double value);
 
     /**
      * Provide classic getter API.
@@ -194,7 +206,11 @@ public abstract class Primitive extends PrimitiveModel {
      * Provide classic setter API.
      */
     final void setDoubleX(double value) {
-        this.doubleX(value);
+        try {
+            doubleXUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -206,9 +222,9 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /**
-     * The internal access API for byteX property setter.
+     * 
      */
-    protected abstract <T extends ÅssignableShortX> T byteX(byte value);
+    abstract Primitive byteX(byte value);
 
     /**
      * Provide classic getter API.
@@ -221,7 +237,11 @@ public abstract class Primitive extends PrimitiveModel {
      * Provide classic setter API.
      */
     final void setByteX(byte value) {
-        this.byteX(value);
+        try {
+            byteXUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -233,9 +253,9 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /**
-     * The internal access API for shortX property setter.
+     * 
      */
-    protected abstract <T extends ÅssignableCharX> T shortX(short value);
+    abstract Primitive shortX(short value);
 
     /**
      * Provide classic getter API.
@@ -248,7 +268,11 @@ public abstract class Primitive extends PrimitiveModel {
      * Provide classic setter API.
      */
     final void setShortX(short value) {
-        this.shortX(value);
+        try {
+            shortXUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -260,9 +284,9 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /**
-     * The internal access API for charX property setter.
+     * 
      */
-    protected abstract <T extends ÅssignableBooleanX> T charX(char value);
+    abstract Primitive charX(char value);
 
     /**
      * Provide classic getter API.
@@ -275,7 +299,11 @@ public abstract class Primitive extends PrimitiveModel {
      * Provide classic setter API.
      */
     final void setCharX(char value) {
-        this.charX(value);
+        try {
+            charXUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -287,9 +315,9 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /**
-     * The internal access API for booleanX property setter.
+     * 
      */
-    protected abstract <T extends Primitive> T booleanX(boolean value);
+    abstract Primitive booleanX(boolean value);
 
     /**
      * Provide classic getter API.
@@ -302,7 +330,11 @@ public abstract class Primitive extends PrimitiveModel {
      * Provide classic setter API.
      */
     final void setBooleanX(boolean value) {
-        this.booleanX(value);
+        try {
+            booleanXUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -312,123 +344,68 @@ public abstract class Primitive extends PrimitiveModel {
 
         /** Create Uninitialized {@link Primitive}. */
         public static final <Self extends ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>>>> Self intX(int value) {
-            return (Self) new Åssignable(value);
+            return (Self) new Åssignable().intX(value);
         }
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Primitive implements ÅssignableIntX<ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>>>>, ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>>>, ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>>, ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>, ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>, ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>, ÅssignableCharX<ÅssignableBooleanX<Primitive>>, ÅssignableBooleanX<Primitive> {
+    private static final class Åssignable extends Primitive implements ÅssignableIntX, ÅssignableLongX, ÅssignableFloatX, ÅssignableDoubleX, ÅssignableByteX, ÅssignableShortX, ÅssignableCharX, ÅssignableBooleanX {
 
-        /**
-         * Initialize by first property.
-         */
-        private Åssignable(int intX) {
-            super(intX);
-        }
-
-        /**
-         * Modify intX property.
-         */
+        /**  {@inheritDoc} */
         @Override
-        public final ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>>> intX(int value) {
-            try {
-                intXUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
+        public final Åssignable intX(int value) {
+            setIntX(value);
             return this;
         }
 
-        /**
-         * Modify longX property.
-         */
+        /**  {@inheritDoc} */
         @Override
-        public final ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>> longX(long value) {
-            try {
-                longXUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
+        public final Åssignable longX(long value) {
+            setLongX(value);
             return this;
         }
 
-        /**
-         * Modify floatX property.
-         */
+        /**  {@inheritDoc} */
         @Override
-        public final ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>> floatX(float value) {
-            try {
-                floatXUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
+        public final Åssignable floatX(float value) {
+            setFloatX(value);
             return this;
         }
 
-        /**
-         * Modify doubleX property.
-         */
+        /**  {@inheritDoc} */
         @Override
-        public final ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>> doubleX(double value) {
-            try {
-                doubleXUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
+        public final Åssignable doubleX(double value) {
+            setDoubleX(value);
             return this;
         }
 
-        /**
-         * Modify byteX property.
-         */
+        /**  {@inheritDoc} */
         @Override
-        public final ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>> byteX(byte value) {
-            try {
-                byteXUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
+        public final Åssignable byteX(byte value) {
+            setByteX(value);
             return this;
         }
 
-        /**
-         * Modify shortX property.
-         */
+        /**  {@inheritDoc} */
         @Override
-        public final ÅssignableCharX<ÅssignableBooleanX<Primitive>> shortX(short value) {
-            try {
-                shortXUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
+        public final Åssignable shortX(short value) {
+            setShortX(value);
             return this;
         }
 
-        /**
-         * Modify charX property.
-         */
+        /**  {@inheritDoc} */
         @Override
-        public final ÅssignableBooleanX<Primitive> charX(char value) {
-            try {
-                charXUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
+        public final Åssignable charX(char value) {
+            setCharX(value);
             return this;
         }
 
-        /**
-         * Modify booleanX property.
-         */
+        /**  {@inheritDoc} */
         @Override
-        public final Primitive booleanX(boolean value) {
-            try {
-                booleanXUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
+        public final Åssignable booleanX(boolean value) {
+            setBooleanX(value);
             return this;
         }
     }

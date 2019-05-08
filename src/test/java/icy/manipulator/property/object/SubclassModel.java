@@ -14,13 +14,6 @@ import icy.manipulator.Icy;
 @Icy
 abstract class SubclassModel extends Single {
 
-    /**
-     * @param name
-     */
-    public SubclassModel(String name) {
-        super(name);
-    }
-
     @Icy.Property
     public abstract String nickname();
 }
