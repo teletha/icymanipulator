@@ -333,11 +333,9 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
      */
     private void defineFieldUpdater() {
         for (Property property : properties) {
-            if (property.isFinal) {
-                code.write();
-                code.write("/** The final property updater. */");
-                code.write("private static final ", MethodHandle.class, " ", property.name, "Updater = updater(\"", property.name, "\");");
-            }
+            code.write();
+            code.write("/** The final property updater. */");
+            code.write("private static final ", MethodHandle.class, " ", property.name, "Updater = updater(\"", property.name, "\");");
         }
     }
 
@@ -399,27 +397,15 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             code.write(" * Provide classic setter API.");
             code.write(" */");
             code.write("private final void set", property.capitalizeName(), "(", property.type, " value)", () -> {
-                if (property.isFinal == false) {
-                    code.write("this.", property.name, " = value;");
+                code.writeTry(() -> {
+                    code.write(property.name, "Updater.invoke(this, value);");
                     if (property.derive != null) code.write("super.", property.derive, "(this);");
-                } else {
-                    code.writeTry(() -> {
-                        code.write(property.name, "Updater.invoke(this, value);");
-                        if (property.derive != null) code.write("super.", property.derive, "(this);");
-                    }, Throwable.class, e -> {
-                        code.write("throw new Error(", e, ");");
-                    });
-                }
+                }, Throwable.class, e -> {
+                    code.write("throw new Error(", e, ");");
+                });
             });
         }
     }
-
-    // public static final class AA<X extends Default & ÅssignableÅrbitrary<X>> {
-    //
-    // public X create() {
-    // return (X) new Åssignable()
-    // }
-    // }
 
     /**
      * Defien model builder methods.
@@ -634,7 +620,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             return;
         }
 
-        Property property = new Property(returnType, method.getSimpleName().toString(), true);
+        Property property = new Property(returnType, method.getSimpleName().toString());
         property.isArbitrary = !method.getModifiers().contains(Modifier.ABSTRACT);
 
         if (property.isArbitrary) {

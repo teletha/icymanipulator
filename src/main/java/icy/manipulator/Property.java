@@ -23,9 +23,6 @@ class Property {
     /** The type name. */
     Type TYPE;
 
-    /** The property modifier. */
-    boolean isFinal;
-
     /** The state. */
     boolean isModel;
 
@@ -46,12 +43,11 @@ class Property {
     /**
      * 
      */
-    Property(Type type, String name, boolean isFinal) {
+    Property(Type type, String name) {
         this.type = type;
         this.TYPE = type.wrap();
         this.name = name;
         this.NAME = name.toUpperCase();
-        this.isFinal = isFinal;
 
         try {
             this.isModel = Class.forName(type + IcyManipulator.ModelDefinitionSuffix).isAnnotationPresent(Icy.class);

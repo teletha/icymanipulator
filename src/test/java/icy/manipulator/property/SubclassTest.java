@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import icy.manipulator.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
+import icy.manipulator.property.object.Subclass;
 import icy.manipulator.property.object.SubclassModel;
 
 class SubclassTest {
@@ -23,8 +24,8 @@ class SubclassTest {
 
     @Test
     void property() {
-        // Subclass name = Subclass.with.name("test").nickname("ok");
-        // Single instance = Subclass.with.name("Giorno Giovanna");
-        // assert instance.name.equals("Giorno Giovanna");
+        Subclass instance = Subclass.with.name("Giorno Giovanna").nickname("jojo");
+        assert instance.name.equals("Giorno Giovanna");
+        assert instance.nickname.equals("jojo");
     }
 }
