@@ -3,7 +3,6 @@ package icy.manipulator.property.object;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
-
 import javax.annotation.processing.Generated;
 
 /**
@@ -18,7 +17,7 @@ public abstract class Multiple extends MultipleModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name) {
+    private static final MethodHandle updater(String name)  {
         try {
             Field field = Multiple.class.getDeclaredField(name);
             field.setAccessible(true);
@@ -137,19 +136,18 @@ public abstract class Multiple extends MultipleModel {
     }
 
     /** The singleton builder. */
-    public static final Ìnstantiator<Multiple> with = new Ìnstantiator();
+    public static final  Ìnstantiator<Multiple> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Multiple}.
      */
-    public static class Ìnstantiator<Next> {
+    public static class Ìnstantiator<Self> {
 
         /** Create Uninitialized {@link Multiple}. */
-        public final <T extends ÅssignableStand<ÅssignableAge<Next>>> T name(String value) {
-            return (T) create().name(value);
+        public final <T extends ÅssignableStand<ÅssignableAge<Self>>> T name(String value) {
+            return (T) base().name(value);
         }
-
-        protected ÅssignableName<Next> create() {
+        public ÅssignableName<Self> base() {
             return new Åssignable();
         }
     }
@@ -207,9 +205,7 @@ public abstract class Multiple extends MultipleModel {
      */
     static final class My {
         static final String Name = "name";
-
         static final String Stand = "stand";
-
         static final String Age = "age";
     }
 }

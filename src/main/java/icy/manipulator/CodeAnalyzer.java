@@ -432,60 +432,92 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         }
     }
 
-    // /**
-    // * Builder namespace for {@link Subclass}.
-    // */
-    // public static class Ìnstantiator<Next extends
-    // Multiple.ÅssignableStand<Multiple.ÅssignableAge<ÅssignableNickname<Subclass>>>> {
+    // /** The singleton builder. */
+    // public static final Ìnstantiator<?> with = new Ìnstantiator();
     //
     // /**
-    // * {@inheritDoc}
+    // * Builder namespace for {@link Default}.
     // */
-    // public Next name(String value) {
-    // return (Next) new Åssignable().name(value);
+    // public static final class Ìnstantiator<Next extends Default & ÅssignableÅrbitrary<Next>> {
+    //
+    // /**
+    // * Create uninitialized {@link Default}.
+    // */
+    // public final Next create() {
+    // return make();
+    // }
+    //
+    // protected Next make() {
+    // return (Next) new Åssignable();
     // }
     // }
-
     /**
      * Defien model builder methods.
      */
     private void defineBuilder() {
+        boolean zero = required.isEmpty();
         String builder = icy.builder();
 
         code.write();
         code.write("/** The singleton builder. */");
-        code.write("public static final  ", Instantiator, "<?> ", builder, " = new ", Instantiator, "();");
+        code.write("public static final  ", Instantiator, "<", zero ? "?" : clazz, "> ", builder, " = new ", Instantiator, "();");
         code.write();
         code.write("/**");
         code.write(" * Builder namespace for {@link ", clazz, "}.");
         code.write(" */");
-        code.write("public static final class ", Instantiator, "<Self extends ", required.isEmpty() ? self()
-                : required.get(0).nextAssignable(self()), ">", () -> {
-                    code.write();
-
-                    if (required.isEmpty()) {
-                        code.write("/**");
-                        code.write(" * Create uninitialized {@link ", clazz, "}.");
-                        code.write(" */");
-                        code.write("public final Self create()", () -> {
-                            code.write("return (Self) new ", Assignable, "();");
-                        });
-                    } else {
-                        Property p = required.get(0);
-                        code.write("/** Create Uninitialized {@link ", clazz, "}. */");
-                        code.write("public final Self ", p.name, "(", p.type, " value)", () -> {
-                            code.write("return (Self) new ", Assignable, "().", p.name, "(value);");
-                        });
-                        for (Method method : overloadForProperty.get(p)) {
-                            code.write();
-                            code.write("/** Create Uninitialized {@link ", clazz, "}. */");
-                            code.write("public final Self ", method, () -> {
-                                code.write("return (Self) new ", Assignable, "().", method.name, "(", method.paramNames, ");");
-                            });
-                        }
-                    }
+        if (zero) {
+            code.write("public static class ", Instantiator, "<Self extends ", clazz, " & ", ArbitraryInterface, "<Self>>", () -> {
+                code.write();
+                code.write("/**");
+                code.write(" * Create uninitialized {@link ", clazz, "}.");
+                code.write(" */");
+                code.write("public final Self create()", () -> {
+                    code.write("return base();");
                 });
+                code.write("public Self base()", () -> {
+                    code.write("return (Self) new ", Assignable, "();");
+                });
+            });
+        } else {
+            code.write("public static class ", Instantiator, "<Self>", () -> {
+                code.write();
+
+                Property p = required.get(0);
+                code.write("/** Create Uninitialized {@link ", clazz, "}. */");
+                code.write("public final <T extends ", p.nextAssignable("Self"), "> T ", p.name, "(", p.type, " value)", () -> {
+                    code.write("return (T) base().", p.name, "(value);");
+                });
+                for (Method method : overloadForProperty.get(p)) {
+                    code.write();
+                    code.write("/** Create Uninitialized {@link ", clazz, "}. */");
+                    code.write("public final <T extends ", p.nextAssignable("Self"), "> T ", method, () -> {
+                        code.write("return (T) base().", method.name, "(", method.paramNames, ");");
+                    });
+                }
+                code.write("public ", p.assignableInterfaceName(), "<Self> base()", () -> {
+                    code.write("return new ", Assignable, "();");
+                });
+            });
+        }
     }
+
+    // /** The singleton builder. */
+    // public static final Ìnstantiator<Multiple> with = new Ìnstantiator();
+    //
+    // /**
+    // * Builder namespace for {@link Multiple}.
+    // */
+    // public static class Ìnstantiator<Next> {
+    //
+    // /** Create Uninitialized {@link Multiple}. */
+    // public final <T extends ÅssignableStand<ÅssignableAge<Next>>> T name(String value) {
+    // return (T) create().name(value);
+    // }
+    //
+    // protected ÅssignableName<Next> create() {
+    // return new Åssignable();
+    // }
+    // }
 
     // /**
     // * Mutable Model.
@@ -511,6 +543,28 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         code.write("private static final class ", Assignable, clazz.variable, " extends ", clazz, interfaces, () -> {
         });
     }
+
+    // /**
+    // * Property assignment API.
+    // */
+    // public static interface ÅssignableÅrbitrary<Next extends Default> {
+    //
+    // /**
+    // * Property assignment API.
+    // */
+    // default Next name(String value) {
+    // ((Default) this).setName(value);
+    // return (Next) this;
+    // }
+    //
+    // /**
+    // * Property assignment API.
+    // */
+    // default Next stand(String value) {
+    // ((Default) this).setStand(value);
+    // return (Next) this;
+    // }
+    // }
 
     /**
      * Define assignable interfaces.
