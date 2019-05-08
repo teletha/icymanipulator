@@ -56,11 +56,6 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
     }
 
     /**
-     * 
-     */
-    abstract MixLastDefault name(String value);
-
-    /**
      * Provide classic getter API.
      */
     final String getName() {
@@ -87,11 +82,6 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
     }
 
     /**
-     * 
-     */
-    abstract MixLastDefault age(int value);
-
-    /**
      * Provide classic getter API.
      */
     final int getAge() {
@@ -109,13 +99,16 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
         }
     }
 
+    /** The singleton builder. */
+    public static final ßuilder<?> with = new ßuilder();
+
     /**
      * Builder namespace for {@link MixLastDefault}.
      */
-    public static final class with {
+    public static final class ßuilder<Self extends MixLastDefault & ÅssignableÅrbitrary<Self>> {
 
         /** Create Uninitialized {@link MixLastDefault}. */
-        public static final <Self extends MixLastDefault> Self name(String value) {
+        public final Self name(String value) {
             return (Self) new Åssignable().name(value);
         }
     }
@@ -157,7 +150,10 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
         /**
          * Property assignment API.
          */
-        Next age(int value);
+        default Next age(int value) {
+            ((MixLastDefault) this).setAge(value);
+            return (Next) this;
+        }
     }
 
     /**

@@ -16,7 +16,7 @@ import icy.manipulator.Icy;
 import icy.manipulator.property.overload.Overload.My;
 
 @Icy
-abstract class OverloadModel {
+public abstract class OverloadModel {
 
     @Icy.Property
     public abstract BigDecimal size();

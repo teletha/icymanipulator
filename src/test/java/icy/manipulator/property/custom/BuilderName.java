@@ -49,11 +49,6 @@ public abstract class BuilderName extends BuilderNameModel {
     }
 
     /**
-     * 
-     */
-    abstract BuilderName name(String value);
-
-    /**
      * Provide classic getter API.
      */
     final String getName() {
@@ -71,13 +66,16 @@ public abstract class BuilderName extends BuilderNameModel {
         }
     }
 
+    /** The singleton builder. */
+    public static final ßuilder<?> build = new ßuilder();
+
     /**
      * Builder namespace for {@link BuilderName}.
      */
-    public static final class build {
+    public static final class ßuilder<Self extends BuilderName> {
 
         /** Create Uninitialized {@link BuilderName}. */
-        public static final <Self extends BuilderName> Self name(String value) {
+        public final Self name(String value) {
             return (Self) new Åssignable().name(value);
         }
     }

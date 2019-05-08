@@ -12,7 +12,7 @@ package icy.manipulator.property.object;
 import icy.manipulator.Icy;
 
 @Icy
-abstract class SubclassModel extends Single {
+public abstract class SubclassModel extends Single {
 
     @Icy.Property
     public abstract String nickname();

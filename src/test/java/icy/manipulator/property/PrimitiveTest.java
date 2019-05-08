@@ -7,13 +7,15 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.property.object;
+package icy.manipulator.property;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import icy.manipulator.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
+import icy.manipulator.property.object.Primitive;
+import icy.manipulator.property.object.PrimitiveModel;
 
 class PrimitiveTest {
 

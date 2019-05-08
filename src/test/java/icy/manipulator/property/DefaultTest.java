@@ -7,13 +7,15 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.property.object;
+package icy.manipulator.property;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import icy.manipulator.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
+import icy.manipulator.property.object.Default;
+import icy.manipulator.property.object.DefaultModel;
 
 class DefaultTest {
 
@@ -31,6 +33,8 @@ class DefaultTest {
 
     @Test
     void property() {
+        Default a = Default.with.create().name("ok").stand("nono");
+        System.out.println(a.name + "   " + a.stand);
         Default instance = Default.with.create().name("Guido Mista").stand("Sex Pistols");
         assert instance.name.equals("Guido Mista");
         assert instance.name().equals("Guido Mista");

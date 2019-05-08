@@ -63,11 +63,6 @@ public abstract class Multiple extends MultipleModel {
     }
 
     /**
-     * 
-     */
-    abstract Multiple name(String value);
-
-    /**
      * Provide classic getter API.
      */
     final String getName() {
@@ -92,11 +87,6 @@ public abstract class Multiple extends MultipleModel {
     public final String stand() {
         return this.stand;
     }
-
-    /**
-     * 
-     */
-    abstract Multiple stand(String value);
 
     /**
      * Provide classic getter API.
@@ -125,11 +115,6 @@ public abstract class Multiple extends MultipleModel {
     }
 
     /**
-     * 
-     */
-    abstract Multiple age(int value);
-
-    /**
      * Provide classic getter API.
      */
     final int getAge() {
@@ -147,13 +132,16 @@ public abstract class Multiple extends MultipleModel {
         }
     }
 
+    /** The singleton builder. */
+    public static final ßuilder<?> with = new ßuilder();
+
     /**
      * Builder namespace for {@link Multiple}.
      */
-    public static final class with {
+    public static final class ßuilder<Self extends ÅssignableStand<ÅssignableAge<Multiple>>> {
 
         /** Create Uninitialized {@link Multiple}. */
-        public static final <Self extends ÅssignableStand<ÅssignableAge<Multiple>>> Self name(String value) {
+        public final Self name(String value) {
             return (Self) new Åssignable().name(value);
         }
     }

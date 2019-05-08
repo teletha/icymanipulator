@@ -85,11 +85,6 @@ public abstract class Overload extends OverloadModel {
     }
 
     /**
-     * 
-     */
-    abstract Overload size(BigDecimal value);
-
-    /**
      * Provide classic getter API.
      */
     final BigDecimal getSize() {
@@ -116,11 +111,6 @@ public abstract class Overload extends OverloadModel {
     }
 
     /**
-     * 
-     */
-    abstract Overload date(LocalDate value);
-
-    /**
      * Provide classic getter API.
      */
     final LocalDate getDate() {
@@ -138,23 +128,26 @@ public abstract class Overload extends OverloadModel {
         }
     }
 
+    /** The singleton builder. */
+    public static final ßuilder<?> with = new ßuilder();
+
     /**
      * Builder namespace for {@link Overload}.
      */
-    public static final class with {
+    public static final class ßuilder<Self extends ÅssignableDate<Overload>> {
 
         /** Create Uninitialized {@link Overload}. */
-        public static final <Self extends ÅssignableDate<Overload>> Self size(BigDecimal value) {
+        public final Self size(BigDecimal value) {
             return (Self) new Åssignable().size(value);
         }
 
         /** Create Uninitialized {@link Overload}. */
-        public static final <Self extends ÅssignableDate<Overload>> Self size(int number) {
+        public final Self size(int number) {
             return (Self) new Åssignable().size(number);
         }
 
         /** Create Uninitialized {@link Overload}. */
-        public static final <Self extends ÅssignableDate<Overload>> Self sizeByText(String number) {
+        public final Self sizeByText(String number) {
             return (Self) new Åssignable().sizeByText(number);
         }
     }

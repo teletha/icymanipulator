@@ -49,11 +49,6 @@ public abstract class Subclass extends SubclassModel {
     }
 
     /**
-     * 
-     */
-    abstract Subclass nickname(String value);
-
-    /**
      * Provide classic getter API.
      */
     final String getNickname() {
@@ -71,13 +66,16 @@ public abstract class Subclass extends SubclassModel {
         }
     }
 
+    /** The singleton builder. */
+    public static final ßuilder<?> with = new ßuilder();
+
     /**
      * Builder namespace for {@link Subclass}.
      */
-    public static final class with {
+    public static final class ßuilder<Self extends Subclass> {
 
         /** Create Uninitialized {@link Subclass}. */
-        public static final <Self extends Subclass> Self nickname(String value) {
+        public final Self nickname(String value) {
             return (Self) new Åssignable().nickname(value);
         }
     }
@@ -85,7 +83,7 @@ public abstract class Subclass extends SubclassModel {
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Subclass implements ÅssignableNickname<Subclass> {
+    private static final class Åssignable extends Subclass implements ÅssignableNickname {
 
         /**  {@inheritDoc} */
         @Override

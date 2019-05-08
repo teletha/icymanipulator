@@ -12,7 +12,7 @@ package icy.manipulator.property.object;
 import icy.manipulator.Icy;
 
 @Icy
-abstract class MultipleModel {
+public abstract class MultipleModel {
 
     @Icy.Property
     public abstract String name();

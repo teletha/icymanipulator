@@ -12,7 +12,7 @@ package icy.manipulator.property.object;
 import icy.manipulator.Icy;
 
 @Icy
-abstract class PrimitiveModel {
+public abstract class PrimitiveModel {
 
     @Icy.Property
     abstract int intX();

@@ -12,7 +12,7 @@ package icy.manipulator.property.object;
 import icy.manipulator.Icy;
 
 @Icy
-abstract class MixLastDefaultModel {
+public abstract class MixLastDefaultModel {
 
     @Icy.Property
     abstract String name();

@@ -56,11 +56,6 @@ public abstract class Default extends DefaultModel {
     }
 
     /**
-     * 
-     */
-    abstract Default name(String value);
-
-    /**
      * Provide classic getter API.
      */
     final String getName() {
@@ -87,11 +82,6 @@ public abstract class Default extends DefaultModel {
     }
 
     /**
-     * 
-     */
-    abstract Default stand(String value);
-
-    /**
      * Provide classic getter API.
      */
     final String getStand() {
@@ -109,15 +99,18 @@ public abstract class Default extends DefaultModel {
         }
     }
 
+    /** The singleton builder. */
+    public static final ßuilder<?> with = new ßuilder();
+
     /**
      * Builder namespace for {@link Default}.
      */
-    public static final class with {
+    public static final class ßuilder<Self extends Default & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create uninitialized {@link Default}.
          */
-        public static final <Self extends Default & ÅssignableÅrbitrary<Self>> Self create() {
+        public final Self create() {
             return (Self) new Åssignable();
         }
     }
@@ -150,12 +143,18 @@ public abstract class Default extends DefaultModel {
         /**
          * Property assignment API.
          */
-        Next name(String value);
+        default Next name(String value) {
+            ((Default) this).setName(value);
+            return (Next) this;
+        }
 
         /**
          * Property assignment API.
          */
-        Next stand(String value);
+        default Next stand(String value) {
+            ((Default) this).setStand(value);
+            return (Next) this;
+        }
     }
 
     /**

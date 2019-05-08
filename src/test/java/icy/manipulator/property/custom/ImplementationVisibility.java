@@ -49,11 +49,6 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
     }
 
     /**
-     * 
-     */
-    abstract ImplementationVisibility name(String value);
-
-    /**
      * Provide classic getter API.
      */
     final String getName() {
@@ -71,13 +66,16 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
         }
     }
 
+    /** The singleton builder. */
+    public static final ßuilder<?> with = new ßuilder();
+
     /**
      * Builder namespace for {@link ImplementationVisibility}.
      */
-    public static final class with {
+    public static final class ßuilder<Self extends ImplementationVisibility> {
 
         /** Create Uninitialized {@link ImplementationVisibility}. */
-        public static final <Self extends ImplementationVisibility> Self name(String value) {
+        public final Self name(String value) {
             return (Self) new Åssignable().name(value);
         }
     }

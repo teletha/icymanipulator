@@ -39,6 +39,9 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
     /** The prefix of assignable type. */
     static final String Assignable = "Åssignable";
 
+    /** The build class name. */
+    private static final String Builder = "ßuilder";
+
     /** The next type parameter. */
     private static final String Next = "Next";
 
@@ -380,14 +383,6 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
                 code.write("return this.", property.name, ";");
             });
 
-            // abstract <Next extends Default & ÅssignableÅrbitrary<Next>> Next name(String value);
-            // Hidden setter
-            code.write();
-            code.write("/**");
-            code.write(" * ");
-            code.write(" */");
-            code.write("abstract ", clazz, " ", property.name, "(", property.type, " value);");
-
             // Hidden classic getter
             code.write();
             code.write("/**");
@@ -418,6 +413,13 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         }
     }
 
+    // public static final class AA<X extends Default & ÅssignableÅrbitrary<X>> {
+    //
+    // public X create() {
+    // return (X) new Åssignable()
+    // }
+    // }
+
     /**
      * Defien model builder methods.
      */
@@ -425,35 +427,39 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         String builder = icy.builder();
 
         code.write();
+        code.write("/** The singleton builder. */");
+        code.write("public static final ", Builder, "<?> ", builder, " = new ", Builder, "();");
+
+        code.write();
         code.write("/**");
         code.write(" * Builder namespace for {@link ", clazz, "}.");
         code.write(" */");
-        code.write("public static final class ", builder, () -> {
-            code.write();
+        code.write("public static final class ", Builder, "<Self extends ", required.isEmpty() ? self()
+                : required.get(0).nextAssignable(self()), ">", () -> {
+                    code.write();
 
-            if (required.isEmpty()) {
-                code.write("/**");
-                code.write(" * Create uninitialized {@link ", clazz, "}.");
-                code.write(" */");
-                code.write("public static final <Self extends ", self(), "> Self create()", () -> {
-                    code.write("return (Self) new ", Assignable, "();");
-                });
-            } else {
-                Property p = required.get(0);
-                code.write("/** Create Uninitialized {@link ", clazz, "}. */");
-                code.write("public static final <Self extends ", p
-                        .nextAssignable(clazz.className), "> Self ", p.name, "(", p.type, " value)", () -> {
+                    if (required.isEmpty()) {
+                        code.write("/**");
+                        code.write(" * Create uninitialized {@link ", clazz, "}.");
+                        code.write(" */");
+                        code.write("public final Self create()", () -> {
+                            code.write("return (Self) new ", Assignable, "();");
+                        });
+                    } else {
+                        Property p = required.get(0);
+                        code.write("/** Create Uninitialized {@link ", clazz, "}. */");
+                        code.write("public final Self ", p.name, "(", p.type, " value)", () -> {
                             code.write("return (Self) new ", Assignable, "().", p.name, "(value);");
                         });
-                for (Method method : overloadForProperty.get(p)) {
-                    code.write();
-                    code.write("/** Create Uninitialized {@link ", clazz, "}. */");
-                    code.write("public static final <Self extends ", p.nextAssignable(clazz.className), "> Self ", method, () -> {
-                        code.write("return (Self) new ", Assignable, "().", method.name, "(", method.paramNames, ");");
-                    });
-                }
-            }
-        });
+                        for (Method method : overloadForProperty.get(p)) {
+                            code.write();
+                            code.write("/** Create Uninitialized {@link ", clazz, "}. */");
+                            code.write("public final Self ", method, () -> {
+                                code.write("return (Self) new ", Assignable, "().", method.name, "(", method.paramNames, ");");
+                            });
+                        }
+                    }
+                });
 
     }
 
@@ -538,7 +544,10 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
                     code.write("/**");
                     code.write(" * Property assignment API.");
                     code.write(" */");
-                    code.write("Next ", property.name, "(", property.type, " value);");
+                    code.write("default Next ", property.name, "(", property.type, " value)", () -> {
+                        code.write("((", clazz, ") this).set", property.capitalizeName(), "(value);");
+                        code.write("return (Next) this;");
+                    });
                 }
             });
         }

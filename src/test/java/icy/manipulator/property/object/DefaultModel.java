@@ -12,7 +12,7 @@ package icy.manipulator.property.object;
 import icy.manipulator.Icy;
 
 @Icy
-abstract class DefaultModel {
+public abstract class DefaultModel {
 
     @Icy.Property
     String name() {

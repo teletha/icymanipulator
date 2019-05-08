@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.property.overload;
+package icy.manipulator.property;
 
 import java.time.LocalDate;
 
@@ -16,6 +16,8 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import icy.manipulator.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
+import icy.manipulator.property.overload.Overload;
+import icy.manipulator.property.overload.OverloadModel;
 
 class OverloadTest {
 

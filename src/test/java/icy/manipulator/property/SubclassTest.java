@@ -7,22 +7,24 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.property.object;
+package icy.manipulator.property;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import icy.manipulator.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
+import icy.manipulator.property.object.SubclassModel;
 
-class SingleTest {
+class SubclassTest {
 
     @RegisterExtension
-    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, SingleModel.class);
+    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, SubclassModel.class);
 
     @Test
     void property() {
-        Single instance = Single.with.name("Giorno Giovanna");
-        assert instance.name.equals("Giorno Giovanna");
+        // Subclass name = Subclass.with.name("test").nickname("ok");
+        // Single instance = Subclass.with.name("Giorno Giovanna");
+        // assert instance.name.equals("Giorno Giovanna");
     }
 }

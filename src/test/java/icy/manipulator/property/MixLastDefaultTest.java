@@ -7,24 +7,32 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.property.object;
+package icy.manipulator.property;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import icy.manipulator.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
+import icy.manipulator.property.object.MixLastDefault;
+import icy.manipulator.property.object.MixLastDefaultModel;
 
-class MultipleTest {
+class MixLastDefaultTest {
 
     @RegisterExtension
-    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, MultipleModel.class);
+    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, MixLastDefaultModel.class);
 
     @Test
     void property() {
-        Multiple instance = Multiple.with.name("Giorno Giovanna").stand("Gold Experience").age(15);
+        MixLastDefault instance = MixLastDefault.with.name("Giorno Giovanna");
         assert instance.name.equals("Giorno Giovanna");
-        assert instance.stand().equals("Gold Experience");
         assert instance.age == 15;
+    }
+
+    @Test
+    void overrideDefault() {
+        MixLastDefault instance = MixLastDefault.with.name("Guido Mista").age(18);
+        assert instance.name.equals("Guido Mista");
+        assert instance.age == 18;
     }
 }

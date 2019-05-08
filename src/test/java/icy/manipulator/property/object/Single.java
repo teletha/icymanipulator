@@ -49,11 +49,6 @@ public abstract class Single extends SingleModel {
     }
 
     /**
-     * 
-     */
-    abstract Single name(String value);
-
-    /**
      * Provide classic getter API.
      */
     final String getName() {
@@ -71,13 +66,16 @@ public abstract class Single extends SingleModel {
         }
     }
 
+    /** The singleton builder. */
+    public static final ßuilder<?> with = new ßuilder();
+
     /**
      * Builder namespace for {@link Single}.
      */
-    public static final class with {
+    public static final class ßuilder<Self extends Single> {
 
         /** Create Uninitialized {@link Single}. */
-        public static final <Self extends Single> Self name(String value) {
+        public final Self name(String value) {
             return (Self) new Åssignable().name(value);
         }
     }

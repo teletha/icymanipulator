@@ -98,11 +98,6 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /**
-     * 
-     */
-    abstract Primitive intX(int value);
-
-    /**
      * Provide classic getter API.
      */
     final int getIntX() {
@@ -127,11 +122,6 @@ public abstract class Primitive extends PrimitiveModel {
     public final long longX() {
         return this.longX;
     }
-
-    /**
-     * 
-     */
-    abstract Primitive longX(long value);
 
     /**
      * Provide classic getter API.
@@ -160,11 +150,6 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /**
-     * 
-     */
-    abstract Primitive floatX(float value);
-
-    /**
      * Provide classic getter API.
      */
     final float getFloatX() {
@@ -189,11 +174,6 @@ public abstract class Primitive extends PrimitiveModel {
     public final double doubleX() {
         return this.doubleX;
     }
-
-    /**
-     * 
-     */
-    abstract Primitive doubleX(double value);
 
     /**
      * Provide classic getter API.
@@ -222,11 +202,6 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /**
-     * 
-     */
-    abstract Primitive byteX(byte value);
-
-    /**
      * Provide classic getter API.
      */
     final byte getByteX() {
@@ -251,11 +226,6 @@ public abstract class Primitive extends PrimitiveModel {
     public final short shortX() {
         return this.shortX;
     }
-
-    /**
-     * 
-     */
-    abstract Primitive shortX(short value);
 
     /**
      * Provide classic getter API.
@@ -284,11 +254,6 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /**
-     * 
-     */
-    abstract Primitive charX(char value);
-
-    /**
      * Provide classic getter API.
      */
     final char getCharX() {
@@ -315,11 +280,6 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /**
-     * 
-     */
-    abstract Primitive booleanX(boolean value);
-
-    /**
      * Provide classic getter API.
      */
     final boolean getBooleanX() {
@@ -337,13 +297,16 @@ public abstract class Primitive extends PrimitiveModel {
         }
     }
 
+    /** The singleton builder. */
+    public static final ßuilder<?> with = new ßuilder();
+
     /**
      * Builder namespace for {@link Primitive}.
      */
-    public static final class with {
+    public static final class ßuilder<Self extends ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>>>> {
 
         /** Create Uninitialized {@link Primitive}. */
-        public static final <Self extends ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>>>> Self intX(int value) {
+        public final Self intX(int value) {
             return (Self) new Åssignable().intX(value);
         }
     }
