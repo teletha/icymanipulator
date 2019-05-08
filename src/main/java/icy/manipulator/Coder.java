@@ -193,8 +193,8 @@ public class Coder {
         } else if (code instanceof Method) {
             Method e = (Method) code;
             StringJoiner params = new StringJoiner(", ", "(", ")");
-            for (int i = 0; i < e.parameterTypes.size(); i++) {
-                params.add(importer.use(e.parameterTypes.get(i)) + " " + e.parameterNames.get(i));
+            for (int i = 0; i < e.paramTypes.size(); i++) {
+                params.add(importer.use(e.paramTypes.get(i)) + " " + e.paramNames.get(i));
             }
             return e.name.concat(params.toString());
         } else if (code instanceof Class) {

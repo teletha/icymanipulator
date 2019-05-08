@@ -80,6 +80,10 @@ public class Default extends DefaultModel {
      * Mutable Model.
      */
     private static final class Åssignable extends Default implements ÅssignableÅrbitrary {
+
+        /**
+         * Initialize by first property.
+         */
         private Åssignable() {
             super();
         }

@@ -31,10 +31,10 @@ class Method {
     final Type returnType;
 
     /** The parameter types. */
-    final List<Type> parameterTypes;
+    final List<Type> paramTypes;
 
     /** The parameter names. */
-    final List<String> parameterNames;
+    final List<String> paramNames;
 
     /**
      * @param element
@@ -44,11 +44,11 @@ class Method {
         this.name = element.getSimpleName().toString();
         this.id = element.toString().replaceAll("[\\s,\\(\\)\\.]", "");
         this.returnType = Type.of(element.getReturnType());
-        this.parameterTypes = ((ExecutableType) element.asType()).getParameterTypes()
+        this.paramTypes = ((ExecutableType) element.asType()).getParameterTypes()
                 .stream()
                 .map(Type::of)
                 .collect(Collectors.toUnmodifiableList());
-        this.parameterNames = element.getParameters()
+        this.paramNames = element.getParameters()
                 .stream()
                 .map(e -> e.getSimpleName().toString())
                 .collect(Collectors.toUnmodifiableList());
@@ -60,7 +60,7 @@ class Method {
      * @return
      */
     boolean hasParameter() {
-        return !parameterTypes.isEmpty();
+        return !paramTypes.isEmpty();
     }
 
     /**

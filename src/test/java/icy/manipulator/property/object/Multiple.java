@@ -66,6 +66,7 @@ public class Multiple extends MultipleModel {
     /** The singleton model builder. */
     public static final ÅssignableName with = new ÅssignableName() {
 
+        /** Create Uninitialized {@link Multiple}. */
         @Override
         public <T extends ÅssignableStand> T name(String value) {
             return (T) new Åssignable(value);
@@ -76,6 +77,10 @@ public class Multiple extends MultipleModel {
      * Mutable Model.
      */
     private static final class Åssignable extends Multiple implements ÅssignableName, ÅssignableStand {
+
+        /**
+         * Initialize by first property.
+         */
         private Åssignable(String name) {
             super(name);
         }
@@ -111,6 +116,8 @@ public class Multiple extends MultipleModel {
      * Property assignment API.
      */
     public static interface ÅssignableName {
+
+        /** Setter */
         <T extends ÅssignableStand> T name(String value);
     }
 
@@ -118,6 +125,8 @@ public class Multiple extends MultipleModel {
      * Property assignment API.
      */
     public static interface ÅssignableStand {
+
+        /** Setter */
         <T extends Multiple> T stand(String value);
     }
 

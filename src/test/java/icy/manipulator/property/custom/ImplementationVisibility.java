@@ -51,6 +51,7 @@ class ImplementationVisibility extends ImplementationVisibilityModel {
     /** The singleton model builder. */
     public static final ÅssignableName with = new ÅssignableName() {
 
+        /** Create Uninitialized {@link ImplementationVisibility}. */
         @Override
         public <T extends ImplementationVisibility> T name(String value) {
             return (T) new Åssignable(value);
@@ -61,6 +62,10 @@ class ImplementationVisibility extends ImplementationVisibilityModel {
      * Mutable Model.
      */
     private static final class Åssignable extends ImplementationVisibility implements ÅssignableName {
+
+        /**
+         * Initialize by first property.
+         */
         private Åssignable(String name) {
             super(name);
         }
@@ -83,6 +88,8 @@ class ImplementationVisibility extends ImplementationVisibilityModel {
      * Property assignment API.
      */
     public static interface ÅssignableName {
+
+        /** Setter */
         <T extends ImplementationVisibility> T name(String value);
     }
 

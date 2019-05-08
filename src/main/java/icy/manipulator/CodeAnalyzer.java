@@ -295,7 +295,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         for (Property property : properties) {
             for (Method method : overloadForProperty.get(property)) {
                 StringJoiner types = new StringJoiner(", ", ", ", "").setEmptyValue("");
-                method.parameterTypes.forEach(t -> types.add(code.use(t) + ".class"));
+                method.paramTypes.forEach(t -> types.add(code.use(t) + ".class"));
 
                 code.write();
                 code.write("/** The overload method invoker. */");
@@ -410,6 +410,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             code.write("/** The singleton model builder. */");
             code.write("public static final ", p.assignableInterfaceName(), " with = new ", p.assignableInterfaceName(), "()", () -> {
                 code.write();
+                code.write("/** Create Uninitialized {@link ", clazz, "}. */");
                 code.write("@Override");
                 code.write("public <T extends ", p.next, "> T ", p.name, "(", p.type, " value)", () -> {
                     code.write("return (T) new ", Assignable, "(value);");
@@ -417,15 +418,10 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
                 for (Method method : overloadForProperty.get(p)) {
                     code.write();
+                    code.write("/** Create Uninitialized {@link ", clazz, "}. */");
                     code.write("@Override");
                     code.write("public <T extends ", p.next, "> T ", method, () -> {
-                        code.write(Assignable, " instnace = new ", Assignable, "(", p.type.defaultValue(), ");");
-                        code.writeTry(() -> {
-                            code.write("instnace.", p.name, "((", method.returnType, ") ", method.id, ".invoke(instnace, ", method.parameterNames, "));");
-                        }, Throwable.class, e -> {
-                            code.write("throw new Error(", e, ");");
-                        });
-                        code.write("return (T) instnace;");
+                        code.write("return new ", Assignable, "(", p.type.defaultValue(), ").", method.name, "(", method.paramNames, ");");
                     });
                 }
             }).asStatement();
@@ -460,6 +456,10 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         code.write(" * Mutable Model.");
         code.write(" */");
         code.write("private static final class ", Assignable, clazz.variable, " extends ", clazz, interfaces, () -> {
+            code.write();
+            code.write("/**");
+            code.write(" * Initialize by first property.");
+            code.write(" */");
             code.write("private ", Assignable, "(", parameterWithType(first), ")", () -> {
                 code.write("super(", parameter(first), ");");
             });
@@ -500,14 +500,20 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             code.write(" */");
             code.write("public static interface ", p.assignableInterfaceName(), () -> {
                 for (Method method : overloadForProperty.get(p)) {
+                    code.write();
+                    code.write("/**");
+                    code.write(" * The overload setter.");
+                    code.write(" */");
                     code.write("default <T extends ", p.next, "> T ", method, () -> {
                         code.writeTry(() -> {
-                            code.write("return ", p.name, "((", method.returnType, ") ", method.id, ".invoke(this, ", method.parameterNames, "));");
+                            code.write("return ", p.name, "((", method.returnType, ") ", method.id, ".invoke(this, ", method.paramNames, "));");
                         }, Throwable.class, e -> {
                             code.write("throw new Error(", e, ");");
                         });
                     });
                 }
+                code.write();
+                code.write("/** Setter */");
                 code.write("<T extends ", p.next, "> T ", p.name, "(", p.type, " value);");
             });
         }

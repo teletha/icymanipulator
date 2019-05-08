@@ -156,6 +156,7 @@ public class Primitive extends PrimitiveModel {
     /** The singleton model builder. */
     public static final ÅssignableIntX with = new ÅssignableIntX() {
 
+        /** Create Uninitialized {@link Primitive}. */
         @Override
         public <T extends ÅssignableLongX> T intX(int value) {
             return (T) new Åssignable(value);
@@ -166,6 +167,10 @@ public class Primitive extends PrimitiveModel {
      * Mutable Model.
      */
     private static final class Åssignable extends Primitive implements ÅssignableIntX, ÅssignableLongX, ÅssignableFloatX, ÅssignableDoubleX, ÅssignableByteX, ÅssignableShortX, ÅssignableCharX, ÅssignableBooleanX {
+
+        /**
+         * Initialize by first property.
+         */
         private Åssignable(int intX) {
             super(intX);
         }
@@ -279,6 +284,8 @@ public class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableIntX {
+
+        /** Setter */
         <T extends ÅssignableLongX> T intX(int value);
     }
 
@@ -286,6 +293,8 @@ public class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableLongX {
+
+        /** Setter */
         <T extends ÅssignableFloatX> T longX(long value);
     }
 
@@ -293,6 +302,8 @@ public class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableFloatX {
+
+        /** Setter */
         <T extends ÅssignableDoubleX> T floatX(float value);
     }
 
@@ -300,6 +311,8 @@ public class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableDoubleX {
+
+        /** Setter */
         <T extends ÅssignableByteX> T doubleX(double value);
     }
 
@@ -307,6 +320,8 @@ public class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableByteX {
+
+        /** Setter */
         <T extends ÅssignableShortX> T byteX(byte value);
     }
 
@@ -314,6 +329,8 @@ public class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableShortX {
+
+        /** Setter */
         <T extends ÅssignableCharX> T shortX(short value);
     }
 
@@ -321,6 +338,8 @@ public class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableCharX {
+
+        /** Setter */
         <T extends ÅssignableBooleanX> T charX(char value);
     }
 
@@ -328,6 +347,8 @@ public class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableBooleanX {
+
+        /** Setter */
         <T extends Primitive> T booleanX(boolean value);
     }
 

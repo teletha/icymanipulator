@@ -66,6 +66,7 @@ public class MixLastDefault extends MixLastDefaultModel {
     /** The singleton model builder. */
     public static final ÅssignableName with = new ÅssignableName() {
 
+        /** Create Uninitialized {@link MixLastDefault}. */
         @Override
         public <T extends MixLastDefault & ÅssignableÅrbitrary> T name(String value) {
             return (T) new Åssignable(value);
@@ -76,6 +77,10 @@ public class MixLastDefault extends MixLastDefaultModel {
      * Mutable Model.
      */
     private static final class Åssignable extends MixLastDefault implements ÅssignableName, ÅssignableÅrbitrary {
+
+        /**
+         * Initialize by first property.
+         */
         private Åssignable(String name) {
             super(name);
         }
@@ -111,6 +116,8 @@ public class MixLastDefault extends MixLastDefaultModel {
      * Property assignment API.
      */
     public static interface ÅssignableName {
+
+        /** Setter */
         <T extends MixLastDefault & ÅssignableÅrbitrary> T name(String value);
     }
 

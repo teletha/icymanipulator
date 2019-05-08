@@ -51,6 +51,7 @@ public class Single extends SingleModel {
     /** The singleton model builder. */
     public static final ÅssignableName with = new ÅssignableName() {
 
+        /** Create Uninitialized {@link Single}. */
         @Override
         public <T extends Single> T name(String value) {
             return (T) new Åssignable(value);
@@ -61,6 +62,10 @@ public class Single extends SingleModel {
      * Mutable Model.
      */
     private static final class Åssignable extends Single implements ÅssignableName {
+
+        /**
+         * Initialize by first property.
+         */
         private Åssignable(String name) {
             super(name);
         }
@@ -83,6 +88,8 @@ public class Single extends SingleModel {
      * Property assignment API.
      */
     public static interface ÅssignableName {
+
+        /** Setter */
         <T extends Single> T name(String value);
     }
 
