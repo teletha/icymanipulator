@@ -51,14 +51,15 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
     /**
      * Provide classic getter API.
      */
-    final String getName() {
+    @SuppressWarnings("unused")
+    private final String getName() {
         return this.name;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setName(String value) {
+    private final void setName(String value) {
         try {
             nameUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -67,12 +68,12 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
     }
 
     /** The singleton builder. */
-    public static final ßuilder<?> with = new ßuilder();
+    public static final Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link ImplementationVisibility}.
      */
-    public static final class ßuilder<Self extends ImplementationVisibility> {
+    public static final class Ìnstantiator<Self extends ImplementationVisibility> {
 
         /** Create Uninitialized {@link ImplementationVisibility}. */
         public final Self name(String value) {
@@ -81,25 +82,23 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
     }
 
     /**
-     * Mutable Model.
-     */
-    private static final class Åssignable extends ImplementationVisibility implements ÅssignableName {
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable name(String value) {
-            setName(value);
-            return this;
-        }
-    }
-
-    /**
      * Property assignment API.
      */
     public static interface ÅssignableName<Next> {
 
-        /** Setter */
-        Next name(String value);
+        /**
+         * The setter.
+         */
+        default Next name(String value) {
+            ((ImplementationVisibility) this).setName(value);
+            return (Next) this;
+        }
+    }
+
+    /**
+     * Mutable Model.
+     */
+    private static final class Åssignable extends ImplementationVisibility implements ÅssignableName {
     }
 
     /**

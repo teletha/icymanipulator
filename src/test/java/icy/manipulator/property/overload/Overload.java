@@ -87,14 +87,15 @@ public abstract class Overload extends OverloadModel {
     /**
      * Provide classic getter API.
      */
-    final BigDecimal getSize() {
+    @SuppressWarnings("unused")
+    private final BigDecimal getSize() {
         return this.size;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setSize(BigDecimal value) {
+    private final void setSize(BigDecimal value) {
         try {
             sizeUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -113,14 +114,15 @@ public abstract class Overload extends OverloadModel {
     /**
      * Provide classic getter API.
      */
-    final LocalDate getDate() {
+    @SuppressWarnings("unused")
+    private final LocalDate getDate() {
         return this.date;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setDate(LocalDate value) {
+    private final void setDate(LocalDate value) {
         try {
             dateUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -129,12 +131,12 @@ public abstract class Overload extends OverloadModel {
     }
 
     /** The singleton builder. */
-    public static final ßuilder<?> with = new ßuilder();
+    public static final Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Overload}.
      */
-    public static final class ßuilder<Self extends ÅssignableDate<Overload>> {
+    public static final class Ìnstantiator<Self extends ÅssignableDate<Overload>> {
 
         /** Create Uninitialized {@link Overload}. */
         public final Self size(BigDecimal value) {
@@ -149,26 +151,6 @@ public abstract class Overload extends OverloadModel {
         /** Create Uninitialized {@link Overload}. */
         public final Self sizeByText(String number) {
             return (Self) new Åssignable().sizeByText(number);
-        }
-    }
-
-    /**
-     * Mutable Model.
-     */
-    private static final class Åssignable extends Overload implements ÅssignableSize, ÅssignableDate {
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable size(BigDecimal value) {
-            setSize(value);
-            return this;
-        }
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable date(LocalDate value) {
-            setDate(value);
-            return this;
         }
     }
 
@@ -199,8 +181,13 @@ public abstract class Overload extends OverloadModel {
             }
         }
 
-        /** Setter */
-        Next size(BigDecimal value);
+        /**
+         * The setter.
+         */
+        default Next size(BigDecimal value) {
+            ((Overload) this).setSize(value);
+            return (Next) this;
+        }
     }
 
     /**
@@ -219,8 +206,19 @@ public abstract class Overload extends OverloadModel {
             }
         }
 
-        /** Setter */
-        Next date(LocalDate value);
+        /**
+         * The setter.
+         */
+        default Next date(LocalDate value) {
+            ((Overload) this).setDate(value);
+            return (Next) this;
+        }
+    }
+
+    /**
+     * Mutable Model.
+     */
+    private static final class Åssignable extends Overload implements ÅssignableSize, ÅssignableDate {
     }
 
     /**

@@ -100,14 +100,15 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Provide classic getter API.
      */
-    final int getIntX() {
+    @SuppressWarnings("unused")
+    private final int getIntX() {
         return this.intX;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setIntX(int value) {
+    private final void setIntX(int value) {
         try {
             intXUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -126,14 +127,15 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Provide classic getter API.
      */
-    final long getLongX() {
+    @SuppressWarnings("unused")
+    private final long getLongX() {
         return this.longX;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setLongX(long value) {
+    private final void setLongX(long value) {
         try {
             longXUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -152,14 +154,15 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Provide classic getter API.
      */
-    final float getFloatX() {
+    @SuppressWarnings("unused")
+    private final float getFloatX() {
         return this.floatX;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setFloatX(float value) {
+    private final void setFloatX(float value) {
         try {
             floatXUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -178,14 +181,15 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Provide classic getter API.
      */
-    final double getDoubleX() {
+    @SuppressWarnings("unused")
+    private final double getDoubleX() {
         return this.doubleX;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setDoubleX(double value) {
+    private final void setDoubleX(double value) {
         try {
             doubleXUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -204,14 +208,15 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Provide classic getter API.
      */
-    final byte getByteX() {
+    @SuppressWarnings("unused")
+    private final byte getByteX() {
         return this.byteX;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setByteX(byte value) {
+    private final void setByteX(byte value) {
         try {
             byteXUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -230,14 +235,15 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Provide classic getter API.
      */
-    final short getShortX() {
+    @SuppressWarnings("unused")
+    private final short getShortX() {
         return this.shortX;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setShortX(short value) {
+    private final void setShortX(short value) {
         try {
             shortXUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -256,14 +262,15 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Provide classic getter API.
      */
-    final char getCharX() {
+    @SuppressWarnings("unused")
+    private final char getCharX() {
         return this.charX;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setCharX(char value) {
+    private final void setCharX(char value) {
         try {
             charXUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -282,14 +289,15 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Provide classic getter API.
      */
-    final boolean getBooleanX() {
+    @SuppressWarnings("unused")
+    private final boolean getBooleanX() {
         return this.booleanX;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setBooleanX(boolean value) {
+    private final void setBooleanX(boolean value) {
         try {
             booleanXUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -298,12 +306,12 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /** The singleton builder. */
-    public static final ßuilder<?> with = new ßuilder();
+    public static final Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Primitive}.
      */
-    public static final class ßuilder<Self extends ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>>>> {
+    public static final class Ìnstantiator<Self extends ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>>>> {
 
         /** Create Uninitialized {@link Primitive}. */
         public final Self intX(int value) {
@@ -312,74 +320,17 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /**
-     * Mutable Model.
-     */
-    private static final class Åssignable extends Primitive implements ÅssignableIntX, ÅssignableLongX, ÅssignableFloatX, ÅssignableDoubleX, ÅssignableByteX, ÅssignableShortX, ÅssignableCharX, ÅssignableBooleanX {
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable intX(int value) {
-            setIntX(value);
-            return this;
-        }
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable longX(long value) {
-            setLongX(value);
-            return this;
-        }
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable floatX(float value) {
-            setFloatX(value);
-            return this;
-        }
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable doubleX(double value) {
-            setDoubleX(value);
-            return this;
-        }
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable byteX(byte value) {
-            setByteX(value);
-            return this;
-        }
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable shortX(short value) {
-            setShortX(value);
-            return this;
-        }
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable charX(char value) {
-            setCharX(value);
-            return this;
-        }
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable booleanX(boolean value) {
-            setBooleanX(value);
-            return this;
-        }
-    }
-
-    /**
      * Property assignment API.
      */
     public static interface ÅssignableIntX<Next> {
 
-        /** Setter */
-        Next intX(int value);
+        /**
+         * The setter.
+         */
+        default Next intX(int value) {
+            ((Primitive) this).setIntX(value);
+            return (Next) this;
+        }
     }
 
     /**
@@ -387,8 +338,13 @@ public abstract class Primitive extends PrimitiveModel {
      */
     public static interface ÅssignableLongX<Next> {
 
-        /** Setter */
-        Next longX(long value);
+        /**
+         * The setter.
+         */
+        default Next longX(long value) {
+            ((Primitive) this).setLongX(value);
+            return (Next) this;
+        }
     }
 
     /**
@@ -396,8 +352,13 @@ public abstract class Primitive extends PrimitiveModel {
      */
     public static interface ÅssignableFloatX<Next> {
 
-        /** Setter */
-        Next floatX(float value);
+        /**
+         * The setter.
+         */
+        default Next floatX(float value) {
+            ((Primitive) this).setFloatX(value);
+            return (Next) this;
+        }
     }
 
     /**
@@ -405,8 +366,13 @@ public abstract class Primitive extends PrimitiveModel {
      */
     public static interface ÅssignableDoubleX<Next> {
 
-        /** Setter */
-        Next doubleX(double value);
+        /**
+         * The setter.
+         */
+        default Next doubleX(double value) {
+            ((Primitive) this).setDoubleX(value);
+            return (Next) this;
+        }
     }
 
     /**
@@ -414,8 +380,13 @@ public abstract class Primitive extends PrimitiveModel {
      */
     public static interface ÅssignableByteX<Next> {
 
-        /** Setter */
-        Next byteX(byte value);
+        /**
+         * The setter.
+         */
+        default Next byteX(byte value) {
+            ((Primitive) this).setByteX(value);
+            return (Next) this;
+        }
     }
 
     /**
@@ -423,8 +394,13 @@ public abstract class Primitive extends PrimitiveModel {
      */
     public static interface ÅssignableShortX<Next> {
 
-        /** Setter */
-        Next shortX(short value);
+        /**
+         * The setter.
+         */
+        default Next shortX(short value) {
+            ((Primitive) this).setShortX(value);
+            return (Next) this;
+        }
     }
 
     /**
@@ -432,8 +408,13 @@ public abstract class Primitive extends PrimitiveModel {
      */
     public static interface ÅssignableCharX<Next> {
 
-        /** Setter */
-        Next charX(char value);
+        /**
+         * The setter.
+         */
+        default Next charX(char value) {
+            ((Primitive) this).setCharX(value);
+            return (Next) this;
+        }
     }
 
     /**
@@ -441,8 +422,19 @@ public abstract class Primitive extends PrimitiveModel {
      */
     public static interface ÅssignableBooleanX<Next> {
 
-        /** Setter */
-        Next booleanX(boolean value);
+        /**
+         * The setter.
+         */
+        default Next booleanX(boolean value) {
+            ((Primitive) this).setBooleanX(value);
+            return (Next) this;
+        }
+    }
+
+    /**
+     * Mutable Model.
+     */
+    private static final class Åssignable extends Primitive implements ÅssignableIntX, ÅssignableLongX, ÅssignableFloatX, ÅssignableDoubleX, ÅssignableByteX, ÅssignableShortX, ÅssignableCharX, ÅssignableBooleanX {
     }
 
     /**

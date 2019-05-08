@@ -51,14 +51,15 @@ public abstract class Subclass extends SubclassModel {
     /**
      * Provide classic getter API.
      */
-    final String getNickname() {
+    @SuppressWarnings("unused")
+    private final String getNickname() {
         return this.nickname;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setNickname(String value) {
+    private final void setNickname(String value) {
         try {
             nicknameUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -67,12 +68,12 @@ public abstract class Subclass extends SubclassModel {
     }
 
     /** The singleton builder. */
-    public static final ßuilder<?> with = new ßuilder();
+    public static final Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Subclass}.
      */
-    public static final class ßuilder<Self extends Subclass> {
+    public static final class Ìnstantiator<Self extends Subclass> {
 
         /** Create Uninitialized {@link Subclass}. */
         public final Self nickname(String value) {
@@ -81,25 +82,23 @@ public abstract class Subclass extends SubclassModel {
     }
 
     /**
-     * Mutable Model.
-     */
-    private static final class Åssignable extends Subclass implements ÅssignableNickname {
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable nickname(String value) {
-            setNickname(value);
-            return this;
-        }
-    }
-
-    /**
      * Property assignment API.
      */
     public static interface ÅssignableNickname<Next> {
 
-        /** Setter */
-        Next nickname(String value);
+        /**
+         * The setter.
+         */
+        default Next nickname(String value) {
+            ((Subclass) this).setNickname(value);
+            return (Next) this;
+        }
+    }
+
+    /**
+     * Mutable Model.
+     */
+    private static final class Åssignable extends Subclass implements ÅssignableNickname {
     }
 
     /**

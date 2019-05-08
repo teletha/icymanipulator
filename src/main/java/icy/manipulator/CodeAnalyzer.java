@@ -39,8 +39,8 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
     /** The prefix of assignable type. */
     static final String Assignable = "Åssignable";
 
-    /** The build class name. */
-    private static final String Builder = "ßuilder";
+    /** The instantiator class name. */
+    private static final String Instantiator = "Ìnstantiator";
 
     /** The next type parameter. */
     private static final String Next = "Next";
@@ -260,8 +260,8 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             defineConstructor();
             defineAccessors();
             defineBuilder();
-            defineMutableClass();
             defineAssignableInterfaces();
+            defineMutableClass();
             definePropertyEnum();
         });
         return code.toCode();
@@ -388,7 +388,8 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             code.write("/**");
             code.write(" * Provide classic getter API.");
             code.write(" */");
-            code.write("final ", property.type, " get", property.capitalizeName(), "()", () -> {
+            code.write("@SuppressWarnings(\"unused\")");
+            code.write("private final ", property.type, " get", property.capitalizeName(), "()", () -> {
                 code.write("return this.", property.name, ";");
             });
 
@@ -397,7 +398,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             code.write("/**");
             code.write(" * Provide classic setter API.");
             code.write(" */");
-            code.write("final void set", property.capitalizeName(), "(", property.type, " value)", () -> {
+            code.write("private final void set", property.capitalizeName(), "(", property.type, " value)", () -> {
                 if (property.isFinal == false) {
                     code.write("this.", property.name, " = value;");
                     if (property.derive != null) code.write("super.", property.derive, "(this);");
@@ -428,13 +429,13 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
         code.write();
         code.write("/** The singleton builder. */");
-        code.write("public static final ", Builder, "<?> ", builder, " = new ", Builder, "();");
+        code.write("public static final ", Instantiator, "<?> ", builder, " = new ", Instantiator, "();");
 
         code.write();
         code.write("/**");
         code.write(" * Builder namespace for {@link ", clazz, "}.");
         code.write(" */");
-        code.write("public static final class ", Builder, "<Self extends ", required.isEmpty() ? self()
+        code.write("public static final class ", Instantiator, "<Self extends ", required.isEmpty() ? self()
                 : required.get(0).nextAssignable(self()), ">", () -> {
                     code.write();
 
@@ -491,16 +492,6 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         code.write(" * Mutable Model.");
         code.write(" */");
         code.write("private static final class ", Assignable, clazz.variable, " extends ", clazz, interfaces, () -> {
-            // Internal exposed setters
-            for (Property p : properties) {
-                code.write();
-                code.write("/**  {@inheritDoc} */");
-                code.write("@Override");
-                code.write("public final ", Assignable, " ", p.name, "(", p.type, " value)", () -> {
-                    code.write("set", p.capitalizeName(), "(value);");
-                    code.write("return this;");
-                });
-            }
         });
     }
 
@@ -528,8 +519,13 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
                     });
                 }
                 code.write();
-                code.write("/** Setter */");
-                code.write("Next ", p.name, "(", p.type, " value);");
+                code.write("/**");
+                code.write(" * The setter.");
+                code.write(" */");
+                code.write("default Next ", p.name, "(", p.type, " value)", () -> {
+                    code.write("((", clazz, ") this).set", p.capitalizeName(), "(value);");
+                    code.write("return (Next) this;");
+                });
             });
         }
 
@@ -566,90 +562,6 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
                 code.write("static final String ", property.capitalizeName(), " = \"", property.name, "\";");
             }
         });
-    }
-
-    /**
-     * <p>
-     * Write paramter without type.
-     * </p>
-     * 
-     * @return
-     */
-    private String parameter(List<Property> properties) {
-        StringJoiner joiner = new StringJoiner(", ");
-
-        for (Property property : properties) {
-            joiner.add(property.name);
-        }
-        return joiner.toString();
-    }
-
-    /**
-     * <p>
-     * Write paramter without type.
-     * </p>
-     * 
-     * @return
-     */
-    private String parameter(ExecutableElement method) {
-        StringJoiner joiner = new StringJoiner(", ");
-
-        for (VariableElement param : method.getParameters()) {
-            joiner.add(param.getSimpleName());
-        }
-        return joiner.toString();
-    }
-
-    /**
-     * <p>
-     * Write paramter without type.
-     * </p>
-     * 
-     * @return
-     */
-    private String parameterReplaceable(List<Property> properties, Property current) {
-        StringJoiner joiner = new StringJoiner(", ");
-
-        for (Property property : properties) {
-            if (property == current) {
-                joiner.add("value");
-            } else {
-                joiner.add("this." + property.name);
-            }
-        }
-        return joiner.toString();
-    }
-
-    /**
-     * <p>
-     * Write paramter with type.
-     * </p>
-     * 
-     * @return
-     */
-    private String parameterWithType(List<Property> properties) {
-        StringJoiner joiner = new StringJoiner(", ");
-
-        for (Property property : properties) {
-            joiner.add(property.type.className + property.type.variable + " " + property.name);
-        }
-        return joiner.toString();
-    }
-
-    /**
-     * <p>
-     * Write paramter with type.
-     * </p>
-     * 
-     * @return
-     */
-    private String parameterWithType(ExecutableElement method) {
-        StringJoiner joiner = new StringJoiner(", ");
-
-        List<? extends TypeMirror> types = ((ExecutableType) method.asType()).getParameterTypes();
-        List<? extends VariableElement> names = method.getParameters();
-
-        return joiner.toString();
     }
 
     /** The error existence state. */

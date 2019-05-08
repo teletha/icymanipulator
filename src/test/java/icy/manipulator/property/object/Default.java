@@ -58,14 +58,15 @@ public abstract class Default extends DefaultModel {
     /**
      * Provide classic getter API.
      */
-    final String getName() {
+    @SuppressWarnings("unused")
+    private final String getName() {
         return this.name;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setName(String value) {
+    private final void setName(String value) {
         try {
             nameUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -84,14 +85,15 @@ public abstract class Default extends DefaultModel {
     /**
      * Provide classic getter API.
      */
-    final String getStand() {
+    @SuppressWarnings("unused")
+    private final String getStand() {
         return this.stand;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setStand(String value) {
+    private final void setStand(String value) {
         try {
             standUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -100,38 +102,18 @@ public abstract class Default extends DefaultModel {
     }
 
     /** The singleton builder. */
-    public static final ßuilder<?> with = new ßuilder();
+    public static final Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Default}.
      */
-    public static final class ßuilder<Self extends Default & ÅssignableÅrbitrary<Self>> {
+    public static final class Ìnstantiator<Self extends Default & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create uninitialized {@link Default}.
          */
         public final Self create() {
             return (Self) new Åssignable();
-        }
-    }
-
-    /**
-     * Mutable Model.
-     */
-    private static final class Åssignable extends Default implements ÅssignableÅrbitrary<Åssignable> {
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable name(String value) {
-            setName(value);
-            return this;
-        }
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable stand(String value) {
-            setStand(value);
-            return this;
         }
     }
 
@@ -155,6 +137,12 @@ public abstract class Default extends DefaultModel {
             ((Default) this).setStand(value);
             return (Next) this;
         }
+    }
+
+    /**
+     * Mutable Model.
+     */
+    private static final class Åssignable extends Default implements ÅssignableÅrbitrary<Åssignable> {
     }
 
     /**

@@ -65,14 +65,15 @@ public abstract class Multiple extends MultipleModel {
     /**
      * Provide classic getter API.
      */
-    final String getName() {
+    @SuppressWarnings("unused")
+    private final String getName() {
         return this.name;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setName(String value) {
+    private final void setName(String value) {
         try {
             nameUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -91,14 +92,15 @@ public abstract class Multiple extends MultipleModel {
     /**
      * Provide classic getter API.
      */
-    final String getStand() {
+    @SuppressWarnings("unused")
+    private final String getStand() {
         return this.stand;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setStand(String value) {
+    private final void setStand(String value) {
         try {
             standUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -117,14 +119,15 @@ public abstract class Multiple extends MultipleModel {
     /**
      * Provide classic getter API.
      */
-    final int getAge() {
+    @SuppressWarnings("unused")
+    private final int getAge() {
         return this.age;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setAge(int value) {
+    private final void setAge(int value) {
         try {
             ageUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -133,12 +136,12 @@ public abstract class Multiple extends MultipleModel {
     }
 
     /** The singleton builder. */
-    public static final ßuilder<?> with = new ßuilder();
+    public static final Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Multiple}.
      */
-    public static final class ßuilder<Self extends ÅssignableStand<ÅssignableAge<Multiple>>> {
+    public static final class Ìnstantiator<Self extends ÅssignableStand<ÅssignableAge<Multiple>>> {
 
         /** Create Uninitialized {@link Multiple}. */
         public final Self name(String value) {
@@ -147,39 +150,17 @@ public abstract class Multiple extends MultipleModel {
     }
 
     /**
-     * Mutable Model.
-     */
-    private static final class Åssignable extends Multiple implements ÅssignableName, ÅssignableStand, ÅssignableAge {
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable name(String value) {
-            setName(value);
-            return this;
-        }
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable stand(String value) {
-            setStand(value);
-            return this;
-        }
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable age(int value) {
-            setAge(value);
-            return this;
-        }
-    }
-
-    /**
      * Property assignment API.
      */
     public static interface ÅssignableName<Next> {
 
-        /** Setter */
-        Next name(String value);
+        /**
+         * The setter.
+         */
+        default Next name(String value) {
+            ((Multiple) this).setName(value);
+            return (Next) this;
+        }
     }
 
     /**
@@ -187,8 +168,13 @@ public abstract class Multiple extends MultipleModel {
      */
     public static interface ÅssignableStand<Next> {
 
-        /** Setter */
-        Next stand(String value);
+        /**
+         * The setter.
+         */
+        default Next stand(String value) {
+            ((Multiple) this).setStand(value);
+            return (Next) this;
+        }
     }
 
     /**
@@ -196,8 +182,19 @@ public abstract class Multiple extends MultipleModel {
      */
     public static interface ÅssignableAge<Next> {
 
-        /** Setter */
-        Next age(int value);
+        /**
+         * The setter.
+         */
+        default Next age(int value) {
+            ((Multiple) this).setAge(value);
+            return (Next) this;
+        }
+    }
+
+    /**
+     * Mutable Model.
+     */
+    private static final class Åssignable extends Multiple implements ÅssignableName, ÅssignableStand, ÅssignableAge {
     }
 
     /**

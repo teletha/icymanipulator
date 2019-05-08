@@ -51,14 +51,15 @@ public abstract class Single extends SingleModel {
     /**
      * Provide classic getter API.
      */
-    final String getName() {
+    @SuppressWarnings("unused")
+    private final String getName() {
         return this.name;
     }
 
     /**
      * Provide classic setter API.
      */
-    final void setName(String value) {
+    private final void setName(String value) {
         try {
             nameUpdater.invoke(this, value);
         } catch (Throwable e) {
@@ -67,12 +68,12 @@ public abstract class Single extends SingleModel {
     }
 
     /** The singleton builder. */
-    public static final ßuilder<?> with = new ßuilder();
+    public static final Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Single}.
      */
-    public static final class ßuilder<Self extends Single> {
+    public static final class Ìnstantiator<Self extends Single> {
 
         /** Create Uninitialized {@link Single}. */
         public final Self name(String value) {
@@ -81,25 +82,23 @@ public abstract class Single extends SingleModel {
     }
 
     /**
-     * Mutable Model.
-     */
-    private static final class Åssignable extends Single implements ÅssignableName {
-
-        /**  {@inheritDoc} */
-        @Override
-        public final Åssignable name(String value) {
-            setName(value);
-            return this;
-        }
-    }
-
-    /**
      * Property assignment API.
      */
     public static interface ÅssignableName<Next> {
 
-        /** Setter */
-        Next name(String value);
+        /**
+         * The setter.
+         */
+        default Next name(String value) {
+            ((Single) this).setName(value);
+            return (Next) this;
+        }
+    }
+
+    /**
+     * Mutable Model.
+     */
+    private static final class Åssignable extends Single implements ÅssignableName {
     }
 
     /**
