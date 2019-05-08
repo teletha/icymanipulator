@@ -69,13 +69,12 @@ public abstract class Subclass extends SubclassModel {
     }
 
     /** The singleton builder. */
-    public static final Ìnstantiator<?, ?> with = new Ìnstantiator();
+    public static final Ìnstantiator<Subclass> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Subclass}.
      */
-    public static class Ìnstantiator<Next extends Multiple.ÅssignableStand<Multiple.ÅssignableAge<X>>, X extends Subclass & ÅssignableNickname<Subclass>>
-            extends Multiple.Ìnstantiator<Next, X> {
+    public static class Ìnstantiator<Next> extends Multiple.Ìnstantiator<ÅssignableNickname<Next>> {
 
         /**
          * {@inheritDoc}

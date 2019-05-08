@@ -137,16 +137,16 @@ public abstract class Multiple extends MultipleModel {
     }
 
     /** The singleton builder. */
-    public static final Ìnstantiator<?, ?> with = new Ìnstantiator();
+    public static final Ìnstantiator<Multiple> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Multiple}.
      */
-    public static class Ìnstantiator<Next extends ÅssignableStand<ÅssignableAge<X>>, X extends Multiple> {
+    public static class Ìnstantiator<Next> {
 
         /** Create Uninitialized {@link Multiple}. */
-        public final Next name(String value) {
-            return create().name(value);
+        public final <T extends ÅssignableStand<ÅssignableAge<Next>>> T name(String value) {
+            return (T) create().name(value);
         }
 
         protected ÅssignableName<Next> create() {

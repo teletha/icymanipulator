@@ -24,7 +24,7 @@ class SubclassTest {
 
     @Test
     void property() {
-        Subclass instance = Subclass.with.name("Giorno Giovanna").stand("").age(19).nickname("jojo");
+        Subclass instance = Subclass.with.name("Giorno Giovanna").stand("").age(11).nickname("jojo");
         assert instance.name.equals("Giorno Giovanna");
         assert instance.nickname.equals("jojo");
     }
