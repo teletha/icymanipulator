@@ -30,19 +30,18 @@ import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.ExecutableType;
 import javax.lang.model.type.TypeMirror;
-import javax.lang.model.util.Elements;
-import javax.lang.model.util.Types;
 import javax.tools.Diagnostic.Kind;
 
 import icy.manipulator.Icy.Overload;
+import icy.manipulator.model.Model;
 
-class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
+public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
     /** The prefix of assignable type. */
-    static final String Assignable = "Åssignable";
+    public static final String Assignable = "Åssignable";
 
     /** The aggregated assignable interface name. */
-    private static final String AssignableAll = Assignable + "All";
+    public static final String AssignableAll = Assignable + "All";
 
     /** The instantiator class name. */
     private static final String Instantiator = "Ìnstantiator";
@@ -51,7 +50,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
     private static final String Next = "Next";
 
     /** The configuration interface name for arbitrary perperties. */
-    static final String ArbitraryInterface = Assignable + "Årbitrary";
+    public static final String ArbitraryInterface = Assignable + "Årbitrary";
 
     /** The root element of the model. */
     private final Element root;
@@ -84,11 +83,10 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
     private final Messager messager;
 
-    private final Elements elements;
-
-    private final Types types;
-
     private final Type parent;
+
+    /** The current procesing model. */
+    private final Model m;
 
     /**
      * Create code analyzer.
@@ -97,14 +95,13 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
      * @param messager
      * @param elements
      */
-    CodeAnalyzer(Element root, Messager messager, Elements elements, Types types) {
+    CodeAnalyzer(Element root, Messager messager) {
         this.root = root;
         this.icy = root.getAnnotation(Icy.class);
         this.messager = messager;
-        this.elements = elements;
-        this.types = types;
+        this.m = new Model(root);
 
-        Type superType = Type.of(types.directSupertypes(root.asType()).get(0));
+        Type superType = Type.of(Utility.types.directSupertypes(root.asType()).get(0));
 
         if (superType.toString().equals("java.lang.Object")) {
             this.parent = null;
@@ -432,7 +429,6 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         boolean hasRequried = required.size() != 0;
         boolean hasArbitrary = arbitrary.size() != 0;
         String builder = icy.builder();
-        String selfType = "<Self" + (hasArbitrary ? " extends " + clazz + " & " + ArbitraryInterface + "<Self>" : "") + ">";
 
         code.write();
         code.write("/** The singleton builder. */");

@@ -30,7 +30,7 @@ import javax.lang.model.type.WildcardType;
 /**
  * @version 2015/06/07 0:34:00
  */
-class Type {
+public class Type {
 
     /** The package name. */
     final String packageName;
@@ -261,7 +261,7 @@ class Type {
      * @param asType
      * @return
      */
-    static final Type of(TypeMirror type) {
+    public static final Type of(TypeMirror type) {
         return type.accept(new TypeDetector(), null);
     }
 

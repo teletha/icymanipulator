@@ -23,9 +23,6 @@ class Property {
     Type type;
 
     /** The state. */
-    boolean isModel;
-
-    /** The state. */
     String derive;
 
     /** The state. */
@@ -46,12 +43,6 @@ class Property {
         this.type = type;
         this.name = name;
         this.element = element;
-
-        try {
-            this.isModel = Class.forName(type + IcyManipulator.ModelDefinitionSuffix).isAnnotationPresent(Icy.class);
-        } catch (ClassNotFoundException e) {
-            this.isModel = false;
-        }
     }
 
     /**
@@ -111,5 +102,12 @@ class Property {
         } else {
             return nextProperty.assignableInterfaceType(className);
         }
+    }
+
+    /**
+     * @return
+     */
+    static Property empty() {
+        return null;
     }
 }

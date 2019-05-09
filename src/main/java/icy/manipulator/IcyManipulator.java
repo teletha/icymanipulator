@@ -41,10 +41,12 @@ public class IcyManipulator extends AbstractProcessor {
             return true;
         }
 
+        Utility.types = processingEnv.getTypeUtils();
+        Utility.elements = processingEnv.getElementUtils();
+
         for (Element element : env.getElementsAnnotatedWith(Icy.class)) {
             importer = new ClassImporter(element.toString());
-            CodeAnalyzer analyzer = element.accept(new CodeAnalyzer(element, processingEnv.getMessager(), processingEnv
-                    .getElementUtils(), processingEnv.getTypeUtils()), null);
+            CodeAnalyzer analyzer = element.accept(new CodeAnalyzer(element, processingEnv.getMessager()), null);
 
             analyzer.prepare();
 
