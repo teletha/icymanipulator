@@ -14,17 +14,18 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import icy.manipulator.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
+import icy.manipulator.property.extend.DefaultThenRequired;
+import icy.manipulator.property.extend.DefaultThenRequiredModel;
 import icy.manipulator.property.object.Default;
-import icy.manipulator.property.object.DefaultModel;
 
-class DefaultTest {
+class DefaultThenReuqiredTest {
 
     @RegisterExtension
-    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, DefaultModel.class);
+    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, DefaultThenRequiredModel.class);
 
     @Test
     void defaults() {
-        Default instance = Default.with.create();
+        DefaultThenRequired instance = DefaultThenRequired.with.create().id(10);
         assert instance.name.equals("Bruno Bucciarati");
         assert instance.name().equals("Bruno Bucciarati");
         assert instance.stand.equals("Sticky Fingers");
@@ -33,7 +34,7 @@ class DefaultTest {
 
     @Test
     void property() {
-        Default instance = Default.with.create().name("Guido Mista").stand("Sex Pistols");
+        Default instance = DefaultThenRequired.with.create().id(10).name("Guido Mista").stand("Sex Pistols");
         assert instance.name.equals("Guido Mista");
         assert instance.name().equals("Guido Mista");
         assert instance.stand.equals("Sex Pistols");

@@ -433,7 +433,6 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         boolean hasArbitrary = arbitrary.size() != 0;
         String builder = icy.builder();
         String selfType = "<Self" + (hasArbitrary ? " extends " + clazz + " & " + ArbitraryInterface + "<Self>" : "") + ">";
-        String self = "<Self extends " + clazz.className + (hasArbitrary ? " & " + ArbitraryInterface + "<Self>" : "") + ">";
 
         code.write();
         code.write("/** The singleton builder. */");
@@ -448,7 +447,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         code.write(" * Builder namespace for {@link ", clazz, "}.");
         code.write(" */");
         if (!hasRequried) {
-            code.write("public static class ", Instantiator, selfType, () -> {
+            code.write("public static class ", Instantiator, "<Self>", () -> {
                 code.write();
                 code.write("/**");
                 code.write(" * Create uninitialized {@link ", clazz, "}.");
@@ -456,7 +455,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
                 code.write("public final Self create()", () -> {
                     code.write("return base();");
                 });
-                code.write("public Self base()", () -> {
+                code.write("protected Self base()", () -> {
                     code.write("return (Self) new ", Assignable, "();");
                 });
             });

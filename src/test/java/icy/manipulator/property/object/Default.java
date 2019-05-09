@@ -104,7 +104,7 @@ public abstract class Default extends DefaultModel {
     /**
      * Builder namespace for {@link Default}.
      */
-    public static class Ìnstantiator<Self extends icy.manipulator.property.object.Default & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self> {
 
         /**
          * Create uninitialized {@link Default}.
@@ -112,7 +112,7 @@ public abstract class Default extends DefaultModel {
         public final Self create() {
             return base();
         }
-        public Self base() {
+        protected Self base() {
             return (Self) new Åssignable();
         }
     }
