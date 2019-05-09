@@ -245,7 +245,7 @@ public class Coder {
             Type clazz = (Type) code;
             return importer.use(clazz);
         } else {
-            return String.valueOf(code);
+            return String.valueOf(code).replace('`', '"');
         }
     }
 

@@ -66,12 +66,9 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setName(String value) {
-        try {
-            nameUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableName) this).name(value);
     }
 
     /**
@@ -93,12 +90,9 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setAge(int value) {
-        try {
-            ageUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableÅrbitrary) this).age(value);
     }
 
     /** The singleton builder. */
@@ -127,7 +121,11 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
          * The setter.
          */
         default Next name(String value) {
-            ((MixLastDefault) this).setName(value);
+            try {
+                nameUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }
@@ -141,7 +139,11 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
          * Property assignment API.
          */
         default Next age(int value) {
-            ((MixLastDefault) this).setAge(value);
+            try {
+                ageUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }

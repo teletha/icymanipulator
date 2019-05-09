@@ -69,7 +69,11 @@ class Property {
      * @return An interface name.
      */
     String assignableInterfaceName() {
-        return CodeAnalyzer.Assignable + Character.toUpperCase(name.charAt(0)) + name.substring(1);
+        if (isArbitrary) {
+            return CodeAnalyzer.ArbitraryInterface;
+        } else {
+            return CodeAnalyzer.Assignable + Character.toUpperCase(name.charAt(0)) + name.substring(1);
+        }
     }
 
     /**

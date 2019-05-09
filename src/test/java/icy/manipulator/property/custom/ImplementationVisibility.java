@@ -59,12 +59,9 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setName(String value) {
-        try {
-            nameUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableName) this).name(value);
     }
 
     /** The singleton builder. */
@@ -93,7 +90,11 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
          * The setter.
          */
         default Next name(String value) {
-            ((ImplementationVisibility) this).setName(value);
+            try {
+                nameUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }

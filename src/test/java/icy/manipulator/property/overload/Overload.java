@@ -95,12 +95,9 @@ public abstract class Overload extends OverloadModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setSize(BigDecimal value) {
-        try {
-            sizeUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableSize) this).size(value);
     }
 
     /**
@@ -122,12 +119,9 @@ public abstract class Overload extends OverloadModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setDate(LocalDate value) {
-        try {
-            dateUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableDate) this).date(value);
     }
 
     /** The singleton builder. */
@@ -188,7 +182,11 @@ public abstract class Overload extends OverloadModel {
          * The setter.
          */
         default Next size(BigDecimal value) {
-            ((Overload) this).setSize(value);
+            try {
+                sizeUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }
@@ -213,7 +211,11 @@ public abstract class Overload extends OverloadModel {
          * The setter.
          */
         default Next date(LocalDate value) {
-            ((Overload) this).setDate(value);
+            try {
+                dateUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }

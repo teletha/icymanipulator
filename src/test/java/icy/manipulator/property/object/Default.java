@@ -66,12 +66,9 @@ public abstract class Default extends DefaultModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setName(String value) {
-        try {
-            nameUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableÅrbitrary) this).name(value);
     }
 
     /**
@@ -93,12 +90,9 @@ public abstract class Default extends DefaultModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setStand(String value) {
-        try {
-            standUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableÅrbitrary) this).stand(value);
     }
 
     /** The singleton builder. */
@@ -129,7 +123,11 @@ public abstract class Default extends DefaultModel {
          * Property assignment API.
          */
         default Next name(String value) {
-            ((Default) this).setName(value);
+            try {
+                nameUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
 
@@ -137,7 +135,11 @@ public abstract class Default extends DefaultModel {
          * Property assignment API.
          */
         default Next stand(String value) {
-            ((Default) this).setStand(value);
+            try {
+                standUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }

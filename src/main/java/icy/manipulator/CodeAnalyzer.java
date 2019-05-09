@@ -48,7 +48,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
     private static final String Next = "Next";
 
     /** The configuratino interface name for arbitrary perperties. */
-    private static final String ArbitraryInterface = Assignable + "Årbitrary";
+    static final String ArbitraryInterface = Assignable + "Årbitrary";
 
     /** The root element of the model. */
     private final Element root;
@@ -108,7 +108,6 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         } else {
             this.parent = superType;
         }
-        System.out.println(parent);
     }
 
     /**
@@ -406,7 +405,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             code.write("/**");
             code.write(" * Provide classic getter API.");
             code.write(" */");
-            code.write("@SuppressWarnings(\"unused\")");
+            code.write("@SuppressWarnings(`unused`)");
             code.write("private final ", property.type, " get", property.capitalizeName(), "()", () -> {
                 code.write("return this.", property.name, ";");
             });
@@ -416,13 +415,9 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             code.write("/**");
             code.write(" * Provide classic setter API.");
             code.write(" */");
+            code.write("@SuppressWarnings(`unused`)");
             code.write("private final void set", property.capitalizeName(), "(", property.type, " value)", () -> {
-                code.writeTry(() -> {
-                    code.write(property.name, "Updater.invoke(this, value);");
-                    if (property.derive != null) code.write("super.", property.derive, "(this);");
-                }, Throwable.class, e -> {
-                    code.write("throw new Error(", e, ");");
-                });
+                code.write("((", property.assignableInterfaceName(), ") this).", property.name, "(value);");
             });
         }
     }
@@ -612,7 +607,11 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
                 code.write(" * The setter.");
                 code.write(" */");
                 code.write("default Next ", p.name, "(", p.type, " value)", () -> {
-                    code.write("((", clazz, ") this).set", p.capitalizeName(), "(value);");
+                    code.writeTry(() -> {
+                        code.write(p.name, "Updater.invoke(this, value);");
+                    }, Throwable.class, e -> {
+                        code.write("throw new Error(", e, ");");
+                    });
                     code.write("return (Next) this;");
                 });
             });
@@ -630,7 +629,11 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
                     code.write(" * Property assignment API.");
                     code.write(" */");
                     code.write("default Next ", property.name, "(", property.type, " value)", () -> {
-                        code.write("((", clazz, ") this).set", property.capitalizeName(), "(value);");
+                        code.writeTry(() -> {
+                            code.write(property.name, "Updater.invoke(this, value);");
+                        }, Throwable.class, e -> {
+                            code.write("throw new Error(", e, ");");
+                        });
                         code.write("return (Next) this;");
                     });
                 }

@@ -108,12 +108,9 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setIntX(int value) {
-        try {
-            intXUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableIntX) this).intX(value);
     }
 
     /**
@@ -135,12 +132,9 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setLongX(long value) {
-        try {
-            longXUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableLongX) this).longX(value);
     }
 
     /**
@@ -162,12 +156,9 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setFloatX(float value) {
-        try {
-            floatXUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableFloatX) this).floatX(value);
     }
 
     /**
@@ -189,12 +180,9 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setDoubleX(double value) {
-        try {
-            doubleXUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableDoubleX) this).doubleX(value);
     }
 
     /**
@@ -216,12 +204,9 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setByteX(byte value) {
-        try {
-            byteXUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableByteX) this).byteX(value);
     }
 
     /**
@@ -243,12 +228,9 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setShortX(short value) {
-        try {
-            shortXUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableShortX) this).shortX(value);
     }
 
     /**
@@ -270,12 +252,9 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setCharX(char value) {
-        try {
-            charXUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableCharX) this).charX(value);
     }
 
     /**
@@ -297,12 +276,9 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setBooleanX(boolean value) {
-        try {
-            booleanXUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableBooleanX) this).booleanX(value);
     }
 
     /** The singleton builder. */
@@ -331,7 +307,11 @@ public abstract class Primitive extends PrimitiveModel {
          * The setter.
          */
         default Next intX(int value) {
-            ((Primitive) this).setIntX(value);
+            try {
+                intXUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }
@@ -345,7 +325,11 @@ public abstract class Primitive extends PrimitiveModel {
          * The setter.
          */
         default Next longX(long value) {
-            ((Primitive) this).setLongX(value);
+            try {
+                longXUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }
@@ -359,7 +343,11 @@ public abstract class Primitive extends PrimitiveModel {
          * The setter.
          */
         default Next floatX(float value) {
-            ((Primitive) this).setFloatX(value);
+            try {
+                floatXUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }
@@ -373,7 +361,11 @@ public abstract class Primitive extends PrimitiveModel {
          * The setter.
          */
         default Next doubleX(double value) {
-            ((Primitive) this).setDoubleX(value);
+            try {
+                doubleXUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }
@@ -387,7 +379,11 @@ public abstract class Primitive extends PrimitiveModel {
          * The setter.
          */
         default Next byteX(byte value) {
-            ((Primitive) this).setByteX(value);
+            try {
+                byteXUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }
@@ -401,7 +397,11 @@ public abstract class Primitive extends PrimitiveModel {
          * The setter.
          */
         default Next shortX(short value) {
-            ((Primitive) this).setShortX(value);
+            try {
+                shortXUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }
@@ -415,7 +415,11 @@ public abstract class Primitive extends PrimitiveModel {
          * The setter.
          */
         default Next charX(char value) {
-            ((Primitive) this).setCharX(value);
+            try {
+                charXUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }
@@ -429,7 +433,11 @@ public abstract class Primitive extends PrimitiveModel {
          * The setter.
          */
         default Next booleanX(boolean value) {
-            ((Primitive) this).setBooleanX(value);
+            try {
+                booleanXUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }

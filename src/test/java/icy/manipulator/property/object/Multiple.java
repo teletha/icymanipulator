@@ -73,12 +73,9 @@ public abstract class Multiple extends MultipleModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setName(String value) {
-        try {
-            nameUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableName) this).name(value);
     }
 
     /**
@@ -100,12 +97,9 @@ public abstract class Multiple extends MultipleModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setStand(String value) {
-        try {
-            standUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableStand) this).stand(value);
     }
 
     /**
@@ -127,12 +121,9 @@ public abstract class Multiple extends MultipleModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setAge(int value) {
-        try {
-            ageUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableAge) this).age(value);
     }
 
     /** The singleton builder. */
@@ -161,7 +152,11 @@ public abstract class Multiple extends MultipleModel {
          * The setter.
          */
         default Next name(String value) {
-            ((Multiple) this).setName(value);
+            try {
+                nameUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }
@@ -175,7 +170,11 @@ public abstract class Multiple extends MultipleModel {
          * The setter.
          */
         default Next stand(String value) {
-            ((Multiple) this).setStand(value);
+            try {
+                standUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }
@@ -189,7 +188,11 @@ public abstract class Multiple extends MultipleModel {
          * The setter.
          */
         default Next age(int value) {
-            ((Multiple) this).setAge(value);
+            try {
+                ageUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }

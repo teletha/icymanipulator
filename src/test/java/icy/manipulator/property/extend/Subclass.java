@@ -60,12 +60,9 @@ public abstract class Subclass extends SubclassModel {
     /**
      * Provide classic setter API.
      */
+    @SuppressWarnings("unused")
     private final void setNickname(String value) {
-        try {
-            nicknameUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw new Error(e);
-        }
+        ((ÅssignableNickname) this).nickname(value);
     }
 
     /** The singleton builder. */
@@ -90,7 +87,11 @@ public abstract class Subclass extends SubclassModel {
          * The setter.
          */
         default Next nickname(String value) {
-            ((Subclass) this).setNickname(value);
+            try {
+                nicknameUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
             return (Next) this;
         }
     }
