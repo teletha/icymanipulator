@@ -41,13 +41,16 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
     /** The prefix of assignable type. */
     static final String Assignable = "Åssignable";
 
+    /** The aggregated assignable interface name. */
+    private static final String AssignableAll = Assignable + "All";
+
     /** The instantiator class name. */
     private static final String Instantiator = "Ìnstantiator";
 
     /** The next type parameter. */
     private static final String Next = "Next";
 
-    /** The configuratino interface name for arbitrary perperties. */
+    /** The configuration interface name for arbitrary perperties. */
     static final String ArbitraryInterface = Assignable + "Årbitrary";
 
     /** The root element of the model. */
@@ -422,25 +425,6 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         }
     }
 
-    // /** The singleton builder. */
-    // public static final Ìnstantiator<?> with = new Ìnstantiator();
-    //
-    // /**
-    // * Builder namespace for {@link Default}.
-    // */
-    // public static final class Ìnstantiator<Next extends Default & ÅssignableÅrbitrary<Next>> {
-    //
-    // /**
-    // * Create uninitialized {@link Default}.
-    // */
-    // public final Next create() {
-    // return make();
-    // }
-    //
-    // protected Next make() {
-    // return (Next) new Åssignable();
-    // }
-    // }
     /**
      * Defien model builder methods.
      */
@@ -449,10 +433,16 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         boolean hasArbitrary = arbitrary.size() != 0;
         String builder = icy.builder();
         String selfType = "<Self" + (hasArbitrary ? " extends " + clazz + " & " + ArbitraryInterface + "<Self>" : "") + ">";
+        String self = "<Self extends " + clazz.className + (hasArbitrary ? " & " + ArbitraryInterface + "<Self>" : "") + ">";
 
         code.write();
         code.write("/** The singleton builder. */");
-        code.write("public static final  ", Instantiator, "<", hasArbitrary ? "?" : clazz, "> ", builder, " = new ", Instantiator, "();");
+        code.write("public static final  ", Instantiator, "Typed<?> ", builder, " = new ", Instantiator, "Typed();");
+
+        code.write();
+        code.write("public static final class ", Instantiator, "Typed<Self extends ", clazz.className, " & ", ArbitraryInterface, "<Self>> extends ", Instantiator, "<Self>", () -> {
+        });
+
         code.write();
         code.write("/**");
         code.write(" * Builder namespace for {@link ", clazz, "}.");
@@ -476,7 +466,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
                     : " extends " + code.use(parent) + "." + Instantiator + "<" + p.assignableInterfaceName() + "<" + p
                             .nextAssignable("Self") + ">>";
 
-            code.write("public static class ", Instantiator, selfType, extend, () -> {
+            code.write("protected static class ", Instantiator, "<Self>", extend, () -> {
                 code.write();
 
                 if (parent == null) {
@@ -492,92 +482,24 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
                         });
                     }
                 }
-                code.write("protected ", Assignable, "All base()", () -> {
+                code.write("protected ", AssignableAll, " base()", () -> {
                     code.write("return new ", Assignable, "();");
                 });
             });
         }
     }
 
-    // /** The singleton builder. */
-    // public static final Ìnstantiator<Subclass> with = new Ìnstantiator();
-    //
-    // /**
-    // * Builder namespace for {@link Subclass}.
-    // */
-    // public static class Ìnstantiator<Self> extends
-    // Multiple.Ìnstantiator<ÅssignableNickname<Self>> {
-    //
-    // @Override
-    // public Åssignable base() {
-    // return new Åssignable();
-    // }
-    // }
-
-    // /** The singleton builder. */
-    // public static final Ìnstantiator<Multiple> with = new Ìnstantiator();
-    //
-    // /**
-    // * Builder namespace for {@link Multiple}.
-    // */
-    // public static class Ìnstantiator<Next> {
-    //
-    // /** Create Uninitialized {@link Multiple}. */
-    // public final <T extends ÅssignableStand<ÅssignableAge<Next>>> T name(String value) {
-    // return (T) create().name(value);
-    // }
-    //
-    // protected ÅssignableName<Next> create() {
-    // return new Åssignable();
-    // }
-    // }
-
-    // /**
-    // * Mutable Model.
-    // */
-    // private static final class Åssignable extends Subclass
-    // implements Multiple.ÅssignableName, Multiple.ÅssignableStand, Multiple.ÅssignableAge,
-    // ÅssignableNickname {
-    // }
-
     /**
      * Define mutable model class.
      */
     private void defineMutableClass() {
-        // compute interfaces
-        StringJoiner interfaces = new StringJoiner(", ", " implements ", "");
-        interfaces.add(Assignable + "All");
-        if (!arbitrary.isEmpty()) interfaces.add(ArbitraryInterface + "<" + Assignable + ">");
-
         code.write();
         code.write("/**");
         code.write(" * Mutable Model.");
         code.write(" */");
-        code.write("private static final class ", Assignable, clazz.variable, " extends ", clazz, interfaces, () -> {
+        code.write("private static final class ", Assignable, clazz.variable, " extends ", clazz, " implements ", AssignableAll, ", ", ArbitraryInterface, () -> {
         });
     }
-
-    // /**
-    // * Property assignment API.
-    // */
-    // public static interface ÅssignableÅrbitrary<Next extends Default> {
-    //
-    // /**
-    // * Property assignment API.
-    // */
-    // default Next name(String value) {
-    // ((Default) this).setName(value);
-    // return (Next) this;
-    // }
-    //
-    // /**
-    // * Property assignment API.
-    // */
-    // default Next stand(String value) {
-    // ((Default) this).setStand(value);
-    // return (Next) this;
-    // }
-    // }
 
     /**
      * Define assignable interfaces.
@@ -617,42 +539,41 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
             });
         }
 
-        if (arbitrary.size() != 0) {
-            code.write();
-            code.write("/**");
-            code.write(" * Property assignment API.");
-            code.write(" */");
-            code.write("public static interface ", ArbitraryInterface, "<Next extends ", clazz, ">", () -> {
-                for (Property property : arbitrary) {
-                    code.write();
-                    code.write("/**");
-                    code.write(" * Property assignment API.");
-                    code.write(" */");
-                    code.write("default Next ", property.name, "(", property.type, " value)", () -> {
-                        code.writeTry(() -> {
-                            code.write(property.name, "Updater.invoke(this, value);");
-                        }, Throwable.class, e -> {
-                            code.write("throw new Error(", e, ");");
-                        });
-                        code.write("return (Next) this;");
+        String extend = this.parent == null ? "" : " extends " + this.parent + "." + ArbitraryInterface + "<Next>";
+        code.write();
+        code.write("/**");
+        code.write(" * Property assignment API.");
+        code.write(" */");
+        code.write("public static interface ", ArbitraryInterface, "<Next extends ", clazz, ">", extend, () -> {
+            for (Property property : arbitrary) {
+                code.write();
+                code.write("/**");
+                code.write(" * Property assignment API.");
+                code.write(" */");
+                code.write("default Next ", property.name, "(", property.type, " value)", () -> {
+                    code.writeTry(() -> {
+                        code.write(property.name, "Updater.invoke(this, value);");
+                    }, Throwable.class, e -> {
+                        code.write("throw new Error(", e, ");");
                     });
-                }
-            });
-        }
+                    code.write("return (Next) this;");
+                });
+            }
+        });
 
         StringJoiner apis = new StringJoiner(", ", " extends ", "").setEmptyValue("");
         for (Property property : required) {
             apis.add(property.assignableInterfaceName());
         }
         if (parent != null) {
-            apis.add(code.use(parent) + "." + Assignable + "All");
+            apis.add(code.use(parent) + "." + AssignableAll);
         }
 
         code.write();
         code.write("/**");
-        code.write(" * Internal assignment API.");
+        code.write(" * Internal aggregated API.");
         code.write(" */");
-        code.write("protected static interface ", Assignable, "All", apis, () -> {
+        code.write("protected static interface ", AssignableAll, apis, () -> {
         });
     }
 

@@ -65,12 +65,15 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
     }
 
     /** The singleton builder. */
-    public static final  Ìnstantiator<ImplementationVisibility> with = new Ìnstantiator();
+    public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
+
+    public static final class ÌnstantiatorTyped<Self extends ImplementationVisibility & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
+    }
 
     /**
      * Builder namespace for {@link ImplementationVisibility}.
      */
-    public static class Ìnstantiator<Self> {
+    protected static class Ìnstantiator<Self> {
 
         /** Create Uninitialized {@link ImplementationVisibility}. */
         public final <T extends Self> T name(String value) {
@@ -100,7 +103,13 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
     }
 
     /**
-     * Internal assignment API.
+     * Property assignment API.
+     */
+    public static interface ÅssignableÅrbitrary<Next extends ImplementationVisibility> {
+    }
+
+    /**
+     * Internal aggregated API.
      */
     protected static interface ÅssignableAll extends ÅssignableName {
     }
@@ -108,7 +117,7 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends ImplementationVisibility implements ÅssignableAll {
+    private static final class Åssignable extends ImplementationVisibility implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**

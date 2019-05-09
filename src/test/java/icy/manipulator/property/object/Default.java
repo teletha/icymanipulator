@@ -96,7 +96,10 @@ public abstract class Default extends DefaultModel {
     }
 
     /** The singleton builder. */
-    public static final  Ìnstantiator<?> with = new Ìnstantiator();
+    public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
+
+    public static final class ÌnstantiatorTyped<Self extends Default & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
+    }
 
     /**
      * Builder namespace for {@link Default}.
@@ -145,7 +148,7 @@ public abstract class Default extends DefaultModel {
     }
 
     /**
-     * Internal assignment API.
+     * Internal aggregated API.
      */
     protected static interface ÅssignableAll {
     }
@@ -153,7 +156,7 @@ public abstract class Default extends DefaultModel {
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Default implements ÅssignableAll, ÅssignableÅrbitrary<Åssignable> {
+    private static final class Åssignable extends Default implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**

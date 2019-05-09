@@ -66,12 +66,15 @@ public abstract class Subclass extends SubclassModel {
     }
 
     /** The singleton builder. */
-    public static final  Ìnstantiator<Subclass> with = new Ìnstantiator();
+    public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
+
+    public static final class ÌnstantiatorTyped<Self extends Subclass & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
+    }
 
     /**
      * Builder namespace for {@link Subclass}.
      */
-    public static class Ìnstantiator<Self> extends Multiple.Ìnstantiator<ÅssignableNickname<Self>> {
+    protected static class Ìnstantiator<Self> extends Multiple.Ìnstantiator<ÅssignableNickname<Self>> {
 
         protected ÅssignableAll base() {
             return new Åssignable();
@@ -97,7 +100,13 @@ public abstract class Subclass extends SubclassModel {
     }
 
     /**
-     * Internal assignment API.
+     * Property assignment API.
+     */
+    public static interface ÅssignableÅrbitrary<Next extends Subclass> extends icy.manipulator.property.object.Multiple.ÅssignableÅrbitrary<Next> {
+    }
+
+    /**
+     * Internal aggregated API.
      */
     protected static interface ÅssignableAll extends ÅssignableNickname, Multiple.ÅssignableAll {
     }
@@ -105,7 +114,7 @@ public abstract class Subclass extends SubclassModel {
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Subclass implements ÅssignableAll {
+    private static final class Åssignable extends Subclass implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**

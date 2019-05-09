@@ -65,12 +65,15 @@ public abstract class BuilderName extends BuilderNameModel {
     }
 
     /** The singleton builder. */
-    public static final  Ìnstantiator<BuilderName> build = new Ìnstantiator();
+    public static final  ÌnstantiatorTyped<?> build = new ÌnstantiatorTyped();
+
+    public static final class ÌnstantiatorTyped<Self extends BuilderName & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
+    }
 
     /**
      * Builder namespace for {@link BuilderName}.
      */
-    public static class Ìnstantiator<Self> {
+    protected static class Ìnstantiator<Self> {
 
         /** Create Uninitialized {@link BuilderName}. */
         public final <T extends Self> T name(String value) {
@@ -100,7 +103,13 @@ public abstract class BuilderName extends BuilderNameModel {
     }
 
     /**
-     * Internal assignment API.
+     * Property assignment API.
+     */
+    public static interface ÅssignableÅrbitrary<Next extends BuilderName> {
+    }
+
+    /**
+     * Internal aggregated API.
      */
     protected static interface ÅssignableAll extends ÅssignableName {
     }
@@ -108,7 +117,7 @@ public abstract class BuilderName extends BuilderNameModel {
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends BuilderName implements ÅssignableAll {
+    private static final class Åssignable extends BuilderName implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**

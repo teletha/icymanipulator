@@ -125,12 +125,15 @@ public abstract class Overload extends OverloadModel {
     }
 
     /** The singleton builder. */
-    public static final  Ìnstantiator<Overload> with = new Ìnstantiator();
+    public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
+
+    public static final class ÌnstantiatorTyped<Self extends Overload & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
+    }
 
     /**
      * Builder namespace for {@link Overload}.
      */
-    public static class Ìnstantiator<Self> {
+    protected static class Ìnstantiator<Self> {
 
         /** Create Uninitialized {@link Overload}. */
         public final <T extends ÅssignableDate<Self>> T size(BigDecimal value) {
@@ -221,7 +224,13 @@ public abstract class Overload extends OverloadModel {
     }
 
     /**
-     * Internal assignment API.
+     * Property assignment API.
+     */
+    public static interface ÅssignableÅrbitrary<Next extends Overload> {
+    }
+
+    /**
+     * Internal aggregated API.
      */
     protected static interface ÅssignableAll extends ÅssignableSize, ÅssignableDate {
     }
@@ -229,7 +238,7 @@ public abstract class Overload extends OverloadModel {
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Overload implements ÅssignableAll {
+    private static final class Åssignable extends Overload implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**

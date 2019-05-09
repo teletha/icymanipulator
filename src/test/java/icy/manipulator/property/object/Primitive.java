@@ -282,12 +282,15 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /** The singleton builder. */
-    public static final  Ìnstantiator<Primitive> with = new Ìnstantiator();
+    public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
+
+    public static final class ÌnstantiatorTyped<Self extends Primitive & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
+    }
 
     /**
      * Builder namespace for {@link Primitive}.
      */
-    public static class Ìnstantiator<Self> {
+    protected static class Ìnstantiator<Self> {
 
         /** Create Uninitialized {@link Primitive}. */
         public final <T extends ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Self>>>>>>>> T intX(int value) {
@@ -443,7 +446,13 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /**
-     * Internal assignment API.
+     * Property assignment API.
+     */
+    public static interface ÅssignableÅrbitrary<Next extends Primitive> {
+    }
+
+    /**
+     * Internal aggregated API.
      */
     protected static interface ÅssignableAll extends ÅssignableIntX, ÅssignableLongX, ÅssignableFloatX, ÅssignableDoubleX, ÅssignableByteX, ÅssignableShortX, ÅssignableCharX, ÅssignableBooleanX {
     }
@@ -451,7 +460,7 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Primitive implements ÅssignableAll {
+    private static final class Åssignable extends Primitive implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**

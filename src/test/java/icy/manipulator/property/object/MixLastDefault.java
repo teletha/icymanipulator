@@ -96,12 +96,15 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
     }
 
     /** The singleton builder. */
-    public static final  Ìnstantiator<?> with = new Ìnstantiator();
+    public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
+
+    public static final class ÌnstantiatorTyped<Self extends MixLastDefault & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
+    }
 
     /**
      * Builder namespace for {@link MixLastDefault}.
      */
-    public static class Ìnstantiator<Self extends icy.manipulator.property.object.MixLastDefault & ÅssignableÅrbitrary<Self>> {
+    protected static class Ìnstantiator<Self> {
 
         /** Create Uninitialized {@link MixLastDefault}. */
         public final <T extends Self> T name(String value) {
@@ -149,7 +152,7 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
     }
 
     /**
-     * Internal assignment API.
+     * Internal aggregated API.
      */
     protected static interface ÅssignableAll extends ÅssignableName {
     }
@@ -157,7 +160,7 @@ public abstract class MixLastDefault extends MixLastDefaultModel {
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends MixLastDefault implements ÅssignableAll, ÅssignableÅrbitrary<Åssignable> {
+    private static final class Åssignable extends MixLastDefault implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**
