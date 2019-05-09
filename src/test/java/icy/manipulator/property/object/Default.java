@@ -107,7 +107,7 @@ public abstract class Default extends DefaultModel {
     /**
      * Builder namespace for {@link Default}.
      */
-    public static class Ìnstantiator<Self extends Default & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends icy.manipulator.property.object.Default & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create uninitialized {@link Default}.
@@ -143,9 +143,15 @@ public abstract class Default extends DefaultModel {
     }
 
     /**
+     * Internal assignment API.
+     */
+    protected static interface ÅssignableAll {
+    }
+
+    /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Default implements ÅssignableÅrbitrary<Åssignable> {
+    private static final class Åssignable extends Default implements ÅssignableAll, ÅssignableÅrbitrary<Åssignable> {
     }
 
     /**

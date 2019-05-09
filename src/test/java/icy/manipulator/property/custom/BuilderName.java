@@ -68,16 +68,19 @@ public abstract class BuilderName extends BuilderNameModel {
     }
 
     /** The singleton builder. */
-    public static final Ìnstantiator<?> build = new Ìnstantiator();
+    public static final  Ìnstantiator<BuilderName> build = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link BuilderName}.
      */
-    public static final class Ìnstantiator<Self extends BuilderName> {
+    public static class Ìnstantiator<Self> {
 
         /** Create Uninitialized {@link BuilderName}. */
-        public final Self name(String value) {
-            return (Self) new Åssignable().name(value);
+        public final <T extends Self> T name(String value) {
+            return (T) base().name(value);
+        }
+        protected ÅssignableAll base() {
+            return new Åssignable();
         }
     }
 
@@ -96,9 +99,15 @@ public abstract class BuilderName extends BuilderNameModel {
     }
 
     /**
+     * Internal assignment API.
+     */
+    protected static interface ÅssignableAll extends ÅssignableName {
+    }
+
+    /**
      * Mutable Model.
      */
-    private static final class Åssignable extends BuilderName implements ÅssignableName {
+    private static final class Åssignable extends BuilderName implements ÅssignableAll {
     }
 
     /**

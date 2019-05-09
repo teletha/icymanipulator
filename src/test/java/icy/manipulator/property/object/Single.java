@@ -3,7 +3,6 @@ package icy.manipulator.property.object;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
-
 import javax.annotation.processing.Generated;
 
 /**
@@ -18,7 +17,7 @@ public abstract class Single extends SingleModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name) {
+    private static final MethodHandle updater(String name)  {
         try {
             Field field = Single.class.getDeclaredField(name);
             field.setAccessible(true);
@@ -69,16 +68,19 @@ public abstract class Single extends SingleModel {
     }
 
     /** The singleton builder. */
-    public static final Ìnstantiator<?> with = new Ìnstantiator();
+    public static final  Ìnstantiator<Single> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Single}.
      */
-    public static class Ìnstantiator<Self extends Single> {
+    public static class Ìnstantiator<Self> {
 
         /** Create Uninitialized {@link Single}. */
-        public Self name(String value) {
-            return (Self) new Åssignable().name(value);
+        public final <T extends Self> T name(String value) {
+            return (T) base().name(value);
+        }
+        protected ÅssignableAll base() {
+            return new Åssignable();
         }
     }
 
@@ -97,9 +99,15 @@ public abstract class Single extends SingleModel {
     }
 
     /**
+     * Internal assignment API.
+     */
+    protected static interface ÅssignableAll extends ÅssignableName {
+    }
+
+    /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Single implements ÅssignableName {
+    private static final class Åssignable extends Single implements ÅssignableAll {
     }
 
     /**

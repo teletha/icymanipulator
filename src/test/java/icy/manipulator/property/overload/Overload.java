@@ -131,26 +131,29 @@ public abstract class Overload extends OverloadModel {
     }
 
     /** The singleton builder. */
-    public static final Ìnstantiator<?> with = new Ìnstantiator();
+    public static final  Ìnstantiator<Overload> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Overload}.
      */
-    public static final class Ìnstantiator<Self extends ÅssignableDate<Overload>> {
+    public static class Ìnstantiator<Self> {
 
         /** Create Uninitialized {@link Overload}. */
-        public final Self size(BigDecimal value) {
-            return (Self) new Åssignable().size(value);
+        public final <T extends ÅssignableDate<Self>> T size(BigDecimal value) {
+            return (T) base().size(value);
         }
 
         /** Create Uninitialized {@link Overload}. */
-        public final Self size(int number) {
-            return (Self) new Åssignable().size(number);
+        public final <T extends ÅssignableDate<Self>> T size(int number) {
+            return (T) base().size(number);
         }
 
         /** Create Uninitialized {@link Overload}. */
-        public final Self sizeByText(String number) {
-            return (Self) new Åssignable().sizeByText(number);
+        public final <T extends ÅssignableDate<Self>> T sizeByText(String number) {
+            return (T) base().sizeByText(number);
+        }
+        protected ÅssignableAll base() {
+            return new Åssignable();
         }
     }
 
@@ -216,9 +219,15 @@ public abstract class Overload extends OverloadModel {
     }
 
     /**
+     * Internal assignment API.
+     */
+    protected static interface ÅssignableAll extends ÅssignableSize, ÅssignableDate {
+    }
+
+    /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Overload implements ÅssignableSize, ÅssignableDate {
+    private static final class Åssignable extends Overload implements ÅssignableAll {
     }
 
     /**

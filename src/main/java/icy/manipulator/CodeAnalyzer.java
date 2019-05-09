@@ -85,6 +85,8 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
     private final Types types;
 
+    private final Type parent;
+
     /**
      * Create code analyzer.
      * 
@@ -99,21 +101,14 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
         this.elements = elements;
         this.types = types;
 
-        List<? extends TypeMirror> superTypes = types.directSupertypes(root.asType());
+        Type superType = Type.of(types.directSupertypes(root.asType()).get(0));
 
-        for (TypeMirror superType : superTypes) {
-            System.out.println(superType);
-
-            List<? extends Element> members = elements.getAllMembers((TypeElement) types.asElement(superType));
-
-            for (Element member : members) {
-                ElementKind kind = member.getKind();
-
-                if (kind == ElementKind.INTERFACE) {
-                    System.out.println(member);
-                }
-            }
+        if (superType.toString().equals("java.lang.Object")) {
+            this.parent = null;
+        } else {
+            this.parent = superType;
         }
+        System.out.println(parent);
     }
 
     /**
@@ -455,18 +450,20 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
      * Defien model builder methods.
      */
     private void defineBuilder() {
-        boolean zero = required.isEmpty();
+        boolean hasRequried = required.size() != 0;
+        boolean hasArbitrary = arbitrary.size() != 0;
         String builder = icy.builder();
+        String selfType = "<Self" + (hasArbitrary ? " extends " + clazz + " & " + ArbitraryInterface + "<Self>" : "") + ">";
 
         code.write();
         code.write("/** The singleton builder. */");
-        code.write("public static final  ", Instantiator, "<", zero ? "?" : clazz, "> ", builder, " = new ", Instantiator, "();");
+        code.write("public static final  ", Instantiator, "<", hasArbitrary ? "?" : clazz, "> ", builder, " = new ", Instantiator, "();");
         code.write();
         code.write("/**");
         code.write(" * Builder namespace for {@link ", clazz, "}.");
         code.write(" */");
-        if (zero) {
-            code.write("public static class ", Instantiator, "<Self extends ", clazz, " & ", ArbitraryInterface, "<Self>>", () -> {
+        if (!hasRequried) {
+            code.write("public static class ", Instantiator, selfType, () -> {
                 code.write();
                 code.write("/**");
                 code.write(" * Create uninitialized {@link ", clazz, "}.");
@@ -479,27 +476,48 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
                 });
             });
         } else {
-            code.write("public static class ", Instantiator, "<Self>", () -> {
+            Property p = required.get(0);
+            String extend = parent == null ? ""
+                    : " extends " + code.use(parent) + "." + Instantiator + "<" + p.assignableInterfaceName() + "<" + p
+                            .nextAssignable("Self") + ">>";
+
+            code.write("public static class ", Instantiator, selfType, extend, () -> {
                 code.write();
 
-                Property p = required.get(0);
-                code.write("/** Create Uninitialized {@link ", clazz, "}. */");
-                code.write("public final <T extends ", p.nextAssignable("Self"), "> T ", p.name, "(", p.type, " value)", () -> {
-                    code.write("return (T) base().", p.name, "(value);");
-                });
-                for (Method method : overloadForProperty.get(p)) {
-                    code.write();
+                if (parent == null) {
                     code.write("/** Create Uninitialized {@link ", clazz, "}. */");
-                    code.write("public final <T extends ", p.nextAssignable("Self"), "> T ", method, () -> {
-                        code.write("return (T) base().", method.name, "(", method.paramNames, ");");
+                    code.write("public final <T extends ", p.nextAssignable("Self"), "> T ", p.name, "(", p.type, " value)", () -> {
+                        code.write("return (T) base().", p.name, "(value);");
                     });
+                    for (Method method : overloadForProperty.get(p)) {
+                        code.write();
+                        code.write("/** Create Uninitialized {@link ", clazz, "}. */");
+                        code.write("public final <T extends ", p.nextAssignable("Self"), "> T ", method, () -> {
+                            code.write("return (T) base().", method.name, "(", method.paramNames, ");");
+                        });
+                    }
                 }
-                code.write("public ", p.assignableInterfaceName(), "<Self> base()", () -> {
+                code.write("protected ", Assignable, "All base()", () -> {
                     code.write("return new ", Assignable, "();");
                 });
             });
         }
     }
+
+    // /** The singleton builder. */
+    // public static final Ìnstantiator<Subclass> with = new Ìnstantiator();
+    //
+    // /**
+    // * Builder namespace for {@link Subclass}.
+    // */
+    // public static class Ìnstantiator<Self> extends
+    // Multiple.Ìnstantiator<ÅssignableNickname<Self>> {
+    //
+    // @Override
+    // public Åssignable base() {
+    // return new Åssignable();
+    // }
+    // }
 
     // /** The singleton builder. */
     // public static final Ìnstantiator<Multiple> with = new Ìnstantiator();
@@ -533,7 +551,7 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
     private void defineMutableClass() {
         // compute interfaces
         StringJoiner interfaces = new StringJoiner(", ", " implements ", "");
-        required.forEach(e -> interfaces.add(e.assignableInterfaceName()));
+        interfaces.add(Assignable + "All");
         if (!arbitrary.isEmpty()) interfaces.add(ArbitraryInterface + "<" + Assignable + ">");
 
         code.write();
@@ -618,6 +636,21 @@ class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
                 }
             });
         }
+
+        StringJoiner apis = new StringJoiner(", ", " extends ", "").setEmptyValue("");
+        for (Property property : required) {
+            apis.add(property.assignableInterfaceName());
+        }
+        if (parent != null) {
+            apis.add(code.use(parent) + "." + Assignable + "All");
+        }
+
+        code.write();
+        code.write("/**");
+        code.write(" * Internal assignment API.");
+        code.write(" */");
+        code.write("protected static interface ", Assignable, "All", apis, () -> {
+        });
     }
 
     /**

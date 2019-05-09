@@ -147,7 +147,7 @@ public abstract class Multiple extends MultipleModel {
         public final <T extends ÅssignableStand<ÅssignableAge<Self>>> T name(String value) {
             return (T) base().name(value);
         }
-        public ÅssignableName<Self> base() {
+        protected ÅssignableAll base() {
             return new Åssignable();
         }
     }
@@ -195,9 +195,15 @@ public abstract class Multiple extends MultipleModel {
     }
 
     /**
+     * Internal assignment API.
+     */
+    protected static interface ÅssignableAll extends ÅssignableName, ÅssignableStand, ÅssignableAge {
+    }
+
+    /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Multiple implements ÅssignableName, ÅssignableStand, ÅssignableAge {
+    private static final class Åssignable extends Multiple implements ÅssignableAll {
     }
 
     /**

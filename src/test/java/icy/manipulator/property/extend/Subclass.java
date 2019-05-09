@@ -1,5 +1,6 @@
-package icy.manipulator.property.object;
+package icy.manipulator.property.extend;
 
+import icy.manipulator.property.object.Multiple;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -73,13 +74,9 @@ public abstract class Subclass extends SubclassModel {
     /**
      * Builder namespace for {@link Subclass}.
      */
-    public static class Ìnstantiator<Self> {
+    public static class Ìnstantiator<Self> extends Multiple.Ìnstantiator<ÅssignableNickname<Self>> {
 
-        /** Create Uninitialized {@link Subclass}. */
-        public final <T extends Self> T nickname(String value) {
-            return (T) base().nickname(value);
-        }
-        public ÅssignableNickname<Self> base() {
+        protected ÅssignableAll base() {
             return new Åssignable();
         }
     }
@@ -99,9 +96,15 @@ public abstract class Subclass extends SubclassModel {
     }
 
     /**
+     * Internal assignment API.
+     */
+    protected static interface ÅssignableAll extends ÅssignableNickname, Multiple.ÅssignableAll {
+    }
+
+    /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Subclass implements ÅssignableNickname {
+    private static final class Åssignable extends Subclass implements ÅssignableAll {
     }
 
     /**

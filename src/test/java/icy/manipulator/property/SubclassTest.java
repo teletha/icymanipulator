@@ -14,8 +14,8 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import icy.manipulator.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
-import icy.manipulator.property.object.Subclass;
-import icy.manipulator.property.object.SubclassModel;
+import icy.manipulator.property.extend.Subclass;
+import icy.manipulator.property.extend.SubclassModel;
 
 class SubclassTest {
 

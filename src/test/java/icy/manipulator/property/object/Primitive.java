@@ -306,16 +306,19 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /** The singleton builder. */
-    public static final Ìnstantiator<?> with = new Ìnstantiator();
+    public static final  Ìnstantiator<Primitive> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Primitive}.
      */
-    public static final class Ìnstantiator<Self extends ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Primitive>>>>>>>> {
+    public static class Ìnstantiator<Self> {
 
         /** Create Uninitialized {@link Primitive}. */
-        public final Self intX(int value) {
-            return (Self) new Åssignable().intX(value);
+        public final <T extends ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Self>>>>>>>> T intX(int value) {
+            return (T) base().intX(value);
+        }
+        protected ÅssignableAll base() {
+            return new Åssignable();
         }
     }
 
@@ -432,9 +435,15 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /**
+     * Internal assignment API.
+     */
+    protected static interface ÅssignableAll extends ÅssignableIntX, ÅssignableLongX, ÅssignableFloatX, ÅssignableDoubleX, ÅssignableByteX, ÅssignableShortX, ÅssignableCharX, ÅssignableBooleanX {
+    }
+
+    /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Primitive implements ÅssignableIntX, ÅssignableLongX, ÅssignableFloatX, ÅssignableDoubleX, ÅssignableByteX, ÅssignableShortX, ÅssignableCharX, ÅssignableBooleanX {
+    private static final class Åssignable extends Primitive implements ÅssignableAll {
     }
 
     /**
