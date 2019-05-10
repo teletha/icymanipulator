@@ -278,12 +278,4 @@ public class Coder {
 
         return code.toString();
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return source.toString();
-    }
 }

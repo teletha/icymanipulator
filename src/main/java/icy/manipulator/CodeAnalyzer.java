@@ -97,7 +97,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
         this.messager = messager;
         this.m = new ModelDefinition(root);
 
-        Type superType = Type.of(Utility.types.directSupertypes(root.asType()).get(0));
+        Type superType = Type.of(TypeUtil.types.directSupertypes(root.asType()).get(0));
 
         if (superType.toString().equals("java.lang.Object")) {
             this.parent = null;
@@ -421,8 +421,6 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
      * Defien model builder methods.
      */
     private void defineBuilder() {
-        boolean hasRequried = required.size() != 0;
-        boolean hasArbitrary = m.ownArbitraryProperties().size() != 0;
         String builder = icy.builder();
 
         code.write();
@@ -438,7 +436,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
         code.write(" * Builder namespace for {@link ", clazz, "}.");
         code.write(" */");
 
-        if (!hasRequried) {
+        if (m.hasRequiredProperty() == false) {
             code.write("public static class ", Instantiator, "<Self>", () -> {
                 code.write();
                 code.write("/**");
@@ -496,7 +494,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
      * Define assignable interfaces.
      */
     private void defineAssignableInterfaces() {
-        for (PropertyDefinition p : required) {
+        for (PropertyDefinition p : m.ownRequiredProperties()) {
             code.write();
             code.write("/**");
             code.write(" * Property assignment API.");

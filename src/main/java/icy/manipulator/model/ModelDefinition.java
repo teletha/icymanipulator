@@ -17,13 +17,14 @@ import java.util.Optional;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
 import icy.manipulator.CodeAnalyzer;
 import icy.manipulator.Fail;
 import icy.manipulator.Type;
-import icy.manipulator.Utility;
+import icy.manipulator.TypeUtil;
 
 public class ModelDefinition {
 
@@ -102,6 +103,18 @@ public class ModelDefinition {
     }
 
     /**
+     * Check whether this model has any required property on self or ancestors.
+     * 
+     * @return
+     */
+    public boolean hasRequiredProperty() {
+        if (requiredProperties.size() != 0 || requiredPropertyAPI.size() != 0) {
+            return true;
+        }
+        return parent.map(p -> p.hasRequiredProperty()).orElse(false);
+    }
+
+    /**
      * Analuze {@link ModelDefinition} by its {@link Element}.
      * 
      * @return Chainable API.
@@ -116,8 +129,22 @@ public class ModelDefinition {
             String name = type.getSimpleName().toString();
 
             if (name.equals(CodeAnalyzer.AssignableAll)) {
+                TypeElement parent = TypeUtil.parent(e);
+                List<ExecutableElement> methods = TypeUtil.methods(parent);
+
                 for (TypeMirror interfaceType : type.getInterfaces()) {
-                    requiredPropertyAPI.add(Type.of(interfaceType));
+                    // estimate property name
+                    String interfaceName = TypeUtil.simpleName(interfaceType);
+
+                    if (interfaceName.startsWith(CodeAnalyzer.Assignable)) {
+                        String proerptyName = TypeUtil.decapitalize(interfaceName.substring(CodeAnalyzer.Assignable.length()));
+
+                        for (ExecutableElement method : methods) {
+                            if (method.getSimpleName().contentEquals(proerptyName)) {
+                                requiredProperties.add(new PropertyDefinition(method));
+                            }
+                        }
+                    }
                 }
             } else if (name.equals(CodeAnalyzer.ArbitraryInterface)) {
                 arbitraryPropertyAPI.add(Type.of(type));
@@ -135,7 +162,7 @@ public class ModelDefinition {
      */
     private Optional<ModelDefinition> analyzeParent(TypeElement e) {
         // search parent class
-        TypeElement parent = (TypeElement) Utility.types.asElement(e.getSuperclass());
+        TypeElement parent = TypeUtil.parent(e);
 
         if (parent == null) {
             return Optional.empty();

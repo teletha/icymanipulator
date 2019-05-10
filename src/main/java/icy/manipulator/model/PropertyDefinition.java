@@ -49,6 +49,15 @@ public class PropertyDefinition {
     }
 
     /**
+     * @param method
+     */
+    public PropertyDefinition(ExecutableElement method) {
+        this.type = Type.of(method.getReturnType());
+        this.name = method.getSimpleName().toString();
+        this.element = method;
+    }
+
+    /**
      * Compute visibilitt of setter method.
      * 
      * @return A visibility.
