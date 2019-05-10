@@ -266,6 +266,18 @@ public class Type {
     }
 
     /**
+     * <p>
+     * Resoleve {@link Type} by {@link TypeMirror}.
+     * </p>
+     * 
+     * @param asType
+     * @return
+     */
+    public static final Type of(TypeElement type) {
+        return type.asType().accept(new TypeDetector(), null);
+    }
+
+    /**
      * @version 2015/06/06 11:44:40
      */
     private static class TypeDetector implements TypeVisitor<Type, Void> {

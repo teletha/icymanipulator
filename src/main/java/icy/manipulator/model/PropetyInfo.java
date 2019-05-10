@@ -7,21 +7,21 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator;
+package icy.manipulator.model;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-class PropetyInfo<T> {
+public class PropetyInfo<T> {
 
-    private HashMap<Property, List<T>> map = new HashMap();
+    private HashMap<PropertyDefinition, List<T>> map = new HashMap();
 
-    void add(Property property, T item) {
+    public void add(PropertyDefinition property, T item) {
         map.computeIfAbsent(property, p -> new LinkedList<T>()).add(item);
     }
 
-    List<T> get(Property property) {
+    public List<T> get(PropertyDefinition property) {
         return map.computeIfAbsent(property, p -> new LinkedList());
     }
 }

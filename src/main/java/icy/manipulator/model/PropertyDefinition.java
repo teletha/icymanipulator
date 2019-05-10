@@ -7,39 +7,42 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator;
+package icy.manipulator.model;
 
 import javax.lang.model.element.ExecutableElement;
 
-class Property {
+import icy.manipulator.CodeAnalyzer;
+import icy.manipulator.Type;
+
+public class PropertyDefinition {
 
     /** The property name. */
-    final String name;
+    public final String name;
 
     /** The actual source element. */
-    final ExecutableElement element;
+    public final ExecutableElement element;
 
     /** The type name. */
-    Type type;
+    public Type type;
 
     /** The state. */
-    String derive;
+    public String derive;
 
     /** The state. */
-    boolean isDerived;
+    public boolean isDerived;
 
     /** The property state. */
-    boolean isArbitrary;
+    public boolean isArbitrary;
 
     /** The next property. */
-    String next;
+    public String next;
 
-    Property nextProperty;
+    public PropertyDefinition nextProperty;
 
     /**
      * 
      */
-    Property(Type type, String name, ExecutableElement element) {
+    public PropertyDefinition(Type type, String name, ExecutableElement element) {
         this.type = type;
         this.name = name;
         this.element = element;
@@ -50,7 +53,7 @@ class Property {
      * 
      * @return A visibility.
      */
-    String setterVisibility() {
+    public String setterVisibility() {
         return isDerived ? "protected" : "public";
     }
 
@@ -59,7 +62,7 @@ class Property {
      * 
      * @return An interface name.
      */
-    String assignableInterfaceName() {
+    public String assignableInterfaceName() {
         if (isArbitrary) {
             return CodeAnalyzer.ArbitraryInterface;
         } else {
@@ -72,7 +75,7 @@ class Property {
      * 
      * @return An interface name.
      */
-    String assignableInterfaceType(String last) {
+    public String assignableInterfaceType(String last) {
         String type = assignableInterfaceName();
 
         if (nextProperty != null) {
@@ -88,7 +91,7 @@ class Property {
      * 
      * @return
      */
-    String capitalizeName() {
+    public String capitalizeName() {
         return Character.toUpperCase(name.charAt(0)) + name.substring(1);
     }
 
@@ -96,7 +99,7 @@ class Property {
      * @param className
      * @return
      */
-    String nextAssignable(String className) {
+    public String nextAssignable(String className) {
         if (nextProperty == null) {
             return className;
         } else {
@@ -105,9 +108,12 @@ class Property {
     }
 
     /**
-     * @return
+     * {@inheritDoc}
      */
-    static Property empty() {
-        return null;
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(name).append("(").append(type).append(")");
+        return builder.toString();
     }
 }

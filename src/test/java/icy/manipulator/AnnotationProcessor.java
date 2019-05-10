@@ -24,6 +24,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import antibug.CleanRoom;
 import bee.Bee;
 import bee.util.JavaCompiler;
+import icy.manipulator.model.ModelDefinition;
 import kiss.I;
 import psychopath.File;
 import psychopath.Locator;
@@ -66,10 +67,12 @@ public class AnnotationProcessor {
         File generatedSource = Locator.directory("src/test/java").file(computeSourceFile(generatedClass));
         File annotaionProcessorSource = Locator.directory("src/main/java").file(computeSourceFile(processor.getName()));
         File analyzer = Locator.directory("src/main/java").file(computeSourceFile(CodeAnalyzer.class.getName()));
+        File depend1 = Locator.directory("src/main/java").file(computeSourceFile(ModelDefinition.class.getName()));
         File temporaryGeneratedSource = Locator.directory(room.root).file(computeSourceFile(generatedClass));
         long date = generatedSource.lastModified();
 
-        if (compilingSource.lastModified() < date && annotaionProcessorSource.lastModified() < date && analyzer.lastModified() < date) {
+        if (compilingSource.lastModified() < date && annotaionProcessorSource.lastModified() < date && analyzer
+                .lastModified() < date && depend1.lastModified() < date) {
             return; // generated source file is up to date
         }
 

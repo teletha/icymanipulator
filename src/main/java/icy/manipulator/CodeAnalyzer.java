@@ -33,7 +33,9 @@ import javax.lang.model.type.TypeMirror;
 import javax.tools.Diagnostic.Kind;
 
 import icy.manipulator.Icy.Overload;
-import icy.manipulator.model.Model;
+import icy.manipulator.model.ModelDefinition;
+import icy.manipulator.model.PropertyDefinition;
+import icy.manipulator.model.PropetyInfo;
 
 public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
 
@@ -64,14 +66,8 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
     /** The fully qualified generated class name. */
     Type clazz;
 
-    /** The property list. */
-    final List<Property> properties = new ArrayList();
-
     /** The required properties. */
-    private final List<Property> required = new ArrayList();
-
-    /** The arbitrary properties. */
-    private final List<Property> arbitrary = new ArrayList();
+    private final List<PropertyDefinition> required = new ArrayList();
 
     /** The overload method holder. */
     private final List<Method> overloads = new ArrayList();
@@ -86,7 +82,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
     private final Type parent;
 
     /** The current procesing model. */
-    private final Model m;
+    private final ModelDefinition m;
 
     /**
      * Create code analyzer.
@@ -99,7 +95,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
         this.root = root;
         this.icy = root.getAnnotation(Icy.class);
         this.messager = messager;
-        this.m = new Model(root);
+        this.m = new ModelDefinition(root);
 
         Type superType = Type.of(Utility.types.directSupertypes(root.asType()).get(0));
 
@@ -215,8 +211,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
      * Prepare to analyze.
      */
     void prepare() {
-        properties.addAll(required);
-        properties.addAll(arbitrary);
+        System.out.println(m);
 
         if (required.size() != 0) {
             for (int i = 0; i < required.size() - 1; i++) {
@@ -226,7 +221,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
             required.get(required.size() - 1).next = self();
         }
 
-        for (Property property : arbitrary) {
+        for (PropertyDefinition property : m.ownArbitraryProperties()) {
             property.next = self();
         }
 
@@ -241,7 +236,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
             Overload overload = method.getAnnotation(Overload.class);
             String targetProperty = overload.value().isEmpty() ? method.name : overload.value();
 
-            Property property = findPropertyByName(targetProperty);
+            PropertyDefinition property = findPropertyByName(targetProperty);
 
             if (property == null) {
                 error("Although you specify the property [" + targetProperty + "], it is not found. Specify the correct property name.", method.element);
@@ -313,7 +308,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
      * Define property updater.
      */
     private void defineOverloadMethodInvoker() {
-        for (Property property : properties) {
+        for (PropertyDefinition property : m.ownProperties()) {
             for (Method method : overloadForProperty.get(property)) {
                 StringJoiner types = new StringJoiner(", ", ", ", "").setEmptyValue("");
                 method.paramTypes.forEach(t -> types.add(code.use(t) + ".class"));
@@ -351,7 +346,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
      * Define property updater.
      */
     private void defineFieldUpdater() {
-        for (Property property : properties) {
+        for (PropertyDefinition property : m.ownProperties()) {
             code.write();
             code.write("/** The final property updater. */");
             code.write("private static final ", MethodHandle.class, " ", property.name, "Updater = updater(\"", property.name, "\");");
@@ -362,7 +357,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
      * Define property field.
      */
     private void defineField() {
-        for (Property property : properties) {
+        for (PropertyDefinition property : m.ownProperties()) {
             code.write();
             code.write("/** The exposed property. */");
             code.write("public final ", property.type, " ", property.name, ";");
@@ -379,7 +374,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
         code.write(" */");
         code.write("protected ", clazz, "()", () -> {
             // initialize field
-            for (Property p : properties) {
+            for (PropertyDefinition p : m.ownProperties()) {
                 code.write("this.", p.name, " = ", (p.isArbitrary ? "super." + p.name + "()" : p.type.defaultValue()), ";");
             }
         });
@@ -389,7 +384,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
      * Define property getter methods.
      */
     private void defineAccessors() {
-        for (Property property : properties) {
+        for (PropertyDefinition property : m.ownProperties()) {
             // Exposed getter
             code.write();
             code.write("/**");
@@ -427,7 +422,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
      */
     private void defineBuilder() {
         boolean hasRequried = required.size() != 0;
-        boolean hasArbitrary = arbitrary.size() != 0;
+        boolean hasArbitrary = m.ownArbitraryProperties().size() != 0;
         String builder = icy.builder();
 
         code.write();
@@ -442,6 +437,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
         code.write("/**");
         code.write(" * Builder namespace for {@link ", clazz, "}.");
         code.write(" */");
+
         if (!hasRequried) {
             code.write("public static class ", Instantiator, "<Self>", () -> {
                 code.write();
@@ -456,7 +452,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
                 });
             });
         } else {
-            Property p = required.get(0);
+            PropertyDefinition p = required.get(0);
             String extend = parent == null ? ""
                     : " extends " + code.use(parent) + "." + Instantiator + "<" + p.assignableInterfaceName() + "<" + p
                             .nextAssignable("Self") + ">>";
@@ -500,7 +496,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
      * Define assignable interfaces.
      */
     private void defineAssignableInterfaces() {
-        for (Property p : required) {
+        for (PropertyDefinition p : required) {
             code.write();
             code.write("/**");
             code.write(" * Property assignment API.");
@@ -540,7 +536,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
         code.write(" * Property assignment API.");
         code.write(" */");
         code.write("public static interface ", ArbitraryInterface, "<Next extends ", clazz, ">", extend, () -> {
-            for (Property property : arbitrary) {
+            for (PropertyDefinition property : m.ownArbitraryProperties()) {
                 code.write();
                 code.write("/**");
                 code.write(" * Property assignment API.");
@@ -557,7 +553,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
         });
 
         StringJoiner apis = new StringJoiner(", ", " extends ", "").setEmptyValue("");
-        for (Property property : required) {
+        for (PropertyDefinition property : required) {
             apis.add(property.assignableInterfaceName());
         }
         if (parent != null) {
@@ -581,7 +577,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
         code.write(" * The identifier for properties.");
         code.write(" */");
         code.write("static final class My", () -> {
-            for (Property property : properties) {
+            for (PropertyDefinition property : m.ownProperties()) {
                 code.write("static final String ", property.capitalizeName(), " = \"", property.name, "\";");
             }
         });
@@ -605,8 +601,8 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
         }
     }
 
-    private Property findPropertyByName(String name) {
-        for (Property property : properties) {
+    private PropertyDefinition findPropertyByName(String name) {
+        for (PropertyDefinition property : m.ownProperties()) {
             if (property.name.equals(name)) {
                 return property;
             }
@@ -657,17 +653,18 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
             return;
         }
 
-        Property property = new Property(returnType, method.getSimpleName().toString(), method);
+        PropertyDefinition property = new PropertyDefinition(returnType, method.getSimpleName().toString(), method);
         property.isArbitrary = !method.getModifiers().contains(Modifier.ABSTRACT);
 
         if (property.isArbitrary) {
-            arbitrary.add(property);
+            m.addArbitraryProperty(property);
         } else {
             required.add(property);
+            m.addRequiredProperty(property);
         }
     }
 
     private String self() {
-        return arbitrary.isEmpty() ? clazz.className : clazz.className + " & " + ArbitraryInterface + "<Self>";
+        return m.ownArbitraryProperties().isEmpty() ? clazz.className : clazz.className + " & " + ArbitraryInterface + "<Self>";
     }
 }

@@ -50,10 +50,6 @@ public class IcyManipulator extends AbstractProcessor {
 
             analyzer.prepare();
 
-            if (analyzer.properties.isEmpty()) {
-                analyzer.error("No property.", element);
-            }
-
             if (analyzer.hasError == false) {
                 try {
                     String code = analyzer.defineCode();
