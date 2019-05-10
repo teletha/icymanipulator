@@ -50,6 +50,12 @@ public class ModelDefinition {
     /** The arbitrary properties. */
     private final List<PropertyDefinition> arbitraryProperties = new LinkedList();
 
+    /** The overload method holder. */
+    private final List<Method> overloads = new ArrayList();
+
+    /** The overload method for each property */
+    private final PropetyInfo<Method> overloadForProperty = new PropetyInfo();
+
     /**
      * 
      */
@@ -72,9 +78,50 @@ public class ModelDefinition {
             this.name = e.getSimpleName().toString();
             this.type = Type.of(e);
             this.implementationType = Type.of(e.getQualifiedName().toString().replaceAll(icy.modelBase() + "$", ""));
+            TypeUtil.methods(e).forEach(m -> {
+                analyzeProperty(m);
+            });
         }
 
         this.parent = analyzeParent(e);
+    }
+
+    /**
+     * Analyze property methods.
+     */
+    private void analyzeProperty(ExecutableElement method) {
+        // require annotation
+        icy.manipulator.Icy.Property annotation = method.getAnnotation(Icy.Property.class);
+
+        if (annotation == null) {
+            return;
+        }
+
+        // require no parameter
+        if (method.getParameters().size() != 0) {
+            throw new Fail(method, "Property declaring method must have no parameter.");
+        }
+
+        Type returnType = Type.of(method.getReturnType());
+
+        if (returnType.className.equalsIgnoreCase("void")) {
+            throw new Fail(method, "Property declaring method must return something.");
+        }
+
+        PropertyDefinition property = new PropertyDefinition(method);
+
+        if (property.isArbitrary) {
+            addArbitraryProperty(property);
+        } else {
+            addRequiredProperty(property);
+        }
+    }
+
+    /**
+     * Analyze overload methods.
+     */
+    private void analyzeOverload() {
+
     }
 
     /**

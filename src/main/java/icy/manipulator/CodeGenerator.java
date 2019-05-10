@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.StringJoiner;
 
 import javax.annotation.processing.Generated;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ExecutableElement;
 
 import icy.manipulator.Icy.Overload;
 import icy.manipulator.model.Method;
@@ -47,7 +45,7 @@ public class CodeGenerator {
     private Type model;
 
     /** The fully qualified generated class name. */
-    Type clazz;
+    private Type clazz;
 
     /** The overload method holder. */
     private final List<Method> overloads = new ArrayList();
@@ -68,55 +66,21 @@ public class CodeGenerator {
      * @param root
      * @param elements
      */
-    CodeGenerator(Element root) {
-        this.icy = root.getAnnotation(Icy.class);
-        this.m = new ModelDefinition(root);
+    CodeGenerator(ModelDefinition model) {
+        this.icy = model.e.getAnnotation(Icy.class);
+        this.m = model;
         this.parent = m.parent.map(p -> p.implementationType).orElse(null);
 
         // analyze
-        model = m.type;
+        this.model = model.type;
         clazz = m.implementationType;
 
         TypeUtil.methods(m.e).forEach(e -> {
-            createAsProperty(e);
 
             // collect overload methods
             Overload overload = e.getAnnotation(Icy.Overload.class);
             if (overload != null) overloads.add(new Method(e));
         });
-    }
-
-    /**
-     * Check property declaring method.
-     * 
-     * @param method
-     */
-    private void createAsProperty(ExecutableElement method) {
-        // require annotation
-        icy.manipulator.Icy.Property annotation = method.getAnnotation(Icy.Property.class);
-
-        if (annotation == null) {
-            return;
-        }
-
-        // require no parameter
-        if (method.getParameters().size() != 0) {
-            throw new Fail(method, "Property declaring method must have no parameter.");
-        }
-
-        Type returnType = Type.of(method.getReturnType());
-
-        if (returnType.className.equalsIgnoreCase("void")) {
-            throw new Fail(method, "Property declaring method must return something.");
-        }
-
-        PropertyDefinition property = new PropertyDefinition(method);
-
-        if (property.isArbitrary) {
-            m.addArbitraryProperty(property);
-        } else {
-            m.addRequiredProperty(property);
-        }
     }
 
     /**
@@ -156,7 +120,7 @@ public class CodeGenerator {
         code.write("/**");
         code.write(" * Generated model for {@link ", model, "}.");
         code.write(" */");
-        code.write("@", Generated.class, "(\"Icy Manipulator\")");
+        code.write("@", Generated.class, "(`Icy Manipulator`)");
         code.write(visibility, "abstract class ", clazz, " extends ", model, () -> {
             if (!overloads.isEmpty()) {
                 defineMethodInvokerBuilder();

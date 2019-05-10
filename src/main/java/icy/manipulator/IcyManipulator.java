@@ -22,6 +22,8 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.tools.JavaFileObject;
 
+import icy.manipulator.model.ModelDefinition;
+
 @SupportedSourceVersion(SourceVersion.RELEASE_13)
 @SupportedAnnotationTypes("icy.manipulator.Icy")
 public class IcyManipulator extends AbstractProcessor {
@@ -46,14 +48,16 @@ public class IcyManipulator extends AbstractProcessor {
 
         for (Element element : env.getElementsAnnotatedWith(Icy.class)) {
             importer = new ClassImporter(element.toString());
-            CodeGenerator analyzer = new CodeGenerator(element);
+
+            ModelDefinition model = new ModelDefinition(element);
+            CodeGenerator analyzer = new CodeGenerator(model);
 
             analyzer.prepare();
 
             try {
                 String code = analyzer.defineCode();
 
-                JavaFileObject generated = processingEnv.getFiler().createSourceFile(analyzer.clazz.toString());
+                JavaFileObject generated = processingEnv.getFiler().createSourceFile(model.implementationType.toString());
                 Writer writer = generated.openWriter();
                 writer.write(code);
                 writer.close();

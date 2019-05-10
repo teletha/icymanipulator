@@ -35,7 +35,7 @@ public class Type {
     /** The package name. */
     public final String packageName;
 
-    /** The class name. */
+    /** The simple class name. */
     public final String className;
 
     /** The variable expression. */
