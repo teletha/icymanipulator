@@ -10,20 +10,24 @@
 package icy.manipulator.model;
 
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.Modifier;
 
 import icy.manipulator.CodeAnalyzer;
 import icy.manipulator.Type;
 
 public class PropertyDefinition {
 
-    /** The property name. */
-    public final String name;
-
     /** The actual source element. */
     public final ExecutableElement element;
 
+    /** The property name. */
+    public final String name;
+
     /** The type name. */
-    public Type type;
+    public final Type type;
+
+    /** The property state. */
+    public final boolean isArbitrary;
 
     /** The state. */
     public String derive;
@@ -31,30 +35,19 @@ public class PropertyDefinition {
     /** The state. */
     public boolean isDerived;
 
-    /** The property state. */
-    public boolean isArbitrary;
-
     /** The next property. */
     public String next;
 
     public PropertyDefinition nextProperty;
 
     /**
-     * 
-     */
-    public PropertyDefinition(Type type, String name, ExecutableElement element) {
-        this.type = type;
-        this.name = name;
-        this.element = element;
-    }
-
-    /**
      * @param method
      */
     public PropertyDefinition(ExecutableElement method) {
-        this.type = Type.of(method.getReturnType());
-        this.name = method.getSimpleName().toString();
         this.element = method;
+        this.name = method.getSimpleName().toString();
+        this.type = Type.of(method.getReturnType());
+        this.isArbitrary = !method.getModifiers().contains(Modifier.ABSTRACT);
     }
 
     /**

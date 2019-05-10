@@ -26,6 +26,16 @@ import javax.lang.model.util.Types;
 
 public class TypeUtil {
 
+    /** The getter pattern. */
+    private static final Predicate<ExecutableElement> getter = m -> {
+        return m.getParameters().size() == 0 && m.getReturnType().getKind() != TypeKind.VOID;
+    };
+
+    /** The setter pattern. */
+    private static final Predicate<ExecutableElement> setter = m -> {
+        return m.getParameters().size() == 1;
+    };
+
     /** The type utility. */
     public static Types types;
 
@@ -89,6 +99,24 @@ public class TypeUtil {
     }
 
     /**
+     * Find all declared getter-like methods.
+     * 
+     * @param e A target type.
+     */
+    public static List<ExecutableElement> getters(TypeElement e) {
+        return methods(e, getter);
+    }
+
+    /**
+     * Find all declared setter-like methods.
+     * 
+     * @param e A target type.
+     */
+    public static List<ExecutableElement> setters(TypeElement e) {
+        return methods(e, setter);
+    }
+
+    /**
      * Find all declared methods.
      * 
      * @param e A target type.
@@ -119,6 +147,17 @@ public class TypeUtil {
             }
         }
         return methods;
+    }
+
+    /**
+     * Check type equality.
+     * 
+     * @param type
+     * @param element
+     * @return
+     */
+    public static boolean same(TypeMirror type, Element element) {
+        return types.isSameType(type, element.asType());
     }
 
     /**

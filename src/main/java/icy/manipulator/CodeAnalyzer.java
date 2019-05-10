@@ -22,7 +22,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ElementVisitor;
 import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.TypeParameterElement;
@@ -651,8 +650,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
             return;
         }
 
-        PropertyDefinition property = new PropertyDefinition(returnType, method.getSimpleName().toString(), method);
-        property.isArbitrary = !method.getModifiers().contains(Modifier.ABSTRACT);
+        PropertyDefinition property = new PropertyDefinition(method);
 
         if (property.isArbitrary) {
             m.addArbitraryProperty(property);

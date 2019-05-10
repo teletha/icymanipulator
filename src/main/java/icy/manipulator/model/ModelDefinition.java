@@ -120,6 +120,8 @@ public class ModelDefinition {
      * @return Chainable API.
      */
     private ModelDefinition analyze() {
+        List<ExecutableElement> parentMethods = TypeUtil.methods(TypeUtil.parent(e));
+
         for (Element element : e.getEnclosedElements()) {
             if (element.getKind() != ElementKind.INTERFACE) {
                 continue;
@@ -129,9 +131,6 @@ public class ModelDefinition {
             String name = type.getSimpleName().toString();
 
             if (name.equals(CodeAnalyzer.AssignableAll)) {
-                TypeElement parent = TypeUtil.parent(e);
-                List<ExecutableElement> methods = TypeUtil.methods(parent);
-
                 for (TypeMirror interfaceType : type.getInterfaces()) {
                     // estimate property name
                     String interfaceName = TypeUtil.simpleName(interfaceType);
@@ -139,7 +138,7 @@ public class ModelDefinition {
                     if (interfaceName.startsWith(CodeAnalyzer.Assignable)) {
                         String proerptyName = TypeUtil.decapitalize(interfaceName.substring(CodeAnalyzer.Assignable.length()));
 
-                        for (ExecutableElement method : methods) {
+                        for (ExecutableElement method : parentMethods) {
                             if (method.getSimpleName().contentEquals(proerptyName)) {
                                 requiredProperties.add(new PropertyDefinition(method));
                             }
@@ -147,7 +146,23 @@ public class ModelDefinition {
                     }
                 }
             } else if (name.equals(CodeAnalyzer.ArbitraryInterface)) {
-                arbitraryPropertyAPI.add(Type.of(type));
+                List<ExecutableElement> setters = TypeUtil.setters(type);
+
+                root: for (ExecutableElement getter : parentMethods) {
+                    for (ExecutableElement setter : setters) {
+                        // check name
+                        if (!getter.getSimpleName().equals(setter.getSimpleName())) {
+                            continue;
+                        }
+
+                        // check type
+                        if (!TypeUtil.same(getter.getReturnType(), setter.getParameters().get(0))) {
+                            continue;
+                        }
+                        arbitraryProperties.add(new PropertyDefinition(getter));
+                        continue root;
+                    }
+                }
             }
         }
 
