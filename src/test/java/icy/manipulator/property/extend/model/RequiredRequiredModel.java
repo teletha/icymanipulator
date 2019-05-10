@@ -13,7 +13,7 @@ import icy.manipulator.Icy;
 import icy.manipulator.property.model.Multiple;
 
 @Icy
-public abstract class SubclassModel extends Multiple {
+public abstract class RequiredRequiredModel extends Multiple {
 
     @Icy.Property
     public abstract String nickname();

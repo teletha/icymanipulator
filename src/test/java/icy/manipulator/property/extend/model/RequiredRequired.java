@@ -7,10 +7,10 @@ import java.lang.reflect.Field;
 import javax.annotation.processing.Generated;
 
 /**
- * Generated model for {@link SubclassModel}.
+ * Generated model for {@link RequiredRequiredModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class Subclass extends SubclassModel {
+public abstract class RequiredRequired extends RequiredRequiredModel {
 
     /**
      * Create special property updater.
@@ -20,7 +20,7 @@ public abstract class Subclass extends SubclassModel {
      */
     private static final MethodHandle updater(String name)  {
         try {
-            Field field = Subclass.class.getDeclaredField(name);
+            Field field = RequiredRequired.class.getDeclaredField(name);
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
@@ -37,7 +37,7 @@ public abstract class Subclass extends SubclassModel {
     /**
      * HIDE CONSTRUCTOR
      */
-    protected Subclass() {
+    protected RequiredRequired() {
         this.nickname = null;
     }
 
@@ -68,11 +68,11 @@ public abstract class Subclass extends SubclassModel {
     /** The singleton builder. */
     public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
 
-    public static final class ÌnstantiatorTyped<Self extends Subclass & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
+    public static final class ÌnstantiatorTyped<Self extends RequiredRequired & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
     }
 
     /**
-     * Builder namespace for {@link Subclass}.
+     * Builder namespace for {@link RequiredRequired}.
      */
     protected static class Ìnstantiator<Self> extends Multiple.Ìnstantiator<ÅssignableNickname<Self>> {
 
@@ -102,7 +102,7 @@ public abstract class Subclass extends SubclassModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends Subclass> extends icy.manipulator.property.model.Multiple.ÅssignableÅrbitrary<Next> {
+    public static interface ÅssignableÅrbitrary<Next extends RequiredRequired> extends icy.manipulator.property.model.Multiple.ÅssignableÅrbitrary<Next> {
     }
 
     /**
@@ -114,7 +114,7 @@ public abstract class Subclass extends SubclassModel {
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Subclass implements ÅssignableAll, ÅssignableÅrbitrary {
+    private static final class Åssignable extends RequiredRequired implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**
