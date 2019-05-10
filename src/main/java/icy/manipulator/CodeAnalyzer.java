@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.StringJoiner;
 
 import javax.annotation.processing.Generated;
-import javax.annotation.processing.Messager;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ElementVisitor;
@@ -27,9 +26,7 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
-import javax.lang.model.type.ExecutableType;
 import javax.lang.model.type.TypeMirror;
-import javax.tools.Diagnostic.Kind;
 
 import icy.manipulator.Icy.Overload;
 import icy.manipulator.model.Method;
@@ -48,9 +45,6 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
     /** The instantiator class name. */
     private static final String Instantiator = "Ìnstantiator";
 
-    /** The next type parameter. */
-    private static final String Next = "Next";
-
     /** The configuration interface name for arbitrary perperties. */
     public static final String ArbitraryInterface = Assignable + "Årbitrary";
 
@@ -66,9 +60,6 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
     /** The fully qualified generated class name. */
     Type clazz;
 
-    /** The required properties. */
-    private final List<PropertyDefinition> required = new ArrayList();
-
     /** The overload method holder. */
     private final List<Method> overloads = new ArrayList();
 
@@ -76,8 +67,6 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
     private final PropetyInfo<Method> overloadForProperty = new PropetyInfo();
 
     private Coder code = new Coder(IcyManipulator.importer);
-
-    private final Messager messager;
 
     private final Type parent;
 
@@ -88,13 +77,11 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
      * Create code analyzer.
      * 
      * @param root
-     * @param messager
      * @param elements
      */
-    CodeAnalyzer(Element root, Messager messager) {
+    CodeAnalyzer(Element root) {
         this.root = root;
         this.icy = root.getAnnotation(Icy.class);
-        this.messager = messager;
         this.m = new ModelDefinition(root);
 
         Type superType = Type.of(TypeUtil.types.directSupertypes(root.asType()).get(0));
@@ -213,18 +200,6 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
     void prepare() {
         System.out.println(m);
 
-        if (required.size() != 0) {
-            for (int i = 0; i < required.size() - 1; i++) {
-                required.get(i).nextProperty = required.get(i + 1);
-                required.get(i).next = required.get(i + 1).assignableInterfaceName();
-            }
-            required.get(required.size() - 1).next = self();
-        }
-
-        for (PropertyDefinition property : m.ownArbitraryProperties()) {
-            property.next = self();
-        }
-
         validateOverload();
     }
 
@@ -239,13 +214,11 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
             PropertyDefinition property = findPropertyByName(targetProperty);
 
             if (property == null) {
-                error("Although you specify the property [" + targetProperty + "], it is not found. Specify the correct property name.", method.element);
-                return;
+                throw new Fail(method.element, "Although you specify the property [" + targetProperty + "], it is not found. Specify the correct property name.");
             }
 
             if (!method.returnType.equals(property.type)) {
-                error("Although the property [" + targetProperty + "] type is " + method.returnType + ", overload method [" + method + "] returns " + method.returnType + ".", method.element);
-                return;
+                throw new Fail(method.element, "Although the property [" + targetProperty + "] type is " + method.returnType + ", overload method [" + method + "] returns " + method.returnType + ".");
             }
             overloadForProperty.add(property, method);
         }
@@ -582,24 +555,6 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
         });
     }
 
-    /** The error existence state. */
-    boolean hasError;
-
-    /**
-     * <p>
-     * Notify error.
-     * </p>
-     * 
-     * @param message
-     * @param position
-     */
-    void error(String message, Element position) {
-        if (message != null && position != null) {
-            hasError = true;
-            messager.printMessage(Kind.ERROR, message, position);
-        }
-    }
-
     private PropertyDefinition findPropertyByName(String name) {
         for (PropertyDefinition property : m.ownProperties()) {
             if (property.name.equals(name)) {
@@ -607,23 +562,6 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
             }
         }
         return null;
-    }
-
-    private boolean isDeriveMethod(ExecutableElement method) {
-        ExecutableType exe = (ExecutableType) method.asType();
-
-        List<? extends TypeMirror> parameters = exe.getParameterTypes();
-
-        if (parameters.size() != 1) {
-            return false;
-        }
-
-        Type modelType = Type.of(parameters.get(0));
-
-        if (!modelType.equals(clazz)) {
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -641,15 +579,13 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
 
         // require no parameter
         if (method.getParameters().size() != 0) {
-            error("Property declaring method must have no parameter.", method);
-            return;
+            throw new Fail(method, "Property declaring method must have no parameter.");
         }
 
         Type returnType = Type.of(method.getReturnType());
 
         if (returnType.className.equalsIgnoreCase("void")) {
-            error("Property declaring method must return something.", method);
-            return;
+            throw new Fail(method, "Property declaring method must return something.");
         }
 
         PropertyDefinition property = new PropertyDefinition(method);
@@ -657,12 +593,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
         if (property.isArbitrary) {
             m.addArbitraryProperty(property);
         } else {
-            required.add(property);
             m.addRequiredProperty(property);
         }
-    }
-
-    private String self() {
-        return m.ownArbitraryProperties().isEmpty() ? clazz.className : clazz.className + " & " + ArbitraryInterface + "<Self>";
     }
 }

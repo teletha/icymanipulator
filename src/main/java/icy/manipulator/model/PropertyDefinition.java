@@ -14,6 +14,7 @@ import javax.lang.model.element.Modifier;
 
 import icy.manipulator.CodeAnalyzer;
 import icy.manipulator.Type;
+import icy.manipulator.TypeUtil;
 
 public class PropertyDefinition {
 
@@ -34,11 +35,6 @@ public class PropertyDefinition {
 
     /** The state. */
     public boolean isDerived;
-
-    /** The next property. */
-    public String next;
-
-    public PropertyDefinition nextProperty;
 
     /**
      * @param method
@@ -68,7 +64,7 @@ public class PropertyDefinition {
         if (isArbitrary) {
             return CodeAnalyzer.ArbitraryInterface;
         } else {
-            return CodeAnalyzer.Assignable + Character.toUpperCase(name.charAt(0)) + name.substring(1);
+            return CodeAnalyzer.Assignable + TypeUtil.capitalize(name);
         }
     }
 

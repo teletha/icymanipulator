@@ -46,21 +46,19 @@ public class IcyManipulator extends AbstractProcessor {
 
         for (Element element : env.getElementsAnnotatedWith(Icy.class)) {
             importer = new ClassImporter(element.toString());
-            CodeAnalyzer analyzer = element.accept(new CodeAnalyzer(element, processingEnv.getMessager()), null);
+            CodeAnalyzer analyzer = element.accept(new CodeAnalyzer(element), null);
 
             analyzer.prepare();
 
-            if (analyzer.hasError == false) {
-                try {
-                    String code = analyzer.defineCode();
+            try {
+                String code = analyzer.defineCode();
 
-                    JavaFileObject generated = processingEnv.getFiler().createSourceFile(analyzer.clazz.toString());
-                    Writer writer = generated.openWriter();
-                    writer.write(code);
-                    writer.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                JavaFileObject generated = processingEnv.getFiler().createSourceFile(analyzer.clazz.toString());
+                Writer writer = generated.openWriter();
+                writer.write(code);
+                writer.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
         return true;
