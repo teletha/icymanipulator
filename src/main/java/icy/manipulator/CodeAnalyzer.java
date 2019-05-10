@@ -158,17 +158,6 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
     @Override
     public CodeAnalyzer visitExecutable(ExecutableElement e, VariableElement z) {
         if (e.getKind() == ElementKind.METHOD) {
-            // Derive derive = e.getAnnotation(Icy.Derive.class);
-            //
-            // if (derive != null && isDeriveMethod(e)) {
-            // Arrays.stream(derive.to()).map(this::findPropertyByName).flatMap(Optional::stream).forEach(p
-            // -> p.isDerived = true);
-            // Arrays.stream(derive.by())
-            // .map(this::findPropertyByName)
-            // .flatMap(Optional::stream)
-            // .forEach(p -> p.derive = e.getSimpleName().toString());
-            // }
-
             createAsProperty(e);
 
             // collect overload methods
@@ -176,6 +165,39 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
             if (overload != null) overloads.add(new Method(e));
         }
         return this;
+    }
+
+    /**
+     * Check property declaring method.
+     * 
+     * @param method
+     */
+    private void createAsProperty(ExecutableElement method) {
+        // require annotation
+        icy.manipulator.Icy.Property annotation = method.getAnnotation(Icy.Property.class);
+    
+        if (annotation == null) {
+            return;
+        }
+    
+        // require no parameter
+        if (method.getParameters().size() != 0) {
+            throw new Fail(method, "Property declaring method must have no parameter.");
+        }
+    
+        Type returnType = Type.of(method.getReturnType());
+    
+        if (returnType.className.equalsIgnoreCase("void")) {
+            throw new Fail(method, "Property declaring method must return something.");
+        }
+    
+        PropertyDefinition property = new PropertyDefinition(method);
+    
+        if (property.isArbitrary) {
+            m.addArbitraryProperty(property);
+        } else {
+            m.addRequiredProperty(property);
+        }
     }
 
     /**
@@ -211,11 +233,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
             Overload overload = method.getAnnotation(Overload.class);
             String targetProperty = overload.value().isEmpty() ? method.name : overload.value();
 
-            PropertyDefinition property = findPropertyByName(targetProperty);
-
-            if (property == null) {
-                throw new Fail(method.element, "Although you specify the property [" + targetProperty + "], it is not found. Specify the correct property name.");
-            }
+            PropertyDefinition property = m.findPropertyByName(targetProperty);
 
             if (!method.returnType.equals(property.type)) {
                 throw new Fail(method.element, "Although the property [" + targetProperty + "] type is " + method.returnType + ", overload method [" + method + "] returns " + method.returnType + ".");
@@ -553,47 +571,5 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
                 code.write("static final String ", property.capitalizeName(), " = \"", property.name, "\";");
             }
         });
-    }
-
-    private PropertyDefinition findPropertyByName(String name) {
-        for (PropertyDefinition property : m.ownProperties()) {
-            if (property.name.equals(name)) {
-                return property;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Check property declaring method.
-     * 
-     * @param method
-     */
-    private void createAsProperty(ExecutableElement method) {
-        // require annotation
-        icy.manipulator.Icy.Property annotation = method.getAnnotation(Icy.Property.class);
-
-        if (annotation == null) {
-            return;
-        }
-
-        // require no parameter
-        if (method.getParameters().size() != 0) {
-            throw new Fail(method, "Property declaring method must have no parameter.");
-        }
-
-        Type returnType = Type.of(method.getReturnType());
-
-        if (returnType.className.equalsIgnoreCase("void")) {
-            throw new Fail(method, "Property declaring method must return something.");
-        }
-
-        PropertyDefinition property = new PropertyDefinition(method);
-
-        if (property.isArbitrary) {
-            m.addArbitraryProperty(property);
-        } else {
-            m.addRequiredProperty(property);
-        }
     }
 }

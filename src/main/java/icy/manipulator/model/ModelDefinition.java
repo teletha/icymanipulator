@@ -165,6 +165,20 @@ public class ModelDefinition {
     }
 
     /**
+     * Find property by name.
+     * 
+     * @param name A property name.
+     * @return
+     */
+    public PropertyDefinition findPropertyByName(String name) {
+        return requiredProperties.stream()
+                .filter(p -> p.name.equals(name))
+                .findFirst()
+                .or(() -> parent.map(m -> m.findPropertyByName(name)))
+                .orElseThrow(() -> new Fail(e, "Although you specify the property [" + name + "], it is not found. Specify the correct property name."));
+    }
+
+    /**
      * Analuze {@link ModelDefinition} by its {@link Element}.
      * 
      * @return Chainable API.
