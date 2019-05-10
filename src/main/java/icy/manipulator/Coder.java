@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.StringJoiner;
 import java.util.function.Consumer;
 
+import icy.manipulator.model.Method;
+
 public class Coder {
 
     /** The line feed. */

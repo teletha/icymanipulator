@@ -32,6 +32,7 @@ import javax.lang.model.type.TypeMirror;
 import javax.tools.Diagnostic.Kind;
 
 import icy.manipulator.Icy.Overload;
+import icy.manipulator.model.Method;
 import icy.manipulator.model.ModelDefinition;
 import icy.manipulator.model.PropertyDefinition;
 import icy.manipulator.model.PropetyInfo;
@@ -449,29 +450,30 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
                 });
             });
         } else {
-            PropertyDefinition p = required.get(0);
-            String extend = parent == null ? ""
-                    : " extends " + code.use(parent) + "." + Instantiator + "<" + p.assignableInterfaceName() + "<" + p
-                            .nextAssignable("Self") + ">>";
+            m.firstRequiredProperty().ifPresent(p -> {
+                String extend = parent == null ? ""
+                        : " extends " + code.use(parent) + "." + Instantiator + "<" + m.ownRequiredRouteType("Self") + ">";
 
-            code.write("protected static class ", Instantiator, "<Self>", extend, () -> {
-                code.write();
+                code.write("protected static class ", Instantiator, "<Self>", extend, () -> {
+                    code.write();
 
-                if (parent == null) {
-                    code.write("/** Create Uninitialized {@link ", clazz, "}. */");
-                    code.write("public final <T extends ", p.nextAssignable("Self"), "> T ", p.name, "(", p.type, " value)", () -> {
-                        code.write("return (T) base().", p.name, "(value);");
-                    });
-                    for (Method method : overloadForProperty.get(p)) {
-                        code.write();
+                    if (parent == null) {
                         code.write("/** Create Uninitialized {@link ", clazz, "}. */");
-                        code.write("public final <T extends ", p.nextAssignable("Self"), "> T ", method, () -> {
-                            code.write("return (T) base().", method.name, "(", method.paramNames, ");");
-                        });
+                        code.write("public final <T extends ", m
+                                .ownRequiredRouteTypeWithoutFirst("Self"), "> T ", p.name, "(", p.type, " value)", () -> {
+                                    code.write("return (T) base().", p.name, "(value);");
+                                });
+                        for (Method method : overloadForProperty.get(p)) {
+                            code.write();
+                            code.write("/** Create Uninitialized {@link ", clazz, "}. */");
+                            code.write("public final <T extends ", m.ownRequiredRouteTypeWithoutFirst("Self"), "> T ", method, () -> {
+                                code.write("return (T) base().", method.name, "(", method.paramNames, ");");
+                            });
+                        }
                     }
-                }
-                code.write("protected ", AssignableAll, " base()", () -> {
-                    code.write("return new ", Assignable, "();");
+                    code.write("protected ", AssignableAll, " base()", () -> {
+                        code.write("return new ", Assignable, "();");
+                    });
                 });
             });
         }
@@ -550,7 +552,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
         });
 
         StringJoiner apis = new StringJoiner(", ", " extends ", "").setEmptyValue("");
-        for (PropertyDefinition property : required) {
+        for (PropertyDefinition property : m.ownRequiredProperties()) {
             apis.add(property.assignableInterfaceName());
         }
         if (parent != null) {

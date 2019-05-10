@@ -37,10 +37,10 @@ public class TypeUtil {
     };
 
     /** The type utility. */
-    public static Types types;
+    static Types types;
 
     /** The element utility. */
-    public static Elements elements;
+    static Elements elements;
 
     /**
      * List up class hierarchy.

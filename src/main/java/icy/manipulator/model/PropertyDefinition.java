@@ -73,40 +73,12 @@ public class PropertyDefinition {
     }
 
     /**
-     * Compute assignable interface name of this property.
-     * 
-     * @return An interface name.
-     */
-    public String assignableInterfaceType(String last) {
-        String type = assignableInterfaceName();
-
-        if (nextProperty != null) {
-            type = type + "<" + nextProperty.assignableInterfaceType(last) + ">";
-        } else {
-            type = type + "<" + last + ">";
-        }
-        return type;
-    }
-
-    /**
      * Compute capitalized property name.
      * 
      * @return
      */
     public String capitalizeName() {
         return Character.toUpperCase(name.charAt(0)) + name.substring(1);
-    }
-
-    /**
-     * @param className
-     * @return
-     */
-    public String nextAssignable(String className) {
-        if (nextProperty == null) {
-            return className;
-        } else {
-            return nextProperty.assignableInterfaceType(className);
-        }
     }
 
     /**

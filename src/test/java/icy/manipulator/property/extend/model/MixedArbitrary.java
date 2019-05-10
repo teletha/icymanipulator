@@ -29,40 +29,40 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle zipUpdater = updater("zip");
+    private static final MethodHandle optionZipUpdater = updater("optionZip");
 
     /** The exposed property. */
-    public final String zip;
+    public final String optionZip;
 
     /**
      * HIDE CONSTRUCTOR
      */
     protected MixedArbitrary() {
-        this.zip = super.zip();
+        this.optionZip = super.optionZip();
     }
 
     /**
-     * Retrieve zip property.
+     * Retrieve optionZip property.
      */
     @Override
-    public final String zip() {
-        return this.zip;
+    public final String optionZip() {
+        return this.optionZip;
     }
 
     /**
      * Provide classic getter API.
      */
     @SuppressWarnings("unused")
-    private final String getZip() {
-        return this.zip;
+    private final String getOptionZip() {
+        return this.optionZip;
     }
 
     /**
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setZip(String value) {
-        ((ÅssignableÅrbitrary) this).zip(value);
+    private final void setOptionZip(String value) {
+        ((ÅssignableÅrbitrary) this).optionZip(value);
     }
 
     /** The singleton builder. */
@@ -74,16 +74,10 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
     /**
      * Builder namespace for {@link MixedArbitrary}.
      */
-    public static class Ìnstantiator<Self> {
+    protected static class Ìnstantiator<Self> extends Mixed.Ìnstantiator<Self> {
 
-        /**
-         * Create uninitialized {@link MixedArbitrary}.
-         */
-        public final Self create() {
-            return base();
-        }
-        protected Self base() {
-            return (Self) new Åssignable();
+        protected ÅssignableAll base() {
+            return new Åssignable();
         }
     }
 
@@ -95,9 +89,9 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
         /**
          * Property assignment API.
          */
-        default Next zip(String value) {
+        default Next optionZip(String value) {
             try {
-                zipUpdater.invoke(this, value);
+                optionZipUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
@@ -121,6 +115,6 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
      * The identifier for properties.
      */
     static final class My {
-        static final String Zip = "zip";
+        static final String OptionZip = "optionZip";
     }
 }

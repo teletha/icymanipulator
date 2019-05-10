@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator;
+package icy.manipulator.model;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
@@ -16,30 +16,32 @@ import java.util.stream.Collectors;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.type.ExecutableType;
 
-class Method {
+import icy.manipulator.Type;
+
+public class Method {
 
     /** The actual element. */
-    final ExecutableElement element;
+    public final ExecutableElement element;
 
     /** The method name. */
-    final String name;
+    public final String name;
 
     /** The identifier. */
-    final String id;
+    public final String id;
 
     /** The return type. */
-    final Type returnType;
+    public final Type returnType;
 
     /** The parameter types. */
-    final List<Type> paramTypes;
+    public final List<Type> paramTypes;
 
     /** The parameter names. */
-    final List<String> paramNames;
+    public final List<String> paramNames;
 
     /**
      * @param element
      */
-    Method(ExecutableElement element) {
+    public Method(ExecutableElement element) {
         this.element = element;
         this.name = element.getSimpleName().toString();
         this.id = element.toString().replaceAll("[\\s,\\(\\)\\.]", "");
@@ -56,7 +58,7 @@ class Method {
      * 
      * @return
      */
-    boolean hasParameter() {
+    public boolean hasParameter() {
         return !paramTypes.isEmpty();
     }
 
@@ -67,7 +69,7 @@ class Method {
      * @param type
      * @return
      */
-    <A extends Annotation> A getAnnotation(Class<A> type) {
+    public <A extends Annotation> A getAnnotation(Class<A> type) {
         return element.getAnnotation(type);
     }
 }

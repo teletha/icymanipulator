@@ -16,7 +16,7 @@ import icy.manipulator.property.model.Mixed;
 public abstract class MixedArbitraryModel extends Mixed {
 
     @Icy.Property
-    public String zip() {
+    public String optionZip() {
         return "";
     }
 }

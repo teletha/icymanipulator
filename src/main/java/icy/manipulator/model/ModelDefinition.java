@@ -23,7 +23,6 @@ import javax.lang.model.type.TypeMirror;
 
 import icy.manipulator.CodeAnalyzer;
 import icy.manipulator.Fail;
-import icy.manipulator.Type;
 import icy.manipulator.TypeUtil;
 
 public class ModelDefinition {
@@ -40,14 +39,8 @@ public class ModelDefinition {
     /** The required properties. */
     private final List<PropertyDefinition> requiredProperties = new LinkedList();
 
-    /** The required properties API. */
-    private final List<Type> requiredPropertyAPI = new LinkedList();
-
     /** The arbitrary properties. */
     private final List<PropertyDefinition> arbitraryProperties = new LinkedList();
-
-    /** The arbitrary properties API. */
-    private final List<Type> arbitraryPropertyAPI = new LinkedList();
 
     /**
      * 
@@ -103,15 +96,72 @@ public class ModelDefinition {
     }
 
     /**
+     * Find the first required property from ancestors and own.
+     * 
+     * @return
+     */
+    public Optional<PropertyDefinition> firstRequiredProperty() {
+        return parent.flatMap(p -> p.firstRequiredProperty()).or(() -> requiredProperties.stream().findFirst());
+    }
+
+    /**
      * Check whether this model has any required property on self or ancestors.
      * 
      * @return
      */
     public boolean hasRequiredProperty() {
-        if (requiredProperties.size() != 0 || requiredPropertyAPI.size() != 0) {
+        if (requiredProperties.size() != 0) {
             return true;
         }
         return parent.map(p -> p.hasRequiredProperty()).orElse(false);
+    }
+
+    /**
+     * Check whether this model has any required property on self or ancestors.
+     * 
+     * @return
+     */
+    public boolean hasArbitraryProperty() {
+        if (arbitraryProperties.size() != 0) {
+            return true;
+        }
+        return parent.map(p -> p.hasArbitraryProperty()).orElse(false);
+    }
+
+    /**
+     * Compute API route variable for required properties.
+     * 
+     * @param destination
+     * @return
+     */
+    public String ownRequiredRouteType(String destination) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < requiredProperties.size(); i++) {
+            builder.append(requiredProperties.get(i).assignableInterfaceName()).append("<");
+        }
+        builder.append(destination);
+        for (int i = 0; i < requiredProperties.size(); i++) {
+            builder.append(">");
+        }
+        return builder.toString();
+    }
+
+    /**
+     * Compute API route variable for required properties.
+     * 
+     * @param destination
+     * @return
+     */
+    public String ownRequiredRouteTypeWithoutFirst(String destination) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 1; i < requiredProperties.size(); i++) {
+            builder.append(requiredProperties.get(i).assignableInterfaceName()).append("<");
+        }
+        builder.append(destination);
+        for (int i = 1; i < requiredProperties.size(); i++) {
+            builder.append(">");
+        }
+        return builder.toString();
     }
 
     /**
@@ -207,8 +257,8 @@ public class ModelDefinition {
         });
 
         builder.append(name).append(" ").append(e.getAnnotationMirrors()).append(End);
-        builder.append("    required: ").append(merge(requiredProperties, requiredPropertyAPI)).append(End);
-        builder.append("    arbitrary: ").append(merge(arbitraryProperties, arbitraryPropertyAPI)).append(End);
+        builder.append("    required: ").append(requiredProperties).append(End);
+        builder.append("    arbitrary: ").append(arbitraryProperties).append(End);
 
         return builder.toString();
     }
