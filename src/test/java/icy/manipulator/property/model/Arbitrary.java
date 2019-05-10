@@ -1,4 +1,4 @@
-package icy.manipulator.property.object;
+package icy.manipulator.property.model;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -6,10 +6,10 @@ import java.lang.reflect.Field;
 import javax.annotation.processing.Generated;
 
 /**
- * Generated model for {@link DefaultModel}.
+ * Generated model for {@link ArbitraryModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class Default extends DefaultModel {
+public abstract class Arbitrary extends ArbitraryModel {
 
     /**
      * Create special property updater.
@@ -19,7 +19,7 @@ public abstract class Default extends DefaultModel {
      */
     private static final MethodHandle updater(String name)  {
         try {
-            Field field = Default.class.getDeclaredField(name);
+            Field field = Arbitrary.class.getDeclaredField(name);
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
@@ -28,86 +28,86 @@ public abstract class Default extends DefaultModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle nameUpdater = updater("name");
+    private static final MethodHandle optionNumUpdater = updater("optionNum");
 
     /** The final property updater. */
-    private static final MethodHandle standUpdater = updater("stand");
+    private static final MethodHandle optionCommentUpdater = updater("optionComment");
 
     /** The exposed property. */
-    public final String name;
+    public final int optionNum;
 
     /** The exposed property. */
-    public final String stand;
+    public final String optionComment;
 
     /**
      * HIDE CONSTRUCTOR
      */
-    protected Default() {
-        this.name = super.name();
-        this.stand = super.stand();
+    protected Arbitrary() {
+        this.optionNum = super.optionNum();
+        this.optionComment = super.optionComment();
     }
 
     /**
-     * Retrieve name property.
+     * Retrieve optionNum property.
      */
     @Override
-    public final String name() {
-        return this.name;
+    public final int optionNum() {
+        return this.optionNum;
     }
 
     /**
      * Provide classic getter API.
      */
     @SuppressWarnings("unused")
-    private final String getName() {
-        return this.name;
+    private final int getOptionNum() {
+        return this.optionNum;
     }
 
     /**
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setName(String value) {
-        ((ÅssignableÅrbitrary) this).name(value);
+    private final void setOptionNum(int value) {
+        ((ÅssignableÅrbitrary) this).optionNum(value);
     }
 
     /**
-     * Retrieve stand property.
+     * Retrieve optionComment property.
      */
     @Override
-    public final String stand() {
-        return this.stand;
+    public final String optionComment() {
+        return this.optionComment;
     }
 
     /**
      * Provide classic getter API.
      */
     @SuppressWarnings("unused")
-    private final String getStand() {
-        return this.stand;
+    private final String getOptionComment() {
+        return this.optionComment;
     }
 
     /**
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setStand(String value) {
-        ((ÅssignableÅrbitrary) this).stand(value);
+    private final void setOptionComment(String value) {
+        ((ÅssignableÅrbitrary) this).optionComment(value);
     }
 
     /** The singleton builder. */
     public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
 
-    public static final class ÌnstantiatorTyped<Self extends Default & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
+    public static final class ÌnstantiatorTyped<Self extends Arbitrary & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
     }
 
     /**
-     * Builder namespace for {@link Default}.
+     * Builder namespace for {@link Arbitrary}.
      */
     public static class Ìnstantiator<Self> {
 
         /**
-         * Create uninitialized {@link Default}.
+         * Create uninitialized {@link Arbitrary}.
          */
         public final Self create() {
             return base();
@@ -120,14 +120,14 @@ public abstract class Default extends DefaultModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends Default> {
+    public static interface ÅssignableÅrbitrary<Next extends Arbitrary> {
 
         /**
          * Property assignment API.
          */
-        default Next name(String value) {
+        default Next optionNum(int value) {
             try {
-                nameUpdater.invoke(this, value);
+                optionNumUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
@@ -137,9 +137,9 @@ public abstract class Default extends DefaultModel {
         /**
          * Property assignment API.
          */
-        default Next stand(String value) {
+        default Next optionComment(String value) {
             try {
-                standUpdater.invoke(this, value);
+                optionCommentUpdater.invoke(this, value);
             } catch (Throwable e) {
                 throw new Error(e);
             }
@@ -156,14 +156,14 @@ public abstract class Default extends DefaultModel {
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Default implements ÅssignableAll, ÅssignableÅrbitrary {
+    private static final class Åssignable extends Arbitrary implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**
      * The identifier for properties.
      */
     static final class My {
-        static final String Name = "name";
-        static final String Stand = "stand";
+        static final String OptionNum = "optionNum";
+        static final String OptionComment = "optionComment";
     }
 }

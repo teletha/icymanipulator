@@ -7,14 +7,14 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.property.extend;
+package icy.manipulator.property.extend.model;
 
 import icy.manipulator.Icy;
-import icy.manipulator.property.object.Default;
+import icy.manipulator.property.model.Multiple;
 
 @Icy
-public abstract class DefaultThenRequiredModel extends Default {
+public abstract class SubclassModel extends Multiple {
 
     @Icy.Property
-    public abstract long id();
+    public abstract String nickname();
 }

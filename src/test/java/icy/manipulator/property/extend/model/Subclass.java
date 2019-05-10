@@ -1,6 +1,6 @@
-package icy.manipulator.property.extend;
+package icy.manipulator.property.extend.model;
 
-import icy.manipulator.property.object.Multiple;
+import icy.manipulator.property.model.Multiple;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -102,7 +102,7 @@ public abstract class Subclass extends SubclassModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends Subclass> extends icy.manipulator.property.object.Multiple.ÅssignableÅrbitrary<Next> {
+    public static interface ÅssignableÅrbitrary<Next extends Subclass> extends icy.manipulator.property.model.Multiple.ÅssignableÅrbitrary<Next> {
     }
 
     /**

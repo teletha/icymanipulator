@@ -7,13 +7,16 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.property.object;
+package icy.manipulator.property.extend.model;
 
 import icy.manipulator.Icy;
+import icy.manipulator.property.model.Mixed;
 
 @Icy
-public abstract class SingleModel {
+public abstract class MixedArbitraryModel extends Mixed {
 
     @Icy.Property
-    public abstract String name();
+    public String zip() {
+        return "";
+    }
 }

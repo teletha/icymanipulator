@@ -14,8 +14,8 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import icy.manipulator.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
-import icy.manipulator.property.object.Multiple;
-import icy.manipulator.property.object.MultipleModel;
+import icy.manipulator.property.model.Multiple;
+import icy.manipulator.property.model.MultipleModel;
 
 class MultipleTest {
 

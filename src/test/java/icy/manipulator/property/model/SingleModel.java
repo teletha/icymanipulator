@@ -7,14 +7,13 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.property.extend;
+package icy.manipulator.property.model;
 
 import icy.manipulator.Icy;
-import icy.manipulator.property.object.MixLastDefault;
 
 @Icy
-public abstract class MixArbitrarySubclassModel extends MixLastDefault {
+public abstract class SingleModel {
 
     @Icy.Property
-    public abstract String nickname();
+    public abstract String name();
 }

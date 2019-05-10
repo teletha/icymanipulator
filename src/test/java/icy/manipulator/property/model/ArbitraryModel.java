@@ -7,18 +7,20 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.property.object;
+package icy.manipulator.property.model;
 
 import icy.manipulator.Icy;
 
 @Icy
-public abstract class MixLastDefaultModel {
+public abstract class ArbitraryModel {
 
     @Icy.Property
-    abstract String name();
+    int optionNum() {
+        return 10;
+    }
 
     @Icy.Property
-    int age() {
-        return 15;
+    String optionComment() {
+        return "";
     }
 }

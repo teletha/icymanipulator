@@ -7,19 +7,26 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.property.object;
+package icy.manipulator.property.model;
 
 import icy.manipulator.Icy;
 
 @Icy
-public abstract class MultipleModel {
+public abstract class MixedModel {
 
     @Icy.Property
     public abstract String name();
 
     @Icy.Property
-    public abstract String stand();
+    String optionAddress() {
+        return "";
+    }
 
     @Icy.Property
     public abstract int age();
+
+    @Icy.Property
+    String optionCommnet() {
+        return "";
+    }
 }

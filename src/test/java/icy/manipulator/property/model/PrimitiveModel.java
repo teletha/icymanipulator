@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.property.object;
+package icy.manipulator.property.model;
 
 import icy.manipulator.Icy;
 

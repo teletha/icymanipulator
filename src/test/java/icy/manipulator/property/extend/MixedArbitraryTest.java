@@ -7,24 +7,23 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.property;
+package icy.manipulator.property.extend;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import icy.manipulator.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
-import icy.manipulator.property.model.Single;
-import icy.manipulator.property.model.SingleModel;
+import icy.manipulator.property.extend.model.MixedArbitrary;
+import icy.manipulator.property.extend.model.MixedArbitraryModel;
 
-class SingleTest {
+class MixedArbitraryTest {
 
     @RegisterExtension
-    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, SingleModel.class);
+    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, MixedArbitraryModel.class);
 
     @Test
     void property() {
-        Single instance = Single.with.name("Giorno Giovanna");
-        assert instance.name.equals("Giorno Giovanna");
+        MixedArbitrary.with.create();
     }
 }

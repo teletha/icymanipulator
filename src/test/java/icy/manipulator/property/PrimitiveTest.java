@@ -14,8 +14,8 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import icy.manipulator.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
-import icy.manipulator.property.object.Primitive;
-import icy.manipulator.property.object.PrimitiveModel;
+import icy.manipulator.property.model.Primitive;
+import icy.manipulator.property.model.PrimitiveModel;
 
 class PrimitiveTest {
 
