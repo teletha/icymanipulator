@@ -21,14 +21,14 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
-import icy.manipulator.CodeAnalyzer;
+import icy.manipulator.CodeGenerator;
 import icy.manipulator.Fail;
 import icy.manipulator.TypeUtil;
 
 public class ModelDefinition {
 
     /** The source code location. */
-    private final TypeElement e;
+    public final TypeElement e;
 
     /** The parent model. */
     private final Optional<ModelDefinition> parent;
@@ -194,13 +194,13 @@ public class ModelDefinition {
             TypeElement type = (TypeElement) element;
             String name = type.getSimpleName().toString();
 
-            if (name.equals(CodeAnalyzer.AssignableAll)) {
+            if (name.equals(CodeGenerator.AssignableAll)) {
                 for (TypeMirror interfaceType : type.getInterfaces()) {
                     // estimate property name
                     String interfaceName = TypeUtil.simpleName(interfaceType);
 
-                    if (interfaceName.startsWith(CodeAnalyzer.Assignable)) {
-                        String proerptyName = TypeUtil.decapitalize(interfaceName.substring(CodeAnalyzer.Assignable.length()));
+                    if (interfaceName.startsWith(CodeGenerator.Assignable)) {
+                        String proerptyName = TypeUtil.decapitalize(interfaceName.substring(CodeGenerator.Assignable.length()));
 
                         for (ExecutableElement method : parentMethods) {
                             if (method.getSimpleName().contentEquals(proerptyName)) {
@@ -209,7 +209,7 @@ public class ModelDefinition {
                         }
                     }
                 }
-            } else if (name.equals(CodeAnalyzer.ArbitraryInterface)) {
+            } else if (name.equals(CodeGenerator.ArbitraryInterface)) {
                 List<ExecutableElement> setters = TypeUtil.setters(type);
 
                 root: for (ExecutableElement getter : parentMethods) {
@@ -251,7 +251,7 @@ public class ModelDefinition {
                 .stream()
                 .filter(i -> i.getKind() == ElementKind.INTERFACE)
                 .map(i -> (TypeElement) i)
-                .filter(i -> i.getQualifiedName().toString().endsWith(CodeAnalyzer.ArbitraryInterface))
+                .filter(i -> i.getQualifiedName().toString().endsWith(CodeGenerator.ArbitraryInterface))
                 .findFirst()
                 .map(i -> new ModelDefinition(parent).analyze())
                 .or(() -> analyzeParent(parent));

@@ -27,7 +27,7 @@ import javax.tools.JavaFileObject;
 public class IcyManipulator extends AbstractProcessor {
 
     /** The suffix of model definition. */
-    static final String ModelDefinitionSuffix = "Model";
+    public static final String ModelDefinitionSuffix = "Model";
 
     /** The utility. */
     static ClassImporter importer;
@@ -46,7 +46,7 @@ public class IcyManipulator extends AbstractProcessor {
 
         for (Element element : env.getElementsAnnotatedWith(Icy.class)) {
             importer = new ClassImporter(element.toString());
-            CodeAnalyzer analyzer = element.accept(new CodeAnalyzer(element), null);
+            CodeGenerator analyzer = new CodeGenerator(element);
 
             analyzer.prepare();
 

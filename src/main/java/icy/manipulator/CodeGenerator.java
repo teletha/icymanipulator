@@ -18,13 +18,7 @@ import java.util.StringJoiner;
 
 import javax.annotation.processing.Generated;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
-import javax.lang.model.element.ElementVisitor;
 import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.PackageElement;
-import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.TypeParameterElement;
-import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
 
@@ -34,7 +28,7 @@ import icy.manipulator.model.ModelDefinition;
 import icy.manipulator.model.PropertyDefinition;
 import icy.manipulator.model.PropetyInfo;
 
-public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElement> {
+public class CodeGenerator {
 
     /** The prefix of assignable type. */
     public static final String Assignable = "Åssignable";
@@ -79,7 +73,7 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
      * @param root
      * @param elements
      */
-    CodeAnalyzer(Element root) {
+    CodeGenerator(Element root) {
         this.root = root;
         this.icy = root.getAnnotation(Icy.class);
         this.m = new ModelDefinition(root);
@@ -91,80 +85,22 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
         } else {
             this.parent = superType;
         }
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CodeAnalyzer visit(Element e, VariableElement p) {
-        return this;
-    }
+        // analyze
+        String name = m.e.getQualifiedName().toString();
+        DeclaredType declared = (DeclaredType) m.e.asType();
+        List<? extends TypeMirror> variables = declared.getTypeArguments();
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CodeAnalyzer visit(Element e) {
-        return visit(e, null);
-    }
+        model = new Type(name, variables);
+        clazz = new Type(name.replaceAll(IcyManipulator.ModelDefinitionSuffix + "$", ""), variables);
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CodeAnalyzer visitPackage(PackageElement e, VariableElement p) {
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CodeAnalyzer visitType(TypeElement e, VariableElement p) {
-        switch (e.getKind()) {
-        case CLASS:
-            if (model == null) {
-                String name = e.getQualifiedName().toString();
-                DeclaredType declared = (DeclaredType) e.asType();
-                List<? extends TypeMirror> variables = declared.getTypeArguments();
-
-                model = new Type(name, variables);
-                clazz = new Type(name.replaceAll(IcyManipulator.ModelDefinitionSuffix + "$", ""), variables);
-            }
-            break;
-
-        default:
-            break;
-        }
-
-        for (Element sub : e.getEnclosedElements()) {
-            sub.accept(this, p);
-        }
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CodeAnalyzer visitVariable(VariableElement e, VariableElement p) {
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CodeAnalyzer visitExecutable(ExecutableElement e, VariableElement z) {
-        if (e.getKind() == ElementKind.METHOD) {
+        TypeUtil.methods(m.e).forEach(e -> {
             createAsProperty(e);
 
             // collect overload methods
             Overload overload = e.getAnnotation(Icy.Overload.class);
             if (overload != null) overloads.add(new Method(e));
-        }
-        return this;
+        });
     }
 
     /**
@@ -175,45 +111,29 @@ public class CodeAnalyzer implements ElementVisitor<CodeAnalyzer, VariableElemen
     private void createAsProperty(ExecutableElement method) {
         // require annotation
         icy.manipulator.Icy.Property annotation = method.getAnnotation(Icy.Property.class);
-    
+
         if (annotation == null) {
             return;
         }
-    
+
         // require no parameter
         if (method.getParameters().size() != 0) {
             throw new Fail(method, "Property declaring method must have no parameter.");
         }
-    
+
         Type returnType = Type.of(method.getReturnType());
-    
+
         if (returnType.className.equalsIgnoreCase("void")) {
             throw new Fail(method, "Property declaring method must return something.");
         }
-    
+
         PropertyDefinition property = new PropertyDefinition(method);
-    
+
         if (property.isArbitrary) {
             m.addArbitraryProperty(property);
         } else {
             m.addRequiredProperty(property);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CodeAnalyzer visitTypeParameter(TypeParameterElement e, VariableElement p) {
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CodeAnalyzer visitUnknown(Element e, VariableElement p) {
-        return this;
     }
 
     /**

@@ -33,16 +33,16 @@ import javax.lang.model.type.WildcardType;
 public class Type {
 
     /** The package name. */
-    final String packageName;
+    public final String packageName;
 
     /** The class name. */
-    final String className;
+    public final String className;
 
     /** The variable expression. */
-    final StringJoiner variable = new StringJoiner(", ", "<", ">").setEmptyValue("");
+    public final StringJoiner variable = new StringJoiner(", ", "<", ">").setEmptyValue("");
 
     /** The generic flag. */
-    final boolean generic;
+    public final boolean generic;
 
     /**
      * <p>
@@ -51,7 +51,7 @@ public class Type {
      * 
      * @param type
      */
-    Type(Class type) {
+    public Type(Class type) {
         this(type.getPackage().getName(), type.getSimpleName(), false);
     }
 
@@ -63,7 +63,7 @@ public class Type {
      * @param fqcn
      * @param generics
      */
-    Type(String fqcn, List<? extends TypeMirror> generics) {
+    public Type(String fqcn, List<? extends TypeMirror> generics) {
         if (generics != null && !generics.isEmpty()) {
             for (TypeMirror generic : generics) {
                 variable.add(IcyManipulator.importer.use(of(generic)));
@@ -91,7 +91,7 @@ public class Type {
      * @param className
      * @param generic
      */
-    Type(String packageName, String className, boolean generic) {
+    public Type(String packageName, String className, boolean generic) {
         this.packageName = packageName;
         this.className = className;
         this.generic = generic;

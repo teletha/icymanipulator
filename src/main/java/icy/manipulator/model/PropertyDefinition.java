@@ -12,7 +12,7 @@ package icy.manipulator.model;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 
-import icy.manipulator.CodeAnalyzer;
+import icy.manipulator.CodeGenerator;
 import icy.manipulator.Type;
 import icy.manipulator.TypeUtil;
 
@@ -62,9 +62,9 @@ public class PropertyDefinition {
      */
     public String assignableInterfaceName() {
         if (isArbitrary) {
-            return CodeAnalyzer.ArbitraryInterface;
+            return CodeGenerator.ArbitraryInterface;
         } else {
-            return CodeAnalyzer.Assignable + TypeUtil.capitalize(name);
+            return CodeGenerator.Assignable + TypeUtil.capitalize(name);
         }
     }
 
