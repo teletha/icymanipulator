@@ -19,8 +19,6 @@ import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.type.DeclaredType;
-import javax.lang.model.type.TypeMirror;
 
 import icy.manipulator.Icy.Overload;
 import icy.manipulator.model.Method;
@@ -41,9 +39,6 @@ public class CodeGenerator {
 
     /** The configuration interface name for arbitrary perperties. */
     public static final String ArbitraryInterface = Assignable + "Årbitrary";
-
-    /** The root element of the model. */
-    private final Element root;
 
     /** The {@link Icy} info on the model class. */
     private final Icy icy;
@@ -74,25 +69,13 @@ public class CodeGenerator {
      * @param elements
      */
     CodeGenerator(Element root) {
-        this.root = root;
         this.icy = root.getAnnotation(Icy.class);
         this.m = new ModelDefinition(root);
-
-        Type superType = Type.of(TypeUtil.types.directSupertypes(root.asType()).get(0));
-
-        if (superType.toString().equals("java.lang.Object")) {
-            this.parent = null;
-        } else {
-            this.parent = superType;
-        }
+        this.parent = m.parent.map(p -> p.implementationType).orElse(null);
 
         // analyze
-        String name = m.e.getQualifiedName().toString();
-        DeclaredType declared = (DeclaredType) m.e.asType();
-        List<? extends TypeMirror> variables = declared.getTypeArguments();
-
-        model = new Type(name, variables);
-        clazz = new Type(name.replaceAll(IcyManipulator.ModelDefinitionSuffix + "$", ""), variables);
+        model = m.type;
+        clazz = m.implementationType;
 
         TypeUtil.methods(m.e).forEach(e -> {
             createAsProperty(e);

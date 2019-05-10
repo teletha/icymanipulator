@@ -23,6 +23,8 @@ import javax.lang.model.type.TypeMirror;
 
 import icy.manipulator.CodeGenerator;
 import icy.manipulator.Fail;
+import icy.manipulator.Icy;
+import icy.manipulator.Type;
 import icy.manipulator.TypeUtil;
 
 public class ModelDefinition {
@@ -31,10 +33,16 @@ public class ModelDefinition {
     public final TypeElement e;
 
     /** The parent model. */
-    private final Optional<ModelDefinition> parent;
+    public final Optional<ModelDefinition> parent;
 
     /** The model name. */
-    private final String name;
+    public final String name;
+
+    /** The model type. */
+    public final Type type;
+
+    /** The implementaion type. */
+    public final Type implementationType;
 
     /** The required properties. */
     private final List<PropertyDefinition> requiredProperties = new LinkedList();
@@ -50,7 +58,22 @@ public class ModelDefinition {
             throw new Fail(element, ModelDefinition.class.getSimpleName() + " requires class.");
         }
         this.e = (TypeElement) element;
-        this.name = e.getSimpleName().toString();
+
+        Icy icy = element.getAnnotation(Icy.class);
+
+        if (icy == null) {
+            // by generated implementation
+            TypeElement model = TypeUtil.parent(e);
+            this.name = model.getSimpleName().toString();
+            this.type = Type.of(model);
+            this.implementationType = Type.of(e);
+        } else {
+            // by defined model
+            this.name = e.getSimpleName().toString();
+            this.type = Type.of(e);
+            this.implementationType = Type.of(e.getQualifiedName().toString().replaceAll(icy.modelBase() + "$", ""));
+        }
+
         this.parent = analyzeParent(e);
     }
 
@@ -102,6 +125,24 @@ public class ModelDefinition {
      */
     public Optional<PropertyDefinition> firstRequiredProperty() {
         return parent.flatMap(p -> p.firstRequiredProperty()).or(() -> requiredProperties.stream().findFirst());
+    }
+
+    /**
+     * Check whether this model is subclass of other model or not.
+     * 
+     * @return
+     */
+    public boolean hasParent() {
+        return parent.isPresent();
+    }
+
+    /**
+     * Check whether this model is subclass of other model or not.
+     * 
+     * @return
+     */
+    public boolean hasNoParent() {
+        return parent.isEmpty();
     }
 
     /**

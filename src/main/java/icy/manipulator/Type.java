@@ -255,6 +255,18 @@ public class Type {
 
     /**
      * <p>
+     * Resoleve {@link Type} by the fully qualified class name.
+     * </p>
+     * 
+     * @param fcn
+     * @return
+     */
+    public static final Type of(String fqcn) {
+        return new Type(fqcn, null);
+    }
+
+    /**
+     * <p>
      * Resoleve {@link Type} by {@link TypeMirror}.
      * </p>
      * 

@@ -35,6 +35,13 @@ public @interface Icy {
      */
     String builder() default "with";
 
+    /**
+     * Configure the postfix base name of model class. (default is "Model")
+     * 
+     * @return
+     */
+    String modelBase() default "Model";
+
     @Documented
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.SOURCE)
