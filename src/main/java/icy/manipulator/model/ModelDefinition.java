@@ -278,6 +278,26 @@ public class ModelDefinition {
     }
 
     /**
+     * Compute API route variable for required properties.
+     * 
+     * @param destination
+     * @return
+     */
+    public String requiredRouteType(int depature, String destination) {
+        StringBuilder builder = new StringBuilder();
+        List<PropertyDefinition> properties = requiredProperties();
+
+        for (int i = depature; i < properties.size(); i++) {
+            builder.append(properties.get(i).assignableInterfaceName()).append("<");
+        }
+        builder.append(destination);
+        for (int i = depature; i < properties.size(); i++) {
+            builder.append(">");
+        }
+        return builder.toString();
+    }
+
+    /**
      * Find property by name.
      * 
      * @param name A property name.

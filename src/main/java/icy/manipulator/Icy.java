@@ -54,9 +54,14 @@ public @interface Icy {
      * 
      * @return "private"
      */
-    String classicSetterModifier()
+    String classicSetterModifier() default "private";
 
-    default "private";
+    /**
+     * Configure the grouping size of first required properties.
+     * 
+     * @return
+     */
+    int grouping() default 1;
 
     @Documented
     @Target(ElementType.METHOD)

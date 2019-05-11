@@ -71,7 +71,6 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
      * Builder namespace for {@link RequiredRequired}.
      */
     public static final class Ìnstantiator<Self extends RequiredRequired & ÅssignableÅrbitrary<Self>> {
-
         /**
          * Create uninitialized {@link RequiredRequired}.
          */

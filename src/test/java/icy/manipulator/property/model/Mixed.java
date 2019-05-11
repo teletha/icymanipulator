@@ -164,7 +164,6 @@ public abstract class Mixed extends MixedModel {
      * Builder namespace for {@link Mixed}.
      */
     public static final class Ìnstantiator<Self extends Mixed & ÅssignableÅrbitrary<Self>> {
-
         /**
          * Create uninitialized {@link Mixed}.
          */

@@ -134,7 +134,6 @@ public abstract class Overload extends OverloadModel {
      * Builder namespace for {@link Overload}.
      */
     public static final class Ìnstantiator<Self extends Overload & ÅssignableÅrbitrary<Self>> {
-
         /**
          * Create uninitialized {@link Overload}.
          */

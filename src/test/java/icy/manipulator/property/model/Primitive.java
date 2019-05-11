@@ -288,7 +288,6 @@ public abstract class Primitive extends PrimitiveModel {
      * Builder namespace for {@link Primitive}.
      */
     public static final class Ìnstantiator<Self extends Primitive & ÅssignableÅrbitrary<Self>> {
-
         /**
          * Create uninitialized {@link Primitive}.
          */

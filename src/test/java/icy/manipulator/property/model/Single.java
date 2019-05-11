@@ -71,7 +71,6 @@ public abstract class Single extends SingleModel {
      * Builder namespace for {@link Single}.
      */
     public static final class Ìnstantiator<Self extends Single & ÅssignableÅrbitrary<Self>> {
-
         /**
          * Create uninitialized {@link Single}.
          */

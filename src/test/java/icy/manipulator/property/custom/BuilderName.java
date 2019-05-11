@@ -71,7 +71,6 @@ public abstract class BuilderName extends BuilderNameModel {
      * Builder namespace for {@link BuilderName}.
      */
     public static final class Ìnstantiator<Self extends BuilderName & ÅssignableÅrbitrary<Self>> {
-
         /**
          * Create uninitialized {@link BuilderName}.
          */

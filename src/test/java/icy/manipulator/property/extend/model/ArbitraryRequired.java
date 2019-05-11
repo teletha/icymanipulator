@@ -71,7 +71,6 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
      * Builder namespace for {@link ArbitraryRequired}.
      */
     public static final class Ìnstantiator<Self extends ArbitraryRequired & ÅssignableÅrbitrary<Self>> {
-
         /**
          * Create uninitialized {@link ArbitraryRequired}.
          */

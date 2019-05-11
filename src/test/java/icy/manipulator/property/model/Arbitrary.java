@@ -102,7 +102,6 @@ public abstract class Arbitrary extends ArbitraryModel {
      * Builder namespace for {@link Arbitrary}.
      */
     public static final class Ìnstantiator<Self extends Arbitrary & ÅssignableÅrbitrary<Self>> {
-
         /**
          * Create uninitialized {@link Arbitrary}.
          */

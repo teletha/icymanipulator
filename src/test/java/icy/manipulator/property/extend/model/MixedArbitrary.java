@@ -71,7 +71,6 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
      * Builder namespace for {@link MixedArbitrary}.
      */
     public static final class Ìnstantiator<Self extends MixedArbitrary & ÅssignableÅrbitrary<Self>> {
-
         /**
          * Create uninitialized {@link MixedArbitrary}.
          */

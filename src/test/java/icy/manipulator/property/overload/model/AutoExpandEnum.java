@@ -71,7 +71,6 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
      * Builder namespace for {@link AutoExpandEnum}.
      */
     public static final class Ìnstantiator<Self extends AutoExpandEnum & ÅssignableÅrbitrary<Self>> {
-
         /**
          * Create uninitialized {@link AutoExpandEnum}.
          */

@@ -12,6 +12,7 @@ package icy.manipulator;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Optional;
 import java.util.StringJoiner;
 
@@ -240,17 +241,20 @@ public class CodeGenerator {
         code.write(" * Builder namespace for {@link ", m.implType, "}.");
         code.write(" */");
         code.write("public static final class ", Instantiator, "<Self extends ", m.implType.className, " & ", ArbitraryInterface, "<Self>>", () -> {
-            code.write();
             m.firstRequiredProperty().ifPresentOrElse(p -> {
-                // base setter
+                // =========================================
+                // Base Setter
+                // =========================================
                 code.write("/**");
                 code.write(" * Create uninitialized {@link ", m.implType, "}.");
                 code.write(" */");
-                code.write("public final <T extends ", m
-                        .requiredRouteTypeWithoutFirst("Self"), "> T ", p.name, "(", p.type, " value)", () -> {
-                            code.write("return (T) new ", Assignable, "().", p.name, "(value);");
-                        });
+                code.write("public final <T extends ", m.requiredRouteType(1, "Self"), "> T ", p.name, "(", p.type, " value)", () -> {
+                    code.write("return (T) new ", Assignable, "().", p.name, "(value);");
+                });
 
+                // =========================================
+                // Overload Setter
+                // =========================================
                 for (Method method : m.findOverloadsFor(p)) {
                     code.write();
                     code.write("/**");
@@ -260,7 +264,35 @@ public class CodeGenerator {
                         code.write("return (T) new ", Assignable, "().", method.name, "(", method.paramNames, ");");
                     });
                 }
+
+                // =========================================
+                // Grouped Setter
+                // =========================================
+                int group = icy.grouping();
+                if (1 < group && group <= m.requiredProperties().size()) {
+                    List<PropertyDefinition> properties = m.requiredProperties();
+                    StringJoiner method = new StringJoiner(", ", p.name + "(", ")");
+                    for (int i = 0; i < group; i++) {
+                        PropertyDefinition property = properties.get(i);
+                        method.add(property.type + " " + property.name);
+                    }
+
+                    code.write("/**");
+                    code.write(" * Create uninitialized {@link ", m.implType, "}.");
+                    code.write(" */");
+                    code.write("public final <T extends ", m.requiredRouteType(group, "Self"), "> T ", method, () -> {
+                        code.write(Assignable, " o = new ", Assignable, "();");
+                        for (int i = 0; i < group; i++) {
+                            PropertyDefinition property = properties.get(i);
+                            code.write("o.", property.name, "(", property.name, ");");
+                        }
+                        code.write("return (T) o;");
+                    });
+                }
             }, () -> {
+                // =========================================
+                // No Required Property
+                // =========================================
                 code.write("/**");
                 code.write(" * Create uninitialized {@link ", m.implType, "}.");
                 code.write(" */");

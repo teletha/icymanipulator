@@ -133,7 +133,6 @@ public abstract class Multiple extends MultipleModel {
      * Builder namespace for {@link Multiple}.
      */
     public static final class Ìnstantiator<Self extends Multiple & ÅssignableÅrbitrary<Self>> {
-
         /**
          * Create uninitialized {@link Multiple}.
          */

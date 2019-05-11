@@ -71,7 +71,6 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
      * Builder namespace for {@link ImplementationVisibility}.
      */
     public static final class Ìnstantiator<Self extends ImplementationVisibility & ÅssignableÅrbitrary<Self>> {
-
         /**
          * Create uninitialized {@link ImplementationVisibility}.
          */
