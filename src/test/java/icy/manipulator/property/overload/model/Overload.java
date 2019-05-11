@@ -1,4 +1,4 @@
-package icy.manipulator.property.overload;
+package icy.manipulator.property.overload.model;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;

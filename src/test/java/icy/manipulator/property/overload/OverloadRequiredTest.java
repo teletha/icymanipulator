@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.property;
+package icy.manipulator.property.overload;
 
 import java.time.LocalDate;
 
@@ -16,13 +16,13 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import icy.manipulator.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
-import icy.manipulator.property.overload.Overload;
-import icy.manipulator.property.overload.OverloadModel;
+import icy.manipulator.property.overload.model.Overload;
+import icy.manipulator.property.overload.model.OverloadRequiredModel;
 
-class OverloadTest {
+class OverloadRequiredTest {
 
     @RegisterExtension
-    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, OverloadModel.class);
+    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, OverloadRequiredModel.class);
 
     @Test
     void overload() {

@@ -20,6 +20,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
 
 import icy.manipulator.CodeGenerator;
@@ -306,7 +307,7 @@ public class ModelDefinition {
      * @return Chainable API.
      */
     private ModelDefinition analyze() {
-        List<ExecutableElement> parentMethods = TypeUtil.methods(TypeUtil.parent(e));
+        List<ExecutableElement> parentMethods = TypeUtil.getters(TypeUtil.parent(e));
 
         for (Element element : e.getEnclosedElements()) {
             if (element.getKind() != ElementKind.INTERFACE) {
@@ -317,17 +318,30 @@ public class ModelDefinition {
             String name = type.getSimpleName().toString();
 
             if (name.equals(CodeGenerator.AssignableAll)) {
-                for (TypeMirror interfaceType : type.getInterfaces()) {
+                root: for (TypeMirror interfaceType : type.getInterfaces()) {
                     // estimate property name
                     String interfaceName = TypeUtil.simpleName(interfaceType);
 
                     if (interfaceName.startsWith(CodeGenerator.Assignable)) {
                         String proerptyName = TypeUtil.decapitalize(interfaceName.substring(CodeGenerator.Assignable.length()));
 
-                        for (ExecutableElement method : parentMethods) {
-                            if (method.getSimpleName().contentEquals(proerptyName)) {
-                                requiredProperties.add(new PropertyDefinition(method));
+                        for (ExecutableElement getter : parentMethods) {
+                            // check name
+                            if (!getter.getSimpleName().contentEquals(proerptyName)) {
+                                continue;
                             }
+
+                            PropertyDefinition property = new PropertyDefinition(getter);
+                            requiredProperties.add(property);
+
+                            for (ExecutableElement method : TypeUtil.methods(interfaceType)) {
+                                List<? extends VariableElement> parameters = method.getParameters();
+
+                                if (parameters.size() != 1 || TypeUtil.diff(getter.getReturnType(), parameters.get(0))) {
+                                    overloadForProperty.add(property, new Method(method));
+                                }
+                            }
+                            continue root;
                         }
                     }
                 }
@@ -379,13 +393,12 @@ public class ModelDefinition {
                 .or(() -> analyzeParent(parent));
     }
 
-    private static final String End = "\r\n";
-
     /**
      * {@inheritDoc}
      */
     @Override
     public String toString() {
+        String End = "\r\n";
         StringBuilder builder = new StringBuilder();
 
         parent.ifPresent(m -> {
@@ -395,6 +408,7 @@ public class ModelDefinition {
         builder.append(name).append(" ").append(e.getAnnotationMirrors()).append(End);
         builder.append("    required: ").append(requiredProperties).append(End);
         builder.append("    arbitrary: ").append(arbitraryProperties).append(End);
+        builder.append("    overload: ").append(overloadForProperty).append(End);
 
         return builder.toString();
     }
@@ -440,6 +454,14 @@ public class ModelDefinition {
          */
         private List<T> find(PropertyDefinition property) {
             return holder.computeIfAbsent(property, p -> new LinkedList());
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String toString() {
+            return holder.toString();
         }
     }
 }

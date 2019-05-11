@@ -122,6 +122,16 @@ public class TypeUtil {
      * @param e A target type.
      * @return
      */
+    public static List<ExecutableElement> methods(TypeMirror e) {
+        return methods(type(e));
+    }
+
+    /**
+     * Find all declared methods.
+     * 
+     * @param e A target type.
+     * @return
+     */
     public static List<ExecutableElement> methods(TypeElement e) {
         return methods(e, x -> true);
     }
@@ -158,6 +168,17 @@ public class TypeUtil {
      */
     public static boolean same(TypeMirror type, Element element) {
         return types.isSameType(type, element.asType());
+    }
+
+    /**
+     * Check type equality.
+     * 
+     * @param type
+     * @param element
+     * @return
+     */
+    public static boolean diff(TypeMirror type, Element element) {
+        return !types.isSameType(type, element.asType());
     }
 
     /**

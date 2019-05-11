@@ -55,6 +55,8 @@ public class CodeGenerator {
         this.icy = model.e.getAnnotation(Icy.class);
         this.m = model;
         this.parent = m.parent.map(p -> p.implType).orElse(null);
+
+        System.out.println(model);
     }
 
     /**

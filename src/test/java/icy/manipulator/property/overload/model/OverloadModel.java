@@ -7,13 +7,13 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.property.overload;
+package icy.manipulator.property.overload.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import icy.manipulator.Icy;
-import icy.manipulator.property.overload.Overload.My;
+import icy.manipulator.property.overload.model.Overload.My;
 
 @Icy
 public abstract class OverloadModel {

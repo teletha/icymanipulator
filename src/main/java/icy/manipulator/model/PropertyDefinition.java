@@ -83,7 +83,7 @@ public class PropertyDefinition {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(name).append("(").append(type).append(")");
+        builder.append(name).append("(").append(type.className).append(")");
         return builder.toString();
     }
 }

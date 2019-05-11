@@ -11,6 +11,7 @@ package icy.manipulator.model;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 import javax.lang.model.element.ExecutableElement;
@@ -71,5 +72,17 @@ public class Method {
      */
     public <A extends Annotation> A getAnnotation(Class<A> type) {
         return element.getAnnotation(type);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        StringJoiner builder = new StringJoiner(", ", name + "(", ")");
+        for (Type type : paramTypes) {
+            builder.add(type.className);
+        }
+        return builder.toString();
     }
 }
