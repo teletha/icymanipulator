@@ -239,20 +239,11 @@ public class CodeGenerator {
         code.write(" */");
         code.write("public static final class ", Instantiator, "<Self extends ", m.implType.className, " & ", ArbitraryInterface, "<Self>>", () -> {
             code.write();
-
-            Optional<PropertyDefinition> first = m.firstRequiredProperty();
-
-            if (first.isEmpty()) {
+            m.firstRequiredProperty().ifPresentOrElse(p -> {
+                // base setter
                 code.write("/**");
                 code.write(" * Create uninitialized {@link ", m.implType, "}.");
                 code.write(" */");
-                code.write("public final Self create()", () -> {
-                    code.write("return (Self) new ", Assignable, "();");
-                });
-            } else {
-                PropertyDefinition p = first.get();
-                // base setter
-                code.write("/** Create Uninitialized {@link ", m.implType, "}. */");
                 code.write("public final <T extends ", m
                         .requiredRouteTypeWithoutFirst("Self"), "> T ", p.name, "(", p.type, " value)", () -> {
                             code.write("return (T) new ", Assignable, "().", p.name, "(value);");
@@ -260,12 +251,21 @@ public class CodeGenerator {
 
                 for (Method method : m.findOverloadsFor(p)) {
                     code.write();
-                    code.write("/** Create Uninitialized {@link ", m.implType, "}. */");
+                    code.write("/**");
+                    code.write(" * Create uninitialized {@link ", m.implType, "}.");
+                    code.write(" */");
                     code.write("public final <T extends ", m.requiredRouteTypeWithoutFirst("Self"), "> T ", method, () -> {
                         code.write("return (T) new ", Assignable, "().", method.name, "(", method.paramNames, ");");
                     });
                 }
-            }
+            }, () -> {
+                code.write("/**");
+                code.write(" * Create uninitialized {@link ", m.implType, "}.");
+                code.write(" */");
+                code.write("public final Self create()", () -> {
+                    code.write("return (Self) new ", Assignable, "();");
+                });
+            });
         });
     }
 

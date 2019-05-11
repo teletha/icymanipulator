@@ -165,7 +165,9 @@ public abstract class Mixed extends MixedModel {
      */
     public static final class Ìnstantiator<Self extends Mixed & ÅssignableÅrbitrary<Self>> {
 
-        /** Create Uninitialized {@link Mixed}. */
+        /**
+         * Create uninitialized {@link Mixed}.
+         */
         public final <T extends ÅssignableAge<Self>> T name(String value) {
             return (T) new Åssignable().name(value);
         }

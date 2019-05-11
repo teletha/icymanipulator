@@ -72,7 +72,9 @@ public abstract class Single extends SingleModel {
      */
     public static final class Ìnstantiator<Self extends Single & ÅssignableÅrbitrary<Self>> {
 
-        /** Create Uninitialized {@link Single}. */
+        /**
+         * Create uninitialized {@link Single}.
+         */
         public final <T extends Self> T name(String value) {
             return (T) new Åssignable().name(value);
         }

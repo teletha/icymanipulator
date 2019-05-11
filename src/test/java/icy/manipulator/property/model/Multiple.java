@@ -134,7 +134,9 @@ public abstract class Multiple extends MultipleModel {
      */
     public static final class Ìnstantiator<Self extends Multiple & ÅssignableÅrbitrary<Self>> {
 
-        /** Create Uninitialized {@link Multiple}. */
+        /**
+         * Create uninitialized {@link Multiple}.
+         */
         public final <T extends ÅssignableStand<ÅssignableAge<Self>>> T name(String value) {
             return (T) new Åssignable().name(value);
         }

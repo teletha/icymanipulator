@@ -72,7 +72,9 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
      */
     public static final class Ìnstantiator<Self extends ArbitraryRequired & ÅssignableÅrbitrary<Self>> {
 
-        /** Create Uninitialized {@link ArbitraryRequired}. */
+        /**
+         * Create uninitialized {@link ArbitraryRequired}.
+         */
         public final <T extends Self> T id(long value) {
             return (T) new Åssignable().id(value);
         }

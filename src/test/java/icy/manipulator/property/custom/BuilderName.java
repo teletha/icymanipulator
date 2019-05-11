@@ -72,7 +72,9 @@ public abstract class BuilderName extends BuilderNameModel {
      */
     public static final class Ìnstantiator<Self extends BuilderName & ÅssignableÅrbitrary<Self>> {
 
-        /** Create Uninitialized {@link BuilderName}. */
+        /**
+         * Create uninitialized {@link BuilderName}.
+         */
         public final <T extends Self> T name(String value) {
             return (T) new Åssignable().name(value);
         }

@@ -72,7 +72,9 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
      */
     public static final class Ìnstantiator<Self extends ImplementationVisibility & ÅssignableÅrbitrary<Self>> {
 
-        /** Create Uninitialized {@link ImplementationVisibility}. */
+        /**
+         * Create uninitialized {@link ImplementationVisibility}.
+         */
         public final <T extends Self> T name(String value) {
             return (T) new Åssignable().name(value);
         }

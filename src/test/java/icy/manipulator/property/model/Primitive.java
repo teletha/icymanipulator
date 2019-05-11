@@ -289,7 +289,9 @@ public abstract class Primitive extends PrimitiveModel {
      */
     public static final class Ìnstantiator<Self extends Primitive & ÅssignableÅrbitrary<Self>> {
 
-        /** Create Uninitialized {@link Primitive}. */
+        /**
+         * Create uninitialized {@link Primitive}.
+         */
         public final <T extends ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Self>>>>>>>> T intX(int value) {
             return (T) new Åssignable().intX(value);
         }
