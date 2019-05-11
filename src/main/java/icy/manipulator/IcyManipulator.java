@@ -11,54 +11,94 @@ package icy.manipulator;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
 import java.util.Set;
 
-import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.Completion;
+import javax.annotation.processing.Filer;
+import javax.annotation.processing.ProcessingEnvironment;
+import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedAnnotationTypes;
-import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
+import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.tools.JavaFileObject;
 
 import icy.manipulator.model.ModelDefinition;
 
-@SupportedSourceVersion(SourceVersion.RELEASE_13)
-@SupportedAnnotationTypes("icy.manipulator.Icy")
-public class IcyManipulator extends AbstractProcessor {
-
-    /** The suffix of model definition. */
-    public static final String ModelDefinitionSuffix = "Model";
+public class IcyManipulator implements Processor {
 
     /** The utility. */
     static ClassImporter importer;
+
+    /** The file manager. */
+    private Filer filer;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment env) {
+    public Set<String> getSupportedOptions() {
+        return Set.of();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<String> getSupportedAnnotationTypes() {
+        return Set.of(Icy.class.getName());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SourceVersion getSupportedSourceVersion() {
+        return SourceVersion.RELEASE_12;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void init(ProcessingEnvironment process) {
+        this.filer = process.getFiler();
+
+        TypeUtil.types = process.getTypeUtils();
+        TypeUtil.elements = process.getElementUtils();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Iterable<? extends Completion> getCompletions(Element element, AnnotationMirror annotation, ExecutableElement member, String userText) {
+        return List.of();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment round) {
         if (annotations.isEmpty()) {
             return true;
         }
 
-        TypeUtil.types = processingEnv.getTypeUtils();
-        TypeUtil.elements = processingEnv.getElementUtils();
-
-        for (Element element : env.getElementsAnnotatedWith(Icy.class)) {
+        for (Element element : round.getElementsAnnotatedWith(Icy.class)) {
             importer = new ClassImporter(element.toString());
 
             ModelDefinition model = new ModelDefinition(element);
-            CodeGenerator analyzer = new CodeGenerator(model);
+            CodeGenerator generator = new CodeGenerator(model);
 
             try {
-                String code = analyzer.defineCode();
-
-                JavaFileObject generated = processingEnv.getFiler().createSourceFile(model.implType.toString());
-                Writer writer = generated.openWriter();
-                writer.write(code);
-                writer.close();
+                JavaFileObject implementationFile = filer.createSourceFile(model.implType.toString());
+                try (Writer writer = implementationFile.openWriter()) {
+                    writer.write(generator.generate());
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

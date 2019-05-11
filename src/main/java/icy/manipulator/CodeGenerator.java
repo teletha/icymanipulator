@@ -62,7 +62,7 @@ public class CodeGenerator {
      * 
      * @return
      */
-    String defineCode() {
+    String generate() {
         String visibility = icy.packagePrivate() ? "" : "public ";
 
         code.write("/**");
