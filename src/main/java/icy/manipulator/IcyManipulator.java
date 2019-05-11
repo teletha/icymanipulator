@@ -52,12 +52,10 @@ public class IcyManipulator extends AbstractProcessor {
             ModelDefinition model = new ModelDefinition(element);
             CodeGenerator analyzer = new CodeGenerator(model);
 
-            analyzer.prepare();
-
             try {
                 String code = analyzer.defineCode();
 
-                JavaFileObject generated = processingEnv.getFiler().createSourceFile(model.implementationType.toString());
+                JavaFileObject generated = processingEnv.getFiler().createSourceFile(model.implType.toString());
                 Writer writer = generated.openWriter();
                 writer.write(code);
                 writer.close();

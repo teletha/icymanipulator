@@ -24,6 +24,7 @@ import javax.lang.model.type.TypeMirror;
 import icy.manipulator.CodeGenerator;
 import icy.manipulator.Fail;
 import icy.manipulator.Icy;
+import icy.manipulator.Icy.Overload;
 import icy.manipulator.Type;
 import icy.manipulator.TypeUtil;
 
@@ -42,7 +43,7 @@ public class ModelDefinition {
     public final Type type;
 
     /** The implementaion type. */
-    public final Type implementationType;
+    public final Type implType;
 
     /** The required properties. */
     private final List<PropertyDefinition> requiredProperties = new LinkedList();
@@ -72,15 +73,20 @@ public class ModelDefinition {
             TypeElement model = TypeUtil.parent(e);
             this.name = model.getSimpleName().toString();
             this.type = Type.of(model);
-            this.implementationType = Type.of(e);
+            this.implType = Type.of(e);
         } else {
             // by defined model
             this.name = e.getSimpleName().toString();
             this.type = Type.of(e);
-            this.implementationType = Type.of(e.getQualifiedName().toString().replaceAll(icy.modelBase() + "$", ""));
+            this.implType = Type.of(e.getQualifiedName().toString().replaceAll(icy.modelBase() + "$", ""));
             TypeUtil.methods(e).forEach(m -> {
                 analyzeProperty(m);
+
+                // collect overload methods
+                Overload overload = m.getAnnotation(Icy.Overload.class);
+                if (overload != null) overloads.add(new Method(m));
             });
+            analyzeOverload();
         }
 
         this.parent = analyzeParent(e);
@@ -121,7 +127,17 @@ public class ModelDefinition {
      * Analyze overload methods.
      */
     private void analyzeOverload() {
+        for (Method method : overloads) {
+            Overload overload = method.getAnnotation(Overload.class);
+            String targetProperty = overload.value().isEmpty() ? method.name : overload.value();
 
+            PropertyDefinition property = findPropertyByName(targetProperty);
+
+            if (!method.returnType.equals(property.type)) {
+                throw new Fail(method.element, "Although the property [" + targetProperty + "] type is " + method.returnType + ", overload method [" + method + "] returns " + method.returnType + ".");
+            }
+            overloadForProperty.add(property, method);
+        }
     }
 
     /**
@@ -217,6 +233,18 @@ public class ModelDefinition {
     }
 
     /**
+     * Check whether this model has any overload property method on self or ancestors.
+     * 
+     * @return
+     */
+    public boolean hasOverload() {
+        if (overloads.size() != 0) {
+            return true;
+        }
+        return parent.map(p -> p.hasOverload()).orElse(false);
+    }
+
+    /**
      * Compute API route variable for required properties.
      * 
      * @param destination
@@ -264,6 +292,16 @@ public class ModelDefinition {
                 .findFirst()
                 .or(() -> parent.map(m -> m.findPropertyByName(name)))
                 .orElseThrow(() -> new Fail(e, "Although you specify the property [" + name + "], it is not found. Specify the correct property name."));
+    }
+
+    /**
+     * List up all overload method for the specified property.
+     * 
+     * @param property A target property.
+     * @return A list of overload methods.
+     */
+    public List<Method> findOverloadsFor(PropertyDefinition property) {
+        return overloadForProperty.get(property);
     }
 
     /**

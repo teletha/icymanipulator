@@ -12,17 +12,13 @@ package icy.manipulator;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringJoiner;
 
 import javax.annotation.processing.Generated;
 
-import icy.manipulator.Icy.Overload;
 import icy.manipulator.model.Method;
 import icy.manipulator.model.ModelDefinition;
 import icy.manipulator.model.PropertyDefinition;
-import icy.manipulator.model.PropetyInfo;
 
 public class CodeGenerator {
 
@@ -38,27 +34,16 @@ public class CodeGenerator {
     /** The configuration interface name for arbitrary perperties. */
     public static final String ArbitraryInterface = Assignable + "Årbitrary";
 
+    /** The current procesing model. */
+    private final ModelDefinition m;
+
     /** The {@link Icy} info on the model class. */
     private final Icy icy;
 
-    /** The fully qualified model class name. */
-    private Type model;
-
-    /** The fully qualified generated class name. */
-    private Type clazz;
-
-    /** The overload method holder. */
-    private final List<Method> overloads = new ArrayList();
-
-    /** The overload method for each property */
-    private final PropetyInfo<Method> overloadForProperty = new PropetyInfo();
-
-    private Coder code = new Coder(IcyManipulator.importer);
+    /** The actual coder. */
+    private final Coder code = new Coder(IcyManipulator.importer);
 
     private final Type parent;
-
-    /** The current procesing model. */
-    private final ModelDefinition m;
 
     /**
      * Create code analyzer.
@@ -69,44 +54,7 @@ public class CodeGenerator {
     CodeGenerator(ModelDefinition model) {
         this.icy = model.e.getAnnotation(Icy.class);
         this.m = model;
-        this.parent = m.parent.map(p -> p.implementationType).orElse(null);
-
-        // analyze
-        this.model = model.type;
-        clazz = m.implementationType;
-
-        TypeUtil.methods(m.e).forEach(e -> {
-
-            // collect overload methods
-            Overload overload = e.getAnnotation(Icy.Overload.class);
-            if (overload != null) overloads.add(new Method(e));
-        });
-    }
-
-    /**
-     * Prepare to analyze.
-     */
-    void prepare() {
-        System.out.println(m);
-
-        validateOverload();
-    }
-
-    /**
-     * Validate overload method.
-     */
-    private void validateOverload() {
-        for (Method method : overloads) {
-            Overload overload = method.getAnnotation(Overload.class);
-            String targetProperty = overload.value().isEmpty() ? method.name : overload.value();
-
-            PropertyDefinition property = m.findPropertyByName(targetProperty);
-
-            if (!method.returnType.equals(property.type)) {
-                throw new Fail(method.element, "Although the property [" + targetProperty + "] type is " + method.returnType + ", overload method [" + method + "] returns " + method.returnType + ".");
-            }
-            overloadForProperty.add(property, method);
-        }
+        this.parent = m.parent.map(p -> p.implType).orElse(null);
     }
 
     /**
@@ -118,11 +66,11 @@ public class CodeGenerator {
         String visibility = icy.packagePrivate() ? "" : "public ";
 
         code.write("/**");
-        code.write(" * Generated model for {@link ", model, "}.");
+        code.write(" * Generated model for {@link ", m.type, "}.");
         code.write(" */");
         code.write("@", Generated.class, "(`Icy Manipulator`)");
-        code.write(visibility, "abstract class ", clazz, " extends ", model, () -> {
-            if (!overloads.isEmpty()) {
+        code.write(visibility, "abstract class ", m.implType, " extends ", m.type, () -> {
+            if (m.hasOverload()) {
                 defineMethodInvokerBuilder();
                 defineOverloadMethodInvoker();
             }
@@ -153,7 +101,7 @@ public class CodeGenerator {
         code.write(" */");
         code.write("private static final ", MethodHandle.class, " updater(String name, Class... parameterTypes) ", () -> {
             code.writeTry(() -> {
-                code.write(java.lang.reflect.Method.class, " method = ", model, ".class.getDeclaredMethod(name, parameterTypes);");
+                code.write(java.lang.reflect.Method.class, " method = ", m.type, ".class.getDeclaredMethod(name, parameterTypes);");
                 code.write("method.setAccessible(true);");
                 code.write("return ", MethodHandles.class, ".lookup().unreflect(method);");
             }, Throwable.class, e -> {
@@ -167,7 +115,7 @@ public class CodeGenerator {
      */
     private void defineOverloadMethodInvoker() {
         for (PropertyDefinition property : m.ownProperties()) {
-            for (Method method : overloadForProperty.get(property)) {
+            for (Method method : m.findOverloadsFor(property)) {
                 StringJoiner types = new StringJoiner(", ", ", ", "").setEmptyValue("");
                 method.paramTypes.forEach(t -> types.add(code.use(t) + ".class"));
 
@@ -191,7 +139,7 @@ public class CodeGenerator {
         code.write(" */");
         code.write("private static final ", MethodHandle.class, " updater(String name) ", () -> {
             code.writeTry(() -> {
-                code.write(Field.class, " field = ", clazz, ".class.getDeclaredField(name);");
+                code.write(Field.class, " field = ", m.implType, ".class.getDeclaredField(name);");
                 code.write("field.setAccessible(true);");
                 code.write("return ", MethodHandles.class, ".lookup().unreflectSetter(field);");
             }, Throwable.class, e -> {
@@ -230,7 +178,7 @@ public class CodeGenerator {
         code.write("/**");
         code.write(" * HIDE CONSTRUCTOR");
         code.write(" */");
-        code.write("protected ", clazz, "()", () -> {
+        code.write("protected ", m.implType, "()", () -> {
             // initialize field
             for (PropertyDefinition p : m.ownProperties()) {
                 code.write("this.", p.name, " = ", (p.isArbitrary ? "super." + p.name + "()" : p.type.defaultValue()), ";");
@@ -286,19 +234,19 @@ public class CodeGenerator {
         code.write("public static final  ", Instantiator, "Typed<?> ", builder, " = new ", Instantiator, "Typed();");
 
         code.write();
-        code.write("public static final class ", Instantiator, "Typed<Self extends ", clazz.className, " & ", ArbitraryInterface, "<Self>> extends ", Instantiator, "<Self>", () -> {
+        code.write("public static final class ", Instantiator, "Typed<Self extends ", m.implType.className, " & ", ArbitraryInterface, "<Self>> extends ", Instantiator, "<Self>", () -> {
         });
 
         code.write();
         code.write("/**");
-        code.write(" * Builder namespace for {@link ", clazz, "}.");
+        code.write(" * Builder namespace for {@link ", m.implType, "}.");
         code.write(" */");
 
         if (m.hasRequiredProperty() == false) {
             code.write("public static class ", Instantiator, "<Self>", () -> {
                 code.write();
                 code.write("/**");
-                code.write(" * Create uninitialized {@link ", clazz, "}.");
+                code.write(" * Create uninitialized {@link ", m.implType, "}.");
                 code.write(" */");
                 code.write("public final Self create()", () -> {
                     code.write("return base();");
@@ -316,14 +264,14 @@ public class CodeGenerator {
                     code.write();
 
                     if (parent == null) {
-                        code.write("/** Create Uninitialized {@link ", clazz, "}. */");
+                        code.write("/** Create Uninitialized {@link ", m.implType, "}. */");
                         code.write("public final <T extends ", m
                                 .ownRequiredRouteTypeWithoutFirst("Self"), "> T ", p.name, "(", p.type, " value)", () -> {
                                     code.write("return (T) base().", p.name, "(value);");
                                 });
-                        for (Method method : overloadForProperty.get(p)) {
+                        for (Method method : m.findOverloadsFor(p)) {
                             code.write();
-                            code.write("/** Create Uninitialized {@link ", clazz, "}. */");
+                            code.write("/** Create Uninitialized {@link ", m.implType, "}. */");
                             code.write("public final <T extends ", m.ownRequiredRouteTypeWithoutFirst("Self"), "> T ", method, () -> {
                                 code.write("return (T) base().", method.name, "(", method.paramNames, ");");
                             });
@@ -345,7 +293,7 @@ public class CodeGenerator {
         code.write("/**");
         code.write(" * Mutable Model.");
         code.write(" */");
-        code.write("private static final class ", Assignable, clazz.variable, " extends ", clazz, " implements ", AssignableAll, ", ", ArbitraryInterface, () -> {
+        code.write("private static final class ", Assignable, m.implType.variable, " extends ", m.implType, " implements ", AssignableAll, ", ", ArbitraryInterface, () -> {
         });
     }
 
@@ -359,7 +307,7 @@ public class CodeGenerator {
             code.write(" * Property assignment API.");
             code.write(" */");
             code.write("public static interface ", p.assignableInterfaceName(), "<Next>", () -> {
-                for (Method method : overloadForProperty.get(p)) {
+                for (Method method : m.findOverloadsFor(p)) {
                     code.write();
                     code.write("/**");
                     code.write(" * The overload setter.");
@@ -392,7 +340,7 @@ public class CodeGenerator {
         code.write("/**");
         code.write(" * Property assignment API.");
         code.write(" */");
-        code.write("public static interface ", ArbitraryInterface, "<Next extends ", clazz, ">", extend, () -> {
+        code.write("public static interface ", ArbitraryInterface, "<Next extends ", m.implType, ">", extend, () -> {
             for (PropertyDefinition property : m.ownArbitraryProperties()) {
                 code.write();
                 code.write("/**");
