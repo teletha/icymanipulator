@@ -77,10 +77,7 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
 
         /** Create Uninitialized {@link ImplementationVisibility}. */
         public final <T extends Self> T name(String value) {
-            return (T) base().name(value);
-        }
-        protected ÅssignableAll base() {
-            return new Åssignable();
+            return (T) new Åssignable().name(value);
         }
     }
 

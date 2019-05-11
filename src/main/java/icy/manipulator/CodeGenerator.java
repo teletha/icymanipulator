@@ -12,6 +12,7 @@ package icy.manipulator;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+import java.util.Optional;
 import java.util.StringJoiner;
 
 import javax.annotation.processing.Generated;
@@ -244,7 +245,9 @@ public class CodeGenerator {
         code.write(" * Builder namespace for {@link ", m.implType, "}.");
         code.write(" */");
 
-        if (m.hasRequiredProperty() == false) {
+        Optional<PropertyDefinition> first = m.firstRequiredProperty();
+
+        if (first.isEmpty()) {
             code.write("public static class ", Instantiator, "<Self>", () -> {
                 code.write();
                 code.write("/**");
@@ -258,31 +261,24 @@ public class CodeGenerator {
                 });
             });
         } else {
-            m.firstRequiredProperty().ifPresent(p -> {
-                String extend = parent == null ? ""
-                        : " extends " + code.use(parent) + "." + Instantiator + "<" + m.ownRequiredRouteType("Self") + ">";
+            PropertyDefinition p = first.get();
+            code.write("protected static class ", Instantiator, "<Self>", () -> {
+                code.write();
 
-                code.write("protected static class ", Instantiator, "<Self>", extend, () -> {
+                // base setter
+                code.write("/** Create Uninitialized {@link ", m.implType, "}. */");
+                code.write("public final <T extends ", m
+                        .requiredRouteTypeWithoutFirst("Self"), "> T ", p.name, "(", p.type, " value)", () -> {
+                            code.write("return (T) new ", Assignable, "().", p.name, "(value);");
+                        });
+
+                for (Method method : m.findOverloadsFor(p)) {
                     code.write();
-
-                    if (parent == null) {
-                        code.write("/** Create Uninitialized {@link ", m.implType, "}. */");
-                        code.write("public final <T extends ", m
-                                .ownRequiredRouteTypeWithoutFirst("Self"), "> T ", p.name, "(", p.type, " value)", () -> {
-                                    code.write("return (T) base().", p.name, "(value);");
-                                });
-                        for (Method method : m.findOverloadsFor(p)) {
-                            code.write();
-                            code.write("/** Create Uninitialized {@link ", m.implType, "}. */");
-                            code.write("public final <T extends ", m.ownRequiredRouteTypeWithoutFirst("Self"), "> T ", method, () -> {
-                                code.write("return (T) base().", method.name, "(", method.paramNames, ");");
-                            });
-                        }
-                    }
-                    code.write("protected ", AssignableAll, " base()", () -> {
-                        code.write("return new ", Assignable, "();");
+                    code.write("/** Create Uninitialized {@link ", m.implType, "}. */");
+                    code.write("public final <T extends ", m.requiredRouteTypeWithoutFirst("Self"), "> T ", method, () -> {
+                        code.write("return (T) new ", Assignable, "().", method.name, "(", method.paramNames, ");");
                     });
-                });
+                }
             });
         }
     }

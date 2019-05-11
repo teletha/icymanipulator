@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import icy.manipulator.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
+import icy.manipulator.property.extend.model.ArbitraryRequired;
 import icy.manipulator.property.extend.model.ArbitraryRequiredModel;
 
 class ArbitraryReuqiredTest {
@@ -23,21 +24,20 @@ class ArbitraryReuqiredTest {
 
     @Test
     void defaults() {
-        // DefaultThenRequired instance = DefaultThenRequired.with.create().id(10);
-        // assert instance.name.equals("Bruno Bucciarati");
-        // assert instance.name().equals("Bruno Bucciarati");
-        // assert instance.stand.equals("Sticky Fingers");
-        // assert instance.stand().equals("Sticky Fingers");
-        // }
-        //
-        // @Test
-        // void property() {
-        // DefaultThenRequired.with.
-        // Default instance = DefaultThenRequired.with.create().id(10).name("Guido
-        // Mista").stand("Sex Pistols");
-        // assert instance.name.equals("Guido Mista");
-        // assert instance.name().equals("Guido Mista");
-        // assert instance.stand.equals("Sex Pistols");
-        // assert instance.stand().equals("Sex Pistols");
+        ArbitraryRequired o = ArbitraryRequired.with.id(10);
+        assert o.id == 10;
+        assert o.optionNum == 10;
+        assert o.optionComment.isEmpty();
     }
+
+    // @Test
+    // void property() {
+    // DefaultThenRequired.with.
+    // Default instance = DefaultThenRequired.with.create().id(10).name("Guido
+    // Mista").stand("Sex Pistols");
+    // assert instance.name.equals("Guido Mista");
+    // assert instance.name().equals("Guido Mista");
+    // assert instance.stand.equals("Sex Pistols");
+    // assert instance.stand().equals("Sex Pistols");
+    // }
 }

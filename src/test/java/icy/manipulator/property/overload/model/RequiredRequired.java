@@ -4,14 +4,15 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.time.LocalTime;
 import javax.annotation.processing.Generated;
 
 /**
- * Generated model for {@link OverloadRequiredModel}.
+ * Generated model for {@link RequiredRequiredModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class OverloadRequired extends OverloadRequiredModel {
+public abstract class RequiredRequired extends RequiredRequiredModel {
 
     /**
      * Create special method invoker.
@@ -22,7 +23,7 @@ public abstract class OverloadRequired extends OverloadRequiredModel {
      */
     private static final MethodHandle updater(String name, Class... parameterTypes)  {
         try {
-            Method method = OverloadRequiredModel.class.getDeclaredMethod(name, parameterTypes);
+            Method method = RequiredRequiredModel.class.getDeclaredMethod(name, parameterTypes);
             method.setAccessible(true);
             return MethodHandles.lookup().unreflect(method);
         } catch (Throwable e) {
@@ -41,7 +42,7 @@ public abstract class OverloadRequired extends OverloadRequiredModel {
      */
     private static final MethodHandle updater(String name)  {
         try {
-            Field field = OverloadRequired.class.getDeclaredField(name);
+            Field field = RequiredRequired.class.getDeclaredField(name);
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
@@ -58,7 +59,7 @@ public abstract class OverloadRequired extends OverloadRequiredModel {
     /**
      * HIDE CONSTRUCTOR
      */
-    protected OverloadRequired() {
+    protected RequiredRequired() {
         this.time = null;
     }
 
@@ -89,16 +90,27 @@ public abstract class OverloadRequired extends OverloadRequiredModel {
     /** The singleton builder. */
     public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
 
-    public static final class ÌnstantiatorTyped<Self extends OverloadRequired & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
+    public static final class ÌnstantiatorTyped<Self extends RequiredRequired & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
     }
 
     /**
-     * Builder namespace for {@link OverloadRequired}.
+     * Builder namespace for {@link RequiredRequired}.
      */
-    protected static class Ìnstantiator<Self> extends Overload.Ìnstantiator<ÅssignableTime<Self>> {
+    protected static class Ìnstantiator<Self> {
 
-        protected ÅssignableAll base() {
-            return new Åssignable();
+        /** Create Uninitialized {@link RequiredRequired}. */
+        public final <T extends ÅssignableDate<ÅssignableTime<Self>>> T size(BigDecimal value) {
+            return (T) new Åssignable().size(value);
+        }
+
+        /** Create Uninitialized {@link RequiredRequired}. */
+        public final <T extends ÅssignableDate<ÅssignableTime<Self>>> T size(int number) {
+            return (T) new Åssignable().size(number);
+        }
+
+        /** Create Uninitialized {@link RequiredRequired}. */
+        public final <T extends ÅssignableDate<ÅssignableTime<Self>>> T sizeByText(String number) {
+            return (T) new Åssignable().sizeByText(number);
         }
     }
 
@@ -134,7 +146,7 @@ public abstract class OverloadRequired extends OverloadRequiredModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends OverloadRequired> extends icy.manipulator.property.overload.model.Overload.ÅssignableÅrbitrary<Next> {
+    public static interface ÅssignableÅrbitrary<Next extends RequiredRequired> extends icy.manipulator.property.overload.model.Overload.ÅssignableÅrbitrary<Next> {
     }
 
     /**
@@ -146,7 +158,7 @@ public abstract class OverloadRequired extends OverloadRequiredModel {
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends OverloadRequired implements ÅssignableAll, ÅssignableÅrbitrary {
+    private static final class Åssignable extends RequiredRequired implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**

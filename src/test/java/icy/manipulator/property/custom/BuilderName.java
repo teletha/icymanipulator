@@ -77,10 +77,7 @@ public abstract class BuilderName extends BuilderNameModel {
 
         /** Create Uninitialized {@link BuilderName}. */
         public final <T extends Self> T name(String value) {
-            return (T) base().name(value);
-        }
-        protected ÅssignableAll base() {
-            return new Åssignable();
+            return (T) new Åssignable().name(value);
         }
     }
 

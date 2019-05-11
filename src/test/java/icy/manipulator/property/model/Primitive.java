@@ -294,10 +294,7 @@ public abstract class Primitive extends PrimitiveModel {
 
         /** Create Uninitialized {@link Primitive}. */
         public final <T extends ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Self>>>>>>>> T intX(int value) {
-            return (T) base().intX(value);
-        }
-        protected ÅssignableAll base() {
-            return new Åssignable();
+            return (T) new Åssignable().intX(value);
         }
     }
 

@@ -9,25 +9,23 @@
  */
 package icy.manipulator.property.overload;
 
-import java.time.LocalDate;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import icy.manipulator.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
-import icy.manipulator.property.overload.model.Overload;
-import icy.manipulator.property.overload.model.OverloadRequiredModel;
+import icy.manipulator.property.overload.model.RequiredRequiredModel;
 
-class OverloadRequiredTest {
+class RequiredRequiredTest {
 
     @RegisterExtension
-    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, OverloadRequiredModel.class);
+    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, RequiredRequiredModel.class);
 
     @Test
     void overload() {
-        Overload instance = Overload.with.sizeByText("12").date(2015, 7, 12);
-        assert instance.size.intValue() == 12;
-        assert instance.date.isEqual(LocalDate.of(2015, 7, 12));
+        // RequiredRequired o = RequiredRequired.with.size(10).date(2019, 5, 14).time(12, 51, 34);
+        // assert o.size.intValue() == 10;
+        // assert o.date.isEqual(LocalDate.of(2019, 5, 14));
+        // assert o.time.equals(LocalTime.of(12, 51, 34));
     }
 }

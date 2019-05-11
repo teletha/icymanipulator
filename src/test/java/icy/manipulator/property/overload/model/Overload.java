@@ -137,20 +137,17 @@ public abstract class Overload extends OverloadModel {
 
         /** Create Uninitialized {@link Overload}. */
         public final <T extends ÅssignableDate<Self>> T size(BigDecimal value) {
-            return (T) base().size(value);
+            return (T) new Åssignable().size(value);
         }
 
         /** Create Uninitialized {@link Overload}. */
         public final <T extends ÅssignableDate<Self>> T size(int number) {
-            return (T) base().size(number);
+            return (T) new Åssignable().size(number);
         }
 
         /** Create Uninitialized {@link Overload}. */
         public final <T extends ÅssignableDate<Self>> T sizeByText(String number) {
-            return (T) base().sizeByText(number);
-        }
-        protected ÅssignableAll base() {
-            return new Åssignable();
+            return (T) new Åssignable().sizeByText(number);
         }
     }
 

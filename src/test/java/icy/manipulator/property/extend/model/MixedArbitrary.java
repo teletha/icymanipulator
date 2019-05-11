@@ -74,10 +74,11 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
     /**
      * Builder namespace for {@link MixedArbitrary}.
      */
-    protected static class Ìnstantiator<Self> extends Mixed.Ìnstantiator<Self> {
+    protected static class Ìnstantiator<Self> {
 
-        protected ÅssignableAll base() {
-            return new Åssignable();
+        /** Create Uninitialized {@link MixedArbitrary}. */
+        public final <T extends ÅssignableAge<Self>> T name(String value) {
+            return (T) new Åssignable().name(value);
         }
     }
 

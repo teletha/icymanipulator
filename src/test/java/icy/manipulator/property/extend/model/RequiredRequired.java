@@ -74,10 +74,11 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     /**
      * Builder namespace for {@link RequiredRequired}.
      */
-    protected static class Ìnstantiator<Self> extends Multiple.Ìnstantiator<ÅssignableNickname<Self>> {
+    protected static class Ìnstantiator<Self> {
 
-        protected ÅssignableAll base() {
-            return new Åssignable();
+        /** Create Uninitialized {@link RequiredRequired}. */
+        public final <T extends ÅssignableStand<ÅssignableAge<ÅssignableNickname<Self>>>> T name(String value) {
+            return (T) new Åssignable().name(value);
         }
     }
 

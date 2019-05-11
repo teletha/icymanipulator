@@ -14,7 +14,7 @@ import java.time.LocalTime;
 import icy.manipulator.Icy;
 
 @Icy
-public abstract class OverloadRequiredModel extends Overload {
+public abstract class RequiredRequiredModel extends Overload {
 
     @Icy.Property
     abstract LocalTime time();

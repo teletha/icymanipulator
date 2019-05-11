@@ -170,10 +170,7 @@ public abstract class Mixed extends MixedModel {
 
         /** Create Uninitialized {@link Mixed}. */
         public final <T extends ÅssignableAge<Self>> T name(String value) {
-            return (T) base().name(value);
-        }
-        protected ÅssignableAll base() {
-            return new Åssignable();
+            return (T) new Åssignable().name(value);
         }
     }
 

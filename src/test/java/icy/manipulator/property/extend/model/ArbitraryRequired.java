@@ -74,10 +74,11 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
     /**
      * Builder namespace for {@link ArbitraryRequired}.
      */
-    protected static class Ìnstantiator<Self> extends Arbitrary.Ìnstantiator<ÅssignableId<Self>> {
+    protected static class Ìnstantiator<Self> {
 
-        protected ÅssignableAll base() {
-            return new Åssignable();
+        /** Create Uninitialized {@link ArbitraryRequired}. */
+        public final <T extends Self> T id(long value) {
+            return (T) new Åssignable().id(value);
         }
     }
 

@@ -179,6 +179,22 @@ public class ModelDefinition {
     }
 
     /**
+     * List up all required proeprties on ancestors and own.
+     * 
+     * @return
+     */
+    public List<PropertyDefinition> requiredProperties() {
+        if (parent.isEmpty()) {
+            return ownRequiredProperties();
+        } else {
+            List<PropertyDefinition> properties = new ArrayList();
+            properties.addAll(parent.get().requiredProperties());
+            properties.addAll(requiredProperties);
+            return properties;
+        }
+    }
+
+    /**
      * Find the first required property from ancestors and own.
      * 
      * @return
@@ -278,6 +294,26 @@ public class ModelDefinition {
     }
 
     /**
+     * Compute API route variable for required properties.
+     * 
+     * @param destination
+     * @return
+     */
+    public String requiredRouteTypeWithoutFirst(String destination) {
+        StringBuilder builder = new StringBuilder();
+        List<PropertyDefinition> properties = requiredProperties();
+
+        for (int i = 1; i < properties.size(); i++) {
+            builder.append(properties.get(i).assignableInterfaceName()).append("<");
+        }
+        builder.append(destination);
+        for (int i = 1; i < properties.size(); i++) {
+            builder.append(">");
+        }
+        return builder.toString();
+    }
+
+    /**
      * Find property by name.
      * 
      * @param name A property name.
@@ -298,7 +334,15 @@ public class ModelDefinition {
      * @return A list of overload methods.
      */
     public List<Method> findOverloadsFor(PropertyDefinition property) {
-        return overloadForProperty.find(property);
+        if (overloadForProperty.holder.containsKey(property)) {
+            return overloadForProperty.find(property);
+        } else {
+            if (parent.isEmpty()) {
+                return Collections.EMPTY_LIST;
+            } else {
+                return parent.get().findOverloadsFor(property);
+            }
+        }
     }
 
     /**
@@ -454,6 +498,16 @@ public class ModelDefinition {
          */
         private List<T> find(PropertyDefinition property) {
             return holder.computeIfAbsent(property, p -> new LinkedList());
+        }
+
+        /**
+         * Check key.
+         * 
+         * @param property
+         * @return
+         */
+        private boolean has(PropertyDefinition property) {
+            return holder.containsKey(property);
         }
 
         /**
