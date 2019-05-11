@@ -11,6 +11,7 @@ package icy.manipulator.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -51,11 +52,8 @@ public class ModelDefinition {
     /** The arbitrary properties. */
     private final List<PropertyDefinition> arbitraryProperties = new LinkedList();
 
-    /** The overload method holder. */
-    private final List<Method> overloads = new ArrayList();
-
     /** The overload method for each property */
-    private final PropetyInfo<Method> overloadForProperty = new PropetyInfo();
+    private final Items<Method> overloadForProperty = new Items();
 
     /**
      * 
@@ -80,22 +78,18 @@ public class ModelDefinition {
             this.type = Type.of(e);
             this.implType = Type.of(e.getQualifiedName().toString().replaceAll(icy.modelBase() + "$", ""));
             TypeUtil.methods(e).forEach(m -> {
-                analyzeProperty(m);
-
-                // collect overload methods
-                Overload overload = m.getAnnotation(Icy.Overload.class);
-                if (overload != null) overloads.add(new Method(m));
+                validateProperty(m);
+                validateOverload(m);
             });
-            analyzeOverload();
         }
 
         this.parent = analyzeParent(e);
     }
 
     /**
-     * Analyze property methods.
+     * Validate property methods.
      */
-    private void analyzeProperty(ExecutableElement method) {
+    private void validateProperty(ExecutableElement method) {
         // require annotation
         icy.manipulator.Icy.Property annotation = method.getAnnotation(Icy.Property.class);
 
@@ -124,11 +118,13 @@ public class ModelDefinition {
     }
 
     /**
-     * Analyze overload methods.
+     * Validate overload methods.
      */
-    private void analyzeOverload() {
-        for (Method method : overloads) {
-            Overload overload = method.getAnnotation(Overload.class);
+    private void validateOverload(ExecutableElement m) {
+        Overload overload = m.getAnnotation(Icy.Overload.class);
+
+        if (overload != null) {
+            Method method = new Method(m);
             String targetProperty = overload.value().isEmpty() ? method.name : overload.value();
 
             PropertyDefinition property = findPropertyByName(targetProperty);
@@ -238,7 +234,7 @@ public class ModelDefinition {
      * @return
      */
     public boolean hasOverload() {
-        if (overloads.size() != 0) {
+        if (overloadForProperty.holder.isEmpty() == false) {
             return true;
         }
         return parent.map(p -> p.hasOverload()).orElse(false);
@@ -301,7 +297,7 @@ public class ModelDefinition {
      * @return A list of overload methods.
      */
     public List<Method> findOverloadsFor(PropertyDefinition property) {
-        return overloadForProperty.get(property);
+        return overloadForProperty.find(property);
     }
 
     /**
@@ -416,5 +412,34 @@ public class ModelDefinition {
         merged.addAll(other);
 
         return merged;
+    }
+
+    /**
+     * Special KVS for {@link PropertyDefinition}.
+     */
+    private static class Items<T> {
+
+        /** The actual item holder. */
+        private HashMap<PropertyDefinition, List<T>> holder = new HashMap();
+
+        /**
+         * Add item.
+         * 
+         * @param property A key property.
+         * @param item An item to add.
+         */
+        private void add(PropertyDefinition property, T item) {
+            holder.computeIfAbsent(property, p -> new LinkedList<T>()).add(item);
+        }
+
+        /**
+         * Find items.
+         * 
+         * @param property A kye property.
+         * @return A list of stored items.
+         */
+        private List<T> find(PropertyDefinition property) {
+            return holder.computeIfAbsent(property, p -> new LinkedList());
+        }
     }
 }
