@@ -30,14 +30,11 @@ class ArbitraryReuqiredTest {
         assert o.optionComment.isEmpty();
     }
 
-    // @Test
-    // void property() {
-    // DefaultThenRequired.with.
-    // Default instance = DefaultThenRequired.with.create().id(10).name("Guido
-    // Mista").stand("Sex Pistols");
-    // assert instance.name.equals("Guido Mista");
-    // assert instance.name().equals("Guido Mista");
-    // assert instance.stand.equals("Sex Pistols");
-    // assert instance.stand().equals("Sex Pistols");
-    // }
+    @Test
+    void override() {
+        ArbitraryRequired o = ArbitraryRequired.with.id(10).optionNum(5).optionComment("Comment");
+        assert o.id == 10;
+        assert o.optionNum == 5;
+        assert o.optionComment.equals("Comment");
+    }
 }

@@ -263,42 +263,6 @@ public class ModelDefinition {
      * @param destination
      * @return
      */
-    public String ownRequiredRouteType(String destination) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < requiredProperties.size(); i++) {
-            builder.append(requiredProperties.get(i).assignableInterfaceName()).append("<");
-        }
-        builder.append(destination);
-        for (int i = 0; i < requiredProperties.size(); i++) {
-            builder.append(">");
-        }
-        return builder.toString();
-    }
-
-    /**
-     * Compute API route variable for required properties.
-     * 
-     * @param destination
-     * @return
-     */
-    public String ownRequiredRouteTypeWithoutFirst(String destination) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 1; i < requiredProperties.size(); i++) {
-            builder.append(requiredProperties.get(i).assignableInterfaceName()).append("<");
-        }
-        builder.append(destination);
-        for (int i = 1; i < requiredProperties.size(); i++) {
-            builder.append(">");
-        }
-        return builder.toString();
-    }
-
-    /**
-     * Compute API route variable for required properties.
-     * 
-     * @param destination
-     * @return
-     */
     public String requiredRouteTypeWithoutFirst(String destination) {
         StringBuilder builder = new StringBuilder();
         List<PropertyDefinition> properties = requiredProperties();
