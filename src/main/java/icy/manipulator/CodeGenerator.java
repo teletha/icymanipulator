@@ -234,37 +234,26 @@ public class CodeGenerator {
 
         code.write();
         code.write("/** The singleton builder. */");
-        code.write("public static final  ", Instantiator, "Typed<?> ", builder, " = new ", Instantiator, "Typed();");
-
-        code.write();
-        code.write("public static final class ", Instantiator, "Typed<Self extends ", m.implType.className, " & ", ArbitraryInterface, "<Self>> extends ", Instantiator, "<Self>", () -> {
-        });
+        code.write("public static final  ", Instantiator, "<?> ", builder, " = new ", Instantiator, "();");
 
         code.write();
         code.write("/**");
         code.write(" * Builder namespace for {@link ", m.implType, "}.");
         code.write(" */");
+        code.write("public static final class ", Instantiator, "<Self extends ", m.implType.className, " & ", ArbitraryInterface, "<Self>>", () -> {
+            code.write();
 
-        Optional<PropertyDefinition> first = m.firstRequiredProperty();
+            Optional<PropertyDefinition> first = m.firstRequiredProperty();
 
-        if (first.isEmpty()) {
-            code.write("public static class ", Instantiator, "<Self>", () -> {
-                code.write();
+            if (first.isEmpty()) {
                 code.write("/**");
                 code.write(" * Create uninitialized {@link ", m.implType, "}.");
                 code.write(" */");
                 code.write("public final Self create()", () -> {
-                    code.write("return base();");
-                });
-                code.write("protected Self base()", () -> {
                     code.write("return (Self) new ", Assignable, "();");
                 });
-            });
-        } else {
-            PropertyDefinition p = first.get();
-            code.write("protected static class ", Instantiator, "<Self>", () -> {
-                code.write();
-
+            } else {
+                PropertyDefinition p = first.get();
                 // base setter
                 code.write("/** Create Uninitialized {@link ", m.implType, "}. */");
                 code.write("public final <T extends ", m
@@ -279,8 +268,8 @@ public class CodeGenerator {
                         code.write("return (T) new ", Assignable, "().", method.name, "(", method.paramNames, ");");
                     });
                 }
-            });
-        }
+            }
+        });
     }
 
     /**

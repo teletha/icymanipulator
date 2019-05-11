@@ -65,15 +65,12 @@ public abstract class BuilderName extends BuilderNameModel {
     }
 
     /** The singleton builder. */
-    public static final  ÌnstantiatorTyped<?> build = new ÌnstantiatorTyped();
-
-    public static final class ÌnstantiatorTyped<Self extends BuilderName & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
-    }
+    public static final  Ìnstantiator<?> build = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link BuilderName}.
      */
-    protected static class Ìnstantiator<Self> {
+    public static final class Ìnstantiator<Self extends BuilderName & ÅssignableÅrbitrary<Self>> {
 
         /** Create Uninitialized {@link BuilderName}. */
         public final <T extends Self> T name(String value) {

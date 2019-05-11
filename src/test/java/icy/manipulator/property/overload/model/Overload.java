@@ -125,15 +125,12 @@ public abstract class Overload extends OverloadModel {
     }
 
     /** The singleton builder. */
-    public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
-
-    public static final class ÌnstantiatorTyped<Self extends Overload & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
-    }
+    public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Overload}.
      */
-    protected static class Ìnstantiator<Self> {
+    public static final class Ìnstantiator<Self extends Overload & ÅssignableÅrbitrary<Self>> {
 
         /** Create Uninitialized {@link Overload}. */
         public final <T extends ÅssignableDate<Self>> T size(BigDecimal value) {

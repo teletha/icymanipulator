@@ -127,15 +127,12 @@ public abstract class Multiple extends MultipleModel {
     }
 
     /** The singleton builder. */
-    public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
-
-    public static final class ÌnstantiatorTyped<Self extends Multiple & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
-    }
+    public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Multiple}.
      */
-    protected static class Ìnstantiator<Self> {
+    public static final class Ìnstantiator<Self extends Multiple & ÅssignableÅrbitrary<Self>> {
 
         /** Create Uninitialized {@link Multiple}. */
         public final <T extends ÅssignableStand<ÅssignableAge<Self>>> T name(String value) {

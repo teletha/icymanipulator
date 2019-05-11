@@ -158,15 +158,12 @@ public abstract class Mixed extends MixedModel {
     }
 
     /** The singleton builder. */
-    public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
-
-    public static final class ÌnstantiatorTyped<Self extends Mixed & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
-    }
+    public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Mixed}.
      */
-    protected static class Ìnstantiator<Self> {
+    public static final class Ìnstantiator<Self extends Mixed & ÅssignableÅrbitrary<Self>> {
 
         /** Create Uninitialized {@link Mixed}. */
         public final <T extends ÅssignableAge<Self>> T name(String value) {

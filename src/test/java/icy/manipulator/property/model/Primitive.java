@@ -282,15 +282,12 @@ public abstract class Primitive extends PrimitiveModel {
     }
 
     /** The singleton builder. */
-    public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
-
-    public static final class ÌnstantiatorTyped<Self extends Primitive & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
-    }
+    public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Primitive}.
      */
-    protected static class Ìnstantiator<Self> {
+    public static final class Ìnstantiator<Self extends Primitive & ÅssignableÅrbitrary<Self>> {
 
         /** Create Uninitialized {@link Primitive}. */
         public final <T extends ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Self>>>>>>>> T intX(int value) {

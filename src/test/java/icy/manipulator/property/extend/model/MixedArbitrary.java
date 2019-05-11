@@ -66,15 +66,12 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
     }
 
     /** The singleton builder. */
-    public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
-
-    public static final class ÌnstantiatorTyped<Self extends MixedArbitrary & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
-    }
+    public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link MixedArbitrary}.
      */
-    protected static class Ìnstantiator<Self> {
+    public static final class Ìnstantiator<Self extends MixedArbitrary & ÅssignableÅrbitrary<Self>> {
 
         /** Create Uninitialized {@link MixedArbitrary}. */
         public final <T extends ÅssignableAge<Self>> T name(String value) {

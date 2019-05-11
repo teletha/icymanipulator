@@ -65,15 +65,12 @@ public abstract class Single extends SingleModel {
     }
 
     /** The singleton builder. */
-    public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
-
-    public static final class ÌnstantiatorTyped<Self extends Single & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
-    }
+    public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Single}.
      */
-    protected static class Ìnstantiator<Self> {
+    public static final class Ìnstantiator<Self extends Single & ÅssignableÅrbitrary<Self>> {
 
         /** Create Uninitialized {@link Single}. */
         public final <T extends Self> T name(String value) {

@@ -66,15 +66,12 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
     }
 
     /** The singleton builder. */
-    public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
-
-    public static final class ÌnstantiatorTyped<Self extends ArbitraryRequired & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
-    }
+    public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link ArbitraryRequired}.
      */
-    protected static class Ìnstantiator<Self> {
+    public static final class Ìnstantiator<Self extends ArbitraryRequired & ÅssignableÅrbitrary<Self>> {
 
         /** Create Uninitialized {@link ArbitraryRequired}. */
         public final <T extends Self> T id(long value) {

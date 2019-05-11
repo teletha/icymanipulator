@@ -66,15 +66,12 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     }
 
     /** The singleton builder. */
-    public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
-
-    public static final class ÌnstantiatorTyped<Self extends RequiredRequired & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
-    }
+    public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link RequiredRequired}.
      */
-    protected static class Ìnstantiator<Self> {
+    public static final class Ìnstantiator<Self extends RequiredRequired & ÅssignableÅrbitrary<Self>> {
 
         /** Create Uninitialized {@link RequiredRequired}. */
         public final <T extends ÅssignableStand<ÅssignableAge<ÅssignableNickname<Self>>>> T name(String value) {

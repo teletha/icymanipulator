@@ -96,23 +96,17 @@ public abstract class Arbitrary extends ArbitraryModel {
     }
 
     /** The singleton builder. */
-    public static final  ÌnstantiatorTyped<?> with = new ÌnstantiatorTyped();
-
-    public static final class ÌnstantiatorTyped<Self extends Arbitrary & ÅssignableÅrbitrary<Self>> extends Ìnstantiator<Self> {
-    }
+    public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link Arbitrary}.
      */
-    public static class Ìnstantiator<Self> {
+    public static final class Ìnstantiator<Self extends Arbitrary & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create uninitialized {@link Arbitrary}.
          */
         public final Self create() {
-            return base();
-        }
-        protected Self base() {
             return (Self) new Åssignable();
         }
     }

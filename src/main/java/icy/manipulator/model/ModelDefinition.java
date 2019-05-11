@@ -465,16 +465,6 @@ public class ModelDefinition {
         }
 
         /**
-         * Check key.
-         * 
-         * @param property
-         * @return
-         */
-        private boolean has(PropertyDefinition property) {
-            return holder.containsKey(property);
-        }
-
-        /**
          * {@inheritDoc}
          */
         @Override
