@@ -31,7 +31,7 @@ class AutoExpandEnumTest {
 
     @Test
     void overloadAutomatically() {
-        AutoExpandEnum o = AutoExpandEnum.with.answer(Answer.Yes);
-        assert o.answer == Answer.Yes;
+        AutoExpandEnum o = AutoExpandEnum.with.no();
+        assert o.answer == Answer.No;
     }
 }

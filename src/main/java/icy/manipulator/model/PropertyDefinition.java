@@ -56,9 +56,9 @@ public class PropertyDefinition {
         this.isArbitrary = !method.getModifiers().contains(Modifier.ABSTRACT);
         this.mutable = Optional.ofNullable(method.getAnnotation(Icy.Property.class)).map(Property::mutable).orElse(false);
         this.autoExpandable = Optional.ofNullable(method.getAnnotation(Icy.Property.class))
-                .map(Property::overloadEnumAutomatically)
+                .map(Property::overloadEnum)
                 .filter(p -> TypeUtil.isEnum(method.getReturnType()))
-                .orElse(false);
+                .orElse(true);
     }
 
     /**

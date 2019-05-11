@@ -80,7 +80,7 @@ public @interface Icy {
          * 
          * @return
          */
-        boolean overloadEnumAutomatically() default false;
+        boolean overloadEnum() default true;
     }
 
     @Documented

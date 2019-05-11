@@ -7,17 +7,20 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator.property.overload.model;
+package icy.manipulator.property.group.model;
 
 import icy.manipulator.Icy;
 
-@Icy
-public abstract class AutoExpandEnumModel {
+@Icy(grouping = 2)
+public abstract class EnumGroupModel {
 
-    @Icy.Property(overloadEnum = true)
-    public abstract Answer answer();
+    @Icy.Property
+    public abstract Color color();
 
-    public static enum Answer {
-        Yes, No;
+    @Icy.Property
+    public abstract int size();
+
+    public static enum Color {
+        Red, Blue, Green;
     }
 }

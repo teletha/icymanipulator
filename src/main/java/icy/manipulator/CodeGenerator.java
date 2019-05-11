@@ -266,6 +266,22 @@ public class CodeGenerator {
                 }
 
                 // =========================================
+                // Auto-Expanded Overload Setter
+                // =========================================
+                if (p.autoExpandable) {
+                    for (String name : TypeUtil.enumConstantNames(p.element.getReturnType())) {
+                        code.write();
+                        code.write("/**");
+                        code.write(" * Create uninitialized {@link ", m.implType, "}.");
+                        code.write(" */");
+                        code.write("public final <T extends ", m.requiredRouteType(1, "Self"), "> T ", TypeUtil
+                                .decapitalize(name), "()", () -> {
+                                    code.write("return ", p.name, "(", p.type, ".", name, ");");
+                                });
+                    }
+                }
+
+                // =========================================
                 // Grouped Setter
                 // =========================================
                 int group = icy.grouping();
@@ -274,7 +290,7 @@ public class CodeGenerator {
                     StringJoiner method = new StringJoiner(", ", p.name + "(", ")");
                     for (int i = 0; i < group; i++) {
                         PropertyDefinition property = properties.get(i);
-                        method.add(property.type + " " + property.name);
+                        method.add(code.use(property.type) + " " + property.name);
                     }
 
                     code.write("/**");
