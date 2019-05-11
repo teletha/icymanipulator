@@ -1,6 +1,5 @@
 package icy.manipulator.property.extend.model;
 
-import icy.manipulator.property.model.Multiple;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -100,13 +99,13 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends RequiredRequired> extends icy.manipulator.property.model.Multiple.ÅssignableÅrbitrary<Next> {
+    public static interface ÅssignableÅrbitrary<Next extends RequiredRequired> {
     }
 
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableNickname, Multiple.ÅssignableAll {
+    protected static interface ÅssignableAll extends ÅssignableNickname, icy.manipulator.property.model.Multiple.ÅssignableAll {
     }
 
     /**

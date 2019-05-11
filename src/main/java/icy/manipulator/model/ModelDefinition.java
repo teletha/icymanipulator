@@ -310,6 +310,21 @@ public class ModelDefinition {
     }
 
     /**
+     * Find the nearest ancestor model which has any arbitrary property.
+     * 
+     * @return
+     */
+    public Optional<ModelDefinition> findNearestArbitraryModel() {
+        return parent.flatMap(p -> {
+            if (p.arbitraryProperties.isEmpty()) {
+                return p.findNearestArbitraryModel();
+            } else {
+                return Optional.of(p);
+            }
+        });
+    }
+
+    /**
      * Analuze {@link ModelDefinition} by its {@link Element}.
      * 
      * @return Chainable API.

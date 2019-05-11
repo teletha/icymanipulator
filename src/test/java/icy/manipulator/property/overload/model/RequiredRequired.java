@@ -143,13 +143,13 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends RequiredRequired> extends icy.manipulator.property.overload.model.Overload.ÅssignableÅrbitrary<Next> {
+    public static interface ÅssignableÅrbitrary<Next extends RequiredRequired> {
     }
 
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableTime, Overload.ÅssignableAll {
+    protected static interface ÅssignableAll extends ÅssignableTime, icy.manipulator.property.overload.model.Overload.ÅssignableAll {
     }
 
     /**

@@ -10,6 +10,7 @@
 package icy.manipulator;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.function.Consumer;
 
@@ -226,7 +227,9 @@ public class Coder {
     }
 
     private String code(Object code) {
-        if (code instanceof List) {
+        if (code instanceof Optional) {
+            return ((Optional<?>) code).map(v -> String.valueOf(v)).orElse("");
+        } else if (code instanceof List) {
             List list = (List) code;
             StringJoiner joiner = new StringJoiner(", ");
             for (Object object : list) {

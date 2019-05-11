@@ -1,6 +1,5 @@
 package icy.manipulator.property.extend.model;
 
-import icy.manipulator.property.model.Arbitrary;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -106,7 +105,7 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableId, Arbitrary.ÅssignableAll {
+    protected static interface ÅssignableAll extends ÅssignableId, icy.manipulator.property.model.Arbitrary.ÅssignableAll {
     }
 
     /**

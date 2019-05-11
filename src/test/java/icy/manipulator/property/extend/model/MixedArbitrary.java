@@ -1,6 +1,5 @@
 package icy.manipulator.property.extend.model;
 
-import icy.manipulator.property.model.Mixed;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -100,7 +99,7 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends Mixed.ÅssignableAll {
+    protected static interface ÅssignableAll extends icy.manipulator.property.model.Mixed.ÅssignableAll {
     }
 
     /**

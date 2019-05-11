@@ -44,8 +44,6 @@ public class CodeGenerator {
     /** The actual coder. */
     private final Coder code = new Coder(IcyManipulator.importer);
 
-    private final Type parent;
-
     /**
      * Create code analyzer.
      * 
@@ -55,7 +53,6 @@ public class CodeGenerator {
     CodeGenerator(ModelDefinition model) {
         this.icy = model.e.getAnnotation(Icy.class);
         this.m = model;
-        this.parent = m.parent.map(p -> p.implType).orElse(null);
 
         System.out.println(model);
     }
@@ -322,7 +319,7 @@ public class CodeGenerator {
             });
         }
 
-        String extend = this.parent == null ? "" : " extends " + this.parent + "." + ArbitraryInterface + "<Next>";
+        Optional<String> extend = m.findNearestArbitraryModel().map(m -> " extends " + m.implType + "." + ArbitraryInterface + "<Next>");
         code.write();
         code.write("/**");
         code.write(" * Property assignment API.");
@@ -348,8 +345,8 @@ public class CodeGenerator {
         for (PropertyDefinition property : m.ownRequiredProperties()) {
             apis.add(property.assignableInterfaceName());
         }
-        if (parent != null) {
-            apis.add(code.use(parent) + "." + AssignableAll);
+        if (m.hasParent()) {
+            apis.add(m.parent.get().implType + "." + AssignableAll);
         }
 
         code.write();
