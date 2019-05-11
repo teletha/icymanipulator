@@ -84,7 +84,6 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
      * Property assignment API.
      */
     public static interface ÅssignableId<Next> {
-
         /**
          * The base setter.
          */

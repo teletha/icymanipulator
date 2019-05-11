@@ -81,6 +81,8 @@ public class CodeGenerator {
             defineAccessors();
             defineBuilder();
             defineAssignableInterfaces();
+            defineAssignableArbitrary();
+            defineAssignableAll();
             defineMutableClass();
             definePropertyEnum();
         });
@@ -291,6 +293,24 @@ public class CodeGenerator {
             code.write(" * Property assignment API.");
             code.write(" */");
             code.write("public static interface ", p.assignableInterfaceName(), "<Next>", () -> {
+                // =========================================
+                // Base Setter
+                // =========================================
+                code.write("/**");
+                code.write(" * The base setter.");
+                code.write(" */");
+                code.write("default Next ", p.name, "(", p.type, " value)", () -> {
+                    code.writeTry(() -> {
+                        code.write(p.name, "Updater.invoke(this, value);");
+                    }, Throwable.class, e -> {
+                        code.write("throw new Error(", e, ");");
+                    });
+                    code.write("return (Next) this;");
+                });
+
+                // =========================================
+                // Overload Setter
+                // =========================================
                 for (Method m : m.findOverloadsFor(p)) {
                     code.write();
                     code.write("/**");
@@ -304,21 +324,30 @@ public class CodeGenerator {
                         });
                     });
                 }
-                code.write();
-                code.write("/**");
-                code.write(" * The base setter.");
-                code.write(" */");
-                code.write("default Next ", p.name, "(", p.type, " value)", () -> {
-                    code.writeTry(() -> {
-                        code.write(p.name, "Updater.invoke(this, value);");
-                    }, Throwable.class, e -> {
-                        code.write("throw new Error(", e, ");");
-                    });
-                    code.write("return (Next) this;");
-                });
+
+                // =========================================
+                // Auto-Expanded Overload Setter
+                // =========================================
+                if (p.autoExpandable) {
+                    for (String name : TypeUtil.enumConstantNames(p.element.getReturnType())) {
+                        code.write();
+                        code.write("/**");
+                        code.write(" * The overload setter.");
+                        code.write(" */");
+                        code.write("default Next ", TypeUtil.decapitalize(name), "()", () -> {
+                            code.write("return ", p.name, "(", p.type, ".", name, ");");
+                        });
+                    }
+                }
             });
         }
 
+    }
+
+    /**
+     * Define assignable interfaces.
+     */
+    private void defineAssignableArbitrary() {
         Optional<String> extend = m.findNearestArbitraryModel().map(m -> " extends " + m.implType + "." + ArbitraryInterface + "<Next>");
         code.write();
         code.write("/**");
@@ -340,7 +369,12 @@ public class CodeGenerator {
                 });
             }
         });
+    }
 
+    /**
+     * Define assignable interfaces.
+     */
+    private void defineAssignableAll() {
         StringJoiner apis = new StringJoiner(", ", " extends ", "").setEmptyValue("");
         for (PropertyDefinition property : m.ownRequiredProperties()) {
             apis.add(property.assignableInterfaceName());

@@ -301,7 +301,6 @@ public abstract class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableIntX<Next> {
-
         /**
          * The base setter.
          */
@@ -319,7 +318,6 @@ public abstract class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableLongX<Next> {
-
         /**
          * The base setter.
          */
@@ -337,7 +335,6 @@ public abstract class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableFloatX<Next> {
-
         /**
          * The base setter.
          */
@@ -355,7 +352,6 @@ public abstract class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableDoubleX<Next> {
-
         /**
          * The base setter.
          */
@@ -373,7 +369,6 @@ public abstract class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableByteX<Next> {
-
         /**
          * The base setter.
          */
@@ -391,7 +386,6 @@ public abstract class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableShortX<Next> {
-
         /**
          * The base setter.
          */
@@ -409,7 +403,6 @@ public abstract class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableCharX<Next> {
-
         /**
          * The base setter.
          */
@@ -427,7 +420,6 @@ public abstract class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableBooleanX<Next> {
-
         /**
          * The base setter.
          */

@@ -161,6 +161,17 @@ public abstract class Overload extends OverloadModel {
      * Property assignment API.
      */
     public static interface ÅssignableSize<Next> {
+        /**
+         * The base setter.
+         */
+        default Next size(BigDecimal value) {
+            try {
+                sizeUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
+            return (Next) this;
+        }
 
         /**
          * The overload setter.
@@ -183,24 +194,23 @@ public abstract class Overload extends OverloadModel {
                 throw new Error(e);
             }
         }
-
-        /**
-         * The base setter.
-         */
-        default Next size(BigDecimal value) {
-            try {
-                sizeUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
-            return (Next) this;
-        }
     }
 
     /**
      * Property assignment API.
      */
     public static interface ÅssignableDate<Next> {
+        /**
+         * The base setter.
+         */
+        default Next date(LocalDate value) {
+            try {
+                dateUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
+            return (Next) this;
+        }
 
         /**
          * The overload setter.
@@ -222,18 +232,6 @@ public abstract class Overload extends OverloadModel {
             } catch (Throwable e) {
                 throw new Error(e);
             }
-        }
-
-        /**
-         * The base setter.
-         */
-        default Next date(LocalDate value) {
-            try {
-                dateUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
-            return (Next) this;
         }
     }
 

@@ -84,7 +84,6 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
      * Property assignment API.
      */
     public static interface ÅssignableNickname<Next> {
-
         /**
          * The base setter.
          */

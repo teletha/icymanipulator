@@ -146,7 +146,6 @@ public abstract class Multiple extends MultipleModel {
      * Property assignment API.
      */
     public static interface ÅssignableName<Next> {
-
         /**
          * The base setter.
          */
@@ -164,7 +163,6 @@ public abstract class Multiple extends MultipleModel {
      * Property assignment API.
      */
     public static interface ÅssignableStand<Next> {
-
         /**
          * The base setter.
          */
@@ -182,7 +180,6 @@ public abstract class Multiple extends MultipleModel {
      * Property assignment API.
      */
     public static interface ÅssignableAge<Next> {
-
         /**
          * The base setter.
          */

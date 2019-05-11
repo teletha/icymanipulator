@@ -121,18 +121,6 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
      * Property assignment API.
      */
     public static interface ÅssignableTime<Next> {
-
-        /**
-         * The overload setter.
-         */
-        default Next time(int hour, int minute, int second) {
-            try {
-                return time((LocalTime) timeintintint.invoke(this, hour, minute, second));
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
-        }
-
         /**
          * The base setter.
          */
@@ -143,6 +131,17 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
                 throw new Error(e);
             }
             return (Next) this;
+        }
+
+        /**
+         * The overload setter.
+         */
+        default Next time(int hour, int minute, int second) {
+            try {
+                return time((LocalTime) timeintintint.invoke(this, hour, minute, second));
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
         }
     }
 

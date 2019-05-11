@@ -84,7 +84,6 @@ public abstract class Single extends SingleModel {
      * Property assignment API.
      */
     public static interface ÅssignableName<Next> {
-
         /**
          * The base setter.
          */

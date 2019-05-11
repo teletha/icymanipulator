@@ -177,7 +177,6 @@ public abstract class Mixed extends MixedModel {
      * Property assignment API.
      */
     public static interface ÅssignableName<Next> {
-
         /**
          * The base setter.
          */
@@ -195,7 +194,6 @@ public abstract class Mixed extends MixedModel {
      * Property assignment API.
      */
     public static interface ÅssignableAge<Next> {
-
         /**
          * The base setter.
          */

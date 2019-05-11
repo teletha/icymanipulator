@@ -82,10 +82,13 @@ public class TypeUtil {
      * @return
      */
     public static TypeElement type(TypeMirror type) {
-        if (type.getKind() != TypeKind.DECLARED) {
+        switch (type.getKind()) {
+        case DECLARED:
+            return (TypeElement) ((DeclaredType) type).asElement();
+
+        default:
             throw new Fail(e(type), "Need DeclaredType.");
         }
-        return (TypeElement) ((DeclaredType) type).asElement();
     }
 
     /**
@@ -182,6 +185,43 @@ public class TypeUtil {
     }
 
     /**
+     * Check whether the specified type is enum or not.
+     * 
+     * @param enumType A target type.
+     * @return A result.
+     */
+    public static boolean isEnum(TypeMirror enumType) {
+        Element e = types.asElement(enumType);
+
+        if (e == null) {
+            return false;
+        }
+        return e.getKind() == ElementKind.ENUM;
+    }
+
+    /**
+     * Check whether the specified type is enum or not.
+     * 
+     * @param enumType A target type.
+     * @return A result.
+     */
+    public static List<String> enumConstantNames(TypeMirror enumType) {
+        List<String> names = new ArrayList();
+        Element e = types.asElement(enumType);
+
+        if (e == null) {
+            return names;
+        }
+
+        for (Element element : e.getEnclosedElements()) {
+            if (element.getKind() == ElementKind.ENUM_CONSTANT) {
+                names.add(element.getSimpleName().toString());
+            }
+        }
+        return names;
+    }
+
+    /**
      * Decapitalize text.
      * 
      * @param value
@@ -198,6 +238,9 @@ public class TypeUtil {
      * @return
      */
     public static String decapitalize(String value) {
+        if (value.toUpperCase().equals(value)) {
+            return value.toLowerCase();
+        }
         return Character.toLowerCase(value.charAt(0)) + value.substring(1);
     }
 

@@ -84,7 +84,6 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
      * Property assignment API.
      */
     public static interface ÅssignableName<Next> {
-
         /**
          * The base setter.
          */
