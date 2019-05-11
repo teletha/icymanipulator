@@ -60,7 +60,7 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setName(String value) {
+    private void setName(String value) {
         ((ÅssignableName) this).name(value);
     }
 
@@ -86,7 +86,7 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
     public static interface ÅssignableName<Next> {
 
         /**
-         * The setter.
+         * The base setter.
          */
         default Next name(String value) {
             try {

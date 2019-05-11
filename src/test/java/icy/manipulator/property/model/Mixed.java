@@ -81,7 +81,7 @@ public abstract class Mixed extends MixedModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setName(String value) {
+    private void setName(String value) {
         ((ÅssignableName) this).name(value);
     }
 
@@ -105,7 +105,7 @@ public abstract class Mixed extends MixedModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setAge(int value) {
+    private void setAge(int value) {
         ((ÅssignableAge) this).age(value);
     }
 
@@ -129,7 +129,7 @@ public abstract class Mixed extends MixedModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setOptionAddress(String value) {
+    private void setOptionAddress(String value) {
         ((ÅssignableÅrbitrary) this).optionAddress(value);
     }
 
@@ -153,7 +153,7 @@ public abstract class Mixed extends MixedModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setOptionCommnet(String value) {
+    private void setOptionCommnet(String value) {
         ((ÅssignableÅrbitrary) this).optionCommnet(value);
     }
 
@@ -179,7 +179,7 @@ public abstract class Mixed extends MixedModel {
     public static interface ÅssignableName<Next> {
 
         /**
-         * The setter.
+         * The base setter.
          */
         default Next name(String value) {
             try {
@@ -197,7 +197,7 @@ public abstract class Mixed extends MixedModel {
     public static interface ÅssignableAge<Next> {
 
         /**
-         * The setter.
+         * The base setter.
          */
         default Next age(int value) {
             try {

@@ -10,6 +10,7 @@
 package icy.manipulator.model;
 
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
@@ -52,6 +53,38 @@ public class Method {
                 .map(Type::of)
                 .collect(Collectors.toUnmodifiableList());
         this.paramNames = element.getParameters().stream().map(e -> e.getSimpleName().toString()).collect(Collectors.toUnmodifiableList());
+    }
+
+    /**
+     * Build additional parameter names at head.
+     * 
+     * @param additions A list of additional names.
+     * @return
+     */
+    public List<String> namesWithHead(String... additions) {
+        List<String> names = new ArrayList(additions.length + paramNames.size());
+        for (String name : additions) {
+            names.add(name);
+        }
+        names.addAll(paramNames);
+    
+        return names;
+    }
+
+    /**
+     * Build additional parameter names at head.
+     * 
+     * @param additions A list of additional names.
+     * @return
+     */
+    public List<String> namesWithTail(String... additions) {
+        List<String> names = new ArrayList(additions.length + paramNames.size());
+        for (String name : additions) {
+            names.add(name);
+        }
+        names.addAll(paramNames);
+
+        return names;
     }
 
     /**

@@ -60,7 +60,7 @@ public abstract class Single extends SingleModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setName(String value) {
+    private void setName(String value) {
         ((ÅssignableName) this).name(value);
     }
 
@@ -86,7 +86,7 @@ public abstract class Single extends SingleModel {
     public static interface ÅssignableName<Next> {
 
         /**
-         * The setter.
+         * The base setter.
          */
         default Next name(String value) {
             try {

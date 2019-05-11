@@ -38,4 +38,9 @@ public abstract class OverloadModel {
     private LocalDate date(int year, int month, int day) {
         return LocalDate.of(year, month, day);
     }
+
+    @Icy.Overload(My.Date)
+    private LocalDate today() {
+        return LocalDate.now();
+    }
 }

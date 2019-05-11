@@ -109,7 +109,7 @@ public abstract class Primitive extends PrimitiveModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setIntX(int value) {
+    private void setIntX(int value) {
         ((ÅssignableIntX) this).intX(value);
     }
 
@@ -133,7 +133,7 @@ public abstract class Primitive extends PrimitiveModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setLongX(long value) {
+    private void setLongX(long value) {
         ((ÅssignableLongX) this).longX(value);
     }
 
@@ -157,7 +157,7 @@ public abstract class Primitive extends PrimitiveModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setFloatX(float value) {
+    private void setFloatX(float value) {
         ((ÅssignableFloatX) this).floatX(value);
     }
 
@@ -181,7 +181,7 @@ public abstract class Primitive extends PrimitiveModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setDoubleX(double value) {
+    private void setDoubleX(double value) {
         ((ÅssignableDoubleX) this).doubleX(value);
     }
 
@@ -205,7 +205,7 @@ public abstract class Primitive extends PrimitiveModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setByteX(byte value) {
+    private void setByteX(byte value) {
         ((ÅssignableByteX) this).byteX(value);
     }
 
@@ -229,7 +229,7 @@ public abstract class Primitive extends PrimitiveModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setShortX(short value) {
+    private void setShortX(short value) {
         ((ÅssignableShortX) this).shortX(value);
     }
 
@@ -253,7 +253,7 @@ public abstract class Primitive extends PrimitiveModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setCharX(char value) {
+    private void setCharX(char value) {
         ((ÅssignableCharX) this).charX(value);
     }
 
@@ -277,7 +277,7 @@ public abstract class Primitive extends PrimitiveModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setBooleanX(boolean value) {
+    private void setBooleanX(boolean value) {
         ((ÅssignableBooleanX) this).booleanX(value);
     }
 
@@ -303,7 +303,7 @@ public abstract class Primitive extends PrimitiveModel {
     public static interface ÅssignableIntX<Next> {
 
         /**
-         * The setter.
+         * The base setter.
          */
         default Next intX(int value) {
             try {
@@ -321,7 +321,7 @@ public abstract class Primitive extends PrimitiveModel {
     public static interface ÅssignableLongX<Next> {
 
         /**
-         * The setter.
+         * The base setter.
          */
         default Next longX(long value) {
             try {
@@ -339,7 +339,7 @@ public abstract class Primitive extends PrimitiveModel {
     public static interface ÅssignableFloatX<Next> {
 
         /**
-         * The setter.
+         * The base setter.
          */
         default Next floatX(float value) {
             try {
@@ -357,7 +357,7 @@ public abstract class Primitive extends PrimitiveModel {
     public static interface ÅssignableDoubleX<Next> {
 
         /**
-         * The setter.
+         * The base setter.
          */
         default Next doubleX(double value) {
             try {
@@ -375,7 +375,7 @@ public abstract class Primitive extends PrimitiveModel {
     public static interface ÅssignableByteX<Next> {
 
         /**
-         * The setter.
+         * The base setter.
          */
         default Next byteX(byte value) {
             try {
@@ -393,7 +393,7 @@ public abstract class Primitive extends PrimitiveModel {
     public static interface ÅssignableShortX<Next> {
 
         /**
-         * The setter.
+         * The base setter.
          */
         default Next shortX(short value) {
             try {
@@ -411,7 +411,7 @@ public abstract class Primitive extends PrimitiveModel {
     public static interface ÅssignableCharX<Next> {
 
         /**
-         * The setter.
+         * The base setter.
          */
         default Next charX(char value) {
             try {
@@ -429,7 +429,7 @@ public abstract class Primitive extends PrimitiveModel {
     public static interface ÅssignableBooleanX<Next> {
 
         /**
-         * The setter.
+         * The base setter.
          */
         default Next booleanX(boolean value) {
             try {

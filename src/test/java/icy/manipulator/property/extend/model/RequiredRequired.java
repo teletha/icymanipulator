@@ -60,7 +60,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setNickname(String value) {
+    private void setNickname(String value) {
         ((ÅssignableNickname) this).nickname(value);
     }
 
@@ -86,7 +86,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     public static interface ÅssignableNickname<Next> {
 
         /**
-         * The setter.
+         * The base setter.
          */
         default Next nickname(String value) {
             try {

@@ -9,10 +9,14 @@
  */
 package icy.manipulator.model;
 
+import java.util.Optional;
+
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 
 import icy.manipulator.CodeGenerator;
+import icy.manipulator.Icy;
+import icy.manipulator.Icy.Property;
 import icy.manipulator.Type;
 import icy.manipulator.TypeUtil;
 
@@ -36,6 +40,9 @@ public class PropertyDefinition {
     /** The state. */
     public boolean isDerived;
 
+    /** The property type. */
+    public final boolean mutable;
+
     /**
      * @param method
      */
@@ -44,6 +51,7 @@ public class PropertyDefinition {
         this.name = method.getSimpleName().toString();
         this.type = Type.of(method.getReturnType());
         this.isArbitrary = !method.getModifiers().contains(Modifier.ABSTRACT);
+        this.mutable = Optional.ofNullable(method.getAnnotation(Icy.Property.class)).map(Property::mutable).orElse(false);
     }
 
     /**

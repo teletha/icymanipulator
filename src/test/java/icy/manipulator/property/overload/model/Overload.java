@@ -21,7 +21,7 @@ public abstract class Overload extends OverloadModel {
      * @param parameterTypes A list of method parameter types.
      * @return A special method invoker.
      */
-    private static final MethodHandle updater(String name, Class... parameterTypes)  {
+    private static final MethodHandle invoker(String name, Class... parameterTypes)  {
         try {
             Method method = OverloadModel.class.getDeclaredMethod(name, parameterTypes);
             method.setAccessible(true);
@@ -32,13 +32,16 @@ public abstract class Overload extends OverloadModel {
     }
 
     /** The overload method invoker. */
-    private static final MethodHandle sizeint= updater("size", int.class);
+    private static final MethodHandle sizeint= invoker("size", int.class);
 
     /** The overload method invoker. */
-    private static final MethodHandle sizeByTextjavalangString= updater("sizeByText", String.class);
+    private static final MethodHandle sizeByTextjavalangString= invoker("sizeByText", String.class);
 
     /** The overload method invoker. */
-    private static final MethodHandle dateintintint= updater("date", int.class, int.class, int.class);
+    private static final MethodHandle dateintintint= invoker("date", int.class, int.class, int.class);
+
+    /** The overload method invoker. */
+    private static final MethodHandle today= invoker("today");
 
     /**
      * Create special property updater.
@@ -96,7 +99,7 @@ public abstract class Overload extends OverloadModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setSize(BigDecimal value) {
+    private void setSize(BigDecimal value) {
         ((ÅssignableSize) this).size(value);
     }
 
@@ -120,7 +123,7 @@ public abstract class Overload extends OverloadModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setDate(LocalDate value) {
+    private void setDate(LocalDate value) {
         ((ÅssignableDate) this).date(value);
     }
 
@@ -182,7 +185,7 @@ public abstract class Overload extends OverloadModel {
         }
 
         /**
-         * The setter.
+         * The base setter.
          */
         default Next size(BigDecimal value) {
             try {
@@ -211,7 +214,18 @@ public abstract class Overload extends OverloadModel {
         }
 
         /**
-         * The setter.
+         * The overload setter.
+         */
+        default Next today() {
+            try {
+                return date((LocalDate) today.invoke(this));
+            } catch (Throwable e) {
+                throw new Error(e);
+            }
+        }
+
+        /**
+         * The base setter.
          */
         default Next date(LocalDate value) {
             try {

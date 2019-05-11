@@ -43,10 +43,24 @@ public @interface Icy {
      */
     String modelNamePattern() default "(.+)Model";
 
+    /**
+     * Configure the modifier of classic style setter method.
+     * 
+     * @return "private"
+     */
+    String classicSetterModifier() default "private";
+
     @Documented
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.SOURCE)
     @interface Property {
+
+        /**
+         * Configure the mutability of property.
+         * 
+         * @return false
+         */
+        boolean mutable() default false;
     }
 
     @Documented

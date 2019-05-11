@@ -67,7 +67,7 @@ public abstract class Arbitrary extends ArbitraryModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setOptionNum(int value) {
+    private void setOptionNum(int value) {
         ((ÅssignableÅrbitrary) this).optionNum(value);
     }
 
@@ -91,7 +91,7 @@ public abstract class Arbitrary extends ArbitraryModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setOptionComment(String value) {
+    private void setOptionComment(String value) {
         ((ÅssignableÅrbitrary) this).optionComment(value);
     }
 

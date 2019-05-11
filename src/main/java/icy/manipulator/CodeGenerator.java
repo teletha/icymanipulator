@@ -99,7 +99,7 @@ public class CodeGenerator {
         code.write(" * @param parameterTypes A list of method parameter types.");
         code.write(" * @return A special method invoker.");
         code.write(" */");
-        code.write("private static final ", MethodHandle.class, " updater(String name, Class... parameterTypes) ", () -> {
+        code.write("private static final ", MethodHandle.class, " invoker(String name, Class... parameterTypes) ", () -> {
             code.writeTry(() -> {
                 code.write(java.lang.reflect.Method.class, " method = ", m.type, ".class.getDeclaredMethod(name, parameterTypes);");
                 code.write("method.setAccessible(true);");
@@ -121,7 +121,7 @@ public class CodeGenerator {
 
                 code.write();
                 code.write("/** The overload method invoker. */");
-                code.write("private static final ", MethodHandle.class, " ", method.id, "= updater(\"", method.name, "\"", types, ");");
+                code.write("private static final ", MethodHandle.class, " ", method.id, "= invoker(`", method.name, "`", types, ");");
             }
         }
     }
@@ -155,7 +155,7 @@ public class CodeGenerator {
         for (PropertyDefinition property : m.ownProperties()) {
             code.write();
             code.write("/** The final property updater. */");
-            code.write("private static final ", MethodHandle.class, " ", property.name, "Updater = updater(\"", property.name, "\");");
+            code.write("private static final ", MethodHandle.class, " ", property.name, "Updater = updater(`", property.name, "`);");
         }
     }
 
@@ -166,7 +166,7 @@ public class CodeGenerator {
         for (PropertyDefinition property : m.ownProperties()) {
             code.write();
             code.write("/** The exposed property. */");
-            code.write("public final ", property.type, " ", property.name, ";");
+            code.write("public ", property.mutable ? "" : "final ", property.type, " ", property.name, ";");
         }
     }
 
@@ -217,7 +217,7 @@ public class CodeGenerator {
             code.write(" * Provide classic setter API.");
             code.write(" */");
             code.write("@SuppressWarnings(`unused`)");
-            code.write("private final void set", property.capitalizeName(), "(", property.type, " value)", () -> {
+            code.write(icy.classicSetterModifier().trim(), " void set", property.capitalizeName(), "(", property.type, " value)", () -> {
                 code.write("((", property.assignableInterfaceName(), ") this).", property.name, "(value);");
             });
         }
@@ -291,14 +291,14 @@ public class CodeGenerator {
             code.write(" * Property assignment API.");
             code.write(" */");
             code.write("public static interface ", p.assignableInterfaceName(), "<Next>", () -> {
-                for (Method method : m.findOverloadsFor(p)) {
+                for (Method m : m.findOverloadsFor(p)) {
                     code.write();
                     code.write("/**");
                     code.write(" * The overload setter.");
                     code.write(" */");
-                    code.write("default Next ", method, () -> {
+                    code.write("default Next ", m, () -> {
                         code.writeTry(() -> {
-                            code.write("return ", p.name, "((", method.returnType, ") ", method.id, ".invoke(this, ", method.paramNames, "));");
+                            code.write("return ", p.name, "((", m.returnType, ") ", m.id, ".invoke(", m.namesWithHead("this"), "));");
                         }, Throwable.class, e -> {
                             code.write("throw new Error(", e, ");");
                         });
@@ -306,7 +306,7 @@ public class CodeGenerator {
                 }
                 code.write();
                 code.write("/**");
-                code.write(" * The setter.");
+                code.write(" * The base setter.");
                 code.write(" */");
                 code.write("default Next ", p.name, "(", p.type, " value)", () -> {
                     code.writeTry(() -> {

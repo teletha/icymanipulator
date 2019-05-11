@@ -21,7 +21,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
      * @param parameterTypes A list of method parameter types.
      * @return A special method invoker.
      */
-    private static final MethodHandle updater(String name, Class... parameterTypes)  {
+    private static final MethodHandle invoker(String name, Class... parameterTypes)  {
         try {
             Method method = RequiredRequiredModel.class.getDeclaredMethod(name, parameterTypes);
             method.setAccessible(true);
@@ -32,7 +32,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     }
 
     /** The overload method invoker. */
-    private static final MethodHandle timeintintint= updater("time", int.class, int.class, int.class);
+    private static final MethodHandle timeintintint= invoker("time", int.class, int.class, int.class);
 
     /**
      * Create special property updater.
@@ -83,7 +83,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setTime(LocalTime value) {
+    private void setTime(LocalTime value) {
         ((ÅssignableTime) this).time(value);
     }
 
@@ -134,7 +134,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
         }
 
         /**
-         * The setter.
+         * The base setter.
          */
         default Next time(LocalTime value) {
             try {

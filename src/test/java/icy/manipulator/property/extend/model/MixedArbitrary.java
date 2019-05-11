@@ -60,7 +60,7 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setOptionZip(String value) {
+    private void setOptionZip(String value) {
         ((ÅssignableÅrbitrary) this).optionZip(value);
     }
 

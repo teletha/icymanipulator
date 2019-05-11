@@ -60,7 +60,7 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
      * Provide classic setter API.
      */
     @SuppressWarnings("unused")
-    private final void setId(long value) {
+    private void setId(long value) {
         ((ÅssignableId) this).id(value);
     }
 
@@ -86,7 +86,7 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
     public static interface ÅssignableId<Next> {
 
         /**
-         * The setter.
+         * The base setter.
          */
         default Next id(long value) {
             try {
