@@ -76,7 +76,7 @@ public class ModelDefinition {
             // by defined model
             this.name = e.getSimpleName().toString();
             this.type = Type.of(e);
-            this.implType = Type.of(e.getQualifiedName().toString().replaceAll(icy.modelBase() + "$", ""));
+            this.implType = Type.of(e.getQualifiedName().toString().replaceAll(icy.modelNamePattern() + "$", "$1"));
             TypeUtil.methods(e).forEach(m -> {
                 validateProperty(m);
                 validateOverload(m);

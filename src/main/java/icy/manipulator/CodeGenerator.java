@@ -29,7 +29,7 @@ public class CodeGenerator {
     public static final String AssignableAll = Assignable + "All";
 
     /** The instantiator class name. */
-    private static final String Instantiator = "Ìnstantiator";
+    public static final String Instantiator = "Ìnstantiator";
 
     /** The configuration interface name for arbitrary perperties. */
     public static final String ArbitraryInterface = Assignable + "Årbitrary";

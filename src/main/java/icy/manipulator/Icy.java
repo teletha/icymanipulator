@@ -36,11 +36,12 @@ public @interface Icy {
     String builder() default "with";
 
     /**
-     * Configure the postfix base name of model class. (default is "Model")
+     * Configure the regular expression for model class naming. The first back reference ($1) will
+     * be used.
      * 
-     * @return
+     * @return A default pattern is "(.+)Model".
      */
-    String modelBase() default "Model";
+    String modelNamePattern() default "(.+)Model";
 
     @Documented
     @Target(ElementType.METHOD)
