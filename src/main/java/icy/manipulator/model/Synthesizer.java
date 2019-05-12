@@ -58,7 +58,7 @@ public class Synthesizer {
                 }
 
                 // overload method parmeter type must NOT be the same type of property
-                if (!overload.paramTypes.get(0).equals(p.type)) {
+                if (overload.paramTypes.get(0).equals(p.type)) {
                     continue;
                 }
                 methods.add(overload);

@@ -250,6 +250,7 @@ public class CodeGenerator {
                         .map(def -> new Synthesizer(m, def))
                         .reduce((prev, next) -> prev.synthesize(next))
                         .ifPresent(synthesizer -> {
+                            System.out.println(synthesizer.methods);
                             for (MethodDefinition method : synthesizer.methods) {
                                 code.write("/**");
                                 code.write(" * Create uninitialized {@link ", m.implType, "}.");
