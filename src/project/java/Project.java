@@ -1,11 +1,11 @@
 /*
- * Copyright (C) 2015 Icy Manipulator Development Team
- * 
- * Licensed under the BSD License (the "License");
+ * Copyright (C) 2019 icymanipulator Development Team
+ *
+ * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
- *          http://opensource.org/licenses/BSD-2-Clause
+ *
+ *          https://opensource.org/licenses/MIT
  */
 public class Project extends bee.api.Project {
 
