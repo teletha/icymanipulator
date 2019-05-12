@@ -74,8 +74,10 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
         /**
          * Create uninitialized {@link ArbitraryRequired}.
          */
-        public final <T extends Self> T id(long value) {
-            return (T) new Åssignable().id(value);
+        public final <T extends Self> T id(long $long) {
+            Åssignable o = new Åssignable();
+            o.id($long);
+            return (T) o;
         }
     }
 

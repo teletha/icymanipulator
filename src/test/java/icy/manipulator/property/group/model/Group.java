@@ -136,16 +136,10 @@ public abstract class Group extends GroupModel {
         /**
          * Create uninitialized {@link Group}.
          */
-        public final <T extends ÅssignableY<ÅssignableZ<Self>>> T x(int value) {
-            return (T) new Åssignable().x(value);
-        }
-        /**
-         * Create uninitialized {@link Group}.
-         */
-        public final <T extends ÅssignableZ<Self>> T x(int x, int y) {
+        public final <T extends ÅssignableZ<Self>> T x(int $int, int $int1) {
             Åssignable o = new Åssignable();
-            o.x(x);
-            o.y(y);
+            o.x($int);
+            o.y($int1);
             return (T) o;
         }
     }

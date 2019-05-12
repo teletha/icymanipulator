@@ -35,7 +35,7 @@ public abstract class Overload extends OverloadModel {
     private static final MethodHandle sizeint= invoker("size", int.class);
 
     /** The overload method invoker. */
-    private static final MethodHandle sizeByTextjavalangString= invoker("sizeByText", String.class);
+    private static final MethodHandle sizeByTextString= invoker("sizeByText", String.class);
 
     /** The overload method invoker. */
     private static final MethodHandle dateintintint= invoker("date", int.class, int.class, int.class);
@@ -137,22 +137,26 @@ public abstract class Overload extends OverloadModel {
         /**
          * Create uninitialized {@link Overload}.
          */
-        public final <T extends ÅssignableDate<Self>> T size(BigDecimal value) {
-            return (T) new Åssignable().size(value);
+        public final <T extends ÅssignableDate<Self>> T size(BigDecimal bigDecimal) {
+            Åssignable o = new Åssignable();
+            o.size(bigDecimal);
+            return (T) o;
         }
-
         /**
          * Create uninitialized {@link Overload}.
          */
         public final <T extends ÅssignableDate<Self>> T size(int number) {
-            return (T) new Åssignable().size(number);
+            Åssignable o = new Åssignable();
+            o.size(number);
+            return (T) o;
         }
-
         /**
          * Create uninitialized {@link Overload}.
          */
         public final <T extends ÅssignableDate<Self>> T sizeByText(String number) {
-            return (T) new Åssignable().sizeByText(number);
+            Åssignable o = new Åssignable();
+            o.sizeByText(number);
+            return (T) o;
         }
     }
 
@@ -188,7 +192,7 @@ public abstract class Overload extends OverloadModel {
          */
         default Next sizeByText(String number) {
             try {
-                return size((BigDecimal) sizeByTextjavalangString.invoke(this, number));
+                return size((BigDecimal) sizeByTextString.invoke(this, number));
             } catch (Throwable e) {
                 throw new Error(e);
             }

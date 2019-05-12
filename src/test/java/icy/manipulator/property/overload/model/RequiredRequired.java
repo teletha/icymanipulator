@@ -97,22 +97,26 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
         /**
          * Create uninitialized {@link RequiredRequired}.
          */
-        public final <T extends ÅssignableDate<ÅssignableTime<Self>>> T size(BigDecimal value) {
-            return (T) new Åssignable().size(value);
+        public final <T extends ÅssignableDate<ÅssignableTime<Self>>> T size(BigDecimal bigDecimal) {
+            Åssignable o = new Åssignable();
+            o.size(bigDecimal);
+            return (T) o;
         }
-
         /**
          * Create uninitialized {@link RequiredRequired}.
          */
         public final <T extends ÅssignableDate<ÅssignableTime<Self>>> T size(int number) {
-            return (T) new Åssignable().size(number);
+            Åssignable o = new Åssignable();
+            o.size(number);
+            return (T) o;
         }
-
         /**
          * Create uninitialized {@link RequiredRequired}.
          */
         public final <T extends ÅssignableDate<ÅssignableTime<Self>>> T sizeByText(String number) {
-            return (T) new Åssignable().sizeByText(number);
+            Åssignable o = new Åssignable();
+            o.sizeByText(number);
+            return (T) o;
         }
     }
 

@@ -74,8 +74,10 @@ public abstract class Single extends SingleModel {
         /**
          * Create uninitialized {@link Single}.
          */
-        public final <T extends Self> T name(String value) {
-            return (T) new Åssignable().name(value);
+        public final <T extends Self> T name(String string) {
+            Åssignable o = new Åssignable();
+            o.name(string);
+            return (T) o;
         }
     }
 

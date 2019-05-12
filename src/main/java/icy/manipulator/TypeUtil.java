@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
 
+import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
@@ -242,6 +243,20 @@ public class TypeUtil {
             return value.toLowerCase();
         }
         return Character.toLowerCase(value.charAt(0)) + value.substring(1);
+    }
+
+    /**
+     * Sanitize java keyword.
+     * 
+     * @param value
+     * @return
+     */
+    public static String sanitize(String value) {
+        if (SourceVersion.isKeyword(value)) {
+            return "$" + value;
+        } else {
+            return value;
+        }
     }
 
     /**

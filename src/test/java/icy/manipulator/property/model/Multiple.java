@@ -136,8 +136,10 @@ public abstract class Multiple extends MultipleModel {
         /**
          * Create uninitialized {@link Multiple}.
          */
-        public final <T extends ÅssignableStand<ÅssignableAge<Self>>> T name(String value) {
-            return (T) new Åssignable().name(value);
+        public final <T extends ÅssignableStand<ÅssignableAge<Self>>> T name(String string) {
+            Åssignable o = new Åssignable();
+            o.name(string);
+            return (T) o;
         }
     }
 

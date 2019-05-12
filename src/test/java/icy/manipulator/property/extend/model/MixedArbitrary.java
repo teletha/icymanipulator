@@ -74,8 +74,10 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
         /**
          * Create uninitialized {@link MixedArbitrary}.
          */
-        public final <T extends ÅssignableAge<Self>> T name(String value) {
-            return (T) new Åssignable().name(value);
+        public final <T extends ÅssignableAge<Self>> T name(String string) {
+            Åssignable o = new Åssignable();
+            o.name(string);
+            return (T) o;
         }
     }
 

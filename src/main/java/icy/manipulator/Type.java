@@ -98,6 +98,19 @@ public class Type {
     }
 
     /**
+     * Compute fully qualified class name.
+     * 
+     * @return
+     */
+    public String fqcn() {
+        if (packageName.isEmpty()) {
+            return className;
+        } else {
+            return packageName + "." + className;
+        }
+    }
+
+    /**
      * <p>
      * Check default package.
      * </p>
@@ -213,6 +226,16 @@ public class Type {
     }
 
     /**
+     * Chech type equality.
+     * 
+     * @param type
+     * @return
+     */
+    public boolean is(Class type) {
+        return fqcn().equals(type.getName());
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -246,11 +269,7 @@ public class Type {
      */
     @Override
     public String toString() {
-        if (packageName.isEmpty()) {
-            return className;
-        } else {
-            return packageName + "." + className;
-        }
+        return fqcn();
     }
 
     /**
@@ -263,6 +282,18 @@ public class Type {
      */
     public static final Type of(String fqcn) {
         return new Type(fqcn, null);
+    }
+
+    /**
+     * <p>
+     * Resoleve {@link Type} by the fully qualified class name.
+     * </p>
+     * 
+     * @param fcn
+     * @return
+     */
+    public static final Type of(Class type) {
+        return new Type(type.getName(), null);
     }
 
     /**

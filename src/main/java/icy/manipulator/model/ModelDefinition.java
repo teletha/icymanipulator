@@ -54,7 +54,7 @@ public class ModelDefinition {
     private final List<PropertyDefinition> arbitraryProperties = new LinkedList();
 
     /** The overload method for each property */
-    private final Items<Method> overloadForProperty = new Items();
+    private final Items<MethodDefinition> overloadForProperty = new Items();
 
     /**
      * 
@@ -125,13 +125,13 @@ public class ModelDefinition {
         Overload overload = m.getAnnotation(Icy.Overload.class);
 
         if (overload != null) {
-            Method method = new Method(m);
+            MethodDefinition method = new MethodDefinition(m);
             String targetProperty = overload.value().isEmpty() ? method.name : overload.value();
 
             PropertyDefinition property = findPropertyByName(targetProperty);
 
             if (!method.returnType.equals(property.type)) {
-                throw new Fail(method.element, "Although the property [" + targetProperty + "] type is " + method.returnType + ", overload method [" + method + "] returns " + method.returnType + ".");
+                throw new Fail(m, "Although the property [" + targetProperty + "] type is " + method.returnType + ", overload method [" + method + "] returns " + method.returnType + ".");
             }
             overloadForProperty.add(property, method);
         }
@@ -263,26 +263,6 @@ public class ModelDefinition {
      * @param destination
      * @return
      */
-    public String requiredRouteTypeWithoutFirst(String destination) {
-        StringBuilder builder = new StringBuilder();
-        List<PropertyDefinition> properties = requiredProperties();
-
-        for (int i = 1; i < properties.size(); i++) {
-            builder.append(properties.get(i).assignableInterfaceName()).append("<");
-        }
-        builder.append(destination);
-        for (int i = 1; i < properties.size(); i++) {
-            builder.append(">");
-        }
-        return builder.toString();
-    }
-
-    /**
-     * Compute API route variable for required properties.
-     * 
-     * @param destination
-     * @return
-     */
     public String requiredRouteType(int depature, String destination) {
         StringBuilder builder = new StringBuilder();
         List<PropertyDefinition> properties = requiredProperties();
@@ -317,7 +297,7 @@ public class ModelDefinition {
      * @param property A target property.
      * @return A list of overload methods.
      */
-    public List<Method> findOverloadsFor(PropertyDefinition property) {
+    public List<MethodDefinition> findOverloadsFor(PropertyDefinition property) {
         if (overloadForProperty.holder.containsKey(property)) {
             return overloadForProperty.find(property);
         } else {
@@ -381,7 +361,7 @@ public class ModelDefinition {
                                 List<? extends VariableElement> parameters = method.getParameters();
 
                                 if (parameters.size() != 1 || TypeUtil.diff(getter.getReturnType(), parameters.get(0))) {
-                                    overloadForProperty.add(property, new Method(method));
+                                    overloadForProperty.add(property, new MethodDefinition(method));
                                 }
                             }
                             continue root;

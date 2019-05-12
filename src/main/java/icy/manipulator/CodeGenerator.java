@@ -18,9 +18,10 @@ import java.util.StringJoiner;
 
 import javax.annotation.processing.Generated;
 
-import icy.manipulator.model.Method;
+import icy.manipulator.model.MethodDefinition;
 import icy.manipulator.model.ModelDefinition;
 import icy.manipulator.model.PropertyDefinition;
+import icy.manipulator.model.Synthesizer;
 
 public class CodeGenerator {
 
@@ -118,13 +119,13 @@ public class CodeGenerator {
      */
     private void defineOverloadMethodInvoker() {
         for (PropertyDefinition property : m.ownProperties()) {
-            for (Method method : m.findOverloadsFor(property)) {
+            for (MethodDefinition method : m.findOverloadsFor(property)) {
                 StringJoiner types = new StringJoiner(", ", ", ", "").setEmptyValue("");
                 method.paramTypes.forEach(t -> types.add(code.use(t) + ".class"));
 
                 code.write();
                 code.write("/** The overload method invoker. */");
-                code.write("private static final ", MethodHandle.class, " ", method.id, "= invoker(`", method.name, "`", types, ");");
+                code.write("private static final ", MethodHandle.class, " ", method.id(), "= invoker(`", method.name, "`", types, ");");
             }
         }
     }
@@ -242,69 +243,37 @@ public class CodeGenerator {
         code.write(" */");
         code.write("public static final class ", Instantiator, "<Self extends ", m.implType.className, " & ", ArbitraryInterface, "<Self>>", () -> {
             m.firstRequiredProperty().ifPresentOrElse(p -> {
-                // =========================================
-                // Base Setter
-                // =========================================
-                code.write("/**");
-                code.write(" * Create uninitialized {@link ", m.implType, "}.");
-                code.write(" */");
-                code.write("public final <T extends ", m.requiredRouteType(1, "Self"), "> T ", p.name, "(", p.type, " value)", () -> {
-                    code.write("return (T) new ", Assignable, "().", p.name, "(value);");
-                });
-
-                // =========================================
-                // Overload Setter
-                // =========================================
-                for (Method method : m.findOverloadsFor(p)) {
-                    code.write();
-                    code.write("/**");
-                    code.write(" * Create uninitialized {@link ", m.implType, "}.");
-                    code.write(" */");
-                    code.write("public final <T extends ", m.requiredRouteTypeWithoutFirst("Self"), "> T ", method, () -> {
-                        code.write("return (T) new ", Assignable, "().", method.name, "(", method.paramNames, ");");
-                    });
-                }
-
-                // =========================================
-                // Auto-Expanded Overload Setter
-                // =========================================
-                if (p.autoExpandable) {
-                    for (String name : TypeUtil.enumConstantNames(p.element.getReturnType())) {
-                        code.write();
-                        code.write("/**");
-                        code.write(" * Create uninitialized {@link ", m.implType, "}.");
-                        code.write(" */");
-                        code.write("public final <T extends ", m.requiredRouteType(1, "Self"), "> T ", TypeUtil
-                                .decapitalize(name), "()", () -> {
-                                    code.write("return ", p.name, "(", p.type, ".", name, ");");
-                                });
-                    }
-                }
-
-                // =========================================
-                // Grouped Setter
-                // =========================================
                 int group = icy.grouping();
-                if (1 < group && group <= m.requiredProperties().size()) {
-                    List<PropertyDefinition> properties = m.requiredProperties();
-                    StringJoiner method = new StringJoiner(", ", p.name + "(", ")");
-                    for (int i = 0; i < group; i++) {
-                        PropertyDefinition property = properties.get(i);
-                        method.add(code.use(property.type) + " " + property.name);
-                    }
+                List<PropertyDefinition> requireds = m.requiredProperties().subList(0, group);
 
-                    code.write("/**");
-                    code.write(" * Create uninitialized {@link ", m.implType, "}.");
-                    code.write(" */");
-                    code.write("public final <T extends ", m.requiredRouteType(group, "Self"), "> T ", method, () -> {
-                        code.write(Assignable, " o = new ", Assignable, "();");
-                        for (int i = 0; i < group; i++) {
-                            PropertyDefinition property = properties.get(i);
-                            code.write("o.", property.name, "(", property.name, ");");
-                        }
-                        code.write("return (T) o;");
-                    });
-                }
+                requireds.stream()
+                        .map(def -> new Synthesizer(m, def))
+                        .reduce((prev, next) -> prev.synthesize(next))
+                        .ifPresent(synthesizer -> {
+                            for (MethodDefinition method : synthesizer.methods) {
+                                code.write("/**");
+                                code.write(" * Create uninitialized {@link ", m.implType, "}.");
+                                code.write(" */");
+                                code.write("public final <T extends ", m.requiredRouteType(group, "Self"), "> T ", method, () -> {
+                                    code.write(Assignable, " o = new ", Assignable, "();");
+
+                                    boolean skipFirst = requireds.size() != method.paramNames.size();
+                                    int parameterIndex = skipFirst ? -1 : 0;
+                                    int index = 0;
+
+                                    for (; index < requireds.size(); index++, parameterIndex++) {
+                                        String methodName = index == 0 ? method.name : requireds.get(index).name;
+
+                                        if (0 <= parameterIndex) {
+                                            code.write("o.", methodName, "(", method.paramNames.get(parameterIndex), ");");
+                                        } else {
+                                            code.write("o.", methodName, "();");
+                                        }
+                                    }
+                                    code.write("return (T) o;");
+                                });
+                            }
+                        });
             }, () -> {
                 // =========================================
                 // No Required Property
@@ -359,14 +328,14 @@ public class CodeGenerator {
                 // =========================================
                 // Overload Setter
                 // =========================================
-                for (Method m : m.findOverloadsFor(p)) {
+                for (MethodDefinition m : m.findOverloadsFor(p)) {
                     code.write();
                     code.write("/**");
                     code.write(" * The overload setter.");
                     code.write(" */");
                     code.write("default Next ", m, () -> {
                         code.writeTry(() -> {
-                            code.write("return ", p.name, "((", m.returnType, ") ", m.id, ".invoke(", m.namesWithHead("this"), "));");
+                            code.write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", m.namesWithHead("this"), "));");
                         }, Throwable.class, e -> {
                             code.write("throw new Error(", e, ");");
                         });

@@ -105,37 +105,37 @@ public abstract class EnumGroup extends EnumGroupModel {
         /**
          * Create uninitialized {@link EnumGroup}.
          */
-        public final <T extends ÅssignableSize<Self>> T color(Color value) {
-            return (T) new Åssignable().color(value);
-        }
-
-        /**
-         * Create uninitialized {@link EnumGroup}.
-         */
-        public final <T extends ÅssignableSize<Self>> T red() {
-            return color(Color.Red);
-        }
-
-        /**
-         * Create uninitialized {@link EnumGroup}.
-         */
-        public final <T extends ÅssignableSize<Self>> T blue() {
-            return color(Color.Blue);
-        }
-
-        /**
-         * Create uninitialized {@link EnumGroup}.
-         */
-        public final <T extends ÅssignableSize<Self>> T green() {
-            return color(Color.Green);
-        }
-        /**
-         * Create uninitialized {@link EnumGroup}.
-         */
-        public final <T extends Self> T color(Color color, int size) {
+        public final <T extends Self> T color(Color color, int $int) {
             Åssignable o = new Åssignable();
             o.color(color);
-            o.size(size);
+            o.size($int);
+            return (T) o;
+        }
+        /**
+         * Create uninitialized {@link EnumGroup}.
+         */
+        public final <T extends Self> T red(int $int) {
+            Åssignable o = new Åssignable();
+            o.red();
+            o.size($int);
+            return (T) o;
+        }
+        /**
+         * Create uninitialized {@link EnumGroup}.
+         */
+        public final <T extends Self> T blue(int $int) {
+            Åssignable o = new Åssignable();
+            o.blue();
+            o.size($int);
+            return (T) o;
+        }
+        /**
+         * Create uninitialized {@link EnumGroup}.
+         */
+        public final <T extends Self> T green(int $int) {
+            Åssignable o = new Åssignable();
+            o.green();
+            o.size($int);
             return (T) o;
         }
     }

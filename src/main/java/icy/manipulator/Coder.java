@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.function.Consumer;
 
-import icy.manipulator.model.Method;
+import icy.manipulator.model.MethodDefinition;
 
 public class Coder {
 
@@ -236,8 +236,8 @@ public class Coder {
                 joiner.add(code(object));
             }
             return joiner.toString();
-        } else if (code instanceof Method) {
-            Method e = (Method) code;
+        } else if (code instanceof MethodDefinition) {
+            MethodDefinition e = (MethodDefinition) code;
             StringJoiner params = new StringJoiner(", ", "(", ")");
             for (int i = 0; i < e.paramTypes.size(); i++) {
                 params.add(importer.use(e.paramTypes.get(i)) + " " + e.paramNames.get(i));

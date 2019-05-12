@@ -74,22 +74,26 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
         /**
          * Create uninitialized {@link AutoExpandEnum}.
          */
-        public final <T extends Self> T answer(Answer value) {
-            return (T) new Åssignable().answer(value);
+        public final <T extends Self> T answer(Answer answer) {
+            Åssignable o = new Åssignable();
+            o.answer(answer);
+            return (T) o;
         }
-
         /**
          * Create uninitialized {@link AutoExpandEnum}.
          */
         public final <T extends Self> T yes() {
-            return answer(Answer.Yes);
+            Åssignable o = new Åssignable();
+            o.yes();
+            return (T) o;
         }
-
         /**
          * Create uninitialized {@link AutoExpandEnum}.
          */
         public final <T extends Self> T no() {
-            return answer(Answer.No);
+            Åssignable o = new Åssignable();
+            o.no();
+            return (T) o;
         }
     }
 

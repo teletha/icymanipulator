@@ -14,8 +14,8 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import icy.manipulator.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
+import icy.manipulator.property.group.model.EnumGroup;
 import icy.manipulator.property.group.model.EnumGroupModel;
-import icy.manipulator.property.group.model.Group;
 
 class EnumGroupTest {
 
@@ -24,9 +24,8 @@ class EnumGroupTest {
 
     @Test
     void normal() {
-        Group o = Group.with.x(1, 5).z(3);
-        assert o.x == 1;
-        assert o.y == 5;
-        assert o.z == 3;
+        EnumGroup o = EnumGroup.with.blue(10);
+        assert o.color == EnumGroupModel.Color.Blue;
+        assert o.size == 10;
     }
 }

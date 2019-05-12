@@ -74,8 +74,10 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
         /**
          * Create uninitialized {@link RequiredRequired}.
          */
-        public final <T extends ÅssignableStand<ÅssignableAge<ÅssignableNickname<Self>>>> T name(String value) {
-            return (T) new Åssignable().name(value);
+        public final <T extends ÅssignableStand<ÅssignableAge<ÅssignableNickname<Self>>>> T name(String string) {
+            Åssignable o = new Åssignable();
+            o.name(string);
+            return (T) o;
         }
     }
 
