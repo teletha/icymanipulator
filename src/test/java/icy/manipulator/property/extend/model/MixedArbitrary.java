@@ -85,9 +85,8 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
      * Property assignment API.
      */
     public static interface ÅssignableÅrbitrary<Next extends MixedArbitrary> extends icy.manipulator.property.model.Mixed.ÅssignableÅrbitrary<Next> {
-
         /**
-         * Property assignment API.
+         * The base setter.
          */
         default Next optionZip(String value) {
             try {

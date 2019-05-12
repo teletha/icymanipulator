@@ -212,9 +212,8 @@ public abstract class Mixed extends MixedModel {
      * Property assignment API.
      */
     public static interface ÅssignableÅrbitrary<Next extends Mixed> {
-
         /**
-         * Property assignment API.
+         * The base setter.
          */
         default Next optionAddress(String value) {
             try {
@@ -224,9 +223,8 @@ public abstract class Mixed extends MixedModel {
             }
             return (Next) this;
         }
-
         /**
-         * Property assignment API.
+         * The base setter.
          */
         default Next optionCommnet(String value) {
             try {

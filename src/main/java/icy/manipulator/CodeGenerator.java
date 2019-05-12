@@ -250,7 +250,6 @@ public class CodeGenerator {
                         .map(def -> new Synthesizer(m, def))
                         .reduce((prev, next) -> prev.synthesize(next))
                         .ifPresent(synthesizer -> {
-                            System.out.println(synthesizer.methods);
                             for (MethodDefinition method : synthesizer.methods) {
                                 code.write("/**");
                                 code.write(" * Create uninitialized {@link ", m.implType, "}.");
@@ -311,55 +310,9 @@ public class CodeGenerator {
             code.write(" * Property assignment API.");
             code.write(" */");
             code.write("public static interface ", p.assignableInterfaceName(), "<Next>", () -> {
-                // =========================================
-                // Base Setter
-                // =========================================
-                code.write("/**");
-                code.write(" * The base setter.");
-                code.write(" */");
-                code.write("default Next ", p.name, "(", p.type, " value)", () -> {
-                    code.writeTry(() -> {
-                        code.write(p.name, "Updater.invoke(this, value);");
-                    }, Throwable.class, e -> {
-                        code.write("throw new Error(", e, ");");
-                    });
-                    code.write("return (Next) this;");
-                });
-
-                // =========================================
-                // Overload Setter
-                // =========================================
-                for (MethodDefinition m : m.findOverloadsFor(p)) {
-                    code.write();
-                    code.write("/**");
-                    code.write(" * The overload setter.");
-                    code.write(" */");
-                    code.write("default Next ", m, () -> {
-                        code.writeTry(() -> {
-                            code.write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", m.namesWithHead("this"), "));");
-                        }, Throwable.class, e -> {
-                            code.write("throw new Error(", e, ");");
-                        });
-                    });
-                }
-
-                // =========================================
-                // Auto-Expanded Overload Setter
-                // =========================================
-                if (p.autoExpandable) {
-                    for (String name : TypeUtil.enumConstantNames(p.element.getReturnType())) {
-                        code.write();
-                        code.write("/**");
-                        code.write(" * The overload setter.");
-                        code.write(" */");
-                        code.write("default Next ", TypeUtil.decapitalize(name), "()", () -> {
-                            code.write("return ", p.name, "(", p.type, ".", name, ");");
-                        });
-                    }
-                }
+                defineAssignableSetter(p);
             });
         }
-
     }
 
     /**
@@ -372,21 +325,62 @@ public class CodeGenerator {
         code.write(" * Property assignment API.");
         code.write(" */");
         code.write("public static interface ", ArbitraryInterface, "<Next extends ", m.implType, ">", extend, () -> {
-            for (PropertyDefinition property : m.ownArbitraryProperties()) {
+            m.ownArbitraryProperties().forEach(this::defineAssignableSetter);
+        });
+    }
+
+    /**
+     * Define assignable setter.
+     * 
+     * @param p
+     */
+    private void defineAssignableSetter(PropertyDefinition p) {
+        // =========================================
+        // Base Setter
+        // =========================================
+        code.write("/**");
+        code.write(" * The base setter.");
+        code.write(" */");
+        code.write("default Next ", p.name, "(", p.type, " value)", () -> {
+            code.writeTry(() -> {
+                code.write(p.name, "Updater.invoke(this, value);");
+            }, Throwable.class, e -> {
+                code.write("throw new Error(", e, ");");
+            });
+            code.write("return (Next) this;");
+        });
+
+        // =========================================
+        // Overload Setter
+        // =========================================
+        for (MethodDefinition m : m.findOverloadsFor(p)) {
+            code.write();
+            code.write("/**");
+            code.write(" * The overload setter.");
+            code.write(" */");
+            code.write("default Next ", m, () -> {
+                code.writeTry(() -> {
+                    code.write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", m.namesWithHead("this"), "));");
+                }, Throwable.class, e -> {
+                    code.write("throw new Error(", e, ");");
+                });
+            });
+        }
+
+        // =========================================
+        // Auto-Expanded Overload Setter
+        // =========================================
+        if (p.autoExpandable) {
+            for (String name : TypeUtil.enumConstantNames(p.element.getReturnType())) {
                 code.write();
                 code.write("/**");
-                code.write(" * Property assignment API.");
+                code.write(" * The overload setter.");
                 code.write(" */");
-                code.write("default Next ", property.name, "(", property.type, " value)", () -> {
-                    code.writeTry(() -> {
-                        code.write(property.name, "Updater.invoke(this, value);");
-                    }, Throwable.class, e -> {
-                        code.write("throw new Error(", e, ");");
-                    });
-                    code.write("return (Next) this;");
+                code.write("default Next ", TypeUtil.decapitalize(name), "()", () -> {
+                    code.write("return ", p.name, "(", p.type, ".", name, ");");
                 });
             }
-        });
+        }
     }
 
     /**

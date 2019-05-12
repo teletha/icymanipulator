@@ -284,7 +284,7 @@ public class ModelDefinition {
      * @return
      */
     public PropertyDefinition findPropertyByName(String name) {
-        return requiredProperties.stream()
+        return ownProperties().stream()
                 .filter(p -> p.name.equals(name))
                 .findFirst()
                 .or(() -> parent.map(m -> m.findPropertyByName(name)))

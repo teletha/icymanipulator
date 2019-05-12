@@ -114,9 +114,8 @@ public abstract class Arbitrary extends ArbitraryModel {
      * Property assignment API.
      */
     public static interface ÅssignableÅrbitrary<Next extends Arbitrary> {
-
         /**
-         * Property assignment API.
+         * The base setter.
          */
         default Next optionNum(int value) {
             try {
@@ -126,9 +125,8 @@ public abstract class Arbitrary extends ArbitraryModel {
             }
             return (Next) this;
         }
-
         /**
-         * Property assignment API.
+         * The base setter.
          */
         default Next optionComment(String value) {
             try {
