@@ -10,6 +10,7 @@
 package icy.manipulator;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 import javax.lang.model.element.TypeElement;
@@ -249,6 +250,14 @@ public class Type {
      * {@inheritDoc}
      */
     @Override
+    public int hashCode() {
+        return Objects.hash(packageName, className, variable.toString(), generic);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean equals(Object obj) {
         if (obj instanceof Type == false) {
             return false;
@@ -280,6 +289,18 @@ public class Type {
     @Override
     public String toString() {
         return fqcn();
+    }
+
+    /**
+     * <p>
+     * Resoleve {@link Type} by the generic variable type.
+     * </p>
+     * 
+     * @param fcn
+     * @return
+     */
+    public static final Type generic(String name) {
+        return new Type("", name, true);
     }
 
     /**

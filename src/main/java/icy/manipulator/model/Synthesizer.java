@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import icy.manipulator.Type;
 import icy.manipulator.TypeUtil;
 import icy.manipulator.util.Strings;
 
@@ -27,20 +28,20 @@ public class Synthesizer {
      */
     public Synthesizer(ModelDefinition m, PropertyDefinition p) {
         // basic setter
-        methods.add(new MethodDefinition(p.name, m.implType).withLast(p.type));
+        add(new MethodDefinition(p.name, m.implType).withLast(p.type));
 
         if (m.firstRequiredProperty().equals(Optional.of(p))) {
             // first property will accept all overload methods unconditionally
 
             // overload setter
             for (MethodDefinition overload : m.findOverloadsFor(p)) {
-                methods.add(overload);
+                add(overload);
             }
 
             // auto-expanded overload
             if (p.autoExpandable) {
                 for (String name : TypeUtil.enumConstantNames(p.element.getReturnType())) {
-                    methods.add(new MethodDefinition(Strings.decapitalize(name), m.implType, List.of(), List.of()));
+                    add(new MethodDefinition(Strings.decapitalize(name), Type.generic("Next"), List.of(), List.of()));
                 }
             }
         } else {
@@ -62,7 +63,7 @@ public class Synthesizer {
                 if (overload.paramTypes.get(0).equals(p.type)) {
                     continue;
                 }
-                methods.add(overload);
+                add(overload);
             }
         }
     }
@@ -70,9 +71,15 @@ public class Synthesizer {
     /**
      * @param methods
      */
-    Synthesizer(MethodDefinition... methods) {
-        for (MethodDefinition method : methods) {
-            this.methods.add(method);
+    Synthesizer(MethodDefinition... definitions) {
+        for (MethodDefinition method : definitions) {
+            add(method);
+        }
+    }
+
+    private void add(MethodDefinition definition) {
+        if (!methods.contains(definition)) {
+            methods.add(definition);
         }
     }
 

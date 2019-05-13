@@ -12,6 +12,7 @@ package icy.manipulator.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
@@ -298,6 +299,14 @@ public class MethodDefinition {
         list.addAll(base);
         list.add(item);
         return Collections.unmodifiableList(list);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, returnType, paramTypes, paramNames);
     }
 
     /**
