@@ -236,6 +236,16 @@ public class Type {
     }
 
     /**
+     * Chech type equality.
+     * 
+     * @param type
+     * @return
+     */
+    public boolean is(Type type) {
+        return fqcn().equals(type.fqcn());
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

@@ -86,10 +86,13 @@ public @interface Icy {
     @Documented
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.SOURCE)
-    @interface Derive {
-        String[] by();
-
-        String[] to();
+    @interface Intercept {
+        /**
+         * The target property name to intercept the invokation of setter.
+         * 
+         * @return
+         */
+        String value();
     }
 
     @Documented
@@ -101,6 +104,6 @@ public @interface Icy {
          * 
          * @return
          */
-        String value() default "";
+        String value();
     }
 }

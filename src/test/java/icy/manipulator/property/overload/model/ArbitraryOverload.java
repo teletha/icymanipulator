@@ -38,7 +38,7 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
         }
     }
 
-    /** The overload method invoker. */
+    /** The overload or intercept method invoker. */
     private static final MethodHandle sizeString= invoker("size", String.class);
 
     /**

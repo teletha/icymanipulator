@@ -19,7 +19,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.type.ExecutableType;
 
 import icy.manipulator.Type;
-import icy.manipulator.TypeUtil;
+import icy.manipulator.util.Strings;
 
 public class MethodDefinition {
 
@@ -214,7 +214,7 @@ public class MethodDefinition {
      * @return
      */
     public MethodDefinition withFirst(Type type) {
-        return withFirst(type, TypeUtil.sanitize(TypeUtil.decapitalize(type.className)));
+        return withFirst(type, Strings.sanitize(Strings.decapitalize(type.className)));
     }
 
     /**
@@ -256,7 +256,7 @@ public class MethodDefinition {
      * @return
      */
     public MethodDefinition withLast(Type type) {
-        return withLast(type, TypeUtil.sanitize(TypeUtil.decapitalize(type.className)));
+        return withLast(type, Strings.sanitize(Strings.decapitalize(type.className)));
     }
 
     /**

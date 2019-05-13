@@ -19,6 +19,7 @@ import icy.manipulator.Icy;
 import icy.manipulator.Icy.Property;
 import icy.manipulator.Type;
 import icy.manipulator.TypeUtil;
+import icy.manipulator.util.Strings;
 
 public class PropertyDefinition {
 
@@ -79,7 +80,7 @@ public class PropertyDefinition {
         if (isArbitrary) {
             return CodeGenerator.ArbitraryInterface;
         } else {
-            return CodeGenerator.Assignable + TypeUtil.capitalize(name);
+            return CodeGenerator.Assignable + Strings.capitalize(name);
         }
     }
 

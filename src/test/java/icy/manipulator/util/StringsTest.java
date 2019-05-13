@@ -7,16 +7,18 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package icy.manipulator;
+package icy.manipulator.util;
 
 import org.junit.jupiter.api.Test;
 
-class TypeUtilTest {
+import icy.manipulator.util.Strings;
+
+class StringsTest {
 
     @Test
     void decapitalize() {
-        assert TypeUtil.decapitalize("Test").equals("test");
-        assert TypeUtil.decapitalize("TEST").equals("test");
-        assert TypeUtil.decapitalize("TEst").equals("tEst");
+        assert Strings.decapitalize("Test").equals("test");
+        assert Strings.decapitalize("TEST").equals("test");
+        assert Strings.decapitalize("TEst").equals("tEst");
     }
 }

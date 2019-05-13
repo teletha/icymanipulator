@@ -26,9 +26,12 @@ import javax.lang.model.type.TypeMirror;
 import icy.manipulator.CodeGenerator;
 import icy.manipulator.Fail;
 import icy.manipulator.Icy;
+import icy.manipulator.Icy.Intercept;
 import icy.manipulator.Icy.Overload;
 import icy.manipulator.Type;
 import icy.manipulator.TypeUtil;
+import icy.manipulator.util.Lists;
+import icy.manipulator.util.Strings;
 
 public class ModelDefinition {
 
@@ -56,6 +59,9 @@ public class ModelDefinition {
     /** The overload method for each property */
     private final Items<MethodDefinition> overloadForProperty = new Items();
 
+    /** The intercept method for each property */
+    private final Items<MethodDefinition> interceptForProperty = new Items();
+
     /**
      * 
      */
@@ -81,6 +87,7 @@ public class ModelDefinition {
             TypeUtil.methods(e).forEach(m -> {
                 validateProperty(m);
                 validateOverload(m);
+                validateIntercept(m);
             });
         }
 
@@ -131,9 +138,39 @@ public class ModelDefinition {
             PropertyDefinition property = findPropertyByName(targetProperty);
 
             if (!method.returnType.equals(property.type)) {
-                throw new Fail(m, "Although the property [" + targetProperty + "] type is " + method.returnType + ", overload method [" + method + "] returns " + method.returnType + ".");
+                throw new Fail(m, "Overload method [" + method + "] must return the same type of the target property [" + property + "].");
             }
             overloadForProperty.add(property, method);
+        }
+    }
+
+    /**
+     * Validate intercept methods.
+     */
+    private void validateIntercept(ExecutableElement m) {
+        Intercept intercept = m.getAnnotation(Icy.Intercept.class);
+
+        if (intercept != null) {
+            MethodDefinition method = new MethodDefinition(m);
+            String targetProperty = intercept.value().isEmpty() ? method.name : intercept.value();
+
+            PropertyDefinition property = findPropertyByName(targetProperty);
+
+            if (!method.returnType.equals(property.type)) {
+                throw new Fail(m, "Intercept method [" + method + "] must return the same type of the target property [" + property + "].");
+            }
+
+            int size = method.paramTypes.size();
+
+            if (size == 1 && method.paramTypes.get(0).is(property.type)) {
+                interceptForProperty.add(property, method);
+            } else if (size == 2 && method.paramTypes.get(0).is(property.type) && method.paramTypes.get(1)
+                    .is(Type.of(implType.fqcn() + "." + CodeGenerator.ArbitraryInterface))) {
+                interceptForProperty.add(property, method);
+            } else {
+                throw new Fail(m, "Intercept method [" + method + "] must accpet one or two parameters. [first type must be " + property.type
+                        .fqcn() + " and (optional) second type must be " + implType.fqcn() + "." + CodeGenerator.ArbitraryInterface + "]");
+            }
         }
     }
 
@@ -157,7 +194,7 @@ public class ModelDefinition {
      * @return
      */
     public List<PropertyDefinition> ownProperties() {
-        return merge(requiredProperties, arbitraryProperties);
+        return Lists.merge(requiredProperties, arbitraryProperties);
     }
 
     /**
@@ -258,6 +295,15 @@ public class ModelDefinition {
     }
 
     /**
+     * Check whether this model has any intercept property method on self or ancestors.
+     * 
+     * @return
+     */
+    public boolean hasIntercept() {
+        return interceptForProperty.holder.isEmpty() == false;
+    }
+
+    /**
      * Compute API route variable for required properties.
      * 
      * @param destination
@@ -292,7 +338,7 @@ public class ModelDefinition {
     }
 
     /**
-     * List up all overload method for the specified property.
+     * List up all overload methods for the specified property.
      * 
      * @param property A target property.
      * @return A list of overload methods.
@@ -307,6 +353,16 @@ public class ModelDefinition {
                 return parent.get().findOverloadsFor(property);
             }
         }
+    }
+
+    /**
+     * List up all intercept methods for the specified property.
+     * 
+     * @param property A target property.
+     * @return A list of intercept methods.
+     */
+    public List<MethodDefinition> findInterceptsFor(PropertyDefinition property) {
+        return interceptForProperty.find(property);
     }
 
     /**
@@ -346,7 +402,7 @@ public class ModelDefinition {
                     String interfaceName = TypeUtil.simpleName(interfaceType);
 
                     if (interfaceName.startsWith(CodeGenerator.Assignable)) {
-                        String proerptyName = TypeUtil.decapitalize(interfaceName.substring(CodeGenerator.Assignable.length()));
+                        String proerptyName = Strings.decapitalize(interfaceName.substring(CodeGenerator.Assignable.length()));
 
                         for (ExecutableElement getter : parentMethods) {
                             // check name
@@ -434,21 +490,6 @@ public class ModelDefinition {
         builder.append("    overload: ").append(overloadForProperty).append(End);
 
         return builder.toString();
-    }
-
-    /**
-     * Helper.
-     * 
-     * @param one
-     * @param other
-     * @return
-     */
-    private List merge(List one, List other) {
-        List merged = new ArrayList(one.size() + other.size());
-        merged.addAll(one);
-        merged.addAll(other);
-
-        return merged;
     }
 
     /**

@@ -22,6 +22,8 @@ import icy.manipulator.model.MethodDefinition;
 import icy.manipulator.model.ModelDefinition;
 import icy.manipulator.model.PropertyDefinition;
 import icy.manipulator.model.Synthesizer;
+import icy.manipulator.util.Lists;
+import icy.manipulator.util.Strings;
 
 public class CodeGenerator {
 
@@ -72,9 +74,9 @@ public class CodeGenerator {
         code.write(" */");
         code.write("@", Generated.class, "(`Icy Manipulator`)");
         code.write(visibility, "abstract class ", m.implType, " extends ", m.type, () -> {
-            if (m.hasOverload()) {
+            if (m.hasOverload() || m.hasIntercept()) {
                 defineMethodInvokerBuilder();
-                defineOverloadMethodInvoker();
+                defineMethodInvoker();
             }
             defineFiledUpdaterBuilder();
             defineFieldUpdater();
@@ -117,14 +119,14 @@ public class CodeGenerator {
     /**
      * Define property updater.
      */
-    private void defineOverloadMethodInvoker() {
+    private void defineMethodInvoker() {
         for (PropertyDefinition property : m.ownProperties()) {
-            for (MethodDefinition method : m.findOverloadsFor(property)) {
+            for (MethodDefinition method : Lists.merge(m.findOverloadsFor(property), m.findInterceptsFor(property))) {
                 StringJoiner types = new StringJoiner(", ", ", ", "").setEmptyValue("");
                 method.paramTypes.forEach(t -> types.add(code.use(t) + ".class"));
 
                 code.write();
-                code.write("/** The overload method invoker. */");
+                code.write("/** The overload or intercept method invoker. */");
                 code.write("private static final ", MethodHandle.class, " ", method.id(), "= invoker(`", method.name, "`", types, ");");
             }
         }
@@ -343,7 +345,11 @@ public class CodeGenerator {
         code.write(" */");
         code.write("default Next ", p.name, "(", p.type, " value)", () -> {
             code.writeTry(() -> {
-                code.write(p.name, "Updater.invoke(this, value);");
+                String value = "value";
+                for (MethodDefinition method : m.findInterceptsFor(p)) {
+                    value = method.id() + ".invoke(this, " + value + (method.paramTypes.size() == 1 ? ")" : ", this)");
+                }
+                code.write(p.name, "Updater.invoke(this, ", value, ");");
             }, Throwable.class, e -> {
                 code.write("throw new Error(", e, ");");
             });
@@ -376,7 +382,7 @@ public class CodeGenerator {
                 code.write("/**");
                 code.write(" * The overload setter.");
                 code.write(" */");
-                code.write("default Next ", TypeUtil.decapitalize(name), "()", () -> {
+                code.write("default Next ", Strings.decapitalize(name), "()", () -> {
                     code.write("return ", p.name, "(", p.type, ".", name, ");");
                 });
             }

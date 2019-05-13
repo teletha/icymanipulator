@@ -40,16 +40,16 @@ public abstract class Overload extends OverloadModel {
         }
     }
 
-    /** The overload method invoker. */
+    /** The overload or intercept method invoker. */
     private static final MethodHandle sizeint= invoker("size", int.class);
 
-    /** The overload method invoker. */
+    /** The overload or intercept method invoker. */
     private static final MethodHandle sizeByTextString= invoker("sizeByText", String.class);
 
-    /** The overload method invoker. */
+    /** The overload or intercept method invoker. */
     private static final MethodHandle dateintintint= invoker("date", int.class, int.class, int.class);
 
-    /** The overload method invoker. */
+    /** The overload or intercept method invoker. */
     private static final MethodHandle today= invoker("today");
 
     /**

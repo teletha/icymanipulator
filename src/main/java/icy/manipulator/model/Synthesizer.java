@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import icy.manipulator.TypeUtil;
+import icy.manipulator.util.Strings;
 
 public class Synthesizer {
 
@@ -39,7 +40,7 @@ public class Synthesizer {
             // auto-expanded overload
             if (p.autoExpandable) {
                 for (String name : TypeUtil.enumConstantNames(p.element.getReturnType())) {
-                    methods.add(new MethodDefinition(TypeUtil.decapitalize(name), m.implType, List.of(), List.of()));
+                    methods.add(new MethodDefinition(Strings.decapitalize(name), m.implType, List.of(), List.of()));
                 }
             }
         } else {

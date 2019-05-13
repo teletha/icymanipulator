@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package icy.manipulator.property.group.model;
+package icy.manipulator.property.intercept.model;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -16,10 +16,10 @@ import java.lang.reflect.Method;
 import javax.annotation.processing.Generated;
 
 /**
- * Generated model for {@link OverloadGroupModel}.
+ * Generated model for {@link InterceptModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class OverloadGroup extends OverloadGroupModel {
+public abstract class Intercept extends InterceptModel {
 
     /**
      * Create special method invoker.
@@ -30,7 +30,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
      */
     private static final MethodHandle invoker(String name, Class... parameterTypes)  {
         try {
-            Method method = OverloadGroupModel.class.getDeclaredMethod(name, parameterTypes);
+            Method method = InterceptModel.class.getDeclaredMethod(name, parameterTypes);
             method.setAccessible(true);
             return MethodHandles.lookup().unreflect(method);
         } catch (Throwable e) {
@@ -39,7 +39,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle sizeString= invoker("size", String.class);
+    private static final MethodHandle normalizeSizeint= invoker("normalizeSize", int.class);
 
     /**
      * Create special property updater.
@@ -49,7 +49,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
      */
     private static final MethodHandle updater(String name)  {
         try {
-            Field field = OverloadGroup.class.getDeclaredField(name);
+            Field field = Intercept.class.getDeclaredField(name);
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
@@ -58,13 +58,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle nameUpdater = updater("name");
-
-    /** The final property updater. */
     private static final MethodHandle sizeUpdater = updater("size");
-
-    /** The exposed property. */
-    public final String name;
 
     /** The exposed property. */
     public final int size;
@@ -72,33 +66,8 @@ public abstract class OverloadGroup extends OverloadGroupModel {
     /**
      * HIDE CONSTRUCTOR
      */
-    protected OverloadGroup() {
-        this.name = null;
+    protected Intercept() {
         this.size = 0;
-    }
-
-    /**
-     * Retrieve name property.
-     */
-    @Override
-    public final String name() {
-        return this.name;
-    }
-
-    /**
-     * Provide classic getter API.
-     */
-    @SuppressWarnings("unused")
-    private final String getName() {
-        return this.name;
-    }
-
-    /**
-     * Provide classic setter API.
-     */
-    @SuppressWarnings("unused")
-    private void setName(String value) {
-        ((ÅssignableName) this).name(value);
     }
 
     /**
@@ -129,43 +98,16 @@ public abstract class OverloadGroup extends OverloadGroupModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link OverloadGroup}.
+     * Builder namespace for {@link Intercept}.
      */
-    public static final class Ìnstantiator<Self extends OverloadGroup & ÅssignableÅrbitrary<Self>> {
+    public static final class Ìnstantiator<Self extends Intercept & ÅssignableÅrbitrary<Self>> {
         /**
-         * Create uninitialized {@link OverloadGroup}.
+         * Create uninitialized {@link Intercept}.
          */
-        public final <T extends Self> T name(String string, int $int) {
+        public final <T extends Self> T size(int $int) {
             Åssignable o = new Åssignable();
-            o.name(string);
             o.size($int);
             return (T) o;
-        }
-        /**
-         * Create uninitialized {@link OverloadGroup}.
-         */
-        public final <T extends Self> T name(String string, String value) {
-            Åssignable o = new Åssignable();
-            o.name(string);
-            o.size(value);
-            return (T) o;
-        }
-    }
-
-    /**
-     * Property assignment API.
-     */
-    public static interface ÅssignableName<Next> {
-        /**
-         * The base setter.
-         */
-        default Next name(String value) {
-            try {
-                nameUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
-            return (Next) this;
         }
     }
 
@@ -178,48 +120,36 @@ public abstract class OverloadGroup extends OverloadGroupModel {
          */
         default Next size(int value) {
             try {
-                sizeUpdater.invoke(this, value);
+                sizeUpdater.invoke(this, normalizeSizeint.invoke(this, value));
             } catch (Throwable e) {
                 throw new Error(e);
             }
             return (Next) this;
-        }
-
-        /**
-         * The overload setter.
-         */
-        default Next size(String value) {
-            try {
-                return size((int) sizeString.invoke(this, value));
-            } catch (Throwable e) {
-                throw new Error(e);
-            }
         }
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends OverloadGroup> {
+    public static interface ÅssignableÅrbitrary<Next extends Intercept> {
     }
 
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableName, ÅssignableSize {
+    protected static interface ÅssignableAll extends ÅssignableSize {
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends OverloadGroup implements ÅssignableAll, ÅssignableÅrbitrary {
+    private static final class Åssignable extends Intercept implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**
      * The identifier for properties.
      */
     static final class My {
-        static final String Name = "name";
         static final String Size = "size";
     }
 }

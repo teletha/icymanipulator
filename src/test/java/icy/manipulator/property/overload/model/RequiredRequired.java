@@ -40,7 +40,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
         }
     }
 
-    /** The overload method invoker. */
+    /** The overload or intercept method invoker. */
     private static final MethodHandle timeintintint= invoker("time", int.class, int.class, int.class);
 
     /**
