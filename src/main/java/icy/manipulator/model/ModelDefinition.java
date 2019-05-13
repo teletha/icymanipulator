@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
@@ -70,6 +71,7 @@ public class ModelDefinition {
             throw new Fail(element, ModelDefinition.class.getSimpleName() + " requires class.");
         }
         this.e = (TypeElement) element;
+        this.parent = analyzeParent(e);
 
         Icy icy = element.getAnnotation(Icy.class);
 
@@ -90,8 +92,6 @@ public class ModelDefinition {
                 validateIntercept(m);
             });
         }
-
-        this.parent = analyzeParent(e);
     }
 
     /**
@@ -160,17 +160,21 @@ public class ModelDefinition {
                 throw new Fail(m, "Intercept method [" + method + "] must return the same type of the target property [" + property + "].");
             }
 
-            int size = method.paramTypes.size();
-
-            if (size == 1 && method.paramTypes.get(0).is(property.type)) {
-                interceptForProperty.add(property, method);
-            } else if (size == 2 && method.paramTypes.get(0).is(property.type) && method.paramTypes.get(1)
-                    .is(Type.of(implType.fqcn() + "." + CodeGenerator.ArbitraryInterface))) {
-                interceptForProperty.add(property, method);
-            } else {
-                throw new Fail(m, "Intercept method [" + method + "] must accpet one or two parameters. [first type must be " + property.type
-                        .fqcn() + " and (optional) second type must be " + implType.fqcn() + "." + CodeGenerator.ArbitraryInterface + "]");
+            if (method.paramTypes.isEmpty() || !method.paramTypes.get(0).is(property.type)) {
+                throw new Fail(m, "Intercept method [" + method + "] requires the same parameter type of the target property [" + property + "].");
             }
+
+            for (int i = 1; i < method.paramTypes.size(); i++) {
+                Type type = method.paramTypes.get(i);
+
+                if (!type.is(Consumer.class)) {
+                    throw new Fail(m, "Intercept method [" + method + "] accepts the setter Consumer<PropertyType> only.");
+                }
+
+                // check property
+                findPropertyByName(method.paramNames.get(i));
+            }
+            interceptForProperty.add(property, new MethodDefinition(m));
         }
     }
 

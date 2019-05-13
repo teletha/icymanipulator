@@ -1,10 +1,10 @@
 package icy.manipulator.property.intercept.model;
 
-import icy.manipulator.property.intercept.model.MultiIntercepts.ÅssignableÅrbitrary;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.function.Consumer;
 import javax.annotation.processing.Generated;
 
 /**
@@ -34,7 +34,7 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
     private static final MethodHandle checkLowerint= invoker("checkLower", int.class);
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle stringlizeintÅssignableÅrbitrary= invoker("stringlize", int.class, ÅssignableÅrbitrary.class);
+    private static final MethodHandle stringlizeintConsumer= invoker("stringlize", int.class, Consumer.class);
 
     /**
      * Create special property updater.
@@ -146,7 +146,7 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
          */
         default Next size(int value) {
             try {
-                sizeUpdater.invoke(this, stringlizeintÅssignableÅrbitrary.invoke(this, checkLowerint.invoke(this, value), this));
+                sizeUpdater.invoke(this, stringlizeintConsumer.invoke(this, checkLowerint.invoke(this, value), (Consumer<String>) ((Åssignable) this)::value));
             } catch (Throwable e) {
                 throw new Error(e);
             }

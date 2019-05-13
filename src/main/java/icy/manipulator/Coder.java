@@ -258,6 +258,10 @@ public class Coder {
         return importer.use(clazz);
     }
 
+    public String classLiteral(Type clazz) {
+        return importer.use(clazz).replaceAll("<.+>", "").concat(".class");
+    }
+
     /**
      * Make the latest expression or block to statement by inserting semicolon.
      */

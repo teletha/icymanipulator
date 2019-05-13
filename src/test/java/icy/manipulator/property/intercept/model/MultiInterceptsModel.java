@@ -9,6 +9,8 @@
  */
 package icy.manipulator.property.intercept.model;
 
+import java.util.function.Consumer;
+
 import icy.manipulator.Icy;
 
 @Icy
@@ -31,8 +33,8 @@ public abstract class MultiInterceptsModel {
     }
 
     @Icy.Intercept("size")
-    private int stringlize(int size, MultiIntercepts.ÅssignableÅrbitrary model) {
-        model.value("Size" + size);
+    private int stringlize(int size, Consumer<String> value) {
+        value.accept("Size" + size);
         return size;
     }
 }

@@ -123,7 +123,7 @@ public class CodeGenerator {
         for (PropertyDefinition property : m.ownProperties()) {
             for (MethodDefinition method : Lists.merge(m.findOverloadsFor(property), m.findInterceptsFor(property))) {
                 StringJoiner types = new StringJoiner(", ", ", ", "").setEmptyValue("");
-                method.paramTypes.forEach(t -> types.add(code.use(t) + ".class"));
+                method.paramTypes.forEach(t -> types.add(code.classLiteral(t)));
 
                 code.write();
                 code.write("/** The overload or intercept method invoker. */");
@@ -347,7 +347,17 @@ public class CodeGenerator {
             code.writeTry(() -> {
                 String value = "value";
                 for (MethodDefinition method : m.findInterceptsFor(p)) {
-                    value = method.id() + ".invoke(this, " + value + (method.paramTypes.size() == 1 ? ")" : ", this)");
+                    if (method.paramTypes.size() == 1) {
+                        value = method.id() + ".invoke(this, " + value + ")";
+                    } else {
+                        value = method.id() + ".invoke(this, " + value;
+                        for (int i = 1; i < method.paramTypes.size(); i++) {
+                            PropertyDefinition target = m.findPropertyByName(method.paramNames.get(i));
+                            value = value + ", " + "(Consumer<" + target.type
+                                    .wrap().className + ">) ((" + Assignable + ") this)::" + target.name;
+                        }
+                        value = value + ")";
+                    }
                 }
                 code.write(p.name, "Updater.invoke(this, ", value, ");");
             }, Throwable.class, e -> {
