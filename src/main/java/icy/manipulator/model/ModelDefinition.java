@@ -86,11 +86,11 @@ public class ModelDefinition {
             this.name = e.getSimpleName().toString();
             this.type = Type.of(e);
             this.implType = Type.of(e.getQualifiedName().toString().replaceAll(icy.modelNamePattern() + "$", "$1"));
-            TypeUtil.methods(e).forEach(m -> {
-                validateProperty(m);
-                validateOverload(m);
-                validateIntercept(m);
-            });
+
+            // validate in 3 times, don't validate all once
+            TypeUtil.methods(e).forEach(this::validateProperty);
+            TypeUtil.methods(e).forEach(this::validateOverload);
+            TypeUtil.methods(e).forEach(this::validateIntercept);
         }
     }
 
