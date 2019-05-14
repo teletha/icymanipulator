@@ -56,43 +56,55 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link EnumGroupSubclass}.
+     * Namespace for {@link EnumGroupSubclass}  builder methods.
      */
     public static final class Ìnstantiator<Self extends EnumGroupSubclass & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link EnumGroupSubclass}.
+         * Create new EnumGroupSubclass with the specifiedcolor property.
+         * 
+         * @return The next assignable model.
          */
-        public final Self color(Color color, int $int) {
+        public final Self color(Color color, int INT) {
             Åssignable o = new Åssignable();
             o.color(color);
-            o.size($int);
+            o.size(INT);
             return (Self) o;
         }
+
         /**
-         * Create uninitialized {@link EnumGroupSubclass}.
+         * Create new EnumGroupSubclass with the specifiedcolor property.
+         * 
+         * @return The next assignable model.
          */
-        public final Self red(int $int) {
+        public final Self red(int INT) {
             Åssignable o = new Åssignable();
             o.red();
-            o.size($int);
+            o.size(INT);
             return (Self) o;
         }
+
         /**
-         * Create uninitialized {@link EnumGroupSubclass}.
+         * Create new EnumGroupSubclass with the specifiedcolor property.
+         * 
+         * @return The next assignable model.
          */
-        public final Self blue(int $int) {
+        public final Self blue(int INT) {
             Åssignable o = new Åssignable();
             o.blue();
-            o.size($int);
+            o.size(INT);
             return (Self) o;
         }
+
         /**
-         * Create uninitialized {@link EnumGroupSubclass}.
+         * Create new EnumGroupSubclass with the specifiedcolor property.
+         * 
+         * @return The next assignable model.
          */
-        public final Self green(int $int) {
+        public final Self green(int INT) {
             Åssignable o = new Åssignable();
             o.green();
-            o.size($int);
+            o.size(INT);
             return (Self) o;
         }
     }

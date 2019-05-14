@@ -30,7 +30,7 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle sizeString= invoker("size", String.class);
+    private static final MethodHandle size$2017368044= invoker("size", String.class);
 
     /**
      * Create special property updater.
@@ -61,25 +61,19 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
         this.size = super.size();
     }
 
-    /**
-     * Retrieve size property.
-     */
+    /** Return the size property. */
     @Override
     public final int size() {
         return this.size;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final int getSize() {
         return this.size;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setSize(int value) {
         ((ÅssignableÅrbitrary) this).size(value);
@@ -89,11 +83,12 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link ArbitraryOverload}.
+     * Namespace for {@link ArbitraryOverload}  builder methods.
      */
     public static final class Ìnstantiator<Self extends ArbitraryOverload & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link ArbitraryOverload}.
+         * Create initialized {@link ArbitraryOverload}.
          */
         public final Self create() {
             return (Self) new Åssignable();
@@ -104,8 +99,12 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
      * Property assignment API.
      */
     public static interface ÅssignableÅrbitrary<Next extends ArbitraryOverload> {
+
         /**
-         * The base setter.
+         * Assign size property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next size(int value) {
             try {
@@ -116,12 +115,10 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
             return (Next) this;
         }
 
-        /**
-         * The overload setter.
-         */
+        /**  */
         default Next size(String number) {
             try {
-                return size((int) sizeString.invoke(this, number));
+                return size((int) size$2017368044.invoke(this, number));
             } catch (Throwable e) {
                 throw new Error(e);
             }

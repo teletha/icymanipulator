@@ -20,6 +20,12 @@ public abstract class OverloadGroupModel {
     @Icy.Property
     public abstract int size();
 
+    /**
+     * Set
+     * 
+     * @param value
+     * @return
+     */
     @Icy.Overload("size")
     private int size(String value) {
         return Integer.valueOf(value);

@@ -31,7 +31,7 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle deriveBySizeintDoubleConsumer= invoker("deriveBySize", int.class, DoubleConsumer.class);
+    private static final MethodHandle deriveBySize$1357412609= invoker("deriveBySize", int.class, DoubleConsumer.class);
 
     /**
      * Create special property updater.
@@ -69,49 +69,37 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
         this.square = super.square();
     }
 
-    /**
-     * Retrieve size property.
-     */
+    /** Return the size property. */
     @Override
     public final int size() {
         return this.size;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final int getSize() {
         return this.size;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setSize(int value) {
         ((ÅssignableSize) this).size(value);
     }
 
-    /**
-     * Retrieve square property.
-     */
+    /** Return the square property. */
     @Override
     public final double square() {
         return this.square;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final double getSquare() {
         return this.square;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setSquare(double value) {
         ((ÅssignableÅrbitrary) this).square(value);
@@ -121,15 +109,18 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link ReferenceDoubleSetter}.
+     * Namespace for {@link ReferenceDoubleSetter}  builder methods.
      */
     public static final class Ìnstantiator<Self extends ReferenceDoubleSetter & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link ReferenceDoubleSetter}.
+         * Create new ReferenceDoubleSetter with the specifiedsize property.
+         * 
+         * @return The next assignable model.
          */
-        public final Self size(int $int) {
+        public final Self size(int INT) {
             Åssignable o = new Åssignable();
-            o.size($int);
+            o.size(INT);
             return (Self) o;
         }
     }
@@ -138,12 +129,16 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
      * Property assignment API.
      */
     public static interface ÅssignableSize<Next> {
+
         /**
-         * The base setter.
+         * Assign size property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next size(int value) {
             try {
-                sizeUpdater.invoke(this, deriveBySizeintDoubleConsumer.invoke(this, value, (DoubleConsumer) ((Åssignable) this)::square));
+                sizeUpdater.invoke(this, deriveBySize$1357412609.invoke(this, value, (DoubleConsumer) ((Åssignable) this)::square));
             } catch (Throwable e) {
                 throw new Error(e);
             }
@@ -155,8 +150,12 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
      * Property assignment API.
      */
     public static interface ÅssignableÅrbitrary<Next extends ReferenceDoubleSetter> {
+
         /**
-         * The base setter.
+         * Assign square property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next square(double value) {
             try {

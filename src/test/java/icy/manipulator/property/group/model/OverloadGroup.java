@@ -30,7 +30,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle sizeString= invoker("size", String.class);
+    private static final MethodHandle size$2017368044= invoker("size", String.class);
 
     /**
      * Create special property updater.
@@ -68,49 +68,37 @@ public abstract class OverloadGroup extends OverloadGroupModel {
         this.size = 0;
     }
 
-    /**
-     * Retrieve name property.
-     */
+    /** Return the name property. */
     @Override
     public final String name() {
         return this.name;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final String getName() {
         return this.name;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setName(String value) {
         ((ÅssignableName) this).name(value);
     }
 
-    /**
-     * Retrieve size property.
-     */
+    /** Return the size property. */
     @Override
     public final int size() {
         return this.size;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final int getSize() {
         return this.size;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setSize(int value) {
         ((ÅssignableSize) this).size(value);
@@ -120,20 +108,26 @@ public abstract class OverloadGroup extends OverloadGroupModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link OverloadGroup}.
+     * Namespace for {@link OverloadGroup}  builder methods.
      */
     public static final class Ìnstantiator<Self extends OverloadGroup & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link OverloadGroup}.
+         * Create new OverloadGroup with the specifiedname property.
+         * 
+         * @return The next assignable model.
          */
-        public final Self name(String string, int $int) {
+        public final Self name(String string, int INT) {
             Åssignable o = new Åssignable();
             o.name(string);
-            o.size($int);
+            o.size(INT);
             return (Self) o;
         }
+
         /**
-         * Create uninitialized {@link OverloadGroup}.
+         * Create new OverloadGroup with the specifiedname property.
+         * 
+         * @return The next assignable model.
          */
         public final Self name(String string, String value) {
             Åssignable o = new Åssignable();
@@ -147,8 +141,12 @@ public abstract class OverloadGroup extends OverloadGroupModel {
      * Property assignment API.
      */
     public static interface ÅssignableName<Next> {
+
         /**
-         * The base setter.
+         * Assign name property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next name(String value) {
             try {
@@ -164,8 +162,12 @@ public abstract class OverloadGroup extends OverloadGroupModel {
      * Property assignment API.
      */
     public static interface ÅssignableSize<Next> {
+
         /**
-         * The base setter.
+         * Assign size property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next size(int value) {
             try {
@@ -177,11 +179,14 @@ public abstract class OverloadGroup extends OverloadGroupModel {
         }
 
         /**
-         * The overload setter.
+         *  Set
+         *  
+         *  @param value
+         *  @return
          */
         default Next size(String value) {
             try {
-                return size((int) sizeString.invoke(this, value));
+                return size((int) size$2017368044.invoke(this, value));
             } catch (Throwable e) {
                 throw new Error(e);
             }

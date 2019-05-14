@@ -30,7 +30,7 @@ public abstract class Intercept extends InterceptModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle normalizeSizeint= invoker("normalizeSize", int.class);
+    private static final MethodHandle normalizeSize$101282980= invoker("normalizeSize", int.class);
 
     /**
      * Create special property updater.
@@ -61,25 +61,19 @@ public abstract class Intercept extends InterceptModel {
         this.size = 0;
     }
 
-    /**
-     * Retrieve size property.
-     */
+    /** Return the size property. */
     @Override
     public final int size() {
         return this.size;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final int getSize() {
         return this.size;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setSize(int value) {
         ((ÅssignableSize) this).size(value);
@@ -89,15 +83,18 @@ public abstract class Intercept extends InterceptModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link Intercept}.
+     * Namespace for {@link Intercept}  builder methods.
      */
     public static final class Ìnstantiator<Self extends Intercept & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link Intercept}.
+         * Create new Intercept with the specifiedsize property.
+         * 
+         * @return The next assignable model.
          */
-        public final Self size(int $int) {
+        public final Self size(int INT) {
             Åssignable o = new Åssignable();
-            o.size($int);
+            o.size(INT);
             return (Self) o;
         }
     }
@@ -106,12 +103,16 @@ public abstract class Intercept extends InterceptModel {
      * Property assignment API.
      */
     public static interface ÅssignableSize<Next> {
+
         /**
-         * The base setter.
+         * Assign size property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next size(int value) {
             try {
-                sizeUpdater.invoke(this, normalizeSizeint.invoke(this, value));
+                sizeUpdater.invoke(this, normalizeSize$101282980.invoke(this, value));
             } catch (Throwable e) {
                 throw new Error(e);
             }

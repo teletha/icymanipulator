@@ -14,6 +14,8 @@ import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.function.Consumer;
 
+import javax.lang.model.element.Element;
+
 import icy.manipulator.model.MethodDefinition;
 
 public class Coder {
@@ -38,6 +40,45 @@ public class Coder {
      */
     public Coder(ClassImporter importer) {
         this.importer = importer;
+    }
+
+    /**
+     * Copy javadoc from the specified {@link Element}.
+     * 
+     * @param e
+     */
+    public void javadoc(Element e) {
+        javadoc(e, "");
+    }
+
+    /**
+     * Copy javadoc from the specified {@link Element}.
+     * 
+     * @param e
+     * @param defaultComment
+     */
+    public void javadoc(Element e, String defaultComment) {
+        javadoc(TypeUtil.doc(e, defaultComment));
+    }
+
+    /**
+     * Copy javadoc from the specified {@link Element}.
+     * 
+     * @param e
+     */
+    public void javadoc(String doc) {
+        String[] lines = doc.replaceAll("\r\n", "\n").split("\n");
+
+        write();
+        if (lines.length == 1) {
+            write("/** ", lines[0], " */");
+        } else {
+            write("/**");
+            for (String line : lines) {
+                write(" * ", line);
+            }
+            write(" */");
+        }
     }
 
     public void writeTry(Runnable tryBlock, Class<? extends Throwable> errorType, Consumer<String> catchBlock) {

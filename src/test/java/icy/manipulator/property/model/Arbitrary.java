@@ -47,49 +47,37 @@ public abstract class Arbitrary extends ArbitraryModel {
         this.optionComment = super.optionComment();
     }
 
-    /**
-     * Retrieve optionNum property.
-     */
+    /** Return the optionNum property. */
     @Override
     public final int optionNum() {
         return this.optionNum;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final int getOptionNum() {
         return this.optionNum;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setOptionNum(int value) {
         ((ÅssignableÅrbitrary) this).optionNum(value);
     }
 
-    /**
-     * Retrieve optionComment property.
-     */
+    /** Return the optionComment property. */
     @Override
     public final String optionComment() {
         return this.optionComment;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final String getOptionComment() {
         return this.optionComment;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setOptionComment(String value) {
         ((ÅssignableÅrbitrary) this).optionComment(value);
@@ -99,11 +87,12 @@ public abstract class Arbitrary extends ArbitraryModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link Arbitrary}.
+     * Namespace for {@link Arbitrary}  builder methods.
      */
     public static final class Ìnstantiator<Self extends Arbitrary & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link Arbitrary}.
+         * Create initialized {@link Arbitrary}.
          */
         public final Self create() {
             return (Self) new Åssignable();
@@ -114,8 +103,12 @@ public abstract class Arbitrary extends ArbitraryModel {
      * Property assignment API.
      */
     public static interface ÅssignableÅrbitrary<Next extends Arbitrary> {
+
         /**
-         * The base setter.
+         * Assign optionNum property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next optionNum(int value) {
             try {
@@ -125,8 +118,12 @@ public abstract class Arbitrary extends ArbitraryModel {
             }
             return (Next) this;
         }
+
         /**
-         * The base setter.
+         * Assign optionComment property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next optionComment(String value) {
             try {

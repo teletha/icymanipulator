@@ -32,16 +32,16 @@ public abstract class Overload extends OverloadModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle sizeint= invoker("size", int.class);
+    private static final MethodHandle size$101282980= invoker("size", int.class);
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle sizeByTextString= invoker("sizeByText", String.class);
+    private static final MethodHandle sizeByText$2017368044= invoker("sizeByText", String.class);
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle dateintintint= invoker("date", int.class, int.class, int.class);
+    private static final MethodHandle date$1789750340= invoker("date", int.class, int.class, int.class);
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle today= invoker("today");
+    private static final MethodHandle today$1= invoker("today");
 
     /**
      * Create special property updater.
@@ -79,49 +79,37 @@ public abstract class Overload extends OverloadModel {
         this.date = null;
     }
 
-    /**
-     * Retrieve size property.
-     */
+    /** Return the size property. */
     @Override
     public final BigDecimal size() {
         return this.size;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final BigDecimal getSize() {
         return this.size;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setSize(BigDecimal value) {
         ((ÅssignableSize) this).size(value);
     }
 
-    /**
-     * Retrieve date property.
-     */
+    /** Return the date property. */
     @Override
     public final LocalDate date() {
         return this.date;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final LocalDate getDate() {
         return this.date;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setDate(LocalDate value) {
         ((ÅssignableDate) this).date(value);
@@ -131,27 +119,36 @@ public abstract class Overload extends OverloadModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link Overload}.
+     * Namespace for {@link Overload}  builder methods.
      */
     public static final class Ìnstantiator<Self extends Overload & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link Overload}.
+         * Create new Overload with the specifiedsize property.
+         * 
+         * @return The next assignable model.
          */
         public final <T extends ÅssignableDate<Self>> T size(BigDecimal bigDecimal) {
             Åssignable o = new Åssignable();
             o.size(bigDecimal);
             return (T) o;
         }
+
         /**
-         * Create uninitialized {@link Overload}.
+         * Create new Overload with the specifiedsize property.
+         * 
+         * @return The next assignable model.
          */
         public final <T extends ÅssignableDate<Self>> T size(int number) {
             Åssignable o = new Åssignable();
             o.size(number);
             return (T) o;
         }
+
         /**
-         * Create uninitialized {@link Overload}.
+         * Create new Overload with the specifiedsize property.
+         * 
+         * @return The next assignable model.
          */
         public final <T extends ÅssignableDate<Self>> T sizeByText(String number) {
             Åssignable o = new Åssignable();
@@ -164,8 +161,12 @@ public abstract class Overload extends OverloadModel {
      * Property assignment API.
      */
     public static interface ÅssignableSize<Next> {
+
         /**
-         * The base setter.
+         * Assign size property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next size(BigDecimal value) {
             try {
@@ -176,23 +177,19 @@ public abstract class Overload extends OverloadModel {
             return (Next) this;
         }
 
-        /**
-         * The overload setter.
-         */
+        /**  */
         default Next size(int number) {
             try {
-                return size((BigDecimal) sizeint.invoke(this, number));
+                return size((BigDecimal) size$101282980.invoke(this, number));
             } catch (Throwable e) {
                 throw new Error(e);
             }
         }
 
-        /**
-         * The overload setter.
-         */
+        /**  */
         default Next sizeByText(String number) {
             try {
-                return size((BigDecimal) sizeByTextString.invoke(this, number));
+                return size((BigDecimal) sizeByText$2017368044.invoke(this, number));
             } catch (Throwable e) {
                 throw new Error(e);
             }
@@ -203,8 +200,12 @@ public abstract class Overload extends OverloadModel {
      * Property assignment API.
      */
     public static interface ÅssignableDate<Next> {
+
         /**
-         * The base setter.
+         * Assign date property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next date(LocalDate value) {
             try {
@@ -215,23 +216,19 @@ public abstract class Overload extends OverloadModel {
             return (Next) this;
         }
 
-        /**
-         * The overload setter.
-         */
+        /**  */
         default Next date(int year, int month, int day) {
             try {
-                return date((LocalDate) dateintintint.invoke(this, year, month, day));
+                return date((LocalDate) date$1789750340.invoke(this, year, month, day));
             } catch (Throwable e) {
                 throw new Error(e);
             }
         }
 
-        /**
-         * The overload setter.
-         */
+        /**  */
         default Next today() {
             try {
-                return date((LocalDate) today.invoke(this));
+                return date((LocalDate) today$1.invoke(this));
             } catch (Throwable e) {
                 throw new Error(e);
             }

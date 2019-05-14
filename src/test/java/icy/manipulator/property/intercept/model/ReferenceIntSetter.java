@@ -5,7 +5,6 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.function.IntConsumer;
-
 import javax.annotation.processing.Generated;
 
 /**
@@ -21,7 +20,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
      * @param parameterTypes A list of method parameter types.
      * @return A special method invoker.
      */
-    private static final MethodHandle invoker(String name, Class... parameterTypes) {
+    private static final MethodHandle invoker(String name, Class... parameterTypes)  {
         try {
             Method method = ReferenceIntSetterModel.class.getDeclaredMethod(name, parameterTypes);
             method.setAccessible(true);
@@ -32,7 +31,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle deriveBySizeintIntConsumer = invoker("deriveBySize", int.class, IntConsumer.class);
+    private static final MethodHandle deriveBySize$1280871585= invoker("deriveBySize", int.class, IntConsumer.class);
 
     /**
      * Create special property updater.
@@ -40,7 +39,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name) {
+    private static final MethodHandle updater(String name)  {
         try {
             Field field = ReferenceIntSetter.class.getDeclaredField(name);
             field.setAccessible(true);
@@ -70,67 +69,58 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
         this.square = super.square();
     }
 
-    /**
-     * Retrieve size property.
-     */
+    /** Return the size property. */
     @Override
     public final int size() {
         return this.size;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final int getSize() {
         return this.size;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setSize(int value) {
         ((ÅssignableSize) this).size(value);
     }
 
-    /**
-     * Retrieve square property.
-     */
+    /** Return the square property. */
     @Override
     public final int square() {
         return this.square;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final int getSquare() {
         return this.square;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setSquare(int value) {
         ((ÅssignableÅrbitrary) this).square(value);
     }
 
     /** The singleton builder. */
-    public static final Ìnstantiator<?> with = new Ìnstantiator();
+    public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link ReferenceIntSetter}.
+     * Namespace for {@link ReferenceIntSetter}  builder methods.
      */
     public static final class Ìnstantiator<Self extends ReferenceIntSetter & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link ReferenceIntSetter}.
+         * Create new ReferenceIntSetter with the specifiedsize property.
+         * 
+         * @return The next assignable model.
          */
-        public final Self size(int $int) {
+        public final Self size(int INT) {
             Åssignable o = new Åssignable();
-            o.size($int);
+            o.size(INT);
             return (Self) o;
         }
     }
@@ -139,12 +129,16 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
      * Property assignment API.
      */
     public static interface ÅssignableSize<Next> {
+
         /**
-         * The base setter.
+         * Assign size property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next size(int value) {
             try {
-                sizeUpdater.invoke(this, deriveBySizeintIntConsumer.invoke(this, value, (IntConsumer) ((Åssignable) this)::square));
+                sizeUpdater.invoke(this, deriveBySize$1280871585.invoke(this, value, (IntConsumer) ((Åssignable) this)::square));
             } catch (Throwable e) {
                 throw new Error(e);
             }
@@ -156,8 +150,12 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
      * Property assignment API.
      */
     public static interface ÅssignableÅrbitrary<Next extends ReferenceIntSetter> {
+
         /**
-         * The base setter.
+         * Assign square property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next square(int value) {
             try {
@@ -186,7 +184,6 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
      */
     static final class My {
         static final String Size = "size";
-
         static final String Square = "square";
     }
 }

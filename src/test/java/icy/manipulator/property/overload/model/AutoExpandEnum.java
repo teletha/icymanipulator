@@ -40,25 +40,19 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
         this.answer = null;
     }
 
-    /**
-     * Retrieve answer property.
-     */
+    /** Return the answer property. */
     @Override
     public final Answer answer() {
         return this.answer;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final Answer getAnswer() {
         return this.answer;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setAnswer(Answer value) {
         ((ÅssignableAnswer) this).answer(value);
@@ -68,27 +62,36 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link AutoExpandEnum}.
+     * Namespace for {@link AutoExpandEnum}  builder methods.
      */
     public static final class Ìnstantiator<Self extends AutoExpandEnum & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link AutoExpandEnum}.
+         * Create new AutoExpandEnum with the specifiedanswer property.
+         * 
+         * @return The next assignable model.
          */
         public final Self answer(Answer answer) {
             Åssignable o = new Åssignable();
             o.answer(answer);
             return (Self) o;
         }
+
         /**
-         * Create uninitialized {@link AutoExpandEnum}.
+         * Create new AutoExpandEnum with the specifiedanswer property.
+         * 
+         * @return The next assignable model.
          */
         public final Self yes() {
             Åssignable o = new Åssignable();
             o.yes();
             return (Self) o;
         }
+
         /**
-         * Create uninitialized {@link AutoExpandEnum}.
+         * Create new AutoExpandEnum with the specifiedanswer property.
+         * 
+         * @return The next assignable model.
          */
         public final Self no() {
             Åssignable o = new Åssignable();
@@ -101,8 +104,12 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
      * Property assignment API.
      */
     public static interface ÅssignableAnswer<Next> {
+
         /**
-         * The base setter.
+         * Assign answer property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next answer(Answer value) {
             try {
@@ -114,14 +121,18 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
         }
 
         /**
-         * The overload setter.
+         * Assign answer property by {@link Answer#Yes}.
+         * 
+         * @return The next assignable model.
          */
         default Next yes() {
             return answer(Answer.Yes);
         }
 
         /**
-         * The overload setter.
+         * Assign answer property by {@link Answer#No}.
+         * 
+         * @return The next assignable model.
          */
         default Next no() {
             return answer(Answer.No);

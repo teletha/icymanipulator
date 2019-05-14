@@ -54,73 +54,55 @@ public abstract class Multiple extends MultipleModel {
         this.age = 0;
     }
 
-    /**
-     * Retrieve name property.
-     */
+    /** Return the name property. */
     @Override
     public final String name() {
         return this.name;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final String getName() {
         return this.name;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setName(String value) {
         ((ÅssignableName) this).name(value);
     }
 
-    /**
-     * Retrieve stand property.
-     */
+    /** Return the stand property. */
     @Override
     public final String stand() {
         return this.stand;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final String getStand() {
         return this.stand;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setStand(String value) {
         ((ÅssignableStand) this).stand(value);
     }
 
-    /**
-     * Retrieve age property.
-     */
+    /** Return the age property. */
     @Override
     public final int age() {
         return this.age;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final int getAge() {
         return this.age;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setAge(int value) {
         ((ÅssignableAge) this).age(value);
@@ -130,11 +112,14 @@ public abstract class Multiple extends MultipleModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link Multiple}.
+     * Namespace for {@link Multiple}  builder methods.
      */
     public static final class Ìnstantiator<Self extends Multiple & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link Multiple}.
+         * Create new Multiple with the specifiedname property.
+         * 
+         * @return The next assignable model.
          */
         public final <T extends ÅssignableStand<ÅssignableAge<Self>>> T name(String string) {
             Åssignable o = new Åssignable();
@@ -147,8 +132,12 @@ public abstract class Multiple extends MultipleModel {
      * Property assignment API.
      */
     public static interface ÅssignableName<Next> {
+
         /**
-         * The base setter.
+         * Assign name property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next name(String value) {
             try {
@@ -164,8 +153,12 @@ public abstract class Multiple extends MultipleModel {
      * Property assignment API.
      */
     public static interface ÅssignableStand<Next> {
+
         /**
-         * The base setter.
+         * Assign stand property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next stand(String value) {
             try {
@@ -181,8 +174,12 @@ public abstract class Multiple extends MultipleModel {
      * Property assignment API.
      */
     public static interface ÅssignableAge<Next> {
+
         /**
-         * The base setter.
+         * Assign age property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next age(int value) {
             try {

@@ -55,10 +55,8 @@ public class CodeGenerator {
      * @param elements
      */
     CodeGenerator(ModelDefinition model) {
-        this.icy = model.e.getAnnotation(Icy.class);
         this.m = model;
-
-        System.out.println(model);
+        this.icy = model.e.getAnnotation(Icy.class);
     }
 
     /**
@@ -198,30 +196,21 @@ public class CodeGenerator {
     private void defineAccessors() {
         for (PropertyDefinition property : m.ownProperties()) {
             // Exposed getter
-            code.write();
-            code.write("/**");
-            code.write(" * Retrieve ", property.name, " property.");
-            code.write(" */");
+            code.javadoc(property.element, "Return the " + property.name + " property.");
             code.write("@Override");
             code.write("public final ", property.type, " ", property.name, "()", () -> {
                 code.write("return this.", property.name, ";");
             });
 
             // Hidden classic getter
-            code.write();
-            code.write("/**");
-            code.write(" * Provide classic getter API.");
-            code.write(" */");
+            code.javadoc("Provide classic getter API.");
             code.write("@SuppressWarnings(`unused`)");
             code.write("private final ", property.type, " get", property.capitalizeName(), "()", () -> {
                 code.write("return this.", property.name, ";");
             });
 
             // Hidden classic setter
-            code.write();
-            code.write("/**");
-            code.write(" * Provide classic setter API.");
-            code.write(" */");
+            code.javadoc("Provide classic setter API.");
             code.write("@SuppressWarnings(`unused`)");
             code.write(icy.classicSetterModifier().trim(), " void set", property.capitalizeName(), "(", property.type, " value)", () -> {
                 code.write("((", property.assignableInterfaceName(), ") this).", property.name, "(value);");
@@ -241,7 +230,7 @@ public class CodeGenerator {
 
         code.write();
         code.write("/**");
-        code.write(" * Builder namespace for {@link ", m.implType, "}.");
+        code.write(" * Namespace for {@link ", m.implType, "}  builder methods.");
         code.write(" */");
         code.write("public static final class ", Instantiator, "<Self extends ", m.implType.className, " & ", ArbitraryInterface, "<Self>>", () -> {
             m.firstRequiredProperty().ifPresentOrElse(p -> {
@@ -253,15 +242,18 @@ public class CodeGenerator {
                         .reduce((prev, next) -> prev.synthesize(next))
                         .ifPresent(synthesizer -> {
                             for (MethodDefinition method : synthesizer.methods) {
-                                code.write("/**");
-                                code.write(" * Create uninitialized {@link ", m.implType, "}.");
-                                code.write(" */");
-
                                 String[] types = new String[] {m.requiredRouteType(group, "Self"), "Self"};
                                 if (!types[0].equals("Self")) {
                                     types[0] = "<T extends " + types[0] + "> T";
                                     types[1] = "T";
                                 }
+
+                                code.write();
+                                code.write("/**");
+                                code.write(" * Create new ", m.implType, " with the specified", p.name, " property.");
+                                code.write(" * ");
+                                code.write(" * @return The next assignable model.");
+                                code.write(" */");
                                 code.write("public final ", types[0], " ", method, () -> {
                                     code.write(Assignable, " o = new ", Assignable, "();");
 
@@ -286,8 +278,9 @@ public class CodeGenerator {
                 // =========================================
                 // No Required Property
                 // =========================================
+                code.write();
                 code.write("/**");
-                code.write(" * Create uninitialized {@link ", m.implType, "}.");
+                code.write(" * Create initialized {@link ", m.implType, "}.");
                 code.write(" */");
                 code.write("public final Self create()", () -> {
                     code.write("return (Self) new ", Assignable, "();");
@@ -346,8 +339,12 @@ public class CodeGenerator {
         // =========================================
         // Base Setter
         // =========================================
+        code.write();
         code.write("/**");
-        code.write(" * The base setter.");
+        code.write(" * Assign ", p.name, " property.");
+        code.write(" * ");
+        code.write(" * @param value A value to assign.");
+        code.write(" * @return The next assignable model.");
         code.write(" */");
         code.write("default Next ", p.name, "(", p.type, " value)", () -> {
             code.writeTry(() -> {
@@ -371,10 +368,7 @@ public class CodeGenerator {
         // Overload Setter
         // =========================================
         for (MethodDefinition m : m.findOverloadsFor(p)) {
-            code.write();
-            code.write("/**");
-            code.write(" * The overload setter.");
-            code.write(" */");
+            code.javadoc(m.doc);
             code.write("default Next ", m, () -> {
                 code.writeTry(() -> {
                     code.write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", m.namesWithHead("this"), "));");
@@ -391,7 +385,9 @@ public class CodeGenerator {
             for (String name : TypeUtil.enumConstantNames(p.element.getReturnType())) {
                 code.write();
                 code.write("/**");
-                code.write(" * The overload setter.");
+                code.write(" * Assign ", p.name, " property by {@link ", p.type.className, "#", name, "}.");
+                code.write(" * ");
+                code.write(" * @return The next assignable model.");
                 code.write(" */");
                 code.write("default Next ", Strings.decapitalize(name), "()", () -> {
                     code.write("return ", p.name, "(", p.type, ".", name, ");");

@@ -14,6 +14,11 @@ import icy.manipulator.Icy;
 @Icy
 public abstract class SingleModel {
 
+    /**
+     * Return name.
+     * 
+     * @return A name.
+     */
     @Icy.Property
     public abstract String name();
 }

@@ -40,25 +40,19 @@ public abstract class BuilderName extends BuilderNameModel {
         this.name = null;
     }
 
-    /**
-     * Retrieve name property.
-     */
+    /** Return the name property. */
     @Override
     public final String name() {
         return this.name;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final String getName() {
         return this.name;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setName(String value) {
         ((ÅssignableName) this).name(value);
@@ -68,11 +62,14 @@ public abstract class BuilderName extends BuilderNameModel {
     public static final  Ìnstantiator<?> build = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link BuilderName}.
+     * Namespace for {@link BuilderName}  builder methods.
      */
     public static final class Ìnstantiator<Self extends BuilderName & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link BuilderName}.
+         * Create new BuilderName with the specifiedname property.
+         * 
+         * @return The next assignable model.
          */
         public final Self name(String string) {
             Åssignable o = new Åssignable();
@@ -85,8 +82,12 @@ public abstract class BuilderName extends BuilderNameModel {
      * Property assignment API.
      */
     public static interface ÅssignableName<Next> {
+
         /**
-         * The base setter.
+         * Assign name property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next name(String value) {
             try {

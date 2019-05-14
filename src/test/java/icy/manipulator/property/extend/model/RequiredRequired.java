@@ -40,25 +40,19 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
         this.nickname = null;
     }
 
-    /**
-     * Retrieve nickname property.
-     */
+    /** Return the nickname property. */
     @Override
     public final String nickname() {
         return this.nickname;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final String getNickname() {
         return this.nickname;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setNickname(String value) {
         ((ÅssignableNickname) this).nickname(value);
@@ -68,11 +62,14 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link RequiredRequired}.
+     * Namespace for {@link RequiredRequired}  builder methods.
      */
     public static final class Ìnstantiator<Self extends RequiredRequired & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link RequiredRequired}.
+         * Create new RequiredRequired with the specifiedname property.
+         * 
+         * @return The next assignable model.
          */
         public final <T extends ÅssignableStand<ÅssignableAge<ÅssignableNickname<Self>>>> T name(String string) {
             Åssignable o = new Åssignable();
@@ -85,8 +82,12 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
      * Property assignment API.
      */
     public static interface ÅssignableNickname<Next> {
+
         /**
-         * The base setter.
+         * Assign nickname property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next nickname(String value) {
             try {

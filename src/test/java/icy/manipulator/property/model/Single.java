@@ -41,24 +41,22 @@ public abstract class Single extends SingleModel {
     }
 
     /**
-     * Retrieve name property.
+     *  Return name.
+     *  
+     *  @return A name.
      */
     @Override
     public final String name() {
         return this.name;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final String getName() {
         return this.name;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setName(String value) {
         ((ÅssignableName) this).name(value);
@@ -68,11 +66,14 @@ public abstract class Single extends SingleModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link Single}.
+     * Namespace for {@link Single}  builder methods.
      */
     public static final class Ìnstantiator<Self extends Single & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link Single}.
+         * Create new Single with the specifiedname property.
+         * 
+         * @return The next assignable model.
          */
         public final Self name(String string) {
             Åssignable o = new Åssignable();
@@ -85,8 +86,12 @@ public abstract class Single extends SingleModel {
      * Property assignment API.
      */
     public static interface ÅssignableName<Next> {
+
         /**
-         * The base setter.
+         * Assign name property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next name(String value) {
             try {

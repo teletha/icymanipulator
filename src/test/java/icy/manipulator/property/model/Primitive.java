@@ -89,193 +89,145 @@ public abstract class Primitive extends PrimitiveModel {
         this.booleanX = false;
     }
 
-    /**
-     * Retrieve intX property.
-     */
+    /** Return the intX property. */
     @Override
     public final int intX() {
         return this.intX;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final int getIntX() {
         return this.intX;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setIntX(int value) {
         ((ÅssignableIntX) this).intX(value);
     }
 
-    /**
-     * Retrieve longX property.
-     */
+    /** Return the longX property. */
     @Override
     public final long longX() {
         return this.longX;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final long getLongX() {
         return this.longX;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setLongX(long value) {
         ((ÅssignableLongX) this).longX(value);
     }
 
-    /**
-     * Retrieve floatX property.
-     */
+    /** Return the floatX property. */
     @Override
     public final float floatX() {
         return this.floatX;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final float getFloatX() {
         return this.floatX;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setFloatX(float value) {
         ((ÅssignableFloatX) this).floatX(value);
     }
 
-    /**
-     * Retrieve doubleX property.
-     */
+    /** Return the doubleX property. */
     @Override
     public final double doubleX() {
         return this.doubleX;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final double getDoubleX() {
         return this.doubleX;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setDoubleX(double value) {
         ((ÅssignableDoubleX) this).doubleX(value);
     }
 
-    /**
-     * Retrieve byteX property.
-     */
+    /** Return the byteX property. */
     @Override
     public final byte byteX() {
         return this.byteX;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final byte getByteX() {
         return this.byteX;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setByteX(byte value) {
         ((ÅssignableByteX) this).byteX(value);
     }
 
-    /**
-     * Retrieve shortX property.
-     */
+    /** Return the shortX property. */
     @Override
     public final short shortX() {
         return this.shortX;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final short getShortX() {
         return this.shortX;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setShortX(short value) {
         ((ÅssignableShortX) this).shortX(value);
     }
 
-    /**
-     * Retrieve charX property.
-     */
+    /** Return the charX property. */
     @Override
     public final char charX() {
         return this.charX;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final char getCharX() {
         return this.charX;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setCharX(char value) {
         ((ÅssignableCharX) this).charX(value);
     }
 
-    /**
-     * Retrieve booleanX property.
-     */
+    /** Return the booleanX property. */
     @Override
     public final boolean booleanX() {
         return this.booleanX;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final boolean getBooleanX() {
         return this.booleanX;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setBooleanX(boolean value) {
         ((ÅssignableBooleanX) this).booleanX(value);
@@ -285,15 +237,18 @@ public abstract class Primitive extends PrimitiveModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link Primitive}.
+     * Namespace for {@link Primitive}  builder methods.
      */
     public static final class Ìnstantiator<Self extends Primitive & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link Primitive}.
+         * Create new Primitive with the specifiedintX property.
+         * 
+         * @return The next assignable model.
          */
-        public final <T extends ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Self>>>>>>>> T intX(int $int) {
+        public final <T extends ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Self>>>>>>>> T intX(int INT) {
             Åssignable o = new Åssignable();
-            o.intX($int);
+            o.intX(INT);
             return (T) o;
         }
     }
@@ -302,8 +257,12 @@ public abstract class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableIntX<Next> {
+
         /**
-         * The base setter.
+         * Assign intX property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next intX(int value) {
             try {
@@ -319,8 +278,12 @@ public abstract class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableLongX<Next> {
+
         /**
-         * The base setter.
+         * Assign longX property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next longX(long value) {
             try {
@@ -336,8 +299,12 @@ public abstract class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableFloatX<Next> {
+
         /**
-         * The base setter.
+         * Assign floatX property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next floatX(float value) {
             try {
@@ -353,8 +320,12 @@ public abstract class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableDoubleX<Next> {
+
         /**
-         * The base setter.
+         * Assign doubleX property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next doubleX(double value) {
             try {
@@ -370,8 +341,12 @@ public abstract class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableByteX<Next> {
+
         /**
-         * The base setter.
+         * Assign byteX property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next byteX(byte value) {
             try {
@@ -387,8 +362,12 @@ public abstract class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableShortX<Next> {
+
         /**
-         * The base setter.
+         * Assign shortX property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next shortX(short value) {
             try {
@@ -404,8 +383,12 @@ public abstract class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableCharX<Next> {
+
         /**
-         * The base setter.
+         * Assign charX property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next charX(char value) {
             try {
@@ -421,8 +404,12 @@ public abstract class Primitive extends PrimitiveModel {
      * Property assignment API.
      */
     public static interface ÅssignableBooleanX<Next> {
+
         /**
-         * The base setter.
+         * Assign booleanX property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next booleanX(boolean value) {
             try {

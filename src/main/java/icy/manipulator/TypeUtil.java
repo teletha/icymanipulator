@@ -222,6 +222,29 @@ public class TypeUtil {
     }
 
     /**
+     * Retrieve the documentation comment from the specified {@link Element}.
+     * 
+     * @param e The target element.
+     * @return A documentation comment
+     */
+    public static String doc(Element e) {
+        return doc(e, "");
+    }
+
+    /**
+     * Retrieve the documentation comment from the specified {@link Element}.
+     * 
+     * @param e The target element.
+     * @param defaultComment Use this default comment if some document is not found.
+     * @return A documentation comment
+     */
+    public static String doc(Element e, String defaultComment) {
+        String doc = elements.getDocComment(e);
+        doc = doc == null ? defaultComment == null ? "" : defaultComment : doc;
+        return doc;
+    }
+
+    /**
      * Helper.
      * 
      * @param mirror

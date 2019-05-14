@@ -20,6 +20,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.type.ExecutableType;
 
 import icy.manipulator.Type;
+import icy.manipulator.TypeUtil;
 import icy.manipulator.util.Strings;
 
 public class MethodDefinition {
@@ -36,6 +37,9 @@ public class MethodDefinition {
     /** The parameter names. */
     public final List<String> paramNames;
 
+    /** The documentation. */
+    public final String doc;
+
     /**
      * @param element
      */
@@ -47,6 +51,7 @@ public class MethodDefinition {
                 .map(Type::of)
                 .collect(Collectors.toUnmodifiableList());
         this.paramNames = element.getParameters().stream().map(e -> e.getSimpleName().toString()).collect(Collectors.toUnmodifiableList());
+        this.doc = TypeUtil.doc(element);
     }
 
     /**
@@ -104,7 +109,7 @@ public class MethodDefinition {
      * @param names
      */
     public MethodDefinition(String name, Class returnType, List<Class> types, List<String> names) {
-        this(name, Type.of(returnType), types.stream().map(Type::of).collect(Collectors.toUnmodifiableList()), names);
+        this(name, Type.of(returnType), types.stream().map(Type::of).collect(Collectors.toUnmodifiableList()), names, "");
     }
 
     /**
@@ -114,7 +119,7 @@ public class MethodDefinition {
      * @param returnType
      */
     public MethodDefinition(String name, Type returnType) {
-        this(name, returnType, List.of(), List.of());
+        this(name, returnType, List.of(), List.of(), "");
     }
 
     /**
@@ -125,11 +130,12 @@ public class MethodDefinition {
      * @param types
      * @param names
      */
-    public MethodDefinition(String name, Type returnType, List<Type> types, List<String> names) {
+    public MethodDefinition(String name, Type returnType, List<Type> types, List<String> names, String doc) {
         this.name = name;
         this.returnType = returnType;
         this.paramTypes = types;
         this.paramNames = names;
+        this.doc = doc;
     }
 
     /**
@@ -138,12 +144,7 @@ public class MethodDefinition {
      * @return
      */
     public String id() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(name);
-        for (Type type : paramTypes) {
-            builder.append(type.className);
-        }
-        return builder.toString();
+        return name + "$" + Math.abs(paramTypes.hashCode());
     }
 
     /**
@@ -226,7 +227,7 @@ public class MethodDefinition {
      * @return
      */
     public MethodDefinition withFirst(Type type, String name) {
-        return new MethodDefinition(this.name, this.returnType, mergeFirst(paramTypes, type), mergeFirst(paramNames, name));
+        return new MethodDefinition(this.name, this.returnType, mergeFirst(paramTypes, type), mergeFirst(paramNames, name), doc);
     }
 
     /**
@@ -268,7 +269,7 @@ public class MethodDefinition {
      * @return
      */
     public MethodDefinition withLast(Type type, String name) {
-        return new MethodDefinition(this.name, this.returnType, mergeLast(paramTypes, type), mergeLast(paramNames, name));
+        return new MethodDefinition(this.name, this.returnType, mergeLast(paramTypes, type), mergeLast(paramNames, name), doc);
     }
 
     /**

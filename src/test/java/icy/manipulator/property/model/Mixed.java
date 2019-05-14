@@ -61,97 +61,73 @@ public abstract class Mixed extends MixedModel {
         this.optionCommnet = super.optionCommnet();
     }
 
-    /**
-     * Retrieve name property.
-     */
+    /** Return the name property. */
     @Override
     public final String name() {
         return this.name;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final String getName() {
         return this.name;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setName(String value) {
         ((ÅssignableName) this).name(value);
     }
 
-    /**
-     * Retrieve age property.
-     */
+    /** Return the age property. */
     @Override
     public final int age() {
         return this.age;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final int getAge() {
         return this.age;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setAge(int value) {
         ((ÅssignableAge) this).age(value);
     }
 
-    /**
-     * Retrieve optionAddress property.
-     */
+    /** Return the optionAddress property. */
     @Override
     public final String optionAddress() {
         return this.optionAddress;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final String getOptionAddress() {
         return this.optionAddress;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setOptionAddress(String value) {
         ((ÅssignableÅrbitrary) this).optionAddress(value);
     }
 
-    /**
-     * Retrieve optionCommnet property.
-     */
+    /** Return the optionCommnet property. */
     @Override
     public final String optionCommnet() {
         return this.optionCommnet;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final String getOptionCommnet() {
         return this.optionCommnet;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setOptionCommnet(String value) {
         ((ÅssignableÅrbitrary) this).optionCommnet(value);
@@ -161,11 +137,14 @@ public abstract class Mixed extends MixedModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link Mixed}.
+     * Namespace for {@link Mixed}  builder methods.
      */
     public static final class Ìnstantiator<Self extends Mixed & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link Mixed}.
+         * Create new Mixed with the specifiedname property.
+         * 
+         * @return The next assignable model.
          */
         public final <T extends ÅssignableAge<Self>> T name(String string) {
             Åssignable o = new Åssignable();
@@ -178,8 +157,12 @@ public abstract class Mixed extends MixedModel {
      * Property assignment API.
      */
     public static interface ÅssignableName<Next> {
+
         /**
-         * The base setter.
+         * Assign name property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next name(String value) {
             try {
@@ -195,8 +178,12 @@ public abstract class Mixed extends MixedModel {
      * Property assignment API.
      */
     public static interface ÅssignableAge<Next> {
+
         /**
-         * The base setter.
+         * Assign age property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next age(int value) {
             try {
@@ -212,8 +199,12 @@ public abstract class Mixed extends MixedModel {
      * Property assignment API.
      */
     public static interface ÅssignableÅrbitrary<Next extends Mixed> {
+
         /**
-         * The base setter.
+         * Assign optionAddress property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next optionAddress(String value) {
             try {
@@ -223,8 +214,12 @@ public abstract class Mixed extends MixedModel {
             }
             return (Next) this;
         }
+
         /**
-         * The base setter.
+         * Assign optionCommnet property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next optionCommnet(String value) {
             try {

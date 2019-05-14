@@ -54,73 +54,55 @@ public abstract class Group extends GroupModel {
         this.z = 0;
     }
 
-    /**
-     * Retrieve x property.
-     */
+    /** Return the x property. */
     @Override
     public final int x() {
         return this.x;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final int getX() {
         return this.x;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setX(int value) {
         ((ÅssignableX) this).x(value);
     }
 
-    /**
-     * Retrieve y property.
-     */
+    /** Return the y property. */
     @Override
     public final int y() {
         return this.y;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final int getY() {
         return this.y;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setY(int value) {
         ((ÅssignableY) this).y(value);
     }
 
-    /**
-     * Retrieve z property.
-     */
+    /** Return the z property. */
     @Override
     public final int z() {
         return this.z;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final int getZ() {
         return this.z;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setZ(int value) {
         ((ÅssignableZ) this).z(value);
@@ -130,16 +112,19 @@ public abstract class Group extends GroupModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link Group}.
+     * Namespace for {@link Group}  builder methods.
      */
     public static final class Ìnstantiator<Self extends Group & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link Group}.
+         * Create new Group with the specifiedx property.
+         * 
+         * @return The next assignable model.
          */
-        public final <T extends ÅssignableZ<Self>> T x(int $int, int $int1) {
+        public final <T extends ÅssignableZ<Self>> T x(int INT, int INT1) {
             Åssignable o = new Åssignable();
-            o.x($int);
-            o.y($int1);
+            o.x(INT);
+            o.y(INT1);
             return (T) o;
         }
     }
@@ -148,8 +133,12 @@ public abstract class Group extends GroupModel {
      * Property assignment API.
      */
     public static interface ÅssignableX<Next> {
+
         /**
-         * The base setter.
+         * Assign x property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next x(int value) {
             try {
@@ -165,8 +154,12 @@ public abstract class Group extends GroupModel {
      * Property assignment API.
      */
     public static interface ÅssignableY<Next> {
+
         /**
-         * The base setter.
+         * Assign y property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next y(int value) {
             try {
@@ -182,8 +175,12 @@ public abstract class Group extends GroupModel {
      * Property assignment API.
      */
     public static interface ÅssignableZ<Next> {
+
         /**
-         * The base setter.
+         * Assign z property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next z(int value) {
             try {

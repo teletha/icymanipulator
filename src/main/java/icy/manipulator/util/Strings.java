@@ -44,7 +44,7 @@ public class Strings {
      */
     public static String sanitize(String value) {
         if (SourceVersion.isKeyword(value)) {
-            return "$" + value;
+            return value.toUpperCase();
         } else {
             return value;
         }

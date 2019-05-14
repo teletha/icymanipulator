@@ -31,10 +31,10 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle checkLowerint= invoker("checkLower", int.class);
+    private static final MethodHandle checkLower$101282980= invoker("checkLower", int.class);
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle stringlizeintConsumer= invoker("stringlize", int.class, Consumer.class);
+    private static final MethodHandle stringlize$423008767= invoker("stringlize", int.class, Consumer.class);
 
     /**
      * Create special property updater.
@@ -72,49 +72,37 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
         this.value = super.value();
     }
 
-    /**
-     * Retrieve size property.
-     */
+    /** Return the size property. */
     @Override
     public final int size() {
         return this.size;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final int getSize() {
         return this.size;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setSize(int value) {
         ((ÅssignableSize) this).size(value);
     }
 
-    /**
-     * Retrieve value property.
-     */
+    /** Return the value property. */
     @Override
     public final String value() {
         return this.value;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final String getValue() {
         return this.value;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setValue(String value) {
         ((ÅssignableÅrbitrary) this).value(value);
@@ -124,15 +112,18 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link MultiIntercepts}.
+     * Namespace for {@link MultiIntercepts}  builder methods.
      */
     public static final class Ìnstantiator<Self extends MultiIntercepts & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link MultiIntercepts}.
+         * Create new MultiIntercepts with the specifiedsize property.
+         * 
+         * @return The next assignable model.
          */
-        public final Self size(int $int) {
+        public final Self size(int INT) {
             Åssignable o = new Åssignable();
-            o.size($int);
+            o.size(INT);
             return (Self) o;
         }
     }
@@ -141,12 +132,16 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
      * Property assignment API.
      */
     public static interface ÅssignableSize<Next> {
+
         /**
-         * The base setter.
+         * Assign size property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next size(int value) {
             try {
-                sizeUpdater.invoke(this, stringlizeintConsumer.invoke(this, checkLowerint.invoke(this, value), (Consumer<String>) ((Åssignable) this)::value));
+                sizeUpdater.invoke(this, stringlize$423008767.invoke(this, checkLower$101282980.invoke(this, value), (Consumer<String>) ((Åssignable) this)::value));
             } catch (Throwable e) {
                 throw new Error(e);
             }
@@ -158,8 +153,12 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
      * Property assignment API.
      */
     public static interface ÅssignableÅrbitrary<Next extends MultiIntercepts> {
+
         /**
-         * The base setter.
+         * Assign value property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next value(String value) {
             try {

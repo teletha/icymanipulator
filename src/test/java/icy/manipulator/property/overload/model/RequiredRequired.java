@@ -32,7 +32,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle timeintintint= invoker("time", int.class, int.class, int.class);
+    private static final MethodHandle time$1789750340= invoker("time", int.class, int.class, int.class);
 
     /**
      * Create special property updater.
@@ -63,25 +63,19 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
         this.time = null;
     }
 
-    /**
-     * Retrieve time property.
-     */
+    /** Return the time property. */
     @Override
     public final LocalTime time() {
         return this.time;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final LocalTime getTime() {
         return this.time;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setTime(LocalTime value) {
         ((ÅssignableTime) this).time(value);
@@ -91,27 +85,36 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link RequiredRequired}.
+     * Namespace for {@link RequiredRequired}  builder methods.
      */
     public static final class Ìnstantiator<Self extends RequiredRequired & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link RequiredRequired}.
+         * Create new RequiredRequired with the specifiedsize property.
+         * 
+         * @return The next assignable model.
          */
         public final <T extends ÅssignableDate<ÅssignableTime<Self>>> T size(BigDecimal bigDecimal) {
             Åssignable o = new Åssignable();
             o.size(bigDecimal);
             return (T) o;
         }
+
         /**
-         * Create uninitialized {@link RequiredRequired}.
+         * Create new RequiredRequired with the specifiedsize property.
+         * 
+         * @return The next assignable model.
          */
         public final <T extends ÅssignableDate<ÅssignableTime<Self>>> T size(int number) {
             Åssignable o = new Åssignable();
             o.size(number);
             return (T) o;
         }
+
         /**
-         * Create uninitialized {@link RequiredRequired}.
+         * Create new RequiredRequired with the specifiedsize property.
+         * 
+         * @return The next assignable model.
          */
         public final <T extends ÅssignableDate<ÅssignableTime<Self>>> T sizeByText(String number) {
             Åssignable o = new Åssignable();
@@ -124,8 +127,12 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
      * Property assignment API.
      */
     public static interface ÅssignableTime<Next> {
+
         /**
-         * The base setter.
+         * Assign time property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next time(LocalTime value) {
             try {
@@ -136,12 +143,10 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
             return (Next) this;
         }
 
-        /**
-         * The overload setter.
-         */
+        /**  */
         default Next time(int hour, int minute, int second) {
             try {
-                return time((LocalTime) timeintintint.invoke(this, hour, minute, second));
+                return time((LocalTime) time$1789750340.invoke(this, hour, minute, second));
             } catch (Throwable e) {
                 throw new Error(e);
             }

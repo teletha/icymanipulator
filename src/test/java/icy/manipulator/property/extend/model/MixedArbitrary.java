@@ -40,25 +40,19 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
         this.optionZip = super.optionZip();
     }
 
-    /**
-     * Retrieve optionZip property.
-     */
+    /** Return the optionZip property. */
     @Override
     public final String optionZip() {
         return this.optionZip;
     }
 
-    /**
-     * Provide classic getter API.
-     */
+    /** Provide classic getter API. */
     @SuppressWarnings("unused")
     private final String getOptionZip() {
         return this.optionZip;
     }
 
-    /**
-     * Provide classic setter API.
-     */
+    /** Provide classic setter API. */
     @SuppressWarnings("unused")
     private void setOptionZip(String value) {
         ((ÅssignableÅrbitrary) this).optionZip(value);
@@ -68,11 +62,14 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Builder namespace for {@link MixedArbitrary}.
+     * Namespace for {@link MixedArbitrary}  builder methods.
      */
     public static final class Ìnstantiator<Self extends MixedArbitrary & ÅssignableÅrbitrary<Self>> {
+
         /**
-         * Create uninitialized {@link MixedArbitrary}.
+         * Create new MixedArbitrary with the specifiedname property.
+         * 
+         * @return The next assignable model.
          */
         public final <T extends ÅssignableAge<Self>> T name(String string) {
             Åssignable o = new Åssignable();
@@ -85,8 +82,12 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
      * Property assignment API.
      */
     public static interface ÅssignableÅrbitrary<Next extends MixedArbitrary> extends icy.manipulator.property.model.Mixed.ÅssignableÅrbitrary<Next> {
+
         /**
-         * The base setter.
+         * Assign optionZip property.
+         * 
+         * @param value A value to assign.
+         * @return The next assignable model.
          */
         default Next optionZip(String value) {
             try {
