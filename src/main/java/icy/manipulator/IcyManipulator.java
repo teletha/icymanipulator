@@ -10,7 +10,9 @@
 package icy.manipulator;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Set;
 
@@ -96,7 +98,7 @@ public class IcyManipulator implements Processor {
 
             try {
                 JavaFileObject implementationFile = filer.createSourceFile(model.implType.toString());
-                try (Writer writer = implementationFile.openWriter()) {
+                try (Writer writer = new OutputStreamWriter(implementationFile.openOutputStream(), StandardCharsets.UTF_8)) {
                     writer.write(generator.generate());
                 }
             } catch (IOException e) {
