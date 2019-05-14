@@ -346,18 +346,13 @@ public class CodeGenerator {
         code.write("default Next ", p.name, "(", p.type, " value)", () -> {
             code.writeTry(() -> {
                 String value = "value";
-                for (MethodDefinition method : m.findInterceptsFor(p)) {
-                    if (method.paramTypes.size() == 1) {
-                        value = method.id() + ".invoke(this, " + value + ")";
-                    } else {
-                        value = method.id() + ".invoke(this, " + value;
-                        for (int i = 1; i < method.paramTypes.size(); i++) {
-                            PropertyDefinition target = m.findPropertyByName(method.paramNames.get(i));
-                            value = value + ", " + "(Consumer<" + target.type
-                                    .wrap().className + ">) ((" + Assignable + ") this)::" + target.name;
-                        }
-                        value = value + ")";
+                for (MethodDefinition inter : m.findInterceptsFor(p)) {
+                    value = inter.id() + ".invoke(this, " + value;
+                    for (int i = 1; i < inter.paramTypes.size(); i++) {
+                        String name = m.findPropertyByName(inter.paramNames.get(i)).name;
+                        value += ", (" + code.use(inter.paramTypes.get(i)) + ") ((" + Assignable + ") this)::" + name;
                     }
+                    value += ")";
                 }
                 code.write(p.name, "Updater.invoke(this, ", value, ");");
             }, Throwable.class, e -> {

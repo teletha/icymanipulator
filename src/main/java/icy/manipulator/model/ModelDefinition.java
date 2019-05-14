@@ -16,6 +16,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.DoubleConsumer;
+import java.util.function.IntConsumer;
+import java.util.function.LongConsumer;
+import java.util.function.Supplier;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
@@ -167,12 +171,17 @@ public class ModelDefinition {
             for (int i = 1; i < method.paramTypes.size(); i++) {
                 Type type = method.paramTypes.get(i);
 
-                if (!type.is(Consumer.class)) {
-                    throw new Fail(m, "Intercept method [" + method + "] accepts the setter Consumer<PropertyType> only.");
+                if (!type.is(Consumer.class) && !type.is(IntConsumer.class) && !type.is(LongConsumer.class) && !type
+                        .is(DoubleConsumer.class)) {
+                    throw new Fail(m, "Intercept method [" + method + "] can reference Consumer, IntConsumer, LongConsumer or DoubleConsumer (in java.util.function package) as property setter. " + Strings
+                            .ordinal(i + 1) + " argument [" + type + "] is invalid.");
                 }
 
                 // check property
-                findPropertyByName(method.paramNames.get(i));
+                String propertyName = method.paramNames.get(i);
+
+                findPropertyByName(propertyName, m, "Although intercept method [" + method + "] references a setter of the property [" + propertyName + "] at " + Strings
+                        .ordinal(i + 1) + " argument, the property is not defined in " + name + " model. Define new [" + propertyName + "] property or specify a collect property name.");
             }
             interceptForProperty.add(property, new MethodDefinition(m));
         }
@@ -334,11 +343,31 @@ public class ModelDefinition {
      * @return
      */
     public PropertyDefinition findPropertyByName(String name) {
+        return findPropertyByName(name, () -> new Fail(e, "Although you specify the property [" + name + "], it is not found. Specify the correct property name."));
+    }
+
+    /**
+     * Find property by name.
+     * 
+     * @param name A property name.
+     * @return
+     */
+    public PropertyDefinition findPropertyByName(String name, Element location, String message) {
+        return findPropertyByName(name, () -> new Fail(location, message));
+    }
+
+    /**
+     * Find property by name.
+     * 
+     * @param name A property name.
+     * @return
+     */
+    public PropertyDefinition findPropertyByName(String name, Supplier<Fail> notFound) {
         return ownProperties().stream()
                 .filter(p -> p.name.equals(name))
                 .findFirst()
                 .or(() -> parent.map(m -> m.findPropertyByName(name)))
-                .orElseThrow(() -> new Fail(e, "Although you specify the property [" + name + "], it is not found. Specify the correct property name."));
+                .orElseThrow(notFound);
     }
 
     /**

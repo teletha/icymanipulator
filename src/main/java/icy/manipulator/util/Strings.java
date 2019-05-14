@@ -50,4 +50,25 @@ public class Strings {
         }
     }
 
+    /**
+     * Compute the ordianl number.
+     * 
+     * @param value
+     * @return
+     */
+    public static String ordinal(int value) {
+        switch (value) {
+        case 1:
+            return "1st";
+
+        case 2:
+            return "2nd";
+
+        case 3:
+            return "3rd";
+
+        default:
+            return value + "th";
+        }
+    }
 }
