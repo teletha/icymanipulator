@@ -18,6 +18,7 @@ import java.util.Set;
 
 import javax.annotation.processing.Completion;
 import javax.annotation.processing.Filer;
+import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
@@ -26,6 +27,7 @@ import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
+import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 
 import icy.manipulator.model.ModelDefinition;
@@ -37,6 +39,9 @@ public class IcyManipulator implements Processor {
 
     /** The file manager. */
     private Filer filer;
+
+    /** The notifier. */
+    private Messager messager;
 
     /**
      * {@inheritDoc}
@@ -59,7 +64,7 @@ public class IcyManipulator implements Processor {
      */
     @Override
     public SourceVersion getSupportedSourceVersion() {
-        return SourceVersion.RELEASE_12;
+        return SourceVersion.latest();
     }
 
     /**
@@ -68,6 +73,7 @@ public class IcyManipulator implements Processor {
     @Override
     public void init(ProcessingEnvironment process) {
         this.filer = process.getFiler();
+        this.messager = process.getMessager();
 
         TypeUtil.types = process.getTypeUtils();
         TypeUtil.elements = process.getElementUtils();
@@ -93,14 +99,16 @@ public class IcyManipulator implements Processor {
         for (Element element : round.getElementsAnnotatedWith(Icy.class)) {
             importer = new ClassImporter(element.toString());
 
-            ModelDefinition model = new ModelDefinition(element);
-            CodeGenerator generator = new CodeGenerator(model);
-
             try {
+                ModelDefinition model = new ModelDefinition(element);
+                CodeGenerator generator = new CodeGenerator(model);
+
                 JavaFileObject implementationFile = filer.createSourceFile(model.implType.toString());
                 try (Writer writer = new OutputStreamWriter(implementationFile.openOutputStream(), StandardCharsets.UTF_8)) {
                     writer.write(generator.generate());
                 }
+            } catch (Fail fail) {
+                messager.printMessage(Kind.ERROR, fail.getMessage(), fail.e);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

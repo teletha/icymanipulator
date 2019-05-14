@@ -15,7 +15,7 @@ import javax.lang.model.element.Element;
 public class Fail extends RuntimeException {
 
     /** The source code location. */
-    private final Element e;
+    public final Element e;
 
     /**
      * Throw failure with message.
