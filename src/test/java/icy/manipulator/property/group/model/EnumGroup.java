@@ -47,37 +47,61 @@ public abstract class EnumGroup extends EnumGroupModel {
         this.size = 0;
     }
 
-    /** Return the color property. */
+    /**
+     * Return the color property.
+     *
+     * @return A value of color property.
+     */
     @Override
     public final Color color() {
         return this.color;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of color property.
+     */
     @SuppressWarnings("unused")
     private final Color getColor() {
         return this.color;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of color property to assign.
+     */
     @SuppressWarnings("unused")
     private void setColor(Color value) {
         ((ÅssignableColor) this).color(value);
     }
 
-    /** Return the size property. */
+    /**
+     * Return the size property.
+     *
+     * @return A value of size property.
+     */
     @Override
     public final int size() {
         return this.size;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of size property.
+     */
     @SuppressWarnings("unused")
     private final int getSize() {
         return this.size;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of size property to assign.
+     */
     @SuppressWarnings("unused")
     private void setSize(int value) {
         ((ÅssignableSize) this).size(value);
@@ -92,7 +116,7 @@ public abstract class EnumGroup extends EnumGroupModel {
     public static final class Ìnstantiator<Self extends EnumGroup & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new EnumGroup with the specifiedcolor property.
+         * Create new {@link EnumGroup} with the specified color property.
          * 
          * @return The next assignable model.
          */
@@ -103,11 +127,7 @@ public abstract class EnumGroup extends EnumGroupModel {
             return (Self) o;
         }
 
-        /**
-         * Create new EnumGroup with the specifiedcolor property.
-         * 
-         * @return The next assignable model.
-         */
+        /** Set color property with Color.Red */
         public final Self red(int INT) {
             Åssignable o = new Åssignable();
             o.red();
@@ -115,11 +135,7 @@ public abstract class EnumGroup extends EnumGroupModel {
             return (Self) o;
         }
 
-        /**
-         * Create new EnumGroup with the specifiedcolor property.
-         * 
-         * @return The next assignable model.
-         */
+        /** Set color property with Color.Blue */
         public final Self blue(int INT) {
             Åssignable o = new Åssignable();
             o.blue();
@@ -127,11 +143,7 @@ public abstract class EnumGroup extends EnumGroupModel {
             return (Self) o;
         }
 
-        /**
-         * Create new EnumGroup with the specifiedcolor property.
-         * 
-         * @return The next assignable model.
-         */
+        /** Set color property with Color.Green */
         public final Self green(int INT) {
             Åssignable o = new Åssignable();
             o.green();
@@ -148,7 +160,7 @@ public abstract class EnumGroup extends EnumGroupModel {
         /**
          * Assign color property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next color(Color value) {
@@ -161,7 +173,7 @@ public abstract class EnumGroup extends EnumGroupModel {
         }
 
         /**
-         * Assign color property by {@link Color#Red}.
+         * Assign {@link Color#Red} to color property.
          * 
          * @return The next assignable model.
          */
@@ -170,7 +182,7 @@ public abstract class EnumGroup extends EnumGroupModel {
         }
 
         /**
-         * Assign color property by {@link Color#Blue}.
+         * Assign {@link Color#Blue} to color property.
          * 
          * @return The next assignable model.
          */
@@ -179,7 +191,7 @@ public abstract class EnumGroup extends EnumGroupModel {
         }
 
         /**
-         * Assign color property by {@link Color#Green}.
+         * Assign {@link Color#Green} to color property.
          * 
          * @return The next assignable model.
          */
@@ -196,7 +208,7 @@ public abstract class EnumGroup extends EnumGroupModel {
         /**
          * Assign size property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next size(int value) {

@@ -61,7 +61,7 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
     public static final class Ìnstantiator<Self extends EnumGroupSubclass & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new EnumGroupSubclass with the specifiedcolor property.
+         * Create new {@link EnumGroupSubclass} with the specified color property.
          * 
          * @return The next assignable model.
          */
@@ -73,7 +73,7 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
         }
 
         /**
-         * Create new EnumGroupSubclass with the specifiedcolor property.
+         * Create new {@link EnumGroupSubclass} with the specified color property.
          * 
          * @return The next assignable model.
          */
@@ -85,7 +85,7 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
         }
 
         /**
-         * Create new EnumGroupSubclass with the specifiedcolor property.
+         * Create new {@link EnumGroupSubclass} with the specified color property.
          * 
          * @return The next assignable model.
          */
@@ -97,7 +97,7 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
         }
 
         /**
-         * Create new EnumGroupSubclass with the specifiedcolor property.
+         * Create new {@link EnumGroupSubclass} with the specified color property.
          * 
          * @return The next assignable model.
          */

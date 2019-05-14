@@ -40,19 +40,31 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
         this.name = null;
     }
 
-    /** Return the name property. */
+    /**
+     * Return the name property.
+     *
+     * @return A value of name property.
+     */
     @Override
     public final String name() {
         return this.name;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of name property.
+     */
     @SuppressWarnings("unused")
     private final String getName() {
         return this.name;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of name property to assign.
+     */
     @SuppressWarnings("unused")
     private void setName(String value) {
         ((ÅssignableName) this).name(value);
@@ -67,7 +79,7 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
     public static final class Ìnstantiator<Self extends ImplementationVisibility & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new ImplementationVisibility with the specifiedname property.
+         * Create new {@link ImplementationVisibility} with the specified name property.
          * 
          * @return The next assignable model.
          */
@@ -86,7 +98,7 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
         /**
          * Assign name property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next name(String value) {

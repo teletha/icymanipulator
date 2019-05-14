@@ -72,37 +72,61 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
         this.value = super.value();
     }
 
-    /** Return the size property. */
+    /**
+     * Return the size property.
+     *
+     * @return A value of size property.
+     */
     @Override
     public final int size() {
         return this.size;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of size property.
+     */
     @SuppressWarnings("unused")
     private final int getSize() {
         return this.size;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of size property to assign.
+     */
     @SuppressWarnings("unused")
     private void setSize(int value) {
         ((ÅssignableSize) this).size(value);
     }
 
-    /** Return the value property. */
+    /**
+     * Return the value property.
+     *
+     * @return A value of value property.
+     */
     @Override
     public final String value() {
         return this.value;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of value property.
+     */
     @SuppressWarnings("unused")
     private final String getValue() {
         return this.value;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of value property to assign.
+     */
     @SuppressWarnings("unused")
     private void setValue(String value) {
         ((ÅssignableÅrbitrary) this).value(value);
@@ -117,7 +141,7 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
     public static final class Ìnstantiator<Self extends MultiIntercepts & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new MultiIntercepts with the specifiedsize property.
+         * Create new {@link MultiIntercepts} with the specified size property.
          * 
          * @return The next assignable model.
          */
@@ -136,7 +160,7 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
         /**
          * Assign size property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next size(int value) {
@@ -157,7 +181,7 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
         /**
          * Assign value property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next value(String value) {

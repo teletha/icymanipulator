@@ -47,37 +47,61 @@ public abstract class Arbitrary extends ArbitraryModel {
         this.optionComment = super.optionComment();
     }
 
-    /** Return the optionNum property. */
+    /**
+     * Return the optionNum property.
+     *
+     * @return A value of optionNum property.
+     */
     @Override
     public final int optionNum() {
         return this.optionNum;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of optionNum property.
+     */
     @SuppressWarnings("unused")
     private final int getOptionNum() {
         return this.optionNum;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of optionNum property to assign.
+     */
     @SuppressWarnings("unused")
     private void setOptionNum(int value) {
         ((ÅssignableÅrbitrary) this).optionNum(value);
     }
 
-    /** Return the optionComment property. */
+    /**
+     * Return the optionComment property.
+     *
+     * @return A value of optionComment property.
+     */
     @Override
     public final String optionComment() {
         return this.optionComment;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of optionComment property.
+     */
     @SuppressWarnings("unused")
     private final String getOptionComment() {
         return this.optionComment;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of optionComment property to assign.
+     */
     @SuppressWarnings("unused")
     private void setOptionComment(String value) {
         ((ÅssignableÅrbitrary) this).optionComment(value);
@@ -107,7 +131,7 @@ public abstract class Arbitrary extends ArbitraryModel {
         /**
          * Assign optionNum property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next optionNum(int value) {
@@ -122,7 +146,7 @@ public abstract class Arbitrary extends ArbitraryModel {
         /**
          * Assign optionComment property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next optionComment(String value) {

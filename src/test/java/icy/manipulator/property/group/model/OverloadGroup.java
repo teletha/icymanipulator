@@ -68,37 +68,61 @@ public abstract class OverloadGroup extends OverloadGroupModel {
         this.size = 0;
     }
 
-    /** Return the name property. */
+    /**
+     * Return the name property.
+     *
+     * @return A value of name property.
+     */
     @Override
     public final String name() {
         return this.name;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of name property.
+     */
     @SuppressWarnings("unused")
     private final String getName() {
         return this.name;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of name property to assign.
+     */
     @SuppressWarnings("unused")
     private void setName(String value) {
         ((ÅssignableName) this).name(value);
     }
 
-    /** Return the size property. */
+    /**
+     * Return the size property.
+     *
+     * @return A value of size property.
+     */
     @Override
     public final int size() {
         return this.size;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of size property.
+     */
     @SuppressWarnings("unused")
     private final int getSize() {
         return this.size;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of size property to assign.
+     */
     @SuppressWarnings("unused")
     private void setSize(int value) {
         ((ÅssignableSize) this).size(value);
@@ -113,7 +137,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
     public static final class Ìnstantiator<Self extends OverloadGroup & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new OverloadGroup with the specifiedname property.
+         * Create new {@link OverloadGroup} with the specified name property.
          * 
          * @return The next assignable model.
          */
@@ -125,7 +149,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
         }
 
         /**
-         * Create new OverloadGroup with the specifiedname property.
+         * Create new {@link OverloadGroup} with the specified name property.
          * 
          * @return The next assignable model.
          */
@@ -145,7 +169,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
         /**
          * Assign name property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next name(String value) {
@@ -166,7 +190,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
         /**
          * Assign size property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next size(int value) {
@@ -179,7 +203,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
         }
 
         /**
-         *  Set
+         * Set
          *  
          *  @param value
          *  @return

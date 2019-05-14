@@ -54,55 +54,91 @@ public abstract class Group extends GroupModel {
         this.z = 0;
     }
 
-    /** Return the x property. */
+    /**
+     * Return the x property.
+     *
+     * @return A value of x property.
+     */
     @Override
     public final int x() {
         return this.x;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of x property.
+     */
     @SuppressWarnings("unused")
     private final int getX() {
         return this.x;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of x property to assign.
+     */
     @SuppressWarnings("unused")
     private void setX(int value) {
         ((ÅssignableX) this).x(value);
     }
 
-    /** Return the y property. */
+    /**
+     * Return the y property.
+     *
+     * @return A value of y property.
+     */
     @Override
     public final int y() {
         return this.y;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of y property.
+     */
     @SuppressWarnings("unused")
     private final int getY() {
         return this.y;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of y property to assign.
+     */
     @SuppressWarnings("unused")
     private void setY(int value) {
         ((ÅssignableY) this).y(value);
     }
 
-    /** Return the z property. */
+    /**
+     * Return the z property.
+     *
+     * @return A value of z property.
+     */
     @Override
     public final int z() {
         return this.z;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of z property.
+     */
     @SuppressWarnings("unused")
     private final int getZ() {
         return this.z;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of z property to assign.
+     */
     @SuppressWarnings("unused")
     private void setZ(int value) {
         ((ÅssignableZ) this).z(value);
@@ -117,7 +153,7 @@ public abstract class Group extends GroupModel {
     public static final class Ìnstantiator<Self extends Group & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new Group with the specifiedx property.
+         * Create new {@link Group} with the specified x property.
          * 
          * @return The next assignable model.
          */
@@ -137,7 +173,7 @@ public abstract class Group extends GroupModel {
         /**
          * Assign x property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next x(int value) {
@@ -158,7 +194,7 @@ public abstract class Group extends GroupModel {
         /**
          * Assign y property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next y(int value) {
@@ -179,7 +215,7 @@ public abstract class Group extends GroupModel {
         /**
          * Assign z property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next z(int value) {

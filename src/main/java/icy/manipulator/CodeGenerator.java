@@ -196,21 +196,38 @@ public class CodeGenerator {
     private void defineAccessors() {
         for (PropertyDefinition property : m.ownProperties()) {
             // Exposed getter
-            code.javadoc(property.element, "Return the " + property.name + " property.");
+            code.write();
+            code.javadoc(property.element, () -> {
+                code.write("/**");
+                code.write(" * Return the ", property.name, " property.");
+                code.write(" *");
+                code.write(" * @return A value of ", property.name, " property.");
+                code.write(" */");
+            });
             code.write("@Override");
             code.write("public final ", property.type, " ", property.name, "()", () -> {
                 code.write("return this.", property.name, ";");
             });
 
             // Hidden classic getter
-            code.javadoc("Provide classic getter API.");
+            code.write();
+            code.write("/**");
+            code.write(" * Provide classic getter API.");
+            code.write(" *");
+            code.write(" * @return A value of ", property.name, " property.");
+            code.write(" */");
             code.write("@SuppressWarnings(`unused`)");
             code.write("private final ", property.type, " get", property.capitalizeName(), "()", () -> {
                 code.write("return this.", property.name, ";");
             });
 
             // Hidden classic setter
-            code.javadoc("Provide classic setter API.");
+            code.write();
+            code.write("/**");
+            code.write(" * Provide classic setter API.");
+            code.write(" *");
+            code.write(" * @paran value A new value of ", property.name, " property to assign.");
+            code.write(" */");
             code.write("@SuppressWarnings(`unused`)");
             code.write(icy.classicSetterModifier().trim(), " void set", property.capitalizeName(), "(", property.type, " value)", () -> {
                 code.write("((", property.assignableInterfaceName(), ") this).", property.name, "(value);");
@@ -249,11 +266,13 @@ public class CodeGenerator {
                                 }
 
                                 code.write();
-                                code.write("/**");
-                                code.write(" * Create new ", m.implType, " with the specified", p.name, " property.");
-                                code.write(" * ");
-                                code.write(" * @return The next assignable model.");
-                                code.write(" */");
+                                code.javadoc(method.doc, () -> {
+                                    code.write("/**");
+                                    code.write(" * Create new {@link ", m.implType, "} with the specified ", p.name, " property.");
+                                    code.write(" * ");
+                                    code.write(" * @return The next assignable model.");
+                                    code.write(" */");
+                                });
                                 code.write("public final ", types[0], " ", method, () -> {
                                     code.write(Assignable, " o = new ", Assignable, "();");
 
@@ -343,7 +362,7 @@ public class CodeGenerator {
         code.write("/**");
         code.write(" * Assign ", p.name, " property.");
         code.write(" * ");
-        code.write(" * @param value A value to assign.");
+        code.write(" * @param value A new value to assign.");
         code.write(" * @return The next assignable model.");
         code.write(" */");
         code.write("default Next ", p.name, "(", p.type, " value)", () -> {
@@ -368,7 +387,14 @@ public class CodeGenerator {
         // Overload Setter
         // =========================================
         for (MethodDefinition m : m.findOverloadsFor(p)) {
-            code.javadoc(m.doc);
+            code.write();
+            code.javadoc(m.doc, () -> {
+                code.write("/**");
+                code.write(" * Assign ", p.name, " property.");
+                code.write(" * ");
+                code.write(" * @return The next assignable model.");
+                code.write(" */");
+            });
             code.write("default Next ", m, () -> {
                 code.writeTry(() -> {
                     code.write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", m.namesWithHead("this"), "));");
@@ -385,7 +411,7 @@ public class CodeGenerator {
             for (String name : TypeUtil.enumConstantNames(p.element.getReturnType())) {
                 code.write();
                 code.write("/**");
-                code.write(" * Assign ", p.name, " property by {@link ", p.type.className, "#", name, "}.");
+                code.write(" * Assign {@link ", p.type.className, "#", name, "} to ", p.name, " property.");
                 code.write(" * ");
                 code.write(" * @return The next assignable model.");
                 code.write(" */");

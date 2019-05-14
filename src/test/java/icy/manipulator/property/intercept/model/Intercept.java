@@ -61,19 +61,31 @@ public abstract class Intercept extends InterceptModel {
         this.size = 0;
     }
 
-    /** Return the size property. */
+    /**
+     * Return the size property.
+     *
+     * @return A value of size property.
+     */
     @Override
     public final int size() {
         return this.size;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of size property.
+     */
     @SuppressWarnings("unused")
     private final int getSize() {
         return this.size;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of size property to assign.
+     */
     @SuppressWarnings("unused")
     private void setSize(int value) {
         ((ÅssignableSize) this).size(value);
@@ -88,7 +100,7 @@ public abstract class Intercept extends InterceptModel {
     public static final class Ìnstantiator<Self extends Intercept & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new Intercept with the specifiedsize property.
+         * Create new {@link Intercept} with the specified size property.
          * 
          * @return The next assignable model.
          */
@@ -107,7 +119,7 @@ public abstract class Intercept extends InterceptModel {
         /**
          * Assign size property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next size(int value) {

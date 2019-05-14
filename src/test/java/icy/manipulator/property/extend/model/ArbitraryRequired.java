@@ -40,19 +40,31 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
         this.id = 0L;
     }
 
-    /** Return the id property. */
+    /**
+     * Return the id property.
+     *
+     * @return A value of id property.
+     */
     @Override
     public final long id() {
         return this.id;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of id property.
+     */
     @SuppressWarnings("unused")
     private final long getId() {
         return this.id;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of id property to assign.
+     */
     @SuppressWarnings("unused")
     private void setId(long value) {
         ((ÅssignableId) this).id(value);
@@ -67,7 +79,7 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
     public static final class Ìnstantiator<Self extends ArbitraryRequired & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new ArbitraryRequired with the specifiedid property.
+         * Create new {@link ArbitraryRequired} with the specified id property.
          * 
          * @return The next assignable model.
          */
@@ -86,7 +98,7 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
         /**
          * Assign id property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next id(long value) {

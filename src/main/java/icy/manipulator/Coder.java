@@ -46,19 +46,10 @@ public class Coder {
      * Copy javadoc from the specified {@link Element}.
      * 
      * @param e
-     */
-    public void javadoc(Element e) {
-        javadoc(e, "");
-    }
-
-    /**
-     * Copy javadoc from the specified {@link Element}.
-     * 
-     * @param e
      * @param defaultComment
      */
-    public void javadoc(Element e, String defaultComment) {
-        javadoc(TypeUtil.doc(e, defaultComment));
+    public void javadoc(Element e, Runnable defaultDocument) {
+        javadoc(TypeUtil.doc(e), defaultDocument);
     }
 
     /**
@@ -66,18 +57,23 @@ public class Coder {
      * 
      * @param e
      */
-    public void javadoc(String doc) {
-        String[] lines = doc.replaceAll("\r\n", "\n").split("\n");
+    public void javadoc(String doc, Runnable defaultDocument) {
+        doc = doc.trim();
 
-        write();
-        if (lines.length == 1) {
-            write("/** ", lines[0], " */");
+        if (doc.isEmpty()) {
+            defaultDocument.run();
         } else {
-            write("/**");
-            for (String line : lines) {
-                write(" * ", line);
+            String[] lines = doc.replaceAll("\r\n", "\n").split("\n");
+
+            if (lines.length == 1) {
+                write("/** ", lines[0], " */");
+            } else {
+                write("/**");
+                for (String line : lines) {
+                    write(" * ", line);
+                }
+                write(" */");
             }
-            write(" */");
         }
     }
 

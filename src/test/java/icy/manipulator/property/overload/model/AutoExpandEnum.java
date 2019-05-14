@@ -40,19 +40,31 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
         this.answer = null;
     }
 
-    /** Return the answer property. */
+    /**
+     * Return the answer property.
+     *
+     * @return A value of answer property.
+     */
     @Override
     public final Answer answer() {
         return this.answer;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of answer property.
+     */
     @SuppressWarnings("unused")
     private final Answer getAnswer() {
         return this.answer;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of answer property to assign.
+     */
     @SuppressWarnings("unused")
     private void setAnswer(Answer value) {
         ((ÅssignableAnswer) this).answer(value);
@@ -67,7 +79,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
     public static final class Ìnstantiator<Self extends AutoExpandEnum & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new AutoExpandEnum with the specifiedanswer property.
+         * Create new {@link AutoExpandEnum} with the specified answer property.
          * 
          * @return The next assignable model.
          */
@@ -77,22 +89,14 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
             return (Self) o;
         }
 
-        /**
-         * Create new AutoExpandEnum with the specifiedanswer property.
-         * 
-         * @return The next assignable model.
-         */
+        /** Set answer property with Answer.Yes */
         public final Self yes() {
             Åssignable o = new Åssignable();
             o.yes();
             return (Self) o;
         }
 
-        /**
-         * Create new AutoExpandEnum with the specifiedanswer property.
-         * 
-         * @return The next assignable model.
-         */
+        /** Set answer property with Answer.No */
         public final Self no() {
             Åssignable o = new Åssignable();
             o.no();
@@ -108,7 +112,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
         /**
          * Assign answer property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next answer(Answer value) {
@@ -121,7 +125,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
         }
 
         /**
-         * Assign answer property by {@link Answer#Yes}.
+         * Assign {@link Answer#Yes} to answer property.
          * 
          * @return The next assignable model.
          */
@@ -130,7 +134,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
         }
 
         /**
-         * Assign answer property by {@link Answer#No}.
+         * Assign {@link Answer#No} to answer property.
          * 
          * @return The next assignable model.
          */

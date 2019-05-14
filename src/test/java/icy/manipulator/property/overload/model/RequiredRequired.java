@@ -63,19 +63,31 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
         this.time = null;
     }
 
-    /** Return the time property. */
+    /**
+     * Return the time property.
+     *
+     * @return A value of time property.
+     */
     @Override
     public final LocalTime time() {
         return this.time;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of time property.
+     */
     @SuppressWarnings("unused")
     private final LocalTime getTime() {
         return this.time;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of time property to assign.
+     */
     @SuppressWarnings("unused")
     private void setTime(LocalTime value) {
         ((ÅssignableTime) this).time(value);
@@ -90,7 +102,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     public static final class Ìnstantiator<Self extends RequiredRequired & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new RequiredRequired with the specifiedsize property.
+         * Create new {@link RequiredRequired} with the specified size property.
          * 
          * @return The next assignable model.
          */
@@ -101,7 +113,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
         }
 
         /**
-         * Create new RequiredRequired with the specifiedsize property.
+         * Create new {@link RequiredRequired} with the specified size property.
          * 
          * @return The next assignable model.
          */
@@ -112,7 +124,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
         }
 
         /**
-         * Create new RequiredRequired with the specifiedsize property.
+         * Create new {@link RequiredRequired} with the specified size property.
          * 
          * @return The next assignable model.
          */
@@ -131,7 +143,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
         /**
          * Assign time property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next time(LocalTime value) {
@@ -143,7 +155,11 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
             return (Next) this;
         }
 
-        /**  */
+        /**
+         * Assign time property.
+         * 
+         * @return The next assignable model.
+         */
         default Next time(int hour, int minute, int second) {
             try {
                 return time((LocalTime) time$1789750340.invoke(this, hour, minute, second));

@@ -41,7 +41,7 @@ public abstract class Single extends SingleModel {
     }
 
     /**
-     *  Return name.
+     * Return name.
      *  
      *  @return A name.
      */
@@ -50,13 +50,21 @@ public abstract class Single extends SingleModel {
         return this.name;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of name property.
+     */
     @SuppressWarnings("unused")
     private final String getName() {
         return this.name;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of name property to assign.
+     */
     @SuppressWarnings("unused")
     private void setName(String value) {
         ((ÅssignableName) this).name(value);
@@ -71,7 +79,7 @@ public abstract class Single extends SingleModel {
     public static final class Ìnstantiator<Self extends Single & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new Single with the specifiedname property.
+         * Create new {@link Single} with the specified name property.
          * 
          * @return The next assignable model.
          */
@@ -90,7 +98,7 @@ public abstract class Single extends SingleModel {
         /**
          * Assign name property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next name(String value) {

@@ -79,37 +79,61 @@ public abstract class Overload extends OverloadModel {
         this.date = null;
     }
 
-    /** Return the size property. */
+    /**
+     * Return the size property.
+     *
+     * @return A value of size property.
+     */
     @Override
     public final BigDecimal size() {
         return this.size;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of size property.
+     */
     @SuppressWarnings("unused")
     private final BigDecimal getSize() {
         return this.size;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of size property to assign.
+     */
     @SuppressWarnings("unused")
     private void setSize(BigDecimal value) {
         ((ÅssignableSize) this).size(value);
     }
 
-    /** Return the date property. */
+    /**
+     * Return the date property.
+     *
+     * @return A value of date property.
+     */
     @Override
     public final LocalDate date() {
         return this.date;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of date property.
+     */
     @SuppressWarnings("unused")
     private final LocalDate getDate() {
         return this.date;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of date property to assign.
+     */
     @SuppressWarnings("unused")
     private void setDate(LocalDate value) {
         ((ÅssignableDate) this).date(value);
@@ -124,7 +148,7 @@ public abstract class Overload extends OverloadModel {
     public static final class Ìnstantiator<Self extends Overload & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new Overload with the specifiedsize property.
+         * Create new {@link Overload} with the specified size property.
          * 
          * @return The next assignable model.
          */
@@ -135,7 +159,7 @@ public abstract class Overload extends OverloadModel {
         }
 
         /**
-         * Create new Overload with the specifiedsize property.
+         * Create new {@link Overload} with the specified size property.
          * 
          * @return The next assignable model.
          */
@@ -146,7 +170,7 @@ public abstract class Overload extends OverloadModel {
         }
 
         /**
-         * Create new Overload with the specifiedsize property.
+         * Create new {@link Overload} with the specified size property.
          * 
          * @return The next assignable model.
          */
@@ -165,7 +189,7 @@ public abstract class Overload extends OverloadModel {
         /**
          * Assign size property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next size(BigDecimal value) {
@@ -177,7 +201,11 @@ public abstract class Overload extends OverloadModel {
             return (Next) this;
         }
 
-        /**  */
+        /**
+         * Assign size property.
+         * 
+         * @return The next assignable model.
+         */
         default Next size(int number) {
             try {
                 return size((BigDecimal) size$101282980.invoke(this, number));
@@ -186,7 +214,11 @@ public abstract class Overload extends OverloadModel {
             }
         }
 
-        /**  */
+        /**
+         * Assign size property.
+         * 
+         * @return The next assignable model.
+         */
         default Next sizeByText(String number) {
             try {
                 return size((BigDecimal) sizeByText$2017368044.invoke(this, number));
@@ -204,7 +236,7 @@ public abstract class Overload extends OverloadModel {
         /**
          * Assign date property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next date(LocalDate value) {
@@ -216,7 +248,11 @@ public abstract class Overload extends OverloadModel {
             return (Next) this;
         }
 
-        /**  */
+        /**
+         * Assign date property.
+         * 
+         * @return The next assignable model.
+         */
         default Next date(int year, int month, int day) {
             try {
                 return date((LocalDate) date$1789750340.invoke(this, year, month, day));
@@ -225,7 +261,11 @@ public abstract class Overload extends OverloadModel {
             }
         }
 
-        /**  */
+        /**
+         * Assign date property.
+         * 
+         * @return The next assignable model.
+         */
         default Next today() {
             try {
                 return date((LocalDate) today$1.invoke(this));

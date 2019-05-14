@@ -54,55 +54,91 @@ public abstract class Multiple extends MultipleModel {
         this.age = 0;
     }
 
-    /** Return the name property. */
+    /**
+     * Return the name property.
+     *
+     * @return A value of name property.
+     */
     @Override
     public final String name() {
         return this.name;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of name property.
+     */
     @SuppressWarnings("unused")
     private final String getName() {
         return this.name;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of name property to assign.
+     */
     @SuppressWarnings("unused")
     private void setName(String value) {
         ((ÅssignableName) this).name(value);
     }
 
-    /** Return the stand property. */
+    /**
+     * Return the stand property.
+     *
+     * @return A value of stand property.
+     */
     @Override
     public final String stand() {
         return this.stand;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of stand property.
+     */
     @SuppressWarnings("unused")
     private final String getStand() {
         return this.stand;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of stand property to assign.
+     */
     @SuppressWarnings("unused")
     private void setStand(String value) {
         ((ÅssignableStand) this).stand(value);
     }
 
-    /** Return the age property. */
+    /**
+     * Return the age property.
+     *
+     * @return A value of age property.
+     */
     @Override
     public final int age() {
         return this.age;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of age property.
+     */
     @SuppressWarnings("unused")
     private final int getAge() {
         return this.age;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of age property to assign.
+     */
     @SuppressWarnings("unused")
     private void setAge(int value) {
         ((ÅssignableAge) this).age(value);
@@ -117,7 +153,7 @@ public abstract class Multiple extends MultipleModel {
     public static final class Ìnstantiator<Self extends Multiple & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new Multiple with the specifiedname property.
+         * Create new {@link Multiple} with the specified name property.
          * 
          * @return The next assignable model.
          */
@@ -136,7 +172,7 @@ public abstract class Multiple extends MultipleModel {
         /**
          * Assign name property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next name(String value) {
@@ -157,7 +193,7 @@ public abstract class Multiple extends MultipleModel {
         /**
          * Assign stand property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next stand(String value) {
@@ -178,7 +214,7 @@ public abstract class Multiple extends MultipleModel {
         /**
          * Assign age property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next age(int value) {

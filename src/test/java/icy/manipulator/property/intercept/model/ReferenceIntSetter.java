@@ -69,37 +69,61 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
         this.square = super.square();
     }
 
-    /** Return the size property. */
+    /**
+     * Return the size property.
+     *
+     * @return A value of size property.
+     */
     @Override
     public final int size() {
         return this.size;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of size property.
+     */
     @SuppressWarnings("unused")
     private final int getSize() {
         return this.size;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of size property to assign.
+     */
     @SuppressWarnings("unused")
     private void setSize(int value) {
         ((ÅssignableSize) this).size(value);
     }
 
-    /** Return the square property. */
+    /**
+     * Return the square property.
+     *
+     * @return A value of square property.
+     */
     @Override
     public final int square() {
         return this.square;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of square property.
+     */
     @SuppressWarnings("unused")
     private final int getSquare() {
         return this.square;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of square property to assign.
+     */
     @SuppressWarnings("unused")
     private void setSquare(int value) {
         ((ÅssignableÅrbitrary) this).square(value);
@@ -114,7 +138,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
     public static final class Ìnstantiator<Self extends ReferenceIntSetter & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new ReferenceIntSetter with the specifiedsize property.
+         * Create new {@link ReferenceIntSetter} with the specified size property.
          * 
          * @return The next assignable model.
          */
@@ -133,7 +157,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
         /**
          * Assign size property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next size(int value) {
@@ -154,7 +178,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
         /**
          * Assign square property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next square(int value) {

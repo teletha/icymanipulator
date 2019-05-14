@@ -40,19 +40,31 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
         this.optionZip = super.optionZip();
     }
 
-    /** Return the optionZip property. */
+    /**
+     * Return the optionZip property.
+     *
+     * @return A value of optionZip property.
+     */
     @Override
     public final String optionZip() {
         return this.optionZip;
     }
 
-    /** Provide classic getter API. */
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of optionZip property.
+     */
     @SuppressWarnings("unused")
     private final String getOptionZip() {
         return this.optionZip;
     }
 
-    /** Provide classic setter API. */
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of optionZip property to assign.
+     */
     @SuppressWarnings("unused")
     private void setOptionZip(String value) {
         ((ÅssignableÅrbitrary) this).optionZip(value);
@@ -67,7 +79,7 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
     public static final class Ìnstantiator<Self extends MixedArbitrary & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new MixedArbitrary with the specifiedname property.
+         * Create new {@link MixedArbitrary} with the specified name property.
          * 
          * @return The next assignable model.
          */
@@ -86,7 +98,7 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
         /**
          * Assign optionZip property.
          * 
-         * @param value A value to assign.
+         * @param value A new value to assign.
          * @return The next assignable model.
          */
         default Next optionZip(String value) {
