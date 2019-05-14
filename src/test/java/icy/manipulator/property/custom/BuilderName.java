@@ -74,10 +74,10 @@ public abstract class BuilderName extends BuilderNameModel {
         /**
          * Create uninitialized {@link BuilderName}.
          */
-        public final <T extends Self> T name(String string) {
+        public final Self name(String string) {
             Åssignable o = new Åssignable();
             o.name(string);
-            return (T) o;
+            return (Self) o;
         }
     }
 

@@ -16,7 +16,6 @@ import icy.manipulator.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
 import icy.manipulator.property.intercept.model.ReferenceIntSetter;
 import icy.manipulator.property.intercept.model.ReferenceIntSetterModel;
-import icy.manipulator.property.intercept.model.ReferenceLongSetter;
 
 class ReferenceIntSetterTest {
 
@@ -25,7 +24,7 @@ class ReferenceIntSetterTest {
 
     @Test
     void reference() {
-        ReferenceLongSetter o = ReferenceIntSetter.with.size(10);
+        ReferenceIntSetter o = ReferenceIntSetter.with.size(10);
         assert o.size == 10;
         assert o.square == 100;
     }

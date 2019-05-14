@@ -126,20 +126,20 @@ public abstract class OverloadGroup extends OverloadGroupModel {
         /**
          * Create uninitialized {@link OverloadGroup}.
          */
-        public final <T extends Self> T name(String string, int $int) {
+        public final Self name(String string, int $int) {
             Åssignable o = new Åssignable();
             o.name(string);
             o.size($int);
-            return (T) o;
+            return (Self) o;
         }
         /**
          * Create uninitialized {@link OverloadGroup}.
          */
-        public final <T extends Self> T name(String string, String value) {
+        public final Self name(String string, String value) {
             Åssignable o = new Åssignable();
             o.name(string);
             o.size(value);
-            return (T) o;
+            return (Self) o;
         }
     }
 

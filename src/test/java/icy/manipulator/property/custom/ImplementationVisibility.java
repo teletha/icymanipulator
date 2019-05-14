@@ -74,10 +74,10 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
         /**
          * Create uninitialized {@link ImplementationVisibility}.
          */
-        public final <T extends Self> T name(String string) {
+        public final Self name(String string) {
             Åssignable o = new Åssignable();
             o.name(string);
-            return (T) o;
+            return (Self) o;
         }
     }
 

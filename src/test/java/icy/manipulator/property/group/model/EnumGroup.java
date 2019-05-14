@@ -105,38 +105,38 @@ public abstract class EnumGroup extends EnumGroupModel {
         /**
          * Create uninitialized {@link EnumGroup}.
          */
-        public final <T extends Self> T color(Color color, int $int) {
+        public final Self color(Color color, int $int) {
             Åssignable o = new Åssignable();
             o.color(color);
             o.size($int);
-            return (T) o;
+            return (Self) o;
         }
         /**
          * Create uninitialized {@link EnumGroup}.
          */
-        public final <T extends Self> T red(int $int) {
+        public final Self red(int $int) {
             Åssignable o = new Åssignable();
             o.red();
             o.size($int);
-            return (T) o;
+            return (Self) o;
         }
         /**
          * Create uninitialized {@link EnumGroup}.
          */
-        public final <T extends Self> T blue(int $int) {
+        public final Self blue(int $int) {
             Åssignable o = new Åssignable();
             o.blue();
             o.size($int);
-            return (T) o;
+            return (Self) o;
         }
         /**
          * Create uninitialized {@link EnumGroup}.
          */
-        public final <T extends Self> T green(int $int) {
+        public final Self green(int $int) {
             Åssignable o = new Åssignable();
             o.green();
             o.size($int);
-            return (T) o;
+            return (Self) o;
         }
     }
 

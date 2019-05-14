@@ -5,6 +5,7 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.function.IntConsumer;
+
 import javax.annotation.processing.Generated;
 
 /**
@@ -20,7 +21,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
      * @param parameterTypes A list of method parameter types.
      * @return A special method invoker.
      */
-    private static final MethodHandle invoker(String name, Class... parameterTypes)  {
+    private static final MethodHandle invoker(String name, Class... parameterTypes) {
         try {
             Method method = ReferenceIntSetterModel.class.getDeclaredMethod(name, parameterTypes);
             method.setAccessible(true);
@@ -31,7 +32,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle deriveBySizeintIntConsumer= invoker("deriveBySize", int.class, IntConsumer.class);
+    private static final MethodHandle deriveBySizeintIntConsumer = invoker("deriveBySize", int.class, IntConsumer.class);
 
     /**
      * Create special property updater.
@@ -39,7 +40,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final MethodHandle updater(String name) {
         try {
             Field field = ReferenceIntSetter.class.getDeclaredField(name);
             field.setAccessible(true);
@@ -118,7 +119,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
     }
 
     /** The singleton builder. */
-    public static final  Ìnstantiator<?> with = new Ìnstantiator();
+    public static final Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Builder namespace for {@link ReferenceIntSetter}.
@@ -127,10 +128,10 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
         /**
          * Create uninitialized {@link ReferenceIntSetter}.
          */
-        public final <T extends Self> T size(int $int) {
+        public final Self size(int $int) {
             Åssignable o = new Åssignable();
             o.size($int);
-            return (T) o;
+            return (Self) o;
         }
     }
 
@@ -185,6 +186,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
      */
     static final class My {
         static final String Size = "size";
+
         static final String Square = "square";
     }
 }

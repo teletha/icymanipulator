@@ -130,10 +130,10 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
         /**
          * Create uninitialized {@link MultiIntercepts}.
          */
-        public final <T extends Self> T size(int $int) {
+        public final Self size(int $int) {
             Åssignable o = new Åssignable();
             o.size($int);
-            return (T) o;
+            return (Self) o;
         }
     }
 

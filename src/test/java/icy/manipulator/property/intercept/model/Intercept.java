@@ -95,10 +95,10 @@ public abstract class Intercept extends InterceptModel {
         /**
          * Create uninitialized {@link Intercept}.
          */
-        public final <T extends Self> T size(int $int) {
+        public final Self size(int $int) {
             Åssignable o = new Åssignable();
             o.size($int);
-            return (T) o;
+            return (Self) o;
         }
     }
 

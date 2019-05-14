@@ -256,7 +256,13 @@ public class CodeGenerator {
                                 code.write("/**");
                                 code.write(" * Create uninitialized {@link ", m.implType, "}.");
                                 code.write(" */");
-                                code.write("public final <T extends ", m.requiredRouteType(group, "Self"), "> T ", method, () -> {
+
+                                String[] types = new String[] {m.requiredRouteType(group, "Self"), "Self"};
+                                if (!types[0].equals("Self")) {
+                                    types[0] = "<T extends " + types[0] + "> T";
+                                    types[1] = "T";
+                                }
+                                code.write("public final ", types[0], " ", method, () -> {
                                     code.write(Assignable, " o = new ", Assignable, "();");
 
                                     boolean skipFirst = requireds.size() != method.paramNames.size();
@@ -272,7 +278,7 @@ public class CodeGenerator {
                                             code.write("o.", methodName, "();");
                                         }
                                     }
-                                    code.write("return (T) o;");
+                                    code.write("return (", types[1], ") o;");
                                 });
                             }
                         });
