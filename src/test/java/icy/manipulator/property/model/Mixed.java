@@ -225,6 +225,9 @@ public abstract class Mixed extends MixedModel {
          * @return The next assignable model.
          */
         default Next name(String value) {
+            if (value == null) {
+                throw new IllegalArgumentException("The name property requires non-null value.");
+            }
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {
@@ -267,6 +270,9 @@ public abstract class Mixed extends MixedModel {
          * @return The next assignable model.
          */
         default Next optionAddress(String value) {
+            if (value == null) {
+                throw new IllegalArgumentException("The optionAddress property requires non-null value.");
+            }
             try {
                 optionAddressUpdater.invoke(this, value);
             } catch (Throwable e) {
@@ -282,6 +288,9 @@ public abstract class Mixed extends MixedModel {
          * @return The next assignable model.
          */
         default Next optionCommnet(String value) {
+            if (value == null) {
+                throw new IllegalArgumentException("The optionCommnet property requires non-null value.");
+            }
             try {
                 optionCommnetUpdater.invoke(this, value);
             } catch (Throwable e) {

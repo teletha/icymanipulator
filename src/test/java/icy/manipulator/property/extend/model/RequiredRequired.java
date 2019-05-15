@@ -114,6 +114,9 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
          * @return The next assignable model.
          */
         default Next nickname(String value) {
+            if (value == null) {
+                throw new IllegalArgumentException("The nickname property requires non-null value.");
+            }
             try {
                 nicknameUpdater.invoke(this, value);
             } catch (Throwable e) {

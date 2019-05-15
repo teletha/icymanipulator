@@ -197,6 +197,9 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
          * @return The next assignable model.
          */
         default Next value(String value) {
+            if (value == null) {
+                throw new IllegalArgumentException("The value property requires non-null value.");
+            }
             try {
                 valueUpdater.invoke(this, value);
             } catch (Throwable e) {

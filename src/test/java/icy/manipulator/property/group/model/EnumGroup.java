@@ -176,6 +176,9 @@ public abstract class EnumGroup extends EnumGroupModel {
          * @return The next assignable model.
          */
         default Next color(Color value) {
+            if (value == null) {
+                throw new IllegalArgumentException("The color property requires non-null value.");
+            }
             try {
                 colorUpdater.invoke(this, value);
             } catch (Throwable e) {

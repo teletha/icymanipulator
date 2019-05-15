@@ -42,6 +42,9 @@ public class PropertyDefinition {
     public boolean isDerived;
 
     /** The property type. */
+    public final boolean nullable;
+
+    /** The property type. */
     public final boolean mutable;
 
     /** The proeprty type. */
@@ -55,11 +58,11 @@ public class PropertyDefinition {
         this.name = method.getSimpleName().toString();
         this.type = Type.of(method.getReturnType());
         this.isArbitrary = !method.getModifiers().contains(Modifier.ABSTRACT);
-        this.mutable = Optional.ofNullable(method.getAnnotation(Icy.Property.class)).map(Property::mutable).orElse(false);
-        this.autoExpandable = Optional.ofNullable(method.getAnnotation(Icy.Property.class))
-                .map(Property::overloadEnum)
-                .filter(p -> TypeUtil.isEnum(method.getReturnType()))
-                .orElse(true);
+
+        Optional<Icy.Property> info = Optional.ofNullable(method.getAnnotation(Icy.Property.class));
+        this.nullable = info.map(Property::nullable).orElse(false);
+        this.mutable = info.map(Property::mutable).orElse(false);
+        this.autoExpandable = info.map(Property::overloadEnum).filter(p -> TypeUtil.isEnum(method.getReturnType())).orElse(true);
     }
 
     /**

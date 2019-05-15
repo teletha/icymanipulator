@@ -185,6 +185,9 @@ public abstract class OverloadGroup extends OverloadGroupModel {
          * @return The next assignable model.
          */
         default Next name(String value) {
+            if (value == null) {
+                throw new IllegalArgumentException("The name property requires non-null value.");
+            }
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {

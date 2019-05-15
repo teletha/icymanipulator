@@ -205,6 +205,9 @@ public abstract class Overload extends OverloadModel {
          * @return The next assignable model.
          */
         default Next size(BigDecimal value) {
+            if (value == null) {
+                throw new IllegalArgumentException("The size property requires non-null value.");
+            }
             try {
                 sizeUpdater.invoke(this, value);
             } catch (Throwable e) {
@@ -252,6 +255,9 @@ public abstract class Overload extends OverloadModel {
          * @return The next assignable model.
          */
         default Next date(LocalDate value) {
+            if (value == null) {
+                throw new IllegalArgumentException("The date property requires non-null value.");
+            }
             try {
                 dateUpdater.invoke(this, value);
             } catch (Throwable e) {

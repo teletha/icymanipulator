@@ -69,6 +69,13 @@ public @interface Icy {
     @interface Property {
 
         /**
+         * Configure whther this property accepts null value or not.
+         * 
+         * @return false
+         */
+        boolean nullable() default false;
+
+        /**
          * Configure the mutability of property.
          * 
          * @return false
@@ -78,7 +85,7 @@ public @interface Icy {
         /**
          * Configure whether enum values are overloaded automatically.
          * 
-         * @return
+         * @return true
          */
         boolean overloadEnum() default true;
     }

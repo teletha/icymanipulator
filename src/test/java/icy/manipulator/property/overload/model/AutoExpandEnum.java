@@ -128,6 +128,9 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
          * @return The next assignable model.
          */
         default Next answer(Answer value) {
+            if (value == null) {
+                throw new IllegalArgumentException("The answer property requires non-null value.");
+            }
             try {
                 answerUpdater.invoke(this, value);
             } catch (Throwable e) {

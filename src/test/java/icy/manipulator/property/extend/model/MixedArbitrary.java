@@ -114,6 +114,9 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
          * @return The next assignable model.
          */
         default Next optionZip(String value) {
+            if (value == null) {
+                throw new IllegalArgumentException("The optionZip property requires non-null value.");
+            }
             try {
                 optionZipUpdater.invoke(this, value);
             } catch (Throwable e) {

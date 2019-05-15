@@ -159,6 +159,9 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
          * @return The next assignable model.
          */
         default Next time(LocalTime value) {
+            if (value == null) {
+                throw new IllegalArgumentException("The time property requires non-null value.");
+            }
             try {
                 timeUpdater.invoke(this, value);
             } catch (Throwable e) {

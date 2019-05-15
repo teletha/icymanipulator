@@ -162,6 +162,9 @@ public abstract class Arbitrary extends ArbitraryModel {
          * @return The next assignable model.
          */
         default Next optionComment(String value) {
+            if (value == null) {
+                throw new IllegalArgumentException("The optionComment property requires non-null value.");
+            }
             try {
                 optionCommentUpdater.invoke(this, value);
             } catch (Throwable e) {

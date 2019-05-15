@@ -188,6 +188,9 @@ public abstract class Multiple extends MultipleModel {
          * @return The next assignable model.
          */
         default Next name(String value) {
+            if (value == null) {
+                throw new IllegalArgumentException("The name property requires non-null value.");
+            }
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {
@@ -209,6 +212,9 @@ public abstract class Multiple extends MultipleModel {
          * @return The next assignable model.
          */
         default Next stand(String value) {
+            if (value == null) {
+                throw new IllegalArgumentException("The stand property requires non-null value.");
+            }
             try {
                 standUpdater.invoke(this, value);
             } catch (Throwable e) {

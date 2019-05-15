@@ -385,6 +385,12 @@ public class CodeGenerator {
         code.write(" * @return The next assignable model.");
         code.write(" */");
         code.write("default Next ", p.name, "(", p.type, " value)", () -> {
+            if (!p.nullable && !p.type.isPrimitive()) {
+                code.write("if (value == null)", () -> {
+                    code.write("throw new IllegalArgumentException(`The ", p.name, " property requires non-null value.`);");
+                });
+            }
+
             code.writeTry(() -> {
                 String value = "value";
                 for (MethodDefinition inter : m.findInterceptsFor(p)) {
