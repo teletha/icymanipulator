@@ -1,17 +1,16 @@
-package icy.manipulator.property.intercept.model;
+package icy.manipulator.property.error.model;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.function.LongConsumer;
 import javax.annotation.processing.Generated;
 
 /**
- * Generated model for {@link ReferenceLongSetterModel}.
+ * Generated model for {@link ThrowOriginalErrorModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
+public abstract class ThrowOriginalError extends ThrowOriginalErrorModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -34,7 +33,7 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
      */
     private static final MethodHandle invoker(String name, Class... parameterTypes)  {
         try {
-            Method method = ReferenceLongSetterModel.class.getDeclaredMethod(name, parameterTypes);
+            Method method = ThrowOriginalErrorModel.class.getDeclaredMethod(name, parameterTypes);
             method.setAccessible(true);
             return MethodHandles.lookup().unreflect(method);
         } catch (Throwable e) {
@@ -43,7 +42,7 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle deriveBySize$1722469908= invoker("deriveBySize", int.class, LongConsumer.class);
+    private static final MethodHandle validateSize$101282980= invoker("validateSize", int.class);
 
     /**
      * Create special property updater.
@@ -53,7 +52,7 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
      */
     private static final MethodHandle updater(String name)  {
         try {
-            Field field = ReferenceLongSetter.class.getDeclaredField(name);
+            Field field = ThrowOriginalError.class.getDeclaredField(name);
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
@@ -64,21 +63,14 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
     /** The final property updater. */
     private static final MethodHandle sizeUpdater = updater("size");
 
-    /** The final property updater. */
-    private static final MethodHandle squareUpdater = updater("square");
-
     /** The exposed property. */
     public final int size;
-
-    /** The exposed property. */
-    public final long square;
 
     /**
      * HIDE CONSTRUCTOR
      */
-    protected ReferenceLongSetter() {
+    protected ThrowOriginalError() {
         this.size = 0;
-        this.square = super.square();
     }
 
     /**
@@ -111,46 +103,16 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
         ((ÅssignableSize) this).size(value);
     }
 
-    /**
-     * Return the square property.
-     *
-     * @return A value of square property.
-     */
-    @Override
-    public final long square() {
-        return this.square;
-    }
-
-    /**
-     * Provide classic getter API.
-     *
-     * @return A value of square property.
-     */
-    @SuppressWarnings("unused")
-    private final long getSquare() {
-        return this.square;
-    }
-
-    /**
-     * Provide classic setter API.
-     *
-     * @paran value A new value of square property to assign.
-     */
-    @SuppressWarnings("unused")
-    private void setSquare(long value) {
-        ((ÅssignableÅrbitrary) this).square(value);
-    }
-
     /** The singleton builder. */
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Namespace for {@link ReferenceLongSetter}  builder methods.
+     * Namespace for {@link ThrowOriginalError}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends ReferenceLongSetter & ÅssignableÅrbitrary<Self>> {
+    public static final class Ìnstantiator<Self extends ThrowOriginalError & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new {@link ReferenceLongSetter} with the specified size property.
+         * Create new {@link ThrowOriginalError} with the specified size property.
          * 
          * @return The next assignable model.
          */
@@ -174,7 +136,7 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
          */
         default Next size(int value) {
             try {
-                sizeUpdater.invoke(this, deriveBySize$1722469908.invoke(this, value, (LongConsumer) ((Åssignable) this)::square));
+                sizeUpdater.invoke(this, validateSize$101282980.invoke(this, value));
             } catch (Throwable e) {
                 throw quiet(e);
             }
@@ -185,22 +147,7 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends ReferenceLongSetter> {
-
-        /**
-         * Assign square property.
-         * 
-         * @param value A new value to assign.
-         * @return The next assignable model.
-         */
-        default Next square(long value) {
-            try {
-                squareUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
-            return (Next) this;
-        }
+    public static interface ÅssignableÅrbitrary<Next extends ThrowOriginalError> {
     }
 
     /**
@@ -212,7 +159,7 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends ReferenceLongSetter implements ÅssignableAll, ÅssignableÅrbitrary {
+    private static final class Åssignable extends ThrowOriginalError implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**
@@ -220,6 +167,5 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
      */
     static final class My {
         static final String Size = "size";
-        static final String Square = "square";
     }
 }

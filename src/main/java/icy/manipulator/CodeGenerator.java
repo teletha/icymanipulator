@@ -72,6 +72,7 @@ public class CodeGenerator {
         code.write(" */");
         code.write("@", Generated.class, "(`Icy Manipulator`)");
         code.write(visibility, "abstract class ", m.implType, " extends ", m.type, () -> {
+            defineErrorHandler();
             if (m.hasOverload() || m.hasIntercept()) {
                 defineMethodInvokerBuilder();
                 defineMethodInvoker();
@@ -92,6 +93,24 @@ public class CodeGenerator {
     }
 
     /**
+     * Define transparent error handler.
+     */
+    private void defineErrorHandler() {
+        code.write();
+        code.write("/**");
+        code.write(" * Deceive complier that the specified checked exception is unchecked exception.");
+        code.write(" *");
+        code.write(" * @param <T> A dummy type for {@link RuntimeException}.");
+        code.write(" * @param throwable Any error.");
+        code.write(" * @return A runtime error.");
+        code.write(" * @throws T Dummy error to deceive compiler.");
+        code.write(" */");
+        code.write("private static <T extends Throwable> T quiet(Throwable throwable) throws T", () -> {
+            code.write("throw (T) throwable;");
+        });
+    }
+
+    /**
      * Define query method for property updater.
      */
     private void defineMethodInvokerBuilder() {
@@ -109,7 +128,7 @@ public class CodeGenerator {
                 code.write("method.setAccessible(true);");
                 code.write("return ", MethodHandles.class, ".lookup().unreflect(method);");
             }, Throwable.class, e -> {
-                code.write("throw new Error(", e, ");");
+                code.write("throw quiet(", e, ");");
             });
         });
     }
@@ -147,7 +166,7 @@ public class CodeGenerator {
                 code.write("field.setAccessible(true);");
                 code.write("return ", MethodHandles.class, ".lookup().unreflectSetter(field);");
             }, Throwable.class, e -> {
-                code.write("throw new Error(", e, ");");
+                code.write("throw quiet(", e, ");");
             });
         });
     }
@@ -378,7 +397,7 @@ public class CodeGenerator {
                 }
                 code.write(p.name, "Updater.invoke(this, ", value, ");");
             }, Throwable.class, e -> {
-                code.write("throw new Error(", e, ");");
+                code.write("throw quiet(", e, ");");
             });
             code.write("return (Next) this;");
         });
@@ -399,7 +418,7 @@ public class CodeGenerator {
                 code.writeTry(() -> {
                     code.write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", m.namesWithHead("this"), "));");
                 }, Throwable.class, e -> {
-                    code.write("throw new Error(", e, ");");
+                    code.write("throw quiet(", e, ");");
                 });
             });
         }

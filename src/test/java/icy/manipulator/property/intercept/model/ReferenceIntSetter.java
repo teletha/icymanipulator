@@ -14,6 +14,18 @@ import javax.annotation.processing.Generated;
 public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
 
     /**
+     * Deceive complier that the specified checked exception is unchecked exception.
+     *
+     * @param <T> A dummy type for {@link RuntimeException}.
+     * @param throwable Any error.
+     * @return A runtime error.
+     * @throws T Dummy error to deceive compiler.
+     */
+    private static <T extends Throwable> T quiet(Throwable throwable) throws T {
+        throw (T) throwable;
+    }
+
+    /**
      * Create special method invoker.
      *
      * @param name A target method name.
@@ -26,7 +38,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
             method.setAccessible(true);
             return MethodHandles.lookup().unreflect(method);
         } catch (Throwable e) {
-            throw new Error(e);
+            throw quiet(e);
         }
     }
 
@@ -45,7 +57,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
-            throw new Error(e);
+            throw quiet(e);
         }
     }
 
@@ -164,7 +176,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
             try {
                 sizeUpdater.invoke(this, deriveBySize$1280871585.invoke(this, value, (IntConsumer) ((Åssignable) this)::square));
             } catch (Throwable e) {
-                throw new Error(e);
+                throw quiet(e);
             }
             return (Next) this;
         }
@@ -185,7 +197,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
             try {
                 squareUpdater.invoke(this, value);
             } catch (Throwable e) {
-                throw new Error(e);
+                throw quiet(e);
             }
             return (Next) this;
         }

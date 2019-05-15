@@ -13,6 +13,18 @@ import javax.annotation.processing.Generated;
 public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
 
     /**
+     * Deceive complier that the specified checked exception is unchecked exception.
+     *
+     * @param <T> A dummy type for {@link RuntimeException}.
+     * @param throwable Any error.
+     * @return A runtime error.
+     * @throws T Dummy error to deceive compiler.
+     */
+    private static <T extends Throwable> T quiet(Throwable throwable) throws T {
+        throw (T) throwable;
+    }
+
+    /**
      * Create special method invoker.
      *
      * @param name A target method name.
@@ -25,7 +37,7 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
             method.setAccessible(true);
             return MethodHandles.lookup().unreflect(method);
         } catch (Throwable e) {
-            throw new Error(e);
+            throw quiet(e);
         }
     }
 
@@ -44,7 +56,7 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
-            throw new Error(e);
+            throw quiet(e);
         }
     }
 
@@ -122,7 +134,7 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
             try {
                 sizeUpdater.invoke(this, value);
             } catch (Throwable e) {
-                throw new Error(e);
+                throw quiet(e);
             }
             return (Next) this;
         }
@@ -136,7 +148,7 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
             try {
                 return size((int) size$2017368044.invoke(this, number));
             } catch (Throwable e) {
-                throw new Error(e);
+                throw quiet(e);
             }
         }
     }

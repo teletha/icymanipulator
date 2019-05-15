@@ -12,6 +12,18 @@ import javax.annotation.processing.Generated;
 public abstract class Multiple extends MultipleModel {
 
     /**
+     * Deceive complier that the specified checked exception is unchecked exception.
+     *
+     * @param <T> A dummy type for {@link RuntimeException}.
+     * @param throwable Any error.
+     * @return A runtime error.
+     * @throws T Dummy error to deceive compiler.
+     */
+    private static <T extends Throwable> T quiet(Throwable throwable) throws T {
+        throw (T) throwable;
+    }
+
+    /**
      * Create special property updater.
      *
      * @param name A target property name.
@@ -23,7 +35,7 @@ public abstract class Multiple extends MultipleModel {
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
-            throw new Error(e);
+            throw quiet(e);
         }
     }
 
@@ -179,7 +191,7 @@ public abstract class Multiple extends MultipleModel {
             try {
                 nameUpdater.invoke(this, value);
             } catch (Throwable e) {
-                throw new Error(e);
+                throw quiet(e);
             }
             return (Next) this;
         }
@@ -200,7 +212,7 @@ public abstract class Multiple extends MultipleModel {
             try {
                 standUpdater.invoke(this, value);
             } catch (Throwable e) {
-                throw new Error(e);
+                throw quiet(e);
             }
             return (Next) this;
         }
@@ -221,7 +233,7 @@ public abstract class Multiple extends MultipleModel {
             try {
                 ageUpdater.invoke(this, value);
             } catch (Throwable e) {
-                throw new Error(e);
+                throw quiet(e);
             }
             return (Next) this;
         }

@@ -12,6 +12,18 @@ import javax.annotation.processing.Generated;
 public abstract class EnumGroup extends EnumGroupModel {
 
     /**
+     * Deceive complier that the specified checked exception is unchecked exception.
+     *
+     * @param <T> A dummy type for {@link RuntimeException}.
+     * @param throwable Any error.
+     * @return A runtime error.
+     * @throws T Dummy error to deceive compiler.
+     */
+    private static <T extends Throwable> T quiet(Throwable throwable) throws T {
+        throw (T) throwable;
+    }
+
+    /**
      * Create special property updater.
      *
      * @param name A target property name.
@@ -23,7 +35,7 @@ public abstract class EnumGroup extends EnumGroupModel {
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
-            throw new Error(e);
+            throw quiet(e);
         }
     }
 
@@ -167,7 +179,7 @@ public abstract class EnumGroup extends EnumGroupModel {
             try {
                 colorUpdater.invoke(this, value);
             } catch (Throwable e) {
-                throw new Error(e);
+                throw quiet(e);
             }
             return (Next) this;
         }
@@ -215,7 +227,7 @@ public abstract class EnumGroup extends EnumGroupModel {
             try {
                 sizeUpdater.invoke(this, value);
             } catch (Throwable e) {
-                throw new Error(e);
+                throw quiet(e);
             }
             return (Next) this;
         }
