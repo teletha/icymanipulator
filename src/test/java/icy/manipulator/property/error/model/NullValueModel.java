@@ -16,7 +16,12 @@ public abstract class NullValueModel {
 
     @Icy.Property
     public abstract String rejectNull();
-    
+
     @Icy.Property(nullable = true)
     public abstract String acceptNull();
+
+    @Icy.Property
+    public String defaultValue() {
+        return "default";
+    }
 }

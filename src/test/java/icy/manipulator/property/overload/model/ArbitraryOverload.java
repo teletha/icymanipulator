@@ -20,7 +20,7 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
      * @return A runtime error.
      * @throws T Dummy error to deceive compiler.
      */
-    private static <T extends Throwable> T quiet(Throwable throwable) throws T {
+    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
         throw (T) throwable;
     }
 
@@ -101,6 +101,15 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
     @SuppressWarnings("unused")
     private void setSize(int value) {
         ((ÅssignableÅrbitrary) this).size(value);
+    }
+
+    /**
+     * Provide accesser to super default value.
+     *
+     * @return A default value.
+     */
+    private final int åccessToDefaultSize() {
+        return super.size();
     }
 
     /** The singleton builder. */

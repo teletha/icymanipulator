@@ -19,7 +19,7 @@ public abstract class Mixed extends MixedModel {
      * @return A runtime error.
      * @throws T Dummy error to deceive compiler.
      */
-    private static <T extends Throwable> T quiet(Throwable throwable) throws T {
+    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
         throw (T) throwable;
     }
 
@@ -164,6 +164,15 @@ public abstract class Mixed extends MixedModel {
     }
 
     /**
+     * Provide accesser to super default value.
+     *
+     * @return A default value.
+     */
+    private final String åccessToDefaultOptionAddress() {
+        return super.optionAddress();
+    }
+
+    /**
      * Return the optionCommnet property.
      *
      * @return A value of optionCommnet property.
@@ -191,6 +200,15 @@ public abstract class Mixed extends MixedModel {
     @SuppressWarnings("unused")
     private void setOptionCommnet(String value) {
         ((ÅssignableÅrbitrary) this).optionCommnet(value);
+    }
+
+    /**
+     * Provide accesser to super default value.
+     *
+     * @return A default value.
+     */
+    private final String åccessToDefaultOptionCommnet() {
+        return super.optionCommnet();
     }
 
     /** The singleton builder. */
@@ -271,7 +289,7 @@ public abstract class Mixed extends MixedModel {
          */
         default Next optionAddress(String value) {
             if (value == null) {
-                throw new IllegalArgumentException("The optionAddress property requires non-null value.");
+                value = ((Mixed) this).åccessToDefaultOptionAddress();
             }
             try {
                 optionAddressUpdater.invoke(this, value);
@@ -289,7 +307,7 @@ public abstract class Mixed extends MixedModel {
          */
         default Next optionCommnet(String value) {
             if (value == null) {
-                throw new IllegalArgumentException("The optionCommnet property requires non-null value.");
+                value = ((Mixed) this).åccessToDefaultOptionCommnet();
             }
             try {
                 optionCommnetUpdater.invoke(this, value);

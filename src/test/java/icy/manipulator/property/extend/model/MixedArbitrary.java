@@ -19,7 +19,7 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
      * @return A runtime error.
      * @throws T Dummy error to deceive compiler.
      */
-    private static <T extends Throwable> T quiet(Throwable throwable) throws T {
+    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
         throw (T) throwable;
     }
 
@@ -82,6 +82,15 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
         ((ÅssignableÅrbitrary) this).optionZip(value);
     }
 
+    /**
+     * Provide accesser to super default value.
+     *
+     * @return A default value.
+     */
+    private final String åccessToDefaultOptionZip() {
+        return super.optionZip();
+    }
+
     /** The singleton builder. */
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
@@ -115,7 +124,7 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
          */
         default Next optionZip(String value) {
             if (value == null) {
-                throw new IllegalArgumentException("The optionZip property requires non-null value.");
+                value = ((MixedArbitrary) this).åccessToDefaultOptionZip();
             }
             try {
                 optionZipUpdater.invoke(this, value);

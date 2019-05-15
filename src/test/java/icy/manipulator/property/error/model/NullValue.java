@@ -19,7 +19,7 @@ public abstract class NullValue extends NullValueModel {
      * @return A runtime error.
      * @throws T Dummy error to deceive compiler.
      */
-    private static <T extends Throwable> T quiet(Throwable throwable) throws T {
+    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
         throw (T) throwable;
     }
 
@@ -45,11 +45,17 @@ public abstract class NullValue extends NullValueModel {
     /** The final property updater. */
     private static final MethodHandle acceptNullUpdater = updater("acceptNull");
 
+    /** The final property updater. */
+    private static final MethodHandle defaultValueUpdater = updater("defaultValue");
+
     /** The exposed property. */
     public final String rejectNull;
 
     /** The exposed property. */
     public final String acceptNull;
+
+    /** The exposed property. */
+    public final String defaultValue;
 
     /**
      * HIDE CONSTRUCTOR
@@ -57,6 +63,7 @@ public abstract class NullValue extends NullValueModel {
     protected NullValue() {
         this.rejectNull = null;
         this.acceptNull = null;
+        this.defaultValue = super.defaultValue();
     }
 
     /**
@@ -117,6 +124,45 @@ public abstract class NullValue extends NullValueModel {
     @SuppressWarnings("unused")
     private void setAcceptNull(String value) {
         ((ÅssignableAcceptNull) this).acceptNull(value);
+    }
+
+    /**
+     * Return the defaultValue property.
+     *
+     * @return A value of defaultValue property.
+     */
+    @Override
+    public final String defaultValue() {
+        return this.defaultValue;
+    }
+
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of defaultValue property.
+     */
+    @SuppressWarnings("unused")
+    private final String getDefaultValue() {
+        return this.defaultValue;
+    }
+
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of defaultValue property to assign.
+     */
+    @SuppressWarnings("unused")
+    private void setDefaultValue(String value) {
+        ((ÅssignableÅrbitrary) this).defaultValue(value);
+    }
+
+    /**
+     * Provide accesser to super default value.
+     *
+     * @return A default value.
+     */
+    private final String åccessToDefaultDefaultValue() {
+        return super.defaultValue();
     }
 
     /** The singleton builder. */
@@ -188,6 +234,24 @@ public abstract class NullValue extends NullValueModel {
      * Property assignment API.
      */
     public static interface ÅssignableÅrbitrary<Next extends NullValue> {
+
+        /**
+         * Assign defaultValue property.
+         * 
+         * @param value A new value to assign.
+         * @return The next assignable model.
+         */
+        default Next defaultValue(String value) {
+            if (value == null) {
+                value = ((NullValue) this).åccessToDefaultDefaultValue();
+            }
+            try {
+                defaultValueUpdater.invoke(this, value);
+            } catch (Throwable e) {
+                throw quiet(e);
+            }
+            return (Next) this;
+        }
     }
 
     /**
@@ -208,5 +272,6 @@ public abstract class NullValue extends NullValueModel {
     static final class My {
         static final String RejectNull = "rejectNull";
         static final String AcceptNull = "acceptNull";
+        static final String DefaultValue = "defaultValue";
     }
 }

@@ -21,7 +21,7 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
      * @return A runtime error.
      * @throws T Dummy error to deceive compiler.
      */
-    private static <T extends Throwable> T quiet(Throwable throwable) throws T {
+    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
         throw (T) throwable;
     }
 
@@ -144,6 +144,15 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
         ((ÅssignableÅrbitrary) this).value(value);
     }
 
+    /**
+     * Provide accesser to super default value.
+     *
+     * @return A default value.
+     */
+    private final String åccessToDefaultValue() {
+        return super.value();
+    }
+
     /** The singleton builder. */
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
@@ -198,7 +207,7 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
          */
         default Next value(String value) {
             if (value == null) {
-                throw new IllegalArgumentException("The value property requires non-null value.");
+                value = ((MultiIntercepts) this).åccessToDefaultValue();
             }
             try {
                 valueUpdater.invoke(this, value);

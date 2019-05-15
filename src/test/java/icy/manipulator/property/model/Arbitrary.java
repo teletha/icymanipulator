@@ -19,7 +19,7 @@ public abstract class Arbitrary extends ArbitraryModel {
      * @return A runtime error.
      * @throws T Dummy error to deceive compiler.
      */
-    private static <T extends Throwable> T quiet(Throwable throwable) throws T {
+    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
         throw (T) throwable;
     }
 
@@ -90,6 +90,15 @@ public abstract class Arbitrary extends ArbitraryModel {
     }
 
     /**
+     * Provide accesser to super default value.
+     *
+     * @return A default value.
+     */
+    private final int åccessToDefaultOptionNum() {
+        return super.optionNum();
+    }
+
+    /**
      * Return the optionComment property.
      *
      * @return A value of optionComment property.
@@ -117,6 +126,15 @@ public abstract class Arbitrary extends ArbitraryModel {
     @SuppressWarnings("unused")
     private void setOptionComment(String value) {
         ((ÅssignableÅrbitrary) this).optionComment(value);
+    }
+
+    /**
+     * Provide accesser to super default value.
+     *
+     * @return A default value.
+     */
+    private final String åccessToDefaultOptionComment() {
+        return super.optionComment();
     }
 
     /** The singleton builder. */
@@ -163,7 +181,7 @@ public abstract class Arbitrary extends ArbitraryModel {
          */
         default Next optionComment(String value) {
             if (value == null) {
-                throw new IllegalArgumentException("The optionComment property requires non-null value.");
+                value = ((Arbitrary) this).åccessToDefaultOptionComment();
             }
             try {
                 optionCommentUpdater.invoke(this, value);

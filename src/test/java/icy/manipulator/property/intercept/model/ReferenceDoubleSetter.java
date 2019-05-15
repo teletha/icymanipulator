@@ -21,7 +21,7 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
      * @return A runtime error.
      * @throws T Dummy error to deceive compiler.
      */
-    private static <T extends Throwable> T quiet(Throwable throwable) throws T {
+    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
         throw (T) throwable;
     }
 
@@ -139,6 +139,15 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
     @SuppressWarnings("unused")
     private void setSquare(double value) {
         ((ÅssignableÅrbitrary) this).square(value);
+    }
+
+    /**
+     * Provide accesser to super default value.
+     *
+     * @return A default value.
+     */
+    private final double åccessToDefaultSquare() {
+        return super.square();
     }
 
     /** The singleton builder. */

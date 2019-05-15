@@ -105,7 +105,7 @@ public class CodeGenerator {
         code.write(" * @return A runtime error.");
         code.write(" * @throws T Dummy error to deceive compiler.");
         code.write(" */");
-        code.write("private static <T extends Throwable> T quiet(Throwable throwable) throws T", () -> {
+        code.write("private static final <T extends Throwable> T quiet(Throwable throwable) throws T", () -> {
             code.write("throw (T) throwable;");
         });
     }
@@ -251,6 +251,19 @@ public class CodeGenerator {
             code.write(icy.classicSetterModifier().trim(), " void set", property.capitalizeName(), "(", property.type, " value)", () -> {
                 code.write("((", property.assignableInterfaceName(), ") this).", property.name, "(value);");
             });
+
+            // Hidden super default value accessor
+            if (property.isArbitrary) {
+                code.write();
+                code.write("/**");
+                code.write(" * Provide accesser to super default value.");
+                code.write(" *");
+                code.write(" * @return A default value.");
+                code.write(" */");
+                code.write("private final ", property.type, " åccessToDefault", property.capitalizeName(), "()", () -> {
+                    code.write("return super.", property.name, "();");
+                });
+            }
         }
     }
 
@@ -387,7 +400,11 @@ public class CodeGenerator {
         code.write("default Next ", p.name, "(", p.type, " value)", () -> {
             if (!p.nullable && !p.type.isPrimitive()) {
                 code.write("if (value == null)", () -> {
-                    code.write("throw new IllegalArgumentException(`The ", p.name, " property requires non-null value.`);");
+                    if (p.isArbitrary) {
+                        code.write("value = ((", m.implType, ") this).åccessToDefault", p.capitalizeName() + "();");
+                    } else {
+                        code.write("throw new IllegalArgumentException(`The ", p.name, " property requires non-null value.`);");
+                    }
                 });
             }
 
