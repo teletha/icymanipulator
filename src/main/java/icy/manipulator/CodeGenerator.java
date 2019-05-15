@@ -15,6 +15,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 import java.util.StringJoiner;
+import java.util.function.UnaryOperator;
 
 import javax.annotation.processing.Generated;
 
@@ -189,7 +190,7 @@ public class CodeGenerator {
         for (PropertyDefinition property : m.ownProperties()) {
             code.write();
             code.write("/** The exposed property. */");
-            code.write("public ", property.mutable ? "" : "final ", property.type, " ", property.name, ";");
+            code.write("public final ", property.type, " ", property.name, ";");
         }
     }
 
@@ -227,6 +228,21 @@ public class CodeGenerator {
             code.write("public final ", property.type, " ", property.name, "()", () -> {
                 code.write("return this.", property.name, ";");
             });
+
+            // Exposed setter
+            if (property.mutable) {
+                code.write();
+                code.write("/**");
+                code.write(" * Assign the new value of ", property.name, " property.");
+                code.write(" *");
+                code.write(" * @paran value The ", property.name, " property assigner which accepts the current value and returns new value.");
+                code.write(" * @return Chainable API.");
+                code.write(" */");
+                code.write("public final ", m.implType, " ", property.name, "(", UnaryOperator.class, "<", property.type, "> value)", () -> {
+                    code.write("set", property.capitalizeName(), "(value.apply(this.", property.name, "));");
+                    code.write("return this;");
+                });
+            }
 
             // Hidden classic getter
             code.write();

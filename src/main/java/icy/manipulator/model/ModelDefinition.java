@@ -20,6 +20,7 @@ import java.util.function.DoubleConsumer;
 import java.util.function.IntConsumer;
 import java.util.function.LongConsumer;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
@@ -208,6 +209,15 @@ public class ModelDefinition {
      */
     public List<PropertyDefinition> ownProperties() {
         return Lists.merge(requiredProperties, arbitraryProperties);
+    }
+
+    /**
+     * List up all mutable proeprties on this own model.
+     * 
+     * @return
+     */
+    public List<PropertyDefinition> ownMutableProperties() {
+        return ownProperties().stream().filter(p -> p.mutable).collect(Collectors.toUnmodifiableList());
     }
 
     /**
