@@ -78,7 +78,7 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
      * @paran value A new value of id property to assign.
      */
     @SuppressWarnings("unused")
-    private void setId(long value) {
+    private final void setId(long value) {
         ((ÅssignableId) this).id(value);
     }
 

@@ -107,7 +107,7 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
      * @paran value A new value of size property to assign.
      */
     @SuppressWarnings("unused")
-    private void setSize(int value) {
+    private final void setSize(int value) {
         ((ÅssignableSize) this).size(value);
     }
 
@@ -137,7 +137,7 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
      * @paran value A new value of square property to assign.
      */
     @SuppressWarnings("unused")
-    private void setSquare(double value) {
+    private final void setSquare(double value) {
         ((ÅssignableÅrbitrary) this).square(value);
     }
 

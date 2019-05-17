@@ -78,7 +78,7 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
      * @paran value A new value of optionZip property to assign.
      */
     @SuppressWarnings("unused")
-    private void setOptionZip(String value) {
+    private final void setOptionZip(String value) {
         ((ÅssignableÅrbitrary) this).optionZip(value);
     }
 

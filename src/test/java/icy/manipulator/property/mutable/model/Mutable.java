@@ -90,7 +90,7 @@ public abstract class Mutable extends MutableModel {
      * @paran value A new value of value property to assign.
      */
     @SuppressWarnings("unused")
-    private void setValue(String value) {
+    private final void setValue(String value) {
         ((ÅssignableValue) this).value(value);
     }
 

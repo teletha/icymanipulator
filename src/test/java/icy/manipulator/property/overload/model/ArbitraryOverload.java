@@ -99,7 +99,7 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
      * @paran value A new value of size property to assign.
      */
     @SuppressWarnings("unused")
-    private void setSize(int value) {
+    private final void setSize(int value) {
         ((ÅssignableÅrbitrary) this).size(value);
     }
 

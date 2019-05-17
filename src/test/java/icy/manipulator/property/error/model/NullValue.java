@@ -92,7 +92,7 @@ public abstract class NullValue extends NullValueModel {
      * @paran value A new value of rejectNull property to assign.
      */
     @SuppressWarnings("unused")
-    private void setRejectNull(String value) {
+    private final void setRejectNull(String value) {
         ((ÅssignableRejectNull) this).rejectNull(value);
     }
 
@@ -122,7 +122,7 @@ public abstract class NullValue extends NullValueModel {
      * @paran value A new value of acceptNull property to assign.
      */
     @SuppressWarnings("unused")
-    private void setAcceptNull(String value) {
+    private final void setAcceptNull(String value) {
         ((ÅssignableAcceptNull) this).acceptNull(value);
     }
 
@@ -152,7 +152,7 @@ public abstract class NullValue extends NullValueModel {
      * @paran value A new value of defaultValue property to assign.
      */
     @SuppressWarnings("unused")
-    private void setDefaultValue(String value) {
+    private final void setDefaultValue(String value) {
         ((ÅssignableÅrbitrary) this).defaultValue(value);
     }
 

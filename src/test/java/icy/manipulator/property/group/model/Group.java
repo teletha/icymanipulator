@@ -92,7 +92,7 @@ public abstract class Group extends GroupModel {
      * @paran value A new value of x property to assign.
      */
     @SuppressWarnings("unused")
-    private void setX(int value) {
+    private final void setX(int value) {
         ((ÅssignableX) this).x(value);
     }
 
@@ -122,7 +122,7 @@ public abstract class Group extends GroupModel {
      * @paran value A new value of y property to assign.
      */
     @SuppressWarnings("unused")
-    private void setY(int value) {
+    private final void setY(int value) {
         ((ÅssignableY) this).y(value);
     }
 
@@ -152,7 +152,7 @@ public abstract class Group extends GroupModel {
      * @paran value A new value of z property to assign.
      */
     @SuppressWarnings("unused")
-    private void setZ(int value) {
+    private final void setZ(int value) {
         ((ÅssignableZ) this).z(value);
     }
 

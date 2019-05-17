@@ -99,7 +99,7 @@ public abstract class Mixed extends MixedModel {
      * @paran value A new value of name property to assign.
      */
     @SuppressWarnings("unused")
-    private void setName(String value) {
+    private final void setName(String value) {
         ((ÅssignableName) this).name(value);
     }
 
@@ -129,7 +129,7 @@ public abstract class Mixed extends MixedModel {
      * @paran value A new value of age property to assign.
      */
     @SuppressWarnings("unused")
-    private void setAge(int value) {
+    private final void setAge(int value) {
         ((ÅssignableAge) this).age(value);
     }
 
@@ -159,7 +159,7 @@ public abstract class Mixed extends MixedModel {
      * @paran value A new value of optionAddress property to assign.
      */
     @SuppressWarnings("unused")
-    private void setOptionAddress(String value) {
+    private final void setOptionAddress(String value) {
         ((ÅssignableÅrbitrary) this).optionAddress(value);
     }
 
@@ -198,7 +198,7 @@ public abstract class Mixed extends MixedModel {
      * @paran value A new value of optionCommnet property to assign.
      */
     @SuppressWarnings("unused")
-    private void setOptionCommnet(String value) {
+    private final void setOptionCommnet(String value) {
         ((ÅssignableÅrbitrary) this).optionCommnet(value);
     }
 

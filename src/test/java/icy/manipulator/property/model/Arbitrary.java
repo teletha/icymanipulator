@@ -85,7 +85,7 @@ public abstract class Arbitrary extends ArbitraryModel {
      * @paran value A new value of optionNum property to assign.
      */
     @SuppressWarnings("unused")
-    private void setOptionNum(int value) {
+    private final void setOptionNum(int value) {
         ((ÅssignableÅrbitrary) this).optionNum(value);
     }
 
@@ -124,7 +124,7 @@ public abstract class Arbitrary extends ArbitraryModel {
      * @paran value A new value of optionComment property to assign.
      */
     @SuppressWarnings("unused")
-    private void setOptionComment(String value) {
+    private final void setOptionComment(String value) {
         ((ÅssignableÅrbitrary) this).optionComment(value);
     }
 

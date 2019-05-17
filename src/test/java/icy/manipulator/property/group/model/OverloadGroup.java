@@ -106,7 +106,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
      * @paran value A new value of name property to assign.
      */
     @SuppressWarnings("unused")
-    private void setName(String value) {
+    private final void setName(String value) {
         ((ÅssignableName) this).name(value);
     }
 
@@ -136,7 +136,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
      * @paran value A new value of size property to assign.
      */
     @SuppressWarnings("unused")
-    private void setSize(int value) {
+    private final void setSize(int value) {
         ((ÅssignableSize) this).size(value);
     }
 

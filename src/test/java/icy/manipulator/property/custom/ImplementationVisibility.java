@@ -78,7 +78,7 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
      * @paran value A new value of name property to assign.
      */
     @SuppressWarnings("unused")
-    private void setName(String value) {
+    private final void setName(String value) {
         ((ÅssignableName) this).name(value);
     }
 

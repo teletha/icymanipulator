@@ -99,7 +99,7 @@ public abstract class ThrowOriginalError extends ThrowOriginalErrorModel {
      * @paran value A new value of size property to assign.
      */
     @SuppressWarnings("unused")
-    private void setSize(int value) {
+    private final void setSize(int value) {
         ((ÅssignableSize) this).size(value);
     }
 

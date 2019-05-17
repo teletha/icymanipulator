@@ -50,11 +50,18 @@ public @interface Icy {
     default "(.+)Model";
 
     /**
+     * Configure the modifier of classic style getter method.
+     * 
+     * @return "private"
+     */
+    String getterModifier() default "private final";
+
+    /**
      * Configure the modifier of classic style setter method.
      * 
      * @return "private"
      */
-    String classicSetterModifier() default "private";
+    String setterModifier() default "private final";
 
     /**
      * Configure the grouping size of first required properties.
@@ -88,6 +95,20 @@ public @interface Icy {
          * @return true
          */
         boolean overloadEnum() default true;
+
+        /**
+         * Configure the modifier of classic style setter method.
+         * 
+         * @return {@link Icy#setterModifier()}
+         */
+        String getterModifier() default "cascade";
+
+        /**
+         * Configure the modifier of classic style setter method.
+         * 
+         * @return {@link Icy#setterModifier()}
+         */
+        String setterModifier() default "cascade";
     }
 
     @Documented

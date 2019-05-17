@@ -92,7 +92,7 @@ public abstract class Multiple extends MultipleModel {
      * @paran value A new value of name property to assign.
      */
     @SuppressWarnings("unused")
-    private void setName(String value) {
+    private final void setName(String value) {
         ((ÅssignableName) this).name(value);
     }
 
@@ -122,7 +122,7 @@ public abstract class Multiple extends MultipleModel {
      * @paran value A new value of stand property to assign.
      */
     @SuppressWarnings("unused")
-    private void setStand(String value) {
+    private final void setStand(String value) {
         ((ÅssignableStand) this).stand(value);
     }
 
@@ -152,7 +152,7 @@ public abstract class Multiple extends MultipleModel {
      * @paran value A new value of age property to assign.
      */
     @SuppressWarnings("unused")
-    private void setAge(int value) {
+    private final void setAge(int value) {
         ((ÅssignableAge) this).age(value);
     }
 

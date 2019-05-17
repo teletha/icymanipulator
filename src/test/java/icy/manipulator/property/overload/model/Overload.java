@@ -117,7 +117,7 @@ public abstract class Overload extends OverloadModel {
      * @paran value A new value of size property to assign.
      */
     @SuppressWarnings("unused")
-    private void setSize(BigDecimal value) {
+    private final void setSize(BigDecimal value) {
         ((ÅssignableSize) this).size(value);
     }
 
@@ -147,7 +147,7 @@ public abstract class Overload extends OverloadModel {
      * @paran value A new value of date property to assign.
      */
     @SuppressWarnings("unused")
-    private void setDate(LocalDate value) {
+    private final void setDate(LocalDate value) {
         ((ÅssignableDate) this).date(value);
     }
 

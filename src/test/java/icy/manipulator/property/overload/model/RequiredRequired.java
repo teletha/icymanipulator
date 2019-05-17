@@ -101,7 +101,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
      * @paran value A new value of time property to assign.
      */
     @SuppressWarnings("unused")
-    private void setTime(LocalTime value) {
+    private final void setTime(LocalTime value) {
         ((ÅssignableTime) this).time(value);
     }
 

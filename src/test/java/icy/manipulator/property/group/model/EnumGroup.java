@@ -85,7 +85,7 @@ public abstract class EnumGroup extends EnumGroupModel {
      * @paran value A new value of color property to assign.
      */
     @SuppressWarnings("unused")
-    private void setColor(Color value) {
+    private final void setColor(Color value) {
         ((ÅssignableColor) this).color(value);
     }
 
@@ -115,7 +115,7 @@ public abstract class EnumGroup extends EnumGroupModel {
      * @paran value A new value of size property to assign.
      */
     @SuppressWarnings("unused")
-    private void setSize(int value) {
+    private final void setSize(int value) {
         ((ÅssignableSize) this).size(value);
     }
 

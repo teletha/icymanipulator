@@ -127,7 +127,7 @@ public abstract class Primitive extends PrimitiveModel {
      * @paran value A new value of intX property to assign.
      */
     @SuppressWarnings("unused")
-    private void setIntX(int value) {
+    private final void setIntX(int value) {
         ((ÅssignableIntX) this).intX(value);
     }
 
@@ -157,7 +157,7 @@ public abstract class Primitive extends PrimitiveModel {
      * @paran value A new value of longX property to assign.
      */
     @SuppressWarnings("unused")
-    private void setLongX(long value) {
+    private final void setLongX(long value) {
         ((ÅssignableLongX) this).longX(value);
     }
 
@@ -187,7 +187,7 @@ public abstract class Primitive extends PrimitiveModel {
      * @paran value A new value of floatX property to assign.
      */
     @SuppressWarnings("unused")
-    private void setFloatX(float value) {
+    private final void setFloatX(float value) {
         ((ÅssignableFloatX) this).floatX(value);
     }
 
@@ -217,7 +217,7 @@ public abstract class Primitive extends PrimitiveModel {
      * @paran value A new value of doubleX property to assign.
      */
     @SuppressWarnings("unused")
-    private void setDoubleX(double value) {
+    private final void setDoubleX(double value) {
         ((ÅssignableDoubleX) this).doubleX(value);
     }
 
@@ -247,7 +247,7 @@ public abstract class Primitive extends PrimitiveModel {
      * @paran value A new value of byteX property to assign.
      */
     @SuppressWarnings("unused")
-    private void setByteX(byte value) {
+    private final void setByteX(byte value) {
         ((ÅssignableByteX) this).byteX(value);
     }
 
@@ -277,7 +277,7 @@ public abstract class Primitive extends PrimitiveModel {
      * @paran value A new value of shortX property to assign.
      */
     @SuppressWarnings("unused")
-    private void setShortX(short value) {
+    private final void setShortX(short value) {
         ((ÅssignableShortX) this).shortX(value);
     }
 
@@ -307,7 +307,7 @@ public abstract class Primitive extends PrimitiveModel {
      * @paran value A new value of charX property to assign.
      */
     @SuppressWarnings("unused")
-    private void setCharX(char value) {
+    private final void setCharX(char value) {
         ((ÅssignableCharX) this).charX(value);
     }
 
@@ -337,7 +337,7 @@ public abstract class Primitive extends PrimitiveModel {
      * @paran value A new value of booleanX property to assign.
      */
     @SuppressWarnings("unused")
-    private void setBooleanX(boolean value) {
+    private final void setBooleanX(boolean value) {
         ((ÅssignableBooleanX) this).booleanX(value);
     }
 

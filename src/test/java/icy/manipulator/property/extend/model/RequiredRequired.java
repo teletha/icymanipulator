@@ -78,7 +78,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
      * @paran value A new value of nickname property to assign.
      */
     @SuppressWarnings("unused")
-    private void setNickname(String value) {
+    private final void setNickname(String value) {
         ((ÅssignableNickname) this).nickname(value);
     }
 

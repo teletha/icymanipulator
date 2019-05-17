@@ -78,7 +78,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
      * @paran value A new value of answer property to assign.
      */
     @SuppressWarnings("unused")
-    private void setAnswer(Answer value) {
+    private final void setAnswer(Answer value) {
         ((ÅssignableAnswer) this).answer(value);
     }
 

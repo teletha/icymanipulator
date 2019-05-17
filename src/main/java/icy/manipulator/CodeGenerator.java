@@ -21,6 +21,7 @@ import javax.annotation.processing.Generated;
 
 import icy.manipulator.model.MethodDefinition;
 import icy.manipulator.model.ModelDefinition;
+import icy.manipulator.model.Modifier;
 import icy.manipulator.model.PropertyDefinition;
 import icy.manipulator.model.Synthesizer;
 import icy.manipulator.util.Lists;
@@ -244,6 +245,8 @@ public class CodeGenerator {
                 });
             }
 
+            Modifier modifier = new Modifier(property, icy);
+
             // Hidden classic getter
             code.write();
             code.write("/**");
@@ -251,8 +254,8 @@ public class CodeGenerator {
             code.write(" *");
             code.write(" * @return A value of ", property.name, " property.");
             code.write(" */");
-            code.write("@SuppressWarnings(`unused`)");
-            code.write("private final ", property.type, " get", property.capitalizeName(), "()", () -> {
+            if (modifier.isPrivateGetter()) code.write("@SuppressWarnings(`unused`)");
+            code.write(modifier.getter, property.type, " get", property.capitalizeName(), "()", () -> {
                 code.write("return this.", property.name, ";");
             });
 
@@ -263,8 +266,8 @@ public class CodeGenerator {
             code.write(" *");
             code.write(" * @paran value A new value of ", property.name, " property to assign.");
             code.write(" */");
-            code.write("@SuppressWarnings(`unused`)");
-            code.write(icy.classicSetterModifier().trim(), " void set", property.capitalizeName(), "(", property.type, " value)", () -> {
+            if (modifier.isPrivateSetter()) code.write("@SuppressWarnings(`unused`)");
+            code.write(modifier.setter, "void set", property.capitalizeName(), "(", property.type, " value)", () -> {
                 code.write("((", property.assignableInterfaceName(), ") this).", property.name, "(value);");
             });
 
