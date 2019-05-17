@@ -9,12 +9,12 @@
  */
 package icy.manipulator.model;
 
-import java.util.Optional;
-
+import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 
 import icy.manipulator.CodeGenerator;
+import icy.manipulator.Fail;
 import icy.manipulator.Icy;
 import icy.manipulator.Icy.Property;
 import icy.manipulator.Type;
@@ -50,6 +50,12 @@ public class PropertyDefinition {
     /** The proeprty type. */
     public final boolean autoExpandable;
 
+    /** The classic getter modifier. */
+    public final String getterModifier;
+
+    /** The classic setter modifier. */
+    public final String setterModifier;
+
     /**
      * @param method
      */
@@ -59,19 +65,55 @@ public class PropertyDefinition {
         this.type = Type.of(method.getReturnType());
         this.isArbitrary = !method.getModifiers().contains(Modifier.ABSTRACT);
 
-        Optional<Icy.Property> info = Optional.ofNullable(method.getAnnotation(Icy.Property.class));
-        this.nullable = info.map(Property::nullable).orElse(false);
-        this.mutable = info.map(Property::mutable).orElse(false);
-        this.autoExpandable = info.map(Property::overloadEnum).filter(p -> TypeUtil.isEnum(method.getReturnType())).orElse(true);
+        Property annotation = method.getAnnotation(Icy.Property.class);
+
+        if (annotation == null) {
+            this.nullable = false;
+            this.mutable = false;
+            this.autoExpandable = true;
+            this.getterModifier = "";
+            this.setterModifier = "";
+        } else {
+            this.nullable = annotation.nullable();
+            this.mutable = annotation.mutable();
+            this.autoExpandable = TypeUtil.isEnum(method.getReturnType()) ? annotation.overloadEnum() : true;
+
+            Icy icy = method.getEnclosingElement().getAnnotation(Icy.class);
+            this.getterModifier = validate(method, annotation.getterModifier(), icy.getterModifier());
+            this.setterModifier = validate(method, annotation.setterModifier(), icy.setterModifier());
+        }
     }
 
     /**
-     * Compute visibilitt of setter method.
+     * Validate accessor modifier.
      * 
-     * @return A visibility.
+     * @param e
+     * @param modifiers
+     * @param parent
+     * @return
      */
-    public String setterVisibility() {
-        return isDerived ? "protected" : "public";
+    private String validate(Element e, String modifiers, String parent) {
+        modifiers = modifiers.trim();
+
+        if (modifiers.equals("cascade")) {
+            modifiers = parent.trim();
+            e = e.getEnclosingElement();
+        }
+
+        for (String modifier : modifiers.split("\\s+")) {
+            switch (modifier) {
+            case "public":
+            case "protected":
+            case "private":
+            case "synchronized":
+            case "final":
+                break;
+
+            default:
+                throw new Fail(e, "Modifier [" + modifier + "] is not accepted on accessor method.");
+            }
+        }
+        return modifiers.isEmpty() ? "" : modifiers.concat(" ");
     }
 
     /**
@@ -94,6 +136,24 @@ public class PropertyDefinition {
      */
     public String capitalizeName() {
         return Character.toUpperCase(name.charAt(0)) + name.substring(1);
+    }
+
+    /**
+     * Detect getter modifier.
+     * 
+     * @return
+     */
+    public boolean isPrivateGetter() {
+        return getterModifier.contains("private");
+    }
+
+    /**
+     * Detect setter modifier.
+     * 
+     * @return
+     */
+    public boolean isPrivateSetter() {
+        return setterModifier.contains("private");
     }
 
     /**
