@@ -26,18 +26,14 @@ public @interface Icy {
      * 
      * @return false means public (default), true means package-private.
      */
-    boolean packagePrivate()
-
-    default false;
+    boolean packagePrivate() default false;
 
     /**
      * Configure the name of model builder. (default is "with").
      * 
      * @return
      */
-    String builder()
-
-    default "with";
+    String builder() default "with";
 
     /**
      * Configure the regular expression for model class naming. The first back reference ($1) will
@@ -45,9 +41,7 @@ public @interface Icy {
      * 
      * @return A default pattern is "(.+)Model".
      */
-    String modelNamePattern()
-
-    default "(.+)Model";
+    String modelNamePattern() default "(.+)Model";
 
     /**
      * Configure the modifier of classic style getter method.
