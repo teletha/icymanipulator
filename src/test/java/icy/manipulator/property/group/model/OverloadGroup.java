@@ -25,11 +25,11 @@ public abstract class OverloadGroup extends OverloadGroupModel {
     }
 
     /**
-     * Create special method invoker.
+     * Create private method invoker.
      *
      * @param name A target method name.
      * @param parameterTypes A list of method parameter types.
-     * @return A special method invoker.
+     * @return A private method invoker.
      */
     private static final MethodHandle invoker(String name, Class... parameterTypes)  {
         try {

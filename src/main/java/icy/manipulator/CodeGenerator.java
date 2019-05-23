@@ -11,6 +11,7 @@ package icy.manipulator;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
@@ -78,6 +79,10 @@ public class CodeGenerator {
                 defineMethodInvokerBuilder();
                 defineMethodInvoker();
             }
+            if (m.hasMutable()) {
+                defineSuperCallBuilder();
+                defineSuperCall();
+            }
             defineFiledUpdaterBuilder();
             defineFieldUpdater();
             defineField();
@@ -112,16 +117,16 @@ public class CodeGenerator {
     }
 
     /**
-     * Define query method for property updater.
+     * Define query method for private method invoker.
      */
     private void defineMethodInvokerBuilder() {
         code.write();
         code.write("/**");
-        code.write(" * Create special method invoker.");
+        code.write(" * Create private method invoker.");
         code.write(" *");
         code.write(" * @param name A target method name.");
         code.write(" * @param parameterTypes A list of method parameter types.");
-        code.write(" * @return A special method invoker.");
+        code.write(" * @return A private method invoker.");
         code.write(" */");
         code.write("private static final ", MethodHandle.class, " invoker(String name, Class... parameterTypes) ", () -> {
             code.writeTry(() -> {
@@ -146,6 +151,44 @@ public class CodeGenerator {
                 code.write();
                 code.write("/** The overload or intercept method invoker. */");
                 code.write("private static final ", MethodHandle.class, " ", method.id(), "= invoker(`", method.name, "`", types, ");");
+            }
+        }
+    }
+
+    /**
+     * Define query method for super method invoker.
+     */
+    private void defineSuperCallBuilder() {
+        code.write();
+        code.write("/**");
+        code.write(" * Create super method invoker.");
+        code.write(" *");
+        code.write(" * @param type A target super class.");
+        code.write(" * @param name A target method name.");
+        code.write(" * @param params A target method parameter types.");
+        code.write(" * @return A super method invoker.");
+        code.write(" */");
+        code.write("private static final ", MethodHandle.class, " śuper(Class type, String name, Class... params) ", () -> {
+            code.writeTry(() -> {
+                code.write("return ", MethodHandles.class, ".lookup().findSpecial(type, name, ", MethodType.class, ".methodType(Object.class, params), type);");
+            }, Throwable.class, e -> {
+                code.write("throw quiet(", e, ");");
+            });
+        });
+    }
+
+    /**
+     * Define property updater.
+     */
+    private void defineSuperCall() {
+        for (PropertyDefinition property : m.ownProperties()) {
+            if (property.mutable) {
+                String type = property.assignableInterfaceName() + ".class";
+                String params = property.type + ".class";
+
+                code.write();
+                code.write("/** The default method accessor for mutable property. */");
+                code.write("private static final ", MethodHandle.class, " ", property.name, "SuperCall = śuper(", type, ", `", property.name, "`, ", params, ");");
             }
         }
     }
@@ -235,12 +278,27 @@ public class CodeGenerator {
                 code.write("/**");
                 code.write(" * Assign the new value of ", property.name, " property.");
                 code.write(" *");
+                code.write(" * @paran value The new ", property.name, " property value to assign.");
+                code.write(" * @return Chainable API.");
+                code.write(" */");
+                code.write("public final ", m.implType, " ", property.name, "(", property.type, " value)", () -> {
+                    code.writeTry(() -> {
+                        code.write(property.name, "SuperCall.invoke(this, value);");
+                    }, Throwable.class, e -> {
+                        code.write("throw quiet(", e, ");");
+                    });
+                    code.write("return this;");
+                });
+
+                code.write();
+                code.write("/**");
+                code.write(" * Assign the new value of ", property.name, " property.");
+                code.write(" *");
                 code.write(" * @paran value The ", property.name, " property assigner which accepts the current value and returns new value.");
                 code.write(" * @return Chainable API.");
                 code.write(" */");
                 code.write("public final ", m.implType, " ", property.name, "(", UnaryOperator.class, "<", property.type, "> value)", () -> {
-                    code.write("set", property.capitalizeName(), "(value.apply(this.", property.name, "));");
-                    code.write("return this;");
+                    code.write("return ", property.name, "(value.apply(this.", property.name, "));");
                 });
             }
 

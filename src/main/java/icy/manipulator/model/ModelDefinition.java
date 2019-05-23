@@ -327,6 +327,15 @@ public class ModelDefinition {
     }
 
     /**
+     * Check whether this model has any mutable property on self.
+     * 
+     * @return
+     */
+    public boolean hasMutable() {
+        return ownProperties().stream().anyMatch(p -> p.mutable);
+    }
+
+    /**
      * Compute API route variable for required properties.
      * 
      * @param destination

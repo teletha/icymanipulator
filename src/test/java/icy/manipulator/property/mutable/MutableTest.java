@@ -27,7 +27,10 @@ class MutableTest {
         Mutable o = Mutable.with.value("value");
         assert o.value.equals("value");
 
+        o.value("set");
+        assert o.value.equals("set");
+
         o.value(now -> now + " updated");
-        assert o.value.equals("value updated");
+        assert o.value.equals("set updated");
     }
 }
