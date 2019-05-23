@@ -27,11 +27,11 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     }
 
     /**
-     * Create private method invoker.
+     * Create special method invoker.
      *
      * @param name A target method name.
      * @param parameterTypes A list of method parameter types.
-     * @return A private method invoker.
+     * @return A special method invoker.
      */
     private static final MethodHandle invoker(String name, Class... parameterTypes)  {
         try {

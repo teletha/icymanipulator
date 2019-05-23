@@ -2,7 +2,6 @@ package icy.manipulator.property.mutable.model;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodType;
 import java.lang.reflect.Field;
 import java.util.function.UnaryOperator;
 import javax.annotation.processing.Generated;
@@ -24,25 +23,6 @@ public abstract class Mutable extends MutableModel {
     private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
         throw (T) throwable;
     }
-
-    /**
-     * Create super method invoker.
-     *
-     * @param type A target super class.
-     * @param name A target method name.
-     * @param params A target method parameter types.
-     * @return A super method invoker.
-     */
-    private static final MethodHandle śuper(Class type, String name, Class... params)  {
-        try {
-            return MethodHandles.lookup().findSpecial(type, name, MethodType.methodType(Object.class, params), type);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The default method accessor for mutable property. */
-    private static final MethodHandle valueSuperCall = śuper(ÅssignableValue.class, "value", java.lang.String.class);
 
     /**
      * Create special property updater.
@@ -86,26 +66,12 @@ public abstract class Mutable extends MutableModel {
     /**
      * Assign the new value of value property.
      *
-     * @paran value The new value property value to assign.
-     * @return Chainable API.
-     */
-    public final Mutable value(String value) {
-        try {
-            valueSuperCall.invoke(this, value);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-        return this;
-    }
-
-    /**
-     * Assign the new value of value property.
-     *
      * @paran value The value property assigner which accepts the current value and returns new value.
      * @return Chainable API.
      */
     public final Mutable value(UnaryOperator<String> value) {
-        return value(value.apply(this.value));
+        setValue(value.apply(this.value));
+        return this;
     }
 
     /**
