@@ -106,9 +106,12 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
      *
      * @paran value A new value of size property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setSize(int value) {
-        ((ÅssignableSize) this).size(value);
+        try {
+            sizeUpdater.invoke(this, deriveBySize$1357412609.invoke(this, value, (DoubleConsumer) ((Åssignable) this)::square));
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -136,9 +139,12 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
      *
      * @paran value A new value of square property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setSquare(double value) {
-        ((ÅssignableÅrbitrary) this).square(value);
+        try {
+            squareUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -182,11 +188,7 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
          * @return The next assignable model.
          */
         default Next size(int value) {
-            try {
-                sizeUpdater.invoke(this, deriveBySize$1357412609.invoke(this, value, (DoubleConsumer) ((Åssignable) this)::square));
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((ReferenceDoubleSetter) this).setSize(value);
             return (Next) this;
         }
     }
@@ -203,11 +205,7 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
          * @return The next assignable model.
          */
         default Next square(double value) {
-            try {
-                squareUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((ReferenceDoubleSetter) this).setSquare(value);
             return (Next) this;
         }
     }

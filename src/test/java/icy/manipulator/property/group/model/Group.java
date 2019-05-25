@@ -91,9 +91,12 @@ public abstract class Group extends GroupModel {
      *
      * @paran value A new value of x property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setX(int value) {
-        ((ÅssignableX) this).x(value);
+        try {
+            xUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -121,9 +124,12 @@ public abstract class Group extends GroupModel {
      *
      * @paran value A new value of y property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setY(int value) {
-        ((ÅssignableY) this).y(value);
+        try {
+            yUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -151,9 +157,12 @@ public abstract class Group extends GroupModel {
      *
      * @paran value A new value of z property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setZ(int value) {
-        ((ÅssignableZ) this).z(value);
+        try {
+            zUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /** The singleton builder. */
@@ -189,11 +198,7 @@ public abstract class Group extends GroupModel {
          * @return The next assignable model.
          */
         default Next x(int value) {
-            try {
-                xUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Group) this).setX(value);
             return (Next) this;
         }
     }
@@ -210,11 +215,7 @@ public abstract class Group extends GroupModel {
          * @return The next assignable model.
          */
         default Next y(int value) {
-            try {
-                yUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Group) this).setY(value);
             return (Next) this;
         }
     }
@@ -231,11 +232,7 @@ public abstract class Group extends GroupModel {
          * @return The next assignable model.
          */
         default Next z(int value) {
-            try {
-                zUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Group) this).setZ(value);
             return (Next) this;
         }
     }

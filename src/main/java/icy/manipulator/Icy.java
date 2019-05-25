@@ -14,6 +14,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.function.Function;
 
 @Documented
 @Target(ElementType.TYPE)
@@ -26,14 +27,18 @@ public @interface Icy {
      * 
      * @return false means public (default), true means package-private.
      */
-    boolean packagePrivate() default false;
+    boolean packagePrivate()
+
+    default false;
 
     /**
      * Configure the name of model builder. (default is "with").
      * 
      * @return
      */
-    String builder() default "with";
+    String builder()
+
+    default "with";
 
     /**
      * Configure the regular expression for model class naming. The first back reference ($1) will
@@ -41,28 +46,36 @@ public @interface Icy {
      * 
      * @return A default pattern is "(.+)Model".
      */
-    String modelNamePattern() default "(.+)Model";
+    String modelNamePattern()
+
+    default "(.+)Model";
 
     /**
      * Configure the modifier of classic style getter method.
      * 
      * @return "private"
      */
-    String getterModifier() default "private final";
+    String getterModifier()
+
+    default "private final";
 
     /**
      * Configure the modifier of classic style setter method.
      * 
      * @return "private"
      */
-    String setterModifier() default "private final";
+    String setterModifier()
+
+    default "private final";
 
     /**
      * Configure the grouping size of first required properties.
      * 
      * @return
      */
-    int grouping() default 1;
+    int grouping()
+
+    default 1;
 
     @Documented
     @Target(ElementType.METHOD)
@@ -103,6 +116,13 @@ public @interface Icy {
          * @return {@link Icy#setterModifier()}
          */
         String setterModifier() default "cascade";
+
+        /**
+         * Customize property.
+         * 
+         * @return
+         */
+        Class<? extends Function> custom() default Function.class;
     }
 
     @Documented

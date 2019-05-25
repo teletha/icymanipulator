@@ -89,9 +89,15 @@ public abstract class Mutable extends MutableModel {
      *
      * @paran value A new value of value property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setValue(String value) {
-        ((ÅssignableValue) this).value(value);
+        if (value == null) {
+            throw new IllegalArgumentException("The value property requires non-null value.");
+        }
+        try {
+            valueUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /** The singleton builder. */
@@ -126,14 +132,7 @@ public abstract class Mutable extends MutableModel {
          * @return The next assignable model.
          */
         default Next value(String value) {
-            if (value == null) {
-                throw new IllegalArgumentException("The value property requires non-null value.");
-            }
-            try {
-                valueUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Mutable) this).setValue(value);
             return (Next) this;
         }
     }

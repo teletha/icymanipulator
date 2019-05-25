@@ -77,9 +77,15 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
      *
      * @paran value A new value of answer property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setAnswer(Answer value) {
-        ((ÅssignableAnswer) this).answer(value);
+        if (value == null) {
+            throw new IllegalArgumentException("The answer property requires non-null value.");
+        }
+        try {
+            answerUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /** The singleton builder. */
@@ -128,14 +134,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
          * @return The next assignable model.
          */
         default Next answer(Answer value) {
-            if (value == null) {
-                throw new IllegalArgumentException("The answer property requires non-null value.");
-            }
-            try {
-                answerUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((AutoExpandEnum) this).setAnswer(value);
             return (Next) this;
         }
 

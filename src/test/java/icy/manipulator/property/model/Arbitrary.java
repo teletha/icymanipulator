@@ -84,9 +84,12 @@ public abstract class Arbitrary extends ArbitraryModel {
      *
      * @paran value A new value of optionNum property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setOptionNum(int value) {
-        ((ÅssignableÅrbitrary) this).optionNum(value);
+        try {
+            optionNumUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -123,9 +126,15 @@ public abstract class Arbitrary extends ArbitraryModel {
      *
      * @paran value A new value of optionComment property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setOptionComment(String value) {
-        ((ÅssignableÅrbitrary) this).optionComment(value);
+        if (value == null) {
+            value = ((Arbitrary) this).åccessToDefaultOptionComment();
+        }
+        try {
+            optionCommentUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -165,11 +174,7 @@ public abstract class Arbitrary extends ArbitraryModel {
          * @return The next assignable model.
          */
         default Next optionNum(int value) {
-            try {
-                optionNumUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Arbitrary) this).setOptionNum(value);
             return (Next) this;
         }
 
@@ -180,14 +185,7 @@ public abstract class Arbitrary extends ArbitraryModel {
          * @return The next assignable model.
          */
         default Next optionComment(String value) {
-            if (value == null) {
-                value = ((Arbitrary) this).åccessToDefaultOptionComment();
-            }
-            try {
-                optionCommentUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Arbitrary) this).setOptionComment(value);
             return (Next) this;
         }
     }

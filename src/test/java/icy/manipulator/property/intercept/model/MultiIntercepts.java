@@ -109,9 +109,12 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
      *
      * @paran value A new value of size property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setSize(int value) {
-        ((ÅssignableSize) this).size(value);
+        try {
+            sizeUpdater.invoke(this, stringlize$423008767.invoke(this, checkLower$101282980.invoke(this, value), (Consumer<String>) ((Åssignable) this)::value));
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -139,9 +142,15 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
      *
      * @paran value A new value of value property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setValue(String value) {
-        ((ÅssignableÅrbitrary) this).value(value);
+        if (value == null) {
+            value = ((MultiIntercepts) this).åccessToDefaultValue();
+        }
+        try {
+            valueUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -185,11 +194,7 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
          * @return The next assignable model.
          */
         default Next size(int value) {
-            try {
-                sizeUpdater.invoke(this, stringlize$423008767.invoke(this, checkLower$101282980.invoke(this, value), (Consumer<String>) ((Åssignable) this)::value));
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((MultiIntercepts) this).setSize(value);
             return (Next) this;
         }
     }
@@ -206,14 +211,7 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
          * @return The next assignable model.
          */
         default Next value(String value) {
-            if (value == null) {
-                value = ((MultiIntercepts) this).åccessToDefaultValue();
-            }
-            try {
-                valueUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((MultiIntercepts) this).setValue(value);
             return (Next) this;
         }
     }

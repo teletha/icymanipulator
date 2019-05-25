@@ -91,9 +91,15 @@ public abstract class NullValue extends NullValueModel {
      *
      * @paran value A new value of rejectNull property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setRejectNull(String value) {
-        ((ÅssignableRejectNull) this).rejectNull(value);
+        if (value == null) {
+            throw new IllegalArgumentException("The rejectNull property requires non-null value.");
+        }
+        try {
+            rejectNullUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -121,9 +127,12 @@ public abstract class NullValue extends NullValueModel {
      *
      * @paran value A new value of acceptNull property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setAcceptNull(String value) {
-        ((ÅssignableAcceptNull) this).acceptNull(value);
+        try {
+            acceptNullUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -151,9 +160,15 @@ public abstract class NullValue extends NullValueModel {
      *
      * @paran value A new value of defaultValue property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setDefaultValue(String value) {
-        ((ÅssignableÅrbitrary) this).defaultValue(value);
+        if (value == null) {
+            value = ((NullValue) this).åccessToDefaultDefaultValue();
+        }
+        try {
+            defaultValueUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -197,14 +212,7 @@ public abstract class NullValue extends NullValueModel {
          * @return The next assignable model.
          */
         default Next rejectNull(String value) {
-            if (value == null) {
-                throw new IllegalArgumentException("The rejectNull property requires non-null value.");
-            }
-            try {
-                rejectNullUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((NullValue) this).setRejectNull(value);
             return (Next) this;
         }
     }
@@ -221,11 +229,7 @@ public abstract class NullValue extends NullValueModel {
          * @return The next assignable model.
          */
         default Next acceptNull(String value) {
-            try {
-                acceptNullUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((NullValue) this).setAcceptNull(value);
             return (Next) this;
         }
     }
@@ -242,14 +246,7 @@ public abstract class NullValue extends NullValueModel {
          * @return The next assignable model.
          */
         default Next defaultValue(String value) {
-            if (value == null) {
-                value = ((NullValue) this).åccessToDefaultDefaultValue();
-            }
-            try {
-                defaultValueUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((NullValue) this).setDefaultValue(value);
             return (Next) this;
         }
     }

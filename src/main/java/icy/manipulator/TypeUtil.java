@@ -9,11 +9,16 @@
  */
 package icy.manipulator;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.function.Predicate;
 
+import javax.lang.model.element.AnnotationMirror;
+import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
@@ -240,5 +245,25 @@ public class TypeUtil {
      */
     private static Element e(TypeMirror mirror) {
         return types.asElement(mirror);
+    }
+
+    /**
+     * @param method
+     * @param class1
+     * @param string
+     * @return
+     */
+    public static Optional<TypeElement> annotaionClassValue(Element e, Class<? extends Annotation> annotationType, String key) {
+        for (AnnotationMirror annotation : elements.getAllAnnotationMirrors(e)) {
+            if (types.isSameType(annotation.getAnnotationType(), elements.getTypeElement(annotationType.getCanonicalName()).asType())) {
+                for (Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : annotation.getElementValues().entrySet()) {
+                    if (entry.getKey().getSimpleName().contentEquals(key)) {
+                        String name = entry.getValue().toString().replaceAll("\\.class", "");
+                        return Optional.ofNullable(elements.getTypeElement(name));
+                    }
+                }
+            }
+        }
+        return Optional.empty();
     }
 }

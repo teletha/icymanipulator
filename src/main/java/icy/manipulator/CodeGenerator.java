@@ -191,6 +191,13 @@ public class CodeGenerator {
             code.write();
             code.write("/** The exposed property. */");
             code.write("public final ", property.type, " ", property.name, ";");
+
+            if (property.customizer != null) {
+                code.write();
+                code.write("/** The property customizer. */");
+                code.write("private final ", property.customizer.type(), " ", property.name, "Customizer = new ", property.customizer
+                        .type(), "();");
+            }
         }
     }
 
@@ -263,9 +270,31 @@ public class CodeGenerator {
             code.write(" *");
             code.write(" * @paran value A new value of ", property.name, " property to assign.");
             code.write(" */");
-            if (property.isPrivateSetter()) code.write("@SuppressWarnings(`unused`)");
             code.write(property.setterModifier, "void set", property.capitalizeName(), "(", property.type, " value)", () -> {
-                code.write("((", property.assignableInterfaceName(), ") this).", property.name, "(value);");
+                if (!property.nullable && !property.type.isPrimitive()) {
+                    code.write("if (value == null)", () -> {
+                        if (property.isArbitrary) {
+                            code.write("value = ((", m.implType, ") this).åccessToDefault", property.capitalizeName() + "();");
+                        } else {
+                            code.write("throw new IllegalArgumentException(`The ", property.name, " property requires non-null value.`);");
+                        }
+                    });
+                }
+
+                code.writeTry(() -> {
+                    String value = "value";
+                    for (MethodDefinition inter : m.findInterceptsFor(property)) {
+                        value = inter.id() + ".invoke(this, " + value;
+                        for (int i = 1; i < inter.paramTypes.size(); i++) {
+                            String name = m.findPropertyByName(inter.paramNames.get(i)).name;
+                            value += ", (" + code.use(inter.paramTypes.get(i)) + ") ((" + Assignable + ") this)::" + name;
+                        }
+                        value += ")";
+                    }
+                    code.write(property.name, "Updater.invoke(this, ", value, ");");
+                }, Throwable.class, e -> {
+                    code.write("throw quiet(", e, ");");
+                });
             });
 
             // Hidden super default value accessor
@@ -414,30 +443,7 @@ public class CodeGenerator {
         code.write(" * @return The next assignable model.");
         code.write(" */");
         code.write("default Next ", p.name, "(", p.type, " value)", () -> {
-            if (!p.nullable && !p.type.isPrimitive()) {
-                code.write("if (value == null)", () -> {
-                    if (p.isArbitrary) {
-                        code.write("value = ((", m.implType, ") this).åccessToDefault", p.capitalizeName() + "();");
-                    } else {
-                        code.write("throw new IllegalArgumentException(`The ", p.name, " property requires non-null value.`);");
-                    }
-                });
-            }
-
-            code.writeTry(() -> {
-                String value = "value";
-                for (MethodDefinition inter : m.findInterceptsFor(p)) {
-                    value = inter.id() + ".invoke(this, " + value;
-                    for (int i = 1; i < inter.paramTypes.size(); i++) {
-                        String name = m.findPropertyByName(inter.paramNames.get(i)).name;
-                        value += ", (" + code.use(inter.paramTypes.get(i)) + ") ((" + Assignable + ") this)::" + name;
-                    }
-                    value += ")";
-                }
-                code.write(p.name, "Updater.invoke(this, ", value, ");");
-            }, Throwable.class, e -> {
-                code.write("throw quiet(", e, ");");
-            });
+            code.write("((", m.implType, ") this).set", p.capitalizeName(), "(value);");
             code.write("return (Next) this;");
         });
 

@@ -77,9 +77,15 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
      *
      * @paran value A new value of optionZip property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setOptionZip(String value) {
-        ((ÅssignableÅrbitrary) this).optionZip(value);
+        if (value == null) {
+            value = ((MixedArbitrary) this).åccessToDefaultOptionZip();
+        }
+        try {
+            optionZipUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -123,14 +129,7 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
          * @return The next assignable model.
          */
         default Next optionZip(String value) {
-            if (value == null) {
-                value = ((MixedArbitrary) this).åccessToDefaultOptionZip();
-            }
-            try {
-                optionZipUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((MixedArbitrary) this).setOptionZip(value);
             return (Next) this;
         }
     }

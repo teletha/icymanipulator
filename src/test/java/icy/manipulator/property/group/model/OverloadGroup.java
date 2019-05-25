@@ -105,9 +105,15 @@ public abstract class OverloadGroup extends OverloadGroupModel {
      *
      * @paran value A new value of name property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setName(String value) {
-        ((ÅssignableName) this).name(value);
+        if (value == null) {
+            throw new IllegalArgumentException("The name property requires non-null value.");
+        }
+        try {
+            nameUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -135,9 +141,12 @@ public abstract class OverloadGroup extends OverloadGroupModel {
      *
      * @paran value A new value of size property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setSize(int value) {
-        ((ÅssignableSize) this).size(value);
+        try {
+            sizeUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /** The singleton builder. */
@@ -185,14 +194,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
          * @return The next assignable model.
          */
         default Next name(String value) {
-            if (value == null) {
-                throw new IllegalArgumentException("The name property requires non-null value.");
-            }
-            try {
-                nameUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((OverloadGroup) this).setName(value);
             return (Next) this;
         }
     }
@@ -209,11 +211,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
          * @return The next assignable model.
          */
         default Next size(int value) {
-            try {
-                sizeUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((OverloadGroup) this).setSize(value);
             return (Next) this;
         }
 

@@ -56,6 +56,9 @@ public class PropertyDefinition {
     /** The classic setter modifier. */
     public final String setterModifier;
 
+    /** The customizer definition. */
+    public final CustomizerDefinition customizer;
+
     /**
      * @param method
      */
@@ -73,6 +76,7 @@ public class PropertyDefinition {
             this.autoExpandable = true;
             this.getterModifier = "";
             this.setterModifier = "";
+            this.customizer = null;
         } else {
             this.nullable = annotation.nullable();
             this.mutable = annotation.mutable();
@@ -81,6 +85,9 @@ public class PropertyDefinition {
             Icy icy = method.getEnclosingElement().getAnnotation(Icy.class);
             this.getterModifier = validate(method, annotation.getterModifier(), icy.getterModifier());
             this.setterModifier = validate(method, annotation.setterModifier(), icy.setterModifier());
+            this.customizer = TypeUtil.annotaionClassValue(method, Icy.Property.class, "custom")
+                    .map(e -> new CustomizerDefinition(e, this))
+                    .orElse(null);
         }
     }
 

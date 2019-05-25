@@ -116,9 +116,15 @@ public abstract class Overload extends OverloadModel {
      *
      * @paran value A new value of size property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setSize(BigDecimal value) {
-        ((ÅssignableSize) this).size(value);
+        if (value == null) {
+            throw new IllegalArgumentException("The size property requires non-null value.");
+        }
+        try {
+            sizeUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -146,9 +152,15 @@ public abstract class Overload extends OverloadModel {
      *
      * @paran value A new value of date property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setDate(LocalDate value) {
-        ((ÅssignableDate) this).date(value);
+        if (value == null) {
+            throw new IllegalArgumentException("The date property requires non-null value.");
+        }
+        try {
+            dateUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /** The singleton builder. */
@@ -205,14 +217,7 @@ public abstract class Overload extends OverloadModel {
          * @return The next assignable model.
          */
         default Next size(BigDecimal value) {
-            if (value == null) {
-                throw new IllegalArgumentException("The size property requires non-null value.");
-            }
-            try {
-                sizeUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Overload) this).setSize(value);
             return (Next) this;
         }
 
@@ -255,14 +260,7 @@ public abstract class Overload extends OverloadModel {
          * @return The next assignable model.
          */
         default Next date(LocalDate value) {
-            if (value == null) {
-                throw new IllegalArgumentException("The date property requires non-null value.");
-            }
-            try {
-                dateUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Overload) this).setDate(value);
             return (Next) this;
         }
 

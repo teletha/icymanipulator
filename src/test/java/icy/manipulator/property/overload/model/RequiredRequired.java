@@ -100,9 +100,15 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
      *
      * @paran value A new value of time property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setTime(LocalTime value) {
-        ((ÅssignableTime) this).time(value);
+        if (value == null) {
+            throw new IllegalArgumentException("The time property requires non-null value.");
+        }
+        try {
+            timeUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /** The singleton builder. */
@@ -159,14 +165,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
          * @return The next assignable model.
          */
         default Next time(LocalTime value) {
-            if (value == null) {
-                throw new IllegalArgumentException("The time property requires non-null value.");
-            }
-            try {
-                timeUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((RequiredRequired) this).setTime(value);
             return (Next) this;
         }
 

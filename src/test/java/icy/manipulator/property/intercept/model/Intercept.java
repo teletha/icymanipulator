@@ -98,9 +98,12 @@ public abstract class Intercept extends InterceptModel {
      *
      * @paran value A new value of size property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setSize(int value) {
-        ((ÅssignableSize) this).size(value);
+        try {
+            sizeUpdater.invoke(this, normalizeSize$101282980.invoke(this, value));
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /** The singleton builder. */
@@ -135,11 +138,7 @@ public abstract class Intercept extends InterceptModel {
          * @return The next assignable model.
          */
         default Next size(int value) {
-            try {
-                sizeUpdater.invoke(this, normalizeSize$101282980.invoke(this, value));
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Intercept) this).setSize(value);
             return (Next) this;
         }
     }

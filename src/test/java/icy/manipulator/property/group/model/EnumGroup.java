@@ -84,9 +84,15 @@ public abstract class EnumGroup extends EnumGroupModel {
      *
      * @paran value A new value of color property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setColor(Color value) {
-        ((ÅssignableColor) this).color(value);
+        if (value == null) {
+            throw new IllegalArgumentException("The color property requires non-null value.");
+        }
+        try {
+            colorUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -114,9 +120,12 @@ public abstract class EnumGroup extends EnumGroupModel {
      *
      * @paran value A new value of size property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setSize(int value) {
-        ((ÅssignableSize) this).size(value);
+        try {
+            sizeUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /** The singleton builder. */
@@ -176,14 +185,7 @@ public abstract class EnumGroup extends EnumGroupModel {
          * @return The next assignable model.
          */
         default Next color(Color value) {
-            if (value == null) {
-                throw new IllegalArgumentException("The color property requires non-null value.");
-            }
-            try {
-                colorUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((EnumGroup) this).setColor(value);
             return (Next) this;
         }
 
@@ -227,11 +229,7 @@ public abstract class EnumGroup extends EnumGroupModel {
          * @return The next assignable model.
          */
         default Next size(int value) {
-            try {
-                sizeUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((EnumGroup) this).setSize(value);
             return (Next) this;
         }
     }

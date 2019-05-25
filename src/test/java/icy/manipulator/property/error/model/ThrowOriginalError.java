@@ -98,9 +98,12 @@ public abstract class ThrowOriginalError extends ThrowOriginalErrorModel {
      *
      * @paran value A new value of size property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setSize(int value) {
-        ((ÅssignableSize) this).size(value);
+        try {
+            sizeUpdater.invoke(this, validateSize$101282980.invoke(this, value));
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /** The singleton builder. */
@@ -135,11 +138,7 @@ public abstract class ThrowOriginalError extends ThrowOriginalErrorModel {
          * @return The next assignable model.
          */
         default Next size(int value) {
-            try {
-                sizeUpdater.invoke(this, validateSize$101282980.invoke(this, value));
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((ThrowOriginalError) this).setSize(value);
             return (Next) this;
         }
     }

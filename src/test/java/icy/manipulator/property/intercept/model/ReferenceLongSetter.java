@@ -106,9 +106,12 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
      *
      * @paran value A new value of size property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setSize(int value) {
-        ((ÅssignableSize) this).size(value);
+        try {
+            sizeUpdater.invoke(this, deriveBySize$1722469908.invoke(this, value, (LongConsumer) ((Åssignable) this)::square));
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -136,9 +139,12 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
      *
      * @paran value A new value of square property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setSquare(long value) {
-        ((ÅssignableÅrbitrary) this).square(value);
+        try {
+            squareUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -182,11 +188,7 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
          * @return The next assignable model.
          */
         default Next size(int value) {
-            try {
-                sizeUpdater.invoke(this, deriveBySize$1722469908.invoke(this, value, (LongConsumer) ((Åssignable) this)::square));
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((ReferenceLongSetter) this).setSize(value);
             return (Next) this;
         }
     }
@@ -203,11 +205,7 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
          * @return The next assignable model.
          */
         default Next square(long value) {
-            try {
-                squareUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((ReferenceLongSetter) this).setSquare(value);
             return (Next) this;
         }
     }

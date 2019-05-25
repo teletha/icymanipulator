@@ -126,9 +126,12 @@ public abstract class Primitive extends PrimitiveModel {
      *
      * @paran value A new value of intX property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setIntX(int value) {
-        ((ÅssignableIntX) this).intX(value);
+        try {
+            intXUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -156,9 +159,12 @@ public abstract class Primitive extends PrimitiveModel {
      *
      * @paran value A new value of longX property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setLongX(long value) {
-        ((ÅssignableLongX) this).longX(value);
+        try {
+            longXUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -186,9 +192,12 @@ public abstract class Primitive extends PrimitiveModel {
      *
      * @paran value A new value of floatX property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setFloatX(float value) {
-        ((ÅssignableFloatX) this).floatX(value);
+        try {
+            floatXUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -216,9 +225,12 @@ public abstract class Primitive extends PrimitiveModel {
      *
      * @paran value A new value of doubleX property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setDoubleX(double value) {
-        ((ÅssignableDoubleX) this).doubleX(value);
+        try {
+            doubleXUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -246,9 +258,12 @@ public abstract class Primitive extends PrimitiveModel {
      *
      * @paran value A new value of byteX property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setByteX(byte value) {
-        ((ÅssignableByteX) this).byteX(value);
+        try {
+            byteXUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -276,9 +291,12 @@ public abstract class Primitive extends PrimitiveModel {
      *
      * @paran value A new value of shortX property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setShortX(short value) {
-        ((ÅssignableShortX) this).shortX(value);
+        try {
+            shortXUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -306,9 +324,12 @@ public abstract class Primitive extends PrimitiveModel {
      *
      * @paran value A new value of charX property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setCharX(char value) {
-        ((ÅssignableCharX) this).charX(value);
+        try {
+            charXUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -336,9 +357,12 @@ public abstract class Primitive extends PrimitiveModel {
      *
      * @paran value A new value of booleanX property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setBooleanX(boolean value) {
-        ((ÅssignableBooleanX) this).booleanX(value);
+        try {
+            booleanXUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /** The singleton builder. */
@@ -373,11 +397,7 @@ public abstract class Primitive extends PrimitiveModel {
          * @return The next assignable model.
          */
         default Next intX(int value) {
-            try {
-                intXUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Primitive) this).setIntX(value);
             return (Next) this;
         }
     }
@@ -394,11 +414,7 @@ public abstract class Primitive extends PrimitiveModel {
          * @return The next assignable model.
          */
         default Next longX(long value) {
-            try {
-                longXUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Primitive) this).setLongX(value);
             return (Next) this;
         }
     }
@@ -415,11 +431,7 @@ public abstract class Primitive extends PrimitiveModel {
          * @return The next assignable model.
          */
         default Next floatX(float value) {
-            try {
-                floatXUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Primitive) this).setFloatX(value);
             return (Next) this;
         }
     }
@@ -436,11 +448,7 @@ public abstract class Primitive extends PrimitiveModel {
          * @return The next assignable model.
          */
         default Next doubleX(double value) {
-            try {
-                doubleXUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Primitive) this).setDoubleX(value);
             return (Next) this;
         }
     }
@@ -457,11 +465,7 @@ public abstract class Primitive extends PrimitiveModel {
          * @return The next assignable model.
          */
         default Next byteX(byte value) {
-            try {
-                byteXUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Primitive) this).setByteX(value);
             return (Next) this;
         }
     }
@@ -478,11 +482,7 @@ public abstract class Primitive extends PrimitiveModel {
          * @return The next assignable model.
          */
         default Next shortX(short value) {
-            try {
-                shortXUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Primitive) this).setShortX(value);
             return (Next) this;
         }
     }
@@ -499,11 +499,7 @@ public abstract class Primitive extends PrimitiveModel {
          * @return The next assignable model.
          */
         default Next charX(char value) {
-            try {
-                charXUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Primitive) this).setCharX(value);
             return (Next) this;
         }
     }
@@ -520,11 +516,7 @@ public abstract class Primitive extends PrimitiveModel {
          * @return The next assignable model.
          */
         default Next booleanX(boolean value) {
-            try {
-                booleanXUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Primitive) this).setBooleanX(value);
             return (Next) this;
         }
     }

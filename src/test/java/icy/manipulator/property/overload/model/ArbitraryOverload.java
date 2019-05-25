@@ -98,9 +98,12 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
      *
      * @paran value A new value of size property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setSize(int value) {
-        ((ÅssignableÅrbitrary) this).size(value);
+        try {
+            sizeUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -140,11 +143,7 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
          * @return The next assignable model.
          */
         default Next size(int value) {
-            try {
-                sizeUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((ArbitraryOverload) this).setSize(value);
             return (Next) this;
         }
 

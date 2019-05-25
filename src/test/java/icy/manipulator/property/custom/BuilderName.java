@@ -77,9 +77,15 @@ public abstract class BuilderName extends BuilderNameModel {
      *
      * @paran value A new value of name property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setName(String value) {
-        ((ÅssignableName) this).name(value);
+        if (value == null) {
+            throw new IllegalArgumentException("The name property requires non-null value.");
+        }
+        try {
+            nameUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /** The singleton builder. */
@@ -114,14 +120,7 @@ public abstract class BuilderName extends BuilderNameModel {
          * @return The next assignable model.
          */
         default Next name(String value) {
-            if (value == null) {
-                throw new IllegalArgumentException("The name property requires non-null value.");
-            }
-            try {
-                nameUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((BuilderName) this).setName(value);
             return (Next) this;
         }
     }

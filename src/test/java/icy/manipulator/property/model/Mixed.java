@@ -98,9 +98,15 @@ public abstract class Mixed extends MixedModel {
      *
      * @paran value A new value of name property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setName(String value) {
-        ((ÅssignableName) this).name(value);
+        if (value == null) {
+            throw new IllegalArgumentException("The name property requires non-null value.");
+        }
+        try {
+            nameUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -128,9 +134,12 @@ public abstract class Mixed extends MixedModel {
      *
      * @paran value A new value of age property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setAge(int value) {
-        ((ÅssignableAge) this).age(value);
+        try {
+            ageUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -158,9 +167,15 @@ public abstract class Mixed extends MixedModel {
      *
      * @paran value A new value of optionAddress property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setOptionAddress(String value) {
-        ((ÅssignableÅrbitrary) this).optionAddress(value);
+        if (value == null) {
+            value = ((Mixed) this).åccessToDefaultOptionAddress();
+        }
+        try {
+            optionAddressUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -197,9 +212,15 @@ public abstract class Mixed extends MixedModel {
      *
      * @paran value A new value of optionCommnet property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setOptionCommnet(String value) {
-        ((ÅssignableÅrbitrary) this).optionCommnet(value);
+        if (value == null) {
+            value = ((Mixed) this).åccessToDefaultOptionCommnet();
+        }
+        try {
+            optionCommnetUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -243,14 +264,7 @@ public abstract class Mixed extends MixedModel {
          * @return The next assignable model.
          */
         default Next name(String value) {
-            if (value == null) {
-                throw new IllegalArgumentException("The name property requires non-null value.");
-            }
-            try {
-                nameUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Mixed) this).setName(value);
             return (Next) this;
         }
     }
@@ -267,11 +281,7 @@ public abstract class Mixed extends MixedModel {
          * @return The next assignable model.
          */
         default Next age(int value) {
-            try {
-                ageUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Mixed) this).setAge(value);
             return (Next) this;
         }
     }
@@ -288,14 +298,7 @@ public abstract class Mixed extends MixedModel {
          * @return The next assignable model.
          */
         default Next optionAddress(String value) {
-            if (value == null) {
-                value = ((Mixed) this).åccessToDefaultOptionAddress();
-            }
-            try {
-                optionAddressUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Mixed) this).setOptionAddress(value);
             return (Next) this;
         }
 
@@ -306,14 +309,7 @@ public abstract class Mixed extends MixedModel {
          * @return The next assignable model.
          */
         default Next optionCommnet(String value) {
-            if (value == null) {
-                value = ((Mixed) this).åccessToDefaultOptionCommnet();
-            }
-            try {
-                optionCommnetUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Mixed) this).setOptionCommnet(value);
             return (Next) this;
         }
     }

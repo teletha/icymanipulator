@@ -111,6 +111,12 @@ public class Type {
         }
     }
 
+    public Type addVariable(Type variable) {
+        this.variable.add(IcyManipulator.importer.use(variable));
+
+        return this;
+    }
+
     /**
      * <p>
      * Check default package.

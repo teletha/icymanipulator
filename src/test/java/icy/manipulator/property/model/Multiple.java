@@ -91,9 +91,15 @@ public abstract class Multiple extends MultipleModel {
      *
      * @paran value A new value of name property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setName(String value) {
-        ((ÅssignableName) this).name(value);
+        if (value == null) {
+            throw new IllegalArgumentException("The name property requires non-null value.");
+        }
+        try {
+            nameUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -121,9 +127,15 @@ public abstract class Multiple extends MultipleModel {
      *
      * @paran value A new value of stand property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setStand(String value) {
-        ((ÅssignableStand) this).stand(value);
+        if (value == null) {
+            throw new IllegalArgumentException("The stand property requires non-null value.");
+        }
+        try {
+            standUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /**
@@ -151,9 +163,12 @@ public abstract class Multiple extends MultipleModel {
      *
      * @paran value A new value of age property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setAge(int value) {
-        ((ÅssignableAge) this).age(value);
+        try {
+            ageUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /** The singleton builder. */
@@ -188,14 +203,7 @@ public abstract class Multiple extends MultipleModel {
          * @return The next assignable model.
          */
         default Next name(String value) {
-            if (value == null) {
-                throw new IllegalArgumentException("The name property requires non-null value.");
-            }
-            try {
-                nameUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Multiple) this).setName(value);
             return (Next) this;
         }
     }
@@ -212,14 +220,7 @@ public abstract class Multiple extends MultipleModel {
          * @return The next assignable model.
          */
         default Next stand(String value) {
-            if (value == null) {
-                throw new IllegalArgumentException("The stand property requires non-null value.");
-            }
-            try {
-                standUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Multiple) this).setStand(value);
             return (Next) this;
         }
     }
@@ -236,11 +237,7 @@ public abstract class Multiple extends MultipleModel {
          * @return The next assignable model.
          */
         default Next age(int value) {
-            try {
-                ageUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((Multiple) this).setAge(value);
             return (Next) this;
         }
     }

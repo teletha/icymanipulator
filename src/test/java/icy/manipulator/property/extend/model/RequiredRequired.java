@@ -77,9 +77,15 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
      *
      * @paran value A new value of nickname property to assign.
      */
-    @SuppressWarnings("unused")
     private final void setNickname(String value) {
-        ((ÅssignableNickname) this).nickname(value);
+        if (value == null) {
+            throw new IllegalArgumentException("The nickname property requires non-null value.");
+        }
+        try {
+            nicknameUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
     }
 
     /** The singleton builder. */
@@ -114,14 +120,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
          * @return The next assignable model.
          */
         default Next nickname(String value) {
-            if (value == null) {
-                throw new IllegalArgumentException("The nickname property requires non-null value.");
-            }
-            try {
-                nicknameUpdater.invoke(this, value);
-            } catch (Throwable e) {
-                throw quiet(e);
-            }
+            ((RequiredRequired) this).setNickname(value);
             return (Next) this;
         }
     }

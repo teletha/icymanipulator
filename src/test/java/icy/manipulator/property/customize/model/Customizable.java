@@ -1,15 +1,16 @@
-package icy.manipulator.property.extend.model;
+package icy.manipulator.property.customize.model;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+
 import javax.annotation.processing.Generated;
 
 /**
- * Generated model for {@link ArbitraryRequiredModel}.
+ * Generated model for {@link CustomizableModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
+public abstract class Customizable extends CustomizableModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -29,9 +30,9 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final MethodHandle updater(String name) {
         try {
-            Field field = ArbitraryRequired.class.getDeclaredField(name);
+            Field field = Customizable.class.getDeclaredField(name);
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
@@ -40,67 +41,72 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle idUpdater = updater("id");
+    private static final MethodHandle nameUpdater = updater("name");
 
     /** The exposed property. */
-    public final long id;
+    public final String name;
+
+    private final Customizer<String> nameCustomizer = new Customizer();
 
     /**
      * HIDE CONSTRUCTOR
      */
-    protected ArbitraryRequired() {
-        this.id = 0L;
+    protected Customizable() {
+        this.name = null;
     }
 
     /**
-     * Return the id property.
-     *
-     * @return A value of id property.
+     * Return name.
+     * 
+     * @return A name.
      */
     @Override
-    public final long id() {
-        return this.id;
+    public final String name() {
+        return this.name;
     }
 
     /**
      * Provide classic getter API.
      *
-     * @return A value of id property.
+     * @return A value of name property.
      */
     @SuppressWarnings("unused")
-    private final long getId() {
-        return this.id;
+    private final String getName() {
+        return this.name;
     }
 
     /**
      * Provide classic setter API.
      *
-     * @paran value A new value of id property to assign.
+     * @paran value A new value of name property to assign.
      */
-    private final void setId(long value) {
+    private final void setName(String value) {
+        if (value == null) {
+            throw new IllegalArgumentException("The name property requires non-null value.");
+        }
         try {
-            idUpdater.invoke(this, value);
+            nameUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
     }
 
     /** The singleton builder. */
-    public static final  Ìnstantiator<?> with = new Ìnstantiator();
+    public static final Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Namespace for {@link ArbitraryRequired}  builder methods.
+     * Namespace for {@link Customizable} builder methods.
      */
-    public static final class Ìnstantiator<Self extends ArbitraryRequired & ÅssignableÅrbitrary<Self>> {
+    public static final class Ìnstantiator<Self extends Customizable & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new {@link ArbitraryRequired} with the specified id property.
+         * Create new {@link Customizable} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final Self id(long LONG) {
+        public final Self name(String string) {
             Åssignable o = new Åssignable();
-            o.id(LONG);
+            o.name(string);
             return (Self) o;
         }
     }
@@ -108,16 +114,16 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableId<Next> {
+    public static interface ÅssignableName<Next> {
 
         /**
-         * Assign id property.
+         * Assign name property.
          * 
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next id(long value) {
-            ((ArbitraryRequired) this).setId(value);
+        default Next name(String value) {
+            ((Customizable) this).setName(value);
             return (Next) this;
         }
     }
@@ -125,25 +131,25 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends ArbitraryRequired> extends icy.manipulator.property.model.Arbitrary.ÅssignableÅrbitrary<Next> {
+    public static interface ÅssignableÅrbitrary<Next extends Customizable> {
     }
 
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableId, icy.manipulator.property.model.Arbitrary.ÅssignableAll {
+    protected static interface ÅssignableAll extends ÅssignableName {
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends ArbitraryRequired implements ÅssignableAll, ÅssignableÅrbitrary {
+    private static final class Åssignable extends Customizable implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**
      * The identifier for properties.
      */
     static final class My {
-        static final String Id = "id";
+        static final String Name = "name";
     }
 }
