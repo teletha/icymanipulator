@@ -23,7 +23,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import antibug.CleanRoom;
 import bee.Bee;
 import bee.util.JavaCompiler;
-import icy.manipulator.model.ModelDefinition;
+import icy.manipulator.model.CustomizerDefinition;
 import kiss.I;
 import psychopath.File;
 import psychopath.Locator;
@@ -66,7 +66,7 @@ public class AnnotationProcessor {
         File generatedSource = Locator.directory("src/test/java").file(computeSourceFile(generatedClass));
         File annotaionProcessorSource = Locator.directory("src/main/java").file(computeSourceFile(processor.getName()));
         File generator = Locator.directory("src/main/java").file(computeSourceFile(CodeGenerator.class.getName()));
-        File depend1 = Locator.directory("src/main/java").file(computeSourceFile(ModelDefinition.class.getName()));
+        File depend1 = Locator.directory("src/main/java").file(computeSourceFile(CustomizerDefinition.class.getName()));
         File temporaryGeneratedSource = Locator.directory(room.root).file(computeSourceFile(generatedClass));
         long date = generatedSource.lastModified();
 

@@ -9,22 +9,99 @@
  */
 package icy.manipulator.model;
 
-import javax.lang.model.element.TypeElement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
+import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.ExecutableType;
+import javax.lang.model.type.TypeMirror;
+import javax.lang.model.type.TypeVariable;
+
+import icy.manipulator.Fail;
 import icy.manipulator.Type;
+import icy.manipulator.TypeUtil;
 
 public class CustomizerDefinition {
 
     public final TypeElement e;
 
+    private final TypeVariable variable;
+
     private final PropertyDefinition property;
 
+    public final boolean requireSetter;
+
+    public final List<MethodDefinition> methods;
+
     public CustomizerDefinition(TypeElement e, PropertyDefinition property) {
+        // search generic type of supplier
+        this.variable = searchSupplierVariable(e);
+
         this.e = e;
         this.property = property;
+        this.requireSetter = TypeUtil.implement(e, Consumer.class);
+        this.methods = TypeUtil.methodsInHierarchy(e, m -> m.getSimpleName().toString().contains("$")).stream().map(m -> {
+            List<Type> types = ((ExecutableType) m.asType()).getParameterTypes()
+                    .stream()
+                    .map(this::convert)
+                    .collect(Collectors.toUnmodifiableList());
+            List<String> names = m.getParameters()
+                    .stream()
+                    .map(element -> element.getSimpleName().toString())
+                    .collect(Collectors.toUnmodifiableList());
+
+            return new MethodDefinition(name(m, property), convert(m.getReturnType()), types, names, TypeUtil.doc(m));
+        }).collect(Collectors.toUnmodifiableList());
+    }
+
+    private TypeVariable searchSupplierVariable(TypeElement e) {
+        while (e != null) {
+            for (TypeMirror interfaceType : e.getInterfaces()) {
+                if (TypeUtil.same(interfaceType, Supplier.class)) {
+                    return (TypeVariable) ((DeclaredType) interfaceType).getTypeArguments().get(0);
+                }
+            }
+            e = TypeUtil.parent(e);
+        }
+        throw new Fail(e, e + " doesn't implement Supplier interface.");
+    }
+
+    private String name(ExecutableElement method, PropertyDefinition p) {
+        String name = method.getSimpleName().toString();
+
+        if (name.startsWith("$")) {
+            return name.replace("$", p.name);
+        } else {
+            return name.replace("$", p.capitalizeName());
+        }
+    }
+
+    private Type convert(TypeMirror type) {
+        // check base
+        if (TypeUtil.same(type, variable)) {
+            return property.type;
+        }
+
+        // check parameters
+        DeclaredType declaredType = (DeclaredType) type;
+        List<Type> variables = new ArrayList();
+
+        for (TypeMirror argType : declaredType.getTypeArguments()) {
+            if (TypeUtil.same(argType, variable)) {
+                variables.add(property.type);
+            } else {
+                variables.add(Type.of(argType));
+            }
+        }
+        return Type.of(declaredType, variables);
     }
 
     public Type type() {
-        return Type.of(e).addVariable(property.type);
+        return convert(e.asType());
     }
 }

@@ -10,7 +10,6 @@
 package icy.manipulator.property.customize.model;
 
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 import icy.manipulator.Icy;
@@ -29,9 +28,7 @@ public abstract class CustomizableModel {
     /**
      * 
      */
-    public static class Customizer<T> implements Function<Supplier<T>, Consumer<T>> {
-
-        private Supplier<T> getter;
+    public static abstract class Customizer<T> implements Consumer<T>, Supplier<T> {
 
         private T latest;
 
@@ -39,9 +36,8 @@ public abstract class CustomizableModel {
          * {@inheritDoc}
          */
         @Override
-        public Consumer<T> apply(Supplier<T> getter) {
-            this.getter = getter;
-            return value -> latest = value;
+        public void accept(T value) {
+            latest = value;
         }
 
         /**
@@ -50,7 +46,48 @@ public abstract class CustomizableModel {
          * @return
          */
         public T $ByGetter() {
-            return getter.get();
+            return get();
+        }
+
+        /**
+         * Get value by setter.
+         * 
+         * @return
+         */
+        public T $BySetter() {
+            return latest;
+        }
+
+        /**
+         * Get value as {@link Supplier}.
+         * 
+         * @return
+         */
+        public Supplier<T> $ByGetterAsSupplier() {
+            return this;
+        }
+    }
+
+    /**
+     * Return name.
+     * 
+     * @return A name.
+     */
+    @Icy.Property(custom = SubCustomizer.class)
+    public abstract String value();
+
+    /**
+     * 
+     */
+    public static abstract class SubCustomizer extends Customizer<String> {
+
+        /**
+         * Get value on sub.
+         * 
+         * @return
+         */
+        public String $FromSub() {
+            return get();
         }
     }
 }

@@ -14,7 +14,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.util.function.Function;
+import java.util.function.Supplier;
 
 @Documented
 @Target(ElementType.TYPE)
@@ -122,7 +122,7 @@ public @interface Icy {
          * 
          * @return
          */
-        Class<? extends Function> custom() default Function.class;
+        Class<? extends Supplier> custom() default Supplier.class;
     }
 
     @Documented

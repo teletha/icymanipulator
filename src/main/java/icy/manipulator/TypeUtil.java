@@ -168,6 +168,33 @@ public class TypeUtil {
     }
 
     /**
+     * Find the matching declared methods.
+     * 
+     * @param e A target type.
+     * @param filter A including filer.
+     * @return
+     */
+    public static List<ExecutableElement> methodsInHierarchy(TypeElement e, Predicate<ExecutableElement> filter) {
+        List<ExecutableElement> methods = new ArrayList();
+
+        while (e != null) {
+            List<? extends Element> child = e.getEnclosedElements();
+
+            for (Element element : child) {
+                if (element.getKind() == ElementKind.METHOD) {
+                    ExecutableElement executable = (ExecutableElement) element;
+
+                    if (filter.test(executable)) {
+                        methods.add(executable);
+                    }
+                }
+            }
+            e = TypeUtil.parent(e);
+        }
+        return methods;
+    }
+
+    /**
      * Check type equality.
      * 
      * @param type
@@ -176,6 +203,28 @@ public class TypeUtil {
      */
     public static boolean same(TypeMirror type, Element element) {
         return types.isSameType(type, element.asType());
+    }
+
+    /**
+     * Check type equality.
+     * 
+     * @param type
+     * @param other
+     * @return
+     */
+    public static boolean same(TypeMirror type, TypeMirror other) {
+        return types.isSameType(type, other);
+    }
+
+    /**
+     * Check type equality.
+     * 
+     * @param type
+     * @param clazz
+     * @return
+     */
+    public static boolean same(TypeMirror type, Class clazz) {
+        return Type.of(type).fqcn().equals(clazz.getCanonicalName());
     }
 
     /**
@@ -265,5 +314,14 @@ public class TypeUtil {
             }
         }
         return Optional.empty();
+    }
+
+    public static boolean implement(TypeElement type, Class interfaceType) {
+        for (TypeMirror mirror : type.getInterfaces()) {
+            if (same(mirror, interfaceType)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

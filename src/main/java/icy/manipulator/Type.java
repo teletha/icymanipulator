@@ -9,9 +9,11 @@
  */
 package icy.manipulator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.ArrayType;
@@ -40,7 +42,7 @@ public class Type {
     public final String className;
 
     /** The variable expression. */
-    public final StringJoiner variable = new StringJoiner(", ", "<", ">").setEmptyValue("");
+    public final List<Type> variable = new VariableList();
 
     /** The generic flag. */
     public final boolean generic;
@@ -64,11 +66,9 @@ public class Type {
      * @param fqcn
      * @param generics
      */
-    public Type(String fqcn, List<? extends TypeMirror> generics) {
+    public Type(String fqcn, List<? extends Type> generics) {
         if (generics != null && !generics.isEmpty()) {
-            for (TypeMirror generic : generics) {
-                variable.add(IcyManipulator.importer.use(of(generic)));
-            }
+            this.variable.addAll(generics);
         }
 
         int index = fqcn.lastIndexOf(".");
@@ -111,8 +111,9 @@ public class Type {
         }
     }
 
-    public Type addVariable(Type variable) {
-        this.variable.add(IcyManipulator.importer.use(variable));
+    public Type resetVariable(Type variable) {
+        this.variable.clear();
+        this.variable.add(variable);
 
         return this;
     }
@@ -353,6 +354,18 @@ public class Type {
      * @param asType
      * @return
      */
+    public static final Type of(TypeMirror type, List<Type> variables) {
+        return type.accept(new TypeDetector(), variables);
+    }
+
+    /**
+     * <p>
+     * Resoleve {@link Type} by {@link TypeMirror}.
+     * </p>
+     * 
+     * @param asType
+     * @return
+     */
     public static final Type of(TypeElement type) {
         return type.asType().accept(new TypeDetector(), null);
     }
@@ -360,13 +373,13 @@ public class Type {
     /**
      * @version 2015/06/06 11:44:40
      */
-    private static class TypeDetector implements TypeVisitor<Type, Void> {
+    private static class TypeDetector implements TypeVisitor<Type, List<Type>> {
 
         /**
          * {@inheritDoc}
          */
         @Override
-        public Type visit(TypeMirror t, Void p) {
+        public Type visit(TypeMirror t, List<Type> p) {
             return null;
         }
 
@@ -382,7 +395,7 @@ public class Type {
          * {@inheritDoc}
          */
         @Override
-        public Type visitPrimitive(PrimitiveType t, Void p) {
+        public Type visitPrimitive(PrimitiveType t, List<Type> p) {
             return new Type(t.toString(), null);
         }
 
@@ -390,7 +403,7 @@ public class Type {
          * {@inheritDoc}
          */
         @Override
-        public Type visitNull(NullType t, Void p) {
+        public Type visitNull(NullType t, List<Type> p) {
             return null;
         }
 
@@ -398,7 +411,7 @@ public class Type {
          * {@inheritDoc}
          */
         @Override
-        public Type visitArray(ArrayType t, Void p) {
+        public Type visitArray(ArrayType t, List<Type> p) {
             return null;
         }
 
@@ -406,15 +419,16 @@ public class Type {
          * {@inheritDoc}
          */
         @Override
-        public Type visitDeclared(DeclaredType t, Void p) {
-            return new Type(((TypeElement) t.asElement()).getQualifiedName().toString(), t.getTypeArguments());
+        public Type visitDeclared(DeclaredType t, List<Type> p) {
+            return new Type(((TypeElement) t.asElement()).getQualifiedName().toString(), p != null ? p
+                    : t.getTypeArguments().stream().map(Type::of).collect(Collectors.toList()));
         }
 
         /**
          * {@inheritDoc}
          */
         @Override
-        public Type visitError(ErrorType t, Void p) {
+        public Type visitError(ErrorType t, List<Type> p) {
             return null;
         }
 
@@ -422,7 +436,7 @@ public class Type {
          * {@inheritDoc}
          */
         @Override
-        public Type visitTypeVariable(TypeVariable t, Void p) {
+        public Type visitTypeVariable(TypeVariable t, List<Type> p) {
             return new Type("", t.toString(), true);
         }
 
@@ -430,7 +444,7 @@ public class Type {
          * {@inheritDoc}
          */
         @Override
-        public Type visitWildcard(WildcardType t, Void p) {
+        public Type visitWildcard(WildcardType t, List<Type> p) {
             return null;
         }
 
@@ -438,7 +452,7 @@ public class Type {
          * {@inheritDoc}
          */
         @Override
-        public Type visitExecutable(ExecutableType t, Void p) {
+        public Type visitExecutable(ExecutableType t, List<Type> p) {
             return null;
         }
 
@@ -446,7 +460,7 @@ public class Type {
          * {@inheritDoc}
          */
         @Override
-        public Type visitNoType(NoType t, Void p) {
+        public Type visitNoType(NoType t, List<Type> p) {
             return null;
         }
 
@@ -454,7 +468,7 @@ public class Type {
          * {@inheritDoc}
          */
         @Override
-        public Type visitUnknown(TypeMirror t, Void p) {
+        public Type visitUnknown(TypeMirror t, List<Type> p) {
             return null;
         }
 
@@ -462,7 +476,7 @@ public class Type {
          * {@inheritDoc}
          */
         @Override
-        public Type visitUnion(UnionType t, Void p) {
+        public Type visitUnion(UnionType t, List<Type> p) {
             return null;
         }
 
@@ -470,9 +484,26 @@ public class Type {
          * {@inheritDoc}
          */
         @Override
-        public Type visitIntersection(IntersectionType t, Void p) {
+        public Type visitIntersection(IntersectionType t, List<Type> p) {
             return null;
         }
     }
 
+    /**
+     * 
+     */
+    @SuppressWarnings("serial")
+    private static final class VariableList extends ArrayList<Type> {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String toString() {
+            StringJoiner joiner = new StringJoiner(", ", "<", ">").setEmptyValue("");
+            for (Type type : this) {
+                joiner.add(IcyManipulator.importer.use(type));
+            }
+            return joiner.toString();
+        }
+    }
 }

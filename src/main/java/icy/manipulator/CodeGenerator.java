@@ -187,16 +187,21 @@ public class CodeGenerator {
      * Define property field.
      */
     private void defineField() {
-        for (PropertyDefinition property : m.ownProperties()) {
+        for (PropertyDefinition p : m.ownProperties()) {
             code.write();
             code.write("/** The exposed property. */");
-            code.write("public final ", property.type, " ", property.name, ";");
+            code.write("public final ", p.type, " ", p.name, ";");
 
-            if (property.customizer != null) {
+            if (p.custom != null) {
                 code.write();
                 code.write("/** The property customizer. */");
-                code.write("private final ", property.customizer.type(), " ", property.name, "Customizer = new ", property.customizer
-                        .type(), "();");
+                code.write("private final ", p.custom.type(), " ", p.name, "Customizer = new ", p.custom.type(), "()", () -> {
+                    code.write();
+                    code.write("@Override");
+                    code.write("public ", p.type, " get()", () -> {
+                        code.write("return ", p.name, ";");
+                    });
+                }).asStatement();
             }
         }
     }
@@ -292,6 +297,10 @@ public class CodeGenerator {
                         value += ")";
                     }
                     code.write(property.name, "Updater.invoke(this, ", value, ");");
+
+                    if (property.custom != null && property.custom.requireSetter) {
+                        code.write(property.name, "Customizer.accept(this.", property.name, ");");
+                    }
                 }, Throwable.class, e -> {
                     code.write("throw quiet(", e, ");");
                 });
@@ -309,7 +318,34 @@ public class CodeGenerator {
                     code.write("return super.", property.name, "();");
                 });
             }
+
+            // customizer's methods
+            if (property.custom != null) {
+                for (MethodDefinition m : property.custom.methods) {
+                    code.write();
+                    code.javadoc(m.doc, () -> {
+                    });
+                    code.write("public final ", m.returnType, " ", m, () -> {
+                        if (m.returnType.is(void.class)) {
+                            code.write(property.name, "Customizer.", m.name, "(", m.paramNames, ");");
+                        } else {
+                            code.write("return ", property.name, "Customizer.", name(m.name, property), "(", m.paramNames, ");");
+                        }
+                    });
+                }
+            }
         }
+    }
+
+    /**
+     * Revert customizer method name.
+     * 
+     * @param name
+     * @param p
+     * @return
+     */
+    private String name(String name, PropertyDefinition p) {
+        return name.replace(p.capitalizeName(), "$").replace(p.name, "$");
     }
 
     /**
