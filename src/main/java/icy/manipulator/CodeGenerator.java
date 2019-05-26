@@ -508,7 +508,7 @@ public class CodeGenerator {
         // Auto-Expanded Overload Setter
         // =========================================
         if (p.autoExpandable) {
-            for (String name : TypeUtil.enumConstantNames(p.element.getReturnType())) {
+            for (String name : Abyss.enumConstantNames(p.element.getReturnType())) {
                 code.write();
                 code.write("/**");
                 code.write(" * Assign {@link ", p.type.className, "#", name, "} to ", p.name, " property.");

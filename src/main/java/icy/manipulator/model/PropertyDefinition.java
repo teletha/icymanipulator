@@ -13,12 +13,12 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 
+import icy.manipulator.Abyss;
 import icy.manipulator.CodeGenerator;
 import icy.manipulator.Fail;
 import icy.manipulator.Icy;
 import icy.manipulator.Icy.Property;
 import icy.manipulator.Type;
-import icy.manipulator.TypeUtil;
 import icy.manipulator.util.Strings;
 
 public class PropertyDefinition {
@@ -80,13 +80,14 @@ public class PropertyDefinition {
         } else {
             this.nullable = annotation.nullable();
             this.mutable = annotation.mutable();
-            this.autoExpandable = TypeUtil.isEnum(method.getReturnType()) ? annotation.overloadEnum() : true;
+            this.autoExpandable = Abyss.isEnum(method.getReturnType()) ? annotation.overloadEnum() : true;
 
             Icy icy = method.getEnclosingElement().getAnnotation(Icy.class);
             this.getterModifier = validate(method, annotation.getterModifier(), icy.getterModifier());
             this.setterModifier = validate(method, annotation.setterModifier(), icy.setterModifier());
-            this.custom = TypeUtil.annotaionClassValue(method, Icy.Property.class, "custom")
-                    .map(e -> new CustomizerDefinition(e, this))
+            this.custom = Abyss.annotationClassValue(method, Icy.Property.class, "custom")
+                    .map(Abyss::cast)
+                    .map(customizer -> new CustomizerDefinition(this, customizer))
                     .orElse(null);
         }
     }

@@ -75,8 +75,8 @@ public class IcyManipulator implements Processor {
         this.filer = process.getFiler();
         this.messager = process.getMessager();
 
-        TypeUtil.types = process.getTypeUtils();
-        TypeUtil.elements = process.getElementUtils();
+        Abyss.types = process.getTypeUtils();
+        Abyss.elements = process.getElementUtils();
     }
 
     /**

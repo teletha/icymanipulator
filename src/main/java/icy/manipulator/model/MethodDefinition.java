@@ -20,7 +20,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.type.ExecutableType;
 
 import icy.manipulator.Type;
-import icy.manipulator.TypeUtil;
+import icy.manipulator.Abyss;
 import icy.manipulator.util.Strings;
 
 public class MethodDefinition {
@@ -51,7 +51,7 @@ public class MethodDefinition {
                 .map(Type::of)
                 .collect(Collectors.toUnmodifiableList());
         this.paramNames = element.getParameters().stream().map(e -> e.getSimpleName().toString()).collect(Collectors.toUnmodifiableList());
-        this.doc = TypeUtil.doc(element);
+        this.doc = Abyss.doc(element);
     }
 
     /**

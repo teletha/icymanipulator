@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import icy.manipulator.Type;
-import icy.manipulator.TypeUtil;
+import icy.manipulator.Abyss;
 import icy.manipulator.util.Strings;
 
 public class Synthesizer {
@@ -40,7 +40,7 @@ public class Synthesizer {
 
             // auto-expanded overload
             if (p.autoExpandable) {
-                for (String name : TypeUtil.enumConstantNames(p.element.getReturnType())) {
+                for (String name : Abyss.enumConstantNames(p.element.getReturnType())) {
                     add(new MethodDefinition(Strings.decapitalize(name), Type.generic("Next"), List.of(), List
                             .of(), "Set " + p.name + " property with " + p.type.className + "." + name));
                 }

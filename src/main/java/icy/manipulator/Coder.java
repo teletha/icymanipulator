@@ -49,7 +49,7 @@ public class Coder {
      * @param defaultComment
      */
     public void javadoc(Element e, Runnable defaultDocument) {
-        javadoc(TypeUtil.doc(e), defaultDocument);
+        javadoc(Abyss.doc(e), defaultDocument);
     }
 
     /**
