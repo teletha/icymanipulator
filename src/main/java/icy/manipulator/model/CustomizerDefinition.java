@@ -42,11 +42,12 @@ public class CustomizerDefinition {
      * @param customizer
      */
     public CustomizerDefinition(PropertyDefinition property, TypeElement customizer) {
-        System.out.println(customizer);
         this.variable = Abyss.variables(customizer, Supplier.class).get(0);
         this.e = customizer;
         this.property = property;
-        this.requireSetter = Abyss.implement(customizer, Consumer.class);
+        System.out.println(Abyss.implement(customizer, Consumer.class) + "            " + Abyss
+                .check(customizer, Abyss.implement(Consumer.class)));
+        this.requireSetter = Abyss.check(customizer, Abyss.implement(Consumer.class));
         this.methods = Abyss.methodsInHierarchy(customizer, m -> m.getSimpleName().toString().contains("$")).stream().map(m -> {
             List<Type> types = ((ExecutableType) m.asType()).getParameterTypes()
                     .stream()

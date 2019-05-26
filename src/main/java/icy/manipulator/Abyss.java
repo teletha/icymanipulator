@@ -113,7 +113,7 @@ public class Abyss {
             return (TypeElement) ((DeclaredType) type).asElement();
 
         default:
-            throw new Fail(e(type), "Need DeclaredType.");
+            throw new Fail(types.asElement(type), "Need DeclaredType.");
         }
     }
 
@@ -342,16 +342,6 @@ public class Abyss {
         return doc == null ? "" : doc;
     }
 
-    /**
-     * Helper.
-     * 
-     * @param mirror
-     * @return
-     */
-    private static Element e(TypeMirror mirror) {
-        return types.asElement(mirror);
-    }
-
     public static boolean implement(TypeElement type, Class interfaceType) {
         for (TypeMirror mirror : type.getInterfaces()) {
             if (same(mirror, interfaceType)) {
@@ -502,8 +492,8 @@ public class Abyss {
         return annotationValue(e, annotationType, name).map(value -> cast(value, DeclaredType.class));
     }
 
-    public static boolean check(Element target, Predicate<Element> condition) {
-        return condition.test(target);
+    public static boolean check(Element target, Predicate<TypeMirror> condition) {
+        return condition.test(target.asType());
     }
 
     /**
@@ -533,7 +523,10 @@ public class Abyss {
      * @return A new validator.
      */
     public static Predicate<TypeMirror> implement(TypeMirror type) {
-        return target -> types.isSubtype(target, type);
+        return target -> {
+            System.out.println(target + "       " + type);
+            return types.isSubtype(target, type);
+        };
     }
 
     /**
@@ -655,7 +648,7 @@ public class Abyss {
      * @param type
      * @return
      */
-    public static <T extends TypeMirror> T cast(TypeMirror e, Class<T> type) {
+    private static <T extends TypeMirror> T cast(TypeMirror e, Class<T> type) {
         return e.accept(TypeCaster.by(type), null);
     }
 
@@ -801,6 +794,7 @@ public class Abyss {
     /**
      * 
      */
+    @SuppressWarnings("unused")
     private static abstract class AnnotationValueCaster<T> extends SimpleAnnotationValueVisitor9<T, Void> {
 
         private static final Map<Class, AnnotationValueCaster> casters = new HashMap();

@@ -109,7 +109,6 @@ public abstract class Customizable extends CustomizableModel {
         }
         try {
             nameUpdater.invoke(this, value);
-            nameCustomizer.accept(this.name);
         } catch (Throwable e) {
             throw quiet(e);
         }
