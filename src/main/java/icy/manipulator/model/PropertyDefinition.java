@@ -86,6 +86,7 @@ public class PropertyDefinition {
             this.getterModifier = validate(method, annotation.getterModifier(), icy.getterModifier());
             this.setterModifier = validate(method, annotation.setterModifier(), icy.setterModifier());
             this.custom = Abyss.annotationClassValue(method, Icy.Property.class, "custom")
+                    .filter(Abyss::isNotInterface)
                     .map(Abyss::cast)
                     .map(customizer -> new CustomizerDefinition(this, customizer))
                     .orElse(null);

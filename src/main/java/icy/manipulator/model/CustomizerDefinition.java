@@ -20,10 +20,8 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.ExecutableType;
 import javax.lang.model.type.TypeMirror;
-import javax.lang.model.type.TypeVariable;
 
 import icy.manipulator.Abyss;
-import icy.manipulator.Fail;
 import icy.manipulator.Type;
 
 public class CustomizerDefinition {
@@ -44,10 +42,8 @@ public class CustomizerDefinition {
      * @param customizer
      */
     public CustomizerDefinition(PropertyDefinition property, TypeElement customizer) {
-        // search generic type of supplier
+        System.out.println(customizer);
         this.variable = Abyss.variables(customizer, Supplier.class).get(0);
-        System.out.println(this.variable + "        @@@   " + searchSupplierVariable(customizer));
-
         this.e = customizer;
         this.property = property;
         this.requireSetter = Abyss.implement(customizer, Consumer.class);
@@ -65,18 +61,6 @@ public class CustomizerDefinition {
         }).collect(Collectors.toUnmodifiableList());
     }
 
-    private TypeVariable searchSupplierVariable(TypeElement e) {
-        while (e != null) {
-            for (TypeMirror interfaceType : e.getInterfaces()) {
-                if (Abyss.same(interfaceType, Supplier.class)) {
-                    return (TypeVariable) ((DeclaredType) interfaceType).getTypeArguments().get(0);
-                }
-            }
-            e = Abyss.parent(e);
-        }
-        throw new Fail(e, e + " doesn't implement Supplier interface.");
-    }
-
     private String name(ExecutableElement method, PropertyDefinition p) {
         String name = method.getSimpleName().toString();
 
@@ -89,13 +73,11 @@ public class CustomizerDefinition {
 
     private Type convert(TypeMirror type) {
         // check base
-        System.out.println(type + "   " + (type.equals(variable)) + "     " + Abyss.same(type, variable) + "       " + variable);
         if (Abyss.same(type, variable)) {
             return property.type;
         }
 
         // check parameters
-        System.out.println(Abyss.cast(type, DeclaredType.class));
         DeclaredType declaredType = (DeclaredType) type;
         List<Type> variables = new ArrayList();
 

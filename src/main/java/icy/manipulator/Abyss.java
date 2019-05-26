@@ -262,16 +262,51 @@ public class Abyss {
     /**
      * Check whether the specified type is enum or not.
      * 
-     * @param enumType A target type.
+     * @param type A target type to check.
      * @return A result.
      */
-    public static boolean isEnum(TypeMirror enumType) {
-        Element e = types.asElement(enumType);
+    public static boolean isEnum(TypeMirror type) {
+        Element e = types.asElement(type);
 
         if (e == null) {
             return false;
         }
         return e.getKind() == ElementKind.ENUM;
+    }
+
+    /**
+     * Check whether the specified type is enum or not.
+     * 
+     * @param type A target type to check.
+     * @return A result.
+     */
+    public static boolean isNotEnum(TypeMirror type) {
+        return !isEnum(type);
+    }
+
+    /**
+     * Check whether the specified type is interface or not.
+     * 
+     * @param type A target type to check.
+     * @return A result.
+     */
+    public static boolean isInterface(TypeMirror type) {
+        Element e = types.asElement(type);
+
+        if (e == null) {
+            return false;
+        }
+        return e.getKind() == ElementKind.INTERFACE;
+    }
+
+    /**
+     * Check whether the specified type is interface or not.
+     * 
+     * @param type A target type to check.
+     * @return A result.
+     */
+    public static boolean isNotInterface(TypeMirror type) {
+        return !isInterface(type);
     }
 
     /**
@@ -334,7 +369,7 @@ public class Abyss {
      * @return
      */
     public static List<? extends TypeMirror> variables(TypeElement target, Class type) {
-        return variables(cast(target.asType(), DeclaredType.class), type, Abyss::same);
+        return variables(target, type, Abyss::same);
     }
 
     /**
@@ -345,7 +380,7 @@ public class Abyss {
      * @return
      */
     public static List<? extends TypeMirror> variables(TypeElement target, DeclaredType type) {
-        return variables(cast(target.asType(), DeclaredType.class), type, Abyss::same);
+        return variables(target, type, Abyss::same);
     }
 
     /**
@@ -356,7 +391,7 @@ public class Abyss {
      * @return
      */
     public static List<? extends TypeMirror> variables(DeclaredType target, Class type) {
-        return variables(target, type, Abyss::same);
+        return variables(cast(target.asElement(), TypeElement.class), type, Abyss::same);
     }
 
     /**
@@ -367,7 +402,7 @@ public class Abyss {
      * @return
      */
     public static List<? extends TypeMirror> variables(DeclaredType target, DeclaredType type) {
-        return variables(target, type, Abyss::same);
+        return variables(cast(target.asElement(), TypeElement.class), type, Abyss::same);
     }
 
     /**
@@ -379,17 +414,14 @@ public class Abyss {
      * @param equality
      * @return
      */
-    private static <Q> List<? extends TypeMirror> variables(DeclaredType target, Q type, BiPredicate<TypeMirror, Q> equality) {
-        if (equality.test(target, type)) {
-            return target.getTypeArguments();
-        }
-
-        for (TypeMirror superType : types.directSupertypes(target)) {
-            List<? extends TypeMirror> variables = variables(cast(superType, DeclaredType.class), type, equality);
-
-            if (!variables.isEmpty()) {
-                return variables;
+    private static <Q> List<? extends TypeMirror> variables(TypeElement target, Q type, BiPredicate<TypeMirror, Q> equality) {
+        while (target != null) {
+            for (TypeMirror interfaceType : target.getInterfaces()) {
+                if (equality.test(interfaceType, type)) {
+                    return cast(interfaceType, DeclaredType.class).getTypeArguments();
+                }
             }
+            target = Abyss.parent(target);
         }
         return Collections.EMPTY_LIST;
     }
