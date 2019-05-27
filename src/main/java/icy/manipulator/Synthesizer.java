@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package icy.manipulator.model;
+package icy.manipulator;
 
 import java.util.ArrayList;
 import java.util.List;

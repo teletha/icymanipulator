@@ -20,7 +20,7 @@ import javax.lang.model.element.Element;
 
 import apty.Apty;
 import apty.Type;
-import icy.manipulator.model.MethodDefinition;
+import icy.manipulator.MethodDefinition;
 
 public class Coder {
 
@@ -29,6 +29,9 @@ public class Coder {
 
     /** The indent. */
     private static final String indent = "    ";
+
+    /** The fully qualified class name. */
+    public final String fqcn;
 
     /** The base package name. */
     private final String basePackage;
@@ -51,6 +54,7 @@ public class Coder {
      * @param fqcn A fully qualified class name to write.
      */
     public Coder(String fqcn) {
+        this.fqcn = fqcn;
         int index = fqcn.lastIndexOf(".");
 
         if (index == -1) {
@@ -68,7 +72,7 @@ public class Coder {
      * @param e
      * @param defaultComment
      */
-    public void javadoc(Element e, Runnable defaultDocument) {
+    public final void javadoc(Element e, Runnable defaultDocument) {
         javadoc(Apty.doc(e), defaultDocument);
     }
 
@@ -77,7 +81,7 @@ public class Coder {
      * 
      * @param e
      */
-    public void javadoc(String doc, Runnable defaultDocument) {
+    public final void javadoc(String doc, Runnable defaultDocument) {
         doc = doc.trim();
 
         if (doc.isEmpty()) {
@@ -97,7 +101,7 @@ public class Coder {
         }
     }
 
-    public void writeTry(Runnable tryBlock, Class<? extends Throwable> errorType, Consumer<String> catchBlock) {
+    public final void writeTry(Runnable tryBlock, Class<? extends Throwable> errorType, Consumer<String> catchBlock) {
         write("try {");
         write(tryBlock);
         write("} catch (", errorType, " e) {");
@@ -110,7 +114,7 @@ public class Coder {
      * 
      * @param nest A nested code.
      */
-    public void write(Runnable nest) {
+    public final void write(Runnable nest) {
         depth++;
         nest.run();
         depth--;
@@ -122,7 +126,7 @@ public class Coder {
      * @param code A code fragment.
      * @param nest A nested code.
      */
-    public Coder write(Object code, Runnable nest) {
+    public final Coder write(Object code, Runnable nest) {
         write(code, " {");
         write(nest);
         write("}");
@@ -136,7 +140,7 @@ public class Coder {
      * @param code A code2 fragment.
      * @param nest A nested code.
      */
-    public Coder write(Object code1, Object code2, Runnable nest) {
+    public final Coder write(Object code1, Object code2, Runnable nest) {
         write(code1, code2, " {");
         write(nest);
         write("}");
@@ -151,7 +155,7 @@ public class Coder {
      * @param code A code3 fragment.
      * @param nest A nested code.
      */
-    public Coder write(Object code1, Object code2, Object code3, Runnable nest) {
+    public final Coder write(Object code1, Object code2, Object code3, Runnable nest) {
         write(code1, code2, code3, " {");
         write(nest);
         write("}");
@@ -167,7 +171,7 @@ public class Coder {
      * @param code A code4 fragment.
      * @param nest A nested code.
      */
-    public Coder write(Object code1, Object code2, Object code3, Object code4, Runnable nest) {
+    public final Coder write(Object code1, Object code2, Object code3, Object code4, Runnable nest) {
         write(code1, code2, code3, code4, " {");
         write(nest);
         write("}");
@@ -184,7 +188,7 @@ public class Coder {
      * @param code A code5 fragment.
      * @param nest A nested code.
      */
-    public Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Runnable nest) {
+    public final Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Runnable nest) {
         write(code1, code2, code3, code4, code5, " {");
         write(nest);
         write("}");
@@ -202,7 +206,7 @@ public class Coder {
      * @param code A code6 fragment.
      * @param nest A nested code.
      */
-    public Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Runnable nest) {
+    public final Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Runnable nest) {
         write(code1, code2, code3, code4, code5, code6, " {");
         write(nest);
         write("}");
@@ -221,7 +225,7 @@ public class Coder {
      * @param code A code7 fragment.
      * @param nest A nested code.
      */
-    public Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Object code7, Runnable nest) {
+    public final Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Object code7, Runnable nest) {
         write(code1, code2, code3, code4, code5, code6, code7, " {");
         write(nest);
         write("}");
@@ -241,7 +245,7 @@ public class Coder {
      * @param code A code8 fragment.
      * @param nest A nested code.
      */
-    public Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Object code7, Object code8, Runnable nest) {
+    public final Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Object code7, Object code8, Runnable nest) {
         write(code1, code2, code3, code4, code5, code6, code7, code8, " {");
         write(nest);
         write("}");
@@ -262,7 +266,7 @@ public class Coder {
      * @param code A code9 fragment.
      * @param nest A nested code.
      */
-    public Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Object code7, Object code8, Object code9, Runnable nest) {
+    public final Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Object code7, Object code8, Object code9, Runnable nest) {
         write(code1, code2, code3, code4, code5, code6, code7, code8, code9, " {");
         write(nest);
         write("}");
@@ -274,7 +278,7 @@ public class Coder {
      * 
      * @param codes
      */
-    public void write(Object... codes) {
+    public final void write(Object... codes) {
         if (codes.length != 0) source.append(indent.repeat(depth));
 
         for (Object code : codes) {
@@ -317,7 +321,7 @@ public class Coder {
      * @param clazz A target class.
      * @return A class name to write.
      */
-    public String use(Class imported) {
+    public final String use(Class imported) {
         return use(new Type(imported));
     }
 
@@ -327,7 +331,7 @@ public class Coder {
      * @param clazz A target class.
      * @return A class name to write.
      */
-    public String use(Type imported) {
+    public final String use(Type imported) {
         if (!imported.isDefault() && !imported.isPrimitive() && !imported.generic) {
             if (!imported.packageName.equals(basePackage) && !imported.toString().startsWith(basePackage + "." + baseClass + ".")) {
                 imports.add(imported.toString());
@@ -342,14 +346,14 @@ public class Coder {
         return imported.className.concat(joiner.toString());
     }
 
-    public String classLiteral(Type clazz) {
+    public final String classLiteral(Type clazz) {
         return use(clazz).replaceAll("<.+>", "").concat(".class");
     }
 
     /**
      * Make the latest expression or block to statement by inserting semicolon.
      */
-    public void asStatement() {
+    public final void asStatement() {
         int index = source.lastIndexOf(END);
 
         if (index + END.length() == source.length()) {
@@ -359,7 +363,11 @@ public class Coder {
         }
     }
 
-    public String toCode() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final String toString() {
         StringBuilder code = new StringBuilder();
         code.append("package ").append(basePackage).append(";").append(END);
         code.append(END);

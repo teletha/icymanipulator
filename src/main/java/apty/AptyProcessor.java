@@ -34,6 +34,8 @@ import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 
+import apty.code.Coder;
+
 public abstract class AptyProcessor implements Processor {
 
     /** The file manager. */
@@ -129,13 +131,26 @@ public abstract class AptyProcessor implements Processor {
      * Write new source file.
      * 
      * @param fqcn A fully qualified class name to write.
-     * @param writingCode Write your code.
+     * @param coder Write your code.
      * @throws Exception
      */
-    protected final void createSourceFile(String fqcn, AnnotationProcessing<Writer> writingCode) throws Exception {
-        JavaFileObject implementationFile = filer.createSourceFile(fqcn);
+    protected final void writeSourceFile(String fqcn, AnnotationProcessing<Coder> coding) throws Exception {
+        Coder coder = new Coder(fqcn);
+        coding.process(coder);
+
+        writeSourceFileBy(coder);
+    }
+
+    /**
+     * Write new source file.
+     * 
+     * @param coder Write your code.
+     * @throws Exception
+     */
+    protected final void writeSourceFileBy(Coder coding) throws Exception {
+        JavaFileObject implementationFile = filer.createSourceFile(coding.fqcn);
         try (Writer writer = new OutputStreamWriter(implementationFile.openOutputStream(), StandardCharsets.UTF_8)) {
-            writingCode.process(writer);
+            writer.write(coding.toString());
         }
     }
 }

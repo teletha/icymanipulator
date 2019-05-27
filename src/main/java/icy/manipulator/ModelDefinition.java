@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package icy.manipulator.model;
+package icy.manipulator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,8 +32,6 @@ import javax.lang.model.type.TypeMirror;
 import apty.Apty;
 import apty.Fail;
 import apty.Type;
-import icy.manipulator.CodeGenerator;
-import icy.manipulator.Icy;
 import icy.manipulator.Icy.Intercept;
 import icy.manipulator.Icy.Overload;
 import icy.manipulator.util.Lists;
@@ -439,13 +437,13 @@ public class ModelDefinition {
             TypeElement type = (TypeElement) element;
             String name = type.getSimpleName().toString();
 
-            if (name.equals(CodeGenerator.AssignableAll)) {
+            if (name.equals(IcyManipulator.AssignableAll)) {
                 root: for (TypeMirror interfaceType : type.getInterfaces()) {
                     // estimate property name
                     String interfaceName = Apty.simpleName(interfaceType);
 
-                    if (interfaceName.startsWith(CodeGenerator.Assignable)) {
-                        String proerptyName = Strings.decapitalize(interfaceName.substring(CodeGenerator.Assignable.length()));
+                    if (interfaceName.startsWith(IcyManipulator.Assignable)) {
+                        String proerptyName = Strings.decapitalize(interfaceName.substring(IcyManipulator.Assignable.length()));
 
                         for (ExecutableElement getter : parentMethods) {
                             // check name
@@ -467,7 +465,7 @@ public class ModelDefinition {
                         }
                     }
                 }
-            } else if (name.equals(CodeGenerator.ArbitraryInterface)) {
+            } else if (name.equals(IcyManipulator.ArbitraryInterface)) {
                 List<ExecutableElement> setters = Apty.setters(type);
 
                 root: for (ExecutableElement getter : parentMethods) {
@@ -509,7 +507,7 @@ public class ModelDefinition {
                 .stream()
                 .filter(i -> i.getKind() == ElementKind.INTERFACE)
                 .map(i -> (TypeElement) i)
-                .filter(i -> i.getQualifiedName().toString().endsWith(CodeGenerator.ArbitraryInterface))
+                .filter(i -> i.getQualifiedName().toString().endsWith(IcyManipulator.ArbitraryInterface))
                 .findFirst()
                 .map(i -> new ModelDefinition(parent).analyze())
                 .or(() -> analyzeParent(parent));

@@ -7,9 +7,11 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package icy.manipulator.model;
+package icy.manipulator;
 
 import org.junit.jupiter.api.Test;
+
+import icy.manipulator.MethodDefinition;
 
 class MethodDefinitionTest {
 

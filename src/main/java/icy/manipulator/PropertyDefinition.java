@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package icy.manipulator.model;
+package icy.manipulator;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
@@ -16,8 +16,6 @@ import javax.lang.model.element.Modifier;
 import apty.Apty;
 import apty.Fail;
 import apty.Type;
-import icy.manipulator.CodeGenerator;
-import icy.manipulator.Icy;
 import icy.manipulator.Icy.Property;
 import icy.manipulator.util.Strings;
 
@@ -132,9 +130,9 @@ public class PropertyDefinition {
      */
     public String assignableInterfaceName() {
         if (isArbitrary) {
-            return CodeGenerator.ArbitraryInterface;
+            return IcyManipulator.ArbitraryInterface;
         } else {
-            return CodeGenerator.Assignable + Strings.capitalize(name);
+            return IcyManipulator.Assignable + Strings.capitalize(name);
         }
     }
 
