@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import apty.Apty;
-import icy.manipulator.Type;
+import apty.code.Type;
 import icy.manipulator.util.Strings;
 
 public class Synthesizer {

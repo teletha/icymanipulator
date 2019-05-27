@@ -20,7 +20,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.type.ExecutableType;
 
 import apty.Apty;
-import icy.manipulator.Type;
+import apty.code.Type;
 import icy.manipulator.util.Strings;
 
 public class MethodDefinition {

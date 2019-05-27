@@ -31,11 +31,11 @@ import javax.lang.model.type.TypeMirror;
 
 import apty.Apty;
 import apty.Fail;
+import apty.code.Type;
 import icy.manipulator.CodeGenerator;
 import icy.manipulator.Icy;
 import icy.manipulator.Icy.Intercept;
 import icy.manipulator.Icy.Overload;
-import icy.manipulator.Type;
 import icy.manipulator.util.Lists;
 import icy.manipulator.util.Strings;
 

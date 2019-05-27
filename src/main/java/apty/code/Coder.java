@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package icy.manipulator;
+package apty.code;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,8 +19,6 @@ import java.util.function.Consumer;
 import javax.lang.model.element.Element;
 
 import apty.Apty;
-import apty.Codable;
-import apty.Importer;
 import icy.manipulator.model.MethodDefinition;
 
 public class Coder implements Importer {

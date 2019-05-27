@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package apty;
+package apty.code;
 
 public interface Codable {
 

@@ -7,9 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package apty;
-
-import icy.manipulator.Type;
+package apty.code;
 
 public interface Importer {
 

@@ -20,6 +20,7 @@ import java.util.function.UnaryOperator;
 import javax.annotation.processing.Generated;
 
 import apty.Apty;
+import apty.code.Coder;
 import icy.manipulator.model.MethodDefinition;
 import icy.manipulator.model.ModelDefinition;
 import icy.manipulator.model.PropertyDefinition;

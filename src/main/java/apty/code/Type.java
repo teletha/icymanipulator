@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package icy.manipulator;
+package apty.code;
 
 import java.util.List;
 import java.util.Objects;
@@ -123,7 +123,7 @@ public class Type {
      * 
      * @return
      */
-    boolean isDefault() {
+    public boolean isDefault() {
         return packageName.equals("java.lang");
     }
 
@@ -134,7 +134,7 @@ public class Type {
      * 
      * @return
      */
-    boolean isPrimitive() {
+    public boolean isPrimitive() {
         switch (className) {
         case "int":
         case "long":
@@ -160,7 +160,7 @@ public class Type {
      * @param type
      * @return
      */
-    Type wrap() {
+    public Type wrap() {
         switch (className) {
         case "int":
             return new Type(Integer.class);
@@ -196,7 +196,7 @@ public class Type {
      * 
      * @return
      */
-    String defaultValue() {
+    public String defaultValue() {
         switch (className) {
         case "int":
         case "byte":

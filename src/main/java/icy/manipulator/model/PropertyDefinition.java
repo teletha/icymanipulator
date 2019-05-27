@@ -15,10 +15,10 @@ import javax.lang.model.element.Modifier;
 
 import apty.Apty;
 import apty.Fail;
+import apty.code.Type;
 import icy.manipulator.CodeGenerator;
 import icy.manipulator.Icy;
 import icy.manipulator.Icy.Property;
-import icy.manipulator.Type;
 import icy.manipulator.util.Strings;
 
 public class PropertyDefinition {

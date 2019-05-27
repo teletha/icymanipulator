@@ -51,7 +51,7 @@ import javax.lang.model.util.SimpleElementVisitor9;
 import javax.lang.model.util.SimpleTypeVisitor9;
 import javax.lang.model.util.Types;
 
-import icy.manipulator.Type;
+import apty.code.Type;
 
 public class Apty {
 

@@ -7,13 +7,10 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator;
+package apty.code;
 
 import java.util.ArrayList;
 import java.util.StringJoiner;
-
-import apty.Codable;
-import apty.Importer;
 
 /**
  * 

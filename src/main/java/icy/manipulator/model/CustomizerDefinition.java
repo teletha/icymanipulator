@@ -22,7 +22,7 @@ import javax.lang.model.type.ExecutableType;
 import javax.lang.model.type.TypeMirror;
 
 import apty.Apty;
-import icy.manipulator.Type;
+import apty.code.Type;
 
 public class CustomizerDefinition {
 
