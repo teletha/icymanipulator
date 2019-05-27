@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package icy.manipulator;
+package apty;
 
 import javax.lang.model.element.Element;
 

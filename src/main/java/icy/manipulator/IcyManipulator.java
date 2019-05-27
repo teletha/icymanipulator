@@ -30,6 +30,8 @@ import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 
+import apty.Apty;
+import apty.Fail;
 import icy.manipulator.model.ModelDefinition;
 
 public class IcyManipulator implements Processor {
@@ -75,8 +77,7 @@ public class IcyManipulator implements Processor {
         this.filer = process.getFiler();
         this.messager = process.getMessager();
 
-        Abyss.types = process.getTypeUtils();
-        Abyss.elements = process.getElementUtils();
+        Apty.initialize(process);
     }
 
     /**

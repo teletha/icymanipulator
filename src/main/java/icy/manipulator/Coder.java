@@ -16,6 +16,7 @@ import java.util.function.Consumer;
 
 import javax.lang.model.element.Element;
 
+import apty.Apty;
 import icy.manipulator.model.MethodDefinition;
 
 public class Coder {
@@ -49,7 +50,7 @@ public class Coder {
      * @param defaultComment
      */
     public void javadoc(Element e, Runnable defaultDocument) {
-        javadoc(Abyss.doc(e), defaultDocument);
+        javadoc(Apty.doc(e), defaultDocument);
     }
 
     /**

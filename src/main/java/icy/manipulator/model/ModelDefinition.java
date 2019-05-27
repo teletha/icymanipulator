@@ -29,13 +29,13 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
 
+import apty.Apty;
+import apty.Fail;
 import icy.manipulator.CodeGenerator;
-import icy.manipulator.Fail;
 import icy.manipulator.Icy;
 import icy.manipulator.Icy.Intercept;
 import icy.manipulator.Icy.Overload;
 import icy.manipulator.Type;
-import icy.manipulator.Abyss;
 import icy.manipulator.util.Lists;
 import icy.manipulator.util.Strings;
 
@@ -82,7 +82,7 @@ public class ModelDefinition {
 
         if (icy == null) {
             // by generated implementation
-            TypeElement model = Abyss.parent(e);
+            TypeElement model = Apty.parent(e);
             this.name = model.getSimpleName().toString();
             this.type = Type.of(model);
             this.implType = Type.of(e);
@@ -93,9 +93,9 @@ public class ModelDefinition {
             this.implType = Type.of(e.getQualifiedName().toString().replaceAll(icy.modelNamePattern() + "$", "$1"));
 
             // validate in 3 times, don't validate all once
-            Abyss.methods(e).forEach(this::validateProperty);
-            Abyss.methods(e).forEach(this::validateOverload);
-            Abyss.methods(e).forEach(this::validateIntercept);
+            Apty.methods(e).forEach(this::validateProperty);
+            Apty.methods(e).forEach(this::validateOverload);
+            Apty.methods(e).forEach(this::validateIntercept);
         }
     }
 
@@ -429,7 +429,7 @@ public class ModelDefinition {
      * @return Chainable API.
      */
     private ModelDefinition analyze() {
-        List<ExecutableElement> parentMethods = Abyss.getters(Abyss.parent(e));
+        List<ExecutableElement> parentMethods = Apty.getters(Apty.parent(e));
 
         for (Element element : e.getEnclosedElements()) {
             if (element.getKind() != ElementKind.INTERFACE) {
@@ -442,7 +442,7 @@ public class ModelDefinition {
             if (name.equals(CodeGenerator.AssignableAll)) {
                 root: for (TypeMirror interfaceType : type.getInterfaces()) {
                     // estimate property name
-                    String interfaceName = Abyss.simpleName(interfaceType);
+                    String interfaceName = Apty.simpleName(interfaceType);
 
                     if (interfaceName.startsWith(CodeGenerator.Assignable)) {
                         String proerptyName = Strings.decapitalize(interfaceName.substring(CodeGenerator.Assignable.length()));
@@ -456,10 +456,10 @@ public class ModelDefinition {
                             PropertyDefinition property = new PropertyDefinition(getter);
                             requiredProperties.add(property);
 
-                            for (ExecutableElement method : Abyss.methods(interfaceType)) {
+                            for (ExecutableElement method : Apty.methods(interfaceType)) {
                                 List<? extends VariableElement> parameters = method.getParameters();
 
-                                if (parameters.size() != 1 || Abyss.diff(getter.getReturnType(), parameters.get(0))) {
+                                if (parameters.size() != 1 || Apty.diff(getter.getReturnType(), parameters.get(0))) {
                                     overloadForProperty.add(property, new MethodDefinition(method));
                                 }
                             }
@@ -468,7 +468,7 @@ public class ModelDefinition {
                     }
                 }
             } else if (name.equals(CodeGenerator.ArbitraryInterface)) {
-                List<ExecutableElement> setters = Abyss.setters(type);
+                List<ExecutableElement> setters = Apty.setters(type);
 
                 root: for (ExecutableElement getter : parentMethods) {
                     for (ExecutableElement setter : setters) {
@@ -478,7 +478,7 @@ public class ModelDefinition {
                         }
 
                         // check type
-                        if (!Abyss.same(getter.getReturnType(), setter.getParameters().get(0))) {
+                        if (!Apty.same(getter.getReturnType(), setter.getParameters().get(0))) {
                             continue;
                         }
                         arbitraryProperties.add(new PropertyDefinition(getter));
@@ -499,7 +499,7 @@ public class ModelDefinition {
      */
     private Optional<ModelDefinition> analyzeParent(TypeElement e) {
         // search parent class
-        TypeElement parent = Abyss.parent(e);
+        TypeElement parent = Apty.parent(e);
 
         if (parent == null) {
             return Optional.empty();

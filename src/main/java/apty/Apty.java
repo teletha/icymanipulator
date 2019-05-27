@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package icy.manipulator;
+package apty;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -21,6 +21,7 @@ import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
+import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.Element;
@@ -50,7 +51,9 @@ import javax.lang.model.util.SimpleElementVisitor9;
 import javax.lang.model.util.SimpleTypeVisitor9;
 import javax.lang.model.util.Types;
 
-public class Abyss {
+import icy.manipulator.Type;
+
+public class Apty {
 
     /** The getter pattern. */
     private static final Predicate<ExecutableElement> getter = m -> {
@@ -63,10 +66,20 @@ public class Abyss {
     };
 
     /** The type utility. */
-    static Types types;
+    private static Types types;
 
     /** The element utility. */
-    static Elements elements;
+    private static Elements elements;
+
+    /**
+     * Initialize {@link Apty}.
+     * 
+     * @param process
+     */
+    public static void initialize(ProcessingEnvironment process) {
+        types = process.getTypeUtils();
+        elements = process.getElementUtils();
+    }
 
     /**
      * List up class hierarchy.
@@ -210,7 +223,7 @@ public class Abyss {
                     }
                 }
             }
-            e = Abyss.parent(e);
+            e = Apty.parent(e);
         }
         return methods;
     }
@@ -359,7 +372,7 @@ public class Abyss {
      * @return
      */
     public static List<? extends TypeMirror> variables(TypeElement target, Class type) {
-        return variables(target, type, Abyss::same);
+        return variables(target, type, Apty::same);
     }
 
     /**
@@ -370,7 +383,7 @@ public class Abyss {
      * @return
      */
     public static List<? extends TypeMirror> variables(TypeElement target, DeclaredType type) {
-        return variables(target, type, Abyss::same);
+        return variables(target, type, Apty::same);
     }
 
     /**
@@ -381,7 +394,7 @@ public class Abyss {
      * @return
      */
     public static List<? extends TypeMirror> variables(DeclaredType target, Class type) {
-        return variables(cast(target.asElement(), TypeElement.class), type, Abyss::same);
+        return variables(cast(target.asElement(), TypeElement.class), type, Apty::same);
     }
 
     /**
@@ -392,7 +405,7 @@ public class Abyss {
      * @return
      */
     public static List<? extends TypeMirror> variables(DeclaredType target, DeclaredType type) {
-        return variables(cast(target.asElement(), TypeElement.class), type, Abyss::same);
+        return variables(cast(target.asElement(), TypeElement.class), type, Apty::same);
     }
 
     /**
@@ -411,7 +424,7 @@ public class Abyss {
                     return cast(interfaceType, DeclaredType.class).getTypeArguments();
                 }
             }
-            target = Abyss.parent(target);
+            target = Apty.parent(target);
         }
         return Collections.EMPTY_LIST;
     }
@@ -470,7 +483,7 @@ public class Abyss {
      * @return
      */
     public static Optional<AnnotationValue> annotationValue(Element e, Class<? extends Annotation> annotationType, String name) {
-        return annotation(e, annotationType).map(Abyss::annotationValues).flatMap(values -> {
+        return annotation(e, annotationType).map(Apty::annotationValues).flatMap(values -> {
             for (Entry<ExecutableElement, AnnotationValue> entry : values.entrySet()) {
                 if (entry.getKey().getSimpleName().contentEquals(name)) {
                     return Optional.of(entry.getValue());
@@ -523,10 +536,7 @@ public class Abyss {
      * @return A new validator.
      */
     public static Predicate<TypeMirror> implement(TypeMirror type) {
-        return target -> {
-            System.out.println(target + "       " + type);
-            return types.isSubtype(target, type);
-        };
+        return target -> types.isSubtype(target, types.erasure(type));
     }
 
     /**

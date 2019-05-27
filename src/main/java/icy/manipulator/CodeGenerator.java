@@ -19,6 +19,7 @@ import java.util.function.UnaryOperator;
 
 import javax.annotation.processing.Generated;
 
+import apty.Apty;
 import icy.manipulator.model.MethodDefinition;
 import icy.manipulator.model.ModelDefinition;
 import icy.manipulator.model.PropertyDefinition;
@@ -508,7 +509,7 @@ public class CodeGenerator {
         // Auto-Expanded Overload Setter
         // =========================================
         if (p.autoExpandable) {
-            for (String name : Abyss.enumConstantNames(p.element.getReturnType())) {
+            for (String name : Apty.enumConstantNames(p.element.getReturnType())) {
                 code.write();
                 code.write("/**");
                 code.write(" * Assign {@link ", p.type.className, "#", name, "} to ", p.name, " property.");

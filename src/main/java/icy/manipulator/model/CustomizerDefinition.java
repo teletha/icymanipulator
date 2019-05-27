@@ -21,7 +21,7 @@ import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.ExecutableType;
 import javax.lang.model.type.TypeMirror;
 
-import icy.manipulator.Abyss;
+import apty.Apty;
 import icy.manipulator.Type;
 
 public class CustomizerDefinition {
@@ -42,13 +42,11 @@ public class CustomizerDefinition {
      * @param customizer
      */
     public CustomizerDefinition(PropertyDefinition property, TypeElement customizer) {
-        this.variable = Abyss.variables(customizer, Supplier.class).get(0);
+        this.variable = Apty.variables(customizer, Supplier.class).get(0);
         this.e = customizer;
         this.property = property;
-        System.out.println(Abyss.implement(customizer, Consumer.class) + "            " + Abyss
-                .check(customizer, Abyss.implement(Consumer.class)));
-        this.requireSetter = Abyss.check(customizer, Abyss.implement(Consumer.class));
-        this.methods = Abyss.methodsInHierarchy(customizer, m -> m.getSimpleName().toString().contains("$")).stream().map(m -> {
+        this.requireSetter = Apty.check(customizer, Apty.implement(Consumer.class));
+        this.methods = Apty.methodsInHierarchy(customizer, m -> m.getSimpleName().toString().contains("$")).stream().map(m -> {
             List<Type> types = ((ExecutableType) m.asType()).getParameterTypes()
                     .stream()
                     .map(this::convert)
@@ -58,7 +56,7 @@ public class CustomizerDefinition {
                     .map(element -> element.getSimpleName().toString())
                     .collect(Collectors.toUnmodifiableList());
 
-            return new MethodDefinition(name(m, property), convert(m.getReturnType()), types, names, Abyss.doc(m));
+            return new MethodDefinition(name(m, property), convert(m.getReturnType()), types, names, Apty.doc(m));
         }).collect(Collectors.toUnmodifiableList());
     }
 
@@ -74,7 +72,7 @@ public class CustomizerDefinition {
 
     private Type convert(TypeMirror type) {
         // check base
-        if (Abyss.same(type, variable)) {
+        if (Apty.same(type, variable)) {
             return property.type;
         }
 
@@ -83,7 +81,7 @@ public class CustomizerDefinition {
         List<Type> variables = new ArrayList();
 
         for (TypeMirror argType : declaredType.getTypeArguments()) {
-            if (Abyss.same(argType, variable)) {
+            if (Apty.same(argType, variable)) {
                 variables.add(property.type);
             } else {
                 variables.add(Type.of(argType));

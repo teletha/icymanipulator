@@ -13,9 +13,9 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 
-import icy.manipulator.Abyss;
+import apty.Apty;
+import apty.Fail;
 import icy.manipulator.CodeGenerator;
-import icy.manipulator.Fail;
 import icy.manipulator.Icy;
 import icy.manipulator.Icy.Property;
 import icy.manipulator.Type;
@@ -80,14 +80,14 @@ public class PropertyDefinition {
         } else {
             this.nullable = annotation.nullable();
             this.mutable = annotation.mutable();
-            this.autoExpandable = Abyss.isEnum(method.getReturnType()) ? annotation.overloadEnum() : true;
+            this.autoExpandable = Apty.isEnum(method.getReturnType()) ? annotation.overloadEnum() : true;
 
             Icy icy = method.getEnclosingElement().getAnnotation(Icy.class);
             this.getterModifier = validate(method, annotation.getterModifier(), icy.getterModifier());
             this.setterModifier = validate(method, annotation.setterModifier(), icy.setterModifier());
-            this.custom = Abyss.annotationClassValue(method, Icy.Property.class, "custom")
-                    .filter(Abyss::isNotInterface)
-                    .map(Abyss::cast)
+            this.custom = Apty.annotationClassValue(method, Icy.Property.class, "custom")
+                    .filter(Apty::isNotInterface)
+                    .map(Apty::cast)
                     .map(customizer -> new CustomizerDefinition(this, customizer))
                     .orElse(null);
         }
