@@ -13,45 +13,22 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Set;
 
-import javax.annotation.processing.Completion;
-import javax.annotation.processing.Filer;
-import javax.annotation.processing.Messager;
-import javax.annotation.processing.ProcessingEnvironment;
-import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
-import javax.lang.model.SourceVersion;
-import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 
-import apty.Apty;
+import apty.AptyProcessor;
 import apty.Fail;
 import icy.manipulator.model.ModelDefinition;
 
-public class IcyManipulator implements Processor {
+public class IcyManipulator extends AptyProcessor {
 
     /** The utility. */
     static ClassImporter importer;
-
-    /** The file manager. */
-    private Filer filer;
-
-    /** The notifier. */
-    private Messager messager;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Set<String> getSupportedOptions() {
-        return Set.of();
-    }
 
     /**
      * {@inheritDoc}
@@ -59,33 +36,6 @@ public class IcyManipulator implements Processor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         return Set.of(Icy.class.getName());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public SourceVersion getSupportedSourceVersion() {
-        return SourceVersion.latest();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void init(ProcessingEnvironment process) {
-        this.filer = process.getFiler();
-        this.messager = process.getMessager();
-
-        Apty.initialize(process);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Iterable<? extends Completion> getCompletions(Element element, AnnotationMirror annotation, ExecutableElement member, String userText) {
-        return List.of();
     }
 
     /**
