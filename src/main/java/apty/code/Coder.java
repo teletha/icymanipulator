@@ -327,7 +327,8 @@ public class Coder {
      * @return A class name to write.
      */
     public final String use(Type imported) {
-        if (!imported.isDefault() && !imported.isPrimitive() && !imported.generic) {
+        System.out.println(imported);
+        if (!imported.isDefault() && !imported.isPrimitive() && !imported.generic && !imported.isWildcard()) {
             if (!imported.packageName.equals(basePackage) && !imported.toString().startsWith(basePackage + "." + baseClass + ".")) {
                 imports.add(Strings.sanitize(imported.toString()));
             }

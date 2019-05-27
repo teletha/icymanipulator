@@ -110,13 +110,6 @@ public class Type {
         }
     }
 
-    public Type resetVariable(Type variable) {
-        this.variable.clear();
-        this.variable.add(variable);
-
-        return this;
-    }
-
     /**
      * <p>
      * Check default package.
@@ -137,6 +130,17 @@ public class Type {
      */
     public boolean isArray() {
         return className.endsWith("[]");
+    }
+
+    /**
+     * <p>
+     * Check array type.
+     * </p>
+     * 
+     * @return
+     */
+    public boolean isWildcard() {
+        return className.contains("?") || packageName.contains("?");
     }
 
     /**
@@ -455,7 +459,7 @@ public class Type {
          */
         @Override
         public Type visitWildcard(WildcardType t, List<Type> p) {
-            return null;
+            return new Type(t.toString(), null);
         }
 
         /**

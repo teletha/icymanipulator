@@ -234,7 +234,7 @@ public class Apty {
      * @return
      */
     public static boolean same(TypeMirror type, Element element) {
-        return types.isSameType(type, element.asType());
+        return same(type, element.asType());
     }
 
     /**
@@ -245,7 +245,7 @@ public class Apty {
      * @return
      */
     public static boolean same(TypeMirror type, TypeMirror other) {
-        return types.isSameType(type, other);
+        return types.isSameType(types.erasure(type), types.erasure(other));
     }
 
     /**
@@ -256,7 +256,7 @@ public class Apty {
      * @return
      */
     public static boolean same(TypeMirror type, Class clazz) {
-        return Type.of(type).fqcn().equals(clazz.getCanonicalName());
+        return same(type, elements.getTypeElement(clazz.getCanonicalName()));
     }
 
     /**
