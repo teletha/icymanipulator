@@ -37,13 +37,13 @@ import icy.manipulator.Icy.Overload;
 import icy.manipulator.util.Lists;
 import icy.manipulator.util.Strings;
 
-public class ModelDefinition {
+public class ModelInfo {
 
     /** The source code location. */
     public final TypeElement e;
 
     /** The parent model. */
-    public final Optional<ModelDefinition> parent;
+    public final Optional<ModelInfo> parent;
 
     /** The model name. */
     public final String name;
@@ -55,23 +55,23 @@ public class ModelDefinition {
     public final Type implType;
 
     /** The required properties. */
-    private final List<PropertyDefinition> requiredProperties = new LinkedList();
+    private final List<PropertyInfo> requiredProperties = new LinkedList();
 
     /** The arbitrary properties. */
-    private final List<PropertyDefinition> arbitraryProperties = new LinkedList();
+    private final List<PropertyInfo> arbitraryProperties = new LinkedList();
 
     /** The overload method for each property */
-    private final Items<MethodDefinition> overloadForProperty = new Items();
+    private final Items<MethodInfo> overloadForProperty = new Items();
 
     /** The intercept method for each property */
-    private final Items<MethodDefinition> interceptForProperty = new Items();
+    private final Items<MethodInfo> interceptForProperty = new Items();
 
     /**
      * 
      */
-    public ModelDefinition(Element element) {
+    public ModelInfo(Element element) {
         if (element.getKind() != ElementKind.CLASS) {
-            throw new Fail(element, ModelDefinition.class.getSimpleName() + " requires class.");
+            throw new Fail(element, ModelInfo.class.getSimpleName() + " requires class.");
         }
         this.e = (TypeElement) element;
         this.parent = analyzeParent(e);
@@ -119,7 +119,7 @@ public class ModelDefinition {
             throw new Fail(method, "Property declaring method must return something.");
         }
 
-        PropertyDefinition property = new PropertyDefinition(method);
+        PropertyInfo property = new PropertyInfo(method);
 
         if (property.isArbitrary) {
             addArbitraryProperty(property);
@@ -135,10 +135,10 @@ public class ModelDefinition {
         Overload overload = m.getAnnotation(Icy.Overload.class);
 
         if (overload != null) {
-            MethodDefinition method = new MethodDefinition(m);
+            MethodInfo method = new MethodInfo(m);
             String targetProperty = overload.value().isEmpty() ? method.name : overload.value();
 
-            PropertyDefinition property = findPropertyByName(targetProperty);
+            PropertyInfo property = findPropertyByName(targetProperty);
 
             if (!method.returnType.equals(property.type)) {
                 throw new Fail(m, "Overload method [" + method + "] must return the same type of the target property [" + property + "].");
@@ -154,10 +154,10 @@ public class ModelDefinition {
         Intercept intercept = m.getAnnotation(Icy.Intercept.class);
 
         if (intercept != null) {
-            MethodDefinition method = new MethodDefinition(m);
+            MethodInfo method = new MethodInfo(m);
             String targetProperty = intercept.value().isEmpty() ? method.name : intercept.value();
 
-            PropertyDefinition property = findPropertyByName(targetProperty);
+            PropertyInfo property = findPropertyByName(targetProperty);
 
             if (!method.returnType.equals(property.type)) {
                 throw new Fail(m, "Intercept method [" + method + "] must return the same type of the target property [" + property + "].");
@@ -182,21 +182,21 @@ public class ModelDefinition {
                 findPropertyByName(propertyName, m, "Although intercept method [" + method + "] references a setter of the property [" + propertyName + "] at " + Strings
                         .ordinal(i + 1) + " argument, the property is not defined in " + name + " model. Define new [" + propertyName + "] property or specify a collect property name.");
             }
-            interceptForProperty.add(property, new MethodDefinition(m));
+            interceptForProperty.add(property, new MethodInfo(m));
         }
     }
 
     /**
      * Add required property.
      */
-    public void addRequiredProperty(PropertyDefinition property) {
+    public void addRequiredProperty(PropertyInfo property) {
         requiredProperties.add(property);
     }
 
     /**
      * Add arbitrary property.
      */
-    public void addArbitraryProperty(PropertyDefinition property) {
+    public void addArbitraryProperty(PropertyInfo property) {
         arbitraryProperties.add(property);
     }
 
@@ -205,7 +205,7 @@ public class ModelDefinition {
      * 
      * @return
      */
-    public List<PropertyDefinition> ownProperties() {
+    public List<PropertyInfo> ownProperties() {
         return Lists.merge(requiredProperties, arbitraryProperties);
     }
 
@@ -214,7 +214,7 @@ public class ModelDefinition {
      * 
      * @return
      */
-    public List<PropertyDefinition> ownMutableProperties() {
+    public List<PropertyInfo> ownMutableProperties() {
         return ownProperties().stream().filter(p -> p.mutable).collect(Collectors.toUnmodifiableList());
     }
 
@@ -223,7 +223,7 @@ public class ModelDefinition {
      * 
      * @return
      */
-    public List<PropertyDefinition> ownRequiredProperties() {
+    public List<PropertyInfo> ownRequiredProperties() {
         return Collections.unmodifiableList(requiredProperties);
     }
 
@@ -232,7 +232,7 @@ public class ModelDefinition {
      * 
      * @return
      */
-    public List<PropertyDefinition> ownArbitraryProperties() {
+    public List<PropertyInfo> ownArbitraryProperties() {
         return Collections.unmodifiableList(arbitraryProperties);
     }
 
@@ -241,11 +241,11 @@ public class ModelDefinition {
      * 
      * @return
      */
-    public List<PropertyDefinition> requiredProperties() {
+    public List<PropertyInfo> requiredProperties() {
         if (parent.isEmpty()) {
             return ownRequiredProperties();
         } else {
-            List<PropertyDefinition> properties = new ArrayList();
+            List<PropertyInfo> properties = new ArrayList();
             properties.addAll(parent.get().requiredProperties());
             properties.addAll(requiredProperties);
             return properties;
@@ -257,7 +257,7 @@ public class ModelDefinition {
      * 
      * @return
      */
-    public Optional<PropertyDefinition> firstRequiredProperty() {
+    public Optional<PropertyInfo> firstRequiredProperty() {
         return parent.flatMap(p -> p.firstRequiredProperty()).or(() -> requiredProperties.stream().findFirst());
     }
 
@@ -332,7 +332,7 @@ public class ModelDefinition {
      */
     public String requiredRouteType(int depature, String destination) {
         StringBuilder builder = new StringBuilder();
-        List<PropertyDefinition> properties = requiredProperties();
+        List<PropertyInfo> properties = requiredProperties();
 
         for (int i = depature; i < properties.size(); i++) {
             builder.append(properties.get(i).assignableInterfaceName()).append("<");
@@ -350,7 +350,7 @@ public class ModelDefinition {
      * @param name A property name.
      * @return
      */
-    public PropertyDefinition findPropertyByName(String name) {
+    public PropertyInfo findPropertyByName(String name) {
         return findPropertyByName(name, () -> new Fail(e, "Although you specify the property [" + name + "], it is not found. Specify the correct property name."));
     }
 
@@ -360,7 +360,7 @@ public class ModelDefinition {
      * @param name A property name.
      * @return
      */
-    public PropertyDefinition findPropertyByName(String name, Element location, String message) {
+    public PropertyInfo findPropertyByName(String name, Element location, String message) {
         return findPropertyByName(name, () -> new Fail(location, message));
     }
 
@@ -370,7 +370,7 @@ public class ModelDefinition {
      * @param name A property name.
      * @return
      */
-    public PropertyDefinition findPropertyByName(String name, Supplier<Fail> notFound) {
+    public PropertyInfo findPropertyByName(String name, Supplier<Fail> notFound) {
         return ownProperties().stream()
                 .filter(p -> p.name.equals(name))
                 .findFirst()
@@ -384,7 +384,7 @@ public class ModelDefinition {
      * @param property A target property.
      * @return A list of overload methods.
      */
-    public List<MethodDefinition> findOverloadsFor(PropertyDefinition property) {
+    public List<MethodInfo> findOverloadsFor(PropertyInfo property) {
         if (overloadForProperty.holder.containsKey(property)) {
             return overloadForProperty.find(property);
         } else {
@@ -402,7 +402,7 @@ public class ModelDefinition {
      * @param property A target property.
      * @return A list of intercept methods.
      */
-    public List<MethodDefinition> findInterceptsFor(PropertyDefinition property) {
+    public List<MethodInfo> findInterceptsFor(PropertyInfo property) {
         return interceptForProperty.find(property);
     }
 
@@ -411,7 +411,7 @@ public class ModelDefinition {
      * 
      * @return
      */
-    public Optional<ModelDefinition> findNearestArbitraryModel() {
+    public Optional<ModelInfo> findNearestArbitraryModel() {
         return parent.flatMap(p -> {
             if (p.arbitraryProperties.isEmpty()) {
                 return p.findNearestArbitraryModel();
@@ -422,11 +422,11 @@ public class ModelDefinition {
     }
 
     /**
-     * Analuze {@link ModelDefinition} by its {@link Element}.
+     * Analuze {@link ModelInfo} by its {@link Element}.
      * 
      * @return Chainable API.
      */
-    private ModelDefinition analyze() {
+    private ModelInfo analyze() {
         List<ExecutableElement> parentMethods = Apty.getters(Apty.parent(e));
 
         for (Element element : e.getEnclosedElements()) {
@@ -451,14 +451,14 @@ public class ModelDefinition {
                                 continue;
                             }
 
-                            PropertyDefinition property = new PropertyDefinition(getter);
+                            PropertyInfo property = new PropertyInfo(getter);
                             requiredProperties.add(property);
 
                             for (ExecutableElement method : Apty.methods(interfaceType)) {
                                 List<? extends VariableElement> parameters = method.getParameters();
 
                                 if (parameters.size() != 1 || Apty.diff(getter.getReturnType(), parameters.get(0))) {
-                                    overloadForProperty.add(property, new MethodDefinition(method));
+                                    overloadForProperty.add(property, new MethodInfo(method));
                                 }
                             }
                             continue root;
@@ -479,7 +479,7 @@ public class ModelDefinition {
                         if (!Apty.same(getter.getReturnType(), setter.getParameters().get(0))) {
                             continue;
                         }
-                        arbitraryProperties.add(new PropertyDefinition(getter));
+                        arbitraryProperties.add(new PropertyInfo(getter));
                         continue root;
                     }
                 }
@@ -495,7 +495,7 @@ public class ModelDefinition {
      * @param e
      * @return
      */
-    private Optional<ModelDefinition> analyzeParent(TypeElement e) {
+    private Optional<ModelInfo> analyzeParent(TypeElement e) {
         // search parent class
         TypeElement parent = Apty.parent(e);
 
@@ -509,7 +509,7 @@ public class ModelDefinition {
                 .map(i -> (TypeElement) i)
                 .filter(i -> i.getQualifiedName().toString().endsWith(IcyManipulator.ArbitraryInterface))
                 .findFirst()
-                .map(i -> new ModelDefinition(parent).analyze())
+                .map(i -> new ModelInfo(parent).analyze())
                 .or(() -> analyzeParent(parent));
     }
 
@@ -534,12 +534,12 @@ public class ModelDefinition {
     }
 
     /**
-     * Special KVS for {@link PropertyDefinition}.
+     * Special KVS for {@link PropertyInfo}.
      */
     private static class Items<T> {
 
         /** The actual item holder. */
-        private HashMap<PropertyDefinition, List<T>> holder = new HashMap();
+        private HashMap<PropertyInfo, List<T>> holder = new HashMap();
 
         /**
          * Add item.
@@ -547,7 +547,7 @@ public class ModelDefinition {
          * @param property A key property.
          * @param item An item to add.
          */
-        private void add(PropertyDefinition property, T item) {
+        private void add(PropertyInfo property, T item) {
             holder.computeIfAbsent(property, p -> new LinkedList<T>()).add(item);
         }
 
@@ -557,7 +557,7 @@ public class ModelDefinition {
          * @param property A kye property.
          * @return A list of stored items.
          */
-        private List<T> find(PropertyDefinition property) {
+        private List<T> find(PropertyInfo property) {
             return holder.computeIfAbsent(property, p -> new LinkedList());
         }
 

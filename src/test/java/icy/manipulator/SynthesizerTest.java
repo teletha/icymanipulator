@@ -11,52 +11,52 @@ package icy.manipulator;
 
 import org.junit.jupiter.api.Test;
 
-import icy.manipulator.MethodDefinition;
+import icy.manipulator.MethodInfo;
 import icy.manipulator.Synthesizer;
 
 class SynthesizerTest {
 
     @Test
     void synthesize() {
-        MethodDefinition one1 = new MethodDefinition("first", void.class, String.class, "name");
+        MethodInfo one1 = new MethodInfo("first", void.class, String.class, "name");
         Synthesizer one = new Synthesizer(one1);
 
-        MethodDefinition second1 = new MethodDefinition("second", void.class, String.class, "type");
+        MethodInfo second1 = new MethodInfo("second", void.class, String.class, "type");
         Synthesizer second = new Synthesizer(second1);
 
         Synthesizer synthesized = one.synthesize(second);
         assert synthesized.methods.size() == 1;
-        assert synthesized.methods.get(0).equals(new MethodDefinition("first", void.class, String.class, "name", String.class, "type"));
+        assert synthesized.methods.get(0).equals(new MethodInfo("first", void.class, String.class, "name", String.class, "type"));
     }
 
     @Test
     void synthesize2() {
-        MethodDefinition one1 = new MethodDefinition("first", void.class, String.class, "name");
-        MethodDefinition one2 = new MethodDefinition("first", void.class, int.class, "age");
+        MethodInfo one1 = new MethodInfo("first", void.class, String.class, "name");
+        MethodInfo one2 = new MethodInfo("first", void.class, int.class, "age");
         Synthesizer one = new Synthesizer(one1, one2);
 
-        MethodDefinition second1 = new MethodDefinition("second", void.class, String.class, "type");
-        MethodDefinition second2 = new MethodDefinition("second", void.class, int.class, "pattern");
+        MethodInfo second1 = new MethodInfo("second", void.class, String.class, "type");
+        MethodInfo second2 = new MethodInfo("second", void.class, int.class, "pattern");
         Synthesizer second = new Synthesizer(second1, second2);
 
         Synthesizer synthesized = one.synthesize(second);
         assert synthesized.methods.size() == 4;
-        assert synthesized.methods.get(0).equals(new MethodDefinition("first", void.class, String.class, "name", String.class, "type"));
-        assert synthesized.methods.get(1).equals(new MethodDefinition("first", void.class, String.class, "name", int.class, "pattern"));
-        assert synthesized.methods.get(2).equals(new MethodDefinition("first", void.class, int.class, "age", String.class, "type"));
-        assert synthesized.methods.get(3).equals(new MethodDefinition("first", void.class, int.class, "age", int.class, "pattern"));
+        assert synthesized.methods.get(0).equals(new MethodInfo("first", void.class, String.class, "name", String.class, "type"));
+        assert synthesized.methods.get(1).equals(new MethodInfo("first", void.class, String.class, "name", int.class, "pattern"));
+        assert synthesized.methods.get(2).equals(new MethodInfo("first", void.class, int.class, "age", String.class, "type"));
+        assert synthesized.methods.get(3).equals(new MethodInfo("first", void.class, int.class, "age", int.class, "pattern"));
     }
 
     @Test
     void sameName() {
-        MethodDefinition one1 = new MethodDefinition("first", void.class, String.class, "name");
+        MethodInfo one1 = new MethodInfo("first", void.class, String.class, "name");
         Synthesizer one = new Synthesizer(one1);
 
-        MethodDefinition second1 = new MethodDefinition("second", void.class, String.class, "name");
+        MethodInfo second1 = new MethodInfo("second", void.class, String.class, "name");
         Synthesizer second = new Synthesizer(second1);
 
         Synthesizer synthesized = one.synthesize(second);
         assert synthesized.methods.size() == 1;
-        assert synthesized.methods.get(0).equals(new MethodDefinition("first", void.class, String.class, "name", String.class, "name1"));
+        assert synthesized.methods.get(0).equals(new MethodInfo("first", void.class, String.class, "name", String.class, "name1"));
     }
 }

@@ -24,24 +24,24 @@ import javax.lang.model.type.TypeMirror;
 import apty.Apty;
 import apty.Type;
 
-public class CustomizerDefinition {
+public class CustomizerInfo {
 
     private TypeElement e;
 
     /** The property type variable on customizer. */
     private TypeMirror variable;
 
-    private PropertyDefinition property;
+    private PropertyInfo property;
 
     public boolean requireSetter;
 
-    public List<MethodDefinition> methods;
+    public List<MethodInfo> methods;
 
     /**
      * @param property
      * @param customizer
      */
-    public CustomizerDefinition(PropertyDefinition property, TypeElement customizer) {
+    public CustomizerInfo(PropertyInfo property, TypeElement customizer) {
         this.variable = Apty.variables(customizer, Supplier.class).get(0);
         this.e = customizer;
         this.property = property;
@@ -56,11 +56,11 @@ public class CustomizerDefinition {
                     .map(element -> element.getSimpleName().toString())
                     .collect(Collectors.toUnmodifiableList());
 
-            return new MethodDefinition(name(m, property), convert(m.getReturnType()), types, names, Apty.doc(m));
+            return new MethodInfo(name(m, property), convert(m.getReturnType()), types, names, Apty.doc(m));
         }).collect(Collectors.toUnmodifiableList());
     }
 
-    private String name(ExecutableElement method, PropertyDefinition p) {
+    private String name(ExecutableElement method, PropertyInfo p) {
         String name = method.getSimpleName().toString();
 
         if (name.startsWith("$")) {

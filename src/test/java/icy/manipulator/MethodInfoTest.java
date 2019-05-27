@@ -11,13 +11,13 @@ package icy.manipulator;
 
 import org.junit.jupiter.api.Test;
 
-import icy.manipulator.MethodDefinition;
+import icy.manipulator.MethodInfo;
 
-class MethodDefinitionTest {
+class MethodInfoTest {
 
     @Test
     void constructor() {
-        MethodDefinition m = new MethodDefinition("name", void.class, String.class, "text");
+        MethodInfo m = new MethodInfo("name", void.class, String.class, "text");
         assert m.name.equals("name");
         assert m.returnType.is(void.class);
         assert m.paramTypes.get(0).is(String.class);
@@ -26,10 +26,10 @@ class MethodDefinitionTest {
 
     @Test
     void addParam() {
-        MethodDefinition m = new MethodDefinition("base", void.class);
+        MethodInfo m = new MethodInfo("base", void.class);
         assert m.hasParameter() == false;
 
-        MethodDefinition created = m.withFirst(String.class, "value");
+        MethodInfo created = m.withFirst(String.class, "value");
         assert m != created;
         assert created.name.equals("base");
         assert created.returnType.is(void.class);

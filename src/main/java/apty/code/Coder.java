@@ -20,7 +20,6 @@ import javax.lang.model.element.Element;
 
 import apty.Apty;
 import apty.Type;
-import icy.manipulator.MethodDefinition;
 
 public class Coder {
 
@@ -297,13 +296,8 @@ public class Coder {
                 joiner.add(code(object));
             }
             return joiner.toString();
-        } else if (code instanceof MethodDefinition) {
-            MethodDefinition e = (MethodDefinition) code;
-            StringJoiner params = new StringJoiner(", ", "(", ")");
-            for (int i = 0; i < e.paramTypes.size(); i++) {
-                params.add(use(e.paramTypes.get(i)) + " " + e.paramNames.get(i));
-            }
-            return e.name.concat(params.toString());
+        } else if (code instanceof Codable) {
+            return ((Codable) code).write(this);
         } else if (code instanceof Class) {
             Class clazz = (Class) code;
             return use(clazz);

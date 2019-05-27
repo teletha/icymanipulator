@@ -65,7 +65,7 @@ public class AnnotationProcessor {
         File generatedSource = Locator.directory("src/test/java").file(computeSourceFile(generatedClass));
         File annotaionProcessorSource = Locator.directory("src/main/java").file(computeSourceFile(processor.getName()));
         File generator = Locator.directory("src/main/java").file(computeSourceFile(IcyManipulator.class.getName()));
-        File depend1 = Locator.directory("src/main/java").file(computeSourceFile(CustomizerDefinition.class.getName()));
+        File depend1 = Locator.directory("src/main/java").file(computeSourceFile(CustomizerInfo.class.getName()));
         File temporaryGeneratedSource = Locator.directory(room.root).file(computeSourceFile(generatedClass));
         long date = generatedSource.lastModified();
 

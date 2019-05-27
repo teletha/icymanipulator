@@ -44,7 +44,7 @@ public class IcyManipulator extends AptyProcessor {
     */
     public IcyManipulator() {
         process(Icy.class, element -> {
-            writeSourceFileBy(new IcyCoder(new ModelDefinition(element)));
+            writeSourceFileBy(new IcyCoder(new ModelInfo(element)));
         });
     }
 
@@ -54,7 +54,7 @@ public class IcyManipulator extends AptyProcessor {
     private static class IcyCoder extends Coder {
 
         /** The current procesing model. */
-        private final ModelDefinition m;
+        private final ModelInfo m;
 
         /** The {@link Icy} info on the model class. */
         private final Icy icy;
@@ -62,7 +62,7 @@ public class IcyManipulator extends AptyProcessor {
         /**
          * @param model
          */
-        public IcyCoder(ModelDefinition model) {
+        public IcyCoder(ModelInfo model) {
             super(model.implType.fqcn());
             this.m = model;
             this.icy = model.e.getAnnotation(Icy.class);
@@ -138,8 +138,8 @@ public class IcyManipulator extends AptyProcessor {
          * Define property updater.
          */
         private void defineMethodInvoker() {
-            for (PropertyDefinition property : m.ownProperties()) {
-                for (MethodDefinition method : Lists.merge(m.findOverloadsFor(property), m.findInterceptsFor(property))) {
+            for (PropertyInfo property : m.ownProperties()) {
+                for (MethodInfo method : Lists.merge(m.findOverloadsFor(property), m.findInterceptsFor(property))) {
                     StringJoiner types = new StringJoiner(", ", ", ", "").setEmptyValue("");
                     method.paramTypes.forEach(t -> types.add(classLiteral(t)));
 
@@ -176,7 +176,7 @@ public class IcyManipulator extends AptyProcessor {
          * Define property updater.
          */
         private void defineFieldUpdater() {
-            for (PropertyDefinition property : m.ownProperties()) {
+            for (PropertyInfo property : m.ownProperties()) {
                 write();
                 write("/** The final property updater. */");
                 write("private static final ", MethodHandle.class, " ", property.name, "Updater = updater(`", property.name, "`);");
@@ -187,7 +187,7 @@ public class IcyManipulator extends AptyProcessor {
          * Define property field.
          */
         private void defineField() {
-            for (PropertyDefinition p : m.ownProperties()) {
+            for (PropertyInfo p : m.ownProperties()) {
                 write();
                 write("/** The exposed property. */");
                 write("public final ", p.type, " ", p.name, ";");
@@ -216,7 +216,7 @@ public class IcyManipulator extends AptyProcessor {
             write(" */");
             write("protected ", m.implType, "()", () -> {
                 // initialize field
-                for (PropertyDefinition p : m.ownProperties()) {
+                for (PropertyInfo p : m.ownProperties()) {
                     write("this.", p.name, " = ", (p.isArbitrary ? "super." + p.name + "()" : p.type.defaultValue()), ";");
                 }
             });
@@ -226,7 +226,7 @@ public class IcyManipulator extends AptyProcessor {
          * Define property getter methods.
          */
         private void defineAccessors() {
-            for (PropertyDefinition property : m.ownProperties()) {
+            for (PropertyInfo property : m.ownProperties()) {
                 // Exposed getter
                 write();
                 javadoc(property.element, () -> {
@@ -288,7 +288,7 @@ public class IcyManipulator extends AptyProcessor {
 
                     writeTry(() -> {
                         String value = "value";
-                        for (MethodDefinition inter : m.findInterceptsFor(property)) {
+                        for (MethodInfo inter : m.findInterceptsFor(property)) {
                             value = inter.id() + ".invoke(this, " + value;
                             for (int i = 1; i < inter.paramTypes.size(); i++) {
                                 String name = m.findPropertyByName(inter.paramNames.get(i)).name;
@@ -321,7 +321,7 @@ public class IcyManipulator extends AptyProcessor {
 
                 // customizer's methods
                 if (property.custom != null) {
-                    for (MethodDefinition m : property.custom.methods) {
+                    for (MethodInfo m : property.custom.methods) {
                         write();
                         javadoc(m.doc, () -> {
                         });
@@ -344,7 +344,7 @@ public class IcyManipulator extends AptyProcessor {
          * @param p
          * @return
          */
-        private String name(String name, PropertyDefinition p) {
+        private String name(String name, PropertyInfo p) {
             return name.replace(p.capitalizeName(), "$").replace(p.name, "$");
         }
 
@@ -365,13 +365,13 @@ public class IcyManipulator extends AptyProcessor {
             write("public static final class ", Instantiator, "<Self extends ", m.implType.className, " & ", ArbitraryInterface, "<Self>>", () -> {
                 m.firstRequiredProperty().ifPresentOrElse(p -> {
                     int group = icy.grouping();
-                    List<PropertyDefinition> requireds = m.requiredProperties().subList(0, group);
+                    List<PropertyInfo> requireds = m.requiredProperties().subList(0, group);
 
                     requireds.stream()
                             .map(def -> new Synthesizer(m, def))
                             .reduce((prev, next) -> prev.synthesize(next))
                             .ifPresent(synthesizer -> {
-                                for (MethodDefinition method : synthesizer.methods) {
+                                for (MethodInfo method : synthesizer.methods) {
                                     String[] types = new String[] {m.requiredRouteType(group, "Self"), "Self"};
                                     if (!types[0].equals("Self")) {
                                         types[0] = "<T extends " + types[0] + "> T";
@@ -437,7 +437,7 @@ public class IcyManipulator extends AptyProcessor {
          * Define assignable interfaces.
          */
         private void defineAssignableInterfaces() {
-            for (PropertyDefinition p : m.ownRequiredProperties()) {
+            for (PropertyInfo p : m.ownRequiredProperties()) {
                 write();
                 write("/**");
                 write(" * Property assignment API.");
@@ -468,7 +468,7 @@ public class IcyManipulator extends AptyProcessor {
          * 
          * @param p
          */
-        private void defineAssignableSetter(PropertyDefinition p) {
+        private void defineAssignableSetter(PropertyInfo p) {
             // =========================================
             // Base Setter
             // =========================================
@@ -487,7 +487,7 @@ public class IcyManipulator extends AptyProcessor {
             // =========================================
             // Overload Setter
             // =========================================
-            for (MethodDefinition m : m.findOverloadsFor(p)) {
+            for (MethodInfo m : m.findOverloadsFor(p)) {
                 write();
                 javadoc(m.doc, () -> {
                     write("/**");
@@ -528,7 +528,7 @@ public class IcyManipulator extends AptyProcessor {
          */
         private void defineAssignableAll() {
             StringJoiner apis = new StringJoiner(", ", " extends ", "").setEmptyValue("");
-            for (PropertyDefinition property : m.ownRequiredProperties()) {
+            for (PropertyInfo property : m.ownRequiredProperties()) {
                 apis.add(property.assignableInterfaceName());
             }
             if (m.hasParent()) {
@@ -552,7 +552,7 @@ public class IcyManipulator extends AptyProcessor {
             write(" * The identifier for properties.");
             write(" */");
             write("static final class My", () -> {
-                for (PropertyDefinition property : m.ownProperties()) {
+                for (PropertyInfo property : m.ownProperties()) {
                     write("static final String ", property.capitalizeName(), " = \"", property.name, "\";");
                 }
             });

@@ -74,7 +74,7 @@ public class Apty {
      * 
      * @param process
      */
-    public static void initialize(ProcessingEnvironment process) {
+    static void initialize(ProcessingEnvironment process) {
         types = process.getTypeUtils();
         elements = process.getElementUtils();
     }

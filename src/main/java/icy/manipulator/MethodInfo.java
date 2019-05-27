@@ -21,9 +21,11 @@ import javax.lang.model.type.ExecutableType;
 
 import apty.Apty;
 import apty.Type;
+import apty.code.Codable;
+import apty.code.Coder;
 import icy.manipulator.util.Strings;
 
-public class MethodDefinition {
+public class MethodInfo implements Codable {
 
     /** The method name. */
     public final String name;
@@ -43,7 +45,7 @@ public class MethodDefinition {
     /**
      * @param element
      */
-    public MethodDefinition(ExecutableElement element) {
+    public MethodInfo(ExecutableElement element) {
         this.name = element.getSimpleName().toString();
         this.returnType = Type.of(element.getReturnType());
         this.paramTypes = ((ExecutableType) element.asType()).getParameterTypes()
@@ -55,82 +57,82 @@ public class MethodDefinition {
     }
 
     /**
-     * Create {@link MethodDefinition}.
+     * Create {@link MethodInfo}.
      * 
      * @param name
      * @param returnType
      */
-    public MethodDefinition(String name, Class returnType) {
+    public MethodInfo(String name, Class returnType) {
         this(name, returnType, List.of(), List.of());
     }
 
     /**
-     * Create {@link MethodDefinition}.
+     * Create {@link MethodInfo}.
      * 
      * @param name
      * @param returnType
      * @param type1
      * @param name1
      */
-    public MethodDefinition(String name, Class returnType, Class type1, String name1) {
+    public MethodInfo(String name, Class returnType, Class type1, String name1) {
         this(name, returnType, List.of(type1), List.of(name1));
     }
 
     /**
-     * Create {@link MethodDefinition}.
+     * Create {@link MethodInfo}.
      * 
      * @param name
      * @param returnType
      * @param type1
      * @param name1
      */
-    public MethodDefinition(String name, Class returnType, Class type1, String name1, Class type2, String name2) {
+    public MethodInfo(String name, Class returnType, Class type1, String name1, Class type2, String name2) {
         this(name, returnType, List.of(type1, type2), List.of(name1, name2));
     }
 
     /**
-     * Create {@link MethodDefinition}.
+     * Create {@link MethodInfo}.
      * 
      * @param name
      * @param returnType
      * @param type1
      * @param name1
      */
-    public MethodDefinition(String name, Class returnType, Class type1, String name1, Class type2, String name2, Class type3, String name3) {
+    public MethodInfo(String name, Class returnType, Class type1, String name1, Class type2, String name2, Class type3, String name3) {
         this(name, returnType, List.of(type1, type2, type3), List.of(name1, name2, name3));
     }
 
     /**
-     * Create {@link MethodDefinition}.
+     * Create {@link MethodInfo}.
      * 
      * @param name
      * @param returnType
      * @param types
      * @param names
      */
-    public MethodDefinition(String name, Class returnType, List<Class> types, List<String> names) {
+    public MethodInfo(String name, Class returnType, List<Class> types, List<String> names) {
         this(name, Type.of(returnType), types.stream().map(Type::of).collect(Collectors.toUnmodifiableList()), names, "");
     }
 
     /**
-     * Create {@link MethodDefinition}.
+     * Create {@link MethodInfo}.
      * 
      * @param name
      * @param returnType
      */
-    public MethodDefinition(String name, Type returnType) {
+    public MethodInfo(String name, Type returnType) {
         this(name, returnType, List.of(), List.of(), "");
     }
 
     /**
-     * Create {@link MethodDefinition}.
+     * Create {@link MethodInfo}.
      * 
      * @param name
      * @param returnType
      * @param types
      * @param names
      */
-    public MethodDefinition(String name, Type returnType, List<Type> types, List<String> names, String doc) {
+    public MethodInfo(String name, Type returnType, List<Type> types, List<String> names, String doc) {
         this.name = name;
         this.returnType = returnType;
         this.paramTypes = types;
@@ -189,87 +191,87 @@ public class MethodDefinition {
     }
 
     /**
-     * Create {@link MethodDefinition} with additional parameter.
+     * Create {@link MethodInfo} with additional parameter.
      * 
      * @param type
      * @return
      */
-    public MethodDefinition withFirst(Class type) {
+    public MethodInfo withFirst(Class type) {
         return withFirst(Type.of(type));
     }
 
     /**
-     * Create {@link MethodDefinition} with additional parameter.
+     * Create {@link MethodInfo} with additional parameter.
      * 
      * @param type
      * @param name
      * @return
      */
-    public MethodDefinition withFirst(Class type, String name) {
+    public MethodInfo withFirst(Class type, String name) {
         return withFirst(Type.of(type), name);
     }
 
     /**
-     * Create {@link MethodDefinition} with additional parameter.
+     * Create {@link MethodInfo} with additional parameter.
      * 
      * @param type
      * @return
      */
-    public MethodDefinition withFirst(Type type) {
+    public MethodInfo withFirst(Type type) {
         return withFirst(type, Strings.sanitize(Strings.decapitalize(type.className)));
     }
 
     /**
-     * Create {@link MethodDefinition} with additional parameter.
+     * Create {@link MethodInfo} with additional parameter.
      * 
      * @param type
      * @param name
      * @return
      */
-    public MethodDefinition withFirst(Type type, String name) {
-        return new MethodDefinition(this.name, this.returnType, mergeFirst(paramTypes, type), mergeFirst(paramNames, name), doc);
+    public MethodInfo withFirst(Type type, String name) {
+        return new MethodInfo(this.name, this.returnType, mergeFirst(paramTypes, type), mergeFirst(paramNames, name), doc);
     }
 
     /**
-     * Create {@link MethodDefinition} with additional parameter.
+     * Create {@link MethodInfo} with additional parameter.
      * 
      * @param type
      * @return
      */
-    public MethodDefinition withLast(Class type) {
+    public MethodInfo withLast(Class type) {
         return withLast(Type.of(type));
     }
 
     /**
-     * Create {@link MethodDefinition} with additional parameter.
+     * Create {@link MethodInfo} with additional parameter.
      * 
      * @param type
      * @param name
      * @return
      */
-    public MethodDefinition withLast(Class type, String name) {
+    public MethodInfo withLast(Class type, String name) {
         return withLast(Type.of(type), name);
     }
 
     /**
-     * Create {@link MethodDefinition} with additional parameter.
+     * Create {@link MethodInfo} with additional parameter.
      * 
      * @param type
      * @return
      */
-    public MethodDefinition withLast(Type type) {
+    public MethodInfo withLast(Type type) {
         return withLast(type, Strings.sanitize(Strings.decapitalize(type.className)));
     }
 
     /**
-     * Create {@link MethodDefinition} with additional parameter.
+     * Create {@link MethodInfo} with additional parameter.
      * 
      * @param type
      * @param name
      * @return
      */
-    public MethodDefinition withLast(Type type, String name) {
-        return new MethodDefinition(this.name, this.returnType, mergeLast(paramTypes, type), mergeLast(paramNames, name), doc);
+    public MethodInfo withLast(Type type, String name) {
+        return new MethodInfo(this.name, this.returnType, mergeLast(paramTypes, type), mergeLast(paramNames, name), doc);
     }
 
     /**
@@ -315,11 +317,11 @@ public class MethodDefinition {
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof MethodDefinition == false) {
+        if (obj instanceof MethodInfo == false) {
             return false;
         }
 
-        MethodDefinition other = (MethodDefinition) obj;
+        MethodInfo other = (MethodInfo) obj;
 
         if (!name.equals(other.name)) {
             return false;
@@ -349,5 +351,17 @@ public class MethodDefinition {
             builder.add(type.className);
         }
         return builder.toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String write(Coder coder) {
+        StringJoiner params = new StringJoiner(", ", "(", ")");
+        for (int i = 0; i < paramTypes.size(); i++) {
+            params.add(coder.use(paramTypes.get(i)) + " " + paramNames.get(i));
+        }
+        return name.concat(params.toString());
     }
 }

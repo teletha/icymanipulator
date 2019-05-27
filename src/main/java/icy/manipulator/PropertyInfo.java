@@ -19,7 +19,7 @@ import apty.Type;
 import icy.manipulator.Icy.Property;
 import icy.manipulator.util.Strings;
 
-public class PropertyDefinition {
+public class PropertyInfo {
 
     /** The actual source element. */
     public final ExecutableElement element;
@@ -55,12 +55,12 @@ public class PropertyDefinition {
     public final String setterModifier;
 
     /** The customizer definition. */
-    public final CustomizerDefinition custom;
+    public final CustomizerInfo custom;
 
     /**
      * @param method
      */
-    public PropertyDefinition(ExecutableElement method) {
+    public PropertyInfo(ExecutableElement method) {
         this.element = method;
         this.name = method.getSimpleName().toString();
         this.type = Type.of(method.getReturnType());
@@ -86,7 +86,7 @@ public class PropertyDefinition {
             this.custom = Apty.annotationClassValue(method, Icy.Property.class, "custom")
                     .filter(Apty::isNotInterface)
                     .map(Apty::cast)
-                    .map(customizer -> new CustomizerDefinition(this, customizer))
+                    .map(customizer -> new CustomizerInfo(this, customizer))
                     .orElse(null);
         }
     }
