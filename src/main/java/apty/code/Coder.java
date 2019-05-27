@@ -20,6 +20,7 @@ import javax.lang.model.element.Element;
 
 import apty.Apty;
 import apty.Type;
+import icy.manipulator.util.Strings;
 
 public class Coder {
 
@@ -328,7 +329,7 @@ public class Coder {
     public final String use(Type imported) {
         if (!imported.isDefault() && !imported.isPrimitive() && !imported.generic) {
             if (!imported.packageName.equals(basePackage) && !imported.toString().startsWith(basePackage + "." + baseClass + ".")) {
-                imports.add(imported.toString());
+                imports.add(Strings.sanitize(imported.toString()));
             }
         }
 

@@ -105,8 +105,10 @@ public abstract class AptyProcessor implements Processor {
                     processor.process(element);
                 } catch (Fail fail) {
                     messager.printMessage(Kind.ERROR, fail.getMessage(), fail.e);
+                    throw fail;
                 } catch (Exception e) {
-                    messager.printMessage(Kind.ERROR, e.getMessage(), element);
+                    messager.printMessage(Kind.ERROR, String.valueOf(e.getMessage()), element);
+                    throw new Error(e);
                 }
             });
         });

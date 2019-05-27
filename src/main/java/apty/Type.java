@@ -130,6 +130,17 @@ public class Type {
 
     /**
      * <p>
+     * Check array type.
+     * </p>
+     * 
+     * @return
+     */
+    public boolean isArray() {
+        return className.endsWith("[]");
+    }
+
+    /**
+     * <p>
      * Check primitive type.
      * </p>
      * 
@@ -411,7 +422,7 @@ public class Type {
          */
         @Override
         public Type visitArray(ArrayType t, List<Type> p) {
-            return null;
+            return new Type(t.toString(), null);
         }
 
         /**

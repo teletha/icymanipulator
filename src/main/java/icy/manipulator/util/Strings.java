@@ -43,6 +43,8 @@ public class Strings {
      * @return
      */
     public static String sanitize(String value) {
+        value = value.replaceAll("[\\[\\]]", "");
+
         if (SourceVersion.isKeyword(value)) {
             return value.toUpperCase();
         } else {

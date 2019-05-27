@@ -348,7 +348,7 @@ public class MethodInfo implements Codable {
     public String toString() {
         StringJoiner builder = new StringJoiner(", ", name + "(", ")");
         for (Type type : paramTypes) {
-            builder.add(type.className);
+            builder.add(Strings.sanitize(type.className));
         }
         return builder.toString();
     }
