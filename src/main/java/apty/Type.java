@@ -7,8 +7,9 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package apty.code;
+package apty;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -40,7 +41,7 @@ public class Type {
     public final String className;
 
     /** The variable expression. */
-    public final VariableList variable = new VariableList();
+    public final List<Type> variable = new ArrayList();
 
     /** The generic flag. */
     public final boolean generic;

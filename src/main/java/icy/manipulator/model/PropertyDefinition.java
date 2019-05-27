@@ -15,7 +15,7 @@ import javax.lang.model.element.Modifier;
 
 import apty.Apty;
 import apty.Fail;
-import apty.code.Type;
+import apty.Type;
 import icy.manipulator.CodeGenerator;
 import icy.manipulator.Icy;
 import icy.manipulator.Icy.Property;

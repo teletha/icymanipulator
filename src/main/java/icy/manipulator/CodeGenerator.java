@@ -432,7 +432,7 @@ public class CodeGenerator {
         code.write("/**");
         code.write(" * Mutable Model.");
         code.write(" */");
-        code.write("private static final class ", Assignable, m.implType.variable, " extends ", m.implType, " implements ", AssignableAll, ", ", ArbitraryInterface, () -> {
+        code.write("private static final class ", Assignable, " extends ", m.implType, " implements ", AssignableAll, ", ", ArbitraryInterface, () -> {
         });
     }
 

@@ -22,7 +22,7 @@ import javax.lang.model.type.ExecutableType;
 import javax.lang.model.type.TypeMirror;
 
 import apty.Apty;
-import apty.code.Type;
+import apty.Type;
 
 public class CustomizerDefinition {
 

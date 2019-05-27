@@ -19,9 +19,10 @@ import java.util.function.Consumer;
 import javax.lang.model.element.Element;
 
 import apty.Apty;
+import apty.Type;
 import icy.manipulator.model.MethodDefinition;
 
-public class Coder implements Importer {
+public class Coder {
 
     /** The line feed. */
     private static final String END = "\r\n";
@@ -283,9 +284,7 @@ public class Coder implements Importer {
     }
 
     private String code(Object code) {
-        if (code instanceof Codable) {
-            return ((Codable) code).write(this);
-        } else if (code instanceof Optional) {
+        if (code instanceof Optional) {
             return ((Optional<?>) code).map(v -> String.valueOf(v)).orElse("");
         } else if (code instanceof List) {
             List list = (List) code;
@@ -313,28 +312,34 @@ public class Coder implements Importer {
     }
 
     /**
-     * <p>
-     * Import class.
-     * </p>
+     * Import the specified class and return the suitable qualified class name.
+     * 
+     * @param clazz A target class.
+     * @return A class name to write.
      */
-    @Override
     public String use(Class imported) {
         return use(new Type(imported));
     }
 
     /**
-     * <p>
-     * Import class.
-     * </p>
+     * Import the specified class and return the suitable qualified class name.
+     * 
+     * @param clazz A target class.
+     * @return A class name to write.
      */
-    @Override
     public String use(Type imported) {
         if (!imported.isDefault() && !imported.isPrimitive() && !imported.generic) {
             if (!imported.packageName.equals(basePackage) && !imported.toString().startsWith(basePackage + "." + baseClass + ".")) {
                 imports.add(imported.toString());
             }
         }
-        return imported.className.concat(imported.variable.write(this));
+
+        StringJoiner joiner = new StringJoiner(", ", "<", ">").setEmptyValue("");
+        for (Type type : imported.variable) {
+            joiner.add(use(type));
+        }
+
+        return imported.className.concat(joiner.toString());
     }
 
     public String classLiteral(Type clazz) {

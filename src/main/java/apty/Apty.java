@@ -51,8 +51,6 @@ import javax.lang.model.util.SimpleElementVisitor9;
 import javax.lang.model.util.SimpleTypeVisitor9;
 import javax.lang.model.util.Types;
 
-import apty.code.Type;
-
 public class Apty {
 
     /** The getter pattern. */
