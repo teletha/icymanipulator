@@ -1,5 +1,6 @@
 package icy.manipulator.property.group.model;
 
+import icy.manipulator.property.group.model.EnumGroupModel.Color;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;

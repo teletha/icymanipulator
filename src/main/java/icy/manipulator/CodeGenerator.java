@@ -48,7 +48,7 @@ public class CodeGenerator {
     private final Icy icy;
 
     /** The actual coder. */
-    private final Coder code = new Coder(IcyManipulator.importer);
+    private final Coder code;
 
     /**
      * Create code analyzer.
@@ -57,6 +57,7 @@ public class CodeGenerator {
      * @param elements
      */
     CodeGenerator(ModelDefinition model) {
+        this.code = new Coder(model.implType.fqcn());
         this.m = model;
         this.icy = model.e.getAnnotation(Icy.class);
     }

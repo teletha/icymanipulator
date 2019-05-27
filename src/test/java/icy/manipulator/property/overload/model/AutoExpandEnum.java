@@ -1,5 +1,6 @@
 package icy.manipulator.property.overload.model;
 
+import icy.manipulator.property.overload.model.AutoExpandEnumModel.Answer;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;

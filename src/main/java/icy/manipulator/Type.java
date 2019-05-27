@@ -9,10 +9,8 @@
  */
 package icy.manipulator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 import javax.lang.model.element.TypeElement;
@@ -42,7 +40,7 @@ public class Type {
     public final String className;
 
     /** The variable expression. */
-    public final List<Type> variable = new VariableList();
+    public final VariableList variable = new VariableList();
 
     /** The generic flag. */
     public final boolean generic;
@@ -486,24 +484,6 @@ public class Type {
         @Override
         public Type visitIntersection(IntersectionType t, List<Type> p) {
             return null;
-        }
-    }
-
-    /**
-     * 
-     */
-    @SuppressWarnings("serial")
-    private static final class VariableList extends ArrayList<Type> {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String toString() {
-            StringJoiner joiner = new StringJoiner(", ", "<", ">").setEmptyValue("");
-            for (Type type : this) {
-                joiner.add(IcyManipulator.importer.use(type));
-            }
-            return joiner.toString();
         }
     }
 }

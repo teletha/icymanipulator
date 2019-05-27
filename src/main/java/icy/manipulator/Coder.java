@@ -11,15 +11,19 @@ package icy.manipulator;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.StringJoiner;
+import java.util.TreeSet;
 import java.util.function.Consumer;
 
 import javax.lang.model.element.Element;
 
 import apty.Apty;
+import apty.Codable;
+import apty.Importer;
 import icy.manipulator.model.MethodDefinition;
 
-public class Coder {
+public class Coder implements Importer {
 
     /** The line feed. */
     private static final String END = "\r\n";
@@ -27,20 +31,36 @@ public class Coder {
     /** The indent. */
     private static final String indent = "    ";
 
+    /** The base package name. */
+    private final String basePackage;
+
+    /** The base class name. */
+    private final String baseClass;
+
+    /** The imported classes. */
+    private final Set<String> imports = new TreeSet();
+
     /** The source code. */
     private final StringBuilder source = new StringBuilder();
-
-    /** The import manager. */
-    private final ClassImporter importer;
 
     /** The indent depth. */
     private int depth = 0;
 
     /**
-     * @param importer
+     * Code writer.
+     * 
+     * @param fqcn A fully qualified class name to write.
      */
-    public Coder(ClassImporter importer) {
-        this.importer = importer;
+    public Coder(String fqcn) {
+        int index = fqcn.lastIndexOf(".");
+
+        if (index == -1) {
+            this.basePackage = "";
+            this.baseClass = fqcn;
+        } else {
+            this.basePackage = fqcn.substring(0, index);
+            this.baseClass = fqcn.substring(index + 1);
+        }
     }
 
     /**
@@ -265,7 +285,9 @@ public class Coder {
     }
 
     private String code(Object code) {
-        if (code instanceof Optional) {
+        if (code instanceof Codable) {
+            return ((Codable) code).write(this);
+        } else if (code instanceof Optional) {
             return ((Optional<?>) code).map(v -> String.valueOf(v)).orElse("");
         } else if (code instanceof List) {
             List list = (List) code;
@@ -278,26 +300,47 @@ public class Coder {
             MethodDefinition e = (MethodDefinition) code;
             StringJoiner params = new StringJoiner(", ", "(", ")");
             for (int i = 0; i < e.paramTypes.size(); i++) {
-                params.add(importer.use(e.paramTypes.get(i)) + " " + e.paramNames.get(i));
+                params.add(use(e.paramTypes.get(i)) + " " + e.paramNames.get(i));
             }
             return e.name.concat(params.toString());
         } else if (code instanceof Class) {
             Class clazz = (Class) code;
-            return importer.use(clazz);
+            return use(clazz);
         } else if (code instanceof Type) {
             Type clazz = (Type) code;
-            return importer.use(clazz);
+            return use(clazz);
         } else {
             return String.valueOf(code).replace('`', '"');
         }
     }
 
-    public String use(Type clazz) {
-        return importer.use(clazz);
+    /**
+     * <p>
+     * Import class.
+     * </p>
+     */
+    @Override
+    public String use(Class imported) {
+        return use(new Type(imported));
+    }
+
+    /**
+     * <p>
+     * Import class.
+     * </p>
+     */
+    @Override
+    public String use(Type imported) {
+        if (!imported.isDefault() && !imported.isPrimitive() && !imported.generic) {
+            if (!imported.packageName.equals(basePackage) && !imported.toString().startsWith(basePackage + "." + baseClass + ".")) {
+                imports.add(imported.toString());
+            }
+        }
+        return imported.className.concat(imported.variable.write(this));
     }
 
     public String classLiteral(Type clazz) {
-        return importer.use(clazz).replaceAll("<.+>", "").concat(".class");
+        return use(clazz).replaceAll("<.+>", "").concat(".class");
     }
 
     /**
@@ -315,9 +358,9 @@ public class Coder {
 
     public String toCode() {
         StringBuilder code = new StringBuilder();
-        code.append("package ").append(importer.basePackage).append(";").append(END);
+        code.append("package ").append(basePackage).append(";").append(END);
         code.append(END);
-        for (String fqnc : importer.imports) {
+        for (String fqnc : imports) {
             code.append("import ").append(fqnc).append(";").append(END);
         }
         code.append(END);

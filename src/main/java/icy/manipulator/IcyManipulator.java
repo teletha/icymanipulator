@@ -27,9 +27,6 @@ import icy.manipulator.model.ModelDefinition;
 
 public class IcyManipulator extends AptyProcessor {
 
-    /** The utility. */
-    static ClassImporter importer;
-
     /**
      * {@inheritDoc}
      */
@@ -48,8 +45,6 @@ public class IcyManipulator extends AptyProcessor {
         }
 
         for (Element element : round.getElementsAnnotatedWith(Icy.class)) {
-            importer = new ClassImporter(element.toString());
-
             try {
                 ModelDefinition model = new ModelDefinition(element);
                 CodeGenerator generator = new CodeGenerator(model);
