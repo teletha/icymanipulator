@@ -134,7 +134,6 @@ public class Type implements Codable {
         switch (kind) {
         case DECLARED:
         case ARRAY:
-        case MODULE:
             coder.require(packageName, className);
             break;
         }
@@ -143,10 +142,6 @@ public class Type implements Codable {
             StringJoiner join = new StringJoiner(" & ", className, "");
             variable.forEach(v -> join.add(v.write(coder)));
             return join.toString();
-        }
-
-        if (kind == TypeKind.MODULE) {
-            return className + "...";
         }
 
         StringJoiner joiner = new StringJoiner(", ", "<", ">").setEmptyValue("");
@@ -241,7 +236,7 @@ public class Type implements Codable {
      */
     public final Type varargnize() {
         if (kind == TypeKind.ARRAY) {
-            return new Type(packageName, className.replaceAll("\\[\\]$", ""), variable, TypeKind.MODULE);
+            return new Type(packageName, className.replaceAll("\\[\\]$", "..."), variable, TypeKind.DECLARED);
         } else {
             return this;
         }
