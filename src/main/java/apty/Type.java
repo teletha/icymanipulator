@@ -59,7 +59,7 @@ public class Type implements Codable {
      * @param type
      */
     public Type(Class type) {
-        this(type.getPackage().getName(), type.getSimpleName(), TypeKind.DECLARED);
+        this(type.getPackage().getName(), type.getSimpleName(), List.of(), TypeKind.DECLARED);
     }
 
     /**
@@ -96,9 +96,10 @@ public class Type implements Codable {
      * @param className
      * @param generic
      */
-    public Type(String packageName, String className, TypeKind kind) {
+    public Type(String packageName, String className, List<Type> variables, TypeKind kind) {
         this.packageName = packageName;
         this.className = className;
+        this.variable.addAll(variables);
         this.kind = kind;
     }
 
@@ -113,6 +114,12 @@ public class Type implements Codable {
     public String write(Coder coder) {
         if (kind == TypeKind.DECLARED && !isPrimitive()) {
             coder.require(packageName, className);
+        }
+
+        if (kind == TypeKind.WILDCARD) {
+            StringJoiner join = new StringJoiner(" & ", className, "");
+            variable.forEach(v -> join.add(v.write(coder)));
+            return join.toString();
         }
 
         StringJoiner joiner = new StringJoiner(", ", "<", ">").setEmptyValue("");
@@ -347,7 +354,7 @@ public class Type implements Codable {
      * @return
      */
     public static final Type generic(String name) {
-        return new Type("", name, TypeKind.TYPEVAR);
+        return new Type("", name, List.of(), TypeKind.TYPEVAR);
     }
 
     /**
@@ -477,15 +484,27 @@ public class Type implements Codable {
          */
         @Override
         public Type visitTypeVariable(TypeVariable t, List<Type> p) {
-            return new Type("", t.toString(), TypeKind.TYPEVAR);
+            return new Type("", t.toString(), List.of(), TypeKind.TYPEVAR);
         }
 
         /**
          * {@inheritDoc}
          */
         @Override
-        public Type visitWildcard(WildcardType t, List<Type> p) {
-            return new Type(t.toString(), null);
+        public Type visitWildcard(WildcardType type, List<Type> p) {
+            TypeMirror extendType = type.getExtendsBound();
+
+            if (extendType != null) {
+                return new Type(null, "? extends ", List.of(extendType.accept(this, null)), TypeKind.WILDCARD);
+            }
+
+            TypeMirror superType = type.getSuperBound();
+
+            if (superType != null) {
+                return new Type(null, "? super ", List.of(superType.accept(this, null)), TypeKind.WILDCARD);
+            }
+
+            return new Type(null, "?", List.of(), TypeKind.WILDCARD);
         }
 
         /**

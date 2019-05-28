@@ -9,7 +9,12 @@
  */
 package icy.manipulator.property.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import icy.manipulator.Icy;
 
@@ -17,5 +22,22 @@ import icy.manipulator.Icy;
 public abstract class WildcardModel {
 
     @Icy.Property
-    public abstract Class<? extends List> type();
+    public Class<? extends Collection> extendType() {
+        return List.class;
+    }
+
+    @Icy.Property
+    public List<? super Integer> superType() {
+        return new ArrayList();
+    }
+
+    @Icy.Property
+    public Supplier<?> wildcard() {
+        return () -> 1;
+    }
+
+    @Icy.Property
+    public Map<? extends CharSequence, List<Class<? extends Number>>> combine() {
+        return new HashMap();
+    }
 }

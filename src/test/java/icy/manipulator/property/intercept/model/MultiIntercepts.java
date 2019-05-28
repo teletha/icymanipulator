@@ -47,10 +47,10 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle checkLower$1325436563= invoker("checkLower", int.class);
+    private static final MethodHandle checkLower$1483229853= invoker("checkLower", int.class);
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle stringlize$1789828267= invoker("stringlize", int.class, Consumer.class);
+    private static final MethodHandle stringlize$1035410283= invoker("stringlize", int.class, Consumer.class);
 
     /**
      * Create special property updater.
@@ -115,7 +115,7 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, stringlize$1789828267.invoke(this, checkLower$1325436563.invoke(this, value), (Consumer<String>) ((Åssignable) this)::value));
+            sizeUpdater.invoke(this, stringlize$1035410283.invoke(this, checkLower$1483229853.invoke(this, value), (Consumer<String>) ((Åssignable) this)::value));
         } catch (Throwable e) {
             throw quiet(e);
         }
