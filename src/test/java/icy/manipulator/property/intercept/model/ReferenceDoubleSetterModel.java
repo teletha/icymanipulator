@@ -24,7 +24,7 @@ public abstract class ReferenceDoubleSetterModel {
         return 0;
     }
 
-    @Icy.Intercept("size")
+    @Icy.Intercept
     private int deriveBySize(int size, DoubleConsumer square) {
         square.accept(size * size);
         return size;

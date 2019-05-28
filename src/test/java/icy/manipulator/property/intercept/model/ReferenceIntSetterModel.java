@@ -24,7 +24,7 @@ public abstract class ReferenceIntSetterModel {
         return 0;
     }
 
-    @Icy.Intercept("size")
+    @Icy.Intercept
     private int deriveBySize(int size, IntConsumer square) {
         square.accept(size * size);
         return size;

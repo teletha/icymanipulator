@@ -129,12 +129,6 @@ public @interface Icy {
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.SOURCE)
     @interface Intercept {
-        /**
-         * The target property name to intercept the invokation of setter.
-         * 
-         * @return
-         */
-        String value();
     }
 
     @Documented
