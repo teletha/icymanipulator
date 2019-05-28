@@ -145,39 +145,6 @@ public class Type implements Codable {
 
     /**
      * <p>
-     * Check default package.
-     * </p>
-     * 
-     * @return
-     */
-    public boolean isDefault() {
-        return packageName.equals("java.lang");
-    }
-
-    /**
-     * <p>
-     * Check array type.
-     * </p>
-     * 
-     * @return
-     */
-    public boolean isArray() {
-        return className.endsWith("[]");
-    }
-
-    /**
-     * <p>
-     * Check array type.
-     * </p>
-     * 
-     * @return
-     */
-    public boolean isWildcard() {
-        return className.contains("?") || packageName.contains("?");
-    }
-
-    /**
-     * <p>
      * Check primitive type.
      * </p>
      * 
@@ -198,45 +165,6 @@ public class Type implements Codable {
 
         default:
             return false;
-        }
-    }
-
-    /**
-     * <p>
-     * Wrap type.
-     * </p>
-     * 
-     * @param type
-     * @return
-     */
-    public Type wrap() {
-        switch (className) {
-        case "int":
-            return new Type(Integer.class);
-
-        case "long":
-            return new Type(Long.class);
-
-        case "float":
-            return new Type(Float.class);
-
-        case "double":
-            return new Type(Double.class);
-
-        case "byte":
-            return new Type(Byte.class);
-
-        case "char":
-            return new Type(Character.class);
-
-        case "boolean":
-            return new Type(Boolean.class);
-
-        case "void":
-            return new Type(Void.class);
-
-        default:
-            return this;
         }
     }
 
@@ -273,14 +201,6 @@ public class Type implements Codable {
     }
 
     /**
-     * @param propertyType
-     * @return
-     */
-    boolean match(TypeMirror propertyType) {
-        return false;
-    }
-
-    /**
      * Chech type equality.
      * 
      * @param type
@@ -301,11 +221,24 @@ public class Type implements Codable {
     }
 
     /**
+     * Create vararged type if this type is array.
+     * 
+     * @return
+     */
+    public final Type varargnize() {
+        if (kind == TypeKind.ARRAY) {
+            return new Type(packageName, className, variable, TypeKind.MODULE);
+        } else {
+            return this;
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public int hashCode() {
-        return Objects.hash(packageName, className, variable.toString(), kind);
+        return Objects.hash(packageName, className, variable, kind);
     }
 
     /**
@@ -335,14 +268,6 @@ public class Type implements Codable {
             return false;
         }
         return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return fqcn();
     }
 
     /**
@@ -458,8 +383,8 @@ public class Type implements Codable {
          * {@inheritDoc}
          */
         @Override
-        public Type visitArray(ArrayType t, List<Type> p) {
-            return new Type(t.toString(), null);
+        public Type visitArray(ArrayType type, List<Type> p) {
+            return new Type(type.toString(), null);
         }
 
         /**

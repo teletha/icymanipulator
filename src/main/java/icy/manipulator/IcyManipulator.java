@@ -454,7 +454,7 @@ public class IcyManipulator extends AptyProcessor {
          */
         private void defineAssignableArbitrary() {
             Optional<String> extend = m.findNearestArbitraryModel()
-                    .map(m -> " extends " + m.implType + "." + ArbitraryInterface + "<Next>");
+                    .map(m -> " extends " + m.implType.fqcn() + "." + ArbitraryInterface + "<Next>");
             write();
             write("/**");
             write(" * Property assignment API.");
@@ -480,7 +480,7 @@ public class IcyManipulator extends AptyProcessor {
             write(" * @param value A new value to assign.");
             write(" * @return The next assignable model.");
             write(" */");
-            write("default Next ", p.name, "(", p.type, " value)", () -> {
+            write("default Next ", p.name, "(", p.type.varargnize(), " value)", () -> {
                 write("((", m.implType, ") this).set", p.capitalizeName(), "(value);");
                 write("return (Next) this;");
             });
@@ -533,7 +533,7 @@ public class IcyManipulator extends AptyProcessor {
                 apis.add(property.assignableInterfaceName());
             }
             if (m.hasParent()) {
-                apis.add(m.parent.get().implType + "." + AssignableAll);
+                apis.add(m.parent.get().implType.fqcn() + "." + AssignableAll);
             }
 
             write();

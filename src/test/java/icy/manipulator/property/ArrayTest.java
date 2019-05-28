@@ -23,8 +23,15 @@ class ArrayTest {
     static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, ArrayModel.class);
 
     @Test
-    void property() {
+    void array() {
         Array o = Array.with.names(new String[] {"one", "two"});
+        assert o.names[0].equals("one");
+        assert o.names[1].equals("two");
+    }
+
+    @Test
+    void vararg() {
+        Array o = Array.with.names("one", "two");
         assert o.names[0].equals("one");
         assert o.names[1].equals("two");
     }
