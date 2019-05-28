@@ -46,7 +46,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle deriveBySize$11134305= invoker("deriveBySize", int.class, IntConsumer.class);
+    private static final MethodHandle deriveBySize$1040292929= invoker("deriveBySize", int.class, IntConsumer.class);
 
     /**
      * Create special property updater.
@@ -111,7 +111,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, deriveBySize$11134305.invoke(this, value, (IntConsumer) ((Åssignable) this)::square));
+            sizeUpdater.invoke(this, deriveBySize$1040292929.invoke(this, value, (IntConsumer) ((Åssignable) this)::square));
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -172,9 +172,9 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
          * 
          * @return The next assignable model.
          */
-        public final Self size(int INT) {
+        public final Self size(int size) {
             Åssignable o = new Åssignable();
-            o.size(INT);
+            o.size(size);
             return (Self) o;
         }
     }

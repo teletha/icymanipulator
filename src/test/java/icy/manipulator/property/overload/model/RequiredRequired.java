@@ -1,5 +1,6 @@
 package icy.manipulator.property.overload.model;
 
+import icy.manipulator.property.overload.model.Overload;
 import icy.manipulator.property.overload.model.RequiredRequired;
 import icy.manipulator.property.overload.model.RequiredRequiredModel;
 import java.lang.String;
@@ -48,7 +49,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle time$416210370= invoker("time", int.class, int.class, int.class);
+    private static final MethodHandle time$1750646937= invoker("time", int.class, int.class, int.class);
 
     /**
      * Create special property updater.
@@ -128,9 +129,9 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableDate<ÅssignableTime<Self>>> T size(BigDecimal bigDecimal) {
+        public final <T extends ÅssignableDate<ÅssignableTime<Self>>> T size(BigDecimal size) {
             Åssignable o = new Åssignable();
-            o.size(bigDecimal);
+            o.size(size);
             return (T) o;
         }
 
@@ -180,7 +181,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
          */
         default Next time(int hour, int minute, int second) {
             try {
-                return time((LocalTime) time$416210370.invoke(this, hour, minute, second));
+                return time((LocalTime) time$1750646937.invoke(this, hour, minute, second));
             } catch (Throwable e) {
                 throw quiet(e);
             }
@@ -196,7 +197,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableTime, icy.manipulator.property.overload.model.Overload.ÅssignableAll {
+    protected static interface ÅssignableAll extends ÅssignableTime, Overload.ÅssignableAll {
     }
 
     /**

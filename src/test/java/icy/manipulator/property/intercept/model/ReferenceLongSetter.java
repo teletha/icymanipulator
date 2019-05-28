@@ -46,7 +46,7 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle deriveBySize$452732628= invoker("deriveBySize", int.class, LongConsumer.class);
+    private static final MethodHandle deriveBySize$1481891252= invoker("deriveBySize", int.class, LongConsumer.class);
 
     /**
      * Create special property updater.
@@ -111,7 +111,7 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, deriveBySize$452732628.invoke(this, value, (LongConsumer) ((Åssignable) this)::square));
+            sizeUpdater.invoke(this, deriveBySize$1481891252.invoke(this, value, (LongConsumer) ((Åssignable) this)::square));
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -172,9 +172,9 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
          * 
          * @return The next assignable model.
          */
-        public final Self size(int INT) {
+        public final Self size(int size) {
             Åssignable o = new Åssignable();
-            o.size(INT);
+            o.size(size);
             return (Self) o;
         }
     }

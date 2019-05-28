@@ -149,9 +149,9 @@ public abstract class Array extends ArrayModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableDates<Self>> T names(String[] string) {
+        public final <T extends ÅssignableDates<Self>> T names(String[] names) {
             Åssignable o = new Åssignable();
-            o.names(string);
+            o.names(names);
             return (T) o;
         }
     }

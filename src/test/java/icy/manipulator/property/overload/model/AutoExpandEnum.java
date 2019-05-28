@@ -111,14 +111,14 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
             return (Self) o;
         }
 
-        /** Set answer property with Answer.Yes */
+        /** Set answer property with Yes. */
         public final Self yes() {
             Åssignable o = new Åssignable();
             o.yes();
             return (Self) o;
         }
 
-        /** Set answer property with Answer.No */
+        /** Set answer property with No. */
         public final Self no() {
             Åssignable o = new Åssignable();
             o.no();

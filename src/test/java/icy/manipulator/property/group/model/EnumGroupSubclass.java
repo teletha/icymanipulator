@@ -1,5 +1,6 @@
 package icy.manipulator.property.group.model;
 
+import icy.manipulator.property.group.model.EnumGroup;
 import icy.manipulator.property.group.model.EnumGroupModel.Color;
 import icy.manipulator.property.group.model.EnumGroupSubclass;
 import icy.manipulator.property.group.model.EnumGroupSubclassModel;
@@ -80,10 +81,10 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
          * 
          * @return The next assignable model.
          */
-        public final Self color(Color color, int INT) {
+        public final Self color(Color color, int size) {
             Åssignable o = new Åssignable();
             o.color(color);
-            o.size(INT);
+            o.size(size);
             return (Self) o;
         }
 
@@ -92,10 +93,10 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
          * 
          * @return The next assignable model.
          */
-        public final Self red(int INT) {
+        public final Self red(int size) {
             Åssignable o = new Åssignable();
             o.red();
-            o.size(INT);
+            o.size(size);
             return (Self) o;
         }
 
@@ -104,10 +105,10 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
          * 
          * @return The next assignable model.
          */
-        public final Self blue(int INT) {
+        public final Self blue(int size) {
             Åssignable o = new Åssignable();
             o.blue();
-            o.size(INT);
+            o.size(size);
             return (Self) o;
         }
 
@@ -116,10 +117,10 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
          * 
          * @return The next assignable model.
          */
-        public final Self green(int INT) {
+        public final Self green(int size) {
             Åssignable o = new Åssignable();
             o.green();
-            o.size(INT);
+            o.size(size);
             return (Self) o;
         }
     }
@@ -133,7 +134,7 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends icy.manipulator.property.group.model.EnumGroup.ÅssignableAll {
+    protected static interface ÅssignableAll extends EnumGroup.ÅssignableAll {
     }
 
     /**

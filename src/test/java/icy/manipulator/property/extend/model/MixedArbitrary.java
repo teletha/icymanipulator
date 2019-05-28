@@ -2,6 +2,7 @@ package icy.manipulator.property.extend.model;
 
 import icy.manipulator.property.extend.model.MixedArbitrary;
 import icy.manipulator.property.extend.model.MixedArbitraryModel;
+import icy.manipulator.property.model.Mixed;
 import java.lang.String;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
@@ -114,9 +115,9 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableAge<Self>> T name(String string) {
+        public final <T extends ÅssignableAge<Self>> T name(String name) {
             Åssignable o = new Åssignable();
-            o.name(string);
+            o.name(name);
             return (T) o;
         }
     }
@@ -124,7 +125,7 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends MixedArbitrary> extends icy.manipulator.property.model.Mixed.ÅssignableÅrbitrary<Next> {
+    public static interface ÅssignableÅrbitrary<Next extends MixedArbitrary> extends Mixed.ÅssignableÅrbitrary<Next> {
 
         /**
          * Assign optionZip property.
@@ -141,7 +142,7 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends icy.manipulator.property.model.Mixed.ÅssignableAll {
+    protected static interface ÅssignableAll extends Mixed.ÅssignableAll {
     }
 
     /**

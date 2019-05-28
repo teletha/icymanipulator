@@ -46,7 +46,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle size$895742682= invoker("size", String.class);
+    private static final MethodHandle size$391032977= invoker("size", String.class);
 
     /**
      * Create special property updater.
@@ -166,10 +166,10 @@ public abstract class OverloadGroup extends OverloadGroupModel {
          * 
          * @return The next assignable model.
          */
-        public final Self name(String string, int INT) {
+        public final Self name(String name, int size) {
             Åssignable o = new Åssignable();
-            o.name(string);
-            o.size(INT);
+            o.name(name);
+            o.size(size);
             return (Self) o;
         }
 
@@ -178,9 +178,9 @@ public abstract class OverloadGroup extends OverloadGroupModel {
          * 
          * @return The next assignable model.
          */
-        public final Self name(String string, String value) {
+        public final Self name(String name, String value) {
             Åssignable o = new Åssignable();
-            o.name(string);
+            o.name(name);
             o.size(value);
             return (Self) o;
         }
@@ -227,7 +227,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
          */
         default Next size(String value) {
             try {
-                return size((int) size$895742682.invoke(this, value));
+                return size((int) size$391032977.invoke(this, value));
             } catch (Throwable e) {
                 throw quiet(e);
             }

@@ -2,6 +2,7 @@ package icy.manipulator.property.extend.model;
 
 import icy.manipulator.property.extend.model.RequiredRequired;
 import icy.manipulator.property.extend.model.RequiredRequiredModel;
+import icy.manipulator.property.model.Multiple;
 import java.lang.String;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
@@ -105,9 +106,9 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableStand<ÅssignableAge<ÅssignableNickname<Self>>>> T name(String string) {
+        public final <T extends ÅssignableStand<ÅssignableAge<ÅssignableNickname<Self>>>> T name(String name) {
             Åssignable o = new Åssignable();
-            o.name(string);
+            o.name(name);
             return (T) o;
         }
     }
@@ -138,7 +139,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableNickname, icy.manipulator.property.model.Multiple.ÅssignableAll {
+    protected static interface ÅssignableAll extends ÅssignableNickname, Multiple.ÅssignableAll {
     }
 
     /**

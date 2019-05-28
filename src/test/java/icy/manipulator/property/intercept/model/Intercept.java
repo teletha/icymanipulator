@@ -45,7 +45,7 @@ public abstract class Intercept extends InterceptModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle normalizeSize$1483139550= invoker("normalizeSize", int.class);
+    private static final MethodHandle normalizeSize$1987849255= invoker("normalizeSize", int.class);
 
     /**
      * Create special property updater.
@@ -103,7 +103,7 @@ public abstract class Intercept extends InterceptModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, normalizeSize$1483139550.invoke(this, value));
+            sizeUpdater.invoke(this, normalizeSize$1987849255.invoke(this, value));
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -122,9 +122,9 @@ public abstract class Intercept extends InterceptModel {
          * 
          * @return The next assignable model.
          */
-        public final Self size(int INT) {
+        public final Self size(int size) {
             Åssignable o = new Åssignable();
-            o.size(INT);
+            o.size(size);
             return (Self) o;
         }
     }

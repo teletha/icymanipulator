@@ -28,7 +28,7 @@ public class Synthesizer {
      */
     public Synthesizer(ModelInfo m, PropertyInfo p) {
         // basic setter
-        add(new MethodInfo(p.name, m.implType).withLast(p.type));
+        add(new MethodInfo(p.name, m.implType).withLast(p.type, p.name));
 
         if (m.firstRequiredProperty().equals(Optional.of(p))) {
             // first property will accept all overload methods unconditionally
@@ -42,7 +42,7 @@ public class Synthesizer {
             if (p.autoExpandable) {
                 for (String name : Apty.enumConstantNames(p.element.getReturnType())) {
                     add(new MethodInfo(Strings.decapitalize(name), Type.generic("Next"), List.of(), List
-                            .of(), "Set " + p.name + " property with " + p.type.className() + "." + name));
+                            .of(), "Set " + p.name + " property with " + name + "."));
                 }
             }
         } else {

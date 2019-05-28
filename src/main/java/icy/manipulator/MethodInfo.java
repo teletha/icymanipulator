@@ -194,31 +194,11 @@ public class MethodInfo implements Codable {
      * Create {@link MethodInfo} with additional parameter.
      * 
      * @param type
-     * @return
-     */
-    public MethodInfo withFirst(Class type) {
-        return withFirst(Type.of(type));
-    }
-
-    /**
-     * Create {@link MethodInfo} with additional parameter.
-     * 
-     * @param type
      * @param name
      * @return
      */
     public MethodInfo withFirst(Class type, String name) {
         return withFirst(Type.of(type), name);
-    }
-
-    /**
-     * Create {@link MethodInfo} with additional parameter.
-     * 
-     * @param type
-     * @return
-     */
-    public MethodInfo withFirst(Type type) {
-        return withFirst(type, Strings.sanitize(Strings.decapitalize(type.className())));
     }
 
     /**
@@ -236,31 +216,11 @@ public class MethodInfo implements Codable {
      * Create {@link MethodInfo} with additional parameter.
      * 
      * @param type
-     * @return
-     */
-    public MethodInfo withLast(Class type) {
-        return withLast(Type.of(type));
-    }
-
-    /**
-     * Create {@link MethodInfo} with additional parameter.
-     * 
-     * @param type
      * @param name
      * @return
      */
     public MethodInfo withLast(Class type, String name) {
         return withLast(Type.of(type), name);
-    }
-
-    /**
-     * Create {@link MethodInfo} with additional parameter.
-     * 
-     * @param type
-     * @return
-     */
-    public MethodInfo withLast(Type type) {
-        return withLast(type, Strings.sanitize(Strings.decapitalize(type.className())));
     }
 
     /**
@@ -348,7 +308,7 @@ public class MethodInfo implements Codable {
     public String toString() {
         StringJoiner builder = new StringJoiner(", ", name + "(", ")");
         for (Type type : paramTypes) {
-            builder.add(Strings.sanitize(type.className()));
+            builder.add(Strings.sanitize(type.simpleName()));
         }
         return builder.toString();
     }

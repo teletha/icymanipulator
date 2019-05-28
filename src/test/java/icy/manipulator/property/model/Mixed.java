@@ -249,9 +249,9 @@ public abstract class Mixed extends MixedModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableAge<Self>> T name(String string) {
+        public final <T extends ÅssignableAge<Self>> T name(String name) {
             Åssignable o = new Åssignable();
-            o.name(string);
+            o.name(name);
             return (T) o;
         }
     }

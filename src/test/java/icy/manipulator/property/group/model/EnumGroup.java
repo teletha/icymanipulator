@@ -145,34 +145,34 @@ public abstract class EnumGroup extends EnumGroupModel {
          * 
          * @return The next assignable model.
          */
-        public final Self color(Color color, int INT) {
+        public final Self color(Color color, int size) {
             Åssignable o = new Åssignable();
             o.color(color);
-            o.size(INT);
+            o.size(size);
             return (Self) o;
         }
 
-        /** Set color property with Color.Red */
-        public final Self red(int INT) {
+        /** Set color property with Red. */
+        public final Self red(int size) {
             Åssignable o = new Åssignable();
             o.red();
-            o.size(INT);
+            o.size(size);
             return (Self) o;
         }
 
-        /** Set color property with Color.Blue */
-        public final Self blue(int INT) {
+        /** Set color property with Blue. */
+        public final Self blue(int size) {
             Åssignable o = new Åssignable();
             o.blue();
-            o.size(INT);
+            o.size(size);
             return (Self) o;
         }
 
-        /** Set color property with Color.Green */
-        public final Self green(int INT) {
+        /** Set color property with Green. */
+        public final Self green(int size) {
             Åssignable o = new Åssignable();
             o.green();
-            o.size(INT);
+            o.size(size);
             return (Self) o;
         }
     }

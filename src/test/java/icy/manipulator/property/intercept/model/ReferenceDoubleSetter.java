@@ -46,7 +46,7 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle deriveBySize$1667817407= invoker("deriveBySize", int.class, DoubleConsumer.class);
+    private static final MethodHandle deriveBySize$1597991265= invoker("deriveBySize", int.class, DoubleConsumer.class);
 
     /**
      * Create special property updater.
@@ -111,7 +111,7 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, deriveBySize$1667817407.invoke(this, value, (DoubleConsumer) ((Åssignable) this)::square));
+            sizeUpdater.invoke(this, deriveBySize$1597991265.invoke(this, value, (DoubleConsumer) ((Åssignable) this)::square));
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -172,9 +172,9 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
          * 
          * @return The next assignable model.
          */
-        public final Self size(int INT) {
+        public final Self size(int size) {
             Åssignable o = new Åssignable();
-            o.size(INT);
+            o.size(size);
             return (Self) o;
         }
     }

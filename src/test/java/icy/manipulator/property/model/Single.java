@@ -105,9 +105,9 @@ public abstract class Single extends SingleModel {
          * 
          * @return The next assignable model.
          */
-        public final Self name(String string) {
+        public final Self name(String name) {
             Åssignable o = new Åssignable();
-            o.name(string);
+            o.name(name);
             return (Self) o;
         }
     }

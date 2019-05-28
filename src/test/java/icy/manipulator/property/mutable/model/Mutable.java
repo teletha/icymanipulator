@@ -117,9 +117,9 @@ public abstract class Mutable extends MutableModel {
          * 
          * @return The next assignable model.
          */
-        public final Self value(String string) {
+        public final Self value(String value) {
             Åssignable o = new Åssignable();
-            o.value(string);
+            o.value(value);
             return (Self) o;
         }
     }

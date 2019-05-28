@@ -162,14 +162,4 @@ public class PropertyInfo {
     public boolean isPrivateSetter() {
         return setterModifier.contains("private");
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(name).append("(").append(type.className()).append(")");
-        return builder.toString();
-    }
 }

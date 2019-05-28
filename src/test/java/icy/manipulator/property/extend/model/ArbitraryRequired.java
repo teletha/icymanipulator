@@ -2,6 +2,7 @@ package icy.manipulator.property.extend.model;
 
 import icy.manipulator.property.extend.model.ArbitraryRequired;
 import icy.manipulator.property.extend.model.ArbitraryRequiredModel;
+import icy.manipulator.property.model.Arbitrary;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -101,9 +102,9 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
          * 
          * @return The next assignable model.
          */
-        public final Self id(long LONG) {
+        public final Self id(long id) {
             Åssignable o = new Åssignable();
-            o.id(LONG);
+            o.id(id);
             return (Self) o;
         }
     }
@@ -128,13 +129,13 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends ArbitraryRequired> extends icy.manipulator.property.model.Arbitrary.ÅssignableÅrbitrary<Next> {
+    public static interface ÅssignableÅrbitrary<Next extends ArbitraryRequired> extends Arbitrary.ÅssignableÅrbitrary<Next> {
     }
 
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableId, icy.manipulator.property.model.Arbitrary.ÅssignableAll {
+    protected static interface ÅssignableAll extends ÅssignableId, Arbitrary.ÅssignableAll {
     }
 
     /**

@@ -362,64 +362,63 @@ public class IcyManipulator extends AptyProcessor {
             write("/**");
             write(" * Namespace for {@link ", m.implType, "}  builder methods.");
             write(" */");
-            write("public static final class ", Instantiator, "<Self extends ", m.implType
-                    .className(), " & ", ArbitraryInterface, "<Self>>", () -> {
-                        m.firstRequiredProperty().ifPresentOrElse(p -> {
-                            int group = icy.grouping();
-                            List<PropertyInfo> requireds = m.requiredProperties().subList(0, group);
+            write("public static final class ", Instantiator, "<Self extends ", m.implType, " & ", ArbitraryInterface, "<Self>>", () -> {
+                m.firstRequiredProperty().ifPresentOrElse(p -> {
+                    int group = icy.grouping();
+                    List<PropertyInfo> requireds = m.requiredProperties().subList(0, group);
 
-                            requireds.stream()
-                                    .map(def -> new Synthesizer(m, def))
-                                    .reduce((prev, next) -> prev.synthesize(next))
-                                    .ifPresent(synthesizer -> {
-                                        for (MethodInfo method : synthesizer.methods) {
-                                            String[] types = new String[] {m.requiredRouteType(group, "Self"), "Self"};
-                                            if (!types[0].equals("Self")) {
-                                                types[0] = "<T extends " + types[0] + "> T";
-                                                types[1] = "T";
-                                            }
+                    requireds.stream()
+                            .map(def -> new Synthesizer(m, def))
+                            .reduce((prev, next) -> prev.synthesize(next))
+                            .ifPresent(synthesizer -> {
+                                for (MethodInfo method : synthesizer.methods) {
+                                    String[] types = new String[] {m.requiredRouteType(group, "Self"), "Self"};
+                                    if (!types[0].equals("Self")) {
+                                        types[0] = "<T extends " + types[0] + "> T";
+                                        types[1] = "T";
+                                    }
 
-                                            write();
-                                            javadoc(method.doc, () -> {
-                                                write("/**");
-                                                write(" * Create new {@link ", m.implType, "} with the specified ", p.name, " property.");
-                                                write(" * ");
-                                                write(" * @return The next assignable model.");
-                                                write(" */");
-                                            });
-                                            write("public final ", types[0], " ", method, () -> {
-                                                write(Assignable, " o = new ", Assignable, "();");
-
-                                                boolean skipFirst = requireds.size() != method.paramNames.size();
-                                                int parameterIndex = skipFirst ? -1 : 0;
-                                                int index = 0;
-
-                                                for (; index < requireds.size(); index++, parameterIndex++) {
-                                                    String methodName = index == 0 ? method.name : requireds.get(index).name;
-
-                                                    if (0 <= parameterIndex) {
-                                                        write("o.", methodName, "(", method.paramNames.get(parameterIndex), ");");
-                                                    } else {
-                                                        write("o.", methodName, "();");
-                                                    }
-                                                }
-                                                write("return (", types[1], ") o;");
-                                            });
-                                        }
+                                    write();
+                                    javadoc(method.doc, () -> {
+                                        write("/**");
+                                        write(" * Create new {@link ", m.implType, "} with the specified ", p.name, " property.");
+                                        write(" * ");
+                                        write(" * @return The next assignable model.");
+                                        write(" */");
                                     });
-                        }, () -> {
-                            // =========================================
-                            // No Required Property
-                            // =========================================
-                            write();
-                            write("/**");
-                            write(" * Create initialized {@link ", m.implType, "}.");
-                            write(" */");
-                            write("public final Self create()", () -> {
-                                write("return (Self) new ", Assignable, "();");
+                                    write("public final ", types[0], " ", method, () -> {
+                                        write(Assignable, " o = new ", Assignable, "();");
+
+                                        boolean skipFirst = requireds.size() != method.paramNames.size();
+                                        int parameterIndex = skipFirst ? -1 : 0;
+                                        int index = 0;
+
+                                        for (; index < requireds.size(); index++, parameterIndex++) {
+                                            String methodName = index == 0 ? method.name : requireds.get(index).name;
+
+                                            if (0 <= parameterIndex) {
+                                                write("o.", methodName, "(", method.paramNames.get(parameterIndex), ");");
+                                            } else {
+                                                write("o.", methodName, "();");
+                                            }
+                                        }
+                                        write("return (", types[1], ") o;");
+                                    });
+                                }
                             });
-                        });
+                }, () -> {
+                    // =========================================
+                    // No Required Property
+                    // =========================================
+                    write();
+                    write("/**");
+                    write(" * Create initialized {@link ", m.implType, "}.");
+                    write(" */");
+                    write("public final Self create()", () -> {
+                        write("return (Self) new ", Assignable, "();");
                     });
+                });
+            });
         }
 
         /**
@@ -454,7 +453,7 @@ public class IcyManipulator extends AptyProcessor {
          */
         private void defineAssignableArbitrary() {
             Optional<String> extend = m.findNearestArbitraryModel()
-                    .map(m -> " extends " + m.implType.fqcn() + "." + ArbitraryInterface + "<Next>");
+                    .map(m -> " extends " + use(m.implType) + "." + ArbitraryInterface + "<Next>");
             write();
             write("/**");
             write(" * Property assignment API.");
@@ -513,7 +512,7 @@ public class IcyManipulator extends AptyProcessor {
                 for (String name : Apty.enumConstantNames(p.element.getReturnType())) {
                     write();
                     write("/**");
-                    write(" * Assign {@link ", p.type.className(), "#", name, "} to ", p.name, " property.");
+                    write(" * Assign {@link ", p.type, "#", name, "} to ", p.name, " property.");
                     write(" * ");
                     write(" * @return The next assignable model.");
                     write(" */");
@@ -533,7 +532,7 @@ public class IcyManipulator extends AptyProcessor {
                 apis.add(property.assignableInterfaceName());
             }
             if (m.hasParent()) {
-                apis.add(m.parent.get().implType.fqcn() + "." + AssignableAll);
+                apis.add(use(m.parent.get().implType) + "." + AssignableAll);
             }
 
             write();

@@ -49,7 +49,7 @@ public class Type implements Codable {
     private final List<Type> variable = new ArrayList();
 
     /** The type kind. */
-    private final TypeKind kind;
+    public final TypeKind kind;
 
     /**
      * <p>
@@ -103,7 +103,20 @@ public class Type implements Codable {
         this.kind = kind;
     }
 
-    public String className() {
+    /**
+     * Compute fully qualified class name.
+     * 
+     * @return
+     */
+    public String fqcn() {
+        if (packageName.isEmpty()) {
+            return className;
+        } else {
+            return packageName + "." + className;
+        }
+    }
+
+    public String simpleName() {
         return className;
     }
 
@@ -127,20 +140,7 @@ public class Type implements Codable {
             joiner.add(type.write(coder));
         }
 
-        return className().concat(joiner.toString());
-    }
-
-    /**
-     * Compute fully qualified class name.
-     * 
-     * @return
-     */
-    public String fqcn() {
-        if (packageName.isEmpty()) {
-            return className;
-        } else {
-            return packageName + "." + className;
-        }
+        return simpleName().concat(joiner.toString());
     }
 
     /**
