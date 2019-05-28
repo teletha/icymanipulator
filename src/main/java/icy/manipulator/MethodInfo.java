@@ -320,7 +320,11 @@ public class MethodInfo implements Codable {
     public String write(Coder coder) {
         StringJoiner params = new StringJoiner(", ", "(", ")");
         for (int i = 0; i < paramTypes.size(); i++) {
-            params.add(coder.use(paramTypes.get(i)) + " " + paramNames.get(i));
+            if (i == paramTypes.size() - 1) {
+                params.add(coder.use(paramTypes.get(i).varargnize()) + " " + paramNames.get(i));
+            } else {
+                params.add(coder.use(paramTypes.get(i)) + " " + paramNames.get(i));
+            }
         }
         return name.concat(params.toString());
     }

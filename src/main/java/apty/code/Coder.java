@@ -330,7 +330,7 @@ public class Coder {
      * @return A class name to write.
      */
     public final String use(Class imported) {
-        return use(new Type(imported));
+        return use(Type.of(imported));
     }
 
     /**

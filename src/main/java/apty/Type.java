@@ -56,35 +56,36 @@ public class Type implements Codable {
      * Immutable Type.
      * </p>
      * 
-     * @param type
+     * @param packageName
+     * @param className
+     * @param generic
      */
-    public Type(Class type) {
-        this(type.getPackage().getName(), type.getSimpleName(), List.of(), TypeKind.DECLARED);
+    private Type(String fqcn, List<Type> variables, TypeKind kind) {
+        this(computePackage(fqcn), computeName(fqcn), variables, kind);
     }
 
     /**
-     * <p>
-     * Immutable Type.
-     * </p>
+     * Compute package name.
      * 
      * @param fqcn
-     * @param generics
+     * @return
      */
-    public Type(String fqcn, List<? extends Type> generics) {
-        if (generics != null && !generics.isEmpty()) {
-            this.variable.addAll(generics);
-        }
-
+    private static String computePackage(String fqcn) {
         int index = fqcn.lastIndexOf(".");
 
-        if (index == -1) {
-            packageName = "";
-            className = fqcn;
-        } else {
-            packageName = fqcn.substring(0, index);
-            className = fqcn.substring(index + 1);
-        }
-        this.kind = TypeKind.DECLARED;
+        return index == -1 ? "" : fqcn.substring(0, index);
+    }
+
+    /**
+     * Compute base name.
+     * 
+     * @param fqcn
+     * @return
+     */
+    private static String computeName(String fqcn) {
+        int index = fqcn.lastIndexOf(".");
+
+        return index == -1 ? fqcn : fqcn.substring(index + 1);
     }
 
     /**
@@ -96,7 +97,7 @@ public class Type implements Codable {
      * @param className
      * @param generic
      */
-    public Type(String packageName, String className, List<Type> variables, TypeKind kind) {
+    private Type(String packageName, String className, List<Type> variables, TypeKind kind) {
         this.packageName = packageName;
         this.className = className;
         this.variable.addAll(variables);
@@ -112,10 +113,15 @@ public class Type implements Codable {
         if (packageName.isEmpty()) {
             return className;
         } else {
-            return packageName + "." + className;
+            return packageName + "." + simpleName();
         }
     }
 
+    /**
+     * Compute the simple name.
+     * 
+     * @return
+     */
     public String simpleName() {
         return className;
     }
@@ -125,14 +131,22 @@ public class Type implements Codable {
      */
     @Override
     public String write(Coder coder) {
-        if (kind == TypeKind.DECLARED && !isPrimitive()) {
+        switch (kind) {
+        case DECLARED:
+        case ARRAY:
+        case MODULE:
             coder.require(packageName, className);
+            break;
         }
 
         if (kind == TypeKind.WILDCARD) {
             StringJoiner join = new StringJoiner(" & ", className, "");
             variable.forEach(v -> join.add(v.write(coder)));
             return join.toString();
+        }
+
+        if (kind == TypeKind.MODULE) {
+            return className + "...";
         }
 
         StringJoiner joiner = new StringJoiner(", ", "<", ">").setEmptyValue("");
@@ -227,7 +241,7 @@ public class Type implements Codable {
      */
     public final Type varargnize() {
         if (kind == TypeKind.ARRAY) {
-            return new Type(packageName, className, variable, TypeKind.MODULE);
+            return new Type(packageName, className.replaceAll("\\[\\]$", ""), variable, TypeKind.MODULE);
         } else {
             return this;
         }
@@ -291,7 +305,7 @@ public class Type implements Codable {
      * @return
      */
     public static final Type of(String fqcn) {
-        return new Type(fqcn, null);
+        return new Type(fqcn, List.of(), TypeKind.DECLARED);
     }
 
     /**
@@ -303,7 +317,7 @@ public class Type implements Codable {
      * @return
      */
     public static final Type of(Class type) {
-        return new Type(type.getName(), null);
+        return new Type(type.getName(), List.of(), TypeKind.DECLARED);
     }
 
     /**
@@ -367,8 +381,8 @@ public class Type implements Codable {
          * {@inheritDoc}
          */
         @Override
-        public Type visitPrimitive(PrimitiveType t, List<Type> p) {
-            return new Type(t.toString(), null);
+        public Type visitPrimitive(PrimitiveType type, List<Type> p) {
+            return new Type(type.toString(), List.of(), type.getKind());
         }
 
         /**
@@ -384,16 +398,18 @@ public class Type implements Codable {
          */
         @Override
         public Type visitArray(ArrayType type, List<Type> p) {
-            return new Type(type.toString(), null);
+            return new Type(type.toString(), List.of(), TypeKind.ARRAY);
         }
 
         /**
          * {@inheritDoc}
          */
         @Override
-        public Type visitDeclared(DeclaredType t, List<Type> p) {
-            return new Type(((TypeElement) t.asElement()).getQualifiedName().toString(), p != null ? p
-                    : t.getTypeArguments().stream().map(Type::of).collect(Collectors.toList()));
+        public Type visitDeclared(DeclaredType type, List<Type> outer) {
+            String fqcn = ((TypeElement) type.asElement()).getQualifiedName().toString();
+            List<Type> variables = outer != null ? outer : type.getTypeArguments().stream().map(Type::of).collect(Collectors.toList());
+
+            return new Type(fqcn, variables, TypeKind.DECLARED);
         }
 
         /**

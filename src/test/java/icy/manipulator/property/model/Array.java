@@ -149,7 +149,7 @@ public abstract class Array extends ArrayModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableDates<Self>> T names(String[] names) {
+        public final <T extends ÅssignableDates<Self>> T names(String... names) {
             Åssignable o = new Åssignable();
             o.names(names);
             return (T) o;
@@ -167,7 +167,7 @@ public abstract class Array extends ArrayModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next names(String[] value) {
+        default Next names(String... value) {
             ((Array) this).setNames(value);
             return (Next) this;
         }
@@ -184,7 +184,7 @@ public abstract class Array extends ArrayModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next dates(LocalDate[] value) {
+        default Next dates(LocalDate... value) {
             ((Array) this).setDates(value);
             return (Next) this;
         }
