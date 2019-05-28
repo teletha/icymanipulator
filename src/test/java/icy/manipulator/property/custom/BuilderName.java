@@ -1,5 +1,9 @@
 package icy.manipulator.property.custom;
 
+import icy.manipulator.property.custom.BuilderName;
+import icy.manipulator.property.custom.BuilderNameModel;
+import java.lang.String;
+import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;

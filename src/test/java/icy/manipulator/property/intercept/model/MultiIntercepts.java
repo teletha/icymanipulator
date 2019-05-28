@@ -1,5 +1,9 @@
 package icy.manipulator.property.intercept.model;
 
+import icy.manipulator.property.intercept.model.MultiIntercepts;
+import icy.manipulator.property.intercept.model.MultiInterceptsModel;
+import java.lang.String;
+import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;

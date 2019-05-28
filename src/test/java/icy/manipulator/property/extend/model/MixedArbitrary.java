@@ -1,5 +1,9 @@
 package icy.manipulator.property.extend.model;
 
+import icy.manipulator.property.extend.model.MixedArbitrary;
+import icy.manipulator.property.extend.model.MixedArbitraryModel;
+import java.lang.String;
+import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;

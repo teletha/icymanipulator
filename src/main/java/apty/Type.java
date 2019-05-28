@@ -12,6 +12,7 @@ package apty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 import javax.lang.model.element.TypeElement;
@@ -29,10 +30,13 @@ import javax.lang.model.type.TypeVisitor;
 import javax.lang.model.type.UnionType;
 import javax.lang.model.type.WildcardType;
 
+import apty.code.Codable;
+import apty.code.Coder;
+
 /**
  * @version 2015/06/07 0:34:00
  */
-public class Type {
+public class Type implements Codable {
 
     /** The package name. */
     private final String packageName;
@@ -88,6 +92,23 @@ public class Type {
             className = fqcn.substring(index + 1);
         }
         this.generic = false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String write(Coder coder) {
+        if (!generic && !isWildcard()) {
+            coder.require(this);
+        }
+
+        StringJoiner joiner = new StringJoiner(", ", "<", ">").setEmptyValue("");
+        for (Type type : variable) {
+            joiner.add(type.write(coder));
+        }
+
+        return className().concat(joiner.toString());
     }
 
     /**

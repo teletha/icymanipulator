@@ -302,12 +302,28 @@ public class Coder {
         } else if (code instanceof Class) {
             Class clazz = (Class) code;
             return use(clazz);
-        } else if (code instanceof Type) {
-            Type clazz = (Type) code;
-            return use(clazz);
         } else {
             return String.valueOf(code).replace('`', '"');
         }
+    }
+
+    public final void require(Type type) {
+        // ignore primitive
+        if (type.isPrimitive()) {
+            return;
+        }
+    
+        // ignore same package
+        if (type.packageName().equals(baseClass)) {
+            return;
+        }
+    
+        // ignore inner classes
+        if (type.fqcn().startsWith(basePackage + "." + baseClass + ".")) {
+            return;
+        }
+    
+        imports.add(Strings.sanitize(type.fqcn()));
     }
 
     /**
@@ -327,19 +343,7 @@ public class Coder {
      * @return A class name to write.
      */
     public final String use(Type imported) {
-        System.out.println(imported);
-        if (!imported.isDefault() && !imported.isPrimitive() && !imported.generic && !imported.isWildcard()) {
-            if (!imported.packageName().equals(basePackage) && !imported.toString().startsWith(basePackage + "." + baseClass + ".")) {
-                imports.add(Strings.sanitize(imported.toString()));
-            }
-        }
-
-        StringJoiner joiner = new StringJoiner(", ", "<", ">").setEmptyValue("");
-        for (Type type : imported.variable) {
-            joiner.add(use(type));
-        }
-
-        return imported.className().concat(joiner.toString());
+        return imported.write(this);
     }
 
     public final String classLiteral(Type clazz) {

@@ -1,5 +1,8 @@
 package icy.manipulator.property.extend.model;
 
+import icy.manipulator.property.extend.model.ArbitraryRequired;
+import icy.manipulator.property.extend.model.ArbitraryRequiredModel;
+import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;

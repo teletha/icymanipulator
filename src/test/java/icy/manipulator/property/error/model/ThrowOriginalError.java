@@ -1,5 +1,8 @@
 package icy.manipulator.property.error.model;
 
+import icy.manipulator.property.error.model.ThrowOriginalError;
+import icy.manipulator.property.error.model.ThrowOriginalErrorModel;
+import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;

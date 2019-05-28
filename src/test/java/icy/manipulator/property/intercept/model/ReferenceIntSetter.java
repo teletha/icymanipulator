@@ -1,5 +1,8 @@
 package icy.manipulator.property.intercept.model;
 
+import icy.manipulator.property.intercept.model.ReferenceIntSetter;
+import icy.manipulator.property.intercept.model.ReferenceIntSetterModel;
+import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
