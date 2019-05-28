@@ -35,10 +35,10 @@ import javax.lang.model.type.WildcardType;
 public class Type {
 
     /** The package name. */
-    public final String packageName;
+    private final String packageName;
 
     /** The simple class name. */
-    public final String className;
+    private final String className;
 
     /** The variable expression. */
     public final List<Type> variable = new ArrayList();
@@ -55,6 +55,14 @@ public class Type {
      */
     public Type(Class type) {
         this(type.getPackage().getName(), type.getSimpleName(), false);
+    }
+
+    public String className() {
+        return className;
+    }
+
+    public String packageName() {
+        return packageName;
     }
 
     /**

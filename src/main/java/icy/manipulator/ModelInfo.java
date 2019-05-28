@@ -115,7 +115,7 @@ public class ModelInfo {
 
         Type returnType = Type.of(method.getReturnType());
 
-        if (returnType.className.equalsIgnoreCase("void")) {
+        if (returnType.className().equalsIgnoreCase("void")) {
             throw new Fail(method, "Property declaring method must return something.");
         }
 

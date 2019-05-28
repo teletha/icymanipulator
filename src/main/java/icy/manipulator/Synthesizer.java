@@ -42,7 +42,7 @@ public class Synthesizer {
             if (p.autoExpandable) {
                 for (String name : Apty.enumConstantNames(p.element.getReturnType())) {
                     add(new MethodInfo(Strings.decapitalize(name), Type.generic("Next"), List.of(), List
-                            .of(), "Set " + p.name + " property with " + p.type.className + "." + name));
+                            .of(), "Set " + p.name + " property with " + p.type.className() + "." + name));
                 }
             }
         } else {

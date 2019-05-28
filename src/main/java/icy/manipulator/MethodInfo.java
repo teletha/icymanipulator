@@ -218,7 +218,7 @@ public class MethodInfo implements Codable {
      * @return
      */
     public MethodInfo withFirst(Type type) {
-        return withFirst(type, Strings.sanitize(Strings.decapitalize(type.className)));
+        return withFirst(type, Strings.sanitize(Strings.decapitalize(type.className())));
     }
 
     /**
@@ -260,7 +260,7 @@ public class MethodInfo implements Codable {
      * @return
      */
     public MethodInfo withLast(Type type) {
-        return withLast(type, Strings.sanitize(Strings.decapitalize(type.className)));
+        return withLast(type, Strings.sanitize(Strings.decapitalize(type.className())));
     }
 
     /**
@@ -348,7 +348,7 @@ public class MethodInfo implements Codable {
     public String toString() {
         StringJoiner builder = new StringJoiner(", ", name + "(", ")");
         for (Type type : paramTypes) {
-            builder.add(Strings.sanitize(type.className));
+            builder.add(Strings.sanitize(type.className()));
         }
         return builder.toString();
     }

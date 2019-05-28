@@ -329,7 +329,7 @@ public class Coder {
     public final String use(Type imported) {
         System.out.println(imported);
         if (!imported.isDefault() && !imported.isPrimitive() && !imported.generic && !imported.isWildcard()) {
-            if (!imported.packageName.equals(basePackage) && !imported.toString().startsWith(basePackage + "." + baseClass + ".")) {
+            if (!imported.packageName().equals(basePackage) && !imported.toString().startsWith(basePackage + "." + baseClass + ".")) {
                 imports.add(Strings.sanitize(imported.toString()));
             }
         }
@@ -339,7 +339,7 @@ public class Coder {
             joiner.add(use(type));
         }
 
-        return imported.className.concat(joiner.toString());
+        return imported.className().concat(joiner.toString());
     }
 
     public final String classLiteral(Type clazz) {
