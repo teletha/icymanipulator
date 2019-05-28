@@ -48,13 +48,13 @@ public abstract class Overload extends OverloadModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle size$101373314= invoker("size", int.class);
+    private static final MethodHandle size$1325436563= invoker("size", int.class);
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle sizeByText$2017458378= invoker("sizeByText", String.class);
+    private static final MethodHandle sizeByText$1053445669= invoker("sizeByText", String.class);
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle date$1879452002= invoker("date", int.class, int.class, int.class);
+    private static final MethodHandle date$1898513491= invoker("date", int.class, int.class, int.class);
 
     /** The overload or intercept method invoker. */
     private static final MethodHandle today$1= invoker("today");
@@ -232,7 +232,7 @@ public abstract class Overload extends OverloadModel {
          */
         default Next size(int number) {
             try {
-                return size((BigDecimal) size$101373314.invoke(this, number));
+                return size((BigDecimal) size$1325436563.invoke(this, number));
             } catch (Throwable e) {
                 throw quiet(e);
             }
@@ -245,7 +245,7 @@ public abstract class Overload extends OverloadModel {
          */
         default Next sizeByText(String number) {
             try {
-                return size((BigDecimal) sizeByText$2017458378.invoke(this, number));
+                return size((BigDecimal) sizeByText$1053445669.invoke(this, number));
             } catch (Throwable e) {
                 throw quiet(e);
             }
@@ -275,7 +275,7 @@ public abstract class Overload extends OverloadModel {
          */
         default Next date(int year, int month, int day) {
             try {
-                return date((LocalDate) date$1879452002.invoke(this, year, month, day));
+                return date((LocalDate) date$1898513491.invoke(this, year, month, day));
             } catch (Throwable e) {
                 throw quiet(e);
             }

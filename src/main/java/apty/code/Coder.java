@@ -307,23 +307,20 @@ public class Coder {
         }
     }
 
-    public final void require(Type type) {
-        // ignore primitive
-        if (type.isPrimitive()) {
-            return;
-        }
-    
+    public final void require(String packageName, String className) {
         // ignore same package
-        if (type.packageName().equals(baseClass)) {
+        if (packageName.equals(baseClass)) {
             return;
         }
-    
+
+        String fqcn = packageName == null ? className : packageName + "." + className;
+
         // ignore inner classes
-        if (type.fqcn().startsWith(basePackage + "." + baseClass + ".")) {
+        if (fqcn.startsWith(basePackage + "." + baseClass + ".")) {
             return;
         }
-    
-        imports.add(Strings.sanitize(type.fqcn()));
+
+        imports.add(Strings.sanitize(fqcn));
     }
 
     /**

@@ -24,6 +24,7 @@ import javax.lang.model.type.IntersectionType;
 import javax.lang.model.type.NoType;
 import javax.lang.model.type.NullType;
 import javax.lang.model.type.PrimitiveType;
+import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.TypeVisitor;
@@ -45,10 +46,10 @@ public class Type implements Codable {
     private final String className;
 
     /** The variable expression. */
-    public final List<Type> variable = new ArrayList();
+    private final List<Type> variable = new ArrayList();
 
-    /** The generic flag. */
-    public final boolean generic;
+    /** The type kind. */
+    private final TypeKind kind;
 
     /**
      * <p>
@@ -58,15 +59,7 @@ public class Type implements Codable {
      * @param type
      */
     public Type(Class type) {
-        this(type.getPackage().getName(), type.getSimpleName(), false);
-    }
-
-    public String className() {
-        return className;
-    }
-
-    public String packageName() {
-        return packageName;
+        this(type.getPackage().getName(), type.getSimpleName(), TypeKind.DECLARED);
     }
 
     /**
@@ -91,24 +84,7 @@ public class Type implements Codable {
             packageName = fqcn.substring(0, index);
             className = fqcn.substring(index + 1);
         }
-        this.generic = false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String write(Coder coder) {
-        if (!generic && !isWildcard()) {
-            coder.require(this);
-        }
-
-        StringJoiner joiner = new StringJoiner(", ", "<", ">").setEmptyValue("");
-        for (Type type : variable) {
-            joiner.add(type.write(coder));
-        }
-
-        return className().concat(joiner.toString());
+        this.kind = TypeKind.DECLARED;
     }
 
     /**
@@ -120,10 +96,31 @@ public class Type implements Codable {
      * @param className
      * @param generic
      */
-    public Type(String packageName, String className, boolean generic) {
+    public Type(String packageName, String className, TypeKind kind) {
         this.packageName = packageName;
         this.className = className;
-        this.generic = generic;
+        this.kind = kind;
+    }
+
+    public String className() {
+        return className;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String write(Coder coder) {
+        if (kind == TypeKind.DECLARED && !isPrimitive()) {
+            coder.require(packageName, className);
+        }
+
+        StringJoiner joiner = new StringJoiner(", ", "<", ">").setEmptyValue("");
+        for (Type type : variable) {
+            joiner.add(type.write(coder));
+        }
+
+        return className().concat(joiner.toString());
     }
 
     /**
@@ -301,7 +298,7 @@ public class Type implements Codable {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(packageName, className, variable.toString(), generic);
+        return Objects.hash(packageName, className, variable.toString(), kind);
     }
 
     /**
@@ -327,7 +324,7 @@ public class Type implements Codable {
             return false;
         }
 
-        if (generic != other.generic) {
+        if (kind != other.kind) {
             return false;
         }
         return true;
@@ -350,7 +347,7 @@ public class Type implements Codable {
      * @return
      */
     public static final Type generic(String name) {
-        return new Type("", name, true);
+        return new Type("", name, TypeKind.TYPEVAR);
     }
 
     /**
@@ -480,7 +477,7 @@ public class Type implements Codable {
          */
         @Override
         public Type visitTypeVariable(TypeVariable t, List<Type> p) {
-            return new Type("", t.toString(), true);
+            return new Type("", t.toString(), TypeKind.TYPEVAR);
         }
 
         /**
