@@ -17,7 +17,7 @@ public abstract class ThrowOriginalErrorModel {
     @Icy.Property
     public abstract int size();
 
-    @Icy.Intercept
+    @Icy.Intercept("size")
     private int validateSize(int size) {
         if (size < 0) {
             throw new IllegalArgumentException("negative");

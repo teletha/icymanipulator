@@ -17,7 +17,7 @@ public abstract class InterceptModel {
     @Icy.Property
     public abstract int size();
 
-    @Icy.Intercept
+    @Icy.Intercept("size")
     private int normalizeSize(int size) {
         if (size < 0) {
             size = 0;

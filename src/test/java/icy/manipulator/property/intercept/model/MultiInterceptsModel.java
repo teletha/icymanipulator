@@ -24,7 +24,7 @@ public abstract class MultiInterceptsModel {
         return "";
     }
 
-    @Icy.Intercept
+    @Icy.Intercept("size")
     private int checkLower(int size) {
         if (size < 0) {
             size = 0;
@@ -32,7 +32,7 @@ public abstract class MultiInterceptsModel {
         return size;
     }
 
-    @Icy.Intercept
+    @Icy.Intercept("size")
     private int stringlize(int size, Consumer<String> value) {
         value.accept("Size" + size);
         return size;

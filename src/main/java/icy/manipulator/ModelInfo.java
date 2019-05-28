@@ -155,7 +155,7 @@ public class ModelInfo {
 
         if (intercept != null) {
             MethodInfo method = new MethodInfo(m);
-            String targetProperty = method.paramNames.get(0);
+            String targetProperty = intercept.value().isEmpty() ? method.name : intercept.value();
 
             PropertyInfo property = findPropertyByName(targetProperty);
 

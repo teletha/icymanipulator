@@ -24,7 +24,7 @@ public abstract class ReferenceLongSetterModel {
         return 0L;
     }
 
-    @Icy.Intercept
+    @Icy.Intercept("size")
     private int deriveBySize(int size, LongConsumer square) {
         square.accept(size * size);
         return size;
