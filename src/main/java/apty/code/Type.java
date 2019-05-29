@@ -175,25 +175,18 @@ public class Type implements Codable {
      */
     @Override
     public String write(Coder coder) {
-        switch (kind) {
-        case DECLARED:
-        case ARRAY:
-            coder.require(packageName, className);
-            break;
-        }
-    
         if (kind == TypeKind.WILDCARD) {
-            StringJoiner join = new StringJoiner(" & ", className, "");
-            variable.forEach(v -> join.add(v.write(coder)));
-            return join.toString();
+            StringJoiner types = new StringJoiner(" & ", className, "");
+            variable.forEach(v -> types.add(v.write(coder)));
+            return types.toString();
         }
-    
+
         StringJoiner joiner = new StringJoiner(", ", "<", ">").setEmptyValue("");
         for (Type type : variable) {
             joiner.add(type.write(coder));
         }
-    
-        return className.concat(joiner.toString());
+
+        return coder.imports(packageName, className).concat(joiner.toString());
     }
 
     /**

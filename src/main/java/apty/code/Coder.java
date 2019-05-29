@@ -349,19 +349,43 @@ public class Coder {
         return code.toString();
     }
 
-    void require(String packageName, String className) {
+    /**
+     * Add import statement and compute the suitable type name on source code.
+     * 
+     * @param packageName
+     * @param className
+     * @return
+     */
+    final String imports(String packageName, String className) {
+        // ignore primitive
+        if (packageName.isEmpty()) {
+            switch (className) {
+            case "int":
+            case "long":
+            case "float":
+            case "double":
+            case "byte":
+            case "short":
+            case "char":
+            case "boolean":
+                return className;
+            }
+        }
+
         // ignore same package
         if (packageName.equals(baseClass)) {
-            return;
+            return className;
         }
 
         String fqcn = packageName == null ? className : packageName + "." + className;
 
         // ignore inner classes
         if (fqcn.startsWith(basePackage + "." + baseClass + ".")) {
-            return;
+            return className;
         }
 
         imports.add(Strings.sanitize(fqcn));
+
+        return className;
     }
 }
