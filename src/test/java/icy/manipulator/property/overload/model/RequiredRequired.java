@@ -49,7 +49,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle time$718095476= invoker("time", int.class, int.class, int.class);
+    private static final MethodHandle time$31563479= invoker("time", int.class, int.class, int.class);
 
     /**
      * Create special property updater.
@@ -181,7 +181,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
          */
         default Next time(int hour, int minute, int second) {
             try {
-                return time((LocalTime) time$718095476.invoke(this, hour, minute, second));
+                return time((LocalTime) time$31563479.invoke(this, hour, minute, second));
             } catch (Throwable e) {
                 throw quiet(e);
             }
