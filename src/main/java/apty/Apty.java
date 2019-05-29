@@ -64,7 +64,7 @@ public class Apty {
     };
 
     /** The type utility. */
-    private static Types types;
+    static Types types;
 
     /** The element utility. */
     private static Elements elements;

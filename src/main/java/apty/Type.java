@@ -18,18 +18,13 @@ import java.util.stream.Collectors;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
-import javax.lang.model.type.ErrorType;
-import javax.lang.model.type.ExecutableType;
-import javax.lang.model.type.IntersectionType;
-import javax.lang.model.type.NoType;
 import javax.lang.model.type.NullType;
 import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
-import javax.lang.model.type.TypeVisitor;
-import javax.lang.model.type.UnionType;
 import javax.lang.model.type.WildcardType;
+import javax.lang.model.util.SimpleTypeVisitor9;
 
 import apty.code.Codable;
 import apty.code.Coder;
@@ -49,7 +44,7 @@ public class Type implements Codable {
     private final List<Type> variable = new ArrayList();
 
     /** The type kind. */
-    public final TypeKind kind;
+    private final TypeKind kind;
 
     /**
      * <p>
@@ -175,6 +170,10 @@ public class Type implements Codable {
         default:
             return false;
         }
+    }
+
+    public boolean isVoid() {
+        return className.equals("void");
     }
 
     /**
@@ -354,23 +353,7 @@ public class Type implements Codable {
     /**
      * @version 2015/06/06 11:44:40
      */
-    private static class TypeDetector implements TypeVisitor<Type, List<Type>> {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Type visit(TypeMirror t, List<Type> p) {
-            return null;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Type visit(TypeMirror t) {
-            return null;
-        }
+    private static class TypeDetector extends SimpleTypeVisitor9<Type, List<Type>> {
 
         /**
          * {@inheritDoc}
@@ -411,14 +394,6 @@ public class Type implements Codable {
          * {@inheritDoc}
          */
         @Override
-        public Type visitError(ErrorType t, List<Type> p) {
-            return null;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
         public Type visitTypeVariable(TypeVariable t, List<Type> p) {
             return new Type("", t.toString(), List.of(), TypeKind.TYPEVAR);
         }
@@ -441,46 +416,6 @@ public class Type implements Codable {
             }
 
             return new Type(null, "?", List.of(), TypeKind.WILDCARD);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Type visitExecutable(ExecutableType t, List<Type> p) {
-            return null;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Type visitNoType(NoType t, List<Type> p) {
-            return null;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Type visitUnknown(TypeMirror t, List<Type> p) {
-            return null;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Type visitUnion(UnionType t, List<Type> p) {
-            return null;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Type visitIntersection(IntersectionType t, List<Type> p) {
-            return null;
         }
     }
 }
