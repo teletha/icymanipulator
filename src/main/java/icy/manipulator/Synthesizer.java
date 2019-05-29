@@ -41,7 +41,7 @@ public class Synthesizer {
             // auto-expanded overload
             if (p.autoExpandable) {
                 for (String name : Apty.enumConstantNames(p.element.getReturnType())) {
-                    add(new MethodInfo(Strings.decapitalize(name), Type.generic("Next"), List.of(), List
+                    add(new MethodInfo(Strings.decapitalize(name), Type.variable("Next"), List.of(), List
                             .of(), "Set " + p.name + " property with " + name + "."));
                 }
             }

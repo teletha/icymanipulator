@@ -36,13 +36,11 @@ public class Type implements Codable {
     public final TypeKind kind;
 
     /**
-     * <p>
-     * Immutable Type.
-     * </p>
+     * Build Type.
      * 
-     * @param packagee
-     * @param base
-     * @param generic
+     * @param fqcn
+     * @param variables
+     * @param kind
      */
     private Type(String fqcn, List<Type> variables, TypeKind kind) {
         this(computePackage(fqcn), computeName(fqcn), variables, kind);
@@ -73,17 +71,16 @@ public class Type implements Codable {
     }
 
     /**
-     * <p>
-     * Immutable Type.
-     * </p>
+     * Build Type.
      * 
      * @param packageName
-     * @param className
-     * @param generic
+     * @param base
+     * @param variables
+     * @param kind
      */
-    private Type(String packageName, String className, List<Type> variables, TypeKind kind) {
+    private Type(String packageName, String base, List<Type> variables, TypeKind kind) {
         this.packagee = packageName;
-        this.base = className;
+        this.base = base;
         this.variables.addAll(variables);
         this.kind = kind;
     }
@@ -235,36 +232,30 @@ public class Type implements Codable {
     }
 
     /**
-     * <p>
-     * Resoleve {@link Type} by the generic variable type.
-     * </p>
+     * Build {@link Type} from the variable name.
      * 
-     * @param fcn
-     * @return
+     * @param name A variable name.
+     * @return The created {@link Type}.
      */
-    public static final Type generic(String name) {
+    public static final Type variable(String name) {
         return new Type("", name, List.of(), TypeKind.TYPEVAR);
     }
 
     /**
-     * <p>
-     * Resoleve {@link Type} by the fully qualified class name.
-     * </p>
+     * Build {@link Type} from the class name.
      * 
-     * @param fcn
-     * @return
+     * @param fqcn A fully qualified class name.
+     * @return The created {@link Type}.
      */
     public static final Type of(String fqcn) {
         return new Type(fqcn, List.of(), TypeKind.DECLARED);
     }
 
     /**
-     * <p>
-     * Resoleve {@link Type} by the fully qualified class name.
-     * </p>
+     * Build {@link Type} from {@link Class}.
      * 
-     * @param fcn
-     * @return
+     * @param type A base type.
+     * @return The created {@link Type}.
      */
     public static final Type of(Class type) {
         return new Type(type.getName(), List.of(), TypeKind.DECLARED);
@@ -274,7 +265,7 @@ public class Type implements Codable {
      * Build {@link Type} from {@link TypeElement}
      * 
      * @param type A base type.
-     * @return The create d {@link Type}.
+     * @return The created {@link Type}.
      */
     public static final Type of(TypeElement type) {
         return of(type.asType());
@@ -284,7 +275,7 @@ public class Type implements Codable {
      * Build {@link Type} from {@link TypeMirror}.
      * 
      * @param type A base type.
-     * @return The create d {@link Type}.
+     * @return The created {@link Type}.
      */
     public static final Type of(TypeMirror type) {
         return of(type, null);
@@ -295,7 +286,7 @@ public class Type implements Codable {
      * 
      * @param type A base type.
      * @param variables A list of type variables.
-     * @return The create d {@link Type}.
+     * @return The created {@link Type}.
      */
     public static final Type of(TypeMirror type, List<Type> variables) {
         TypeKind kind = type.getKind();
