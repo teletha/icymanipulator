@@ -1,8 +1,5 @@
 package icy.manipulator.property.intercept.model;
 
-import icy.manipulator.property.intercept.model.ReferenceDoubleSetter;
-import icy.manipulator.property.intercept.model.ReferenceDoubleSetterModel;
-import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -46,7 +43,7 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle deriveBySize$501295102= invoker("deriveBySize", int.class, DoubleConsumer.class);
+    private static final MethodHandle deriveBySize$1798737882= invoker("deriveBySize", int.class, DoubleConsumer.class);
 
     /**
      * Create special property updater.
@@ -111,7 +108,7 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, deriveBySize$501295102.invoke(this, value, (DoubleConsumer) ((Åssignable) this)::square));
+            sizeUpdater.invoke(this, deriveBySize$1798737882.invoke(this, value, (DoubleConsumer) ((Åssignable) this)::square));
         } catch (Throwable e) {
             throw quiet(e);
         }

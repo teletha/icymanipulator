@@ -1,9 +1,5 @@
 package icy.manipulator.property.custom;
 
-import icy.manipulator.property.custom.ImplementationVisibility;
-import icy.manipulator.property.custom.ImplementationVisibilityModel;
-import java.lang.String;
-import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;

@@ -31,7 +31,7 @@ import javax.lang.model.type.TypeMirror;
 
 import apty.Apty;
 import apty.Fail;
-import apty.Type;
+import apty.code.Type;
 import icy.manipulator.Icy.Intercept;
 import icy.manipulator.Icy.Overload;
 import icy.manipulator.util.Lists;

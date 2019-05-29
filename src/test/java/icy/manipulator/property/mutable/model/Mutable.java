@@ -1,9 +1,5 @@
 package icy.manipulator.property.mutable.model;
 
-import icy.manipulator.property.mutable.model.Mutable;
-import icy.manipulator.property.mutable.model.MutableModel;
-import java.lang.String;
-import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;

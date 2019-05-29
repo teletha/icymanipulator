@@ -1,9 +1,5 @@
 package icy.manipulator.property.intercept.model;
 
-import icy.manipulator.property.intercept.model.MultiIntercepts;
-import icy.manipulator.property.intercept.model.MultiInterceptsModel;
-import java.lang.String;
-import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -47,10 +43,10 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle checkLower$1547525488= invoker("checkLower", int.class);
+    private static final MethodHandle checkLower$1998120734= invoker("checkLower", int.class);
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle stringlize$131590681= invoker("stringlize", int.class, Consumer.class);
+    private static final MethodHandle stringlize$1081436523= invoker("stringlize", int.class, Consumer.class);
 
     /**
      * Create special property updater.
@@ -115,7 +111,7 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, stringlize$131590681.invoke(this, checkLower$1547525488.invoke(this, value), (Consumer<String>) ((Åssignable) this)::value));
+            sizeUpdater.invoke(this, stringlize$1081436523.invoke(this, checkLower$1998120734.invoke(this, value), (Consumer<String>) ((Åssignable) this)::value));
         } catch (Throwable e) {
             throw quiet(e);
         }

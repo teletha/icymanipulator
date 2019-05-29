@@ -1,8 +1,5 @@
 package icy.manipulator.property.intercept.model;
 
-import icy.manipulator.property.intercept.model.ReferenceLongSetter;
-import icy.manipulator.property.intercept.model.ReferenceLongSetterModel;
-import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -46,7 +43,7 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle deriveBySize$713789677= invoker("deriveBySize", int.class, LongConsumer.class);
+    private static final MethodHandle deriveBySize$1681842543= invoker("deriveBySize", int.class, LongConsumer.class);
 
     /**
      * Create special property updater.
@@ -111,7 +108,7 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, deriveBySize$713789677.invoke(this, value, (LongConsumer) ((Åssignable) this)::square));
+            sizeUpdater.invoke(this, deriveBySize$1681842543.invoke(this, value, (LongConsumer) ((Åssignable) this)::square));
         } catch (Throwable e) {
             throw quiet(e);
         }

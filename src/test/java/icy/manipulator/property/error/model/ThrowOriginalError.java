@@ -1,8 +1,5 @@
 package icy.manipulator.property.error.model;
 
-import icy.manipulator.property.error.model.ThrowOriginalError;
-import icy.manipulator.property.error.model.ThrowOriginalErrorModel;
-import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -45,7 +42,7 @@ public abstract class ThrowOriginalError extends ThrowOriginalErrorModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle validateSize$1547525488= invoker("validateSize", int.class);
+    private static final MethodHandle validateSize$1998120734= invoker("validateSize", int.class);
 
     /**
      * Create special property updater.
@@ -103,7 +100,7 @@ public abstract class ThrowOriginalError extends ThrowOriginalErrorModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, validateSize$1547525488.invoke(this, value));
+            sizeUpdater.invoke(this, validateSize$1998120734.invoke(this, value));
         } catch (Throwable e) {
             throw quiet(e);
         }

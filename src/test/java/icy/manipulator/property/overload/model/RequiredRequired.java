@@ -1,10 +1,5 @@
 package icy.manipulator.property.overload.model;
 
-import icy.manipulator.property.overload.model.Overload;
-import icy.manipulator.property.overload.model.RequiredRequired;
-import icy.manipulator.property.overload.model.RequiredRequiredModel;
-import java.lang.String;
-import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -49,7 +44,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle time$905483376= invoker("time", int.class, int.class, int.class);
+    private static final MethodHandle time$141002882= invoker("time", int.class, int.class, int.class);
 
     /**
      * Create special property updater.
@@ -181,7 +176,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
          */
         default Next time(int hour, int minute, int second) {
             try {
-                return time((LocalTime) time$905483376.invoke(this, hour, minute, second));
+                return time((LocalTime) time$141002882.invoke(this, hour, minute, second));
             } catch (Throwable e) {
                 throw quiet(e);
             }

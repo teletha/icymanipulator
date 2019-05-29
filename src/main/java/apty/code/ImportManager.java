@@ -84,6 +84,73 @@ class ImportManager {
     }
 
     /**
+     * @param type
+     */
+    String require(Type type) {
+        return type.imports(this);
+    }
+
+    /**
+     * Analyze raw name and package.
+     * 
+     * @param type
+     * @return
+     */
+    String require(String fqcn) {
+        int index = fqcn.lastIndexOf(".");
+
+        String packageName;
+        String className;
+
+        if (index == -1) {
+            packageName = "";
+            className = fqcn;
+        } else {
+            packageName = fqcn.substring(0, index);
+            className = fqcn.substring(index + 1);
+        }
+
+        require(packageName, className);
+
+        return className;
+    }
+
+    private void require(String packageName, String className) {
+        // ignore primitive
+        if (packageName.isEmpty()) {
+            switch (className) {
+            case "int":
+            case "long":
+            case "float":
+            case "double":
+            case "char":
+            case "byte":
+            case "short":
+            case "boolean":
+                return;
+            }
+        }
+
+        // ignore java.lang
+        if (packageName.equals("java.lang")) {
+            return;
+        }
+
+        // ignore same package
+        if (packageName.equals(basePackage)) {
+            return;
+        }
+
+        String fqcn = packageName == null ? className : packageName + "." + className;
+
+        // ignore inner classes
+        if (fqcn.startsWith(basePackage + "." + baseClass + ".")) {
+            return;
+        }
+        imports.add(Strings.sanitize(fqcn));
+    }
+
+    /**
      * 
      */
     private final class TypeAnalyzer extends SimpleTypeVisitor9<String, Void> {
@@ -136,44 +203,7 @@ class ImportManager {
          * @return
          */
         private String name(TypeMirror type) {
-            String fqcn = types.toString(types.erasure(type));
-
-            int index = fqcn.lastIndexOf(".");
-
-            String packageName;
-            String className;
-
-            if (index == -1) {
-                packageName = "";
-                className = fqcn;
-            } else {
-                packageName = fqcn.substring(0, index);
-                className = fqcn.substring(index + 1);
-            }
-
-            require(packageName, className);
-
-            return className;
-        }
-
-        private void require(String packageName, String className) {
-            // ignore java.lang
-            if (packageName.equals("java.lang")) {
-                return;
-            }
-
-            // ignore same package
-            if (packageName.equals(basePackage)) {
-                return;
-            }
-
-            String fqcn = packageName == null ? className : packageName + "." + className;
-
-            // ignore inner classes
-            if (fqcn.startsWith(basePackage + "." + baseClass + ".")) {
-                return;
-            }
-            imports.add(Strings.sanitize(fqcn));
+            return require(types.toString(types.erasure(type)));
         }
     }
 }

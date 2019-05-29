@@ -1,8 +1,5 @@
 package icy.manipulator.property.intercept.model;
 
-import icy.manipulator.property.intercept.model.Intercept;
-import icy.manipulator.property.intercept.model.InterceptModel;
-import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -45,7 +42,7 @@ public abstract class Intercept extends InterceptModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle normalizeSize$1547525488= invoker("normalizeSize", int.class);
+    private static final MethodHandle normalizeSize$1998120734= invoker("normalizeSize", int.class);
 
     /**
      * Create special property updater.
@@ -103,7 +100,7 @@ public abstract class Intercept extends InterceptModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, normalizeSize$1547525488.invoke(this, value));
+            sizeUpdater.invoke(this, normalizeSize$1998120734.invoke(this, value));
         } catch (Throwable e) {
             throw quiet(e);
         }
