@@ -13,7 +13,6 @@ import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -77,29 +76,6 @@ public class Apty {
     static void initialize(ProcessingEnvironment process) {
         types = process.getTypeUtils();
         elements = process.getElementUtils();
-    }
-
-    /**
-     * List up class hierarchy.
-     * 
-     * @param e
-     * @return
-     */
-    public static List<TypeElement> hierarchy(Element e) {
-        ElementKind kind = e.getKind();
-
-        if (kind != ElementKind.CLASS) {
-            return List.of();
-        }
-
-        TypeElement type = (TypeElement) e;
-        LinkedList<TypeElement> list = new LinkedList();
-
-        while (!type.getQualifiedName().contentEquals("java.lang.Object")) {
-            list.addLast(type);
-            type = (TypeElement) types.asElement(type.getSuperclass());
-        }
-        return list;
     }
 
     /**
@@ -351,15 +327,6 @@ public class Apty {
     public static String doc(Element e) {
         String doc = elements.getDocComment(e);
         return doc == null ? "" : doc;
-    }
-
-    public static boolean implement(TypeElement type, Class interfaceType) {
-        for (TypeMirror mirror : type.getInterfaces()) {
-            if (same(mirror, interfaceType)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
