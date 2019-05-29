@@ -9,6 +9,8 @@
  */
 package icy.manipulator.property.intercept;
 
+import java.util.function.Consumer;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -76,8 +78,76 @@ class InvalidInterceptTest {
         abstract int value();
 
         @Icy.Intercept("value")
-        private int intercept2(long value) {
+        private int intercept(long value) {
             return (int) value;
+        }
+    }
+
+    @Test
+    void returnType() {
+        assert processor.captureError(DifferentReturnType.class).contains("return the same type");
+    }
+
+    @Icy
+    static abstract class DifferentReturnType {
+
+        @Icy.Property
+        abstract int value();
+
+        @Icy.Intercept("value")
+        private long intercept(int value) {
+            return value;
+        }
+    }
+
+    @Test
+    void propertyName() {
+        assert processor.captureError(InvalidPropertyName.class).contains("not found");
+    }
+
+    @Icy
+    static abstract class InvalidPropertyName {
+
+        @Icy.Property
+        abstract int value();
+
+        @Icy.Intercept("notFound")
+        private int intercept(int value) {
+            return value;
+        }
+    }
+
+    @Test
+    void nonSetterParam() {
+        assert processor.captureError(NonSetterParam.class).contains("2nd argument [java.lang.String] is invalid");
+    }
+
+    @Icy
+    static abstract class NonSetterParam {
+
+        @Icy.Property
+        abstract int value();
+
+        @Icy.Intercept("value")
+        private int intercept(int value, String invalid) {
+            return value;
+        }
+    }
+
+    @Test
+    void setterPropertyName() {
+        assert processor.captureError(NonSetterName.class).contains("property is not defined");
+    }
+
+    @Icy
+    static abstract class NonSetterName {
+
+        @Icy.Property
+        abstract int value();
+
+        @Icy.Intercept("value")
+        private int intercept(int value, Consumer<String> notFound) {
+            return value;
         }
     }
 }
