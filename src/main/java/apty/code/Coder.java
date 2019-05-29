@@ -357,21 +357,6 @@ public class Coder {
      * @return
      */
     final String imports(String packageName, String className) {
-        // ignore primitive
-        if (packageName.isEmpty()) {
-            switch (className) {
-            case "int":
-            case "long":
-            case "float":
-            case "double":
-            case "byte":
-            case "short":
-            case "char":
-            case "boolean":
-                return className;
-            }
-        }
-
         // ignore same package
         if (packageName.equals(baseClass)) {
             return className;

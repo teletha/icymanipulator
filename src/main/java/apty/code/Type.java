@@ -28,13 +28,13 @@ import javax.lang.model.util.SimpleTypeVisitor9;
 public class Type implements Codable {
 
     /** The package name. */
-    private final String packageName;
+    private final String packagee;
 
-    /** The simple class name. */
-    private final String className;
+    /** The base name. */
+    private final String base;
 
-    /** The variable expression. */
-    private final List<Type> variable = new ArrayList();
+    /** The managed variables. */
+    private final List<Type> variables = new ArrayList();
 
     /** The type kind. */
     public final TypeKind kind;
@@ -44,8 +44,8 @@ public class Type implements Codable {
      * Immutable Type.
      * </p>
      * 
-     * @param packageName
-     * @param className
+     * @param packagee
+     * @param base
      * @param generic
      */
     private Type(String fqcn, List<Type> variables, TypeKind kind) {
@@ -86,9 +86,9 @@ public class Type implements Codable {
      * @param generic
      */
     private Type(String packageName, String className, List<Type> variables, TypeKind kind) {
-        this.packageName = packageName;
-        this.className = className;
-        this.variable.addAll(variables);
+        this.packagee = packageName;
+        this.base = className;
+        this.variables.addAll(variables);
         this.kind = kind;
     }
 
@@ -98,10 +98,10 @@ public class Type implements Codable {
      * @return
      */
     public String name() {
-        if (packageName.isEmpty()) {
-            return className;
+        if (packagee.isEmpty()) {
+            return base;
         } else {
-            return packageName + "." + className;
+            return packagee + "." + base;
         }
     }
 
@@ -111,7 +111,7 @@ public class Type implements Codable {
      * @return
      */
     public String defaultValue() {
-        switch (className) {
+        switch (base) {
         case "int":
         case "byte":
         case "short":
@@ -164,7 +164,7 @@ public class Type implements Codable {
      */
     public Type varargnize() {
         if (kind == TypeKind.ARRAY) {
-            return new Type(packageName, className.replaceAll("\\[\\]$", "..."), variable, TypeKind.DECLARED);
+            return new Type(packagee, base.replaceAll("\\[\\]$", "..."), variables, TypeKind.DECLARED);
         } else {
             return this;
         }
@@ -175,18 +175,29 @@ public class Type implements Codable {
      */
     @Override
     public String write(Coder coder) {
-        if (kind == TypeKind.WILDCARD) {
-            StringJoiner types = new StringJoiner(" & ", className, "");
-            variable.forEach(v -> types.add(v.write(coder)));
-            return types.toString();
-        }
+        switch (kind) {
+        case BOOLEAN:
+        case INT:
+        case LONG:
+        case FLOAT:
+        case DOUBLE:
+        case CHAR:
+        case BYTE:
+        case SHORT:
+            return base;
 
-        StringJoiner joiner = new StringJoiner(", ", "<", ">").setEmptyValue("");
-        for (Type type : variable) {
-            joiner.add(type.write(coder));
-        }
+        case WILDCARD:
+            StringJoiner vars = new StringJoiner(" & ", base, "");
+            variables.forEach(v -> vars.add(v.write(coder)));
+            return vars.toString();
 
-        return coder.imports(packageName, className).concat(joiner.toString());
+        default:
+            vars = new StringJoiner(", ", "<", ">").setEmptyValue("");
+            for (Type type : variables) {
+                vars.add(type.write(coder));
+            }
+            return coder.imports(packagee, base).concat(vars.toString());
+        }
     }
 
     /**
@@ -194,7 +205,7 @@ public class Type implements Codable {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(packageName, className, variable, kind);
+        return Objects.hash(packagee, base, variables, kind);
     }
 
     /**
@@ -208,15 +219,15 @@ public class Type implements Codable {
 
         Type other = (Type) obj;
 
-        if (!packageName.equals(other.packageName)) {
+        if (!packagee.equals(other.packagee)) {
             return false;
         }
 
-        if (!className.equals(other.className)) {
+        if (!base.equals(other.base)) {
             return false;
         }
 
-        if (!variable.toString().equals(other.variable.toString())) {
+        if (!variables.toString().equals(other.variables.toString())) {
             return false;
         }
 
