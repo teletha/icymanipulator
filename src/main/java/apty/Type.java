@@ -100,25 +100,16 @@ public class Type implements Codable {
     }
 
     /**
-     * Compute fully qualified class name.
+     * Compute the suitable notation of this type.
      * 
      * @return
      */
-    public String fqcn() {
+    public String notation() {
         if (packageName.isEmpty()) {
             return className;
         } else {
-            return packageName + "." + simpleName();
+            return packageName + "." + className;
         }
-    }
-
-    /**
-     * Compute the simple name.
-     * 
-     * @return
-     */
-    public String simpleName() {
-        return className;
     }
 
     /**
@@ -144,7 +135,7 @@ public class Type implements Codable {
             joiner.add(type.write(coder));
         }
 
-        return simpleName().concat(joiner.toString());
+        return className.concat(joiner.toString());
     }
 
     /**
@@ -215,7 +206,7 @@ public class Type implements Codable {
      * @return
      */
     public boolean is(Class type) {
-        return fqcn().equals(type.getName());
+        return notation().equals(type.getName());
     }
 
     /**
@@ -225,7 +216,7 @@ public class Type implements Codable {
      * @return
      */
     public boolean is(Type type) {
-        return fqcn().equals(type.fqcn());
+        return notation().equals(type.notation());
     }
 
     /**
