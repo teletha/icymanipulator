@@ -111,25 +111,25 @@ public class Type implements Codable {
      * @return
      */
     public String defaultValue() {
-        switch (base) {
-        case "int":
-        case "byte":
-        case "short":
+        switch (kind) {
+        case INT:
+        case BYTE:
+        case SHORT:
             return "0";
 
-        case "long":
+        case LONG:
             return "0L";
 
-        case "float":
+        case FLOAT:
             return "0";
 
-        case "double":
+        case DOUBLE:
             return "0D";
 
-        case "char":
+        case CHAR:
             return "' '";
 
-        case "boolean":
+        case BOOLEAN:
             return "false";
 
         default:
