@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package apty.code;
+package apty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,61 +18,112 @@ import java.util.stream.Collectors;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.ErrorType;
+import javax.lang.model.type.ExecutableType;
+import javax.lang.model.type.IntersectionType;
+import javax.lang.model.type.NoType;
 import javax.lang.model.type.NullType;
 import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
+import javax.lang.model.type.TypeVisitor;
+import javax.lang.model.type.UnionType;
 import javax.lang.model.type.WildcardType;
-import javax.lang.model.util.SimpleTypeVisitor9;
+
+import apty.code.Codable;
+import apty.code.Coder;
 
 /**
  * @version 2015/06/07 0:34:00
  */
 public class Type implements Codable {
 
-    /** The identical notation. */
-    protected final String className;
+    /** The package name. */
+    private final String packageName;
+
+    /** The simple class name. */
+    private final String className;
 
     /** The variable expression. */
-    protected final List<Type> variables = new ArrayList();
+    private final List<Type> variable = new ArrayList();
 
     /** The type kind. */
-    protected final TypeKind kind;
+    public final TypeKind kind;
 
     /**
+     * <p>
+     * Immutable Type.
+     * </p>
+     * 
+     * @param packageName
      * @param className
-     * @param variables
-     * @param kind
+     * @param generic
      */
-    protected Type(String className, List<Type> variables, TypeKind kind) {
+    private Type(String fqcn, List<Type> variables, TypeKind kind) {
+        this(computePackage(fqcn), computeName(fqcn), variables, kind);
+    }
+
+    /**
+     * Compute package name.
+     * 
+     * @param fqcn
+     * @return
+     */
+    private static String computePackage(String fqcn) {
+        int index = fqcn.lastIndexOf(".");
+
+        return index == -1 ? "" : fqcn.substring(0, index);
+    }
+
+    /**
+     * Compute base name.
+     * 
+     * @param fqcn
+     * @return
+     */
+    private static String computeName(String fqcn) {
+        int index = fqcn.lastIndexOf(".");
+
+        return index == -1 ? fqcn : fqcn.substring(index + 1);
+    }
+
+    /**
+     * <p>
+     * Immutable Type.
+     * </p>
+     * 
+     * @param packageName
+     * @param className
+     * @param generic
+     */
+    private Type(String packageName, String className, List<Type> variables, TypeKind kind) {
+        this.packageName = packageName;
         this.className = className;
-        this.variables.addAll(variables);
+        this.variable.addAll(variables);
         this.kind = kind;
     }
 
     /**
-     * Compute the suitable notation of this type.
+     * Compute fully qualified class name.
      * 
      * @return
      */
-    public String notation() {
-        return className;
+    public String fqcn() {
+        if (packageName.isEmpty()) {
+            return className;
+        } else {
+            return packageName + "." + simpleName();
+        }
     }
 
-    protected String imports(ImportManager manager) {
-
-        if (kind == TypeKind.WILDCARD) {
-            StringJoiner join = new StringJoiner(" & ", className, "");
-            variables.forEach(v -> join.add(manager.require(v)));
-            return join.toString();
-        }
-
-        StringJoiner types = new StringJoiner(", ", "<", ">").setEmptyValue("");
-        for (Type variable : variables) {
-            types.add(manager.require(variable));
-        }
-        return manager.require(className).concat(types.toString());
+    /**
+     * Compute the simple name.
+     * 
+     * @return
+     */
+    public String simpleName() {
+        return className;
     }
 
     /**
@@ -80,24 +131,25 @@ public class Type implements Codable {
      */
     @Override
     public String write(Coder coder) {
-        StringJoiner joiner = new StringJoiner(", ", "<", ">").setEmptyValue("");
-        for (Type type : variables) {
-            joiner.add(type.write(coder));
-        }
-
         switch (kind) {
         case DECLARED:
         case ARRAY:
-            return coder.require(className).concat(joiner.toString());
+            coder.require(packageName, className);
+            break;
         }
 
         if (kind == TypeKind.WILDCARD) {
             StringJoiner join = new StringJoiner(" & ", className, "");
-            variables.forEach(v -> join.add(v.write(coder)));
+            variable.forEach(v -> join.add(v.write(coder)));
             return join.toString();
         }
 
-        return className.concat(joiner.toString());
+        StringJoiner joiner = new StringJoiner(", ", "<", ">").setEmptyValue("");
+        for (Type type : variable) {
+            joiner.add(type.write(coder));
+        }
+
+        return simpleName().concat(joiner.toString());
     }
 
     /**
@@ -123,10 +175,6 @@ public class Type implements Codable {
         default:
             return false;
         }
-    }
-
-    public boolean isVoid() {
-        return className.equals("void");
     }
 
     /**
@@ -168,7 +216,7 @@ public class Type implements Codable {
      * @return
      */
     public boolean is(Class type) {
-        return notation().equals(type.getName());
+        return fqcn().equals(type.getName());
     }
 
     /**
@@ -178,7 +226,7 @@ public class Type implements Codable {
      * @return
      */
     public boolean is(Type type) {
-        return notation().equals(type.notation());
+        return fqcn().equals(type.fqcn());
     }
 
     /**
@@ -188,32 +236,9 @@ public class Type implements Codable {
      */
     public final Type varargnize() {
         if (kind == TypeKind.ARRAY) {
-            return new VarArgs(className.replaceAll("\\[\\]$", ""));
+            return new Type(packageName, className.replaceAll("\\[\\]$", "..."), variable, TypeKind.DECLARED);
         } else {
             return this;
-        }
-    }
-
-    /**
-     * 
-     */
-    private static class VarArgs extends Type {
-
-        /**
-         * @param notation
-         * @param variables
-         * @param kind
-         */
-        public VarArgs(String notation) {
-            super(notation, List.of(), TypeKind.DECLARED);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected String imports(ImportManager manager) {
-            return manager.require(className).concat("...");
         }
     }
 
@@ -222,7 +247,7 @@ public class Type implements Codable {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(className, variables, kind);
+        return Objects.hash(packageName, className, variable, kind);
     }
 
     /**
@@ -236,11 +261,15 @@ public class Type implements Codable {
 
         Type other = (Type) obj;
 
+        if (!packageName.equals(other.packageName)) {
+            return false;
+        }
+
         if (!className.equals(other.className)) {
             return false;
         }
 
-        if (!variables.toString().equals(other.variables.toString())) {
+        if (!variable.toString().equals(other.variable.toString())) {
             return false;
         }
 
@@ -259,7 +288,7 @@ public class Type implements Codable {
      * @return
      */
     public static final Type generic(String name) {
-        return new Type(name, List.of(), TypeKind.TYPEVAR);
+        return new Type("", name, List.of(), TypeKind.TYPEVAR);
     }
 
     /**
@@ -325,7 +354,23 @@ public class Type implements Codable {
     /**
      * @version 2015/06/06 11:44:40
      */
-    private static class TypeDetector extends SimpleTypeVisitor9<Type, List<Type>> {
+    private static class TypeDetector implements TypeVisitor<Type, List<Type>> {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visit(TypeMirror t, List<Type> p) {
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visit(TypeMirror t) {
+            return null;
+        }
 
         /**
          * {@inheritDoc}
@@ -366,8 +411,16 @@ public class Type implements Codable {
          * {@inheritDoc}
          */
         @Override
+        public Type visitError(ErrorType t, List<Type> p) {
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
         public Type visitTypeVariable(TypeVariable t, List<Type> p) {
-            return new Type(t.toString(), List.of(), TypeKind.TYPEVAR);
+            return new Type("", t.toString(), List.of(), TypeKind.TYPEVAR);
         }
 
         /**
@@ -378,16 +431,56 @@ public class Type implements Codable {
             TypeMirror extendType = type.getExtendsBound();
 
             if (extendType != null) {
-                return new Type("? extends ", List.of(extendType.accept(this, null)), TypeKind.WILDCARD);
+                return new Type(null, "? extends ", List.of(extendType.accept(this, null)), TypeKind.WILDCARD);
             }
 
             TypeMirror superType = type.getSuperBound();
 
             if (superType != null) {
-                return new Type("? super ", List.of(superType.accept(this, null)), TypeKind.WILDCARD);
+                return new Type(null, "? super ", List.of(superType.accept(this, null)), TypeKind.WILDCARD);
             }
 
-            return new Type("?", List.of(), TypeKind.WILDCARD);
+            return new Type(null, "?", List.of(), TypeKind.WILDCARD);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visitExecutable(ExecutableType t, List<Type> p) {
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visitNoType(NoType t, List<Type> p) {
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visitUnknown(TypeMirror t, List<Type> p) {
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visitUnion(UnionType t, List<Type> p) {
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type visitIntersection(IntersectionType t, List<Type> p) {
+            return null;
         }
     }
 }

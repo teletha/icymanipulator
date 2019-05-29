@@ -20,9 +20,9 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.type.ExecutableType;
 
 import apty.Apty;
+import apty.Type;
 import apty.code.Codable;
 import apty.code.Coder;
-import apty.code.Type;
 import icy.manipulator.util.Strings;
 
 public class MethodInfo implements Codable {
@@ -308,7 +308,7 @@ public class MethodInfo implements Codable {
     public String toString() {
         StringJoiner builder = new StringJoiner(", ", name + "(", ")");
         for (Type type : paramTypes) {
-            builder.add(Strings.sanitize(type.notation()));
+            builder.add(Strings.sanitize(type.simpleName()));
         }
         return builder.toString();
     }

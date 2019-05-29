@@ -1,5 +1,9 @@
 package icy.manipulator.property.overload.model;
 
+import icy.manipulator.property.overload.model.Overload;
+import icy.manipulator.property.overload.model.OverloadModel;
+import java.lang.String;
+import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -44,13 +48,13 @@ public abstract class Overload extends OverloadModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle size$1998120734= invoker("size", int.class);
+    private static final MethodHandle size$1694526829= invoker("size", int.class);
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle sizeByText$1046392373= invoker("sizeByText", String.class);
+    private static final MethodHandle sizeByText$2029104697= invoker("sizeByText", String.class);
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle date$141002882= invoker("date", int.class, int.class, int.class);
+    private static final MethodHandle date$962039827= invoker("date", int.class, int.class, int.class);
 
     /** The overload or intercept method invoker. */
     private static final MethodHandle today$1= invoker("today");
@@ -228,7 +232,7 @@ public abstract class Overload extends OverloadModel {
          */
         default Next size(int number) {
             try {
-                return size((BigDecimal) size$1998120734.invoke(this, number));
+                return size((BigDecimal) size$1694526829.invoke(this, number));
             } catch (Throwable e) {
                 throw quiet(e);
             }
@@ -241,7 +245,7 @@ public abstract class Overload extends OverloadModel {
          */
         default Next sizeByText(String number) {
             try {
-                return size((BigDecimal) sizeByText$1046392373.invoke(this, number));
+                return size((BigDecimal) sizeByText$2029104697.invoke(this, number));
             } catch (Throwable e) {
                 throw quiet(e);
             }
@@ -271,7 +275,7 @@ public abstract class Overload extends OverloadModel {
          */
         default Next date(int year, int month, int day) {
             try {
-                return date((LocalDate) date$141002882.invoke(this, year, month, day));
+                return date((LocalDate) date$962039827.invoke(this, year, month, day));
             } catch (Throwable e) {
                 throw quiet(e);
             }

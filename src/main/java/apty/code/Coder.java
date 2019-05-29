@@ -18,6 +18,8 @@ import javax.lang.model.element.Element;
 import javax.lang.model.type.TypeMirror;
 
 import apty.Apty;
+import apty.Type;
+import icy.manipulator.util.Strings;
 
 public class Coder {
 
@@ -295,20 +297,32 @@ public class Coder {
                 joiner.add(code(object));
             }
             return joiner.toString();
-        } else if (code instanceof Type) {
-            return manager.require((Type) code);
         } else if (code instanceof Codable) {
             return ((Codable) code).write(this);
         } else if (code instanceof Class) {
             Class clazz = (Class) code;
             return use(clazz);
+        } else if (code instanceof TypeMirror) {
+            return use((TypeMirror) code);
         } else {
             return String.valueOf(code).replace('`', '"');
         }
     }
 
-    public final String require(String fqcn) {
-        return manager.require(fqcn);
+    public final void require(String packageName, String className) {
+        // ignore same package
+        if (packageName.equals(baseClass)) {
+            return;
+        }
+
+        String fqcn = packageName == null ? className : packageName + "." + className;
+
+        // ignore inner classes
+        if (fqcn.startsWith(basePackage + "." + baseClass + ".")) {
+            return;
+        }
+
+        manager.imports.add(Strings.sanitize(fqcn));
     }
 
     /**

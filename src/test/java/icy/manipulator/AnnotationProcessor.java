@@ -21,7 +21,7 @@ import javax.tools.JavaFileObject;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import antibug.CleanRoom;
-import apty.code.Type;
+import apty.Type;
 import bee.Bee;
 import bee.util.JavaCompiler;
 import kiss.I;

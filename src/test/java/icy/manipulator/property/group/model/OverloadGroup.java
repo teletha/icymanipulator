@@ -1,5 +1,9 @@
 package icy.manipulator.property.group.model;
 
+import icy.manipulator.property.group.model.OverloadGroup;
+import icy.manipulator.property.group.model.OverloadGroupModel;
+import java.lang.String;
+import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -42,7 +46,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle size$1046392373= invoker("size", String.class);
+    private static final MethodHandle size$2029104697= invoker("size", String.class);
 
     /**
      * Create special property updater.
@@ -223,7 +227,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
          */
         default Next size(String value) {
             try {
-                return size((int) size$1046392373.invoke(this, value));
+                return size((int) size$2029104697.invoke(this, value));
             } catch (Throwable e) {
                 throw quiet(e);
             }

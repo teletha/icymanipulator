@@ -63,7 +63,7 @@ public class IcyManipulator extends AptyProcessor {
          * @param model
          */
         public IcyCoder(ModelInfo model) {
-            super(model.implType.notation());
+            super(model.implType.fqcn());
             this.m = model;
             this.icy = model.e.getAnnotation(Icy.class);
 

@@ -1,5 +1,9 @@
 package icy.manipulator.property.model;
 
+import icy.manipulator.property.model.Array;
+import icy.manipulator.property.model.ArrayModel;
+import java.lang.String;
+import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -145,7 +149,7 @@ public abstract class Array extends ArrayModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableDates<Self>> T names(String names) {
+        public final <T extends ÅssignableDates<Self>> T names(String... names) {
             Åssignable o = new Åssignable();
             o.names(names);
             return (T) o;

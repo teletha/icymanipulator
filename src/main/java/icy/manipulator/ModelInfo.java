@@ -27,11 +27,12 @@ import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
+import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 
 import apty.Apty;
 import apty.Fail;
-import apty.code.Type;
+import apty.Type;
 import icy.manipulator.Icy.Intercept;
 import icy.manipulator.Icy.Overload;
 import icy.manipulator.util.Lists;
@@ -115,7 +116,7 @@ public class ModelInfo {
 
         Type returnType = Type.of(method.getReturnType());
 
-        if (returnType.isVoid()) {
+        if (returnType.kind == TypeKind.VOID) {
             throw new Fail(method, "Property declaring method must return something.");
         }
 

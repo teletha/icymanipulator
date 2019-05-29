@@ -1,7 +1,11 @@
 package icy.manipulator.property.customize.model;
 
+import icy.manipulator.property.customize.model.Customizable;
+import icy.manipulator.property.customize.model.CustomizableModel;
 import icy.manipulator.property.customize.model.CustomizableModel.Customizer;
 import icy.manipulator.property.customize.model.CustomizableModel.SubCustomizer;
+import java.lang.String;
+import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;

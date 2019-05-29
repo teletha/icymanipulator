@@ -1,5 +1,12 @@
 package icy.manipulator.property.model;
 
+import icy.manipulator.property.model.Wildcard;
+import icy.manipulator.property.model.WildcardModel;
+import java.lang.CharSequence;
+import java.lang.Class;
+import java.lang.Integer;
+import java.lang.Number;
+import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;

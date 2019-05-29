@@ -1,5 +1,9 @@
 package icy.manipulator.property.model;
 
+import icy.manipulator.property.model.Mixed;
+import icy.manipulator.property.model.MixedModel;
+import java.lang.String;
+import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
