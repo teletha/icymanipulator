@@ -142,6 +142,10 @@ public class ModelInfo {
 
             PropertyInfo property = findPropertyByName(targetProperty);
 
+            if (!Modifiers.isPrivate(m)) {
+                throw new Fail(m, "Overload method [" + method + "] must be private.");
+            }
+
             if (!method.returnType.equals(property.type)) {
                 throw new Fail(m, "Overload method [" + method + "] must return the same type of the target property [" + property + "].");
             }
