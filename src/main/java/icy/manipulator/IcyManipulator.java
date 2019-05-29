@@ -63,7 +63,7 @@ public class IcyManipulator extends AptyProcessor {
          * @param model
          */
         public IcyCoder(ModelInfo model) {
-            super(model.implType.fqcn());
+            super(model.implType.name());
             this.m = model;
             this.icy = model.e.getAnnotation(Icy.class);
 
@@ -276,7 +276,7 @@ public class IcyManipulator extends AptyProcessor {
                 write(" * @paran value A new value of ", property.name, " property to assign.");
                 write(" */");
                 write(property.setterModifier, "void set", property.capitalizeName(), "(", property.type, " value)", () -> {
-                    if (!property.nullable && !property.type.isPrimitive()) {
+                    if (!property.nullable && !property.type.kind.isPrimitive()) {
                         write("if (value == null)", () -> {
                             if (property.isArbitrary) {
                                 write("value = ((", m.implType, ") this).åccessToDefault", property.capitalizeName() + "();");

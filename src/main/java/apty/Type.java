@@ -18,25 +18,16 @@ import java.util.stream.Collectors;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
-import javax.lang.model.type.ErrorType;
-import javax.lang.model.type.ExecutableType;
-import javax.lang.model.type.IntersectionType;
-import javax.lang.model.type.NoType;
-import javax.lang.model.type.NullType;
 import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
-import javax.lang.model.type.TypeVisitor;
-import javax.lang.model.type.UnionType;
 import javax.lang.model.type.WildcardType;
+import javax.lang.model.util.SimpleTypeVisitor9;
 
 import apty.code.Codable;
 import apty.code.Coder;
 
-/**
- * @version 2015/06/07 0:34:00
- */
 public class Type implements Codable {
 
     /** The package name. */
@@ -109,71 +100,11 @@ public class Type implements Codable {
      * 
      * @return
      */
-    public String fqcn() {
+    public String name() {
         if (packageName.isEmpty()) {
             return className;
         } else {
-            return packageName + "." + simpleName();
-        }
-    }
-
-    /**
-     * Compute the simple name.
-     * 
-     * @return
-     */
-    public String simpleName() {
-        return className;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String write(Coder coder) {
-        switch (kind) {
-        case DECLARED:
-        case ARRAY:
-            coder.require(packageName, className);
-            break;
-        }
-
-        if (kind == TypeKind.WILDCARD) {
-            StringJoiner join = new StringJoiner(" & ", className, "");
-            variable.forEach(v -> join.add(v.write(coder)));
-            return join.toString();
-        }
-
-        StringJoiner joiner = new StringJoiner(", ", "<", ">").setEmptyValue("");
-        for (Type type : variable) {
-            joiner.add(type.write(coder));
-        }
-
-        return simpleName().concat(joiner.toString());
-    }
-
-    /**
-     * <p>
-     * Check primitive type.
-     * </p>
-     * 
-     * @return
-     */
-    public boolean isPrimitive() {
-        switch (className) {
-        case "int":
-        case "long":
-        case "float":
-        case "double":
-        case "char":
-        case "byte":
-        case "short":
-        case "boolean":
-        case "void":
-            return true;
-
-        default:
-            return false;
+            return packageName + "." + className;
         }
     }
 
@@ -216,7 +147,7 @@ public class Type implements Codable {
      * @return
      */
     public boolean is(Class type) {
-        return fqcn().equals(type.getName());
+        return name().equals(type.getName());
     }
 
     /**
@@ -226,7 +157,7 @@ public class Type implements Codable {
      * @return
      */
     public boolean is(Type type) {
-        return fqcn().equals(type.fqcn());
+        return name().equals(type.name());
     }
 
     /**
@@ -234,12 +165,38 @@ public class Type implements Codable {
      * 
      * @return
      */
-    public final Type varargnize() {
+    public Type varargnize() {
         if (kind == TypeKind.ARRAY) {
             return new Type(packageName, className.replaceAll("\\[\\]$", "..."), variable, TypeKind.DECLARED);
         } else {
             return this;
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String write(Coder coder) {
+        switch (kind) {
+        case DECLARED:
+        case ARRAY:
+            coder.require(packageName, className);
+            break;
+        }
+    
+        if (kind == TypeKind.WILDCARD) {
+            StringJoiner join = new StringJoiner(" & ", className, "");
+            variable.forEach(v -> join.add(v.write(coder)));
+            return join.toString();
+        }
+    
+        StringJoiner joiner = new StringJoiner(", ", "<", ">").setEmptyValue("");
+        for (Type type : variable) {
+            joiner.add(type.write(coder));
+        }
+    
+        return className.concat(joiner.toString());
     }
 
     /**
@@ -352,25 +309,9 @@ public class Type implements Codable {
     }
 
     /**
-     * @version 2015/06/06 11:44:40
+     * 
      */
-    private static class TypeDetector implements TypeVisitor<Type, List<Type>> {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Type visit(TypeMirror t, List<Type> p) {
-            return null;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Type visit(TypeMirror t) {
-            return null;
-        }
+    private static class TypeDetector extends SimpleTypeVisitor9<Type, List<Type>> {
 
         /**
          * {@inheritDoc}
@@ -378,14 +319,6 @@ public class Type implements Codable {
         @Override
         public Type visitPrimitive(PrimitiveType type, List<Type> p) {
             return new Type(type.toString(), List.of(), type.getKind());
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Type visitNull(NullType t, List<Type> p) {
-            return null;
         }
 
         /**
@@ -405,14 +338,6 @@ public class Type implements Codable {
             List<Type> variables = outer != null ? outer : type.getTypeArguments().stream().map(Type::of).collect(Collectors.toList());
 
             return new Type(fqcn, variables, TypeKind.DECLARED);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Type visitError(ErrorType t, List<Type> p) {
-            return null;
         }
 
         /**
@@ -441,46 +366,6 @@ public class Type implements Codable {
             }
 
             return new Type(null, "?", List.of(), TypeKind.WILDCARD);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Type visitExecutable(ExecutableType t, List<Type> p) {
-            return null;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Type visitNoType(NoType t, List<Type> p) {
-            return null;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Type visitUnknown(TypeMirror t, List<Type> p) {
-            return null;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Type visitUnion(UnionType t, List<Type> p) {
-            return null;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Type visitIntersection(IntersectionType t, List<Type> p) {
-            return null;
         }
     }
 }
