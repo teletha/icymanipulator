@@ -308,6 +308,7 @@ public class Type implements Codable {
         case CHAR:
         case BYTE:
         case SHORT:
+        case VOID:
             return new Type(type.toString(), List.of(), kind);
 
         case ARRAY:
@@ -329,7 +330,7 @@ public class Type implements Codable {
             return new Type(fqcn, variables, TypeKind.DECLARED);
 
         default:
-            throw new Error("Bug!");
+            throw new Error("Bug! " + type);
         }
     }
 }

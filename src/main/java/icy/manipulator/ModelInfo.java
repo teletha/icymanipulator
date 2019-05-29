@@ -110,6 +110,10 @@ public class ModelInfo {
             return;
         }
 
+        if (Modifiers.isPrivate(method)) {
+            throw new Fail(method, "Property method [" + method + "] must not be private.");
+        }
+
         // require no parameter
         if (method.getParameters().size() != 0) {
             throw new Fail(method, "Property declaring method must have no parameter.");
