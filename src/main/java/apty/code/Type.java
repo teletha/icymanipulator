@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package apty;
+package apty.code;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +24,6 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.WildcardType;
 import javax.lang.model.util.SimpleTypeVisitor9;
-
-import apty.code.Codable;
-import apty.code.Coder;
 
 public class Type implements Codable {
 

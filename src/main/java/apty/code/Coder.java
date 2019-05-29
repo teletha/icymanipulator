@@ -19,7 +19,6 @@ import java.util.function.Consumer;
 import javax.lang.model.element.Element;
 
 import apty.Apty;
-import apty.Type;
 import icy.manipulator.util.Strings;
 
 public class Coder {
@@ -300,37 +299,10 @@ public class Coder {
         } else if (code instanceof Codable) {
             return ((Codable) code).write(this);
         } else if (code instanceof Class) {
-            Class clazz = (Class) code;
-            return use(clazz);
+            return use(Type.of((Class) code));
         } else {
             return String.valueOf(code).replace('`', '"');
         }
-    }
-
-    public final void require(String packageName, String className) {
-        // ignore same package
-        if (packageName.equals(baseClass)) {
-            return;
-        }
-
-        String fqcn = packageName == null ? className : packageName + "." + className;
-
-        // ignore inner classes
-        if (fqcn.startsWith(basePackage + "." + baseClass + ".")) {
-            return;
-        }
-
-        imports.add(Strings.sanitize(fqcn));
-    }
-
-    /**
-     * Import the specified class and return the suitable qualified class name.
-     * 
-     * @param clazz A target class.
-     * @return A class name to write.
-     */
-    public final String use(Class imported) {
-        return use(Type.of(imported));
     }
 
     /**
@@ -375,5 +347,21 @@ public class Coder {
         code.append(source);
 
         return code.toString();
+    }
+
+    void require(String packageName, String className) {
+        // ignore same package
+        if (packageName.equals(baseClass)) {
+            return;
+        }
+
+        String fqcn = packageName == null ? className : packageName + "." + className;
+
+        // ignore inner classes
+        if (fqcn.startsWith(basePackage + "." + baseClass + ".")) {
+            return;
+        }
+
+        imports.add(Strings.sanitize(fqcn));
     }
 }

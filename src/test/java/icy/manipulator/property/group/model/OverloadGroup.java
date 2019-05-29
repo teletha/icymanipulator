@@ -46,7 +46,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle size$1171131726= invoker("size", String.class);
+    private static final MethodHandle size$1195967339= invoker("size", String.class);
 
     /**
      * Create special property updater.
@@ -227,7 +227,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
          */
         default Next size(String value) {
             try {
-                return size((int) size$1171131726.invoke(this, value));
+                return size((int) size$1195967339.invoke(this, value));
             } catch (Throwable e) {
                 throw quiet(e);
             }
