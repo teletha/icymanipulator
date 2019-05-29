@@ -11,11 +11,12 @@ package apty.code;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.StringJoiner;
+import java.util.TreeSet;
 import java.util.function.Consumer;
 
 import javax.lang.model.element.Element;
-import javax.lang.model.type.TypeMirror;
 
 import apty.Apty;
 import apty.Type;
@@ -39,7 +40,7 @@ public class Coder {
     private final String baseClass;
 
     /** The imported classes. */
-    private final ImportManager manager;
+    private final Set<String> imports = new TreeSet();
 
     /** The source code. */
     private final StringBuilder source = new StringBuilder();
@@ -63,7 +64,6 @@ public class Coder {
             this.basePackage = fqcn.substring(0, index);
             this.baseClass = fqcn.substring(index + 1);
         }
-        this.manager = new ImportManager(basePackage, baseClass);
     }
 
     /**
@@ -302,8 +302,6 @@ public class Coder {
         } else if (code instanceof Class) {
             Class clazz = (Class) code;
             return use(clazz);
-        } else if (code instanceof TypeMirror) {
-            return use((TypeMirror) code);
         } else {
             return String.valueOf(code).replace('`', '"');
         }
@@ -322,7 +320,7 @@ public class Coder {
             return;
         }
 
-        manager.imports.add(Strings.sanitize(fqcn));
+        imports.add(Strings.sanitize(fqcn));
     }
 
     /**
@@ -343,17 +341,6 @@ public class Coder {
      */
     public final String use(Type imported) {
         return imported.write(this);
-    }
-
-    /**
-     * Return the suitable notation for source code.
-     * 
-     * @return The suitable notation.
-     * @param type
-     * @return
-     */
-    public final String use(TypeMirror type) {
-        return manager.require(type);
     }
 
     public final String classLiteral(Type clazz) {
@@ -381,7 +368,7 @@ public class Coder {
         StringBuilder code = new StringBuilder();
         code.append("package ").append(basePackage).append(";").append(END);
         code.append(END);
-        for (String fqnc : manager.imports) {
+        for (String fqnc : imports) {
             code.append("import ").append(fqnc).append(";").append(END);
         }
         code.append(END);
