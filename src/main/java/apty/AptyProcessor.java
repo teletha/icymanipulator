@@ -45,7 +45,7 @@ public abstract class AptyProcessor implements Processor {
     protected Messager messager;
 
     /** The registered processors. */
-    private final Map<Class<? extends Annotation>, AnnotationProcessing<Element>> processors = new HashMap();
+    protected final Map<Class<? extends Annotation>, AnnotationProcessing<Element>> processors = new HashMap();
 
     /**
      * {@inheritDoc}

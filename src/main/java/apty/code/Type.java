@@ -232,6 +232,14 @@ public class Type implements Codable {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return name();
+    }
+
+    /**
      * Build {@link Type} from the variable name.
      * 
      * @param name A variable name.

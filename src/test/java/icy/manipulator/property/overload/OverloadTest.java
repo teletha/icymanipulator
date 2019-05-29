@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-import icy.manipulator.AnnotationProcessor;
+import apty.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
 import icy.manipulator.property.overload.model.Overload;
 import icy.manipulator.property.overload.model.OverloadModel;

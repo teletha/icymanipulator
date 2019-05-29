@@ -14,7 +14,7 @@ import java.lang.reflect.Modifier;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-import icy.manipulator.AnnotationProcessor;
+import apty.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
 
 class ImplementationVisibilityTest {

@@ -12,7 +12,7 @@ package icy.manipulator.property.intercept;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-import icy.manipulator.AnnotationProcessor;
+import apty.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
 import icy.manipulator.property.intercept.model.MultiIntercepts;
 import icy.manipulator.property.intercept.model.MultiInterceptsModel;

@@ -12,7 +12,7 @@ package icy.manipulator.property;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-import icy.manipulator.AnnotationProcessor;
+import apty.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
 import icy.manipulator.property.model.Mixed;
 import icy.manipulator.property.model.MixedModel;

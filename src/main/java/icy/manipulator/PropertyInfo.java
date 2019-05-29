@@ -162,4 +162,12 @@ public class PropertyInfo {
     public boolean isPrivateSetter() {
         return setterModifier.contains("private");
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return type + " " + element;
+    }
 }

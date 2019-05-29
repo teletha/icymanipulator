@@ -32,6 +32,7 @@ import javax.lang.model.type.TypeMirror;
 
 import apty.Apty;
 import apty.Fail;
+import apty.Modifiers;
 import apty.code.Type;
 import icy.manipulator.Icy.Intercept;
 import icy.manipulator.Icy.Overload;
@@ -159,6 +160,10 @@ public class ModelInfo {
             String targetProperty = intercept.value().isEmpty() ? method.name : intercept.value();
 
             PropertyInfo property = findPropertyByName(targetProperty);
+
+            if (!Modifiers.isPrivate(m)) {
+                throw new Fail(m, "Intercept method [" + method + "] must be private.");
+            }
 
             if (!method.returnType.equals(property.type)) {
                 throw new Fail(m, "Intercept method [" + method + "] must return the same type of the target property [" + property + "].");

@@ -23,7 +23,6 @@ import apty.Apty;
 import apty.code.Codable;
 import apty.code.Coder;
 import apty.code.Type;
-import icy.manipulator.util.Strings;
 
 public class MethodInfo implements Codable {
 
@@ -308,9 +307,9 @@ public class MethodInfo implements Codable {
     public String toString() {
         StringJoiner builder = new StringJoiner(", ", name + "(", ")");
         for (Type type : paramTypes) {
-            builder.add(Strings.sanitize(type.name()));
+            builder.add(type.name());
         }
-        return builder.toString();
+        return returnType + " " + builder;
     }
 
     /**
