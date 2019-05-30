@@ -50,6 +50,9 @@ public class IcyManipulator extends AptyProcessor {
     /** The built-in supported optional type. */
     static final Type GuavaOptional = Type.of("com.google.common.base.Optional");
 
+    /** The built-in supported optional type. */
+    static final Type SinobuVariable = Type.of("kiss.Variable");
+
     /**
      * 
      */
@@ -269,6 +272,8 @@ public class IcyManipulator extends AptyProcessor {
                 return use(OptionalDouble.class) + ".empty()";
             } else if (property.type.is(GuavaOptional)) {
                 return use(GuavaOptional) + ".absent()";
+            } else if (property.type.is(SinobuVariable)) {
+                return use(SinobuVariable) + ".empty()";
             } else {
                 throw new Error("Bug! " + property);
             }
@@ -719,6 +724,8 @@ public class IcyManipulator extends AptyProcessor {
                 overloadOptionalDouble(p, m);
             } else if (m.returnType.is(GuavaOptional)) {
                 overloadGuavaOptional(p, m);
+            } else if (m.returnType.is(SinobuVariable)) {
+                overloadSinobuVariable(p, m);
             } else {
                 overloadMethod(p, m);
             }
@@ -772,6 +779,16 @@ public class IcyManipulator extends AptyProcessor {
          */
         private void overloadGuavaOptional(PropertyInfo p, MethodInfo m) {
             write("return ", p.name, "(", GuavaOptional, ".of(", m.paramNames.get(0), "));");
+        }
+
+        /**
+         * Write overload method body for sinobu's Variable property.
+         * 
+         * @param p A property info.
+         * @param m A method info.
+         */
+        private void overloadSinobuVariable(PropertyInfo p, MethodInfo m) {
+            write("return ", p.name, "(", SinobuVariable, ".of(", m.paramNames.get(0), "));");
         }
 
         /**
