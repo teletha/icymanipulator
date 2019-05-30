@@ -6,6 +6,7 @@ import java.lang.CharSequence;
 import java.lang.Class;
 import java.lang.Integer;
 import java.lang.Number;
+import java.lang.Override;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -13,6 +14,8 @@ import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.function.Supplier;
 import javax.annotation.processing.Generated;
 
@@ -226,6 +229,31 @@ public abstract class Wildcard extends WildcardModel {
         } catch (Throwable e) {
             throw quiet(e);
         }
+    }
+
+    /**
+     * Show all property values.
+     *
+     * @return All property values.
+     */
+    @Override
+    public String toString() {
+        StringJoiner builder = new StringJoiner(", ", "Wildcard [", "]");
+        builder.add("extendType=" + extendType);
+        builder.add("superType=" + superType);
+        builder.add("wildcard=" + wildcard);
+        builder.add("combine=" + combine);
+        return builder.toString();
+    }
+
+    /**
+     * Generates a hash code for a sequence of property values. The hash code is generated as if all the property values were placed into an array, and that array were hashed by calling Arrays.hashCode(Object[]). 
+     *
+     * @return A hash value of the sequence of property values.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(extendType, superType, wildcard, combine);
     }
 
     /** The singleton builder. */

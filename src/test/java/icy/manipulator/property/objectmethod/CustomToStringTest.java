@@ -14,17 +14,17 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import apty.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
-import icy.manipulator.property.objectmethod.model.ToString;
-import icy.manipulator.property.objectmethod.model.ToStringModel;
+import icy.manipulator.property.objectmethod.model.CustomToString;
+import icy.manipulator.property.objectmethod.model.CustomToStringModel;
 
-class ToStringTest {
+class CustomToStringTest {
 
     @RegisterExtension
-    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, ToStringModel.class);
+    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, CustomToStringModel.class);
 
     @Test
-    void generated() {
-        ToString o = ToString.with.name("Kirito").age(16);
-        assert o.toString().equals("ToString [name=Kirito, age=16]");
+    void custom() {
+        CustomToString o = CustomToString.with.name("Kirito").age(16);
+        assert o.toString().equals("[Kirito:16]");
     }
 }

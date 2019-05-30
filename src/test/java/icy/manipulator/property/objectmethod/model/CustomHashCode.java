@@ -1,22 +1,21 @@
-package icy.manipulator.property.model;
+package icy.manipulator.property.objectmethod.model;
 
-import icy.manipulator.property.model.Mixed;
-import icy.manipulator.property.model.MixedModel;
+import icy.manipulator.property.objectmethod.model.CustomHashCode;
+import icy.manipulator.property.objectmethod.model.CustomHashCodeModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
-import java.util.Objects;
 import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
- * Generated model for {@link MixedModel}.
+ * Generated model for {@link CustomHashCodeModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class Mixed extends MixedModel {
+public abstract class CustomHashCode extends CustomHashCodeModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -38,7 +37,7 @@ public abstract class Mixed extends MixedModel {
      */
     private static final MethodHandle updater(String name)  {
         try {
-            Field field = Mixed.class.getDeclaredField(name);
+            Field field = CustomHashCode.class.getDeclaredField(name);
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
@@ -52,32 +51,18 @@ public abstract class Mixed extends MixedModel {
     /** The final property updater. */
     private static final MethodHandle ageUpdater = updater("age");
 
-    /** The final property updater. */
-    private static final MethodHandle optionAddressUpdater = updater("optionAddress");
-
-    /** The final property updater. */
-    private static final MethodHandle optionCommnetUpdater = updater("optionCommnet");
-
     /** The exposed property. */
     public final String name;
 
     /** The exposed property. */
     public final int age;
 
-    /** The exposed property. */
-    public final String optionAddress;
-
-    /** The exposed property. */
-    public final String optionCommnet;
-
     /**
      * HIDE CONSTRUCTOR
      */
-    protected Mixed() {
+    protected CustomHashCode() {
         this.name = null;
         this.age = 0;
-        this.optionAddress = super.optionAddress();
-        this.optionCommnet = super.optionCommnet();
     }
 
     /**
@@ -150,112 +135,28 @@ public abstract class Mixed extends MixedModel {
     }
 
     /**
-     * Return the optionAddress property.
-     *
-     * @return A value of optionAddress property.
-     */
-    @Override
-    public final String optionAddress() {
-        return this.optionAddress;
-    }
-
-    /**
-     * Provide classic getter API.
-     *
-     * @return A value of optionAddress property.
-     */
-    @SuppressWarnings("unused")
-    private final String getOptionAddress() {
-        return this.optionAddress;
-    }
-
-    /**
-     * Provide classic setter API.
-     *
-     * @paran value A new value of optionAddress property to assign.
-     */
-    private final void setOptionAddress(String value) {
-        if (value == null) {
-            value = super.optionAddress();
-        }
-        try {
-            optionAddressUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /**
-     * Return the optionCommnet property.
-     *
-     * @return A value of optionCommnet property.
-     */
-    @Override
-    public final String optionCommnet() {
-        return this.optionCommnet;
-    }
-
-    /**
-     * Provide classic getter API.
-     *
-     * @return A value of optionCommnet property.
-     */
-    @SuppressWarnings("unused")
-    private final String getOptionCommnet() {
-        return this.optionCommnet;
-    }
-
-    /**
-     * Provide classic setter API.
-     *
-     * @paran value A new value of optionCommnet property to assign.
-     */
-    private final void setOptionCommnet(String value) {
-        if (value == null) {
-            value = super.optionCommnet();
-        }
-        try {
-            optionCommnetUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /**
      * Show all property values.
      *
      * @return All property values.
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "Mixed [", "]");
+        StringJoiner builder = new StringJoiner(", ", "CustomHashCode [", "]");
         builder.add("name=" + name);
         builder.add("age=" + age);
-        builder.add("optionAddress=" + optionAddress);
-        builder.add("optionCommnet=" + optionCommnet);
         return builder.toString();
-    }
-
-    /**
-     * Generates a hash code for a sequence of property values. The hash code is generated as if all the property values were placed into an array, and that array were hashed by calling Arrays.hashCode(Object[]). 
-     *
-     * @return A hash value of the sequence of property values.
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, age, optionAddress, optionCommnet);
     }
 
     /** The singleton builder. */
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Namespace for {@link Mixed}  builder methods.
+     * Namespace for {@link CustomHashCode}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Mixed & ÅssignableÅrbitrary<Self>> {
+    public static final class Ìnstantiator<Self extends CustomHashCode & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new {@link Mixed} with the specified name property.
+         * Create new {@link CustomHashCode} with the specified name property.
          * 
          * @return The next assignable model.
          */
@@ -278,7 +179,7 @@ public abstract class Mixed extends MixedModel {
          * @return The next assignable model.
          */
         default Next name(String value) {
-            ((Mixed) this).setName(value);
+            ((CustomHashCode) this).setName(value);
             return (Next) this;
         }
     }
@@ -295,7 +196,7 @@ public abstract class Mixed extends MixedModel {
          * @return The next assignable model.
          */
         default Next age(int value) {
-            ((Mixed) this).setAge(value);
+            ((CustomHashCode) this).setAge(value);
             return (Next) this;
         }
     }
@@ -303,29 +204,7 @@ public abstract class Mixed extends MixedModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends Mixed> {
-
-        /**
-         * Assign optionAddress property.
-         * 
-         * @param value A new value to assign.
-         * @return The next assignable model.
-         */
-        default Next optionAddress(String value) {
-            ((Mixed) this).setOptionAddress(value);
-            return (Next) this;
-        }
-
-        /**
-         * Assign optionCommnet property.
-         * 
-         * @param value A new value to assign.
-         * @return The next assignable model.
-         */
-        default Next optionCommnet(String value) {
-            ((Mixed) this).setOptionCommnet(value);
-            return (Next) this;
-        }
+    public static interface ÅssignableÅrbitrary<Next extends CustomHashCode> {
     }
 
     /**
@@ -337,7 +216,7 @@ public abstract class Mixed extends MixedModel {
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Mixed implements ÅssignableAll, ÅssignableÅrbitrary {
+    private static final class Åssignable extends CustomHashCode implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**
@@ -346,7 +225,5 @@ public abstract class Mixed extends MixedModel {
     static final class My {
         static final String Name = "name";
         static final String Age = "age";
-        static final String OptionAddress = "optionAddress";
-        static final String OptionCommnet = "optionCommnet";
     }
 }

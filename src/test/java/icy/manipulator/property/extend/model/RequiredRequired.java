@@ -3,11 +3,14 @@ package icy.manipulator.property.extend.model;
 import icy.manipulator.property.extend.model.RequiredRequired;
 import icy.manipulator.property.extend.model.RequiredRequiredModel;
 import icy.manipulator.property.model.Multiple;
+import java.lang.Override;
 import java.lang.String;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+import java.util.Objects;
+import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -91,6 +94,31 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
         } catch (Throwable e) {
             throw quiet(e);
         }
+    }
+
+    /**
+     * Show all property values.
+     *
+     * @return All property values.
+     */
+    @Override
+    public String toString() {
+        StringJoiner builder = new StringJoiner(", ", "RequiredRequired [", "]");
+        builder.add("name=" + name);
+        builder.add("stand=" + stand);
+        builder.add("age=" + age);
+        builder.add("nickname=" + nickname);
+        return builder.toString();
+    }
+
+    /**
+     * Generates a hash code for a sequence of property values. The hash code is generated as if all the property values were placed into an array, and that array were hashed by calling Arrays.hashCode(Object[]). 
+     *
+     * @return A hash value of the sequence of property values.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, stand, age, nickname);
     }
 
     /** The singleton builder. */

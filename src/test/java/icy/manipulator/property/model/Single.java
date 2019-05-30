@@ -2,11 +2,14 @@ package icy.manipulator.property.model;
 
 import icy.manipulator.property.model.Single;
 import icy.manipulator.property.model.SingleModel;
+import java.lang.Override;
 import java.lang.String;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+import java.util.Objects;
+import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -90,6 +93,28 @@ public abstract class Single extends SingleModel {
         } catch (Throwable e) {
             throw quiet(e);
         }
+    }
+
+    /**
+     * Show all property values.
+     *
+     * @return All property values.
+     */
+    @Override
+    public String toString() {
+        StringJoiner builder = new StringJoiner(", ", "Single [", "]");
+        builder.add("name=" + name);
+        return builder.toString();
+    }
+
+    /**
+     * Generates a hash code for a sequence of property values. The hash code is generated as if all the property values were placed into an array, and that array were hashed by calling Arrays.hashCode(Object[]). 
+     *
+     * @return A hash value of the sequence of property values.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
     /** The singleton builder. */

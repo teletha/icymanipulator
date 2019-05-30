@@ -3,10 +3,13 @@ package icy.manipulator.property.group.model;
 import icy.manipulator.property.group.model.EnumGroup;
 import icy.manipulator.property.group.model.EnumGroupModel;
 import icy.manipulator.property.group.model.EnumGroupModel.Color;
+import java.lang.Override;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+import java.util.Objects;
+import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -130,6 +133,29 @@ public abstract class EnumGroup extends EnumGroupModel {
         } catch (Throwable e) {
             throw quiet(e);
         }
+    }
+
+    /**
+     * Show all property values.
+     *
+     * @return All property values.
+     */
+    @Override
+    public String toString() {
+        StringJoiner builder = new StringJoiner(", ", "EnumGroup [", "]");
+        builder.add("color=" + color);
+        builder.add("size=" + size);
+        return builder.toString();
+    }
+
+    /**
+     * Generates a hash code for a sequence of property values. The hash code is generated as if all the property values were placed into an array, and that array were hashed by calling Arrays.hashCode(Object[]). 
+     *
+     * @return A hash value of the sequence of property values.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, size);
     }
 
     /** The singleton builder. */

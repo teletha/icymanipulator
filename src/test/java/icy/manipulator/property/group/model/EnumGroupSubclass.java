@@ -4,6 +4,9 @@ import icy.manipulator.property.group.model.EnumGroup;
 import icy.manipulator.property.group.model.EnumGroupModel.Color;
 import icy.manipulator.property.group.model.EnumGroupSubclass;
 import icy.manipulator.property.group.model.EnumGroupSubclassModel;
+import java.lang.Override;
+import java.util.Objects;
+import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -16,6 +19,29 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
      * HIDE CONSTRUCTOR
      */
     protected EnumGroupSubclass() {
+    }
+
+    /**
+     * Show all property values.
+     *
+     * @return All property values.
+     */
+    @Override
+    public String toString() {
+        StringJoiner builder = new StringJoiner(", ", "EnumGroupSubclass [", "]");
+        builder.add("color=" + color);
+        builder.add("size=" + size);
+        return builder.toString();
+    }
+
+    /**
+     * Generates a hash code for a sequence of property values. The hash code is generated as if all the property values were placed into an array, and that array were hashed by calling Arrays.hashCode(Object[]). 
+     *
+     * @return A hash value of the sequence of property values.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, size);
     }
 
     /** The singleton builder. */

@@ -14,17 +14,17 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import apty.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
-import icy.manipulator.property.objectmethod.model.ToString;
-import icy.manipulator.property.objectmethod.model.ToStringModel;
+import icy.manipulator.property.objectmethod.model.HashCode;
+import icy.manipulator.property.objectmethod.model.HashCodeModel;
 
-class ToStringTest {
+class HashCodeTest {
 
     @RegisterExtension
-    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, ToStringModel.class);
+    static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, HashCodeModel.class);
 
     @Test
     void generated() {
-        ToString o = ToString.with.name("Kirito").age(16);
-        assert o.toString().equals("ToString [name=Kirito, age=16]");
+        HashCode o = HashCode.with.name("JoJo").age(16);
+        assert o.hashCode() == 71722887;
     }
 }

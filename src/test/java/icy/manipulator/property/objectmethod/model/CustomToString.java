@@ -2,11 +2,13 @@ package icy.manipulator.property.objectmethod.model;
 
 import icy.manipulator.property.objectmethod.model.CustomToString;
 import icy.manipulator.property.objectmethod.model.CustomToStringModel;
+import java.lang.Override;
 import java.lang.String;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+import java.util.Objects;
 import javax.annotation.processing.Generated;
 
 /**
@@ -130,6 +132,16 @@ public abstract class CustomToString extends CustomToStringModel {
         } catch (Throwable e) {
             throw quiet(e);
         }
+    }
+
+    /**
+     * Generates a hash code for a sequence of property values. The hash code is generated as if all the property values were placed into an array, and that array were hashed by calling Arrays.hashCode(Object[]). 
+     *
+     * @return A hash value of the sequence of property values.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
     }
 
     /** The singleton builder. */

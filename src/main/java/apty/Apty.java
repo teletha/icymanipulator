@@ -58,6 +58,11 @@ public class Apty {
                 .contentEquals("toString");
     };
 
+    /** The {@link Object#hashCode()} method pattern. */
+    public static final Predicate<ExecutableElement> HashCode = m -> {
+        return m.getParameters().size() == 0 && m.getReturnType().toString().equals("int") && m.getSimpleName().contentEquals("hashCode");
+    };
+
     /** The getter pattern. */
     private static final Predicate<ExecutableElement> getter = m -> {
         return m.getParameters().size() == 0 && m.getReturnType().getKind() != TypeKind.VOID;

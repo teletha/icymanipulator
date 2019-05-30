@@ -59,6 +59,9 @@ public class ModelInfo {
     /** The model method. */
     public final boolean hasToString;
 
+    /** The model method. */
+    public final boolean hasHashCode;
+
     /** The required properties. */
     private final List<PropertyInfo> requiredProperties = new LinkedList();
 
@@ -93,12 +96,14 @@ public class ModelInfo {
             this.type = Type.of(model);
             this.implType = Type.of(e);
             this.hasToString = Apty.methods(model).stream().anyMatch(Apty.ToString);
+            this.hasHashCode = Apty.methods(model).stream().anyMatch(Apty.HashCode);
         } else {
             // by defined model
             this.name = e.getSimpleName().toString();
             this.type = Type.of(e);
             this.implType = Type.of(e.getQualifiedName().toString().replaceAll(icy.modelNamePattern() + "$", "$1"));
             this.hasToString = Apty.methods(e).stream().anyMatch(Apty.ToString);
+            this.hasHashCode = Apty.methods(e).stream().anyMatch(Apty.HashCode);
 
             // validate in 3 times, don't validate all once
             Apty.methods(e).forEach(this::validateProperty);
@@ -224,6 +229,15 @@ public class ModelInfo {
      */
     public void addArbitraryProperty(PropertyInfo property) {
         arbitraryProperties.add(property);
+    }
+
+    /**
+     * List up all proeprties on this own model and ancestors.
+     * 
+     * @return
+     */
+    public List<PropertyInfo> properties() {
+        return Lists.merge(requiredProperties(), arbitraryProperties());
     }
 
     /**

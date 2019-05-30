@@ -13,6 +13,7 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.function.UnaryOperator;
@@ -84,6 +85,7 @@ public class IcyManipulator extends AptyProcessor {
                 defineConstructor();
                 defineAccessors();
                 defineToString();
+                defineHashCode();
                 defineCopy();
                 defineBuilder();
                 defineAssignableInterfaces();
@@ -376,10 +378,32 @@ public class IcyManipulator extends AptyProcessor {
                 write("@", Override.class);
                 write("public String toString()", () -> {
                     write(StringJoiner.class, " builder = new ", StringJoiner.class, "(`, `, `", m.implType, " [`, `]`);");
-                    for (PropertyInfo p : Lists.merge(m.requiredProperties(), m.arbitraryProperties())) {
+                    for (PropertyInfo p : m.properties()) {
                         write("builder.add(`", p.name, "=` + ", p.name, ");");
                     }
                     write("return builder.toString();");
+                });
+            }
+        }
+
+        /**
+         * Define {@link Object#hashCode()} override.
+         */
+        private void defineHashCode() {
+            if (!m.hasHashCode) {
+                write();
+                write("/**");
+                write(" * Generates a hash code for a sequence of property values. The hash code is generated as if all the property values were placed into an array, and that array were hashed by calling Arrays.hashCode(Object[]). ");
+                write(" *");
+                write(" * @return A hash value of the sequence of property values.");
+                write(" */");
+                write("@", Override.class);
+                write("public int hashCode()", () -> {
+                    StringJoiner values = new StringJoiner(", ");
+                    for (PropertyInfo p : m.properties()) {
+                        values.add(p.name);
+                    }
+                    write("return ", Objects.class, ".hash(", values, ");");
                 });
             }
         }
