@@ -129,10 +129,10 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableDate<ÅssignableTime<Self>>> T size(BigDecimal size) {
+        public final ÅssignableDate<ÅssignableTime<Self>> size(BigDecimal size) {
             Åssignable o = new Åssignable();
             o.size(size);
-            return (T) o;
+            return o;
         }
 
         /**
@@ -140,10 +140,10 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableDate<ÅssignableTime<Self>>> T size(int number) {
+        public final ÅssignableDate<ÅssignableTime<Self>> size(int number) {
             Åssignable o = new Åssignable();
             o.size(number);
-            return (T) o;
+            return o;
         }
 
         /**
@@ -151,10 +151,10 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableDate<ÅssignableTime<Self>>> T sizeByText(String number) {
+        public final ÅssignableDate<ÅssignableTime<Self>> sizeByText(String number) {
             Åssignable o = new Åssignable();
             o.sizeByText(number);
-            return (T) o;
+            return o;
         }
     }
 

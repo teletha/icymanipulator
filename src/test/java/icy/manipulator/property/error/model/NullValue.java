@@ -188,10 +188,10 @@ public abstract class NullValue extends NullValueModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableAcceptNull<Self>> T rejectNull(String rejectNull) {
+        public final ÅssignableAcceptNull<Self> rejectNull(String rejectNull) {
             Åssignable o = new Åssignable();
             o.rejectNull(rejectNull);
-            return (T) o;
+            return o;
         }
     }
 

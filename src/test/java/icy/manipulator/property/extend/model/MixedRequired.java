@@ -1,7 +1,7 @@
 package icy.manipulator.property.extend.model;
 
-import icy.manipulator.property.extend.model.MixedArbitrary;
-import icy.manipulator.property.extend.model.MixedArbitraryModel;
+import icy.manipulator.property.extend.model.MixedRequired;
+import icy.manipulator.property.extend.model.MixedRequiredModel;
 import icy.manipulator.property.model.Mixed;
 import java.lang.String;
 import java.lang.Throwable;
@@ -11,10 +11,10 @@ import java.lang.reflect.Field;
 import javax.annotation.processing.Generated;
 
 /**
- * Generated model for {@link MixedArbitraryModel}.
+ * Generated model for {@link MixedRequiredModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class MixedArbitrary extends MixedArbitraryModel {
+public abstract class MixedRequired extends MixedRequiredModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -36,7 +36,7 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
      */
     private static final MethodHandle updater(String name)  {
         try {
-            Field field = MixedArbitrary.class.getDeclaredField(name);
+            Field field = MixedRequired.class.getDeclaredField(name);
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
@@ -45,49 +45,49 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle optionZipUpdater = updater("optionZip");
+    private static final MethodHandle zipUpdater = updater("zip");
 
     /** The exposed property. */
-    public final String optionZip;
+    public final String zip;
 
     /**
      * HIDE CONSTRUCTOR
      */
-    protected MixedArbitrary() {
-        this.optionZip = super.optionZip();
+    protected MixedRequired() {
+        this.zip = null;
     }
 
     /**
-     * Return the optionZip property.
+     * Return the zip property.
      *
-     * @return A value of optionZip property.
+     * @return A value of zip property.
      */
     @Override
-    public final String optionZip() {
-        return this.optionZip;
+    public final String zip() {
+        return this.zip;
     }
 
     /**
      * Provide classic getter API.
      *
-     * @return A value of optionZip property.
+     * @return A value of zip property.
      */
     @SuppressWarnings("unused")
-    private final String getOptionZip() {
-        return this.optionZip;
+    private final String getZip() {
+        return this.zip;
     }
 
     /**
      * Provide classic setter API.
      *
-     * @paran value A new value of optionZip property to assign.
+     * @paran value A new value of zip property to assign.
      */
-    private final void setOptionZip(String value) {
+    private final void setZip(String value) {
         if (value == null) {
-            value = super.optionZip();
+            throw new IllegalArgumentException("The zip property requires non-null value.");
         }
         try {
-            optionZipUpdater.invoke(this, value);
+            zipUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -97,16 +97,16 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Namespace for {@link MixedArbitrary}  builder methods.
+     * Namespace for {@link MixedRequired}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends MixedArbitrary & ÅssignableÅrbitrary<Self>> {
+    public static final class Ìnstantiator<Self extends MixedRequired & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new {@link MixedArbitrary} with the specified name property.
+         * Create new {@link MixedRequired} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableAge<Self> name(String name) {
+        public final ÅssignableAge<ÅssignableZip<Self>> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;
@@ -116,36 +116,42 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends MixedArbitrary> extends Mixed.ÅssignableÅrbitrary<Next> {
+    public static interface ÅssignableZip<Next> {
 
         /**
-         * Assign optionZip property.
+         * Assign zip property.
          * 
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next optionZip(String value) {
-            ((MixedArbitrary) this).setOptionZip(value);
+        default Next zip(String value) {
+            ((MixedRequired) this).setZip(value);
             return (Next) this;
         }
     }
 
     /**
+     * Property assignment API.
+     */
+    public static interface ÅssignableÅrbitrary<Next extends MixedRequired> extends Mixed.ÅssignableÅrbitrary<Next> {
+    }
+
+    /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends Mixed.ÅssignableAll {
+    protected static interface ÅssignableAll extends ÅssignableZip, Mixed.ÅssignableAll {
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends MixedArbitrary implements ÅssignableAll, ÅssignableÅrbitrary {
+    private static final class Åssignable extends MixedRequired implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**
      * The identifier for properties.
      */
     static final class My {
-        static final String OptionZip = "optionZip";
+        static final String Zip = "zip";
     }
 }

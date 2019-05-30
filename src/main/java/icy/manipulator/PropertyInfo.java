@@ -31,13 +31,7 @@ public class PropertyInfo {
     public final Type type;
 
     /** The property state. */
-    public final boolean isArbitrary;
-
-    /** The state. */
-    public String derive;
-
-    /** The state. */
-    public boolean isDerived;
+    public final boolean arbitrary;
 
     /** The property type. */
     public final boolean nullable;
@@ -67,7 +61,7 @@ public class PropertyInfo {
         this.element = method;
         this.name = method.getSimpleName().toString();
         this.type = Type.of(method.getReturnType());
-        this.isArbitrary = !method.getModifiers().contains(Modifier.ABSTRACT);
+        this.arbitrary = !method.getModifiers().contains(Modifier.ABSTRACT);
 
         Property annotation = method.getAnnotation(Icy.Property.class);
 
@@ -134,7 +128,7 @@ public class PropertyInfo {
      * @return An interface name.
      */
     public String assignableInterfaceName() {
-        if (isArbitrary) {
+        if (arbitrary) {
             return IcyManipulator.ArbitraryInterface;
         } else {
             return IcyManipulator.Assignable + Strings.capitalize(name);

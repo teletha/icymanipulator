@@ -149,7 +149,7 @@ public abstract class EnumGroup extends EnumGroupModel {
             Åssignable o = new Åssignable();
             o.color(color);
             o.size(size);
-            return (Self) o;
+            return (Self)o;
         }
 
         /** Set color property with Red. */
@@ -157,7 +157,7 @@ public abstract class EnumGroup extends EnumGroupModel {
             Åssignable o = new Åssignable();
             o.red();
             o.size(size);
-            return (Self) o;
+            return (Self)o;
         }
 
         /** Set color property with Blue. */
@@ -165,7 +165,7 @@ public abstract class EnumGroup extends EnumGroupModel {
             Åssignable o = new Åssignable();
             o.blue();
             o.size(size);
-            return (Self) o;
+            return (Self)o;
         }
 
         /** Set color property with Green. */
@@ -173,7 +173,7 @@ public abstract class EnumGroup extends EnumGroupModel {
             Åssignable o = new Åssignable();
             o.green();
             o.size(size);
-            return (Self) o;
+            return (Self)o;
         }
     }
 

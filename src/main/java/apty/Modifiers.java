@@ -20,6 +20,16 @@ public class Modifiers {
      * @param e
      * @return
      */
+    public static boolean isPublic(Element e) {
+        return e.getModifiers().contains(Modifier.PUBLIC);
+    }
+
+    /**
+     * Check modifier.
+     * 
+     * @param e
+     * @return
+     */
     public static boolean isPrivate(Element e) {
         return e.getModifiers().contains(Modifier.PRIVATE);
     }

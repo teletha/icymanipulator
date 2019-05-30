@@ -7,13 +7,13 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package icy.manipulator.property.model;
+package icy.manipulator.property.copy.model;
 
 import icy.manipulator.Icy;
 
 @Icy
-public abstract class ArrayModel {
+public abstract class CopySubModel extends Copy {
 
     @Icy.Property
-    public abstract String[] names();
+    public abstract String address();
 }

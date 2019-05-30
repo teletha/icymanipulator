@@ -83,6 +83,7 @@ public class IcyManipulator extends AptyProcessor {
                 defineField();
                 defineConstructor();
                 defineAccessors();
+                defineCopy();
                 defineBuilder();
                 defineAssignableInterfaces();
                 defineAssignableArbitrary();
@@ -228,7 +229,7 @@ public class IcyManipulator extends AptyProcessor {
             write("protected ", m.implType, "()", () -> {
                 // initialize field
                 for (PropertyInfo p : m.ownProperties()) {
-                    write("this.", p.name, " = ", (p.isArbitrary ? defaultValueCallFor(p) : p.type.defaultValue()), ";");
+                    write("this.", p.name, " = ", (p.arbitrary ? defaultValueCallFor(p) : p.type.defaultValue()), ";");
                 }
             });
         }
@@ -303,7 +304,7 @@ public class IcyManipulator extends AptyProcessor {
                 write(property.setterModifier, "void set", property.capitalizeName(), "(", property.type, " value)", () -> {
                     if (!property.nullable && !property.type.kind.isPrimitive()) {
                         write("if (value == null)", () -> {
-                            if (property.isArbitrary) {
+                            if (property.arbitrary) {
                                 write("value = ", defaultValueCallFor(property), ";");
                             } else {
                                 write("throw new IllegalArgumentException(`The ", property.name, " property requires non-null value.`);");
@@ -330,29 +331,6 @@ public class IcyManipulator extends AptyProcessor {
                         write("throw quiet(", e, ");");
                     });
                 });
-
-                // copy method
-                if (property.copiable) {
-                    write();
-                    write("/**");
-                    write(" * Create new {@link ", m.implType, "} with the specified property and copy other properties from this model.");
-                    write(" *");
-                    write(" * @param value A new value to assign.");
-                    write(" * @return A created new model instance.");
-                    write(" */");
-                    write("public ", m.implType, " with", property.capitalizeName(), "(", property.type, " value)", () -> {
-                        // check equality
-                        write("if (this.", property.name, " == value)", () -> {
-                            write("return this;");
-                        });
-
-                        StringJoiner code = new StringJoiner(".");
-                        for (PropertyInfo p : Lists.merge(m.requiredProperties(), m.arbitraryProperties())) {
-                            code.add(p.name + "(" + (property == p ? "value" : "this." + p.name) + ")");
-                        }
-                        write("return ", icy.builder(), ".", code, ";");
-                    });
-                }
 
                 // customizer's methods
                 if (property.custom != null) {
@@ -384,6 +362,33 @@ public class IcyManipulator extends AptyProcessor {
         }
 
         /**
+         * Define copy methods.
+         */
+        private void defineCopy() {
+            for (PropertyInfo property : m.copiablePorperties()) {
+                write();
+                write("/**");
+                write(" * Create new {@link ", m.implType, "} with the specified property and copy other properties from this model.");
+                write(" *");
+                write(" * @param value A new value to assign.");
+                write(" * @return A created new model instance.");
+                write(" */");
+                write("public ", m.implType, " with", property.capitalizeName(), "(", property.type, " value)", () -> {
+                    // check equality
+                    write("if (this.", property.name, " == value)", () -> {
+                        write("return this;");
+                    });
+
+                    StringJoiner code = new StringJoiner(".");
+                    for (PropertyInfo p : Lists.merge(m.requiredProperties(), m.arbitraryProperties())) {
+                        code.add(p.name + "(" + (property == p ? "value" : "this." + p.name) + ")");
+                    }
+                    write("return ", icy.builder(), ".", code, ";");
+                });
+            }
+        }
+
+        /**
          * Defien model builder methods.
          */
         private void defineBuilder() {
@@ -408,10 +413,6 @@ public class IcyManipulator extends AptyProcessor {
                             .ifPresent(synthesizer -> {
                                 for (MethodInfo method : synthesizer.methods) {
                                     String[] types = new String[] {m.requiredRouteType(group, "Self"), "Self"};
-                                    if (!types[0].equals("Self")) {
-                                        types[0] = "<T extends " + types[0] + "> T";
-                                        types[1] = "T";
-                                    }
 
                                     write();
                                     javadoc(method.doc, () -> {
@@ -437,7 +438,7 @@ public class IcyManipulator extends AptyProcessor {
                                                 write("o.", methodName, "();");
                                             }
                                         }
-                                        write("return (", types[1], ") o;");
+                                        write("return ", types[0].equals("Self") ? "(Self)" : "", "o;");
                                     });
                                 }
                             });

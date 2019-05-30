@@ -234,10 +234,10 @@ public abstract class Customizable extends CustomizableModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableValue<Self>> T name(String name) {
+        public final ÅssignableValue<Self> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
-            return (T) o;
+            return o;
         }
     }
 

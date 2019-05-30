@@ -180,10 +180,10 @@ public abstract class Overload extends OverloadModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableDate<Self>> T size(BigDecimal size) {
+        public final ÅssignableDate<Self> size(BigDecimal size) {
             Åssignable o = new Åssignable();
             o.size(size);
-            return (T) o;
+            return o;
         }
 
         /**
@@ -191,10 +191,10 @@ public abstract class Overload extends OverloadModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableDate<Self>> T size(int number) {
+        public final ÅssignableDate<Self> size(int number) {
             Åssignable o = new Åssignable();
             o.size(number);
-            return (T) o;
+            return o;
         }
 
         /**
@@ -202,10 +202,10 @@ public abstract class Overload extends OverloadModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableDate<Self>> T sizeByText(String number) {
+        public final ÅssignableDate<Self> sizeByText(String number) {
             Åssignable o = new Åssignable();
             o.sizeByText(number);
-            return (T) o;
+            return o;
         }
     }
 

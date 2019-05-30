@@ -108,7 +108,7 @@ public abstract class Single extends SingleModel {
         public final Self name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
-            return (Self) o;
+            return (Self)o;
         }
     }
 

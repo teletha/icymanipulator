@@ -108,7 +108,7 @@ public abstract class BuilderName extends BuilderNameModel {
         public final Self name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
-            return (Self) o;
+            return (Self)o;
         }
     }
 

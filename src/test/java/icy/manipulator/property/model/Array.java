@@ -7,7 +7,6 @@ import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
-import java.time.LocalDate;
 import javax.annotation.processing.Generated;
 
 /**
@@ -47,21 +46,14 @@ public abstract class Array extends ArrayModel {
     /** The final property updater. */
     private static final MethodHandle namesUpdater = updater("names");
 
-    /** The final property updater. */
-    private static final MethodHandle datesUpdater = updater("dates");
-
     /** The exposed property. */
     public final String[] names;
-
-    /** The exposed property. */
-    public final LocalDate[] dates;
 
     /**
      * HIDE CONSTRUCTOR
      */
     protected Array() {
         this.names = null;
-        this.dates = null;
     }
 
     /**
@@ -100,42 +92,6 @@ public abstract class Array extends ArrayModel {
         }
     }
 
-    /**
-     * Return the dates property.
-     *
-     * @return A value of dates property.
-     */
-    @Override
-    public final LocalDate[] dates() {
-        return this.dates;
-    }
-
-    /**
-     * Provide classic getter API.
-     *
-     * @return A value of dates property.
-     */
-    @SuppressWarnings("unused")
-    private final LocalDate[] getDates() {
-        return this.dates;
-    }
-
-    /**
-     * Provide classic setter API.
-     *
-     * @paran value A new value of dates property to assign.
-     */
-    private final void setDates(LocalDate[] value) {
-        if (value == null) {
-            throw new IllegalArgumentException("The dates property requires non-null value.");
-        }
-        try {
-            datesUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
     /** The singleton builder. */
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
@@ -149,10 +105,10 @@ public abstract class Array extends ArrayModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableDates<Self>> T names(String... names) {
+        public final Self names(String... names) {
             Åssignable o = new Åssignable();
             o.names(names);
-            return (T) o;
+            return (Self)o;
         }
     }
 
@@ -176,30 +132,13 @@ public abstract class Array extends ArrayModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableDates<Next> {
-
-        /**
-         * Assign dates property.
-         * 
-         * @param value A new value to assign.
-         * @return The next assignable model.
-         */
-        default Next dates(LocalDate... value) {
-            ((Array) this).setDates(value);
-            return (Next) this;
-        }
-    }
-
-    /**
-     * Property assignment API.
-     */
     public static interface ÅssignableÅrbitrary<Next extends Array> {
     }
 
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableNames, ÅssignableDates {
+    protected static interface ÅssignableAll extends ÅssignableNames {
     }
 
     /**
@@ -213,6 +152,5 @@ public abstract class Array extends ArrayModel {
      */
     static final class My {
         static final String Names = "names";
-        static final String Dates = "dates";
     }
 }

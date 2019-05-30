@@ -35,7 +35,7 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
             Åssignable o = new Åssignable();
             o.color(color);
             o.size(size);
-            return (Self) o;
+            return (Self)o;
         }
 
         /**
@@ -47,7 +47,7 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
             Åssignable o = new Åssignable();
             o.red();
             o.size(size);
-            return (Self) o;
+            return (Self)o;
         }
 
         /**
@@ -59,7 +59,7 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
             Åssignable o = new Åssignable();
             o.blue();
             o.size(size);
-            return (Self) o;
+            return (Self)o;
         }
 
         /**
@@ -71,7 +71,7 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
             Åssignable o = new Åssignable();
             o.green();
             o.size(size);
-            return (Self) o;
+            return (Self)o;
         }
     }
 

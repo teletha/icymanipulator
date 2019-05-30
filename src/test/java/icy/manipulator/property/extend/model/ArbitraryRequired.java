@@ -105,7 +105,7 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
         public final Self id(long id) {
             Åssignable o = new Åssignable();
             o.id(id);
-            return (Self) o;
+            return (Self)o;
         }
     }
 

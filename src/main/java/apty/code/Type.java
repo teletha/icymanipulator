@@ -15,6 +15,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
+import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
@@ -148,6 +149,26 @@ public class Type implements Codable {
      */
     public boolean is(Type type) {
         return name().equals(type.name());
+    }
+
+    /**
+     * Chech type equality.
+     * 
+     * @param type
+     * @return
+     */
+    public boolean is(Element type) {
+        return is(type.asType());
+    }
+
+    /**
+     * Chech type equality.
+     * 
+     * @param type
+     * @return
+     */
+    public boolean is(TypeMirror type) {
+        return is(Type.of(type));
     }
 
     /**

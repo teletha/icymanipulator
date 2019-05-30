@@ -31,10 +31,10 @@ import javax.tools.JavaFileObject;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import antibug.CleanRoom;
-import apty.code.Type;
 import bee.Bee;
 import bee.util.JavaCompiler;
 import icy.manipulator.IcyManipulator;
+import icy.manipulator.ModelInfo;
 import kiss.I;
 import psychopath.File;
 import psychopath.Locator;
@@ -191,7 +191,7 @@ public class AnnotationProcessor {
         File generatedSource = Locator.directory("src/test/java").file(computeSourceFileName(generatedClass));
         File annotaionProcessorSource = Locator.directory("src/main/java").file(computeSourceFileName(processor.getName()));
         File generator = Locator.directory("src/main/java").file(computeSourceFileName(IcyManipulator.class.getName()));
-        File depend1 = Locator.directory("src/main/java").file(computeSourceFileName(Type.class.getName()));
+        File depend1 = Locator.directory("src/main/java").file(computeSourceFileName(ModelInfo.class.getName()));
         File temporaryGeneratedSource = Locator.directory(room.root).file(computeSourceFileName(generatedClass));
         long date = generatedSource.lastModified();
 

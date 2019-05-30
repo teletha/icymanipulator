@@ -181,11 +181,11 @@ public abstract class Group extends GroupModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableZ<Self>> T x(int x, int y) {
+        public final ÅssignableZ<Self> x(int x, int y) {
             Åssignable o = new Åssignable();
             o.x(x);
             o.y(y);
-            return (T) o;
+            return o;
         }
     }
 

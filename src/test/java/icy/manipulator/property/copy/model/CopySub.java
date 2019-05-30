@@ -1,20 +1,20 @@
-package icy.manipulator.property.mutable.model;
+package icy.manipulator.property.copy.model;
 
-import icy.manipulator.property.mutable.model.Mutable;
-import icy.manipulator.property.mutable.model.MutableModel;
+import icy.manipulator.property.copy.model.Copy;
+import icy.manipulator.property.copy.model.CopySub;
+import icy.manipulator.property.copy.model.CopySubModel;
 import java.lang.String;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
-import java.util.function.UnaryOperator;
 import javax.annotation.processing.Generated;
 
 /**
- * Generated model for {@link MutableModel}.
+ * Generated model for {@link CopySubModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class Mutable extends MutableModel {
+public abstract class CopySub extends CopySubModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -36,7 +36,7 @@ public abstract class Mutable extends MutableModel {
      */
     private static final MethodHandle updater(String name)  {
         try {
-            Field field = Mutable.class.getDeclaredField(name);
+            Field field = CopySub.class.getDeclaredField(name);
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
@@ -45,98 +45,100 @@ public abstract class Mutable extends MutableModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle valueUpdater = updater("value");
+    private static final MethodHandle addressUpdater = updater("address");
 
     /** The exposed property. */
-    public final String value;
+    public final String address;
 
     /**
      * HIDE CONSTRUCTOR
      */
-    protected Mutable() {
-        this.value = null;
+    protected CopySub() {
+        this.address = null;
     }
 
     /**
-     * Return the value property.
+     * Return the address property.
      *
-     * @return A value of value property.
+     * @return A value of address property.
      */
     @Override
-    public final String value() {
-        return this.value;
-    }
-
-    /**
-     * Assign the new value of value property.
-     *
-     * @paran value The value property assigner which accepts the current value and returns new value.
-     * @return Chainable API.
-     */
-    public final Mutable value(UnaryOperator<String> value) {
-        setValue(value.apply(this.value));
-        return this;
+    public final String address() {
+        return this.address;
     }
 
     /**
      * Provide classic getter API.
      *
-     * @return A value of value property.
+     * @return A value of address property.
      */
     @SuppressWarnings("unused")
-    private final String getValue() {
-        return this.value;
+    private final String getAddress() {
+        return this.address;
     }
 
     /**
      * Provide classic setter API.
      *
-     * @paran value A new value of value property to assign.
+     * @paran value A new value of address property to assign.
      */
-    private final void setValue(String value) {
+    private final void setAddress(String value) {
         if (value == null) {
-            throw new IllegalArgumentException("The value property requires non-null value.");
+            throw new IllegalArgumentException("The address property requires non-null value.");
         }
         try {
-            valueUpdater.invoke(this, value);
+            addressUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
+    }
+
+    /**
+     * Create new {@link CopySub} with the specified property and copy other properties from this model.
+     *
+     * @param value A new value to assign.
+     * @return A created new model instance.
+     */
+    public CopySub withAge(int value) {
+        if (this.age == value) {
+            return this;
+        }
+        return with.name(this.name).age(value).address(this.address);
     }
 
     /** The singleton builder. */
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Namespace for {@link Mutable}  builder methods.
+     * Namespace for {@link CopySub}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Mutable & ÅssignableÅrbitrary<Self>> {
+    public static final class Ìnstantiator<Self extends CopySub & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new {@link Mutable} with the specified value property.
+         * Create new {@link CopySub} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final Self value(String value) {
+        public final ÅssignableAge<ÅssignableAddress<Self>> name(String name) {
             Åssignable o = new Åssignable();
-            o.value(value);
-            return (Self)o;
+            o.name(name);
+            return o;
         }
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableValue<Next> {
+    public static interface ÅssignableAddress<Next> {
 
         /**
-         * Assign value property.
+         * Assign address property.
          * 
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next value(String value) {
-            ((Mutable) this).setValue(value);
+        default Next address(String value) {
+            ((CopySub) this).setAddress(value);
             return (Next) this;
         }
     }
@@ -144,25 +146,25 @@ public abstract class Mutable extends MutableModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends Mutable> {
+    public static interface ÅssignableÅrbitrary<Next extends CopySub> {
     }
 
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableValue {
+    protected static interface ÅssignableAll extends ÅssignableAddress, Copy.ÅssignableAll {
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Mutable implements ÅssignableAll, ÅssignableÅrbitrary {
+    private static final class Åssignable extends CopySub implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**
      * The identifier for properties.
      */
     static final class My {
-        static final String Value = "value";
+        static final String Address = "address";
     }
 }

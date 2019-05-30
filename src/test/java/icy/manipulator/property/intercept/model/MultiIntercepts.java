@@ -173,7 +173,7 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
         public final Self size(int size) {
             Åssignable o = new Åssignable();
             o.size(size);
-            return (Self) o;
+            return (Self)o;
         }
     }
 

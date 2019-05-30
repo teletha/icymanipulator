@@ -170,7 +170,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
             Åssignable o = new Åssignable();
             o.name(name);
             o.size(size);
-            return (Self) o;
+            return (Self)o;
         }
 
         /**
@@ -182,7 +182,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
             Åssignable o = new Åssignable();
             o.name(name);
             o.size(value);
-            return (Self) o;
+            return (Self)o;
         }
     }
 

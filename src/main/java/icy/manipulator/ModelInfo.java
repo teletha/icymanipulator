@@ -62,6 +62,9 @@ public class ModelInfo {
     /** The arbitrary properties. */
     private final List<PropertyInfo> arbitraryProperties = new LinkedList();
 
+    /** The copiable properties. */
+    private final List<PropertyInfo> copiableProperties = new LinkedList();
+
     /** The overload method for each property */
     private final Items<MethodInfo> overloadForProperty = new Items();
 
@@ -127,10 +130,14 @@ public class ModelInfo {
 
         PropertyInfo property = new PropertyInfo(method);
 
-        if (property.isArbitrary) {
+        if (property.arbitrary) {
             addArbitraryProperty(property);
         } else {
             addRequiredProperty(property);
+        }
+
+        if (property.copiable) {
+            copiableProperties.add(property);
         }
     }
 
@@ -251,6 +258,15 @@ public class ModelInfo {
     }
 
     /**
+     * List up all copiable proeprties on this own model.
+     * 
+     * @return
+     */
+    public List<PropertyInfo> ownCopiableProperties() {
+        return Collections.unmodifiableList(copiableProperties);
+    }
+
+    /**
      * List up all required proeprties on ancestors and own.
      * 
      * @return
@@ -278,6 +294,22 @@ public class ModelInfo {
             List<PropertyInfo> properties = new ArrayList();
             properties.addAll(parent.get().arbitraryProperties());
             properties.addAll(arbitraryProperties);
+            return properties;
+        }
+    }
+
+    /**
+     * List up all copiable proeprties on ancestors and own.
+     * 
+     * @return
+     */
+    public List<PropertyInfo> copiablePorperties() {
+        if (parent.isEmpty()) {
+            return ownCopiableProperties();
+        } else {
+            List<PropertyInfo> properties = new ArrayList();
+            properties.addAll(parent.get().copiablePorperties());
+            properties.addAll(copiableProperties);
             return properties;
         }
     }
@@ -461,7 +493,7 @@ public class ModelInfo {
     }
 
     /**
-     * Analuze {@link ModelInfo} by its {@link Element}.
+     * Analyze {@link ModelInfo} by its {@link Element}.
      * 
      * @return Chainable API.
      */
@@ -525,6 +557,19 @@ public class ModelInfo {
             }
         }
 
+        Apty.methods(e).forEach(m -> {
+            String name = m.getSimpleName().toString();
+            List<? extends VariableElement> params = m.getParameters();
+
+            if (Modifiers.isPublic(m) && params.size() == 1) {
+                for (PropertyInfo p : ownProperties()) {
+                    if (name.equals("with".concat(p.capitalizeName())) && p.type.is(params.get(0))) {
+                        copiableProperties.add(p);
+                        return;
+                    }
+                }
+            }
+        });
         return this;
     }
 

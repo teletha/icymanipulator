@@ -381,10 +381,10 @@ public abstract class Primitive extends PrimitiveModel {
          * 
          * @return The next assignable model.
          */
-        public final <T extends ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Self>>>>>>>> T intX(int intX) {
+        public final ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Self>>>>>>> intX(int intX) {
             Åssignable o = new Åssignable();
             o.intX(intX);
-            return (T) o;
+            return o;
         }
     }
 
