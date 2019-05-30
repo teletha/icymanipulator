@@ -15,7 +15,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link OptionalIntModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class OptionalInt implements OptionalIntModel {
+public abstract class OptionalInt extends OptionalIntModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -48,14 +48,21 @@ public abstract class OptionalInt implements OptionalIntModel {
     /** The final property updater. */
     private static final MethodHandle valueUpdater = updater("value");
 
+    /** The final property updater. */
+    private static final MethodHandle defaultsUpdater = updater("defaults");
+
     /** The exposed property. */
     public final java.util.OptionalInt value;
+
+    /** The exposed property. */
+    public final java.util.OptionalInt defaults;
 
     /**
      * HIDE CONSTRUCTOR
      */
     protected OptionalInt() {
         this.value = java.util.OptionalInt.empty();
+        this.defaults = super.defaults();
     }
 
     /**
@@ -95,6 +102,42 @@ public abstract class OptionalInt implements OptionalIntModel {
     }
 
     /**
+     * Return the defaults property.
+     *
+     * @return A value of defaults property.
+     */
+    @Override
+    public final java.util.OptionalInt defaults() {
+        return this.defaults;
+    }
+
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of defaults property.
+     */
+    @SuppressWarnings("unused")
+    private final java.util.OptionalInt getDefaults() {
+        return this.defaults;
+    }
+
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of defaults property to assign.
+     */
+    private final void setDefaults(java.util.OptionalInt value) {
+        if (value == null) {
+            value = super.defaults();
+        }
+        try {
+            defaultsUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
      * Show all property values.
      *
      * @return All property values.
@@ -102,7 +145,8 @@ public abstract class OptionalInt implements OptionalIntModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("OptionalInt [");
-        builder.append("value=").append(value).append("]");
+        builder.append("value=").append(value).append(", ");
+        builder.append("defaults=").append(defaults).append("]");
         return builder.toString();
     }
 
@@ -113,7 +157,7 @@ public abstract class OptionalInt implements OptionalIntModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return Objects.hash(value, defaults);
     }
 
     /**
@@ -129,6 +173,7 @@ public abstract class OptionalInt implements OptionalIntModel {
 
         OptionalInt other = (OptionalInt) o;
         if (!Objects.equals(value, other.value)) return false;
+        if (!Objects.equals(defaults, other.defaults)) return false;
         return true;
     }
 
@@ -168,6 +213,26 @@ public abstract class OptionalInt implements OptionalIntModel {
         public final Self value(int value) {
             return value(java.util.OptionalInt.of(value));
         }
+
+        /**
+         * Create initialized {@link OptionalInt} with defaults property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public final Self defaults(java.util.OptionalInt value) {
+            return create().defaults(value);
+        }
+
+        /**
+         * Create initialized {@link OptionalInt} with defaults property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public final Self defaults(int value) {
+            return defaults(java.util.OptionalInt.of(value));
+        }
     }
 
     /**
@@ -194,6 +259,26 @@ public abstract class OptionalInt implements OptionalIntModel {
         default Next value(int value) {
             return value(java.util.OptionalInt.of(value));
         }
+
+        /**
+         * Assign defaults property.
+         * 
+         * @param value A new value to assign.
+         * @return The next assignable model.
+         */
+        default Next defaults(java.util.OptionalInt value) {
+            ((OptionalInt) this).setDefaults(value);
+            return (Next) this;
+        }
+
+        /**
+         * Assign defaults property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next defaults(int value) {
+            return defaults(java.util.OptionalInt.of(value));
+        }
     }
 
     /**
@@ -213,5 +298,6 @@ public abstract class OptionalInt implements OptionalIntModel {
      */
     static final class My {
         static final String Value = "value";
+        static final String Defaults = "defaults";
     }
 }

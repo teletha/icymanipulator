@@ -27,6 +27,7 @@ import javax.annotation.processing.Generated;
 
 import apty.Apty;
 import apty.AptyProcessor;
+import apty.Modifiers;
 import apty.code.Coder;
 import icy.manipulator.util.Lists;
 import icy.manipulator.util.Strings;
@@ -250,7 +251,11 @@ public class IcyManipulator extends AptyProcessor {
          * @return
          */
         private String defaultValueCallFor(PropertyInfo property) {
-            if (property.type.is(Optional.class)) {
+            if (property.element.isDefault()) {
+                return use(m.type) + ".super." + property.name + "()";
+            } else if (!Modifiers.isAbstract(property.element)) {
+                return "super." + property.name + "()";
+            } else if (property.type.is(Optional.class)) {
                 return use(Optional.class) + ".empty()";
             } else if (property.type.is(OptionalInt.class)) {
                 return use(OptionalInt.class) + ".empty()";
@@ -258,10 +263,8 @@ public class IcyManipulator extends AptyProcessor {
                 return use(OptionalLong.class) + ".empty()";
             } else if (property.type.is(OptionalDouble.class)) {
                 return use(OptionalDouble.class) + ".empty()";
-            } else if (property.element.isDefault()) {
-                return use(m.type) + ".super." + property.name + "()";
             } else {
-                return "super." + property.name + "()";
+                throw new Error("Bug! " + property);
             }
         }
 

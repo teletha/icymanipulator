@@ -18,4 +18,9 @@ public interface OptionalModel {
 
     @Icy.Property
     Optional<String> name();
+
+    @Icy.Property
+    default Optional<String> defaults() {
+        return Optional.of("default");
+    }
 }

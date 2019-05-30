@@ -27,4 +27,10 @@ class OptionalTest {
         Optional o = Optional.with.name("Giorno Giovanna");
         assert o.name.get().equals("Giorno Giovanna");
     }
+
+    @Test
+    void defaultValue() {
+        Optional o = Optional.with.create();
+        assert o.defaults.get().equals("default");
+    }
 }

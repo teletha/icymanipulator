@@ -14,8 +14,13 @@ import java.util.OptionalInt;
 import icy.manipulator.Icy;
 
 @Icy
-public interface OptionalIntModel {
+public abstract class OptionalIntModel {
 
     @Icy.Property
-    OptionalInt value();
+    public abstract OptionalInt value();
+
+    @Icy.Property
+    public OptionalInt defaults() {
+        return OptionalInt.of(10);
+    }
 }

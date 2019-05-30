@@ -33,4 +33,14 @@ public class Modifiers {
     public static boolean isPrivate(Element e) {
         return e.getModifiers().contains(Modifier.PRIVATE);
     }
+
+    /**
+     * Check modifier.
+     * 
+     * @param e
+     * @return
+     */
+    public static boolean isAbstract(Element e) {
+        return e.getModifiers().contains(Modifier.ABSTRACT);
+    }
 }
