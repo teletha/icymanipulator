@@ -52,6 +52,12 @@ import javax.lang.model.util.Types;
 
 public class Apty {
 
+    /** The {@link Object#toString()} method pattern. */
+    public static final Predicate<ExecutableElement> ToString = m -> {
+        return m.getParameters().size() == 0 && m.getReturnType().toString().equals("java.lang.String") && m.getSimpleName()
+                .contentEquals("toString");
+    };
+
     /** The getter pattern. */
     private static final Predicate<ExecutableElement> getter = m -> {
         return m.getParameters().size() == 0 && m.getReturnType().getKind() != TypeKind.VOID;

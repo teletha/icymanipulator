@@ -56,6 +56,9 @@ public class ModelInfo {
     /** The implementaion type. */
     public final Type implType;
 
+    /** The model method. */
+    public final boolean hasToString;
+
     /** The required properties. */
     private final List<PropertyInfo> requiredProperties = new LinkedList();
 
@@ -89,11 +92,13 @@ public class ModelInfo {
             this.name = model.getSimpleName().toString();
             this.type = Type.of(model);
             this.implType = Type.of(e);
+            this.hasToString = Apty.methods(model).stream().anyMatch(Apty.ToString);
         } else {
             // by defined model
             this.name = e.getSimpleName().toString();
             this.type = Type.of(e);
             this.implType = Type.of(e.getQualifiedName().toString().replaceAll(icy.modelNamePattern() + "$", "$1"));
+            this.hasToString = Apty.methods(e).stream().anyMatch(Apty.ToString);
 
             // validate in 3 times, don't validate all once
             Apty.methods(e).forEach(this::validateProperty);

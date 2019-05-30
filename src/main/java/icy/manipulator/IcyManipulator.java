@@ -83,6 +83,7 @@ public class IcyManipulator extends AptyProcessor {
                 defineField();
                 defineConstructor();
                 defineAccessors();
+                defineToString();
                 defineCopy();
                 defineBuilder();
                 defineAssignableInterfaces();
@@ -359,6 +360,28 @@ public class IcyManipulator extends AptyProcessor {
          */
         private String name(String name, PropertyInfo p) {
             return name.replace(p.capitalizeName(), "$").replace(p.name, "$");
+        }
+
+        /**
+         * Define {@link Object#toString()} override.
+         */
+        private void defineToString() {
+            if (!m.hasToString) {
+                write();
+                write("/**");
+                write(" * Show all property values.");
+                write(" *");
+                write(" * @return All property values.");
+                write(" */");
+                write("@", Override.class);
+                write("public String toString()", () -> {
+                    write(StringJoiner.class, " builder = new ", StringJoiner.class, "(`, `, `", m.implType, " [`, `]`);");
+                    for (PropertyInfo p : Lists.merge(m.requiredProperties(), m.arbitraryProperties())) {
+                        write("builder.add(`", p.name, "=` + ", p.name, ");");
+                    }
+                    write("return builder.toString();");
+                });
+            }
         }
 
         /**
