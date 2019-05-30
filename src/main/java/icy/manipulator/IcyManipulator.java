@@ -627,11 +627,11 @@ public class IcyManipulator extends AptyProcessor {
                     write(" */");
                 });
                 write("default Next ", m, () -> {
-                    writeTry(() -> {
-                        write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", m.namesWithHead("this"), "));");
-                    }, Throwable.class, e -> {
-                        write("throw quiet(", e, ");");
-                    });
+                    if (m.returnType.is(Optional.class)) {
+                        overloadOptional(p, m);
+                    } else {
+                        overloadMethod(p, m);
+                    }
                 });
             }
 
@@ -651,6 +651,30 @@ public class IcyManipulator extends AptyProcessor {
                     });
                 }
             }
+        }
+
+        /**
+         * Write overload method body for {@link Optional} property.
+         * 
+         * @param p A property info.
+         * @param m A method info.
+         */
+        private void overloadOptional(PropertyInfo p, MethodInfo m) {
+            write("return ", p.name, "(", Optional.class, ".of(", m.paramNames.get(0), "));");
+        }
+
+        /**
+         * Write overload method body for user defined method.
+         * 
+         * @param p A property info.
+         * @param m A method info.
+         */
+        private void overloadMethod(PropertyInfo p, MethodInfo m) {
+            writeTry(() -> {
+                write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", m.namesWithHead("this"), "));");
+            }, Throwable.class, e -> {
+                write("throw quiet(", e, ");");
+            });
         }
 
         /**

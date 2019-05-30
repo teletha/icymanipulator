@@ -142,16 +142,23 @@ public class ModelInfo {
             throw new Fail(method, "Property declaring method must return something.");
         }
 
-        PropertyInfo property = new PropertyInfo(method);
+        PropertyInfo p = new PropertyInfo(method);
 
-        if (property.arbitrary) {
-            addArbitraryProperty(property);
+        if (p.arbitrary) {
+            addArbitraryProperty(p);
         } else {
-            addRequiredProperty(property);
+            addRequiredProperty(p);
         }
 
-        if (property.copiable) {
-            copiableProperties.add(property);
+        if (p.copiable) {
+            copiableProperties.add(p);
+        }
+
+        // ==============================
+        // Auto Overload
+        // ==============================
+        if (p.type.is(Optional.class)) {
+            overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(p.type.variables.get(0)), List.of("value"), ""));
         }
     }
 

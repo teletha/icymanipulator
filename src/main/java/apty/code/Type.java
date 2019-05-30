@@ -9,7 +9,7 @@
  */
 package apty.code;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -31,10 +31,10 @@ public class Type implements Codable {
     private final String base;
 
     /** The managed variables. */
-    private final List<Type> variables = new ArrayList();
+    public final List<Type> variables;
 
     /** The type kind. */
-    private final TypeKind kind;
+    public final TypeKind kind;
 
     /**
      * Build Type.
@@ -82,7 +82,7 @@ public class Type implements Codable {
     private Type(String packageName, String base, List<Type> variables, TypeKind kind) {
         this.packagee = packageName;
         this.base = base;
-        this.variables.addAll(variables);
+        this.variables = Collections.unmodifiableList(variables);
         this.kind = kind;
     }
 
