@@ -12,6 +12,7 @@ package icy.manipulator;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -137,7 +138,7 @@ public class IcyManipulator extends AptyProcessor {
             write(" */");
             write("private static final ", MethodHandle.class, " invoker(String name, Class... parameterTypes) ", () -> {
                 writeTry(() -> {
-                    write(java.lang.reflect.Method.class, " method = ", m.type, ".class.getDeclaredMethod(name, parameterTypes);");
+                    write(Method.class, " method = ", m.type, ".class.getDeclaredMethod(name, parameterTypes);");
                     write("method.setAccessible(true);");
                     write("return ", MethodHandles.class, ".lookup().unreflect(method);");
                 }, Throwable.class, e -> {
