@@ -75,10 +75,8 @@ public class IcyManipulator extends AptyProcessor {
             write("@", Generated.class, "(`Icy Manipulator`)");
             write(visibility, "abstract class ", model.implType, " extends ", model.type, () -> {
                 defineErrorHandler();
-                if (model.hasOverload() || model.hasIntercept()) {
-                    defineMethodInvokerBuilder();
-                    defineMethodInvoker();
-                }
+                defineMethodInvokerBuilder();
+                defineMethodInvoker();
                 defineFiledUpdaterBuilder();
                 defineFieldUpdater();
                 defineField();
@@ -119,7 +117,7 @@ public class IcyManipulator extends AptyProcessor {
          * Define query method for property updater.
          */
         private void defineMethodInvokerBuilder() {
-            if (m.ownProperties().isEmpty()) {
+            if (m.ownProperties().isEmpty() || (!m.hasOwnOverload() && !m.hasIntercept())) {
                 return;
             }
 
