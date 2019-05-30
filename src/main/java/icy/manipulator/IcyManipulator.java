@@ -41,8 +41,8 @@ public class IcyManipulator extends AptyProcessor {
     static final String ArbitraryInterface = Assignable + "Årbitrary";
 
     /**
-    * 
-    */
+     * 
+     */
     public IcyManipulator() {
         process(Icy.class, element -> {
             writeSourceFileBy(new IcyCoder(new ModelInfo(element)));
