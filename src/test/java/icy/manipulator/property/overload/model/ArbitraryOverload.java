@@ -121,7 +121,7 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("ArbitraryOverload [");
-        builder.append("size").append("=").append(size).append("]");
+        builder.append("size=").append(size).append("]");
         return builder.toString();
     }
 
@@ -147,9 +147,7 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
         }
 
         ArbitraryOverload other = (ArbitraryOverload) o;
-        if (size != other.size) {
-            return false;
-        }
+        if (size != other.size) return false;
         return true;
     }
 

@@ -143,8 +143,8 @@ public abstract class EnumGroup extends EnumGroupModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("EnumGroup [");
-        builder.append("color").append("=").append(color).append(", ");
-        builder.append("size").append("=").append(size).append("]");
+        builder.append("color=").append(color).append(", ");
+        builder.append("size=").append(size).append("]");
         return builder.toString();
     }
 
@@ -170,12 +170,8 @@ public abstract class EnumGroup extends EnumGroupModel {
         }
 
         EnumGroup other = (EnumGroup) o;
-        if (!Objects.equals(color, other.color)) {
-            return false;
-        }
-        if (size != other.size) {
-            return false;
-        }
+        if (!Objects.equals(color, other.color)) return false;
+        if (size != other.size) return false;
         return true;
     }
 

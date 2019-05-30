@@ -127,9 +127,9 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("RequiredRequired [");
-        builder.append("size").append("=").append(size).append(", ");
-        builder.append("date").append("=").append(date).append(", ");
-        builder.append("time").append("=").append(time).append("]");
+        builder.append("size=").append(size).append(", ");
+        builder.append("date=").append(date).append(", ");
+        builder.append("time=").append(time).append("]");
         return builder.toString();
     }
 
@@ -155,15 +155,9 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
         }
 
         RequiredRequired other = (RequiredRequired) o;
-        if (!Objects.equals(size, other.size)) {
-            return false;
-        }
-        if (!Objects.equals(date, other.date)) {
-            return false;
-        }
-        if (!Objects.equals(time, other.time)) {
-            return false;
-        }
+        if (!Objects.equals(size, other.size)) return false;
+        if (!Objects.equals(date, other.date)) return false;
+        if (!Objects.equals(time, other.time)) return false;
         return true;
     }
 

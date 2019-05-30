@@ -143,8 +143,8 @@ public abstract class Equals extends EqualsModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Equals [");
-        builder.append("name").append("=").append(name).append(", ");
-        builder.append("age").append("=").append(age).append("]");
+        builder.append("name=").append(name).append(", ");
+        builder.append("age=").append(age).append("]");
         return builder.toString();
     }
 
@@ -170,12 +170,8 @@ public abstract class Equals extends EqualsModel {
         }
 
         Equals other = (Equals) o;
-        if (!Objects.equals(name, other.name)) {
-            return false;
-        }
-        if (age != other.age) {
-            return false;
-        }
+        if (!Objects.equals(name, other.name)) return false;
+        if (age != other.age) return false;
         return true;
     }
 

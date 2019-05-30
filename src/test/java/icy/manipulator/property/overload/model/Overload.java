@@ -178,8 +178,8 @@ public abstract class Overload extends OverloadModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Overload [");
-        builder.append("size").append("=").append(size).append(", ");
-        builder.append("date").append("=").append(date).append("]");
+        builder.append("size=").append(size).append(", ");
+        builder.append("date=").append(date).append("]");
         return builder.toString();
     }
 
@@ -205,12 +205,8 @@ public abstract class Overload extends OverloadModel {
         }
 
         Overload other = (Overload) o;
-        if (!Objects.equals(size, other.size)) {
-            return false;
-        }
-        if (!Objects.equals(date, other.date)) {
-            return false;
-        }
+        if (!Objects.equals(size, other.size)) return false;
+        if (!Objects.equals(date, other.date)) return false;
         return true;
     }
 

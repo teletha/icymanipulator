@@ -100,9 +100,9 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("ArbitraryRequired [");
-        builder.append("id").append("=").append(id).append(", ");
-        builder.append("optionNum").append("=").append(optionNum).append(", ");
-        builder.append("optionComment").append("=").append(optionComment).append("]");
+        builder.append("id=").append(id).append(", ");
+        builder.append("optionNum=").append(optionNum).append(", ");
+        builder.append("optionComment=").append(optionComment).append("]");
         return builder.toString();
     }
 
@@ -128,15 +128,9 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
         }
 
         ArbitraryRequired other = (ArbitraryRequired) o;
-        if (id != other.id) {
-            return false;
-        }
-        if (optionNum != other.optionNum) {
-            return false;
-        }
-        if (!Objects.equals(optionComment, other.optionComment)) {
-            return false;
-        }
+        if (id != other.id) return false;
+        if (optionNum != other.optionNum) return false;
+        if (!Objects.equals(optionComment, other.optionComment)) return false;
         return true;
     }
 

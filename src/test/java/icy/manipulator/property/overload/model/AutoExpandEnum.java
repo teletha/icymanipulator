@@ -103,7 +103,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("AutoExpandEnum [");
-        builder.append("answer").append("=").append(answer).append("]");
+        builder.append("answer=").append(answer).append("]");
         return builder.toString();
     }
 
@@ -129,9 +129,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
         }
 
         AutoExpandEnum other = (AutoExpandEnum) o;
-        if (!Objects.equals(answer, other.answer)) {
-            return false;
-        }
+        if (!Objects.equals(answer, other.answer)) return false;
         return true;
     }
 

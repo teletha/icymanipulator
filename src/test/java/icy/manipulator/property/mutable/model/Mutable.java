@@ -115,7 +115,7 @@ public abstract class Mutable extends MutableModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Mutable [");
-        builder.append("value").append("=").append(value).append("]");
+        builder.append("value=").append(value).append("]");
         return builder.toString();
     }
 
@@ -141,9 +141,7 @@ public abstract class Mutable extends MutableModel {
         }
 
         Mutable other = (Mutable) o;
-        if (!Objects.equals(value, other.value)) {
-            return false;
-        }
+        if (!Objects.equals(value, other.value)) return false;
         return true;
     }
 

@@ -104,11 +104,11 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("MixedArbitrary [");
-        builder.append("name").append("=").append(name).append(", ");
-        builder.append("age").append("=").append(age).append(", ");
-        builder.append("optionAddress").append("=").append(optionAddress).append(", ");
-        builder.append("optionCommnet").append("=").append(optionCommnet).append(", ");
-        builder.append("optionZip").append("=").append(optionZip).append("]");
+        builder.append("name=").append(name).append(", ");
+        builder.append("age=").append(age).append(", ");
+        builder.append("optionAddress=").append(optionAddress).append(", ");
+        builder.append("optionCommnet=").append(optionCommnet).append(", ");
+        builder.append("optionZip=").append(optionZip).append("]");
         return builder.toString();
     }
 
@@ -134,21 +134,11 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
         }
 
         MixedArbitrary other = (MixedArbitrary) o;
-        if (!Objects.equals(name, other.name)) {
-            return false;
-        }
-        if (age != other.age) {
-            return false;
-        }
-        if (!Objects.equals(optionAddress, other.optionAddress)) {
-            return false;
-        }
-        if (!Objects.equals(optionCommnet, other.optionCommnet)) {
-            return false;
-        }
-        if (!Objects.equals(optionZip, other.optionZip)) {
-            return false;
-        }
+        if (!Objects.equals(name, other.name)) return false;
+        if (age != other.age) return false;
+        if (!Objects.equals(optionAddress, other.optionAddress)) return false;
+        if (!Objects.equals(optionCommnet, other.optionCommnet)) return false;
+        if (!Objects.equals(optionZip, other.optionZip)) return false;
         return true;
     }
 

@@ -103,7 +103,7 @@ public abstract class Interface implements InterfaceModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Interface [");
-        builder.append("name").append("=").append(name).append("]");
+        builder.append("name=").append(name).append("]");
         return builder.toString();
     }
 
@@ -129,9 +129,7 @@ public abstract class Interface implements InterfaceModel {
         }
 
         Interface other = (Interface) o;
-        if (!Objects.equals(name, other.name)) {
-            return false;
-        }
+        if (!Objects.equals(name, other.name)) return false;
         return true;
     }
 

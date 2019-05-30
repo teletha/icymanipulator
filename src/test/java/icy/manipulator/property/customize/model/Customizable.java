@@ -232,8 +232,8 @@ public abstract class Customizable extends CustomizableModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Customizable [");
-        builder.append("name").append("=").append(name).append(", ");
-        builder.append("value").append("=").append(value).append("]");
+        builder.append("name=").append(name).append(", ");
+        builder.append("value=").append(value).append("]");
         return builder.toString();
     }
 
@@ -259,12 +259,8 @@ public abstract class Customizable extends CustomizableModel {
         }
 
         Customizable other = (Customizable) o;
-        if (!Objects.equals(name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(value, other.value)) {
-            return false;
-        }
+        if (!Objects.equals(name, other.name)) return false;
+        if (!Objects.equals(value, other.value)) return false;
         return true;
     }
 

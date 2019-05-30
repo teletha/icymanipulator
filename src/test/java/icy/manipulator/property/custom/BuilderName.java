@@ -103,7 +103,7 @@ public abstract class BuilderName extends BuilderNameModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("BuilderName [");
-        builder.append("name").append("=").append(name).append("]");
+        builder.append("name=").append(name).append("]");
         return builder.toString();
     }
 
@@ -129,9 +129,7 @@ public abstract class BuilderName extends BuilderNameModel {
         }
 
         BuilderName other = (BuilderName) o;
-        if (!Objects.equals(name, other.name)) {
-            return false;
-        }
+        if (!Objects.equals(name, other.name)) return false;
         return true;
     }
 

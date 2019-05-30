@@ -379,14 +379,14 @@ public abstract class Primitive extends PrimitiveModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Primitive [");
-        builder.append("intX").append("=").append(intX).append(", ");
-        builder.append("longX").append("=").append(longX).append(", ");
-        builder.append("floatX").append("=").append(floatX).append(", ");
-        builder.append("doubleX").append("=").append(doubleX).append(", ");
-        builder.append("byteX").append("=").append(byteX).append(", ");
-        builder.append("shortX").append("=").append(shortX).append(", ");
-        builder.append("charX").append("=").append(charX).append(", ");
-        builder.append("booleanX").append("=").append(booleanX).append("]");
+        builder.append("intX=").append(intX).append(", ");
+        builder.append("longX=").append(longX).append(", ");
+        builder.append("floatX=").append(floatX).append(", ");
+        builder.append("doubleX=").append(doubleX).append(", ");
+        builder.append("byteX=").append(byteX).append(", ");
+        builder.append("shortX=").append(shortX).append(", ");
+        builder.append("charX=").append(charX).append(", ");
+        builder.append("booleanX=").append(booleanX).append("]");
         return builder.toString();
     }
 
@@ -412,30 +412,14 @@ public abstract class Primitive extends PrimitiveModel {
         }
 
         Primitive other = (Primitive) o;
-        if (intX != other.intX) {
-            return false;
-        }
-        if (longX != other.longX) {
-            return false;
-        }
-        if (floatX != other.floatX) {
-            return false;
-        }
-        if (doubleX != other.doubleX) {
-            return false;
-        }
-        if (byteX != other.byteX) {
-            return false;
-        }
-        if (shortX != other.shortX) {
-            return false;
-        }
-        if (charX != other.charX) {
-            return false;
-        }
-        if (booleanX != other.booleanX) {
-            return false;
-        }
+        if (intX != other.intX) return false;
+        if (longX != other.longX) return false;
+        if (floatX != other.floatX) return false;
+        if (doubleX != other.doubleX) return false;
+        if (byteX != other.byteX) return false;
+        if (shortX != other.shortX) return false;
+        if (charX != other.charX) return false;
+        if (booleanX != other.booleanX) return false;
         return true;
     }
 

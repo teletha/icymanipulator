@@ -229,10 +229,10 @@ public abstract class Mixed extends MixedModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Mixed [");
-        builder.append("name").append("=").append(name).append(", ");
-        builder.append("age").append("=").append(age).append(", ");
-        builder.append("optionAddress").append("=").append(optionAddress).append(", ");
-        builder.append("optionCommnet").append("=").append(optionCommnet).append("]");
+        builder.append("name=").append(name).append(", ");
+        builder.append("age=").append(age).append(", ");
+        builder.append("optionAddress=").append(optionAddress).append(", ");
+        builder.append("optionCommnet=").append(optionCommnet).append("]");
         return builder.toString();
     }
 
@@ -258,18 +258,10 @@ public abstract class Mixed extends MixedModel {
         }
 
         Mixed other = (Mixed) o;
-        if (!Objects.equals(name, other.name)) {
-            return false;
-        }
-        if (age != other.age) {
-            return false;
-        }
-        if (!Objects.equals(optionAddress, other.optionAddress)) {
-            return false;
-        }
-        if (!Objects.equals(optionCommnet, other.optionCommnet)) {
-            return false;
-        }
+        if (!Objects.equals(name, other.name)) return false;
+        if (age != other.age) return false;
+        if (!Objects.equals(optionAddress, other.optionAddress)) return false;
+        if (!Objects.equals(optionCommnet, other.optionCommnet)) return false;
         return true;
     }
 

@@ -104,7 +104,7 @@ public abstract class Array extends ArrayModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Array [");
-        builder.append("names").append("=").append(Arrays.deepToString(names)).append("]");
+        builder.append("names=").append(Arrays.deepToString(names)).append("]");
         return builder.toString();
     }
 
@@ -130,9 +130,7 @@ public abstract class Array extends ArrayModel {
         }
 
         Array other = (Array) o;
-        if (!Objects.deepEquals(names, other.names)) {
-            return false;
-        }
+        if (!Objects.deepEquals(names, other.names)) return false;
         return true;
     }
 

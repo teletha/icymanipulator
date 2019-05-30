@@ -103,7 +103,7 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("ImplementationVisibility [");
-        builder.append("name").append("=").append(name).append("]");
+        builder.append("name=").append(name).append("]");
         return builder.toString();
     }
 
@@ -129,9 +129,7 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
         }
 
         ImplementationVisibility other = (ImplementationVisibility) o;
-        if (!Objects.equals(name, other.name)) {
-            return false;
-        }
+        if (!Objects.equals(name, other.name)) return false;
         return true;
     }
 

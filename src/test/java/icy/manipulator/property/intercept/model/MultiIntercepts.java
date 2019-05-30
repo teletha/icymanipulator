@@ -168,8 +168,8 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("MultiIntercepts [");
-        builder.append("size").append("=").append(size).append(", ");
-        builder.append("value").append("=").append(value).append("]");
+        builder.append("size=").append(size).append(", ");
+        builder.append("value=").append(value).append("]");
         return builder.toString();
     }
 
@@ -195,12 +195,8 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
         }
 
         MultiIntercepts other = (MultiIntercepts) o;
-        if (size != other.size) {
-            return false;
-        }
-        if (!Objects.equals(value, other.value)) {
-            return false;
-        }
+        if (size != other.size) return false;
+        if (!Objects.equals(value, other.value)) return false;
         return true;
     }
 

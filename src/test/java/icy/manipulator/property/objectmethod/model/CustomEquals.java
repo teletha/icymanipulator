@@ -143,8 +143,8 @@ public abstract class CustomEquals extends CustomEqualsModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("CustomEquals [");
-        builder.append("name").append("=").append(name).append(", ");
-        builder.append("age").append("=").append(age).append("]");
+        builder.append("name=").append(name).append(", ");
+        builder.append("age=").append(age).append("]");
         return builder.toString();
     }
 

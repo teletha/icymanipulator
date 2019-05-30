@@ -179,9 +179,9 @@ public abstract class Group extends GroupModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Group [");
-        builder.append("x").append("=").append(x).append(", ");
-        builder.append("y").append("=").append(y).append(", ");
-        builder.append("z").append("=").append(z).append("]");
+        builder.append("x=").append(x).append(", ");
+        builder.append("y=").append(y).append(", ");
+        builder.append("z=").append(z).append("]");
         return builder.toString();
     }
 
@@ -207,15 +207,9 @@ public abstract class Group extends GroupModel {
         }
 
         Group other = (Group) o;
-        if (x != other.x) {
-            return false;
-        }
-        if (y != other.y) {
-            return false;
-        }
-        if (z != other.z) {
-            return false;
-        }
+        if (x != other.x) return false;
+        if (y != other.y) return false;
+        if (z != other.z) return false;
         return true;
     }
 

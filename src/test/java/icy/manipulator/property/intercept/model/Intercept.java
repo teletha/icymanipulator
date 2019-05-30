@@ -120,7 +120,7 @@ public abstract class Intercept extends InterceptModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Intercept [");
-        builder.append("size").append("=").append(size).append("]");
+        builder.append("size=").append(size).append("]");
         return builder.toString();
     }
 
@@ -146,9 +146,7 @@ public abstract class Intercept extends InterceptModel {
         }
 
         Intercept other = (Intercept) o;
-        if (size != other.size) {
-            return false;
-        }
+        if (size != other.size) return false;
         return true;
     }
 

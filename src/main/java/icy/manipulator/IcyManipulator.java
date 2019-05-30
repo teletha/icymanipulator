@@ -387,9 +387,9 @@ public class IcyManipulator extends AptyProcessor {
                         String tail = i == properties.size() - 1 ? "]" : ", ";
 
                         if (p.type.isArray()) {
-                            write("builder.append(`", p.name, "`).append(`=`).append(", Arrays.class, ".deepToString(", p.name, ")).append(`", tail, "`);");
+                            write("builder.append(`", p.name, "=`).append(", Arrays.class, ".deepToString(", p.name, ")).append(`", tail, "`);");
                         } else {
-                            write("builder.append(`", p.name, "`).append(`=`).append(", p.name, ").append(`", tail, "`);");
+                            write("builder.append(`", p.name, "=`).append(", p.name, ").append(`", tail, "`);");
                         }
                     }
                     write("return builder.toString();");
@@ -443,17 +443,11 @@ public class IcyManipulator extends AptyProcessor {
                     write(m.implType, " other = (", m.implType, ") o;");
                     for (PropertyInfo p : m.properties()) {
                         if (p.type.isPrimitive()) {
-                            write("if (", p.name, " != other.", p.name, ")", () -> {
-                                write("return false;");
-                            });
+                            write("if (", p.name, " != other.", p.name, ") return false;");
                         } else if (p.type.isArray()) {
-                            write("if (!", Objects.class, ".deepEquals(", p.name, ", other.", p.name, "))", () -> {
-                                write("return false;");
-                            });
+                            write("if (!", Objects.class, ".deepEquals(", p.name, ", other.", p.name, ")) return false;");
                         } else {
-                            write("if (!", Objects.class, ".equals(", p.name, ", other.", p.name, "))", () -> {
-                                write("return false;");
-                            });
+                            write("if (!", Objects.class, ".equals(", p.name, ", other.", p.name, ")) return false;");
                         }
                     }
                     write("return true;");

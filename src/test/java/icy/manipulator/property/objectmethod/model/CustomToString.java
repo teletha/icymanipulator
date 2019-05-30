@@ -156,12 +156,8 @@ public abstract class CustomToString extends CustomToStringModel {
         }
 
         CustomToString other = (CustomToString) o;
-        if (!Objects.equals(name, other.name)) {
-            return false;
-        }
-        if (age != other.age) {
-            return false;
-        }
+        if (!Objects.equals(name, other.name)) return false;
+        if (age != other.age) return false;
         return true;
     }
 

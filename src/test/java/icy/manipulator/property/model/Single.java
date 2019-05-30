@@ -103,7 +103,7 @@ public abstract class Single extends SingleModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Single [");
-        builder.append("name").append("=").append(name).append("]");
+        builder.append("name=").append(name).append("]");
         return builder.toString();
     }
 
@@ -129,9 +129,7 @@ public abstract class Single extends SingleModel {
         }
 
         Single other = (Single) o;
-        if (!Objects.equals(name, other.name)) {
-            return false;
-        }
+        if (!Objects.equals(name, other.name)) return false;
         return true;
     }
 

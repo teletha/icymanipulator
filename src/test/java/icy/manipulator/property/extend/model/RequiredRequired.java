@@ -104,10 +104,10 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("RequiredRequired [");
-        builder.append("name").append("=").append(name).append(", ");
-        builder.append("stand").append("=").append(stand).append(", ");
-        builder.append("age").append("=").append(age).append(", ");
-        builder.append("nickname").append("=").append(nickname).append("]");
+        builder.append("name=").append(name).append(", ");
+        builder.append("stand=").append(stand).append(", ");
+        builder.append("age=").append(age).append(", ");
+        builder.append("nickname=").append(nickname).append("]");
         return builder.toString();
     }
 
@@ -133,18 +133,10 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
         }
 
         RequiredRequired other = (RequiredRequired) o;
-        if (!Objects.equals(name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(stand, other.stand)) {
-            return false;
-        }
-        if (age != other.age) {
-            return false;
-        }
-        if (!Objects.equals(nickname, other.nickname)) {
-            return false;
-        }
+        if (!Objects.equals(name, other.name)) return false;
+        if (!Objects.equals(stand, other.stand)) return false;
+        if (age != other.age) return false;
+        if (!Objects.equals(nickname, other.nickname)) return false;
         return true;
     }
 

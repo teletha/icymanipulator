@@ -103,7 +103,7 @@ public abstract class InterfaceArbitrary implements InterfaceArbitraryModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("InterfaceArbitrary [");
-        builder.append("optional").append("=").append(optional).append("]");
+        builder.append("optional=").append(optional).append("]");
         return builder.toString();
     }
 
@@ -129,9 +129,7 @@ public abstract class InterfaceArbitrary implements InterfaceArbitraryModel {
         }
 
         InterfaceArbitrary other = (InterfaceArbitrary) o;
-        if (!Objects.equals(optional, other.optional)) {
-            return false;
-        }
+        if (!Objects.equals(optional, other.optional)) return false;
         return true;
     }
 

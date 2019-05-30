@@ -143,8 +143,8 @@ public abstract class CustomHashCode extends CustomHashCodeModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("CustomHashCode [");
-        builder.append("name").append("=").append(name).append(", ");
-        builder.append("age").append("=").append(age).append("]");
+        builder.append("name=").append(name).append(", ");
+        builder.append("age=").append(age).append("]");
         return builder.toString();
     }
 
@@ -160,12 +160,8 @@ public abstract class CustomHashCode extends CustomHashCodeModel {
         }
 
         CustomHashCode other = (CustomHashCode) o;
-        if (!Objects.equals(name, other.name)) {
-            return false;
-        }
-        if (age != other.age) {
-            return false;
-        }
+        if (!Objects.equals(name, other.name)) return false;
+        if (age != other.age) return false;
         return true;
     }
 

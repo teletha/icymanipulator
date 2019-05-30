@@ -239,10 +239,10 @@ public abstract class Wildcard extends WildcardModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Wildcard [");
-        builder.append("extendType").append("=").append(extendType).append(", ");
-        builder.append("superType").append("=").append(superType).append(", ");
-        builder.append("wildcard").append("=").append(wildcard).append(", ");
-        builder.append("combine").append("=").append(combine).append("]");
+        builder.append("extendType=").append(extendType).append(", ");
+        builder.append("superType=").append(superType).append(", ");
+        builder.append("wildcard=").append(wildcard).append(", ");
+        builder.append("combine=").append(combine).append("]");
         return builder.toString();
     }
 
@@ -268,18 +268,10 @@ public abstract class Wildcard extends WildcardModel {
         }
 
         Wildcard other = (Wildcard) o;
-        if (!Objects.equals(extendType, other.extendType)) {
-            return false;
-        }
-        if (!Objects.equals(superType, other.superType)) {
-            return false;
-        }
-        if (!Objects.equals(wildcard, other.wildcard)) {
-            return false;
-        }
-        if (!Objects.equals(combine, other.combine)) {
-            return false;
-        }
+        if (!Objects.equals(extendType, other.extendType)) return false;
+        if (!Objects.equals(superType, other.superType)) return false;
+        if (!Objects.equals(wildcard, other.wildcard)) return false;
+        if (!Objects.equals(combine, other.combine)) return false;
         return true;
     }
 

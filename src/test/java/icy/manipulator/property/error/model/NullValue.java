@@ -186,9 +186,9 @@ public abstract class NullValue extends NullValueModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("NullValue [");
-        builder.append("rejectNull").append("=").append(rejectNull).append(", ");
-        builder.append("acceptNull").append("=").append(acceptNull).append(", ");
-        builder.append("defaultValue").append("=").append(defaultValue).append("]");
+        builder.append("rejectNull=").append(rejectNull).append(", ");
+        builder.append("acceptNull=").append(acceptNull).append(", ");
+        builder.append("defaultValue=").append(defaultValue).append("]");
         return builder.toString();
     }
 
@@ -214,15 +214,9 @@ public abstract class NullValue extends NullValueModel {
         }
 
         NullValue other = (NullValue) o;
-        if (!Objects.equals(rejectNull, other.rejectNull)) {
-            return false;
-        }
-        if (!Objects.equals(acceptNull, other.acceptNull)) {
-            return false;
-        }
-        if (!Objects.equals(defaultValue, other.defaultValue)) {
-            return false;
-        }
+        if (!Objects.equals(rejectNull, other.rejectNull)) return false;
+        if (!Objects.equals(acceptNull, other.acceptNull)) return false;
+        if (!Objects.equals(defaultValue, other.defaultValue)) return false;
         return true;
     }
 

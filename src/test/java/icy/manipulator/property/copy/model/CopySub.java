@@ -104,9 +104,9 @@ public abstract class CopySub extends CopySubModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("CopySub [");
-        builder.append("name").append("=").append(name).append(", ");
-        builder.append("age").append("=").append(age).append(", ");
-        builder.append("address").append("=").append(address).append("]");
+        builder.append("name=").append(name).append(", ");
+        builder.append("age=").append(age).append(", ");
+        builder.append("address=").append(address).append("]");
         return builder.toString();
     }
 
@@ -132,15 +132,9 @@ public abstract class CopySub extends CopySubModel {
         }
 
         CopySub other = (CopySub) o;
-        if (!Objects.equals(name, other.name)) {
-            return false;
-        }
-        if (age != other.age) {
-            return false;
-        }
-        if (!Objects.equals(address, other.address)) {
-            return false;
-        }
+        if (!Objects.equals(name, other.name)) return false;
+        if (age != other.age) return false;
+        if (!Objects.equals(address, other.address)) return false;
         return true;
     }
 

@@ -103,7 +103,7 @@ public abstract class Optional implements OptionalModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Optional [");
-        builder.append("name").append("=").append(name).append("]");
+        builder.append("name=").append(name).append("]");
         return builder.toString();
     }
 
@@ -129,9 +129,7 @@ public abstract class Optional implements OptionalModel {
         }
 
         Optional other = (Optional) o;
-        if (!Objects.equals(name, other.name)) {
-            return false;
-        }
+        if (!Objects.equals(name, other.name)) return false;
         return true;
     }
 

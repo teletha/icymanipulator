@@ -161,8 +161,8 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("ReferenceDoubleSetter [");
-        builder.append("size").append("=").append(size).append(", ");
-        builder.append("square").append("=").append(square).append("]");
+        builder.append("size=").append(size).append(", ");
+        builder.append("square=").append(square).append("]");
         return builder.toString();
     }
 
@@ -188,12 +188,8 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
         }
 
         ReferenceDoubleSetter other = (ReferenceDoubleSetter) o;
-        if (size != other.size) {
-            return false;
-        }
-        if (square != other.square) {
-            return false;
-        }
+        if (size != other.size) return false;
+        if (square != other.square) return false;
         return true;
     }
 

@@ -143,8 +143,8 @@ public abstract class Arbitrary extends ArbitraryModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Arbitrary [");
-        builder.append("optionNum").append("=").append(optionNum).append(", ");
-        builder.append("optionComment").append("=").append(optionComment).append("]");
+        builder.append("optionNum=").append(optionNum).append(", ");
+        builder.append("optionComment=").append(optionComment).append("]");
         return builder.toString();
     }
 
@@ -170,12 +170,8 @@ public abstract class Arbitrary extends ArbitraryModel {
         }
 
         Arbitrary other = (Arbitrary) o;
-        if (optionNum != other.optionNum) {
-            return false;
-        }
-        if (!Objects.equals(optionComment, other.optionComment)) {
-            return false;
-        }
+        if (optionNum != other.optionNum) return false;
+        if (!Objects.equals(optionComment, other.optionComment)) return false;
         return true;
     }
 

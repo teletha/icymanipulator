@@ -164,8 +164,8 @@ public abstract class OverloadGroup extends OverloadGroupModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("OverloadGroup [");
-        builder.append("name").append("=").append(name).append(", ");
-        builder.append("size").append("=").append(size).append("]");
+        builder.append("name=").append(name).append(", ");
+        builder.append("size=").append(size).append("]");
         return builder.toString();
     }
 
@@ -191,12 +191,8 @@ public abstract class OverloadGroup extends OverloadGroupModel {
         }
 
         OverloadGroup other = (OverloadGroup) o;
-        if (!Objects.equals(name, other.name)) {
-            return false;
-        }
-        if (size != other.size) {
-            return false;
-        }
+        if (!Objects.equals(name, other.name)) return false;
+        if (size != other.size) return false;
         return true;
     }
 

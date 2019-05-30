@@ -161,8 +161,8 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("ReferenceIntSetter [");
-        builder.append("size").append("=").append(size).append(", ");
-        builder.append("square").append("=").append(square).append("]");
+        builder.append("size=").append(size).append(", ");
+        builder.append("square=").append(square).append("]");
         return builder.toString();
     }
 
@@ -188,12 +188,8 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
         }
 
         ReferenceIntSetter other = (ReferenceIntSetter) o;
-        if (size != other.size) {
-            return false;
-        }
-        if (square != other.square) {
-            return false;
-        }
+        if (size != other.size) return false;
+        if (square != other.square) return false;
         return true;
     }
 

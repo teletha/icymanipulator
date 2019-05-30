@@ -29,8 +29,8 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("EnumGroupSubclass [");
-        builder.append("color").append("=").append(color).append(", ");
-        builder.append("size").append("=").append(size).append("]");
+        builder.append("color=").append(color).append(", ");
+        builder.append("size=").append(size).append("]");
         return builder.toString();
     }
 
@@ -56,12 +56,8 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
         }
 
         EnumGroupSubclass other = (EnumGroupSubclass) o;
-        if (!Objects.equals(color, other.color)) {
-            return false;
-        }
-        if (size != other.size) {
-            return false;
-        }
+        if (!Objects.equals(color, other.color)) return false;
+        if (size != other.size) return false;
         return true;
     }
 
