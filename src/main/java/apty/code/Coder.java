@@ -9,6 +9,7 @@
  */
 package apty.code;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -40,6 +41,9 @@ public class Coder {
 
     /** The imported classes. */
     private final Set<String> imports = new TreeSet();
+
+    /** The imported class names. */
+    private final Set<String> importNames = new HashSet();
 
     /** The source code. */
     private final StringBuilder source = new StringBuilder();
@@ -369,7 +373,21 @@ public class Coder {
             return className;
         }
 
-        imports.add(Strings.sanitize(fqcn));
+        String sanitizedClassName = Strings.sanitize(className);
+        String sanitizedFQCN = packageName == null ? sanitizedClassName : packageName + "." + sanitizedClassName;
+
+        // ignore the class which is already imported
+        if (imports.contains(sanitizedFQCN)) {
+            return className;
+        }
+
+        // ignore same class name
+        if (importNames.contains(sanitizedClassName)) {
+            return fqcn;
+        }
+
+        imports.add(sanitizedFQCN);
+        importNames.add(sanitizedClassName);
 
         return className;
     }
