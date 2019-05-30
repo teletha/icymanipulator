@@ -55,7 +55,7 @@ public abstract class OptionalDouble implements OptionalDoubleModel {
      * HIDE CONSTRUCTOR
      */
     protected OptionalDouble() {
-        this.value = null;
+        this.value = java.util.OptionalDouble.empty();
     }
 
     /**
@@ -85,7 +85,7 @@ public abstract class OptionalDouble implements OptionalDoubleModel {
      */
     private final void setValue(java.util.OptionalDouble value) {
         if (value == null) {
-            throw new IllegalArgumentException("The value property requires non-null value.");
+            value = java.util.OptionalDouble.empty();
         }
         try {
             valueUpdater.invoke(this, value);
@@ -141,32 +141,39 @@ public abstract class OptionalDouble implements OptionalDoubleModel {
     public static final class Ìnstantiator<Self extends OptionalDouble & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new {@link OptionalDouble} with the specified value property.
-         * 
-         * @return The next assignable model.
+         * Create initialized {@link OptionalDouble}.
+         *
+         * @return A initialized model.
          */
-        public final Self value(java.util.OptionalDouble value) {
-            Åssignable o = new Åssignable();
-            o.value(value);
-            return (Self)o;
+        public final Self create() {
+            return (Self) new Åssignable();
         }
 
         /**
-         * Create new {@link OptionalDouble} with the specified value property.
-         * 
-         * @return The next assignable model.
+         * Create initialized {@link OptionalDouble} with value property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public final Self value(java.util.OptionalDouble value) {
+            return create().value(value);
+        }
+
+        /**
+         * Create initialized {@link OptionalDouble} with value property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
          */
         public final Self value(double value) {
-            Åssignable o = new Åssignable();
-            o.value(value);
-            return (Self)o;
+            return value(java.util.OptionalDouble.of(value));
         }
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableValue<Next> {
+    public static interface ÅssignableÅrbitrary<Next extends OptionalDouble> {
 
         /**
          * Assign value property.
@@ -190,15 +197,9 @@ public abstract class OptionalDouble implements OptionalDoubleModel {
     }
 
     /**
-     * Property assignment API.
-     */
-    public static interface ÅssignableÅrbitrary<Next extends OptionalDouble> {
-    }
-
-    /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableValue {
+    protected static interface ÅssignableAll {
     }
 
     /**

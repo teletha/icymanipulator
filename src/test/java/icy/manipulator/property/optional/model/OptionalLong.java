@@ -55,7 +55,7 @@ public abstract class OptionalLong implements OptionalLongModel {
      * HIDE CONSTRUCTOR
      */
     protected OptionalLong() {
-        this.value = null;
+        this.value = java.util.OptionalLong.empty();
     }
 
     /**
@@ -85,7 +85,7 @@ public abstract class OptionalLong implements OptionalLongModel {
      */
     private final void setValue(java.util.OptionalLong value) {
         if (value == null) {
-            throw new IllegalArgumentException("The value property requires non-null value.");
+            value = java.util.OptionalLong.empty();
         }
         try {
             valueUpdater.invoke(this, value);
@@ -141,32 +141,39 @@ public abstract class OptionalLong implements OptionalLongModel {
     public static final class Ìnstantiator<Self extends OptionalLong & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new {@link OptionalLong} with the specified value property.
-         * 
-         * @return The next assignable model.
+         * Create initialized {@link OptionalLong}.
+         *
+         * @return A initialized model.
          */
-        public final Self value(java.util.OptionalLong value) {
-            Åssignable o = new Åssignable();
-            o.value(value);
-            return (Self)o;
+        public final Self create() {
+            return (Self) new Åssignable();
         }
 
         /**
-         * Create new {@link OptionalLong} with the specified value property.
-         * 
-         * @return The next assignable model.
+         * Create initialized {@link OptionalLong} with value property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public final Self value(java.util.OptionalLong value) {
+            return create().value(value);
+        }
+
+        /**
+         * Create initialized {@link OptionalLong} with value property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
          */
         public final Self value(long value) {
-            Åssignable o = new Åssignable();
-            o.value(value);
-            return (Self)o;
+            return value(java.util.OptionalLong.of(value));
         }
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableValue<Next> {
+    public static interface ÅssignableÅrbitrary<Next extends OptionalLong> {
 
         /**
          * Assign value property.
@@ -190,15 +197,9 @@ public abstract class OptionalLong implements OptionalLongModel {
     }
 
     /**
-     * Property assignment API.
-     */
-    public static interface ÅssignableÅrbitrary<Next extends OptionalLong> {
-    }
-
-    /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableValue {
+    protected static interface ÅssignableAll {
     }
 
     /**

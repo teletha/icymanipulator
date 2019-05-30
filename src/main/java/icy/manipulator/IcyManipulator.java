@@ -252,6 +252,12 @@ public class IcyManipulator extends AptyProcessor {
         private String defaultValueCallFor(PropertyInfo property) {
             if (property.type.is(Optional.class)) {
                 return use(Optional.class) + ".empty()";
+            } else if (property.type.is(OptionalInt.class)) {
+                return use(OptionalInt.class) + ".empty()";
+            } else if (property.type.is(OptionalLong.class)) {
+                return use(OptionalLong.class) + ".empty()";
+            } else if (property.type.is(OptionalDouble.class)) {
+                return use(OptionalDouble.class) + ".empty()";
             } else if (property.element.isDefault()) {
                 return use(m.type) + ".super." + property.name + "()";
             } else {

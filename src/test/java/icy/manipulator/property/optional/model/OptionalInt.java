@@ -55,7 +55,7 @@ public abstract class OptionalInt implements OptionalIntModel {
      * HIDE CONSTRUCTOR
      */
     protected OptionalInt() {
-        this.value = null;
+        this.value = java.util.OptionalInt.empty();
     }
 
     /**
@@ -85,7 +85,7 @@ public abstract class OptionalInt implements OptionalIntModel {
      */
     private final void setValue(java.util.OptionalInt value) {
         if (value == null) {
-            throw new IllegalArgumentException("The value property requires non-null value.");
+            value = java.util.OptionalInt.empty();
         }
         try {
             valueUpdater.invoke(this, value);
@@ -141,32 +141,39 @@ public abstract class OptionalInt implements OptionalIntModel {
     public static final class Ìnstantiator<Self extends OptionalInt & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new {@link OptionalInt} with the specified value property.
-         * 
-         * @return The next assignable model.
+         * Create initialized {@link OptionalInt}.
+         *
+         * @return A initialized model.
          */
-        public final Self value(java.util.OptionalInt value) {
-            Åssignable o = new Åssignable();
-            o.value(value);
-            return (Self)o;
+        public final Self create() {
+            return (Self) new Åssignable();
         }
 
         /**
-         * Create new {@link OptionalInt} with the specified value property.
-         * 
-         * @return The next assignable model.
+         * Create initialized {@link OptionalInt} with value property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public final Self value(java.util.OptionalInt value) {
+            return create().value(value);
+        }
+
+        /**
+         * Create initialized {@link OptionalInt} with value property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
          */
         public final Self value(int value) {
-            Åssignable o = new Åssignable();
-            o.value(value);
-            return (Self)o;
+            return value(java.util.OptionalInt.of(value));
         }
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableValue<Next> {
+    public static interface ÅssignableÅrbitrary<Next extends OptionalInt> {
 
         /**
          * Assign value property.
@@ -190,15 +197,9 @@ public abstract class OptionalInt implements OptionalIntModel {
     }
 
     /**
-     * Property assignment API.
-     */
-    public static interface ÅssignableÅrbitrary<Next extends OptionalInt> {
-    }
-
-    /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableValue {
+    protected static interface ÅssignableAll {
     }
 
     /**
