@@ -9,11 +9,6 @@
  */
 package icy.manipulator;
 
-import java.util.Optional;
-import java.util.OptionalDouble;
-import java.util.OptionalInt;
-import java.util.OptionalLong;
-
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
@@ -66,9 +61,7 @@ public class PropertyInfo {
         this.element = method;
         this.name = method.getSimpleName().toString();
         this.type = Type.of(method.getReturnType());
-        this.arbitrary = !method.getModifiers().contains(Modifier.ABSTRACT) || type.is(Optional.class) || type.is(OptionalInt.class) || type
-                .is(OptionalLong.class) || type
-                        .is(OptionalDouble.class) || type.is(IcyManipulator.GuavaOptional) || type.is(IcyManipulator.SinobuVariable);
+        this.arbitrary = !method.getModifiers().contains(Modifier.ABSTRACT) || OptionalSupport.by(type).isPresent();
 
         Property annotation = method.getAnnotation(Icy.Property.class);
 

@@ -15,9 +15,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalDouble;
-import java.util.OptionalInt;
-import java.util.OptionalLong;
 import java.util.function.Consumer;
 import java.util.function.DoubleConsumer;
 import java.util.function.IntConsumer;
@@ -157,22 +154,9 @@ public class ModelInfo {
             copiableProperties.add(p);
         }
 
-        // ==============================
-        // Optional Like
-        // ==============================
-        if (p.type.is(Optional.class)) {
-            overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(p.type.variables.get(0)), List.of("value"), ""));
-        } else if (p.type.is(OptionalInt.class)) {
-            overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(Type.of(int.class)), List.of("value"), ""));
-        } else if (p.type.is(OptionalLong.class)) {
-            overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(Type.of(long.class)), List.of("value"), ""));
-        } else if (p.type.is(OptionalDouble.class)) {
-            overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(Type.of(double.class)), List.of("value"), ""));
-        } else if (p.type.is(IcyManipulator.GuavaOptional)) {
-            overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(p.type.variables.get(0)), List.of("value"), ""));
-        } else if (p.type.is(IcyManipulator.SinobuVariable)) {
-            overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(p.type.variables.get(0)), List.of("value"), ""));
-        }
+        OptionalSupport.by(p.type).ifPresent(support -> {
+            overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(support.extractType(p)), List.of("value"), ""));
+        });
     }
 
     /**

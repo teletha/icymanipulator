@@ -17,9 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.OptionalDouble;
-import java.util.OptionalInt;
-import java.util.OptionalLong;
 import java.util.StringJoiner;
 import java.util.function.UnaryOperator;
 
@@ -29,7 +26,6 @@ import apty.Apty;
 import apty.AptyProcessor;
 import apty.Modifiers;
 import apty.code.Coder;
-import apty.code.Type;
 import icy.manipulator.util.Lists;
 import icy.manipulator.util.Strings;
 
@@ -46,12 +42,6 @@ public class IcyManipulator extends AptyProcessor {
 
     /** The configuration interface name for arbitrary perperties. */
     static final String ArbitraryInterface = Assignable + "Årbitrary";
-
-    /** The built-in supported optional type. */
-    static final Type GuavaOptional = Type.of("com.google.common.base.Optional");
-
-    /** The built-in supported optional type. */
-    static final Type SinobuVariable = Type.of("kiss.Variable");
 
     /**
      * 
@@ -262,20 +252,8 @@ public class IcyManipulator extends AptyProcessor {
                 return use(m.type) + ".super." + property.name + "()";
             } else if (!Modifiers.isAbstract(property.element)) {
                 return "super." + property.name + "()";
-            } else if (property.type.is(Optional.class)) {
-                return use(Optional.class) + ".empty()";
-            } else if (property.type.is(OptionalInt.class)) {
-                return use(OptionalInt.class) + ".empty()";
-            } else if (property.type.is(OptionalLong.class)) {
-                return use(OptionalLong.class) + ".empty()";
-            } else if (property.type.is(OptionalDouble.class)) {
-                return use(OptionalDouble.class) + ".empty()";
-            } else if (property.type.is(GuavaOptional)) {
-                return use(GuavaOptional) + ".absent()";
-            } else if (property.type.is(SinobuVariable)) {
-                return use(SinobuVariable) + ".empty()";
             } else {
-                throw new Error("Bug! " + property);
+                return OptionalSupport.by(property.type).map(s -> use(s.type) + "." + s.noneMethod + "()").orElseThrow();
             }
         }
 
@@ -708,100 +686,20 @@ public class IcyManipulator extends AptyProcessor {
         }
 
         /**
-         * Write overload methods.
+         * Write overload method.
          * 
          * @param p A property info.
          * @param m A method info.
          */
         private void overload(PropertyInfo p, MethodInfo m) {
-            if (m.returnType.is(Optional.class)) {
-                overloadOptional(p, m);
-            } else if (m.returnType.is(OptionalInt.class)) {
-                overloadOptionalInt(p, m);
-            } else if (m.returnType.is(OptionalLong.class)) {
-                overloadOptionalLong(p, m);
-            } else if (m.returnType.is(OptionalDouble.class)) {
-                overloadOptionalDouble(p, m);
-            } else if (m.returnType.is(GuavaOptional)) {
-                overloadGuavaOptional(p, m);
-            } else if (m.returnType.is(SinobuVariable)) {
-                overloadSinobuVariable(p, m);
-            } else {
-                overloadMethod(p, m);
-            }
-        }
-
-        /**
-         * Write overload method body for {@link Optional} property.
-         * 
-         * @param p A property info.
-         * @param m A method info.
-         */
-        private void overloadOptional(PropertyInfo p, MethodInfo m) {
-            write("return ", p.name, "(", Optional.class, ".of(", m.paramNames.get(0), "));");
-        }
-
-        /**
-         * Write overload method body for {@link OptionalInt} property.
-         * 
-         * @param p A property info.
-         * @param m A method info.
-         */
-        private void overloadOptionalInt(PropertyInfo p, MethodInfo m) {
-            write("return ", p.name, "(", OptionalInt.class, ".of(", m.paramNames.get(0), "));");
-        }
-
-        /**
-         * Write overload method body for {@link OptionalLong} property.
-         * 
-         * @param p A property info.
-         * @param m A method info.
-         */
-        private void overloadOptionalLong(PropertyInfo p, MethodInfo m) {
-            write("return ", p.name, "(", OptionalLong.class, ".of(", m.paramNames.get(0), "));");
-        }
-
-        /**
-         * Write overload method body for {@link OptionalDouble} property.
-         * 
-         * @param p A property info.
-         * @param m A method info.
-         */
-        private void overloadOptionalDouble(PropertyInfo p, MethodInfo m) {
-            write("return ", p.name, "(", OptionalDouble.class, ".of(", m.paramNames.get(0), "));");
-        }
-
-        /**
-         * Write overload method body for guava's Optional property.
-         * 
-         * @param p A property info.
-         * @param m A method info.
-         */
-        private void overloadGuavaOptional(PropertyInfo p, MethodInfo m) {
-            write("return ", p.name, "(", GuavaOptional, ".of(", m.paramNames.get(0), "));");
-        }
-
-        /**
-         * Write overload method body for sinobu's Variable property.
-         * 
-         * @param p A property info.
-         * @param m A method info.
-         */
-        private void overloadSinobuVariable(PropertyInfo p, MethodInfo m) {
-            write("return ", p.name, "(", SinobuVariable, ".of(", m.paramNames.get(0), "));");
-        }
-
-        /**
-         * Write overload method body for user defined method.
-         * 
-         * @param p A property info.
-         * @param m A method info.
-         */
-        private void overloadMethod(PropertyInfo p, MethodInfo m) {
-            writeTry(() -> {
-                write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", m.namesWithHead("this"), "));");
-            }, Throwable.class, e -> {
-                write("throw quiet(", e, ");");
+            OptionalSupport.by(p.type).ifPresentOrElse(s -> {
+                write("return ", p.name, "(", s.type, ".", s.someMethod, "(", m.paramNames.get(0), "));");
+            }, () -> {
+                writeTry(() -> {
+                    write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", m.namesWithHead("this"), "));");
+                }, Throwable.class, e -> {
+                    write("throw quiet(", e, ");");
+                });
             });
         }
 
