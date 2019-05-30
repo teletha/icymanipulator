@@ -111,22 +111,13 @@ public abstract class Wildcard extends WildcardModel {
      */
     private final void setExtendType(Class<? extends Collection> value) {
         if (value == null) {
-            value = ((Wildcard) this).åccessToDefaultExtendType();
+            value = super.extendType();
         }
         try {
             extendTypeUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
-    }
-
-    /**
-     * Provide accesser to super default value.
-     *
-     * @return A default value.
-     */
-    private final Class<? extends Collection> åccessToDefaultExtendType() {
-        return super.extendType();
     }
 
     /**
@@ -156,22 +147,13 @@ public abstract class Wildcard extends WildcardModel {
      */
     private final void setSuperType(List<? super Integer> value) {
         if (value == null) {
-            value = ((Wildcard) this).åccessToDefaultSuperType();
+            value = super.superType();
         }
         try {
             superTypeUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
-    }
-
-    /**
-     * Provide accesser to super default value.
-     *
-     * @return A default value.
-     */
-    private final List<? super Integer> åccessToDefaultSuperType() {
-        return super.superType();
     }
 
     /**
@@ -201,22 +183,13 @@ public abstract class Wildcard extends WildcardModel {
      */
     private final void setWildcard(Supplier<?> value) {
         if (value == null) {
-            value = ((Wildcard) this).åccessToDefaultWildcard();
+            value = super.wildcard();
         }
         try {
             wildcardUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
-    }
-
-    /**
-     * Provide accesser to super default value.
-     *
-     * @return A default value.
-     */
-    private final Supplier<?> åccessToDefaultWildcard() {
-        return super.wildcard();
     }
 
     /**
@@ -246,22 +219,13 @@ public abstract class Wildcard extends WildcardModel {
      */
     private final void setCombine(Map<? extends CharSequence, List<Class<? extends Number>>> value) {
         if (value == null) {
-            value = ((Wildcard) this).åccessToDefaultCombine();
+            value = super.combine();
         }
         try {
             combineUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
-    }
-
-    /**
-     * Provide accesser to super default value.
-     *
-     * @return A default value.
-     */
-    private final Map<? extends CharSequence, List<Class<? extends Number>>> åccessToDefaultCombine() {
-        return super.combine();
     }
 
     /** The singleton builder. */

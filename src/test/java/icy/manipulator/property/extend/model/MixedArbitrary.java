@@ -84,22 +84,13 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
      */
     private final void setOptionZip(String value) {
         if (value == null) {
-            value = ((MixedArbitrary) this).åccessToDefaultOptionZip();
+            value = super.optionZip();
         }
         try {
             optionZipUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
-    }
-
-    /**
-     * Provide accesser to super default value.
-     *
-     * @return A default value.
-     */
-    private final String åccessToDefaultOptionZip() {
-        return super.optionZip();
     }
 
     /** The singleton builder. */

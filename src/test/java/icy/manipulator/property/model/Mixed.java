@@ -173,22 +173,13 @@ public abstract class Mixed extends MixedModel {
      */
     private final void setOptionAddress(String value) {
         if (value == null) {
-            value = ((Mixed) this).åccessToDefaultOptionAddress();
+            value = super.optionAddress();
         }
         try {
             optionAddressUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
-    }
-
-    /**
-     * Provide accesser to super default value.
-     *
-     * @return A default value.
-     */
-    private final String åccessToDefaultOptionAddress() {
-        return super.optionAddress();
     }
 
     /**
@@ -218,22 +209,13 @@ public abstract class Mixed extends MixedModel {
      */
     private final void setOptionCommnet(String value) {
         if (value == null) {
-            value = ((Mixed) this).åccessToDefaultOptionCommnet();
+            value = super.optionCommnet();
         }
         try {
             optionCommnetUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
-    }
-
-    /**
-     * Provide accesser to super default value.
-     *
-     * @return A default value.
-     */
-    private final String åccessToDefaultOptionCommnet() {
-        return super.optionCommnet();
     }
 
     /** The singleton builder. */

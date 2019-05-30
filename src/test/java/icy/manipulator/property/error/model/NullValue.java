@@ -166,22 +166,13 @@ public abstract class NullValue extends NullValueModel {
      */
     private final void setDefaultValue(String value) {
         if (value == null) {
-            value = ((NullValue) this).åccessToDefaultDefaultValue();
+            value = super.defaultValue();
         }
         try {
             defaultValueUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
-    }
-
-    /**
-     * Provide accesser to super default value.
-     *
-     * @return A default value.
-     */
-    private final String åccessToDefaultDefaultValue() {
-        return super.defaultValue();
     }
 
     /** The singleton builder. */

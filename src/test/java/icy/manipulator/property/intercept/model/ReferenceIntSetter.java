@@ -150,15 +150,6 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
         }
     }
 
-    /**
-     * Provide accesser to super default value.
-     *
-     * @return A default value.
-     */
-    private final int åccessToDefaultSquare() {
-        return super.square();
-    }
-
     /** The singleton builder. */
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 

@@ -150,15 +150,6 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
         }
     }
 
-    /**
-     * Provide accesser to super default value.
-     *
-     * @return A default value.
-     */
-    private final double åccessToDefaultSquare() {
-        return super.square();
-    }
-
     /** The singleton builder. */
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 

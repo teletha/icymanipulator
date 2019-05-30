@@ -97,15 +97,6 @@ public abstract class Arbitrary extends ArbitraryModel {
     }
 
     /**
-     * Provide accesser to super default value.
-     *
-     * @return A default value.
-     */
-    private final int åccessToDefaultOptionNum() {
-        return super.optionNum();
-    }
-
-    /**
      * Return the optionComment property.
      *
      * @return A value of optionComment property.
@@ -132,22 +123,13 @@ public abstract class Arbitrary extends ArbitraryModel {
      */
     private final void setOptionComment(String value) {
         if (value == null) {
-            value = ((Arbitrary) this).åccessToDefaultOptionComment();
+            value = super.optionComment();
         }
         try {
             optionCommentUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
-    }
-
-    /**
-     * Provide accesser to super default value.
-     *
-     * @return A default value.
-     */
-    private final String åccessToDefaultOptionComment() {
-        return super.optionComment();
     }
 
     /** The singleton builder. */

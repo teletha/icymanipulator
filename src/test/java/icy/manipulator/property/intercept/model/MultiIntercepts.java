@@ -148,22 +148,13 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
      */
     private final void setValue(String value) {
         if (value == null) {
-            value = ((MultiIntercepts) this).åccessToDefaultValue();
+            value = super.value();
         }
         try {
             valueUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
-    }
-
-    /**
-     * Provide accesser to super default value.
-     *
-     * @return A default value.
-     */
-    private final String åccessToDefaultValue() {
-        return super.value();
     }
 
     /** The singleton builder. */

@@ -279,7 +279,7 @@ public class IcyManipulator extends AptyProcessor {
                     if (!property.nullable && !property.type.kind.isPrimitive()) {
                         write("if (value == null)", () -> {
                             if (property.isArbitrary) {
-                                write("value = ((", m.implType, ") this).åccessToDefault", property.capitalizeName() + "();");
+                                write("value = super.", property.name + "();");
                             } else {
                                 write("throw new IllegalArgumentException(`The ", property.name, " property requires non-null value.`);");
                             }
@@ -305,19 +305,6 @@ public class IcyManipulator extends AptyProcessor {
                         write("throw quiet(", e, ");");
                     });
                 });
-
-                // Hidden super default value accessor
-                if (property.isArbitrary) {
-                    write();
-                    write("/**");
-                    write(" * Provide accesser to super default value.");
-                    write(" *");
-                    write(" * @return A default value.");
-                    write(" */");
-                    write("private final ", property.type, " åccessToDefault", property.capitalizeName(), "()", () -> {
-                        write("return super.", property.name, "();");
-                    });
-                }
 
                 // customizer's methods
                 if (property.custom != null) {

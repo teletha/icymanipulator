@@ -110,15 +110,6 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
         }
     }
 
-    /**
-     * Provide accesser to super default value.
-     *
-     * @return A default value.
-     */
-    private final int åccessToDefaultSize() {
-        return super.size();
-    }
-
     /** The singleton builder. */
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
