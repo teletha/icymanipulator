@@ -242,7 +242,7 @@ public class ModelInfo {
     }
 
     /**
-     * List up all required proeprties on this own model.
+     * List up all arbitrary proeprties on this own model.
      * 
      * @return
      */
@@ -262,6 +262,22 @@ public class ModelInfo {
             List<PropertyInfo> properties = new ArrayList();
             properties.addAll(parent.get().requiredProperties());
             properties.addAll(requiredProperties);
+            return properties;
+        }
+    }
+
+    /**
+     * List up all arbitrary proeprties on ancestors and own.
+     * 
+     * @return
+     */
+    public List<PropertyInfo> arbitraryProperties() {
+        if (parent.isEmpty()) {
+            return ownArbitraryProperties();
+        } else {
+            List<PropertyInfo> properties = new ArrayList();
+            properties.addAll(parent.get().arbitraryProperties());
+            properties.addAll(arbitraryProperties);
             return properties;
         }
     }

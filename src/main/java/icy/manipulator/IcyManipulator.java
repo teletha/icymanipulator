@@ -331,6 +331,27 @@ public class IcyManipulator extends AptyProcessor {
                     });
                 });
 
+                // copy method
+                if (property.copiable) {
+                    write();
+                    write("/**");
+                    write(" * Create new {@link ", m.implType, "} with the specified property and copy other properties from this model.");
+                    write(" *");
+                    write(" * @param value A new value to assign.");
+                    write(" * @return A created new model instance.");
+                    write(" */");
+                    write("public ", m.implType, " with", property.capitalizeName(), "(", property.type, " value)", () -> {
+                        StringJoiner code = new StringJoiner(".");
+                        for (PropertyInfo p : m.requiredProperties()) {
+                            code.add(p.name + "(" + (property == p ? "value" : "this." + p.name) + ")");
+                        }
+                        for (PropertyInfo p : m.arbitraryProperties()) {
+                            code.add(p.name + "(" + (property == p ? "value" : "this." + p.name) + ")");
+                        }
+                        write("return ", icy.builder(), ".", code, ";");
+                    });
+                }
+
                 // customizer's methods
                 if (property.custom != null) {
                     for (MethodInfo m : property.custom.methods) {

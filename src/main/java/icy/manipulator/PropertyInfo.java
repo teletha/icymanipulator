@@ -45,6 +45,9 @@ public class PropertyInfo {
     /** The property type. */
     public final boolean mutable;
 
+    /** The property type. */
+    public final boolean copiable;
+
     /** The proeprty type. */
     public final boolean autoExpandable;
 
@@ -71,6 +74,7 @@ public class PropertyInfo {
         if (annotation == null) {
             this.nullable = false;
             this.mutable = false;
+            this.copiable = false;
             this.autoExpandable = true;
             this.getterModifier = "";
             this.setterModifier = "";
@@ -78,6 +82,7 @@ public class PropertyInfo {
         } else {
             this.nullable = annotation.nullable();
             this.mutable = annotation.mutable();
+            this.copiable = annotation.copiable();
             this.autoExpandable = Apty.isEnum(method.getReturnType()) ? annotation.overloadEnum() : true;
 
             Icy icy = method.getEnclosingElement().getAnnotation(Icy.class);

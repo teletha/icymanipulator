@@ -85,6 +85,13 @@ public @interface Icy {
         boolean mutable() default false;
 
         /**
+         * Configure the copy functionaloty of property.
+         * 
+         * @return false
+         */
+        boolean copiable() default false;
+
+        /**
          * Configure whether enum values are overloaded automatically.
          * 
          * @return true
