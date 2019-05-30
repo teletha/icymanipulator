@@ -86,6 +86,7 @@ public class IcyManipulator extends AptyProcessor {
                 defineAccessors();
                 defineToString();
                 defineHashCode();
+                defineEquals();
                 defineCopy();
                 defineBuilder();
                 defineAssignableInterfaces();
@@ -404,6 +405,40 @@ public class IcyManipulator extends AptyProcessor {
                         values.add(p.name);
                     }
                     write("return ", Objects.class, ".hash(", values, ");");
+                });
+            }
+        }
+
+        /**
+         * Define {@link Object#equals(Object)} override.
+         */
+        private void defineEquals() {
+            if (!m.hasEquals) {
+                write();
+                write("/**");
+                write(" * Returns true if the all properties are equal to each other and false otherwise. Consequently, if both properties are null, true is returned and if exactly one property is null, false is returned. Otherwise, equality is determined by using the equals method of the base model. ");
+                write(" *");
+                write(" * @return true if the all properties are equal to each other and false otherwise.");
+                write(" */");
+                write("@", Override.class);
+                write("public boolean equals(Object o)", () -> {
+                    write("if (o instanceof ", m.implType, " == false)", () -> {
+                        write("return false;");
+                    });
+                    write();
+                    write(m.implType, " other = (", m.implType, ") o;");
+                    for (PropertyInfo p : m.properties()) {
+                        if (p.type.kind.isPrimitive()) {
+                            write("if (", p.name, " != other.", p.name, ")", () -> {
+                                write("return false;");
+                            });
+                        } else {
+                            write("if (!", Objects.class, ".equals(", p.name, ", other.", p.name, "))", () -> {
+                                write("return false;");
+                            });
+                        }
+                    }
+                    write("return true;");
                 });
             }
         }

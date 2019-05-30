@@ -122,6 +122,36 @@ public abstract class MixedRequired extends MixedRequiredModel {
         return Objects.hash(name, age, zip, optionAddress, optionCommnet);
     }
 
+    /**
+     * Returns true if the all properties are equal to each other and false otherwise. Consequently, if both properties are null, true is returned and if exactly one property is null, false is returned. Otherwise, equality is determined by using the equals method of the base model. 
+     *
+     * @return true if the all properties are equal to each other and false otherwise.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof MixedRequired == false) {
+            return false;
+        }
+
+        MixedRequired other = (MixedRequired) o;
+        if (!Objects.equals(name, other.name)) {
+            return false;
+        }
+        if (age != other.age) {
+            return false;
+        }
+        if (!Objects.equals(zip, other.zip)) {
+            return false;
+        }
+        if (!Objects.equals(optionAddress, other.optionAddress)) {
+            return false;
+        }
+        if (!Objects.equals(optionCommnet, other.optionCommnet)) {
+            return false;
+        }
+        return true;
+    }
+
     /** The singleton builder. */
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 

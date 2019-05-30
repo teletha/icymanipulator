@@ -202,6 +202,30 @@ public abstract class NullValue extends NullValueModel {
         return Objects.hash(rejectNull, acceptNull, defaultValue);
     }
 
+    /**
+     * Returns true if the all properties are equal to each other and false otherwise. Consequently, if both properties are null, true is returned and if exactly one property is null, false is returned. Otherwise, equality is determined by using the equals method of the base model. 
+     *
+     * @return true if the all properties are equal to each other and false otherwise.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof NullValue == false) {
+            return false;
+        }
+
+        NullValue other = (NullValue) o;
+        if (!Objects.equals(rejectNull, other.rejectNull)) {
+            return false;
+        }
+        if (!Objects.equals(acceptNull, other.acceptNull)) {
+            return false;
+        }
+        if (!Objects.equals(defaultValue, other.defaultValue)) {
+            return false;
+        }
+        return true;
+    }
+
     /** The singleton builder. */
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 

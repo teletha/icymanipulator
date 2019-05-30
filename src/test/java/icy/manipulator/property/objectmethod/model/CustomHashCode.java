@@ -8,6 +8,7 @@ import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+import java.util.Objects;
 import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
@@ -145,6 +146,27 @@ public abstract class CustomHashCode extends CustomHashCodeModel {
         builder.add("name=" + name);
         builder.add("age=" + age);
         return builder.toString();
+    }
+
+    /**
+     * Returns true if the all properties are equal to each other and false otherwise. Consequently, if both properties are null, true is returned and if exactly one property is null, false is returned. Otherwise, equality is determined by using the equals method of the base model. 
+     *
+     * @return true if the all properties are equal to each other and false otherwise.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof CustomHashCode == false) {
+            return false;
+        }
+
+        CustomHashCode other = (CustomHashCode) o;
+        if (!Objects.equals(name, other.name)) {
+            return false;
+        }
+        if (age != other.age) {
+            return false;
+        }
+        return true;
     }
 
     /** The singleton builder. */

@@ -143,6 +143,30 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
         return Objects.hash(size, date, time);
     }
 
+    /**
+     * Returns true if the all properties are equal to each other and false otherwise. Consequently, if both properties are null, true is returned and if exactly one property is null, false is returned. Otherwise, equality is determined by using the equals method of the base model. 
+     *
+     * @return true if the all properties are equal to each other and false otherwise.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof RequiredRequired == false) {
+            return false;
+        }
+
+        RequiredRequired other = (RequiredRequired) o;
+        if (!Objects.equals(size, other.size)) {
+            return false;
+        }
+        if (!Objects.equals(date, other.date)) {
+            return false;
+        }
+        if (!Objects.equals(time, other.time)) {
+            return false;
+        }
+        return true;
+    }
+
     /** The singleton builder. */
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 

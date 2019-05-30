@@ -195,6 +195,30 @@ public abstract class Group extends GroupModel {
         return Objects.hash(x, y, z);
     }
 
+    /**
+     * Returns true if the all properties are equal to each other and false otherwise. Consequently, if both properties are null, true is returned and if exactly one property is null, false is returned. Otherwise, equality is determined by using the equals method of the base model. 
+     *
+     * @return true if the all properties are equal to each other and false otherwise.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Group == false) {
+            return false;
+        }
+
+        Group other = (Group) o;
+        if (x != other.x) {
+            return false;
+        }
+        if (y != other.y) {
+            return false;
+        }
+        if (z != other.z) {
+            return false;
+        }
+        return true;
+    }
+
     /** The singleton builder. */
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 

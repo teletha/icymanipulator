@@ -117,6 +117,24 @@ public abstract class InterfaceArbitrary implements InterfaceArbitraryModel {
         return Objects.hash(optional);
     }
 
+    /**
+     * Returns true if the all properties are equal to each other and false otherwise. Consequently, if both properties are null, true is returned and if exactly one property is null, false is returned. Otherwise, equality is determined by using the equals method of the base model. 
+     *
+     * @return true if the all properties are equal to each other and false otherwise.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof InterfaceArbitrary == false) {
+            return false;
+        }
+
+        InterfaceArbitrary other = (InterfaceArbitrary) o;
+        if (!Objects.equals(optional, other.optional)) {
+            return false;
+        }
+        return true;
+    }
+
     /** The singleton builder. */
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 

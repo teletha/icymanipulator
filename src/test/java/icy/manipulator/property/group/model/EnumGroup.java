@@ -158,6 +158,27 @@ public abstract class EnumGroup extends EnumGroupModel {
         return Objects.hash(color, size);
     }
 
+    /**
+     * Returns true if the all properties are equal to each other and false otherwise. Consequently, if both properties are null, true is returned and if exactly one property is null, false is returned. Otherwise, equality is determined by using the equals method of the base model. 
+     *
+     * @return true if the all properties are equal to each other and false otherwise.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof EnumGroup == false) {
+            return false;
+        }
+
+        EnumGroup other = (EnumGroup) o;
+        if (!Objects.equals(color, other.color)) {
+            return false;
+        }
+        if (size != other.size) {
+            return false;
+        }
+        return true;
+    }
+
     /** The singleton builder. */
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 

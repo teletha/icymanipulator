@@ -63,6 +63,13 @@ public class Apty {
         return m.getParameters().size() == 0 && m.getReturnType().toString().equals("int") && m.getSimpleName().contentEquals("hashCode");
     };
 
+    /** The {@link Object#equals(Object)} method pattern. */
+    public static final Predicate<ExecutableElement> Equals = m -> {
+        return m.getParameters().size() == 1 && m.getParameters().get(0).asType().toString().equals("java.lang.Object") && m.getReturnType()
+                .toString()
+                .equals("boolean") && m.getSimpleName().contentEquals("equals");
+    };
+
     /** The getter pattern. */
     private static final Predicate<ExecutableElement> getter = m -> {
         return m.getParameters().size() == 0 && m.getReturnType().getKind() != TypeKind.VOID;

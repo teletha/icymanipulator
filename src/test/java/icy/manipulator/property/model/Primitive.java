@@ -400,6 +400,45 @@ public abstract class Primitive extends PrimitiveModel {
         return Objects.hash(intX, longX, floatX, doubleX, byteX, shortX, charX, booleanX);
     }
 
+    /**
+     * Returns true if the all properties are equal to each other and false otherwise. Consequently, if both properties are null, true is returned and if exactly one property is null, false is returned. Otherwise, equality is determined by using the equals method of the base model. 
+     *
+     * @return true if the all properties are equal to each other and false otherwise.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Primitive == false) {
+            return false;
+        }
+
+        Primitive other = (Primitive) o;
+        if (intX != other.intX) {
+            return false;
+        }
+        if (longX != other.longX) {
+            return false;
+        }
+        if (floatX != other.floatX) {
+            return false;
+        }
+        if (doubleX != other.doubleX) {
+            return false;
+        }
+        if (byteX != other.byteX) {
+            return false;
+        }
+        if (shortX != other.shortX) {
+            return false;
+        }
+        if (charX != other.charX) {
+            return false;
+        }
+        if (booleanX != other.booleanX) {
+            return false;
+        }
+        return true;
+    }
+
     /** The singleton builder. */
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 

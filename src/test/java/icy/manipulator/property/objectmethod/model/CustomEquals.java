@@ -1,7 +1,7 @@
-package icy.manipulator.property.model;
+package icy.manipulator.property.objectmethod.model;
 
-import icy.manipulator.property.model.Multiple;
-import icy.manipulator.property.model.MultipleModel;
+import icy.manipulator.property.objectmethod.model.CustomEquals;
+import icy.manipulator.property.objectmethod.model.CustomEqualsModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.Throwable;
@@ -13,10 +13,10 @@ import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
- * Generated model for {@link MultipleModel}.
+ * Generated model for {@link CustomEqualsModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class Multiple extends MultipleModel {
+public abstract class CustomEquals extends CustomEqualsModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -38,7 +38,7 @@ public abstract class Multiple extends MultipleModel {
      */
     private static final MethodHandle updater(String name)  {
         try {
-            Field field = Multiple.class.getDeclaredField(name);
+            Field field = CustomEquals.class.getDeclaredField(name);
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
@@ -50,16 +50,10 @@ public abstract class Multiple extends MultipleModel {
     private static final MethodHandle nameUpdater = updater("name");
 
     /** The final property updater. */
-    private static final MethodHandle standUpdater = updater("stand");
-
-    /** The final property updater. */
     private static final MethodHandle ageUpdater = updater("age");
 
     /** The exposed property. */
     public final String name;
-
-    /** The exposed property. */
-    public final String stand;
 
     /** The exposed property. */
     public final int age;
@@ -67,9 +61,8 @@ public abstract class Multiple extends MultipleModel {
     /**
      * HIDE CONSTRUCTOR
      */
-    protected Multiple() {
+    protected CustomEquals() {
         this.name = null;
-        this.stand = null;
         this.age = 0;
     }
 
@@ -104,42 +97,6 @@ public abstract class Multiple extends MultipleModel {
         }
         try {
             nameUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /**
-     * Return the stand property.
-     *
-     * @return A value of stand property.
-     */
-    @Override
-    public final String stand() {
-        return this.stand;
-    }
-
-    /**
-     * Provide classic getter API.
-     *
-     * @return A value of stand property.
-     */
-    @SuppressWarnings("unused")
-    private final String getStand() {
-        return this.stand;
-    }
-
-    /**
-     * Provide classic setter API.
-     *
-     * @paran value A new value of stand property to assign.
-     */
-    private final void setStand(String value) {
-        if (value == null) {
-            throw new IllegalArgumentException("The stand property requires non-null value.");
-        }
-        try {
-            standUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -185,9 +142,8 @@ public abstract class Multiple extends MultipleModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "Multiple [", "]");
+        StringJoiner builder = new StringJoiner(", ", "CustomEquals [", "]");
         builder.add("name=" + name);
-        builder.add("stand=" + stand);
         builder.add("age=" + age);
         return builder.toString();
     }
@@ -199,47 +155,23 @@ public abstract class Multiple extends MultipleModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(name, stand, age);
-    }
-
-    /**
-     * Returns true if the all properties are equal to each other and false otherwise. Consequently, if both properties are null, true is returned and if exactly one property is null, false is returned. Otherwise, equality is determined by using the equals method of the base model. 
-     *
-     * @return true if the all properties are equal to each other and false otherwise.
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Multiple == false) {
-            return false;
-        }
-
-        Multiple other = (Multiple) o;
-        if (!Objects.equals(name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(stand, other.stand)) {
-            return false;
-        }
-        if (age != other.age) {
-            return false;
-        }
-        return true;
+        return Objects.hash(name, age);
     }
 
     /** The singleton builder. */
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Namespace for {@link Multiple}  builder methods.
+     * Namespace for {@link CustomEquals}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Multiple & ÅssignableÅrbitrary<Self>> {
+    public static final class Ìnstantiator<Self extends CustomEquals & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new {@link Multiple} with the specified name property.
+         * Create new {@link CustomEquals} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableStand<ÅssignableAge<Self>> name(String name) {
+        public final ÅssignableAge<Self> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;
@@ -258,24 +190,7 @@ public abstract class Multiple extends MultipleModel {
          * @return The next assignable model.
          */
         default Next name(String value) {
-            ((Multiple) this).setName(value);
-            return (Next) this;
-        }
-    }
-
-    /**
-     * Property assignment API.
-     */
-    public static interface ÅssignableStand<Next> {
-
-        /**
-         * Assign stand property.
-         * 
-         * @param value A new value to assign.
-         * @return The next assignable model.
-         */
-        default Next stand(String value) {
-            ((Multiple) this).setStand(value);
+            ((CustomEquals) this).setName(value);
             return (Next) this;
         }
     }
@@ -292,7 +207,7 @@ public abstract class Multiple extends MultipleModel {
          * @return The next assignable model.
          */
         default Next age(int value) {
-            ((Multiple) this).setAge(value);
+            ((CustomEquals) this).setAge(value);
             return (Next) this;
         }
     }
@@ -300,19 +215,19 @@ public abstract class Multiple extends MultipleModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends Multiple> {
+    public static interface ÅssignableÅrbitrary<Next extends CustomEquals> {
     }
 
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableName, ÅssignableStand, ÅssignableAge {
+    protected static interface ÅssignableAll extends ÅssignableName, ÅssignableAge {
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Multiple implements ÅssignableAll, ÅssignableÅrbitrary {
+    private static final class Åssignable extends CustomEquals implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**
@@ -320,7 +235,6 @@ public abstract class Multiple extends MultipleModel {
      */
     static final class My {
         static final String Name = "name";
-        static final String Stand = "stand";
         static final String Age = "age";
     }
 }

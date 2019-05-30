@@ -62,6 +62,9 @@ public class ModelInfo {
     /** The model method. */
     public final boolean hasHashCode;
 
+    /** The model method. */
+    public final boolean hasEquals;
+
     /** The required properties. */
     private final List<PropertyInfo> requiredProperties = new LinkedList();
 
@@ -97,6 +100,7 @@ public class ModelInfo {
             this.implType = Type.of(e);
             this.hasToString = Apty.methods(model).stream().anyMatch(Apty.ToString);
             this.hasHashCode = Apty.methods(model).stream().anyMatch(Apty.HashCode);
+            this.hasEquals = Apty.methods(model).stream().anyMatch(Apty.Equals);
         } else {
             // by defined model
             this.name = e.getSimpleName().toString();
@@ -104,6 +108,7 @@ public class ModelInfo {
             this.implType = Type.of(e.getQualifiedName().toString().replaceAll(icy.modelNamePattern() + "$", "$1"));
             this.hasToString = Apty.methods(e).stream().anyMatch(Apty.ToString);
             this.hasHashCode = Apty.methods(e).stream().anyMatch(Apty.HashCode);
+            this.hasEquals = Apty.methods(e).stream().anyMatch(Apty.Equals);
 
             // validate in 3 times, don't validate all once
             Apty.methods(e).forEach(this::validateProperty);
