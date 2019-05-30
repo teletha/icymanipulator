@@ -9,6 +9,8 @@
  */
 package icy.manipulator;
 
+import java.util.Optional;
+
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
@@ -61,7 +63,7 @@ public class PropertyInfo {
         this.element = method;
         this.name = method.getSimpleName().toString();
         this.type = Type.of(method.getReturnType());
-        this.arbitrary = !method.getModifiers().contains(Modifier.ABSTRACT);
+        this.arbitrary = !method.getModifiers().contains(Modifier.ABSTRACT) || type.is(Optional.class);
 
         Property annotation = method.getAnnotation(Icy.Property.class);
 

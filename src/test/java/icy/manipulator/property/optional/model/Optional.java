@@ -56,7 +56,7 @@ public abstract class Optional implements OptionalModel {
      * HIDE CONSTRUCTOR
      */
     protected Optional() {
-        this.name = null;
+        this.name = java.util.Optional.empty();
     }
 
     /**
@@ -86,7 +86,7 @@ public abstract class Optional implements OptionalModel {
      */
     private final void setName(java.util.Optional<String> value) {
         if (value == null) {
-            throw new IllegalArgumentException("The name property requires non-null value.");
+            value = java.util.Optional.empty();
         }
         try {
             nameUpdater.invoke(this, value);
@@ -142,32 +142,39 @@ public abstract class Optional implements OptionalModel {
     public static final class Ìnstantiator<Self extends Optional & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new {@link Optional} with the specified name property.
-         * 
-         * @return The next assignable model.
+         * Create initialized {@link Optional}.
+         *
+         * @return A initialized model.
          */
-        public final Self name(java.util.Optional<String> name) {
-            Åssignable o = new Åssignable();
-            o.name(name);
-            return (Self)o;
+        public final Self create() {
+            return (Self) new Åssignable();
         }
 
         /**
-         * Create new {@link Optional} with the specified name property.
-         * 
-         * @return The next assignable model.
+         * Create initialized {@link Optional} with name property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public final Self name(java.util.Optional<String> value) {
+            return create().name(value);
+        }
+
+        /**
+         * Create initialized {@link Optional} with name property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
          */
         public final Self name(String value) {
-            Åssignable o = new Åssignable();
-            o.name(value);
-            return (Self)o;
+            return name(java.util.Optional.of(value));
         }
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableName<Next> {
+    public static interface ÅssignableÅrbitrary<Next extends Optional> {
 
         /**
          * Assign name property.
@@ -191,15 +198,9 @@ public abstract class Optional implements OptionalModel {
     }
 
     /**
-     * Property assignment API.
-     */
-    public static interface ÅssignableÅrbitrary<Next extends Optional> {
-    }
-
-    /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableName {
+    protected static interface ÅssignableAll {
     }
 
     /**

@@ -31,28 +31,28 @@ class ArbitraryTest {
 
     @Test
     void configOneOption() {
-        Arbitrary o = Arbitrary.with.create().optionNum(5);
+        Arbitrary o = Arbitrary.with.optionNum(5);
         assert o.optionComment.isEmpty();
         assert o.optionNum == 5;
     }
 
     @Test
     void configOtherOption() {
-        Arbitrary o = Arbitrary.with.create().optionComment("ok");
+        Arbitrary o = Arbitrary.with.optionComment("ok");
         assert o.optionComment.equals("ok");
         assert o.optionNum == 10;
     }
 
     @Test
     void configOneOptionThenOtherOption() {
-        Arbitrary o = Arbitrary.with.create().optionNum(5).optionComment("ok");
+        Arbitrary o = Arbitrary.with.optionNum(5).optionComment("ok");
         assert o.optionComment.equals("ok");
         assert o.optionNum == 5;
     }
 
     @Test
     void configOtherOptionThenOneOption() {
-        Arbitrary o = Arbitrary.with.create().optionComment("ok").optionNum(5);
+        Arbitrary o = Arbitrary.with.optionComment("ok").optionNum(5);
         assert o.optionComment.equals("ok");
         assert o.optionNum == 5;
     }

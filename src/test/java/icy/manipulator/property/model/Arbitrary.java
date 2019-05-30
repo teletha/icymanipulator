@@ -185,9 +185,31 @@ public abstract class Arbitrary extends ArbitraryModel {
 
         /**
          * Create initialized {@link Arbitrary}.
+         *
+         * @return A initialized model.
          */
         public final Self create() {
             return (Self) new Åssignable();
+        }
+
+        /**
+         * Create initialized {@link Arbitrary} with optionNum property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public final Self optionNum(int value) {
+            return create().optionNum(value);
+        }
+
+        /**
+         * Create initialized {@link Arbitrary} with optionComment property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public final Self optionComment(String value) {
+            return create().optionComment(value);
         }
     }
 

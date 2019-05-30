@@ -250,7 +250,9 @@ public class IcyManipulator extends AptyProcessor {
          * @return
          */
         private String defaultValueCallFor(PropertyInfo property) {
-            if (property.element.isDefault()) {
+            if (property.type.is(Optional.class)) {
+                return use(Optional.class) + ".empty()";
+            } else if (property.element.isDefault()) {
                 return use(m.type) + ".super." + property.name + "()";
             } else {
                 return "super." + property.name + "()";
@@ -546,10 +548,43 @@ public class IcyManipulator extends AptyProcessor {
                     write();
                     write("/**");
                     write(" * Create initialized {@link ", m.implType, "}.");
+                    write(" *");
+                    write(" * @return A initialized model.");
                     write(" */");
                     write("public final Self create()", () -> {
                         write("return (Self) new ", Assignable, "();");
                     });
+
+                    for (PropertyInfo p : m.arbitraryProperties()) {
+                        write();
+                        write("/**");
+                        write(" * Create initialized {@link ", m.implType, "} with ", p.name, " property.");
+                        write(" *");
+                        write(" * @param value A value to assign.");
+                        write(" * @return A initialized model.");
+                        write(" */");
+                        write("public final Self ", p.name, "(", p.type, " value)", () -> {
+                            write("return create().", p.name, "(value);");
+                        });
+
+                        // =========================================
+                        // Overload
+                        // =========================================
+                        for (MethodInfo m : m.findOverloadsFor(p)) {
+                            write();
+                            javadoc(m.doc, () -> {
+                                write("/**");
+                                write(" * Create initialized {@link ", this.m.implType, "} with ", p.name, " property.");
+                                write(" *");
+                                write(" * @param value A value to assign.");
+                                write(" * @return A initialized model.");
+                                write(" */");
+                            });
+                            write("public final Self ", m, () -> {
+                                overload(p, m);
+                            });
+                        }
+                    }
                 });
             });
         }
@@ -630,17 +665,7 @@ public class IcyManipulator extends AptyProcessor {
                     write(" */");
                 });
                 write("default Next ", m, () -> {
-                    if (m.returnType.is(Optional.class)) {
-                        overloadOptional(p, m);
-                    } else if (m.returnType.is(OptionalInt.class)) {
-                        overloadOptionalInt(p, m);
-                    } else if (m.returnType.is(OptionalLong.class)) {
-                        overloadOptionalLong(p, m);
-                    } else if (m.returnType.is(OptionalDouble.class)) {
-                        overloadOptionalDouble(p, m);
-                    } else {
-                        overloadMethod(p, m);
-                    }
+                    overload(p, m);
                 });
             }
 
@@ -659,6 +684,26 @@ public class IcyManipulator extends AptyProcessor {
                         write("return ", p.name, "(", p.type, ".", name, ");");
                     });
                 }
+            }
+        }
+
+        /**
+         * Write overload methods.
+         * 
+         * @param p A property info.
+         * @param m A method info.
+         */
+        private void overload(PropertyInfo p, MethodInfo m) {
+            if (m.returnType.is(Optional.class)) {
+                overloadOptional(p, m);
+            } else if (m.returnType.is(OptionalInt.class)) {
+                overloadOptionalInt(p, m);
+            } else if (m.returnType.is(OptionalLong.class)) {
+                overloadOptionalLong(p, m);
+            } else if (m.returnType.is(OptionalDouble.class)) {
+                overloadOptionalDouble(p, m);
+            } else {
+                overloadMethod(p, m);
             }
         }
 

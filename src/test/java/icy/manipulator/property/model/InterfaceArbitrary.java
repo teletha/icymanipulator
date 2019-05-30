@@ -143,9 +143,21 @@ public abstract class InterfaceArbitrary implements InterfaceArbitraryModel {
 
         /**
          * Create initialized {@link InterfaceArbitrary}.
+         *
+         * @return A initialized model.
          */
         public final Self create() {
             return (Self) new Åssignable();
+        }
+
+        /**
+         * Create initialized {@link InterfaceArbitrary} with optional property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public final Self optional(String value) {
+            return create().optional(value);
         }
     }
 

@@ -158,7 +158,7 @@ public class ModelInfo {
         }
 
         // ==============================
-        // Auto Overload
+        // Optional Like
         // ==============================
         if (p.type.is(Optional.class)) {
             overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(p.type.variables.get(0)), List.of("value"), ""));

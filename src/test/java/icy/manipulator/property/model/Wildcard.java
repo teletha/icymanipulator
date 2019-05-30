@@ -285,9 +285,51 @@ public abstract class Wildcard extends WildcardModel {
 
         /**
          * Create initialized {@link Wildcard}.
+         *
+         * @return A initialized model.
          */
         public final Self create() {
             return (Self) new Åssignable();
+        }
+
+        /**
+         * Create initialized {@link Wildcard} with extendType property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public final Self extendType(Class<? extends Collection> value) {
+            return create().extendType(value);
+        }
+
+        /**
+         * Create initialized {@link Wildcard} with superType property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public final Self superType(List<? super Integer> value) {
+            return create().superType(value);
+        }
+
+        /**
+         * Create initialized {@link Wildcard} with wildcard property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public final Self wildcard(Supplier<?> value) {
+            return create().wildcard(value);
+        }
+
+        /**
+         * Create initialized {@link Wildcard} with combine property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public final Self combine(Map<? extends CharSequence, List<Class<? extends Number>>> value) {
+            return create().combine(value);
         }
     }
 

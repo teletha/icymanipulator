@@ -161,9 +161,35 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
 
         /**
          * Create initialized {@link ArbitraryOverload}.
+         *
+         * @return A initialized model.
          */
         public final Self create() {
             return (Self) new Åssignable();
+        }
+
+        /**
+         * Create initialized {@link ArbitraryOverload} with size property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public final Self size(int value) {
+            return create().size(value);
+        }
+
+        /**
+         * Create initialized {@link ArbitraryOverload} with size property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public final Self size(String number) {
+            try {
+                return size((int) size$927011984.invoke(this, number));
+            } catch (Throwable e) {
+                throw quiet(e);
+            }
         }
     }
 
