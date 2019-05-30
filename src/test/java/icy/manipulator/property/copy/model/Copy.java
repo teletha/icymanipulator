@@ -139,6 +139,9 @@ public abstract class Copy extends CopyModel {
      * @return A created new model instance.
      */
     public Copy withAge(int value) {
+        if (this.age == value) {
+            return this;
+        }
         return with.name(this.name).age(value);
     }
 

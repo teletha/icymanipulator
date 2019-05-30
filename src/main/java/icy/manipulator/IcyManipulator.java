@@ -341,11 +341,13 @@ public class IcyManipulator extends AptyProcessor {
                     write(" * @return A created new model instance.");
                     write(" */");
                     write("public ", m.implType, " with", property.capitalizeName(), "(", property.type, " value)", () -> {
+                        // check equality
+                        write("if (this.", property.name, " == value)", () -> {
+                            write("return this;");
+                        });
+
                         StringJoiner code = new StringJoiner(".");
-                        for (PropertyInfo p : m.requiredProperties()) {
-                            code.add(p.name + "(" + (property == p ? "value" : "this." + p.name) + ")");
-                        }
-                        for (PropertyInfo p : m.arbitraryProperties()) {
+                        for (PropertyInfo p : Lists.merge(m.requiredProperties(), m.arbitraryProperties())) {
                             code.add(p.name + "(" + (property == p ? "value" : "this." + p.name) + ")");
                         }
                         write("return ", icy.builder(), ".", code, ";");

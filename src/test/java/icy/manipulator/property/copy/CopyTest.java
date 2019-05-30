@@ -36,4 +36,14 @@ class CopyTest {
         assert original.name.equals("name");
         assert original.age == 15;
     }
+
+    @Test
+    void same() {
+        Copy original = Copy.with.name("name").age(15);
+        assert original.name.equals("name");
+        assert original.age == 15;
+
+        Copy copied = original.withAge(15);
+        assert original == copied;
+    }
 }
