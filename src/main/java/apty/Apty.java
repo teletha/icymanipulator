@@ -274,12 +274,10 @@ public class Apty {
     /**
      * Check whether the specified type is interface or not.
      * 
-     * @param type A target type to check.
+     * @param e A target type to check.
      * @return A result.
      */
-    public static boolean isInterface(TypeMirror type) {
-        Element e = types.asElement(type);
-
+    public static boolean isInterface(TypeElement e) {
         if (e == null) {
             return false;
         }
@@ -292,7 +290,27 @@ public class Apty {
      * @param type A target type to check.
      * @return A result.
      */
-    public static boolean isNotInterface(TypeMirror type) {
+    public static boolean isInterface(DeclaredType type) {
+        return isInterface(cast(type));
+    }
+
+    /**
+     * Check whether the specified type is interface or not.
+     * 
+     * @param e A target type to check.
+     * @return A result.
+     */
+    public static boolean isNotInterface(TypeElement e) {
+        return !isInterface(e);
+    }
+
+    /**
+     * Check whether the specified type is interface or not.
+     * 
+     * @param type A target type to check.
+     * @return A result.
+     */
+    public static boolean isNotInterface(DeclaredType type) {
         return !isInterface(type);
     }
 

@@ -68,12 +68,13 @@ public class IcyManipulator extends AptyProcessor {
             this.icy = model.e.getAnnotation(Icy.class);
 
             String visibility = icy.packagePrivate() ? "" : "public ";
+            String inheritance = Apty.isInterface(model.e) ? " implements " : " extends ";
 
             write("/**");
             write(" * Generated model for {@link ", model.type, "}.");
             write(" */");
             write("@", Generated.class, "(`Icy Manipulator`)");
-            write(visibility, "abstract class ", model.implType, " extends ", model.type, () -> {
+            write(visibility, "abstract class ", model.implType, inheritance, model.type, () -> {
                 defineErrorHandler();
                 defineMethodInvokerBuilder();
                 defineMethodInvoker();
