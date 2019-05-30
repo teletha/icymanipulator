@@ -17,6 +17,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
+import java.util.OptionalLong;
 import java.util.StringJoiner;
 import java.util.function.UnaryOperator;
 
@@ -125,7 +128,7 @@ public class IcyManipulator extends AptyProcessor {
          * Define query method for property updater.
          */
         private void defineMethodInvokerBuilder() {
-            if (m.ownProperties().isEmpty() || (!m.hasOwnOverload() && !m.hasIntercept())) {
+            if (m.ownProperties().isEmpty() || (!m.hasOwnUserDefinedOverload() && !m.hasIntercept())) {
                 return;
             }
 
@@ -153,7 +156,7 @@ public class IcyManipulator extends AptyProcessor {
          */
         private void defineMethodInvoker() {
             for (PropertyInfo property : m.ownProperties()) {
-                for (MethodInfo method : Lists.merge(m.findOverloadsFor(property), m.findInterceptsFor(property))) {
+                for (MethodInfo method : Lists.merge(m.findUserDefinedOverloadsFor(property), m.findInterceptsFor(property))) {
                     StringJoiner types = new StringJoiner(", ", ", ", "").setEmptyValue("");
                     method.paramTypes.forEach(t -> types.add(classLiteral(t)));
 
@@ -629,6 +632,12 @@ public class IcyManipulator extends AptyProcessor {
                 write("default Next ", m, () -> {
                     if (m.returnType.is(Optional.class)) {
                         overloadOptional(p, m);
+                    } else if (m.returnType.is(OptionalInt.class)) {
+                        overloadOptionalInt(p, m);
+                    } else if (m.returnType.is(OptionalLong.class)) {
+                        overloadOptionalLong(p, m);
+                    } else if (m.returnType.is(OptionalDouble.class)) {
+                        overloadOptionalDouble(p, m);
                     } else {
                         overloadMethod(p, m);
                     }
@@ -661,6 +670,36 @@ public class IcyManipulator extends AptyProcessor {
          */
         private void overloadOptional(PropertyInfo p, MethodInfo m) {
             write("return ", p.name, "(", Optional.class, ".of(", m.paramNames.get(0), "));");
+        }
+
+        /**
+         * Write overload method body for {@link OptionalInt} property.
+         * 
+         * @param p A property info.
+         * @param m A method info.
+         */
+        private void overloadOptionalInt(PropertyInfo p, MethodInfo m) {
+            write("return ", p.name, "(", OptionalInt.class, ".of(", m.paramNames.get(0), "));");
+        }
+
+        /**
+         * Write overload method body for {@link OptionalLong} property.
+         * 
+         * @param p A property info.
+         * @param m A method info.
+         */
+        private void overloadOptionalLong(PropertyInfo p, MethodInfo m) {
+            write("return ", p.name, "(", OptionalLong.class, ".of(", m.paramNames.get(0), "));");
+        }
+
+        /**
+         * Write overload method body for {@link OptionalDouble} property.
+         * 
+         * @param p A property info.
+         * @param m A method info.
+         */
+        private void overloadOptionalDouble(PropertyInfo p, MethodInfo m) {
+            write("return ", p.name, "(", OptionalDouble.class, ".of(", m.paramNames.get(0), "));");
         }
 
         /**

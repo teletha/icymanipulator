@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.OptionalInt;
+import java.util.OptionalLong;
 import java.util.function.Consumer;
 import java.util.function.DoubleConsumer;
 import java.util.function.IntConsumer;
@@ -159,6 +162,12 @@ public class ModelInfo {
         // ==============================
         if (p.type.is(Optional.class)) {
             overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(p.type.variables.get(0)), List.of("value"), ""));
+        } else if (p.type.is(OptionalInt.class)) {
+            overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(Type.of(int.class)), List.of("value"), ""));
+        } else if (p.type.is(OptionalLong.class)) {
+            overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(Type.of(long.class)), List.of("value"), ""));
+        } else if (p.type.is(OptionalDouble.class)) {
+            overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(Type.of(double.class)), List.of("value"), ""));
         }
     }
 
@@ -417,6 +426,15 @@ public class ModelInfo {
     }
 
     /**
+     * Check whether this model has any overload property method on self.
+     * 
+     * @return
+     */
+    public boolean hasOwnUserDefinedOverload() {
+        return overloadForProperty.holder.values().stream().flatMap(v -> v.stream()).anyMatch(m -> m.userDefiend);
+    }
+
+    /**
      * Check whether this model has any intercept property method on self.
      * 
      * @return
@@ -488,6 +506,24 @@ public class ModelInfo {
     public List<MethodInfo> findOverloadsFor(PropertyInfo property) {
         if (overloadForProperty.holder.containsKey(property)) {
             return overloadForProperty.find(property);
+        } else {
+            if (parent.isEmpty()) {
+                return Collections.EMPTY_LIST;
+            } else {
+                return parent.get().findOverloadsFor(property);
+            }
+        }
+    }
+
+    /**
+     * List up all overload methods for the specified property.
+     * 
+     * @param property A target property.
+     * @return A list of overload methods.
+     */
+    public List<MethodInfo> findUserDefinedOverloadsFor(PropertyInfo property) {
+        if (overloadForProperty.holder.containsKey(property)) {
+            return overloadForProperty.find(property).stream().filter(m -> m.userDefiend).collect(Collectors.toList());
         } else {
             if (parent.isEmpty()) {
                 return Collections.EMPTY_LIST;

@@ -9,7 +9,6 @@ import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Objects;
 import javax.annotation.processing.Generated;
 
@@ -30,26 +29,6 @@ public abstract class Optional implements OptionalModel {
     private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
         throw (T) throwable;
     }
-
-    /**
-     * Create special method invoker.
-     *
-     * @param name A target method name.
-     * @param parameterTypes A list of method parameter types.
-     * @return A special method invoker.
-     */
-    private static final MethodHandle invoker(String name, Class... parameterTypes)  {
-        try {
-            Method method = OptionalModel.class.getDeclaredMethod(name, parameterTypes);
-            method.setAccessible(true);
-            return MethodHandles.lookup().unreflect(method);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The overload or intercept method invoker. */
-    private static final MethodHandle name$927011984= invoker("name", String.class);
 
     /**
      * Create special property updater.

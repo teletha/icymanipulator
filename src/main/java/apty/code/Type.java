@@ -314,7 +314,11 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type of(Class type) {
-        return new Type(type.getName(), List.of(), TypeKind.DECLARED);
+        if (type.isPrimitive()) {
+            return new Type(type.getName(), List.of(), TypeKind.valueOf(type.getName().toUpperCase()));
+        } else {
+            return new Type(type.getName(), List.of(), TypeKind.DECLARED);
+        }
     }
 
     /**

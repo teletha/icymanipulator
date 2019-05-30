@@ -41,6 +41,9 @@ public class MethodInfo implements Codable {
     /** The documentation. */
     public final String doc;
 
+    /** The user defined overload method. */
+    public final boolean userDefiend;
+
     /**
      * @param element
      */
@@ -53,6 +56,7 @@ public class MethodInfo implements Codable {
                 .collect(Collectors.toUnmodifiableList());
         this.paramNames = element.getParameters().stream().map(e -> e.getSimpleName().toString()).collect(Collectors.toUnmodifiableList());
         this.doc = Apty.doc(element);
+        this.userDefiend = true;
     }
 
     /**
@@ -137,6 +141,7 @@ public class MethodInfo implements Codable {
         this.paramTypes = types;
         this.paramNames = names;
         this.doc = doc;
+        this.userDefiend = false;
     }
 
     /**
