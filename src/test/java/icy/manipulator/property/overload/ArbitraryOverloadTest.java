@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import apty.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
+import icy.manipulator.property.overload.model.ArbitraryOverload;
 import icy.manipulator.property.overload.model.ArbitraryOverloadModel;
 
 class ArbitraryOverloadTest {
@@ -23,7 +24,7 @@ class ArbitraryOverloadTest {
 
     @Test
     void overload() {
-        // ArbitraryOverload o = ArbitraryOverload.with.create().size("30");
-        // assert o.size == 30;
+        ArbitraryOverload o = ArbitraryOverload.with.create().size("30");
+        assert o.size == 30;
     }
 }

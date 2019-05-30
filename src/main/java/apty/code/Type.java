@@ -199,7 +199,7 @@ public class Type implements Codable {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(packagee, base, variables, kind);
+        return Objects.hash(packagee, base, variables, kind.name());
     }
 
     /**
