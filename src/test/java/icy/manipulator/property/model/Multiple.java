@@ -4,12 +4,12 @@ import icy.manipulator.property.model.Multiple;
 import icy.manipulator.property.model.MultipleModel;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -185,10 +185,10 @@ public abstract class Multiple extends MultipleModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "Multiple [", "]");
-        builder.add("name=" + name);
-        builder.add("stand=" + stand);
-        builder.add("age=" + age);
+        StringBuilder builder = new StringBuilder("Multiple [");
+        builder.append("name").append("=").append(name).append(", ");
+        builder.append("stand").append("=").append(stand).append(", ");
+        builder.append("age").append("=").append(age).append("]");
         return builder.toString();
     }
 

@@ -3,12 +3,12 @@ package icy.manipulator.property.group.model;
 import icy.manipulator.property.group.model.Group;
 import icy.manipulator.property.group.model.GroupModel;
 import java.lang.Override;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -178,10 +178,10 @@ public abstract class Group extends GroupModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "Group [", "]");
-        builder.add("x=" + x);
-        builder.add("y=" + y);
-        builder.add("z=" + z);
+        StringBuilder builder = new StringBuilder("Group [");
+        builder.append("x").append("=").append(x).append(", ");
+        builder.append("y").append("=").append(y).append(", ");
+        builder.append("z").append("=").append(z).append("]");
         return builder.toString();
     }
 

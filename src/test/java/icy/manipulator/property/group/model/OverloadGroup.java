@@ -4,13 +4,13 @@ import icy.manipulator.property.group.model.OverloadGroup;
 import icy.manipulator.property.group.model.OverloadGroupModel;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -163,9 +163,9 @@ public abstract class OverloadGroup extends OverloadGroupModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "OverloadGroup [", "]");
-        builder.add("name=" + name);
-        builder.add("size=" + size);
+        StringBuilder builder = new StringBuilder("OverloadGroup [");
+        builder.append("name").append("=").append(name).append(", ");
+        builder.append("size").append("=").append(size).append("]");
         return builder.toString();
     }
 

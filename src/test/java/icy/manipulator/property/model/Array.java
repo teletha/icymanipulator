@@ -4,12 +4,13 @@ import icy.manipulator.property.model.Array;
 import icy.manipulator.property.model.ArrayModel;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -102,8 +103,8 @@ public abstract class Array extends ArrayModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "Array [", "]");
-        builder.add("names=" + names);
+        StringBuilder builder = new StringBuilder("Array [");
+        builder.append("names").append("=").append(Arrays.deepToString(names)).append("]");
         return builder.toString();
     }
 
@@ -114,7 +115,7 @@ public abstract class Array extends ArrayModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(names);
+        return Objects.hash(Arrays.deepHashCode(names));
     }
 
     /**
@@ -129,7 +130,7 @@ public abstract class Array extends ArrayModel {
         }
 
         Array other = (Array) o;
-        if (!Objects.equals(names, other.names)) {
+        if (!Objects.deepEquals(names, other.names)) {
             return false;
         }
         return true;

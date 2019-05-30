@@ -4,13 +4,13 @@ import icy.manipulator.property.intercept.model.MultiIntercepts;
 import icy.manipulator.property.intercept.model.MultiInterceptsModel;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
-import java.util.StringJoiner;
 import java.util.function.Consumer;
 import javax.annotation.processing.Generated;
 
@@ -167,9 +167,9 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "MultiIntercepts [", "]");
-        builder.add("size=" + size);
-        builder.add("value=" + value);
+        StringBuilder builder = new StringBuilder("MultiIntercepts [");
+        builder.append("size").append("=").append(size).append(", ");
+        builder.append("value").append("=").append(value).append("]");
         return builder.toString();
     }
 

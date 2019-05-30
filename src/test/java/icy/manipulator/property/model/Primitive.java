@@ -3,12 +3,12 @@ package icy.manipulator.property.model;
 import icy.manipulator.property.model.Primitive;
 import icy.manipulator.property.model.PrimitiveModel;
 import java.lang.Override;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -378,15 +378,15 @@ public abstract class Primitive extends PrimitiveModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "Primitive [", "]");
-        builder.add("intX=" + intX);
-        builder.add("longX=" + longX);
-        builder.add("floatX=" + floatX);
-        builder.add("doubleX=" + doubleX);
-        builder.add("byteX=" + byteX);
-        builder.add("shortX=" + shortX);
-        builder.add("charX=" + charX);
-        builder.add("booleanX=" + booleanX);
+        StringBuilder builder = new StringBuilder("Primitive [");
+        builder.append("intX").append("=").append(intX).append(", ");
+        builder.append("longX").append("=").append(longX).append(", ");
+        builder.append("floatX").append("=").append(floatX).append(", ");
+        builder.append("doubleX").append("=").append(doubleX).append(", ");
+        builder.append("byteX").append("=").append(byteX).append(", ");
+        builder.append("shortX").append("=").append(shortX).append(", ");
+        builder.append("charX").append("=").append(charX).append(", ");
+        builder.append("booleanX").append("=").append(booleanX).append("]");
         return builder.toString();
     }
 

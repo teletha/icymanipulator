@@ -5,12 +5,12 @@ import icy.manipulator.property.extend.model.RequiredRequiredModel;
 import icy.manipulator.property.model.Multiple;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -103,11 +103,11 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "RequiredRequired [", "]");
-        builder.add("name=" + name);
-        builder.add("stand=" + stand);
-        builder.add("age=" + age);
-        builder.add("nickname=" + nickname);
+        StringBuilder builder = new StringBuilder("RequiredRequired [");
+        builder.append("name").append("=").append(name).append(", ");
+        builder.append("stand").append("=").append(stand).append(", ");
+        builder.append("age").append("=").append(age).append(", ");
+        builder.append("nickname").append("=").append(nickname).append("]");
         return builder.toString();
     }
 

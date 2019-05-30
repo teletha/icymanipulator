@@ -3,13 +3,13 @@ package icy.manipulator.property.intercept.model;
 import icy.manipulator.property.intercept.model.ReferenceLongSetter;
 import icy.manipulator.property.intercept.model.ReferenceLongSetterModel;
 import java.lang.Override;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
-import java.util.StringJoiner;
 import java.util.function.LongConsumer;
 import javax.annotation.processing.Generated;
 
@@ -160,9 +160,9 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "ReferenceLongSetter [", "]");
-        builder.add("size=" + size);
-        builder.add("square=" + square);
+        StringBuilder builder = new StringBuilder("ReferenceLongSetter [");
+        builder.append("size").append("=").append(size).append(", ");
+        builder.append("square").append("=").append(square).append("]");
         return builder.toString();
     }
 

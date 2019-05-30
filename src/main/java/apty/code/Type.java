@@ -34,7 +34,7 @@ public class Type implements Codable {
     private final List<Type> variables = new ArrayList();
 
     /** The type kind. */
-    public final TypeKind kind;
+    private final TypeKind kind;
 
     /**
      * Build Type.
@@ -129,6 +129,33 @@ public class Type implements Codable {
         default:
             return "null";
         }
+    }
+
+    /**
+     * Check whether this is primitive type or not.
+     * 
+     * @return A result.
+     */
+    public boolean isPrimitive() {
+        return kind.isPrimitive();
+    }
+
+    /**
+     * Check whether this is array type or not.
+     * 
+     * @return A result.
+     */
+    public boolean isArray() {
+        return kind == TypeKind.ARRAY;
+    }
+
+    /**
+     * Check whether this is void type or not.
+     * 
+     * @return A result.
+     */
+    public boolean isVoid() {
+        return kind == TypeKind.VOID;
     }
 
     /**

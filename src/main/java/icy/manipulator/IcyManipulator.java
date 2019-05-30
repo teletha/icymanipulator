@@ -13,6 +13,7 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -307,7 +308,7 @@ public class IcyManipulator extends AptyProcessor {
                 write(" * @paran value A new value of ", property.name, " property to assign.");
                 write(" */");
                 write(property.setterModifier, "void set", property.capitalizeName(), "(", property.type, " value)", () -> {
-                    if (!property.nullable && !property.type.kind.isPrimitive()) {
+                    if (!property.nullable && !property.type.isPrimitive()) {
                         write("if (value == null)", () -> {
                             if (property.arbitrary) {
                                 write("value = ", defaultValueCallFor(property), ";");
@@ -379,9 +380,17 @@ public class IcyManipulator extends AptyProcessor {
                 write(" */");
                 write("@", Override.class);
                 write("public String toString()", () -> {
-                    write(StringJoiner.class, " builder = new ", StringJoiner.class, "(`, `, `", m.implType, " [`, `]`);");
-                    for (PropertyInfo p : m.properties()) {
-                        write("builder.add(`", p.name, "=` + ", p.name, ");");
+                    write(StringBuilder.class, " builder = new ", StringBuilder.class, "(`", m.implType, " [`);");
+                    List<PropertyInfo> properties = m.properties();
+                    for (int i = 0; i < properties.size(); i++) {
+                        PropertyInfo p = properties.get(i);
+                        String tail = i == properties.size() - 1 ? "]" : ", ";
+
+                        if (p.type.isArray()) {
+                            write("builder.append(`", p.name, "`).append(`=`).append(", Arrays.class, ".deepToString(", p.name, ")).append(`", tail, "`);");
+                        } else {
+                            write("builder.append(`", p.name, "`).append(`=`).append(", p.name, ").append(`", tail, "`);");
+                        }
                     }
                     write("return builder.toString();");
                 });
@@ -403,7 +412,11 @@ public class IcyManipulator extends AptyProcessor {
                 write("public int hashCode()", () -> {
                     StringJoiner values = new StringJoiner(", ");
                     for (PropertyInfo p : m.properties()) {
-                        values.add(p.name);
+                        if (p.type.isArray()) {
+                            values.add(use(Arrays.class) + ".deepHashCode(" + p.name + ")");
+                        } else {
+                            values.add(p.name);
+                        }
                     }
                     write("return ", Objects.class, ".hash(", values, ");");
                 });
@@ -429,8 +442,12 @@ public class IcyManipulator extends AptyProcessor {
                     write();
                     write(m.implType, " other = (", m.implType, ") o;");
                     for (PropertyInfo p : m.properties()) {
-                        if (p.type.kind.isPrimitive()) {
+                        if (p.type.isPrimitive()) {
                             write("if (", p.name, " != other.", p.name, ")", () -> {
+                                write("return false;");
+                            });
+                        } else if (p.type.isArray()) {
+                            write("if (!", Objects.class, ".deepEquals(", p.name, ", other.", p.name, "))", () -> {
                                 write("return false;");
                             });
                         } else {

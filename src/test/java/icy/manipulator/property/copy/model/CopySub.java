@@ -5,12 +5,12 @@ import icy.manipulator.property.copy.model.CopySub;
 import icy.manipulator.property.copy.model.CopySubModel;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -103,10 +103,10 @@ public abstract class CopySub extends CopySubModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "CopySub [", "]");
-        builder.add("name=" + name);
-        builder.add("age=" + age);
-        builder.add("address=" + address);
+        StringBuilder builder = new StringBuilder("CopySub [");
+        builder.append("name").append("=").append(name).append(", ");
+        builder.append("age").append("=").append(age).append(", ");
+        builder.append("address").append("=").append(address).append("]");
         return builder.toString();
     }
 

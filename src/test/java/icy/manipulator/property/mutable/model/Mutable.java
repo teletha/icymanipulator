@@ -4,12 +4,12 @@ import icy.manipulator.property.mutable.model.Mutable;
 import icy.manipulator.property.mutable.model.MutableModel;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.StringJoiner;
 import java.util.function.UnaryOperator;
 import javax.annotation.processing.Generated;
 
@@ -114,8 +114,8 @@ public abstract class Mutable extends MutableModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "Mutable [", "]");
-        builder.add("value=" + value);
+        StringBuilder builder = new StringBuilder("Mutable [");
+        builder.append("value").append("=").append(value).append("]");
         return builder.toString();
     }
 

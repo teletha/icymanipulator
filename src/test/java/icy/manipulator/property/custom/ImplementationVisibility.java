@@ -4,12 +4,12 @@ import icy.manipulator.property.custom.ImplementationVisibility;
 import icy.manipulator.property.custom.ImplementationVisibilityModel;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -102,8 +102,8 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "ImplementationVisibility [", "]");
-        builder.add("name=" + name);
+        StringBuilder builder = new StringBuilder("ImplementationVisibility [");
+        builder.append("name").append("=").append(name).append("]");
         return builder.toString();
     }
 

@@ -4,12 +4,12 @@ import icy.manipulator.property.overload.model.AutoExpandEnum;
 import icy.manipulator.property.overload.model.AutoExpandEnumModel;
 import icy.manipulator.property.overload.model.AutoExpandEnumModel.Answer;
 import java.lang.Override;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -102,8 +102,8 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "AutoExpandEnum [", "]");
-        builder.add("answer=" + answer);
+        StringBuilder builder = new StringBuilder("AutoExpandEnum [");
+        builder.append("answer").append("=").append(answer).append("]");
         return builder.toString();
     }
 

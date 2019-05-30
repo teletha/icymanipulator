@@ -5,6 +5,7 @@ import icy.manipulator.property.overload.model.RequiredRequired;
 import icy.manipulator.property.overload.model.RequiredRequiredModel;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -13,7 +14,6 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -126,10 +126,10 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "RequiredRequired [", "]");
-        builder.add("size=" + size);
-        builder.add("date=" + date);
-        builder.add("time=" + time);
+        StringBuilder builder = new StringBuilder("RequiredRequired [");
+        builder.append("size").append("=").append(size).append(", ");
+        builder.append("date").append("=").append(date).append(", ");
+        builder.append("time").append("=").append(time).append("]");
         return builder.toString();
     }
 

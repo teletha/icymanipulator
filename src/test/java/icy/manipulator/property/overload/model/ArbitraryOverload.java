@@ -4,13 +4,13 @@ import icy.manipulator.property.overload.model.ArbitraryOverload;
 import icy.manipulator.property.overload.model.ArbitraryOverloadModel;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -120,8 +120,8 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "ArbitraryOverload [", "]");
-        builder.add("size=" + size);
+        StringBuilder builder = new StringBuilder("ArbitraryOverload [");
+        builder.append("size").append("=").append(size).append("]");
         return builder.toString();
     }
 

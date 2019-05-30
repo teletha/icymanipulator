@@ -4,12 +4,12 @@ import icy.manipulator.property.extend.model.ArbitraryRequired;
 import icy.manipulator.property.extend.model.ArbitraryRequiredModel;
 import icy.manipulator.property.model.Arbitrary;
 import java.lang.Override;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -99,10 +99,10 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "ArbitraryRequired [", "]");
-        builder.add("id=" + id);
-        builder.add("optionNum=" + optionNum);
-        builder.add("optionComment=" + optionComment);
+        StringBuilder builder = new StringBuilder("ArbitraryRequired [");
+        builder.append("id").append("=").append(id).append(", ");
+        builder.append("optionNum").append("=").append(optionNum).append(", ");
+        builder.append("optionComment").append("=").append(optionComment).append("]");
         return builder.toString();
     }
 

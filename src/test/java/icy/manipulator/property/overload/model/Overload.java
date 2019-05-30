@@ -4,6 +4,7 @@ import icy.manipulator.property.overload.model.Overload;
 import icy.manipulator.property.overload.model.OverloadModel;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -12,7 +13,6 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -177,9 +177,9 @@ public abstract class Overload extends OverloadModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "Overload [", "]");
-        builder.add("size=" + size);
-        builder.add("date=" + date);
+        StringBuilder builder = new StringBuilder("Overload [");
+        builder.append("size").append("=").append(size).append(", ");
+        builder.append("date").append("=").append(date).append("]");
         return builder.toString();
     }
 

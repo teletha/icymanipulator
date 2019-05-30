@@ -4,12 +4,12 @@ import icy.manipulator.property.objectmethod.model.ToString;
 import icy.manipulator.property.objectmethod.model.ToStringModel;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -142,9 +142,9 @@ public abstract class ToString extends ToStringModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "ToString [", "]");
-        builder.add("name=" + name);
-        builder.add("age=" + age);
+        StringBuilder builder = new StringBuilder("ToString [");
+        builder.append("name").append("=").append(name).append(", ");
+        builder.append("age").append("=").append(age).append("]");
         return builder.toString();
     }
 

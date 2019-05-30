@@ -6,12 +6,12 @@ import icy.manipulator.property.customize.model.CustomizableModel.Customizer;
 import icy.manipulator.property.customize.model.CustomizableModel.SubCustomizer;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.StringJoiner;
 import java.util.function.Supplier;
 import javax.annotation.processing.Generated;
 
@@ -231,9 +231,9 @@ public abstract class Customizable extends CustomizableModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "Customizable [", "]");
-        builder.add("name=" + name);
-        builder.add("value=" + value);
+        StringBuilder builder = new StringBuilder("Customizable [");
+        builder.append("name").append("=").append(name).append(", ");
+        builder.append("value").append("=").append(value).append("]");
         return builder.toString();
     }
 

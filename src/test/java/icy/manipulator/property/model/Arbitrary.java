@@ -4,12 +4,12 @@ import icy.manipulator.property.model.Arbitrary;
 import icy.manipulator.property.model.ArbitraryModel;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -142,9 +142,9 @@ public abstract class Arbitrary extends ArbitraryModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "Arbitrary [", "]");
-        builder.add("optionNum=" + optionNum);
-        builder.add("optionComment=" + optionComment);
+        StringBuilder builder = new StringBuilder("Arbitrary [");
+        builder.append("optionNum").append("=").append(optionNum).append(", ");
+        builder.append("optionComment").append("=").append(optionComment).append("]");
         return builder.toString();
     }
 

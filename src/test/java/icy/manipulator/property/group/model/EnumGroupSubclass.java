@@ -5,8 +5,8 @@ import icy.manipulator.property.group.model.EnumGroupModel.Color;
 import icy.manipulator.property.group.model.EnumGroupSubclass;
 import icy.manipulator.property.group.model.EnumGroupSubclassModel;
 import java.lang.Override;
+import java.lang.StringBuilder;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -28,9 +28,9 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "EnumGroupSubclass [", "]");
-        builder.add("color=" + color);
-        builder.add("size=" + size);
+        StringBuilder builder = new StringBuilder("EnumGroupSubclass [");
+        builder.append("color").append("=").append(color).append(", ");
+        builder.append("size").append("=").append(size).append("]");
         return builder.toString();
     }
 

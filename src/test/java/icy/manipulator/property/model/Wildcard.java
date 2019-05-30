@@ -7,6 +7,7 @@ import java.lang.Class;
 import java.lang.Integer;
 import java.lang.Number;
 import java.lang.Override;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -15,7 +16,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.StringJoiner;
 import java.util.function.Supplier;
 import javax.annotation.processing.Generated;
 
@@ -238,11 +238,11 @@ public abstract class Wildcard extends WildcardModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "Wildcard [", "]");
-        builder.add("extendType=" + extendType);
-        builder.add("superType=" + superType);
-        builder.add("wildcard=" + wildcard);
-        builder.add("combine=" + combine);
+        StringBuilder builder = new StringBuilder("Wildcard [");
+        builder.append("extendType").append("=").append(extendType).append(", ");
+        builder.append("superType").append("=").append(superType).append(", ");
+        builder.append("wildcard").append("=").append(wildcard).append(", ");
+        builder.append("combine").append("=").append(combine).append("]");
         return builder.toString();
     }
 

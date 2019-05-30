@@ -4,12 +4,12 @@ import icy.manipulator.property.group.model.EnumGroup;
 import icy.manipulator.property.group.model.EnumGroupModel;
 import icy.manipulator.property.group.model.EnumGroupModel.Color;
 import java.lang.Override;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -142,9 +142,9 @@ public abstract class EnumGroup extends EnumGroupModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "EnumGroup [", "]");
-        builder.add("color=" + color);
-        builder.add("size=" + size);
+        StringBuilder builder = new StringBuilder("EnumGroup [");
+        builder.append("color").append("=").append(color).append(", ");
+        builder.append("size").append("=").append(size).append("]");
         return builder.toString();
     }
 

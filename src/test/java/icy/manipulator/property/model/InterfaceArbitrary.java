@@ -4,12 +4,12 @@ import icy.manipulator.property.model.InterfaceArbitrary;
 import icy.manipulator.property.model.InterfaceArbitraryModel;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -102,8 +102,8 @@ public abstract class InterfaceArbitrary implements InterfaceArbitraryModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "InterfaceArbitrary [", "]");
-        builder.add("optional=" + optional);
+        StringBuilder builder = new StringBuilder("InterfaceArbitrary [");
+        builder.append("optional").append("=").append(optional).append("]");
         return builder.toString();
     }
 

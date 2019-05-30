@@ -4,12 +4,12 @@ import icy.manipulator.property.custom.BuilderName;
 import icy.manipulator.property.custom.BuilderNameModel;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -102,8 +102,8 @@ public abstract class BuilderName extends BuilderNameModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "BuilderName [", "]");
-        builder.add("name=" + name);
+        StringBuilder builder = new StringBuilder("BuilderName [");
+        builder.append("name").append("=").append(name).append("]");
         return builder.toString();
     }
 

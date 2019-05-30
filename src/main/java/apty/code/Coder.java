@@ -315,8 +315,18 @@ public class Coder {
      * @param clazz A target class.
      * @return A class name to write.
      */
-    public final String use(Type imported) {
-        return imported.write(this);
+    public final String use(Class clazz) {
+        return use(Type.of(clazz));
+    }
+
+    /**
+     * Import the specified class and return the suitable qualified class name.
+     * 
+     * @param clazz A target class.
+     * @return A class name to write.
+     */
+    public final String use(Type clazz) {
+        return clazz.write(this);
     }
 
     public final String classLiteral(Type clazz) {

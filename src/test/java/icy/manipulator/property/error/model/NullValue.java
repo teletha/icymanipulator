@@ -4,12 +4,12 @@ import icy.manipulator.property.error.model.NullValue;
 import icy.manipulator.property.error.model.NullValueModel;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -185,10 +185,10 @@ public abstract class NullValue extends NullValueModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "NullValue [", "]");
-        builder.add("rejectNull=" + rejectNull);
-        builder.add("acceptNull=" + acceptNull);
-        builder.add("defaultValue=" + defaultValue);
+        StringBuilder builder = new StringBuilder("NullValue [");
+        builder.append("rejectNull").append("=").append(rejectNull).append(", ");
+        builder.append("acceptNull").append("=").append(acceptNull).append(", ");
+        builder.append("defaultValue").append("=").append(defaultValue).append("]");
         return builder.toString();
     }
 

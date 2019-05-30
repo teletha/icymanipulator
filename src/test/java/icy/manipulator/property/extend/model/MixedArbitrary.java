@@ -5,12 +5,12 @@ import icy.manipulator.property.extend.model.MixedArbitraryModel;
 import icy.manipulator.property.model.Mixed;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -103,12 +103,12 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "MixedArbitrary [", "]");
-        builder.add("name=" + name);
-        builder.add("age=" + age);
-        builder.add("optionAddress=" + optionAddress);
-        builder.add("optionCommnet=" + optionCommnet);
-        builder.add("optionZip=" + optionZip);
+        StringBuilder builder = new StringBuilder("MixedArbitrary [");
+        builder.append("name").append("=").append(name).append(", ");
+        builder.append("age").append("=").append(age).append(", ");
+        builder.append("optionAddress").append("=").append(optionAddress).append(", ");
+        builder.append("optionCommnet").append("=").append(optionCommnet).append(", ");
+        builder.append("optionZip").append("=").append(optionZip).append("]");
         return builder.toString();
     }
 

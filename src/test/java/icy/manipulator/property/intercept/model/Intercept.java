@@ -3,13 +3,13 @@ package icy.manipulator.property.intercept.model;
 import icy.manipulator.property.intercept.model.Intercept;
 import icy.manipulator.property.intercept.model.InterceptModel;
 import java.lang.Override;
+import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
-import java.util.StringJoiner;
 import javax.annotation.processing.Generated;
 
 /**
@@ -119,8 +119,8 @@ public abstract class Intercept extends InterceptModel {
      */
     @Override
     public String toString() {
-        StringJoiner builder = new StringJoiner(", ", "Intercept [", "]");
-        builder.add("size=" + size);
+        StringBuilder builder = new StringBuilder("Intercept [");
+        builder.append("size").append("=").append(size).append("]");
         return builder.toString();
     }
 
