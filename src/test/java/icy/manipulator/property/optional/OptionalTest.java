@@ -14,7 +14,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import apty.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
-import icy.manipulator.property.model.Single;
+import icy.manipulator.property.optional.model.Optional;
 import icy.manipulator.property.optional.model.OptionalModel;
 
 class OptionalTest {
@@ -24,7 +24,7 @@ class OptionalTest {
 
     @Test
     void property() {
-        Single instance = Single.with.name("Giorno Giovanna");
-        assert instance.name.equals("Giorno Giovanna");
+        Optional o = Optional.with.name("Giorno Giovanna");
+        assert o.name.get().equals("Giorno Giovanna");
     }
 }
