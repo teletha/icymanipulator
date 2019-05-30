@@ -330,7 +330,16 @@ public class ModelInfo {
     }
 
     /**
-     * Check whether this model has any intercept property method on self or ancestors.
+     * Check whether this model has any overload property method on self.
+     * 
+     * @return
+     */
+    public boolean hasOwnOverload() {
+        return overloadForProperty.holder.size() != 0;
+    }
+
+    /**
+     * Check whether this model has any intercept property method on self.
      * 
      * @return
      */

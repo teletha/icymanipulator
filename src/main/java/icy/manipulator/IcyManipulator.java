@@ -97,6 +97,10 @@ public class IcyManipulator extends AptyProcessor {
          * Define transparent error handler.
          */
         private void defineErrorHandler() {
+            if (m.ownProperties().isEmpty()) {
+                return;
+            }
+
             write();
             write("/**");
             write(" * Deceive complier that the specified checked exception is unchecked exception.");
@@ -115,6 +119,10 @@ public class IcyManipulator extends AptyProcessor {
          * Define query method for property updater.
          */
         private void defineMethodInvokerBuilder() {
+            if (m.ownProperties().isEmpty()) {
+                return;
+            }
+
             write();
             write("/**");
             write(" * Create special method invoker.");
@@ -154,6 +162,10 @@ public class IcyManipulator extends AptyProcessor {
          * Define query method for property updater.
          */
         private void defineFiledUpdaterBuilder() {
+            if (m.ownProperties().isEmpty()) {
+                return;
+            }
+
             write();
             write("/**");
             write(" * Create special property updater.");

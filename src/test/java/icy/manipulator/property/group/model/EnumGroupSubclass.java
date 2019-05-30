@@ -4,11 +4,6 @@ import icy.manipulator.property.group.model.EnumGroup;
 import icy.manipulator.property.group.model.EnumGroupModel.Color;
 import icy.manipulator.property.group.model.EnumGroupSubclass;
 import icy.manipulator.property.group.model.EnumGroupSubclassModel;
-import java.lang.Throwable;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import javax.annotation.processing.Generated;
 
 /**
@@ -16,51 +11,6 @@ import javax.annotation.processing.Generated;
  */
 @Generated("Icy Manipulator")
 public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
-
-    /**
-     * Deceive complier that the specified checked exception is unchecked exception.
-     *
-     * @param <T> A dummy type for {@link RuntimeException}.
-     * @param throwable Any error.
-     * @return A runtime error.
-     * @throws T Dummy error to deceive compiler.
-     */
-    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
-        throw (T) throwable;
-    }
-
-    /**
-     * Create special method invoker.
-     *
-     * @param name A target method name.
-     * @param parameterTypes A list of method parameter types.
-     * @return A special method invoker.
-     */
-    private static final MethodHandle invoker(String name, Class... parameterTypes)  {
-        try {
-            Method method = EnumGroupSubclassModel.class.getDeclaredMethod(name, parameterTypes);
-            method.setAccessible(true);
-            return MethodHandles.lookup().unreflect(method);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final MethodHandle updater(String name)  {
-        try {
-            Field field = EnumGroupSubclass.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
 
     /**
      * HIDE CONSTRUCTOR
