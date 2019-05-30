@@ -228,9 +228,23 @@ public class IcyManipulator extends AptyProcessor {
             write("protected ", m.implType, "()", () -> {
                 // initialize field
                 for (PropertyInfo p : m.ownProperties()) {
-                    write("this.", p.name, " = ", (p.isArbitrary ? "super." + p.name + "()" : p.type.defaultValue()), ";");
+                    write("this.", p.name, " = ", (p.isArbitrary ? defaultValueCallFor(p) : p.type.defaultValue()), ";");
                 }
             });
+        }
+
+        /**
+         * Write super method call for retrieving the default value.
+         * 
+         * @param property A target property.
+         * @return
+         */
+        private String defaultValueCallFor(PropertyInfo property) {
+            if (property.element.isDefault()) {
+                return use(m.type) + ".super." + property.name + "()";
+            } else {
+                return "super." + property.name + "()";
+            }
         }
 
         /**
@@ -290,7 +304,7 @@ public class IcyManipulator extends AptyProcessor {
                     if (!property.nullable && !property.type.kind.isPrimitive()) {
                         write("if (value == null)", () -> {
                             if (property.isArbitrary) {
-                                write("value = super.", property.name + "();");
+                                write("value = ", defaultValueCallFor(property), ";");
                             } else {
                                 write("throw new IllegalArgumentException(`The ", property.name, " property requires non-null value.`);");
                             }
