@@ -73,7 +73,7 @@ public class ModelInfo {
      */
     public ModelInfo(Element element) {
         if (element.getKind() != ElementKind.CLASS && element.getKind() != ElementKind.INTERFACE) {
-            throw new Fail(element, ModelInfo.class.getSimpleName() + " requires class or interface.");
+            throw new Fail(element, "Model requires class or interface.");
         }
         this.e = (TypeElement) element;
         this.parent = analyzeParent(e);
