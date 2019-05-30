@@ -36,6 +36,10 @@ class OptionalSupport {
         new OptionalSupport(Type.of(OptionalLong.class), p -> Type.of(long.class), "empty", "of");
         new OptionalSupport(Type.of(OptionalDouble.class), p -> Type.of(double.class), "empty", "of");
         new OptionalSupport(Type.of("com.google.common.base.Optional"), p -> p.type.variables.get(0), "absent", "of");
+        new OptionalSupport(Type.of("com.atlassian.fugue.Option"), p -> p.type.variables.get(0), "none", "some");
+        new OptionalSupport(Type.of("io.atlassian.fugue.Option"), p -> p.type.variables.get(0), "none", "some");
+        new OptionalSupport(Type.of("fj.data.Option"), p -> p.type.variables.get(0), "none", "some");
+        new OptionalSupport(Type.of("io.vavr.control.Option"), p -> p.type.variables.get(0), "none", "some");
         new OptionalSupport(Type.of("kiss.Variable"), p -> p.type.variables.get(0), "empty", "of");
     }
 
@@ -62,7 +66,7 @@ class OptionalSupport {
     final Type type;
 
     /** The type extractor. */
-    private final Function<PropertyInfo, Type> extractType;
+    final Function<PropertyInfo, Type> extractor;
 
     /** The empty method name. */
     final String noneMethod;
@@ -80,20 +84,10 @@ class OptionalSupport {
      */
     private OptionalSupport(Type optionalType, Function<PropertyInfo, Type> extractType, String noneMethodName, String someMethodName) {
         this.type = Objects.requireNonNull(optionalType);
-        this.extractType = Objects.requireNonNull(extractType);
+        this.extractor = Objects.requireNonNull(extractType);
         this.noneMethod = Objects.requireNonNull(noneMethodName);
         this.someMethod = Objects.requireNonNull(someMethodName);
 
         supports.put(optionalType, this);
-    }
-
-    /**
-     * Extract raw type from the specified {@link PropertyInfo}.
-     * 
-     * @param property
-     * @return
-     */
-    Type extractType(PropertyInfo property) {
-        return extractType.apply(property);
     }
 }

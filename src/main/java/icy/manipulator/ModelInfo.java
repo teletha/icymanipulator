@@ -155,7 +155,7 @@ public class ModelInfo {
         }
 
         OptionalSupport.by(p.type).ifPresent(support -> {
-            overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(support.extractType(p)), List.of("value"), ""));
+            overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(support.extractor.apply(p)), List.of("value"), ""));
         });
     }
 
