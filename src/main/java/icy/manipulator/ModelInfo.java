@@ -168,6 +168,8 @@ public class ModelInfo {
             overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(Type.of(long.class)), List.of("value"), ""));
         } else if (p.type.is(OptionalDouble.class)) {
             overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(Type.of(double.class)), List.of("value"), ""));
+        } else if (p.type.is(IcyManipulator.GuavaOptional)) {
+            overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(p.type.variables.get(0)), List.of("value"), ""));
         }
     }
 

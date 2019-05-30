@@ -67,7 +67,7 @@ public class PropertyInfo {
         this.name = method.getSimpleName().toString();
         this.type = Type.of(method.getReturnType());
         this.arbitrary = !method.getModifiers().contains(Modifier.ABSTRACT) || type.is(Optional.class) || type.is(OptionalInt.class) || type
-                .is(OptionalLong.class) || type.is(OptionalDouble.class);
+                .is(OptionalLong.class) || type.is(OptionalDouble.class) || type.is(IcyManipulator.GuavaOptional);
 
         Property annotation = method.getAnnotation(Icy.Property.class);
 

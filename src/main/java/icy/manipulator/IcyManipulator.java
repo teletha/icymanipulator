@@ -29,6 +29,7 @@ import apty.Apty;
 import apty.AptyProcessor;
 import apty.Modifiers;
 import apty.code.Coder;
+import apty.code.Type;
 import icy.manipulator.util.Lists;
 import icy.manipulator.util.Strings;
 
@@ -45,6 +46,9 @@ public class IcyManipulator extends AptyProcessor {
 
     /** The configuration interface name for arbitrary perperties. */
     static final String ArbitraryInterface = Assignable + "Årbitrary";
+
+    /** The built-in supported optional type. */
+    static final Type GuavaOptional = Type.of("com.google.common.base.Optional");
 
     /**
      * 
@@ -263,6 +267,8 @@ public class IcyManipulator extends AptyProcessor {
                 return use(OptionalLong.class) + ".empty()";
             } else if (property.type.is(OptionalDouble.class)) {
                 return use(OptionalDouble.class) + ".empty()";
+            } else if (property.type.is(GuavaOptional)) {
+                return use(GuavaOptional) + ".absent()";
             } else {
                 throw new Error("Bug! " + property);
             }
@@ -711,6 +717,8 @@ public class IcyManipulator extends AptyProcessor {
                 overloadOptionalLong(p, m);
             } else if (m.returnType.is(OptionalDouble.class)) {
                 overloadOptionalDouble(p, m);
+            } else if (m.returnType.is(GuavaOptional)) {
+                overloadGuavaOptional(p, m);
             } else {
                 overloadMethod(p, m);
             }
@@ -754,6 +762,16 @@ public class IcyManipulator extends AptyProcessor {
          */
         private void overloadOptionalDouble(PropertyInfo p, MethodInfo m) {
             write("return ", p.name, "(", OptionalDouble.class, ".of(", m.paramNames.get(0), "));");
+        }
+
+        /**
+         * Write overload method body for guava's Optional property.
+         * 
+         * @param p A property info.
+         * @param m A method info.
+         */
+        private void overloadGuavaOptional(PropertyInfo p, MethodInfo m) {
+            write("return ", p.name, "(", GuavaOptional, ".of(", m.paramNames.get(0), "));");
         }
 
         /**
