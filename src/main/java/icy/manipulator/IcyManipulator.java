@@ -507,37 +507,37 @@ public class IcyManipulator extends AptyProcessor {
                     requireds.stream()
                             .map(def -> new Synthesizer(m, def))
                             .reduce((prev, next) -> prev.synthesize(next))
-                            .ifPresent(synthesizer -> {
-                                for (MethodInfo method : synthesizer.methods) {
-                                    String[] types = new String[] {m.requiredRouteType(group, "Self"), "Self"};
+                            .stream()
+                            .flatMap(s -> s.methods.stream())
+                            .forEach(method -> {
+                                String[] types = new String[] {m.requiredRouteType(group, "Self"), "Self"};
 
-                                    write();
-                                    javadoc(method.doc, () -> {
-                                        write("/**");
-                                        write(" * Create new {@link ", m.implType, "} with the specified ", p.name, " property.");
-                                        write(" * ");
-                                        write(" * @return The next assignable model.");
-                                        write(" */");
-                                    });
-                                    write("public final ", types[0], " ", method, () -> {
-                                        write(Assignable, " o = new ", Assignable, "();");
+                                write();
+                                javadoc(method.doc, () -> {
+                                    write("/**");
+                                    write(" * Create new {@link ", m.implType, "} with the specified ", p.name, " property.");
+                                    write(" * ");
+                                    write(" * @return The next assignable model.");
+                                    write(" */");
+                                });
+                                write("public final ", types[0], " ", method, () -> {
+                                    write(Assignable, " o = new ", Assignable, "();");
 
-                                        boolean skipFirst = requireds.size() != method.paramNames.size();
-                                        int parameterIndex = skipFirst ? -1 : 0;
-                                        int index = 0;
+                                    boolean skipFirst = requireds.size() != method.paramNames.size();
+                                    int parameterIndex = skipFirst ? -1 : 0;
+                                    int index = 0;
 
-                                        for (; index < requireds.size(); index++, parameterIndex++) {
-                                            String methodName = index == 0 ? method.name : requireds.get(index).name;
+                                    for (; index < requireds.size(); index++, parameterIndex++) {
+                                        String methodName = index == 0 ? method.name : requireds.get(index).name;
 
-                                            if (0 <= parameterIndex) {
-                                                write("o.", methodName, "(", method.paramNames.get(parameterIndex), ");");
-                                            } else {
-                                                write("o.", methodName, "();");
-                                            }
+                                        if (0 <= parameterIndex) {
+                                            write("o.", methodName, "(", method.paramNames.get(parameterIndex), ");");
+                                        } else {
+                                            write("o.", methodName, "();");
                                         }
-                                        write("return ", types[0].equals("Self") ? "(Self)" : "", "o;");
-                                    });
-                                }
+                                    }
+                                    write("return ", types[0].equals("Self") ? "(Self)" : "", "o;");
+                                });
                             });
                 }, () -> {
                     // =========================================
