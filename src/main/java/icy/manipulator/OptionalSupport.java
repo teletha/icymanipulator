@@ -17,7 +17,6 @@ import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalInt;
 import java.util.OptionalLong;
-import java.util.Set;
 import java.util.function.Function;
 
 import apty.code.Type;
@@ -41,15 +40,6 @@ class OptionalSupport {
         new OptionalSupport(Type.of("fj.data.Option"), p -> p.type.variables.get(0), "none", "some");
         new OptionalSupport(Type.of("io.vavr.control.Option"), p -> p.type.variables.get(0), "none", "some");
         new OptionalSupport(Type.of("kiss.Variable"), p -> p.type.variables.get(0), "empty", "of");
-    }
-
-    /**
-     * List up all supported types.
-     * 
-     * @return
-     */
-    static final Set<Type> types() {
-        return supports.keySet();
     }
 
     /**
