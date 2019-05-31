@@ -462,7 +462,7 @@ public class IcyManipulator extends AptyProcessor {
          * Define copy methods.
          */
         private void defineCopy() {
-            for (PropertyInfo property : m.copiablePorperties()) {
+            for (PropertyInfo property : m.copiablePoroperties()) {
                 write();
                 write("/**");
                 write(" * Create new {@link ", m.implType, "} with the specified property and copy other properties from this model.");

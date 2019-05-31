@@ -240,7 +240,7 @@ public class ModelInfo {
     }
 
     /**
-     * List up all proeprties on this own model and ancestors.
+     * List up all properties on this own model and ancestors.
      * 
      * @return
      */
@@ -258,7 +258,7 @@ public class ModelInfo {
     }
 
     /**
-     * List up all mutable proeprties on this own model.
+     * List up all mutable properties on this own model.
      * 
      * @return
      */
@@ -276,7 +276,7 @@ public class ModelInfo {
     }
 
     /**
-     * List up all arbitrary proeprties on this own model.
+     * List up all arbitrary properties on this own model.
      * 
      * @return
      */
@@ -294,7 +294,7 @@ public class ModelInfo {
     }
 
     /**
-     * List up all required proeprties on ancestors and own.
+     * List up all required properties on ancestors and own.
      * 
      * @return
      */
@@ -310,7 +310,7 @@ public class ModelInfo {
     }
 
     /**
-     * List up all arbitrary proeprties on ancestors and own.
+     * List up all arbitrary properties on ancestors and own.
      * 
      * @return
      */
@@ -326,16 +326,16 @@ public class ModelInfo {
     }
 
     /**
-     * List up all copiable proeprties on ancestors and own.
+     * List up all copiable properties on ancestors and own.
      * 
      * @return
      */
-    public List<PropertyInfo> copiablePorperties() {
+    public List<PropertyInfo> copiablePoroperties() {
         if (parent.isEmpty()) {
             return ownCopiableProperties();
         } else {
             List<PropertyInfo> properties = new ArrayList();
-            properties.addAll(parent.get().copiablePorperties());
+            properties.addAll(parent.get().copiablePoroperties());
             properties.addAll(copiableProperties);
             return properties;
         }
