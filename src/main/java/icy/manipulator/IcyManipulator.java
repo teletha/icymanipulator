@@ -510,7 +510,7 @@ public class IcyManipulator extends AptyProcessor {
                             .stream()
                             .flatMap(s -> s.methods.stream())
                             .forEach(method -> {
-                                String[] types = new String[] {m.requiredRouteType(group, "Self"), "Self"};
+                                String[] types = m.requiredRouteTypes(group, "Self");
 
                                 write();
                                 javadoc(method.doc, () -> {
@@ -520,7 +520,7 @@ public class IcyManipulator extends AptyProcessor {
                                     write(" * @return The next assignable model.");
                                     write(" */");
                                 });
-                                write("public final ", types[0], " ", method, () -> {
+                                write("public final ", types[1], types[0], " ", method, () -> {
                                     write(Assignable, " o = new ", Assignable, "();");
 
                                     boolean skipFirst = requireds.size() != method.paramNames.size();
@@ -695,10 +695,15 @@ public class IcyManipulator extends AptyProcessor {
             OptionalSupport.by(p.type).ifPresentOrElse(s -> {
                 write("return ", p.name, "(", s.type, ".", s.someMethod, "(", m.paramNames.get(0), "));");
             }, () -> {
-                writeTry(() -> {
-                    write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", m.namesWithHead("this"), "));");
-                }, Throwable.class, e -> {
-                    write("throw quiet(", e, ");");
+                CollectionSupport.by(p.type).ifPresentOrElse(s -> {
+                    write("((", this.m.implType, ") this).", p.name, ".", s.collectMethod, "(", m.paramNames.get(0), ");");
+                    write("return (Next) this;");
+                }, () -> {
+                    writeTry(() -> {
+                        write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", m.namesWithHead("this"), "));");
+                    }, Throwable.class, e -> {
+                        write("throw quiet(", e, ");");
+                    });
                 });
             });
         }

@@ -155,7 +155,12 @@ public class ModelInfo {
         }
 
         OptionalSupport.by(p.type).ifPresent(support -> {
-            overloadForProperty.add(p, new MethodInfo(p.name, p.type, List.of(support.extractor.apply(p)), List.of("value"), ""));
+            overloadForProperty
+                    .add(p, new MethodInfo(p.name, p.type, List.of(support.extractor.apply(p).stripWild()), List.of("value"), ""));
+        });
+        CollectionSupport.by(p.type).ifPresent(support -> {
+            overloadForProperty.add(p, new MethodInfo("add" + p.capitalizeName(), p.type, List
+                    .of(support.extractor.apply(p).stripWild()), List.of("value"), ""));
         });
     }
 
@@ -449,6 +454,39 @@ public class ModelInfo {
             builder.append(">");
         }
         return builder.toString();
+    }
+
+    /**
+     * Compute API route variable for required properties.
+     * 
+     * @param destination
+     * @return
+     */
+    public String[] requiredRouteTypes(int depature, String destination) {
+        List<String> types = new ArrayList();
+        List<PropertyInfo> properties = requiredProperties();
+
+        for (int i = depature; i < properties.size(); i++) {
+            String nextType = i == properties.size() - 1 ? destination : "R" + i;
+            String currentType = "R" + (i - 1);
+            PropertyInfo current = properties.get(i);
+            PropertyInfo prev = properties.get(i - 1);
+
+            if (types.isEmpty()) {
+                types.add(current.assignableInterfaceName() + "<" + nextType + ">");
+            } else {
+                String postfix = prev.repeatable ? " & " + prev.assignableInterfaceName() + "<" + currentType + ">" : "";
+                types.add(currentType + " extends " + current.assignableInterfaceName() + "<" + nextType + ">" + postfix);
+            }
+        }
+
+        if (types.size() == 0) {
+            return new String[] {destination, ""};
+        } else if (types.size() == 1) {
+            return new String[] {types.get(0), ""};
+        } else {
+            return new String[] {types.get(0), types.stream().skip(1).collect(Collectors.joining(", ", "<", "> "))};
+        }
     }
 
     /**

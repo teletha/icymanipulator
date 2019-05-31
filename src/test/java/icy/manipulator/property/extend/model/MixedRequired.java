@@ -155,7 +155,7 @@ public abstract class MixedRequired extends MixedRequiredModel {
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableAge<ÅssignableZip<Self>> name(String name) {
+        public final <R1 extends ÅssignableZip<Self>> ÅssignableAge<R1> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;

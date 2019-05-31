@@ -1,7 +1,7 @@
-package icy.manipulator.property.model;
+package icy.manipulator.property.collection.model;
 
-import icy.manipulator.property.model.Multiple;
-import icy.manipulator.property.model.MultipleModel;
+import icy.manipulator.property.collection.model.List;
+import icy.manipulator.property.collection.model.ListModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -13,10 +13,10 @@ import java.util.Objects;
 import javax.annotation.processing.Generated;
 
 /**
- * Generated model for {@link MultipleModel}.
+ * Generated model for {@link ListModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class Multiple extends MultipleModel {
+public abstract class List extends ListModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -38,7 +38,7 @@ public abstract class Multiple extends MultipleModel {
      */
     private static final MethodHandle updater(String name)  {
         try {
-            Field field = Multiple.class.getDeclaredField(name);
+            Field field = List.class.getDeclaredField(name);
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
@@ -50,7 +50,7 @@ public abstract class Multiple extends MultipleModel {
     private static final MethodHandle nameUpdater = updater("name");
 
     /** The final property updater. */
-    private static final MethodHandle standUpdater = updater("stand");
+    private static final MethodHandle valuesUpdater = updater("values");
 
     /** The final property updater. */
     private static final MethodHandle ageUpdater = updater("age");
@@ -59,7 +59,7 @@ public abstract class Multiple extends MultipleModel {
     public final String name;
 
     /** The exposed property. */
-    public final String stand;
+    public final java.util.List<String> values;
 
     /** The exposed property. */
     public final int age;
@@ -67,9 +67,9 @@ public abstract class Multiple extends MultipleModel {
     /**
      * HIDE CONSTRUCTOR
      */
-    protected Multiple() {
+    protected List() {
         this.name = null;
-        this.stand = null;
+        this.values = null;
         this.age = 0;
     }
 
@@ -110,36 +110,36 @@ public abstract class Multiple extends MultipleModel {
     }
 
     /**
-     * Return the stand property.
+     * Return the values property.
      *
-     * @return A value of stand property.
+     * @return A value of values property.
      */
     @Override
-    public final String stand() {
-        return this.stand;
+    public final java.util.List<String> values() {
+        return this.values;
     }
 
     /**
      * Provide classic getter API.
      *
-     * @return A value of stand property.
+     * @return A value of values property.
      */
     @SuppressWarnings("unused")
-    private final String getStand() {
-        return this.stand;
+    private final java.util.List<String> getValues() {
+        return this.values;
     }
 
     /**
      * Provide classic setter API.
      *
-     * @paran value A new value of stand property to assign.
+     * @paran value A new value of values property to assign.
      */
-    private final void setStand(String value) {
+    private final void setValues(java.util.List<String> value) {
         if (value == null) {
-            throw new IllegalArgumentException("The stand property requires non-null value.");
+            throw new IllegalArgumentException("The values property requires non-null value.");
         }
         try {
-            standUpdater.invoke(this, value);
+            valuesUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -185,9 +185,9 @@ public abstract class Multiple extends MultipleModel {
      */
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder("Multiple [");
+        StringBuilder builder = new StringBuilder("List [");
         builder.append("name=").append(name).append(", ");
-        builder.append("stand=").append(stand).append(", ");
+        builder.append("values=").append(values).append(", ");
         builder.append("age=").append(age).append("]");
         return builder.toString();
     }
@@ -199,7 +199,7 @@ public abstract class Multiple extends MultipleModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(name, stand, age);
+        return Objects.hash(name, values, age);
     }
 
     /**
@@ -209,13 +209,13 @@ public abstract class Multiple extends MultipleModel {
      */
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Multiple == false) {
+        if (o instanceof List == false) {
             return false;
         }
 
-        Multiple other = (Multiple) o;
+        List other = (List) o;
         if (!Objects.equals(name, other.name)) return false;
-        if (!Objects.equals(stand, other.stand)) return false;
+        if (!Objects.equals(values, other.values)) return false;
         if (age != other.age) return false;
         return true;
     }
@@ -224,16 +224,16 @@ public abstract class Multiple extends MultipleModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Namespace for {@link Multiple}  builder methods.
+     * Namespace for {@link List}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Multiple & ÅssignableÅrbitrary<Self>> {
+    public static final class Ìnstantiator<Self extends List & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new {@link Multiple} with the specified name property.
+         * Create new {@link List} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final <R1 extends ÅssignableAge<Self>> ÅssignableStand<R1> name(String name) {
+        public final <R1 extends ÅssignableAge<Self> & ÅssignableValues<R1>> ÅssignableValues<R1> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;
@@ -252,7 +252,7 @@ public abstract class Multiple extends MultipleModel {
          * @return The next assignable model.
          */
         default Next name(String value) {
-            ((Multiple) this).setName(value);
+            ((List) this).setName(value);
             return (Next) this;
         }
     }
@@ -260,16 +260,26 @@ public abstract class Multiple extends MultipleModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableStand<Next> {
+    public static interface ÅssignableValues<Next> {
 
         /**
-         * Assign stand property.
+         * Assign values property.
          * 
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next stand(String value) {
-            ((Multiple) this).setStand(value);
+        default Next values(java.util.List<String> value) {
+            ((List) this).setValues(value);
+            return (Next) this;
+        }
+
+        /**
+         * Assign values property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next addValues(String value) {
+            ((List) this).values.add(value);
             return (Next) this;
         }
     }
@@ -286,7 +296,7 @@ public abstract class Multiple extends MultipleModel {
          * @return The next assignable model.
          */
         default Next age(int value) {
-            ((Multiple) this).setAge(value);
+            ((List) this).setAge(value);
             return (Next) this;
         }
     }
@@ -294,19 +304,19 @@ public abstract class Multiple extends MultipleModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends Multiple> {
+    public static interface ÅssignableÅrbitrary<Next extends List> {
     }
 
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableName, ÅssignableStand, ÅssignableAge {
+    protected static interface ÅssignableAll extends ÅssignableName, ÅssignableValues, ÅssignableAge {
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends Multiple implements ÅssignableAll, ÅssignableÅrbitrary {
+    private static final class Åssignable extends List implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**
@@ -314,7 +324,7 @@ public abstract class Multiple extends MultipleModel {
      */
     static final class My {
         static final String Name = "name";
-        static final String Stand = "stand";
+        static final String Values = "values";
         static final String Age = "age";
     }
 }

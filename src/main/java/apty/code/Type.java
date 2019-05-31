@@ -211,6 +211,14 @@ public class Type implements Codable {
         }
     }
 
+    public Type stripWild() {
+        if (kind == TypeKind.WILDCARD) {
+            return variables.get(0);
+        } else {
+            return this;
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
