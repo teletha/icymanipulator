@@ -510,7 +510,7 @@ public class IcyManipulator extends AptyProcessor {
                             .stream()
                             .flatMap(s -> s.methods.stream())
                             .forEach(method -> {
-                                String[] types = m.requiredRouteTypes(group, "Self");
+                                String type = m.requiredRouteType(group, "Self");
 
                                 write();
                                 javadoc(method.doc, () -> {
@@ -520,7 +520,7 @@ public class IcyManipulator extends AptyProcessor {
                                     write(" * @return The next assignable model.");
                                     write(" */");
                                 });
-                                write("public final ", types[1], types[0], " ", method, () -> {
+                                write("public final ", type, " ", method, () -> {
                                     write(Assignable, " o = new ", Assignable, "();");
 
                                     boolean skipFirst = requireds.size() != method.paramNames.size();
@@ -536,7 +536,7 @@ public class IcyManipulator extends AptyProcessor {
                                             write("o.", methodName, "();");
                                         }
                                     }
-                                    write("return ", types[0].equals("Self") ? "(Self)" : "", "o;");
+                                    write("return ", type.equals("Self") ? "(Self)" : "", "o;");
                                 });
                             });
                 }, () -> {

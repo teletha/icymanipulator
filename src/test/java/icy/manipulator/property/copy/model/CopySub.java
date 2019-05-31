@@ -164,7 +164,7 @@ public abstract class CopySub extends CopySubModel {
          * 
          * @return The next assignable model.
          */
-        public final <R1 extends ÅssignableAddress<Self>> ÅssignableAge<R1> name(String name) {
+        public final ÅssignableAge<ÅssignableAddress<Self>> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;

@@ -158,10 +158,6 @@ public class ModelInfo {
             overloadForProperty
                     .add(p, new MethodInfo(p.name, p.type, List.of(support.extractor.apply(p).stripWild()), List.of("value"), ""));
         });
-        CollectionSupport.by(p.type).ifPresent(support -> {
-            overloadForProperty.add(p, new MethodInfo("add" + p.capitalizeName(), p.type, List
-                    .of(support.extractor.apply(p).stripWild()), List.of("value"), ""));
-        });
     }
 
     /**

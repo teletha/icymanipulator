@@ -1,5 +1,14 @@
 package icy.manipulator.property.model;
 
+import icy.manipulator.property.model.Wildcard;
+import icy.manipulator.property.model.WildcardModel;
+import java.lang.CharSequence;
+import java.lang.Class;
+import java.lang.Integer;
+import java.lang.Number;
+import java.lang.Override;
+import java.lang.StringBuilder;
+import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -8,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
-
 import javax.annotation.processing.Generated;
 
 /**
@@ -35,7 +43,7 @@ public abstract class Wildcard extends WildcardModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name) {
+    private static final MethodHandle updater(String name)  {
         try {
             Field field = Wildcard.class.getDeclaredField(name);
             field.setAccessible(true);
@@ -239,9 +247,7 @@ public abstract class Wildcard extends WildcardModel {
     }
 
     /**
-     * Generates a hash code for a sequence of property values. The hash code is generated as if all
-     * the property values were placed into an array, and that array were hashed by calling
-     * Arrays.hashCode(Object[]).
+     * Generates a hash code for a sequence of property values. The hash code is generated as if all the property values were placed into an array, and that array were hashed by calling Arrays.hashCode(Object[]). 
      *
      * @return A hash value of the sequence of property values.
      */
@@ -251,9 +257,7 @@ public abstract class Wildcard extends WildcardModel {
     }
 
     /**
-     * Returns true if the all properties are equal to each other and false otherwise. Consequently,
-     * if both properties are null, true is returned and if exactly one property is null, false is
-     * returned. Otherwise, equality is determined by using the equals method of the base model.
+     * Returns true if the all properties are equal to each other and false otherwise. Consequently, if both properties are null, true is returned and if exactly one property is null, false is returned. Otherwise, equality is determined by using the equals method of the base model. 
      *
      * @return true if the all properties are equal to each other and false otherwise.
      */
@@ -272,10 +276,10 @@ public abstract class Wildcard extends WildcardModel {
     }
 
     /** The singleton builder. */
-    public static final Ìnstantiator<?> with = new Ìnstantiator();
+    public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Namespace for {@link Wildcard} builder methods.
+     * Namespace for {@link Wildcard}  builder methods.
      */
     public static final class Ìnstantiator<Self extends Wildcard & ÅssignableÅrbitrary<Self>> {
 
@@ -306,17 +310,6 @@ public abstract class Wildcard extends WildcardModel {
          */
         public final Self superType(List<? super Integer> value) {
             return create().superType(value);
-        }
-
-        /**
-         * Create initialized {@link Wildcard} with superType property.
-         *
-         * @param value A value to assign.
-         * @return A initialized model.
-         */
-        public final Self addSuperType(Integer value) {
-            ((Wildcard) this).superType.add(value);
-            return (Next) this;
         }
 
         /**
@@ -368,16 +361,6 @@ public abstract class Wildcard extends WildcardModel {
         }
 
         /**
-         * Assign superType property.
-         * 
-         * @return The next assignable model.
-         */
-        default Next addSuperType(Integer value) {
-            ((Wildcard) this).superType.add(value);
-            return (Next) this;
-        }
-
-        /**
          * Assign wildcard property.
          * 
          * @param value A new value to assign.
@@ -417,11 +400,8 @@ public abstract class Wildcard extends WildcardModel {
      */
     static final class My {
         static final String ExtendType = "extendType";
-
         static final String SuperType = "superType";
-
         static final String Wildcard = "wildcard";
-
         static final String Combine = "combine";
     }
 }

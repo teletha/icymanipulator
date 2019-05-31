@@ -9,6 +9,8 @@
  */
 package icy.manipulator.property.collection;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -24,6 +26,6 @@ class ListTest {
 
     @Test
     void property() {
-        List addValues = List.with.name("name").addValues("").addValues("").addValues("").age(12);
+        List addValues = List.with.name("name").values(new ArrayList<>()).addValues("ok").addValues("").age(15);
     }
 }

@@ -153,7 +153,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
          * 
          * @return The next assignable model.
          */
-        public final <R1 extends ÅssignableAge<R2>, R2 extends ÅssignableNickname<Self>> ÅssignableStand<R1> name(String name) {
+        public final ÅssignableStand<ÅssignableAge<ÅssignableNickname<Self>>> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;

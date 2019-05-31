@@ -233,7 +233,7 @@ public abstract class List extends ListModel {
          * 
          * @return The next assignable model.
          */
-        public final <R1 extends ÅssignableAge<Self> & ÅssignableValues<R1>> ÅssignableValues<R1> name(String name) {
+        public final ÅssignableValues<ÅssignableAge<Self>> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;
@@ -270,16 +270,6 @@ public abstract class List extends ListModel {
          */
         default Next values(java.util.List<String> value) {
             ((List) this).setValues(value);
-            return (Next) this;
-        }
-
-        /**
-         * Assign values property.
-         * 
-         * @return The next assignable model.
-         */
-        default Next addValues(String value) {
-            ((List) this).values.add(value);
             return (Next) this;
         }
     }

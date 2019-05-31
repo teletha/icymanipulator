@@ -233,7 +233,7 @@ public abstract class Multiple extends MultipleModel {
          * 
          * @return The next assignable model.
          */
-        public final <R1 extends ÅssignableAge<Self>> ÅssignableStand<R1> name(String name) {
+        public final ÅssignableStand<ÅssignableAge<Self>> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;
