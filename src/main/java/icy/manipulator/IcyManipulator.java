@@ -603,13 +603,19 @@ public class IcyManipulator extends AptyProcessor {
          * Define assignable interfaces.
          */
         private void defineAssignableInterfaces() {
-            for (PropertyInfo p : m.ownRequiredProperties()) {
+            List<PropertyInfo> requireds = m.ownRequiredProperties();
+
+            for (int i = 0; i < requireds.size(); i++) {
+                PropertyInfo now = requireds.get(i);
+                PropertyInfo prev = i == 0 ? null : requireds.get(i - 1);
+
                 write();
                 write("/**");
                 write(" * Property assignment API.");
                 write(" */");
-                write("public static interface ", p.assignableInterfaceName(), "<Next>", () -> {
-                    defineAssignableSetter(p);
+                write("public static interface ", now.assignableInterfaceName(), "<Next>", () -> {
+                    defineAssignableSetter(now);
+                    repeater(prev, now.assignableInterfaceName() + "<Next>");
                 });
             }
         }
@@ -625,7 +631,10 @@ public class IcyManipulator extends AptyProcessor {
             write(" * Property assignment API.");
             write(" */");
             write("public static interface ", ArbitraryInterface, "<Next extends ", m.implType, ">", extend, () -> {
-                m.ownArbitraryProperties().forEach(this::defineAssignableSetter);
+                m.ownArbitraryProperties().forEach(p -> {
+                    defineAssignableSetter(p);
+                    repeater(p, "Next");
+                });
             });
         }
 
@@ -706,6 +715,28 @@ public class IcyManipulator extends AptyProcessor {
                     });
                 });
             });
+        }
+
+        /**
+         * Write repeatable method.
+         * 
+         * @param p
+         * @param api
+         */
+        private void repeater(PropertyInfo p, String next) {
+            if (p != null && p.repeatable) {
+                write();
+                write("/**");
+                write(" * Assign ", p.name, " property.");
+                write(" * ");
+                write(" * @param value A new value to assign.");
+                write(" * @return The next assignable model.");
+                write(" */");
+                write("default ", next, " add", p.capitalizeName(), "(", p.type.variables.get(0).stripWild(), " value)", () -> {
+                    write("((", m.implType, ") this).", p.name, ".add(value);");
+                    write("return (", next, ") this;");
+                });
+            }
         }
 
         /**

@@ -289,6 +289,17 @@ public abstract class List extends ListModel {
             ((List) this).setAge(value);
             return (Next) this;
         }
+
+        /**
+         * Assign values property.
+         * 
+         * @param value A new value to assign.
+         * @return The next assignable model.
+         */
+        default ÅssignableAge<Next> addValues(String value) {
+            ((List) this).values.add(value);
+            return (ÅssignableAge<Next>) this;
+        }
     }
 
     /**

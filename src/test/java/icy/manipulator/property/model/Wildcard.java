@@ -361,6 +361,17 @@ public abstract class Wildcard extends WildcardModel {
         }
 
         /**
+         * Assign superType property.
+         * 
+         * @param value A new value to assign.
+         * @return The next assignable model.
+         */
+        default Next addSuperType(Integer value) {
+            ((Wildcard) this).superType.add(value);
+            return (Next) this;
+        }
+
+        /**
          * Assign wildcard property.
          * 
          * @param value A new value to assign.
