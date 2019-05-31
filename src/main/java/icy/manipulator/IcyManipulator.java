@@ -14,16 +14,22 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.function.UnaryOperator;
 
 import javax.annotation.processing.Generated;
+import javax.lang.model.element.AnnotationValue;
+import javax.lang.model.element.Element;
+import javax.lang.model.type.DeclaredType;
 
 import apty.Apty;
 import apty.AptyProcessor;
+import apty.Fail;
 import apty.Modifiers;
 import apty.code.Coder;
 import icy.manipulator.util.Lists;
@@ -43,13 +49,40 @@ public class IcyManipulator extends AptyProcessor {
     /** The configuration interface name for arbitrary perperties. */
     static final String ArbitraryInterface = Assignable + "Årbitrary";
 
+    /** The type container. */
+    private static final Map<Class, DeclaredType> builtins = new HashMap();
+
     /**
      * 
      */
     public IcyManipulator() {
         process(Icy.class, element -> {
+            peek(element);
+
             writeSourceFileBy(new IcyCoder(new ModelInfo(element)));
         });
+    }
+
+    /**
+     * Cheat to retrieve various Java API's types.
+     * 
+     * @param element
+     */
+    private void peek(Element element) {
+        try {
+            Method method = Icy.class.getMethod("ϻ");
+            Class[] classes = (Class[]) method.getDefaultValue();
+            List<AnnotationValue> types = (List<AnnotationValue>) Apty.annotationValue(element, Icy.class, "ϻ").orElseThrow().getValue();
+
+            for (int i = 0; i < classes.length; i++) {
+                Class clazz = classes[i];
+                DeclaredType type = (DeclaredType) types.get(i).getValue();
+
+                builtins.put(clazz, type);
+            }
+        } catch (Exception e) {
+            throw new Fail(element, e);
+        }
     }
 
     /**
@@ -615,7 +648,7 @@ public class IcyManipulator extends AptyProcessor {
                 write(" */");
                 write("public static interface ", now.assignableInterfaceName(), "<Next>", () -> {
                     defineAssignableSetter(now);
-                    repeater(prev, now.assignableInterfaceName() + "<Next>");
+                    repeatList(prev, now.assignableInterfaceName() + "<Next>");
                 });
             }
         }
@@ -633,7 +666,7 @@ public class IcyManipulator extends AptyProcessor {
             write("public static interface ", ArbitraryInterface, "<Next extends ", m.implType, ">", extend, () -> {
                 m.ownArbitraryProperties().forEach(p -> {
                     defineAssignableSetter(p);
-                    repeater(p, "Next");
+                    repeatList(p, "Next");
                 });
             });
         }
@@ -723,7 +756,7 @@ public class IcyManipulator extends AptyProcessor {
          * @param p
          * @param api
          */
-        private void repeater(PropertyInfo p, String next) {
+        private void repeatList(PropertyInfo p, String next) {
             if (p != null && p.repeatable) {
                 write();
                 write("/**");

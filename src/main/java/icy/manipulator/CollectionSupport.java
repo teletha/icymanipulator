@@ -9,7 +9,7 @@
  */
 package icy.manipulator;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +29,9 @@ class CollectionSupport {
     private static final Map<Type, CollectionSupport> supports = new HashMap();
 
     static {
-        new CollectionSupport(Type.of(List.class), p -> p.type.variables.get(0), Type.of(ArrayList.class), "add");
+        new CollectionSupport(Type.of(List.class)) //
+                .register("add$", "add", p -> p.type.variables.get(0))
+                .register("add$All", "addAll", p -> Type.of(Collection.class));
     }
 
     /**
@@ -45,15 +47,6 @@ class CollectionSupport {
     /** The optional type. */
     final Type type;
 
-    /** The type extractor. */
-    final Function<PropertyInfo, Type> extractor;
-
-    /** The empty method name. */
-    final Type impl;
-
-    /** The value method name. */
-    final String collectMethod;
-
     /**
      * Register support.
      * 
@@ -62,12 +55,13 @@ class CollectionSupport {
      * @param noneMethodName
      * @param collectMethod
      */
-    private CollectionSupport(Type optionalType, Function<PropertyInfo, Type> extractType, Type impl, String collectMethod) {
+    private CollectionSupport(Type optionalType) {
         this.type = Objects.requireNonNull(optionalType);
-        this.extractor = Objects.requireNonNull(extractType);
-        this.impl = Objects.requireNonNull(impl);
-        this.collectMethod = Objects.requireNonNull(collectMethod);
 
         supports.put(optionalType, this);
+    }
+
+    private CollectionSupport register(String methodName, String impleMethodName, Function<PropertyInfo, Type> prameterType) {
+        return this;
     }
 }

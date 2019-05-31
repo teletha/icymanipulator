@@ -27,4 +27,15 @@ public class Fail extends RuntimeException {
         super(message);
         this.e = e;
     }
+
+    /**
+     * Throw failure with message.
+     * 
+     * @param e
+     * @param cause
+     */
+    public Fail(Element e, Throwable cause) {
+        super(cause);
+        this.e = e;
+    }
 }
