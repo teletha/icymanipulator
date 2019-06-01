@@ -44,6 +44,9 @@ public class MethodInfo implements Codable {
     /** The user defined overload method. */
     public final boolean userDefiend;
 
+    /** The data storage for user. */
+    public String userInfo;
+
     /**
      * @param element
      */

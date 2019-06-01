@@ -758,13 +758,11 @@ public class IcyManipulator extends AptyProcessor {
          * Write repeatable method.
          * 
          * @param p
-         * @param api
+         * @param next
          */
         private void repeatList(PropertyInfo p, String next) {
             if (p != null) {
-                p.repeatable.stream().flatMap(s -> s.methods.stream()).forEach(m -> {
-                    MethodInfo method = m.method(p);
-
+                p.repeatable.stream().flatMap(s -> s.computeMethodsFor(p)).forEach(method -> {
                     write();
                     write("/**");
                     write(" * Assign ", p.name, " property.");
@@ -773,7 +771,7 @@ public class IcyManipulator extends AptyProcessor {
                     write(" * @return The next assignable model.");
                     write(" */");
                     write("default ", next, " ", method, () -> {
-                        write("((", this.m.implType, ") this).", p.name, ".", m.delegationMethodName(p), "(", method.paramNames, ");");
+                        write("((", this.m.implType, ") this).", p.name, ".", method.userInfo, "(", method.paramNames, ");");
                         write("return (", next, ") this;");
                     });
                 });

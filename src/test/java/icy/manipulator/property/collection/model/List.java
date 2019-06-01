@@ -297,8 +297,8 @@ public abstract class List extends ListModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default ÅssignableAge<Next> addValues(String value) {
-            ((List) this).values.add(value);
+        default ÅssignableAge<Next> addValues(String value1) {
+            ((List) this).values.add(value1);
             return (ÅssignableAge<Next>) this;
         }
 
@@ -308,8 +308,8 @@ public abstract class List extends ListModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default ÅssignableAge<Next> addValuesAll(Collection<? extends String> value) {
-            ((List) this).values.addAll(value);
+        default ÅssignableAge<Next> addValuesAll(Collection<? extends String> value1) {
+            ((List) this).values.addAll(value1);
             return (ÅssignableAge<Next>) this;
         }
     }

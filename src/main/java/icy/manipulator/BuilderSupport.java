@@ -19,6 +19,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
@@ -27,19 +28,19 @@ import apty.Apty;
 import apty.code.Type;
 
 /**
- * Built-in support for {@link Optional} like classes.
+ * Built-in support for builder assistants.
  */
-class RepeatableSupport {
+class BuilderSupport {
 
     /** The built-in support. */
-    private static final Map<DeclaredType, RepeatableSupport> supports = new HashMap();
+    private static final Map<DeclaredType, BuilderSupport> supports = new HashMap();
 
     static {
-        new RepeatableSupport(Collection.class) //
+        new BuilderSupport(Collection.class) //
                 .register("add$", "add", p -> p.type.variables.subList(0, 1))
                 .register("add$All", "addAll", p -> List.of(Type.of(Collection.class, Type.wildcardExtend(p.type.variables.get(0)))));
 
-        new RepeatableSupport(Map.class) //
+        new BuilderSupport(Map.class) //
                 .register("put$", "put", p -> p.type.variables.subList(0, 2))
                 .register("put$All", "putAll", p -> List.of(p.type));
     }
@@ -50,15 +51,15 @@ class RepeatableSupport {
      * @param type
      * @return
      */
-    static final Optional<RepeatableSupport> by(TypeMirror type) {
+    static final Optional<BuilderSupport> by(TypeMirror type) {
         return supports.entrySet().stream().filter(e -> Apty.isSubType(type, e.getKey())).map(Entry::getValue).findFirst();
     }
 
     /** The optional type. */
-    final DeclaredType type;
+    private final DeclaredType type;
 
     /** The method holder. */
-    final List<RepeatableMethod> methods = new ArrayList();
+    private final List<RepeatableMethod> methods = new ArrayList();
 
     /**
      * Register support.
@@ -68,7 +69,7 @@ class RepeatableSupport {
      * @param noneMethodName
      * @param collectMethod
      */
-    private RepeatableSupport(Class type) {
+    private BuilderSupport(Class type) {
         this.type = IcyManipulator.by(type);
 
         supports.put(this.type, this);
@@ -82,15 +83,35 @@ class RepeatableSupport {
      * @param paramTypeExtractor
      * @return
      */
-    private RepeatableSupport register(String implemetMethodNamePattern, String delegationMethodName, Function<PropertyInfo, List<Type>> paramTypeExtractor) {
+    private BuilderSupport register(String implemetMethodNamePattern, String delegationMethodName, Function<PropertyInfo, List<Type>> paramTypeExtractor) {
         methods.add(new RepeatableMethod(implemetMethodNamePattern, delegationMethodName, paramTypeExtractor));
         return this;
     }
 
     /**
+     * Compute the methods for the property.
+     * 
+     * @param property
+     * @return
+     */
+    Stream<MethodInfo> computeMethodsFor(PropertyInfo property) {
+        return methods.stream().map(m -> {
+            AtomicInteger index = new AtomicInteger();
+            String name = m.implemetMethodNamePattern.replace("$", property.capitalizeName());
+            List<Type> types = m.paramTypeExtractor.apply(property).stream().map(Type::stripWild).collect(Collectors.toList());
+            List<String> names = types.stream().map(t -> "value" + index.incrementAndGet()).collect(Collectors.toList());
+
+            MethodInfo method = new MethodInfo(name, Type.of(void.class), types, names, "");
+            method.userInfo = m.delegationMethodName;
+
+            return method;
+        });
+    }
+
+    /**
      * 
      */
-    static class RepeatableMethod {
+    private static class RepeatableMethod {
 
         /** The implemetation method name pattern. */
         private final String implemetMethodNamePattern;
@@ -102,6 +123,8 @@ class RepeatableSupport {
         private final Function<PropertyInfo, List<Type>> paramTypeExtractor;
 
         /**
+         * Holder.
+         * 
          * @param implemetMethodNamePattern
          * @param delegationMethodName
          * @param paramTypeExtractor
@@ -110,25 +133,6 @@ class RepeatableSupport {
             this.implemetMethodNamePattern = implemetMethodNamePattern;
             this.delegationMethodName = delegationMethodName;
             this.paramTypeExtractor = paramTypeExtractor;
-        }
-
-        /**
-         * Calculate the method for the property.
-         * 
-         * @param property
-         * @return
-         */
-        MethodInfo method(PropertyInfo property) {
-            AtomicInteger index = new AtomicInteger();
-            String name = implemetMethodNamePattern.replace("$", property.capitalizeName());
-            List<Type> types = paramTypeExtractor.apply(property).stream().map(Type::stripWild).collect(Collectors.toList());
-            List<String> names = types.stream().map(t -> "value" + index.incrementAndGet()).collect(Collectors.toList());
-
-            return new MethodInfo(name, Type.of(void.class), types, names, "");
-        }
-
-        String delegationMethodName(PropertyInfo property) {
-            return delegationMethodName;
         }
     }
 }
