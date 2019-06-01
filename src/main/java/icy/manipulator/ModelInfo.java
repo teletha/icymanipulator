@@ -471,7 +471,7 @@ public class ModelInfo {
             if (types.isEmpty()) {
                 types.add(current.assignableInterfaceName() + "<" + nextType + ">");
             } else {
-                String postfix = prev.repeatable.isPresent() ? " & " + prev.assignableInterfaceName() + "<" + currentType + ">" : "";
+                String postfix = prev.assist.isPresent() ? " & " + prev.assignableInterfaceName() + "<" + currentType + ">" : "";
                 types.add(currentType + " extends " + current.assignableInterfaceName() + "<" + nextType + ">" + postfix);
             }
         }

@@ -657,7 +657,7 @@ public class IcyManipulator extends AptyProcessor {
                 write(" */");
                 write("public static interface ", now.assignableInterfaceName(), "<Next>", () -> {
                     defineAssignableSetter(now);
-                    repeatList(prev, now.assignableInterfaceName() + "<Next>");
+                    assistBuilder(prev, now.assignableInterfaceName() + "<Next>");
                 });
             }
         }
@@ -675,7 +675,7 @@ public class IcyManipulator extends AptyProcessor {
             write("public static interface ", ArbitraryInterface, "<Next extends ", m.implType, ">", extend, () -> {
                 m.ownArbitraryProperties().forEach(p -> {
                     defineAssignableSetter(p);
-                    repeatList(p, "Next");
+                    assistBuilder(p, "Next");
                 });
             });
         }
@@ -760,9 +760,9 @@ public class IcyManipulator extends AptyProcessor {
          * @param p
          * @param next
          */
-        private void repeatList(PropertyInfo p, String next) {
+        private void assistBuilder(PropertyInfo p, String next) {
             if (p != null) {
-                p.repeatable.stream().flatMap(s -> s.computeMethodsFor(p)).forEach(method -> {
+                p.assist.stream().flatMap(s -> s.computeMethodsFor(p)).forEach(method -> {
                     write();
                     write("/**");
                     write(" * Assign ", p.name, " property.");

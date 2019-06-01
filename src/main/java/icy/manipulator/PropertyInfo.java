@@ -45,7 +45,7 @@ public class PropertyInfo {
     public final boolean copiable;
 
     /** The property type. */
-    public final Optional<BuilderSupport> repeatable;
+    public final Optional<BuilderSupport> assist;
 
     /** The proeprty type. */
     public final boolean autoExpandable;
@@ -66,7 +66,7 @@ public class PropertyInfo {
         this.element = method;
         this.name = method.getSimpleName().toString();
         this.type = Type.of(method.getReturnType());
-        this.repeatable = BuilderSupport.by(method.getReturnType());
+        this.assist = BuilderSupport.by(method.getReturnType());
         this.arbitrary = !method.getModifiers().contains(Modifier.ABSTRACT) || OptionalSupport.by(type).isPresent();
 
         Property annotation = method.getAnnotation(Icy.Property.class);
