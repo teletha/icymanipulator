@@ -15,11 +15,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.Collection;
-import java.util.Deque;
-import java.util.List;
 import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
 import java.util.function.Supplier;
 
 @Documented
@@ -91,7 +87,7 @@ public @interface Icy {
      * 
      * @return DONT TOUCH ME!
      */
-    Class[] ϻ() default {Collection.class, List.class, Set.class, Map.class, Queue.class, Deque.class};
+    Class[] ϻ() default {Collection.class, Map.class};
 
     @Documented
     @Target(ElementType.METHOD)

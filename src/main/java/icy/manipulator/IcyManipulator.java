@@ -85,6 +85,15 @@ public class IcyManipulator extends AptyProcessor {
         }
     }
 
+    static final DeclaredType by(Class type) {
+        DeclaredType declaredType = builtins.get(type);
+
+        if (declaredType == null) {
+            throw new Error(type + " is not found.");
+        }
+        return declaredType;
+    }
+
     /**
      * 
      */
@@ -737,15 +746,10 @@ public class IcyManipulator extends AptyProcessor {
             OptionalSupport.by(p.type).ifPresentOrElse(s -> {
                 write("return ", p.name, "(", s.type, ".", s.someMethod, "(", m.paramNames.get(0), "));");
             }, () -> {
-                CollectionSupport.by(p.type).ifPresentOrElse(s -> {
-                    write("((", this.m.implType, ") this).", p.name, ".", s.collectMethod, "(", m.paramNames.get(0), ");");
-                    write("return (Next) this;");
-                }, () -> {
-                    writeTry(() -> {
-                        write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", m.namesWithHead("this"), "));");
-                    }, Throwable.class, e -> {
-                        write("throw quiet(", e, ");");
-                    });
+                writeTry(() -> {
+                    write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", m.namesWithHead("this"), "));");
+                }, Throwable.class, e -> {
+                    write("throw quiet(", e, ");");
                 });
             });
         }
@@ -757,17 +761,21 @@ public class IcyManipulator extends AptyProcessor {
          * @param api
          */
         private void repeatList(PropertyInfo p, String next) {
-            if (p != null && p.repeatable) {
-                write();
-                write("/**");
-                write(" * Assign ", p.name, " property.");
-                write(" * ");
-                write(" * @param value A new value to assign.");
-                write(" * @return The next assignable model.");
-                write(" */");
-                write("default ", next, " add", p.capitalizeName(), "(", p.type.variables.get(0).stripWild(), " value)", () -> {
-                    write("((", m.implType, ") this).", p.name, ".add(value);");
-                    write("return (", next, ") this;");
+            if (p != null) {
+                p.repeatable.stream().flatMap(s -> s.methods.stream()).forEach(m -> {
+                    MethodInfo method = m.method(p);
+
+                    write();
+                    write("/**");
+                    write(" * Assign ", p.name, " property.");
+                    write(" * ");
+                    write(" * @param value A new value to assign.");
+                    write(" * @return The next assignable model.");
+                    write(" */");
+                    write("default ", next, " ", method, () -> {
+                        write("((", this.m.implType, ") this).", p.name, ".", m.delegationMethodName(p), "(", method.paramNames, ");");
+                        write("return (", next, ") this;");
+                    });
                 });
             }
         }

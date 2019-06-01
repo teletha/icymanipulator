@@ -1,7 +1,8 @@
 package icy.manipulator.property.collection.model;
 
-import icy.manipulator.property.collection.model.List;
-import icy.manipulator.property.collection.model.ListModel;
+import icy.manipulator.property.collection.model.Map;
+import icy.manipulator.property.collection.model.MapModel;
+import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -9,15 +10,14 @@ import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
-import java.util.Collection;
 import java.util.Objects;
 import javax.annotation.processing.Generated;
 
 /**
- * Generated model for {@link ListModel}.
+ * Generated model for {@link MapModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class List extends ListModel {
+public abstract class Map extends MapModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -39,7 +39,7 @@ public abstract class List extends ListModel {
      */
     private static final MethodHandle updater(String name)  {
         try {
-            Field field = List.class.getDeclaredField(name);
+            Field field = Map.class.getDeclaredField(name);
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
@@ -48,19 +48,13 @@ public abstract class List extends ListModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle nameUpdater = updater("name");
-
-    /** The final property updater. */
     private static final MethodHandle valuesUpdater = updater("values");
 
     /** The final property updater. */
     private static final MethodHandle ageUpdater = updater("age");
 
     /** The exposed property. */
-    public final String name;
-
-    /** The exposed property. */
-    public final java.util.List<String> values;
+    public final java.util.Map<String, Integer> values;
 
     /** The exposed property. */
     public final int age;
@@ -68,46 +62,9 @@ public abstract class List extends ListModel {
     /**
      * HIDE CONSTRUCTOR
      */
-    protected List() {
-        this.name = null;
+    protected Map() {
         this.values = null;
         this.age = 0;
-    }
-
-    /**
-     * Return the name property.
-     *
-     * @return A value of name property.
-     */
-    @Override
-    public final String name() {
-        return this.name;
-    }
-
-    /**
-     * Provide classic getter API.
-     *
-     * @return A value of name property.
-     */
-    @SuppressWarnings("unused")
-    private final String getName() {
-        return this.name;
-    }
-
-    /**
-     * Provide classic setter API.
-     *
-     * @paran value A new value of name property to assign.
-     */
-    private final void setName(String value) {
-        if (value == null) {
-            throw new IllegalArgumentException("The name property requires non-null value.");
-        }
-        try {
-            nameUpdater.invoke(this, value);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
     }
 
     /**
@@ -116,7 +73,7 @@ public abstract class List extends ListModel {
      * @return A value of values property.
      */
     @Override
-    public final java.util.List<String> values() {
+    public final java.util.Map<String, Integer> values() {
         return this.values;
     }
 
@@ -126,7 +83,7 @@ public abstract class List extends ListModel {
      * @return A value of values property.
      */
     @SuppressWarnings("unused")
-    private final java.util.List<String> getValues() {
+    private final java.util.Map<String, Integer> getValues() {
         return this.values;
     }
 
@@ -135,7 +92,7 @@ public abstract class List extends ListModel {
      *
      * @paran value A new value of values property to assign.
      */
-    private final void setValues(java.util.List<String> value) {
+    private final void setValues(java.util.Map<String, Integer> value) {
         if (value == null) {
             throw new IllegalArgumentException("The values property requires non-null value.");
         }
@@ -186,8 +143,7 @@ public abstract class List extends ListModel {
      */
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder("List [");
-        builder.append("name=").append(name).append(", ");
+        StringBuilder builder = new StringBuilder("Map [");
         builder.append("values=").append(values).append(", ");
         builder.append("age=").append(age).append("]");
         return builder.toString();
@@ -200,7 +156,7 @@ public abstract class List extends ListModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(name, values, age);
+        return Objects.hash(values, age);
     }
 
     /**
@@ -210,12 +166,11 @@ public abstract class List extends ListModel {
      */
     @Override
     public boolean equals(Object o) {
-        if (o instanceof List == false) {
+        if (o instanceof Map == false) {
             return false;
         }
 
-        List other = (List) o;
-        if (!Objects.equals(name, other.name)) return false;
+        Map other = (Map) o;
         if (!Objects.equals(values, other.values)) return false;
         if (age != other.age) return false;
         return true;
@@ -225,36 +180,19 @@ public abstract class List extends ListModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Namespace for {@link List}  builder methods.
+     * Namespace for {@link Map}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends List & ÅssignableÅrbitrary<Self>> {
+    public static final class Ìnstantiator<Self extends Map & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new {@link List} with the specified name property.
+         * Create new {@link Map} with the specified values property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableValues<ÅssignableAge<Self>> name(String name) {
+        public final ÅssignableAge<Self> values(java.util.Map<String, Integer> values) {
             Åssignable o = new Åssignable();
-            o.name(name);
+            o.values(values);
             return o;
-        }
-    }
-
-    /**
-     * Property assignment API.
-     */
-    public static interface ÅssignableName<Next> {
-
-        /**
-         * Assign name property.
-         * 
-         * @param value A new value to assign.
-         * @return The next assignable model.
-         */
-        default Next name(String value) {
-            ((List) this).setName(value);
-            return (Next) this;
         }
     }
 
@@ -269,8 +207,8 @@ public abstract class List extends ListModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next values(java.util.List<String> value) {
-            ((List) this).setValues(value);
+        default Next values(java.util.Map<String, Integer> value) {
+            ((Map) this).setValues(value);
             return (Next) this;
         }
     }
@@ -287,7 +225,7 @@ public abstract class List extends ListModel {
          * @return The next assignable model.
          */
         default Next age(int value) {
-            ((List) this).setAge(value);
+            ((Map) this).setAge(value);
             return (Next) this;
         }
 
@@ -297,8 +235,8 @@ public abstract class List extends ListModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default ÅssignableAge<Next> addValues(String value) {
-            ((List) this).values.add(value);
+        default ÅssignableAge<Next> putValues(String value1, Integer value2) {
+            ((Map) this).values.put(value1, value2);
             return (ÅssignableAge<Next>) this;
         }
 
@@ -308,8 +246,8 @@ public abstract class List extends ListModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default ÅssignableAge<Next> addValuesAll(Collection<? extends String> value) {
-            ((List) this).values.addAll(value);
+        default ÅssignableAge<Next> putValuesAll(java.util.Map<String, Integer> value1) {
+            ((Map) this).values.putAll(value1);
             return (ÅssignableAge<Next>) this;
         }
     }
@@ -317,26 +255,25 @@ public abstract class List extends ListModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends List> {
+    public static interface ÅssignableÅrbitrary<Next extends Map> {
     }
 
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableName, ÅssignableValues, ÅssignableAge {
+    protected static interface ÅssignableAll extends ÅssignableValues, ÅssignableAge {
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends List implements ÅssignableAll, ÅssignableÅrbitrary {
+    private static final class Åssignable extends Map implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**
      * The identifier for properties.
      */
     static final class My {
-        static final String Name = "name";
         static final String Values = "values";
         static final String Age = "age";
     }

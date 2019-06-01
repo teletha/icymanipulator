@@ -306,6 +306,26 @@ public class Type implements Codable {
     }
 
     /**
+     * Build {@link Type} of upper bounded wildcard.
+     * 
+     * @param type The bounded type.
+     * @return The created {@link Type}.
+     */
+    public static final Type wildcardExtend(Type type) {
+        return new Type("", "? extends ", List.of(type), TypeKind.WILDCARD);
+    }
+
+    /**
+     * Build {@link Type} of lower bounded wildcard.
+     * 
+     * @param type The bounded type.
+     * @return The created {@link Type}.
+     */
+    public static final Type wildcardSuper(Type type) {
+        return new Type("", "? super ", List.of(type), TypeKind.WILDCARD);
+    }
+
+    /**
      * Build {@link Type} from the class name.
      * 
      * @param fqcn A fully qualified class name.
@@ -321,11 +341,11 @@ public class Type implements Codable {
      * @param type A base type.
      * @return The created {@link Type}.
      */
-    public static final Type of(Class type) {
+    public static final Type of(Class type, Type... variables) {
         if (type.isPrimitive()) {
-            return new Type(type.getName(), List.of(), TypeKind.valueOf(type.getName().toUpperCase()));
+            return new Type(type.getName(), List.of(variables), TypeKind.valueOf(type.getName().toUpperCase()));
         } else {
-            return new Type(type.getName(), List.of(), TypeKind.DECLARED);
+            return new Type(type.getName(), List.of(variables), TypeKind.DECLARED);
         }
     }
 

@@ -26,6 +26,18 @@ class ListTest {
 
     @Test
     void property() {
-        List addValues = List.with.name("name").values(new ArrayList<>()).addValues("ok").addValues("").age(15);
+        List o = List.with.name("name")
+                .values(new ArrayList<>())
+                .addValues("value")
+                .addValuesAll(java.util.List.of("from", "list"))
+                .addValues("any order")
+                .age(15);
+
+        assert o.name.equals("name");
+        assert o.values.contains("value");
+        assert o.values.contains("from");
+        assert o.values.contains("list");
+        assert o.values.contains("any order");
+        assert o.age == 15;
     }
 }
