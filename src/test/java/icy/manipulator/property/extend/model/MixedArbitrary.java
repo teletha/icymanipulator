@@ -1,8 +1,8 @@
 package icy.manipulator.property.extend.model;
 
+import icy.manipulator.property.base.model.Mixed;
 import icy.manipulator.property.extend.model.MixedArbitrary;
 import icy.manipulator.property.extend.model.MixedArbitraryModel;
-import icy.manipulator.property.model.Mixed;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;

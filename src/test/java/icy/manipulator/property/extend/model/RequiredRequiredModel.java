@@ -10,7 +10,7 @@
 package icy.manipulator.property.extend.model;
 
 import icy.manipulator.Icy;
-import icy.manipulator.property.model.Multiple;
+import icy.manipulator.property.base.model.Multiple;
 
 @Icy
 public abstract class RequiredRequiredModel extends Multiple {

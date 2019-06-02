@@ -10,7 +10,7 @@
 package icy.manipulator.property.extend.model;
 
 import icy.manipulator.Icy;
-import icy.manipulator.property.model.Mixed;
+import icy.manipulator.property.base.model.Mixed;
 
 @Icy
 public abstract class MixedArbitraryModel extends Mixed {

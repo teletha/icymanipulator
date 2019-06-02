@@ -1,8 +1,7 @@
-package icy.manipulator.property.extend.model;
+package icy.manipulator.property.base.model;
 
-import icy.manipulator.property.base.model.Mixed;
-import icy.manipulator.property.extend.model.MixedRequired;
-import icy.manipulator.property.extend.model.MixedRequiredModel;
+import icy.manipulator.property.base.model.InterfaceArbitrary;
+import icy.manipulator.property.base.model.InterfaceArbitraryModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -14,10 +13,10 @@ import java.util.Objects;
 import javax.annotation.processing.Generated;
 
 /**
- * Generated model for {@link MixedRequiredModel}.
+ * Generated model for {@link InterfaceArbitraryModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class MixedRequired extends MixedRequiredModel {
+public abstract class InterfaceArbitrary implements InterfaceArbitraryModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -39,7 +38,7 @@ public abstract class MixedRequired extends MixedRequiredModel {
      */
     private static final MethodHandle updater(String name)  {
         try {
-            Field field = MixedRequired.class.getDeclaredField(name);
+            Field field = InterfaceArbitrary.class.getDeclaredField(name);
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
@@ -48,49 +47,49 @@ public abstract class MixedRequired extends MixedRequiredModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle zipUpdater = updater("zip");
+    private static final MethodHandle optionalUpdater = updater("optional");
 
     /** The exposed property. */
-    public final String zip;
+    public final String optional;
 
     /**
      * HIDE CONSTRUCTOR
      */
-    protected MixedRequired() {
-        this.zip = null;
+    protected InterfaceArbitrary() {
+        this.optional = InterfaceArbitraryModel.super.optional();
     }
 
     /**
-     * Return the zip property.
+     * Return the optional property.
      *
-     * @return A value of zip property.
+     * @return A value of optional property.
      */
     @Override
-    public final String zip() {
-        return this.zip;
+    public final String optional() {
+        return this.optional;
     }
 
     /**
      * Provide classic getter API.
      *
-     * @return A value of zip property.
+     * @return A value of optional property.
      */
     @SuppressWarnings("unused")
-    private final String getZip() {
-        return this.zip;
+    private final String getOptional() {
+        return this.optional;
     }
 
     /**
      * Provide classic setter API.
      *
-     * @paran value A new value of zip property to assign.
+     * @paran value A new value of optional property to assign.
      */
-    private final void setZip(String value) {
+    private final void setOptional(String value) {
         if (value == null) {
-            throw new IllegalArgumentException("The zip property requires non-null value.");
+            value = InterfaceArbitraryModel.super.optional();
         }
         try {
-            zipUpdater.invoke(this, value);
+            optionalUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -103,12 +102,8 @@ public abstract class MixedRequired extends MixedRequiredModel {
      */
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder("MixedRequired [");
-        builder.append("name=").append(name).append(", ");
-        builder.append("age=").append(age).append(", ");
-        builder.append("zip=").append(zip).append(", ");
-        builder.append("optionAddress=").append(optionAddress).append(", ");
-        builder.append("optionCommnet=").append(optionCommnet).append("]");
+        StringBuilder builder = new StringBuilder("InterfaceArbitrary [");
+        builder.append("optional=").append(optional).append("]");
         return builder.toString();
     }
 
@@ -119,7 +114,7 @@ public abstract class MixedRequired extends MixedRequiredModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(name, age, zip, optionAddress, optionCommnet);
+        return Objects.hash(optional);
     }
 
     /**
@@ -129,16 +124,12 @@ public abstract class MixedRequired extends MixedRequiredModel {
      */
     @Override
     public boolean equals(Object o) {
-        if (o instanceof MixedRequired == false) {
+        if (o instanceof InterfaceArbitrary == false) {
             return false;
         }
 
-        MixedRequired other = (MixedRequired) o;
-        if (!Objects.equals(name, other.name)) return false;
-        if (age != other.age) return false;
-        if (!Objects.equals(zip, other.zip)) return false;
-        if (!Objects.equals(optionAddress, other.optionAddress)) return false;
-        if (!Objects.equals(optionCommnet, other.optionCommnet)) return false;
+        InterfaceArbitrary other = (InterfaceArbitrary) o;
+        if (!Objects.equals(optional, other.optional)) return false;
         return true;
     }
 
@@ -146,61 +137,63 @@ public abstract class MixedRequired extends MixedRequiredModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Namespace for {@link MixedRequired}  builder methods.
+     * Namespace for {@link InterfaceArbitrary}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends MixedRequired & ÅssignableÅrbitrary<Self>> {
+    public static final class Ìnstantiator<Self extends InterfaceArbitrary & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new {@link MixedRequired} with the specified name property.
-         * 
-         * @return The next assignable model.
+         * Create initialized {@link InterfaceArbitrary}.
+         *
+         * @return A initialized model.
          */
-        public final ÅssignableAge<ÅssignableZip<Self>> name(String name) {
-            Åssignable o = new Åssignable();
-            o.name(name);
-            return o;
+        public final Self create() {
+            return (Self) new Åssignable();
+        }
+
+        /**
+         * Create initialized {@link InterfaceArbitrary} with optional property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public final Self optional(String value) {
+            return create().optional(value);
         }
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableZip<Next> {
+    public static interface ÅssignableÅrbitrary<Next extends InterfaceArbitrary> {
 
         /**
-         * Assign zip property.
+         * Assign optional property.
          * 
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next zip(String value) {
-            ((MixedRequired) this).setZip(value);
+        default Next optional(String value) {
+            ((InterfaceArbitrary) this).setOptional(value);
             return (Next) this;
         }
     }
 
     /**
-     * Property assignment API.
-     */
-    public static interface ÅssignableÅrbitrary<Next extends MixedRequired> extends Mixed.ÅssignableÅrbitrary<Next> {
-    }
-
-    /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableZip, Mixed.ÅssignableAll {
+    protected static interface ÅssignableAll {
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends MixedRequired implements ÅssignableAll, ÅssignableÅrbitrary {
+    private static final class Åssignable extends InterfaceArbitrary implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**
      * The identifier for properties.
      */
     static final class My {
-        static final String Zip = "zip";
+        static final String Optional = "optional";
     }
 }

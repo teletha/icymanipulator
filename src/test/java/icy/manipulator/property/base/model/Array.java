@@ -1,8 +1,5 @@
-package icy.manipulator.property.extend.model;
+package icy.manipulator.property.base.model;
 
-import icy.manipulator.property.base.model.Mixed;
-import icy.manipulator.property.extend.model.MixedRequired;
-import icy.manipulator.property.extend.model.MixedRequiredModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -10,14 +7,18 @@ import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Objects;
 import javax.annotation.processing.Generated;
 
+import icy.manipulator.property.base.model.Array;
+import icy.manipulator.property.base.model.ArrayModel;
+
 /**
- * Generated model for {@link MixedRequiredModel}.
+ * Generated model for {@link ArrayModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class MixedRequired extends MixedRequiredModel {
+public abstract class Array extends ArrayModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -39,7 +40,7 @@ public abstract class MixedRequired extends MixedRequiredModel {
      */
     private static final MethodHandle updater(String name)  {
         try {
-            Field field = MixedRequired.class.getDeclaredField(name);
+            Field field = Array.class.getDeclaredField(name);
             field.setAccessible(true);
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
@@ -48,49 +49,49 @@ public abstract class MixedRequired extends MixedRequiredModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle zipUpdater = updater("zip");
+    private static final MethodHandle namesUpdater = updater("names");
 
     /** The exposed property. */
-    public final String zip;
+    public final String[] names;
 
     /**
      * HIDE CONSTRUCTOR
      */
-    protected MixedRequired() {
-        this.zip = null;
+    protected Array() {
+        this.names = null;
     }
 
     /**
-     * Return the zip property.
+     * Return the names property.
      *
-     * @return A value of zip property.
+     * @return A value of names property.
      */
     @Override
-    public final String zip() {
-        return this.zip;
+    public final String[] names() {
+        return this.names;
     }
 
     /**
      * Provide classic getter API.
      *
-     * @return A value of zip property.
+     * @return A value of names property.
      */
     @SuppressWarnings("unused")
-    private final String getZip() {
-        return this.zip;
+    private final String[] getNames() {
+        return this.names;
     }
 
     /**
      * Provide classic setter API.
      *
-     * @paran value A new value of zip property to assign.
+     * @paran value A new value of names property to assign.
      */
-    private final void setZip(String value) {
+    private final void setNames(String[] value) {
         if (value == null) {
-            throw new IllegalArgumentException("The zip property requires non-null value.");
+            throw new IllegalArgumentException("The names property requires non-null value.");
         }
         try {
-            zipUpdater.invoke(this, value);
+            namesUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -103,12 +104,8 @@ public abstract class MixedRequired extends MixedRequiredModel {
      */
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder("MixedRequired [");
-        builder.append("name=").append(name).append(", ");
-        builder.append("age=").append(age).append(", ");
-        builder.append("zip=").append(zip).append(", ");
-        builder.append("optionAddress=").append(optionAddress).append(", ");
-        builder.append("optionCommnet=").append(optionCommnet).append("]");
+        StringBuilder builder = new StringBuilder("Array [");
+        builder.append("names=").append(Arrays.deepToString(names)).append("]");
         return builder.toString();
     }
 
@@ -119,7 +116,7 @@ public abstract class MixedRequired extends MixedRequiredModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(name, age, zip, optionAddress, optionCommnet);
+        return Objects.hash(Arrays.deepHashCode(names));
     }
 
     /**
@@ -129,16 +126,12 @@ public abstract class MixedRequired extends MixedRequiredModel {
      */
     @Override
     public boolean equals(Object o) {
-        if (o instanceof MixedRequired == false) {
+        if (o instanceof Array == false) {
             return false;
         }
 
-        MixedRequired other = (MixedRequired) o;
-        if (!Objects.equals(name, other.name)) return false;
-        if (age != other.age) return false;
-        if (!Objects.equals(zip, other.zip)) return false;
-        if (!Objects.equals(optionAddress, other.optionAddress)) return false;
-        if (!Objects.equals(optionCommnet, other.optionCommnet)) return false;
+        Array other = (Array) o;
+        if (!Objects.deepEquals(names, other.names)) return false;
         return true;
     }
 
@@ -146,35 +139,35 @@ public abstract class MixedRequired extends MixedRequiredModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Namespace for {@link MixedRequired}  builder methods.
+     * Namespace for {@link Array}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends MixedRequired & ÅssignableÅrbitrary<Self>> {
+    public static final class Ìnstantiator<Self extends Array & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new {@link MixedRequired} with the specified name property.
+         * Create new {@link Array} with the specified names property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableAge<ÅssignableZip<Self>> name(String name) {
+        public final Self names(String... names) {
             Åssignable o = new Åssignable();
-            o.name(name);
-            return o;
+            o.names(names);
+            return (Self)o;
         }
     }
 
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableZip<Next> {
+    public static interface ÅssignableNames<Next> {
 
         /**
-         * Assign zip property.
+         * Assign names property.
          * 
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next zip(String value) {
-            ((MixedRequired) this).setZip(value);
+        default Next names(String... value) {
+            ((Array) this).setNames(value);
             return (Next) this;
         }
     }
@@ -182,25 +175,25 @@ public abstract class MixedRequired extends MixedRequiredModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends MixedRequired> extends Mixed.ÅssignableÅrbitrary<Next> {
+    public static interface ÅssignableÅrbitrary<Next extends Array> {
     }
 
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableZip, Mixed.ÅssignableAll {
+    protected static interface ÅssignableAll extends ÅssignableNames {
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends MixedRequired implements ÅssignableAll, ÅssignableÅrbitrary {
+    private static final class Åssignable extends Array implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**
      * The identifier for properties.
      */
     static final class My {
-        static final String Zip = "zip";
+        static final String Names = "names";
     }
 }

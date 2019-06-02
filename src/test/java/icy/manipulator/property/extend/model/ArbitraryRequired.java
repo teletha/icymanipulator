@@ -1,8 +1,8 @@
 package icy.manipulator.property.extend.model;
 
+import icy.manipulator.property.base.model.Arbitrary;
 import icy.manipulator.property.extend.model.ArbitraryRequired;
 import icy.manipulator.property.extend.model.ArbitraryRequiredModel;
-import icy.manipulator.property.model.Arbitrary;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;

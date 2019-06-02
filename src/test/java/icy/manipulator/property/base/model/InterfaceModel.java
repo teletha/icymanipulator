@@ -7,14 +7,13 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package icy.manipulator.property.extend.model;
+package icy.manipulator.property.base.model;
 
 import icy.manipulator.Icy;
-import icy.manipulator.property.base.model.Arbitrary;
 
 @Icy
-public abstract class ArbitraryRequiredModel extends Arbitrary {
+public interface InterfaceModel {
 
     @Icy.Property
-    public abstract long id();
+    String name();
 }

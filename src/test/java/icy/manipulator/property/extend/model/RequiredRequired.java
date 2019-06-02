@@ -1,8 +1,8 @@
 package icy.manipulator.property.extend.model;
 
+import icy.manipulator.property.base.model.Multiple;
 import icy.manipulator.property.extend.model.RequiredRequired;
 import icy.manipulator.property.extend.model.RequiredRequiredModel;
-import icy.manipulator.property.model.Multiple;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
