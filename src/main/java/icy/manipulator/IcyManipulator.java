@@ -183,7 +183,7 @@ public class IcyManipulator extends AptyProcessor {
             write(" */");
             write("private static final ", MethodHandle.class, " updater(String name) ", () -> {
                 writeTry(() -> {
-                    write(Field.class, " field = ", m.implType, ".class.getDeclaredField(name);");
+                    write(Field.class, " field = ", classLiteral(m.implType), ".getDeclaredField(name);");
                     write("field.setAccessible(true);");
                     write("return ", MethodHandles.class, ".lookup().unreflectSetter(field);");
                 }, Throwable.class, e -> {
@@ -234,7 +234,7 @@ public class IcyManipulator extends AptyProcessor {
             write("/**");
             write(" * HIDE CONSTRUCTOR");
             write(" */");
-            write("protected ", m.implType, "()", () -> {
+            write("protected ", m.implType.raw(), "()", () -> {
                 // initialize field
                 for (PropertyInfo p : m.ownProperties()) {
                     write("this.", p.name, " = ", (p.arbitrary ? defaultValueCallFor(p) : p.type.defaultValue()), ";");
@@ -440,7 +440,7 @@ public class IcyManipulator extends AptyProcessor {
                 write(" */");
                 write("@", Override.class);
                 write("public boolean equals(Object o)", () -> {
-                    write("if (o instanceof ", m.implType, " == false)", () -> {
+                    write("if (o instanceof ", m.implType.raw(), " == false)", () -> {
                         write("return false;");
                     });
                     write();

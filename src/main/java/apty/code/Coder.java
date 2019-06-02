@@ -329,8 +329,14 @@ public class Coder {
         return clazz.write(this);
     }
 
+    /**
+     * Write class literal.
+     * 
+     * @param clazz
+     * @return
+     */
     public final String classLiteral(Type clazz) {
-        return use(clazz).replaceAll("<.+>", "").concat(".class");
+        return use(clazz.raw()).replaceAll("<.+>", "").concat(".class");
     }
 
     /**

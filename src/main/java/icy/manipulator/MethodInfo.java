@@ -96,15 +96,6 @@ public class MethodInfo implements Codable {
     }
 
     /**
-     * Detect parameter size.
-     * 
-     * @return
-     */
-    public boolean hasParameter() {
-        return !paramTypes.isEmpty();
-    }
-
-    /**
      * Create {@link MethodInfo} with additional parameter.
      * 
      * @param type

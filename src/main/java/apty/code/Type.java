@@ -22,6 +22,8 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.WildcardType;
 
+import apty.Apty;
+
 public class Type implements Codable {
 
     /** The package name. */
@@ -199,6 +201,15 @@ public class Type implements Codable {
     }
 
     /**
+     * Create raw type, all variables are removed.
+     * 
+     * @return
+     */
+    public Type raw() {
+        return new Type(packagee, base, List.of(), kind);
+    }
+
+    /**
      * Create vararged type if this type is array.
      * 
      * @return
@@ -329,23 +340,47 @@ public class Type implements Codable {
      * Build {@link Type} from the class name.
      * 
      * @param fqcn A fully qualified class name.
+     * @param variables A list of type variables.
      * @return The created {@link Type}.
      */
-    public static final Type of(String fqcn) {
-        return new Type(fqcn, List.of(), TypeKind.DECLARED);
+    public static final Type of(String fqcn, Type... variables) {
+        return of(fqcn, List.of(variables));
+    }
+
+    /**
+     * Build {@link Type} from the class name.
+     * 
+     * @param fqcn A fully qualified class name.
+     * @param variables A list of type variables.
+     * @return The created {@link Type}.
+     */
+    public static final Type of(String fqcn, List<Type> variables) {
+        return new Type(fqcn, variables, TypeKind.DECLARED);
     }
 
     /**
      * Build {@link Type} from {@link Class}.
      * 
      * @param type A base type.
+     * @param variables A list of type variables.
      * @return The created {@link Type}.
      */
     public static final Type of(Class type, Type... variables) {
+        return of(type, List.of(variables));
+    }
+
+    /**
+     * Build {@link Type} from {@link Class}.
+     * 
+     * @param type A base type.
+     * @param variables A list of type variables.
+     * @return The created {@link Type}.
+     */
+    public static final Type of(Class type, List<Type> variables) {
         if (type.isPrimitive()) {
-            return new Type(type.getName(), List.of(variables), TypeKind.valueOf(type.getName().toUpperCase()));
+            return new Type(type.getName(), variables, TypeKind.valueOf(type.getName().toUpperCase()));
         } else {
-            return new Type(type.getName(), List.of(variables), TypeKind.DECLARED);
+            return new Type(type.getName(), variables, TypeKind.DECLARED);
         }
     }
 
@@ -356,6 +391,7 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type of(TypeElement type) {
+        System.out.println(type);
         return of(type.asType());
     }
 

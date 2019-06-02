@@ -257,6 +257,17 @@ public class Apty {
      * Check type equality.
      * 
      * @param type
+     * @param clazz
+     * @return
+     */
+    public static boolean diff(TypeMirror type, Class clazz) {
+        return !same(type, clazz);
+    }
+
+    /**
+     * Check type equality.
+     * 
+     * @param type
      * @param element
      * @return
      */

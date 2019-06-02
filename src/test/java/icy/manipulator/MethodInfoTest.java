@@ -25,7 +25,7 @@ class MethodClassInfoTest {
     @Test
     void addParam() {
         MethodInfo m = new TestableMethodInfo("base", void.class);
-        assert m.hasParameter() == false;
+        assert m.paramTypes.isEmpty();
 
         MethodInfo created = m.withFirst(String.class, "value");
         assert m != created;
