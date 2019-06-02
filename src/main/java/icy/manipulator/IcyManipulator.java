@@ -26,6 +26,7 @@ import apty.Apty;
 import apty.AptyProcessor;
 import apty.Modifiers;
 import apty.code.Coder;
+import apty.code.Type;
 import icy.manipulator.util.Lists;
 import icy.manipulator.util.Strings;
 
@@ -489,11 +490,9 @@ public class IcyManipulator extends AptyProcessor {
          * Defien model builder methods.
          */
         private void defineBuilder() {
-            String builder = icy.builder();
-
             write();
             write("/** The singleton builder. */");
-            write("public static final  ", Instantiator, "<?> ", builder, " = new ", Instantiator, "();");
+            write("public static final  ", Instantiator, "<?> ", icy.builder(), " = new ", Instantiator, "();");
 
             write();
             write("/**");
@@ -695,8 +694,10 @@ public class IcyManipulator extends AptyProcessor {
             OptionalSupport.by(p.type).ifPresentOrElse(s -> {
                 write("return ", p.name, "(", s.type, ".", s.someMethod, "(", m.paramNames.get(0), "));");
             }, () -> {
+                List<String> names = m.withFirst(Type.of(Object.class), "this").paramNames;
+
                 writeTry(() -> {
-                    write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", m.namesWithHead("this"), "));");
+                    write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", names, "));");
                 }, Throwable.class, e -> {
                     write("throw quiet(", e, ");");
                 });

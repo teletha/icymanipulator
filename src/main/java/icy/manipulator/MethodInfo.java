@@ -44,9 +44,6 @@ public class MethodInfo implements Codable {
     /** The user defined overload method. */
     public final boolean userDefiend;
 
-    /** The data storage for user. */
-    public String userInfo;
-
     /**
      * @param element
      */
@@ -96,38 +93,6 @@ public class MethodInfo implements Codable {
      */
     public String id() {
         return name + "$" + Math.abs(paramTypes.hashCode());
-    }
-
-    /**
-     * Build additional parameter names at head.
-     * 
-     * @param additions A list of additional names.
-     * @return
-     */
-    public List<String> namesWithHead(String... additions) {
-        List<String> names = new ArrayList(additions.length + paramNames.size());
-        for (String name : additions) {
-            names.add(name);
-        }
-        names.addAll(paramNames);
-
-        return names;
-    }
-
-    /**
-     * Build additional parameter names at head.
-     * 
-     * @param additions A list of additional names.
-     * @return
-     */
-    public List<String> namesWithTail(String... additions) {
-        List<String> names = new ArrayList(additions.length + paramNames.size());
-        for (String name : additions) {
-            names.add(name);
-        }
-        names.addAll(paramNames);
-
-        return names;
     }
 
     /**
