@@ -657,7 +657,6 @@ public class IcyManipulator extends AptyProcessor {
                 write(" */");
                 write("public static interface ", now.assignableInterfaceName(), "<Next>", () -> {
                     defineAssignableSetter(now);
-                    assistBuilder(prev, now.assignableInterfaceName() + "<Next>");
                 });
             }
         }
@@ -673,10 +672,7 @@ public class IcyManipulator extends AptyProcessor {
             write(" * Property assignment API.");
             write(" */");
             write("public static interface ", ArbitraryInterface, "<Next extends ", m.implType, ">", extend, () -> {
-                m.ownArbitraryProperties().forEach(p -> {
-                    defineAssignableSetter(p);
-                    assistBuilder(p, "Next");
-                });
+                m.ownArbitraryProperties().forEach(this::defineAssignableSetter);
             });
         }
 
@@ -752,30 +748,6 @@ public class IcyManipulator extends AptyProcessor {
                     write("throw quiet(", e, ");");
                 });
             });
-        }
-
-        /**
-         * Write repeatable method.
-         * 
-         * @param p
-         * @param next
-         */
-        private void assistBuilder(PropertyInfo p, String next) {
-            if (p != null) {
-                p.assist.stream().flatMap(s -> s.computeMethodsFor(p)).forEach(method -> {
-                    write();
-                    write("/**");
-                    write(" * Assign ", p.name, " property.");
-                    write(" * ");
-                    write(" * @param value A new value to assign.");
-                    write(" * @return The next assignable model.");
-                    write(" */");
-                    write("default ", next, " ", method, () -> {
-                        write("((", this.m.implType, ") this).", p.name, ".", method.userInfo, "(", method.paramNames, ");");
-                        write("return (", next, ") this;");
-                    });
-                });
-            }
         }
 
         /**

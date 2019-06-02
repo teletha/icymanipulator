@@ -9,8 +9,6 @@
  */
 package icy.manipulator;
 
-import java.util.Optional;
-
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
@@ -45,7 +43,7 @@ public class PropertyInfo {
     public final boolean copiable;
 
     /** The property type. */
-    public final Optional<BuilderSupport> assist;
+    public final boolean repeatable;
 
     /** The proeprty type. */
     public final boolean autoExpandable;
@@ -66,7 +64,7 @@ public class PropertyInfo {
         this.element = method;
         this.name = method.getSimpleName().toString();
         this.type = Type.of(method.getReturnType());
-        this.assist = BuilderSupport.by(method.getReturnType());
+        this.repeatable = false;
         this.arbitrary = !method.getModifiers().contains(Modifier.ABSTRACT) || OptionalSupport.by(type).isPresent();
 
         Property annotation = method.getAnnotation(Icy.Property.class);
