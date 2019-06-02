@@ -505,7 +505,7 @@ public class IcyManipulator extends AptyProcessor {
                     List<PropertyInfo> requireds = m.requiredProperties().subList(0, group);
 
                     requireds.stream()
-                            .map(def -> new Synthesizer(m, def))
+                            .map(def -> new MethodSynthesizer(m, def))
                             .reduce((prev, next) -> prev.synthesize(next))
                             .stream()
                             .flatMap(s -> s.methods.stream())

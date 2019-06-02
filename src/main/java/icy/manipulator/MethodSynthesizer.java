@@ -17,7 +17,7 @@ import apty.Apty;
 import apty.code.Type;
 import icy.manipulator.util.Strings;
 
-public class Synthesizer {
+public class MethodSynthesizer {
 
     /** The synthesized methods. */
     public final List<MethodInfo> methods = new ArrayList();
@@ -26,7 +26,7 @@ public class Synthesizer {
      * @param m
      * @param p
      */
-    public Synthesizer(ModelInfo m, PropertyInfo p) {
+    public MethodSynthesizer(ModelInfo m, PropertyInfo p) {
         // basic setter
         add(new MethodInfo(p.name, m.implType).withLast(p.type, p.name));
 
@@ -72,7 +72,7 @@ public class Synthesizer {
     /**
      * @param methods
      */
-    Synthesizer(MethodInfo... definitions) {
+    MethodSynthesizer(MethodInfo... definitions) {
         for (MethodInfo method : definitions) {
             add(method);
         }
@@ -90,8 +90,8 @@ public class Synthesizer {
      * @param other
      * @return
      */
-    public Synthesizer synthesize(Synthesizer other) {
-        Synthesizer synthesized = new Synthesizer();
+    public MethodSynthesizer synthesize(MethodSynthesizer other) {
+        MethodSynthesizer synthesized = new MethodSynthesizer();
 
         for (MethodInfo method : methods) {
             for (MethodInfo otherMethod : other.methods) {
