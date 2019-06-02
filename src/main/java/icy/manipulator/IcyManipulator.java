@@ -14,22 +14,16 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.function.UnaryOperator;
 
 import javax.annotation.processing.Generated;
-import javax.lang.model.element.AnnotationValue;
-import javax.lang.model.element.Element;
-import javax.lang.model.type.DeclaredType;
 
 import apty.Apty;
 import apty.AptyProcessor;
-import apty.Fail;
 import apty.Modifiers;
 import apty.code.Coder;
 import icy.manipulator.util.Lists;
@@ -49,49 +43,13 @@ public class IcyManipulator extends AptyProcessor {
     /** The configuration interface name for arbitrary perperties. */
     static final String ArbitraryInterface = Assignable + "Årbitrary";
 
-    /** The type container. */
-    private static final Map<Class, DeclaredType> builtins = new HashMap();
-
     /**
      * 
      */
     public IcyManipulator() {
         process(Icy.class, element -> {
-            peek(element);
-
             writeSourceFileBy(new IcyCoder(new ModelInfo(element)));
         });
-    }
-
-    /**
-     * Cheat to retrieve various Java API's types.
-     * 
-     * @param element
-     */
-    private void peek(Element element) {
-        try {
-            Method method = Icy.class.getMethod("ϻ");
-            Class[] classes = (Class[]) method.getDefaultValue();
-            List<AnnotationValue> types = (List<AnnotationValue>) Apty.annotationValue(element, Icy.class, "ϻ").orElseThrow().getValue();
-
-            for (int i = 0; i < classes.length; i++) {
-                Class clazz = classes[i];
-                DeclaredType type = (DeclaredType) types.get(i).getValue();
-
-                builtins.put(clazz, type);
-            }
-        } catch (Exception e) {
-            throw new Fail(element, e);
-        }
-    }
-
-    static final DeclaredType by(Class type) {
-        DeclaredType declaredType = builtins.get(type);
-
-        if (declaredType == null) {
-            throw new Error(type + " is not found.");
-        }
-        return declaredType;
     }
 
     /**
@@ -645,18 +603,13 @@ public class IcyManipulator extends AptyProcessor {
          * Define assignable interfaces.
          */
         private void defineAssignableInterfaces() {
-            List<PropertyInfo> requireds = m.ownRequiredProperties();
-
-            for (int i = 0; i < requireds.size(); i++) {
-                PropertyInfo now = requireds.get(i);
-                PropertyInfo prev = i == 0 ? null : requireds.get(i - 1);
-
+            for (PropertyInfo property : m.ownRequiredProperties()) {
                 write();
                 write("/**");
                 write(" * Property assignment API.");
                 write(" */");
-                write("public static interface ", now.assignableInterfaceName(), "<Next>", () -> {
-                    defineAssignableSetter(now);
+                write("public static interface ", property.assignableInterfaceName(), "<Next>", () -> {
+                    defineAssignableSetter(property);
                 });
             }
         }

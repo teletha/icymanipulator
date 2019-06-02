@@ -42,9 +42,6 @@ public class PropertyInfo {
     /** The property type. */
     public final boolean copiable;
 
-    /** The property type. */
-    public final boolean repeatable;
-
     /** The proeprty type. */
     public final boolean autoExpandable;
 
@@ -64,7 +61,6 @@ public class PropertyInfo {
         this.element = method;
         this.name = method.getSimpleName().toString();
         this.type = Type.of(method.getReturnType());
-        this.repeatable = false;
         this.arbitrary = !method.getModifiers().contains(Modifier.ABSTRACT) || OptionalSupport.by(type).isPresent();
 
         Property annotation = method.getAnnotation(Icy.Property.class);

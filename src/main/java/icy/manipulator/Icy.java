@@ -14,8 +14,6 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.util.Collection;
-import java.util.Map;
 import java.util.function.Supplier;
 
 @Documented
@@ -66,18 +64,6 @@ public @interface Icy {
      * @return
      */
     int grouping() default 1;
-
-    /**
-     * <p>
-     * DONT USE, INTERNAL API
-     * </p>
-     * <p>
-     * If you override this value {@link IcyManipulator} will stop processing.
-     * </p>
-     * 
-     * @return DONT TOUCH ME!
-     */
-    Class[] ϻ() default {Collection.class, Map.class};
 
     @Documented
     @Target(ElementType.METHOD)

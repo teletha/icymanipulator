@@ -453,39 +453,6 @@ public class ModelInfo {
     }
 
     /**
-     * Compute API route variable for required properties.
-     * 
-     * @param destination
-     * @return
-     */
-    public String[] requiredRouteTypes(int depature, String destination) {
-        List<String> types = new ArrayList();
-        List<PropertyInfo> properties = requiredProperties();
-
-        for (int i = depature; i < properties.size(); i++) {
-            String nextType = i == properties.size() - 1 ? destination : "R" + i;
-            String currentType = "R" + (i - 1);
-            PropertyInfo current = properties.get(i);
-            PropertyInfo prev = properties.get(i - 1);
-
-            if (types.isEmpty()) {
-                types.add(current.assignableInterfaceName() + "<" + nextType + ">");
-            } else {
-                String postfix = prev.repeatable ? " & " + prev.assignableInterfaceName() + "<" + currentType + ">" : "";
-                types.add(currentType + " extends " + current.assignableInterfaceName() + "<" + nextType + ">" + postfix);
-            }
-        }
-
-        if (types.size() == 0) {
-            return new String[] {destination, ""};
-        } else if (types.size() == 1) {
-            return new String[] {types.get(0), ""};
-        } else {
-            return new String[] {types.get(0), types.stream().skip(1).collect(Collectors.joining(", ", "<", "> "))};
-        }
-    }
-
-    /**
      * Find property by name.
      * 
      * @param name A property name.
