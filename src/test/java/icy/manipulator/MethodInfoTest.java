@@ -11,13 +11,11 @@ package icy.manipulator;
 
 import org.junit.jupiter.api.Test;
 
-import icy.manipulator.MethodInfo;
-
-class MethodInfoTest {
+class MethodClassInfoTest {
 
     @Test
     void constructor() {
-        MethodInfo m = new MethodInfo("name", void.class, String.class, "text");
+        MethodInfo m = new TestableMethodInfo("name", void.class, String.class, "text");
         assert m.name.equals("name");
         assert m.returnType.is(void.class);
         assert m.paramTypes.get(0).is(String.class);
@@ -26,7 +24,7 @@ class MethodInfoTest {
 
     @Test
     void addParam() {
-        MethodInfo m = new MethodInfo("base", void.class);
+        MethodInfo m = new TestableMethodInfo("base", void.class);
         assert m.hasParameter() == false;
 
         MethodInfo created = m.withFirst(String.class, "value");

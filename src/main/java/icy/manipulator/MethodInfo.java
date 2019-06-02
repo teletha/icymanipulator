@@ -68,52 +68,6 @@ public class MethodInfo implements Codable {
      * @param name
      * @param returnType
      */
-    MethodInfo(String name, Class returnType) {
-        this(name, returnType, List.of(), List.of());
-    }
-
-    /**
-     * Create {@link MethodInfo}.
-     * 
-     * @param name
-     * @param returnType
-     * @param type1
-     * @param name1
-     */
-    MethodInfo(String name, Class returnType, Class type1, String name1) {
-        this(name, returnType, List.of(type1), List.of(name1));
-    }
-
-    /**
-     * Create {@link MethodInfo}.
-     * 
-     * @param name
-     * @param returnType
-     * @param type1
-     * @param name1
-     */
-    MethodInfo(String name, Class returnType, Class type1, String name1, Class type2, String name2) {
-        this(name, returnType, List.of(type1, type2), List.of(name1, name2));
-    }
-
-    /**
-     * Create {@link MethodInfo}.
-     * 
-     * @param name
-     * @param returnType
-     * @param types
-     * @param names
-     */
-    private MethodInfo(String name, Class returnType, List<Class> types, List<String> names) {
-        this(name, Type.of(returnType), types.stream().map(Type::of).collect(Collectors.toUnmodifiableList()), names, "");
-    }
-
-    /**
-     * Create {@link MethodInfo}.
-     * 
-     * @param name
-     * @param returnType
-     */
     public MethodInfo(String name, Type returnType) {
         this(name, returnType, List.of(), List.of(), "");
     }
