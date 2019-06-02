@@ -164,14 +164,14 @@ public abstract class CustomEquals extends CustomEqualsModel {
     /**
      * Namespace for {@link CustomEquals}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends CustomEquals & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends CustomEquals & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link CustomEquals} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableAge<Self> name(String name) {
+        public ÅssignableAge<Self> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;

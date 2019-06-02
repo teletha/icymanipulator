@@ -151,14 +151,14 @@ public abstract class Mutable extends MutableModel {
     /**
      * Namespace for {@link Mutable}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Mutable & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends Mutable & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link Mutable} with the specified value property.
          * 
          * @return The next assignable model.
          */
-        public final Self value(String value) {
+        public Self value(String value) {
             Åssignable o = new Åssignable();
             o.value(value);
             return (Self)o;

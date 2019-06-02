@@ -139,14 +139,14 @@ public abstract class BuilderName extends BuilderNameModel {
     /**
      * Namespace for {@link BuilderName}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends BuilderName & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends BuilderName & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link BuilderName} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final Self name(String name) {
+        public Self name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return (Self)o;

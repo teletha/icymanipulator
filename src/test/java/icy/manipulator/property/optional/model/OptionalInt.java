@@ -183,14 +183,14 @@ public abstract class OptionalInt extends OptionalIntModel {
     /**
      * Namespace for {@link OptionalInt}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends OptionalInt & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends OptionalInt & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create initialized {@link OptionalInt}.
          *
          * @return A initialized model.
          */
-        public final Self create() {
+        public Self create() {
             return (Self) new Åssignable();
         }
 
@@ -200,7 +200,7 @@ public abstract class OptionalInt extends OptionalIntModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self value(java.util.OptionalInt value) {
+        public Self value(java.util.OptionalInt value) {
             return create().value(value);
         }
 
@@ -210,7 +210,7 @@ public abstract class OptionalInt extends OptionalIntModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self value(int value) {
+        public Self value(int value) {
             return value(java.util.OptionalInt.of(value));
         }
 
@@ -220,7 +220,7 @@ public abstract class OptionalInt extends OptionalIntModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self defaults(java.util.OptionalInt value) {
+        public Self defaults(java.util.OptionalInt value) {
             return create().defaults(value);
         }
 
@@ -230,7 +230,7 @@ public abstract class OptionalInt extends OptionalIntModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self defaults(int value) {
+        public Self defaults(int value) {
             return defaults(java.util.OptionalInt.of(value));
         }
     }

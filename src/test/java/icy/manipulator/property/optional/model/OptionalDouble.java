@@ -138,14 +138,14 @@ public abstract class OptionalDouble implements OptionalDoubleModel {
     /**
      * Namespace for {@link OptionalDouble}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends OptionalDouble & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends OptionalDouble & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create initialized {@link OptionalDouble}.
          *
          * @return A initialized model.
          */
-        public final Self create() {
+        public Self create() {
             return (Self) new Åssignable();
         }
 
@@ -155,7 +155,7 @@ public abstract class OptionalDouble implements OptionalDoubleModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self value(java.util.OptionalDouble value) {
+        public Self value(java.util.OptionalDouble value) {
             return create().value(value);
         }
 
@@ -165,7 +165,7 @@ public abstract class OptionalDouble implements OptionalDoubleModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self value(double value) {
+        public Self value(double value) {
             return value(java.util.OptionalDouble.of(value));
         }
     }

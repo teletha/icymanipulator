@@ -156,14 +156,14 @@ public abstract class Intercept extends InterceptModel {
     /**
      * Namespace for {@link Intercept}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Intercept & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends Intercept & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link Intercept} with the specified size property.
          * 
          * @return The next assignable model.
          */
-        public final Self size(int size) {
+        public Self size(int size) {
             Åssignable o = new Åssignable();
             o.size(size);
             return (Self)o;

@@ -11,6 +11,7 @@ package icy.manipulator.property.generic;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -20,6 +21,7 @@ import icy.manipulator.property.generic.model.Generic;
 import icy.manipulator.property.generic.model.GenericModel;
 import icy.manipulator.property.generic.model.Wildcard;
 
+@Disabled
 class GenericTest {
 
     @RegisterExtension

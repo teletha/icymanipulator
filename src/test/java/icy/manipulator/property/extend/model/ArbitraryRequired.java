@@ -140,14 +140,14 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
     /**
      * Namespace for {@link ArbitraryRequired}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends ArbitraryRequired & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends ArbitraryRequired & ÅssignableÅrbitrary<Self>> extends icy.manipulator.property.base.model.Arbitrary.Ìnstantiator {
 
         /**
          * Create new {@link ArbitraryRequired} with the specified id property.
          * 
          * @return The next assignable model.
          */
-        public final Self id(long id) {
+        public Self id(long id) {
             Åssignable o = new Åssignable();
             o.id(id);
             return (Self)o;

@@ -219,14 +219,14 @@ public abstract class Group extends GroupModel {
     /**
      * Namespace for {@link Group}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Group & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends Group & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link Group} with the specified x property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableZ<Self> x(int x, int y) {
+        public ÅssignableZ<Self> x(int x, int y) {
             Åssignable o = new Åssignable();
             o.x(x);
             o.y(y);

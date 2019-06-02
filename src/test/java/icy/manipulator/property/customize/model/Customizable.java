@@ -270,14 +270,14 @@ public abstract class Customizable extends CustomizableModel {
     /**
      * Namespace for {@link Customizable}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Customizable & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends Customizable & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link Customizable} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableValue<Self> name(String name) {
+        public ÅssignableValue<Self> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;

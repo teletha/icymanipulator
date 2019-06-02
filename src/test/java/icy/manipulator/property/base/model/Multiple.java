@@ -1,5 +1,7 @@
 package icy.manipulator.property.base.model;
 
+import icy.manipulator.property.base.model.Multiple;
+import icy.manipulator.property.base.model.MultipleModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -9,9 +11,6 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
 import javax.annotation.processing.Generated;
-
-import icy.manipulator.property.base.model.Multiple;
-import icy.manipulator.property.base.model.MultipleModel;
 
 /**
  * Generated model for {@link MultipleModel}.
@@ -227,14 +226,14 @@ public abstract class Multiple extends MultipleModel {
     /**
      * Namespace for {@link Multiple}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Multiple & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends Multiple & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link Multiple} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableStand<ÅssignableAge<Self>> name(String name) {
+        public ÅssignableStand<ÅssignableAge<Self>> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;

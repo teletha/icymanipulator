@@ -202,14 +202,14 @@ public abstract class OverloadGroup extends OverloadGroupModel {
     /**
      * Namespace for {@link OverloadGroup}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends OverloadGroup & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends OverloadGroup & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link OverloadGroup} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final Self name(String name, int size) {
+        public Self name(String name, int size) {
             Åssignable o = new Åssignable();
             o.name(name);
             o.size(size);
@@ -221,7 +221,7 @@ public abstract class OverloadGroup extends OverloadGroupModel {
          * 
          * @return The next assignable model.
          */
-        public final Self name(String name, String value) {
+        public Self name(String name, String value) {
             Åssignable o = new Åssignable();
             o.name(name);
             o.size(value);

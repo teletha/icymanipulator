@@ -139,14 +139,14 @@ public abstract class Single extends SingleModel {
     /**
      * Namespace for {@link Single}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Single & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends Single & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link Single} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final Self name(String name) {
+        public Self name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return (Self)o;

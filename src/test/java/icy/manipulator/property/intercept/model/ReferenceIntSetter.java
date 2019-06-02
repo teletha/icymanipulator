@@ -199,14 +199,14 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
     /**
      * Namespace for {@link ReferenceIntSetter}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends ReferenceIntSetter & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends ReferenceIntSetter & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link ReferenceIntSetter} with the specified size property.
          * 
          * @return The next assignable model.
          */
-        public final Self size(int size) {
+        public Self size(int size) {
             Åssignable o = new Åssignable();
             o.size(size);
             return (Self)o;

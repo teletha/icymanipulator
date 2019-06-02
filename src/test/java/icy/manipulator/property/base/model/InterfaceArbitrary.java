@@ -139,14 +139,14 @@ public abstract class InterfaceArbitrary implements InterfaceArbitraryModel {
     /**
      * Namespace for {@link InterfaceArbitrary}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends InterfaceArbitrary & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends InterfaceArbitrary & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create initialized {@link InterfaceArbitrary}.
          *
          * @return A initialized model.
          */
-        public final Self create() {
+        public Self create() {
             return (Self) new Åssignable();
         }
 
@@ -156,7 +156,7 @@ public abstract class InterfaceArbitrary implements InterfaceArbitraryModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self optional(String value) {
+        public Self optional(String value) {
             return create().optional(value);
         }
     }

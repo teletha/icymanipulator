@@ -22,8 +22,6 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.WildcardType;
 
-import apty.Apty;
-
 public class Type implements Codable {
 
     /** The package name. */
@@ -391,7 +389,6 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type of(TypeElement type) {
-        System.out.println(type);
         return of(type.asType());
     }
 

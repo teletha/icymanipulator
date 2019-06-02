@@ -216,14 +216,14 @@ public abstract class Overload extends OverloadModel {
     /**
      * Namespace for {@link Overload}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Overload & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends Overload & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link Overload} with the specified size property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableDate<Self> size(BigDecimal size) {
+        public ÅssignableDate<Self> size(BigDecimal size) {
             Åssignable o = new Åssignable();
             o.size(size);
             return o;
@@ -234,7 +234,7 @@ public abstract class Overload extends OverloadModel {
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableDate<Self> size(int number) {
+        public ÅssignableDate<Self> size(int number) {
             Åssignable o = new Åssignable();
             o.size(number);
             return o;
@@ -245,7 +245,7 @@ public abstract class Overload extends OverloadModel {
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableDate<Self> sizeByText(String number) {
+        public ÅssignableDate<Self> sizeByText(String number) {
             Åssignable o = new Åssignable();
             o.sizeByText(number);
             return o;

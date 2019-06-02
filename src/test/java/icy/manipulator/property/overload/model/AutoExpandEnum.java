@@ -139,28 +139,28 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
     /**
      * Namespace for {@link AutoExpandEnum}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends AutoExpandEnum & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends AutoExpandEnum & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link AutoExpandEnum} with the specified answer property.
          * 
          * @return The next assignable model.
          */
-        public final Self answer(Answer answer) {
+        public Self answer(Answer answer) {
             Åssignable o = new Åssignable();
             o.answer(answer);
             return (Self)o;
         }
 
         /** Set answer property with Yes. */
-        public final Self yes() {
+        public Self yes() {
             Åssignable o = new Åssignable();
             o.yes();
             return (Self)o;
         }
 
         /** Set answer property with No. */
-        public final Self no() {
+        public Self no() {
             Åssignable o = new Åssignable();
             o.no();
             return (Self)o;

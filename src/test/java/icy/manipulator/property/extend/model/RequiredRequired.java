@@ -146,14 +146,14 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     /**
      * Namespace for {@link RequiredRequired}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends RequiredRequired & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends RequiredRequired & ÅssignableÅrbitrary<Self>> extends icy.manipulator.property.base.model.Multiple.Ìnstantiator {
 
         /**
          * Create new {@link RequiredRequired} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableStand<ÅssignableAge<ÅssignableNickname<Self>>> name(String name) {
+        public ÅssignableStand<ÅssignableAge<ÅssignableNickname<Self>>> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;

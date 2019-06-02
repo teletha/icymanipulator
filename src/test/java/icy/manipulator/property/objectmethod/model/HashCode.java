@@ -181,14 +181,14 @@ public abstract class HashCode extends HashCodeModel {
     /**
      * Namespace for {@link HashCode}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends HashCode & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends HashCode & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link HashCode} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableAge<Self> name(String name) {
+        public ÅssignableAge<Self> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;

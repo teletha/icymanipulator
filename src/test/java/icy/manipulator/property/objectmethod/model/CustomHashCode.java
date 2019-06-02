@@ -171,14 +171,14 @@ public abstract class CustomHashCode extends CustomHashCodeModel {
     /**
      * Namespace for {@link CustomHashCode}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends CustomHashCode & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends CustomHashCode & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link CustomHashCode} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableAge<Self> name(String name) {
+        public ÅssignableAge<Self> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;

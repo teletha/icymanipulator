@@ -139,14 +139,14 @@ abstract class ImplementationVisibility extends ImplementationVisibilityModel {
     /**
      * Namespace for {@link ImplementationVisibility}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends ImplementationVisibility & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends ImplementationVisibility & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link ImplementationVisibility} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final Self name(String name) {
+        public Self name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return (Self)o;

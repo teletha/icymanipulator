@@ -494,11 +494,12 @@ public class IcyManipulator extends AptyProcessor {
             write("/** The singleton builder. */");
             write("public static final  ", Instantiator, "<?> ", icy.builder(), " = new ", Instantiator, "();");
 
+            String parentInstantiator = m.parent.map(p -> " extends " + Type.of(Apty.parent(m.e)) + "." + Instantiator).orElse("");
             write();
             write("/**");
             write(" * Namespace for {@link ", m.implType, "}  builder methods.");
             write(" */");
-            write("public static final class ", Instantiator, "<Self extends ", m.implType, " & ", ArbitraryInterface, "<Self>>", () -> {
+            write("public static class ", Instantiator, "<Self extends ", m.implType, " & ", ArbitraryInterface, "<Self>>", parentInstantiator, () -> {
                 m.firstRequiredProperty().ifPresentOrElse(p -> {
                     int group = icy.grouping();
                     List<PropertyInfo> requireds = m.requiredProperties().subList(0, group);
@@ -519,7 +520,7 @@ public class IcyManipulator extends AptyProcessor {
                                     write(" * @return The next assignable model.");
                                     write(" */");
                                 });
-                                write("public final ", type, " ", method, () -> {
+                                write("public ", type, " ", method, () -> {
                                     write(Assignable, " o = new ", Assignable, "();");
 
                                     boolean skipFirst = requireds.size() != method.paramNames.size();
@@ -548,7 +549,7 @@ public class IcyManipulator extends AptyProcessor {
                     write(" *");
                     write(" * @return A initialized model.");
                     write(" */");
-                    write("public final Self create()", () -> {
+                    write("public Self create()", () -> {
                         write("return (Self) new ", Assignable, "();");
                     });
 
@@ -560,7 +561,7 @@ public class IcyManipulator extends AptyProcessor {
                         write(" * @param value A value to assign.");
                         write(" * @return A initialized model.");
                         write(" */");
-                        write("public final Self ", p.name, "(", p.type, " value)", () -> {
+                        write("public Self ", p.name, "(", p.type, " value)", () -> {
                             write("return create().", p.name, "(value);");
                         });
 
@@ -577,7 +578,7 @@ public class IcyManipulator extends AptyProcessor {
                                 write(" * @return A initialized model.");
                                 write(" */");
                             });
-                            write("public final Self ", m, () -> {
+                            write("public Self ", m, () -> {
                                 overload(p, m);
                             });
                         }

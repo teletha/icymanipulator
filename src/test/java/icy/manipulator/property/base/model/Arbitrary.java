@@ -1,5 +1,7 @@
 package icy.manipulator.property.base.model;
 
+import icy.manipulator.property.base.model.Arbitrary;
+import icy.manipulator.property.base.model.ArbitraryModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -9,9 +11,6 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
 import javax.annotation.processing.Generated;
-
-import icy.manipulator.property.base.model.Arbitrary;
-import icy.manipulator.property.base.model.ArbitraryModel;
 
 /**
  * Generated model for {@link ArbitraryModel}.
@@ -182,14 +181,14 @@ public abstract class Arbitrary extends ArbitraryModel {
     /**
      * Namespace for {@link Arbitrary}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Arbitrary & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends Arbitrary & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create initialized {@link Arbitrary}.
          *
          * @return A initialized model.
          */
-        public final Self create() {
+        public Self create() {
             return (Self) new Åssignable();
         }
 
@@ -199,7 +198,7 @@ public abstract class Arbitrary extends ArbitraryModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self optionNum(int value) {
+        public Self optionNum(int value) {
             return create().optionNum(value);
         }
 
@@ -209,7 +208,7 @@ public abstract class Arbitrary extends ArbitraryModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self optionComment(String value) {
+        public Self optionComment(String value) {
             return create().optionComment(value);
         }
     }

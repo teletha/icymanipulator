@@ -167,14 +167,14 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     /**
      * Namespace for {@link RequiredRequired}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends RequiredRequired & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends RequiredRequired & ÅssignableÅrbitrary<Self>> extends icy.manipulator.property.overload.model.Overload.Ìnstantiator {
 
         /**
          * Create new {@link RequiredRequired} with the specified size property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableDate<ÅssignableTime<Self>> size(BigDecimal size) {
+        public ÅssignableDate<ÅssignableTime<Self>> size(BigDecimal size) {
             Åssignable o = new Åssignable();
             o.size(size);
             return o;
@@ -185,7 +185,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableDate<ÅssignableTime<Self>> size(int number) {
+        public ÅssignableDate<ÅssignableTime<Self>> size(int number) {
             Åssignable o = new Åssignable();
             o.size(number);
             return o;
@@ -196,7 +196,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableDate<ÅssignableTime<Self>> sizeByText(String number) {
+        public ÅssignableDate<ÅssignableTime<Self>> sizeByText(String number) {
             Åssignable o = new Åssignable();
             o.sizeByText(number);
             return o;

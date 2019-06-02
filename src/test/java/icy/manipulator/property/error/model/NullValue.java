@@ -226,14 +226,14 @@ public abstract class NullValue extends NullValueModel {
     /**
      * Namespace for {@link NullValue}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends NullValue & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends NullValue & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link NullValue} with the specified rejectNull property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableAcceptNull<Self> rejectNull(String rejectNull) {
+        public ÅssignableAcceptNull<Self> rejectNull(String rejectNull) {
             Åssignable o = new Åssignable();
             o.rejectNull(rejectNull);
             return o;

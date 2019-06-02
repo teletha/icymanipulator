@@ -1,5 +1,7 @@
 package icy.manipulator.property.base.model;
 
+import icy.manipulator.property.base.model.Primitive;
+import icy.manipulator.property.base.model.PrimitiveModel;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
@@ -8,9 +10,6 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
 import javax.annotation.processing.Generated;
-
-import icy.manipulator.property.base.model.Primitive;
-import icy.manipulator.property.base.model.PrimitiveModel;
 
 /**
  * Generated model for {@link PrimitiveModel}.
@@ -430,14 +429,14 @@ public abstract class Primitive extends PrimitiveModel {
     /**
      * Namespace for {@link Primitive}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Primitive & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends Primitive & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link Primitive} with the specified intX property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Self>>>>>>> intX(int intX) {
+        public ÅssignableLongX<ÅssignableFloatX<ÅssignableDoubleX<ÅssignableByteX<ÅssignableShortX<ÅssignableCharX<ÅssignableBooleanX<Self>>>>>>> intX(int intX) {
             Åssignable o = new Åssignable();
             o.intX(intX);
             return o;

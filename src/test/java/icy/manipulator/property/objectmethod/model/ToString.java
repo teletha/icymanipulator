@@ -181,14 +181,14 @@ public abstract class ToString extends ToStringModel {
     /**
      * Namespace for {@link ToString}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends ToString & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends ToString & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link ToString} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableAge<Self> name(String name) {
+        public ÅssignableAge<Self> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;

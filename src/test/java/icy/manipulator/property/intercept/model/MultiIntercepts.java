@@ -206,14 +206,14 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
     /**
      * Namespace for {@link MultiIntercepts}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends MultiIntercepts & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends MultiIntercepts & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link MultiIntercepts} with the specified size property.
          * 
          * @return The next assignable model.
          */
-        public final Self size(int size) {
+        public Self size(int size) {
             Åssignable o = new Åssignable();
             o.size(size);
             return (Self)o;

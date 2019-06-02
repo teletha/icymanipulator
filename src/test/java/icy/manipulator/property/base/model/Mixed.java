@@ -1,5 +1,7 @@
 package icy.manipulator.property.base.model;
 
+import icy.manipulator.property.base.model.Mixed;
+import icy.manipulator.property.base.model.MixedModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -9,9 +11,6 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
 import javax.annotation.processing.Generated;
-
-import icy.manipulator.property.base.model.Mixed;
-import icy.manipulator.property.base.model.MixedModel;
 
 /**
  * Generated model for {@link MixedModel}.
@@ -272,14 +271,14 @@ public abstract class Mixed extends MixedModel {
     /**
      * Namespace for {@link Mixed}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Mixed & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends Mixed & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link Mixed} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableAge<Self> name(String name) {
+        public ÅssignableAge<Self> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;

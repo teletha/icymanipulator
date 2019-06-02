@@ -184,14 +184,14 @@ public abstract class Optional implements OptionalModel {
     /**
      * Namespace for {@link Optional}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Optional & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends Optional & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create initialized {@link Optional}.
          *
          * @return A initialized model.
          */
-        public final Self create() {
+        public Self create() {
             return (Self) new Åssignable();
         }
 
@@ -201,7 +201,7 @@ public abstract class Optional implements OptionalModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self name(java.util.Optional<String> value) {
+        public Self name(java.util.Optional<String> value) {
             return create().name(value);
         }
 
@@ -211,7 +211,7 @@ public abstract class Optional implements OptionalModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self name(String value) {
+        public Self name(String value) {
             return name(java.util.Optional.of(value));
         }
 
@@ -221,7 +221,7 @@ public abstract class Optional implements OptionalModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self defaults(java.util.Optional<String> value) {
+        public Self defaults(java.util.Optional<String> value) {
             return create().defaults(value);
         }
 
@@ -231,7 +231,7 @@ public abstract class Optional implements OptionalModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self defaults(String value) {
+        public Self defaults(String value) {
             return defaults(java.util.Optional.of(value));
         }
     }

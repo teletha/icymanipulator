@@ -199,14 +199,14 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
     /**
      * Namespace for {@link ReferenceLongSetter}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends ReferenceLongSetter & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends ReferenceLongSetter & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link ReferenceLongSetter} with the specified size property.
          * 
          * @return The next assignable model.
          */
-        public final Self size(int size) {
+        public Self size(int size) {
             Åssignable o = new Åssignable();
             o.size(size);
             return (Self)o;

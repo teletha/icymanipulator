@@ -156,14 +156,14 @@ public abstract class Interface implements InterfaceModel {
     /**
      * Namespace for {@link Interface}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Interface & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends Interface & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link Interface} with the specified size property.
          * 
          * @return The next assignable model.
          */
-        public final Self size(int size) {
+        public Self size(int size) {
             Åssignable o = new Åssignable();
             o.size(size);
             return (Self)o;

@@ -181,14 +181,14 @@ public abstract class Equals extends EqualsModel {
     /**
      * Namespace for {@link Equals}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Equals & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends Equals & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link Equals} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableAge<Self> name(String name) {
+        public ÅssignableAge<Self> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;

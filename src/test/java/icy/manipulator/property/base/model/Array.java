@@ -1,5 +1,7 @@
 package icy.manipulator.property.base.model;
 
+import icy.manipulator.property.base.model.Array;
+import icy.manipulator.property.base.model.ArrayModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -10,9 +12,6 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Objects;
 import javax.annotation.processing.Generated;
-
-import icy.manipulator.property.base.model.Array;
-import icy.manipulator.property.base.model.ArrayModel;
 
 /**
  * Generated model for {@link ArrayModel}.
@@ -141,14 +140,14 @@ public abstract class Array extends ArrayModel {
     /**
      * Namespace for {@link Array}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Array & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends Array & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link Array} with the specified names property.
          * 
          * @return The next assignable model.
          */
-        public final Self names(String... names) {
+        public Self names(String... names) {
             Åssignable o = new Åssignable();
             o.names(names);
             return (Self)o;

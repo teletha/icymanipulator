@@ -199,14 +199,14 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
     /**
      * Namespace for {@link ReferenceDoubleSetter}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends ReferenceDoubleSetter & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends ReferenceDoubleSetter & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link ReferenceDoubleSetter} with the specified size property.
          * 
          * @return The next assignable model.
          */
-        public final Self size(int size) {
+        public Self size(int size) {
             Åssignable o = new Åssignable();
             o.size(size);
             return (Self)o;

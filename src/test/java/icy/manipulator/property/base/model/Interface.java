@@ -1,5 +1,7 @@
 package icy.manipulator.property.base.model;
 
+import icy.manipulator.property.base.model.Interface;
+import icy.manipulator.property.base.model.InterfaceModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -9,9 +11,6 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
 import javax.annotation.processing.Generated;
-
-import icy.manipulator.property.base.model.Interface;
-import icy.manipulator.property.base.model.InterfaceModel;
 
 /**
  * Generated model for {@link InterfaceModel}.
@@ -140,14 +139,14 @@ public abstract class Interface implements InterfaceModel {
     /**
      * Namespace for {@link Interface}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Interface & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends Interface & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link Interface} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final Self name(String name) {
+        public Self name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return (Self)o;

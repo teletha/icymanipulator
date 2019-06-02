@@ -157,14 +157,14 @@ public abstract class CopySub extends CopySubModel {
     /**
      * Namespace for {@link CopySub}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends CopySub & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends CopySub & ÅssignableÅrbitrary<Self>> extends icy.manipulator.property.copy.model.Copy.Ìnstantiator {
 
         /**
          * Create new {@link CopySub} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableAge<ÅssignableAddress<Self>> name(String name) {
+        public ÅssignableAge<ÅssignableAddress<Self>> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;

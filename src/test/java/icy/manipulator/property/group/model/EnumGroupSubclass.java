@@ -67,14 +67,14 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
     /**
      * Namespace for {@link EnumGroupSubclass}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends EnumGroupSubclass & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends EnumGroupSubclass & ÅssignableÅrbitrary<Self>> extends icy.manipulator.property.group.model.EnumGroup.Ìnstantiator {
 
         /**
          * Create new {@link EnumGroupSubclass} with the specified color property.
          * 
          * @return The next assignable model.
          */
-        public final Self color(Color color, int size) {
+        public Self color(Color color, int size) {
             Åssignable o = new Åssignable();
             o.color(color);
             o.size(size);
@@ -86,7 +86,7 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
          * 
          * @return The next assignable model.
          */
-        public final Self red(int size) {
+        public Self red(int size) {
             Åssignable o = new Åssignable();
             o.red();
             o.size(size);
@@ -98,7 +98,7 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
          * 
          * @return The next assignable model.
          */
-        public final Self blue(int size) {
+        public Self blue(int size) {
             Åssignable o = new Åssignable();
             o.blue();
             o.size(size);
@@ -110,7 +110,7 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
          * 
          * @return The next assignable model.
          */
-        public final Self green(int size) {
+        public Self green(int size) {
             Åssignable o = new Åssignable();
             o.green();
             o.size(size);

@@ -138,14 +138,14 @@ public abstract class OptionalLong implements OptionalLongModel {
     /**
      * Namespace for {@link OptionalLong}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends OptionalLong & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends OptionalLong & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create initialized {@link OptionalLong}.
          *
          * @return A initialized model.
          */
-        public final Self create() {
+        public Self create() {
             return (Self) new Åssignable();
         }
 
@@ -155,7 +155,7 @@ public abstract class OptionalLong implements OptionalLongModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self value(java.util.OptionalLong value) {
+        public Self value(java.util.OptionalLong value) {
             return create().value(value);
         }
 
@@ -165,7 +165,7 @@ public abstract class OptionalLong implements OptionalLongModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self value(long value) {
+        public Self value(long value) {
             return value(java.util.OptionalLong.of(value));
         }
     }

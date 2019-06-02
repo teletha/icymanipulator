@@ -157,14 +157,14 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
     /**
      * Namespace for {@link ArbitraryOverload}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends ArbitraryOverload & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends ArbitraryOverload & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create initialized {@link ArbitraryOverload}.
          *
          * @return A initialized model.
          */
-        public final Self create() {
+        public Self create() {
             return (Self) new Åssignable();
         }
 
@@ -174,7 +174,7 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self size(int value) {
+        public Self size(int value) {
             return create().size(value);
         }
 
@@ -184,7 +184,7 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self size(String number) {
+        public Self size(String number) {
             try {
                 return size((int) size$927011984.invoke(this, number));
             } catch (Throwable e) {

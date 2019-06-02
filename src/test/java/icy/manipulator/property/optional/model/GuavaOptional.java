@@ -140,14 +140,14 @@ public abstract class GuavaOptional implements GuavaOptionalModel {
     /**
      * Namespace for {@link GuavaOptional}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends GuavaOptional & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends GuavaOptional & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create initialized {@link GuavaOptional}.
          *
          * @return A initialized model.
          */
-        public final Self create() {
+        public Self create() {
             return (Self) new Åssignable();
         }
 
@@ -157,7 +157,7 @@ public abstract class GuavaOptional implements GuavaOptionalModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self value(Optional<String> value) {
+        public Self value(Optional<String> value) {
             return create().value(value);
         }
 
@@ -167,7 +167,7 @@ public abstract class GuavaOptional implements GuavaOptionalModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self value(String value) {
+        public Self value(String value) {
             return value(Optional.of(value));
         }
     }

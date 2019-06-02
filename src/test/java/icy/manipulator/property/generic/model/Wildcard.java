@@ -281,14 +281,14 @@ public abstract class Wildcard extends WildcardModel {
     /**
      * Namespace for {@link Wildcard}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends Wildcard & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends Wildcard & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create initialized {@link Wildcard}.
          *
          * @return A initialized model.
          */
-        public final Self create() {
+        public Self create() {
             return (Self) new Åssignable();
         }
 
@@ -298,7 +298,7 @@ public abstract class Wildcard extends WildcardModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self extendType(Class<? extends Collection> value) {
+        public Self extendType(Class<? extends Collection> value) {
             return create().extendType(value);
         }
 
@@ -308,7 +308,7 @@ public abstract class Wildcard extends WildcardModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self superType(List<? super Integer> value) {
+        public Self superType(List<? super Integer> value) {
             return create().superType(value);
         }
 
@@ -318,7 +318,7 @@ public abstract class Wildcard extends WildcardModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self wildcard(Supplier<?> value) {
+        public Self wildcard(Supplier<?> value) {
             return create().wildcard(value);
         }
 
@@ -328,7 +328,7 @@ public abstract class Wildcard extends WildcardModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public final Self combine(Map<? extends CharSequence, List<Class<? extends Number>>> value) {
+        public Self combine(Map<? extends CharSequence, List<Class<? extends Number>>> value) {
             return create().combine(value);
         }
     }

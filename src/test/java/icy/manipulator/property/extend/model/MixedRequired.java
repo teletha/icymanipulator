@@ -148,14 +148,14 @@ public abstract class MixedRequired extends MixedRequiredModel {
     /**
      * Namespace for {@link MixedRequired}  builder methods.
      */
-    public static final class Ìnstantiator<Self extends MixedRequired & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends MixedRequired & ÅssignableÅrbitrary<Self>> extends icy.manipulator.property.base.model.Mixed.Ìnstantiator {
 
         /**
          * Create new {@link MixedRequired} with the specified name property.
          * 
          * @return The next assignable model.
          */
-        public final ÅssignableAge<ÅssignableZip<Self>> name(String name) {
+        public ÅssignableAge<ÅssignableZip<Self>> name(String name) {
             Åssignable o = new Åssignable();
             o.name(name);
             return o;
