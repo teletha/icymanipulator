@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.StringJoiner;
 import java.util.function.Consumer;
 import java.util.function.DoubleConsumer;
 import java.util.function.IntConsumer;
@@ -33,6 +34,7 @@ import apty.Apty;
 import apty.Fail;
 import apty.Modifiers;
 import apty.code.Type;
+import apty.code.Types;
 import icy.manipulator.Icy.Intercept;
 import icy.manipulator.Icy.Overload;
 import icy.manipulator.util.Lists;
@@ -231,6 +233,15 @@ public class ModelInfo {
             }
             interceptForProperty.add(property, new MethodInfo(m));
         }
+    }
+
+    /**
+     * The fully calculated type variables of this model.
+     * 
+     * @return
+     */
+    public Types variables() {
+        return type.variables.typed();
     }
 
     /**
@@ -446,6 +457,9 @@ public class ModelInfo {
      * @return
      */
     public String requiredRouteType(int depature, String destination) {
+        StringJoiner variables = new StringJoiner(", ", ", ", "").setEmptyValue("");
+        type.variables.stream().forEach(t -> variables.add(t.name()));
+
         StringBuilder builder = new StringBuilder();
         List<PropertyInfo> properties = requiredProperties();
 
@@ -454,7 +468,7 @@ public class ModelInfo {
         }
         builder.append(destination);
         for (int i = depature; i < properties.size(); i++) {
-            builder.append(">");
+            builder.append(variables).append(">");
         }
         return builder.toString();
     }

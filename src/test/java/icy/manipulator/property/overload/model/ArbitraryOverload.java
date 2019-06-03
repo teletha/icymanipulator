@@ -49,7 +49,7 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle size$1902883125= invoker("size", String.class);
+    private static final MethodHandle size$933400130= invoker("size", String.class);
 
     /**
      * Create special property updater.
@@ -186,7 +186,7 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
          */
         public Self size(String number) {
             try {
-                return size((int) size$1902883125.invoke(this, number));
+                return size((int) size$933400130.invoke(this, number));
             } catch (Throwable e) {
                 throw quiet(e);
             }
@@ -216,7 +216,7 @@ public abstract class ArbitraryOverload extends ArbitraryOverloadModel {
          */
         default Next size(String number) {
             try {
-                return size((int) size$1902883125.invoke(this, number));
+                return size((int) size$933400130.invoke(this, number));
             } catch (Throwable e) {
                 throw quiet(e);
             }

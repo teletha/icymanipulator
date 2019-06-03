@@ -36,6 +36,15 @@ public class Types implements Codable {
     }
 
     /**
+     * Size of type variables.
+     * 
+     * @return
+     */
+    public int size() {
+        return types.size();
+    }
+
+    /**
      * List up all types.
      * 
      * @return
@@ -54,12 +63,45 @@ public class Types implements Codable {
     }
 
     /**
+     * Create new {@link Types} which all variables are raw.
+     * 
+     * @return A new {@link Types}.
+     */
+    public Types typed() {
+        return new Types(types.stream().map(Type::typed).collect(Collectors.toUnmodifiableList()));
+    }
+
+    /**
      * Get type variable at head.
      * 
      * @return
      */
     public Type head() {
         return types.get(0);
+    }
+
+    /**
+     * Create new {@link Types} which the specified variable is prepended at head.
+     * 
+     * @param variable A variable to prepend.
+     * @return A new {@link Types}.
+     */
+    public Types head(String variable) {
+        return head(Type.var(variable));
+    }
+
+    /**
+     * Create new {@link Types} which the specified variable is prepended at head.
+     * 
+     * @param variable A variable to prepend.
+     * @return A new {@link Types}.
+     */
+    public Types head(Type type) {
+        List<Type> list = new ArrayList();
+        list.add(type);
+        list.addAll(types);
+
+        return new Types(list);
     }
 
     /**
@@ -72,6 +114,30 @@ public class Types implements Codable {
     }
 
     /**
+     * Create new {@link Types} which the specified variable is appended at tail.
+     * 
+     * @param variable A variable to append.
+     * @return A new {@link Types}.
+     */
+    public Types tail(String variable) {
+        return tail(Type.var(variable));
+    }
+
+    /**
+     * Create new {@link Types} which the specified variable is appended at tail.
+     * 
+     * @param variable A variable to append.
+     * @return A new {@link Types}.
+     */
+    public Types tail(Type variable) {
+        List<Type> list = new ArrayList();
+        list.addAll(types);
+        list.add(variable);
+
+        return new Types(list);
+    }
+
+    /**
      * Create merged variable types at tail.
      * 
      * @return
@@ -81,50 +147,12 @@ public class Types implements Codable {
     }
 
     /**
-     * Create new {@link Types} which the specified variable is prepended at head.
-     * 
-     * @param variable A variable to prepend.
-     * @return A new {@link Types}.
-     */
-    public Types prepend(String variable) {
-        return prepend(Type.var(variable));
-    }
-
-    /**
-     * Create new {@link Types} which the specified variable is prepended at head.
-     * 
-     * @param variable A variable to prepend.
-     * @return A new {@link Types}.
-     */
-    public Types prepend(Type type) {
-        List<Type> list = new ArrayList();
-        list.add(type);
-        list.addAll(types);
-
-        return new Types(list);
-    }
-
-    /**
-     * Create new {@link Types} which the specified variable is appended at tail.
-     * 
-     * @param variable A variable to append.
-     * @return A new {@link Types}.
-     */
-    public Types append(String variable) {
-        List<Type> list = new ArrayList();
-        list.addAll(types);
-        list.add(Type.var(variable));
-
-        return new Types(list);
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     public String write(Coder coder) {
         StringJoiner builder = new StringJoiner(", ", "<", ">").setEmptyValue("");
-        types.forEach(v -> builder.add(coder.use(v)));
+        types.forEach(v -> builder.add(v.write(coder)));
         return builder.toString();
     }
 
@@ -140,5 +168,15 @@ public class Types implements Codable {
         Types other = (Types) obj;
 
         return types.toString().equals(other.types.toString());
+    }
+
+    /**
+     * Create new variable {@link Types}.
+     * 
+     * @param variable
+     * @return
+     */
+    public static Types var(String variable) {
+        return new Types(Type.var(variable));
     }
 }

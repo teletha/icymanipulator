@@ -20,7 +20,10 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.WildcardType;
+
+import apty.Apty;
 
 public class Type implements Codable {
 
@@ -244,7 +247,16 @@ public class Type implements Codable {
      * @return
      */
     public Type raw() {
-        return new Type(packagee, base, variables, kind);
+        return new Type(packagee, base, new Types(), kind);
+    }
+
+    /**
+     * Create raw type, all variables are removed.
+     * 
+     * @return
+     */
+    public Type typed() {
+        return new Type(packagee, base, variables, TypeKind.INTERSECTION);
     }
 
     /**
@@ -449,6 +461,11 @@ public class Type implements Codable {
             return new Type(type.toString(), new Types(), kind);
 
         case TYPEVAR:
+            TypeVariable var = (TypeVariable) type;
+            TypeMirror upper = var.getUpperBound();
+            if (Apty.diff(upper, Object.class)) {
+                return new Type("", type.toString(), new Types(of(upper)), kind);
+            }
             return new Type("", type.toString(), new Types(), kind);
 
         case WILDCARD:

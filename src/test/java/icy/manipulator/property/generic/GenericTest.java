@@ -9,6 +9,8 @@
  */
 package icy.manipulator.property.generic;
 
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -24,8 +26,9 @@ class GenericTest {
 
     @Test
     void generic() {
-        Generic<String, Integer> o = Generic.<String, Integer> with().value("ok").number(10);
-        assert o.value.equals("ok");
+        Generic<String, Integer> o = Generic.<String, Integer> with().value("value").number(10).mapper(Map.of("key", 20));
+        assert o.value.equals("value");
         assert o.number == 10;
+        assert o.mapper.get("key") == 20;
     }
 }

@@ -48,7 +48,7 @@ public abstract class Interface implements InterfaceModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle normalizeSize$1495927443= invoker("normalizeSize", int.class);
+    private static final MethodHandle normalizeSize$1067557996= invoker("normalizeSize", int.class);
 
     /**
      * Create special property updater.
@@ -106,7 +106,7 @@ public abstract class Interface implements InterfaceModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, normalizeSize$1495927443.invoke(this, value));
+            sizeUpdater.invoke(this, normalizeSize$1067557996.invoke(this, value));
         } catch (Throwable e) {
             throw quiet(e);
         }
