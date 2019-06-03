@@ -152,14 +152,22 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
             return (Self)o;
         }
 
-        /** Set answer property with Yes. */
+        /**
+         * Create new {@link AutoExpandEnum} with the specified answer property.
+         * 
+         * @return The next assignable model.
+         */
         public Self yes() {
             Åssignable o = new Åssignable();
             o.yes();
             return (Self)o;
         }
 
-        /** Set answer property with No. */
+        /**
+         * Create new {@link AutoExpandEnum} with the specified answer property.
+         * 
+         * @return The next assignable model.
+         */
         public Self no() {
             Åssignable o = new Åssignable();
             o.no();
@@ -184,7 +192,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
         }
 
         /**
-         * Assign {@link Answer#Yes} to answer property.
+         * Assign answer property.
          * 
          * @return The next assignable model.
          */
@@ -193,7 +201,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
         }
 
         /**
-         * Assign {@link Answer#No} to answer property.
+         * Assign answer property.
          * 
          * @return The next assignable model.
          */

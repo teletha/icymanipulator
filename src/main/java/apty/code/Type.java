@@ -245,8 +245,13 @@ public class Type implements Codable {
         case TYPEVAR:
             return base;
 
+        case INTERSECTION:
+            StringJoiner vars = new StringJoiner(" & ", " extends ", "").setEmptyValue("");
+            variables.forEach(v -> vars.add(v.write(coder)));
+            return base.concat(vars.toString());
+
         case WILDCARD:
-            StringJoiner vars = new StringJoiner(" & ", base, "");
+            vars = new StringJoiner(" & ", base, "");
             variables.forEach(v -> vars.add(v.write(coder)));
             return vars.toString();
 
@@ -311,7 +316,18 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type variable(String name) {
-        return new Type("", name, List.of(), TypeKind.TYPEVAR);
+        return variable(name, List.of());
+    }
+
+    /**
+     * Build {@link Type} from the variable name.
+     * 
+     * @param name A variable name.
+     * @param bounds The upper bound types.
+     * @return The created {@link Type}.
+     */
+    public static final Type variable(String name, List<Type> bounds) {
+        return new Type("", name, bounds, TypeKind.INTERSECTION);
     }
 
     /**
@@ -354,6 +370,18 @@ public class Type implements Codable {
      */
     public static final Type of(String fqcn, List<Type> variables) {
         return new Type(fqcn, variables, TypeKind.DECLARED);
+    }
+
+    /**
+     * Build {@link Type} from the class name.
+     * 
+     * @param packageName A name of package.
+     * @param className A name of type.
+     * @param variables A list of type variables.
+     * @return The created {@link Type}.
+     */
+    public static final Type of(String packageName, String className, List<Type> variables) {
+        return new Type(packageName, className, variables, TypeKind.DECLARED);
     }
 
     /**

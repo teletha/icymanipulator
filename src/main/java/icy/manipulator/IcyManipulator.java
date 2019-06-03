@@ -495,11 +495,14 @@ public class IcyManipulator extends AptyProcessor {
             write("public static final  ", Instantiator, "<?> ", icy.builder(), " = new ", Instantiator, "();");
 
             String parentInstantiator = m.parent.map(p -> " extends " + Type.of(Apty.parent(m.e)) + "." + Instantiator).orElse("");
+            Type self = Type.variable("Self", List
+                    .of(m.implType, Type.of(m.implType.name() + "." + ArbitraryInterface, List.of(Type.variable("Self")))));
+
             write();
             write("/**");
             write(" * Namespace for {@link ", m.implType, "}  builder methods.");
             write(" */");
-            write("public static class ", Instantiator, "<Self extends ", m.implType, " & ", ArbitraryInterface, "<Self>>", parentInstantiator, () -> {
+            write("public static class ", Instantiator, "<", self, ">", parentInstantiator, () -> {
                 m.firstRequiredProperty().ifPresentOrElse(p -> {
                     int group = icy.grouping();
                     List<PropertyInfo> requireds = m.requiredProperties().subList(0, group);
@@ -620,11 +623,14 @@ public class IcyManipulator extends AptyProcessor {
         private void defineAssignableArbitrary() {
             Optional<String> extend = m.findNearestArbitraryModel()
                     .map(m -> " extends " + use(m.implType) + "." + ArbitraryInterface + "<Next>");
+
+            Type next = Type.variable("Next", List.of(m.implType));
+
             write();
             write("/**");
             write(" * Property assignment API.");
             write(" */");
-            write("public static interface ", ArbitraryInterface, "<Next extends ", m.implType, ">", extend, () -> {
+            write("public static interface ", ArbitraryInterface, "<", next, ">", extend, () -> {
                 m.ownArbitraryProperties().forEach(this::defineAssignableSetter);
             });
         }
@@ -666,23 +672,6 @@ public class IcyManipulator extends AptyProcessor {
                     overload(p, m);
                 });
             }
-
-            // =========================================
-            // Auto-Expanded Overload Setter
-            // =========================================
-            if (p.autoExpandable) {
-                for (String name : Apty.enumConstantNames(p.element.getReturnType())) {
-                    write();
-                    write("/**");
-                    write(" * Assign {@link ", p.type, "#", name, "} to ", p.name, " property.");
-                    write(" * ");
-                    write(" * @return The next assignable model.");
-                    write(" */");
-                    write("default Next ", Strings.decapitalize(name), "()", () -> {
-                        write("return ", p.name, "(", p.type, ".", name, ");");
-                    });
-                }
-            }
         }
 
         /**
@@ -695,13 +684,17 @@ public class IcyManipulator extends AptyProcessor {
             OptionalSupport.by(p.type).ifPresentOrElse(s -> {
                 write("return ", p.name, "(", s.type, ".", s.someMethod, "(", m.paramNames.get(0), "));");
             }, () -> {
-                List<String> names = m.withFirst(Type.of(Object.class), "this").paramNames;
+                if (Apty.isEnum(p.element.getReturnType())) {
+                    write("return ", p.name, "(", p.type, ".", Strings.capitalize(m.name), ");");
+                } else {
+                    List<String> names = m.withFirst(Type.of(Object.class), "this").paramNames;
 
-                writeTry(() -> {
-                    write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", names, "));");
-                }, Throwable.class, e -> {
-                    write("throw quiet(", e, ");");
-                });
+                    writeTry(() -> {
+                        write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", names, "));");
+                    }, Throwable.class, e -> {
+                        write("throw quiet(", e, ");");
+                    });
+                }
             });
         }
 

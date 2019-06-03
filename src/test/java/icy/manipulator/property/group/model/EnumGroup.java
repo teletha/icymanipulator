@@ -195,7 +195,11 @@ public abstract class EnumGroup extends EnumGroupModel {
             return (Self)o;
         }
 
-        /** Set color property with Red. */
+        /**
+         * Create new {@link EnumGroup} with the specified color property.
+         * 
+         * @return The next assignable model.
+         */
         public Self red(int size) {
             Åssignable o = new Åssignable();
             o.red();
@@ -203,7 +207,11 @@ public abstract class EnumGroup extends EnumGroupModel {
             return (Self)o;
         }
 
-        /** Set color property with Blue. */
+        /**
+         * Create new {@link EnumGroup} with the specified color property.
+         * 
+         * @return The next assignable model.
+         */
         public Self blue(int size) {
             Åssignable o = new Åssignable();
             o.blue();
@@ -211,7 +219,11 @@ public abstract class EnumGroup extends EnumGroupModel {
             return (Self)o;
         }
 
-        /** Set color property with Green. */
+        /**
+         * Create new {@link EnumGroup} with the specified color property.
+         * 
+         * @return The next assignable model.
+         */
         public Self green(int size) {
             Åssignable o = new Åssignable();
             o.green();
@@ -237,7 +249,7 @@ public abstract class EnumGroup extends EnumGroupModel {
         }
 
         /**
-         * Assign {@link Color#Red} to color property.
+         * Assign color property.
          * 
          * @return The next assignable model.
          */
@@ -246,7 +258,7 @@ public abstract class EnumGroup extends EnumGroupModel {
         }
 
         /**
-         * Assign {@link Color#Blue} to color property.
+         * Assign color property.
          * 
          * @return The next assignable model.
          */
@@ -255,7 +267,7 @@ public abstract class EnumGroup extends EnumGroupModel {
         }
 
         /**
-         * Assign {@link Color#Green} to color property.
+         * Assign color property.
          * 
          * @return The next assignable model.
          */

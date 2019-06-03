@@ -158,6 +158,12 @@ public class ModelInfo {
             overloadForProperty
                     .add(p, new MethodInfo(p.name, p.type, List.of(support.extractor.apply(p).stripWild()), List.of("value"), ""));
         });
+
+        if (p.autoExpandable) {
+            for (String name : Apty.enumConstantNames(p.element.getReturnType())) {
+                overloadForProperty.add(p, new MethodInfo(Strings.decapitalize(name), Type.variable("Next"), List.of(), List.of(), ""));
+            }
+        }
     }
 
     /**

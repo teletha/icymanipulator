@@ -13,10 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import apty.Apty;
-import apty.code.Type;
-import icy.manipulator.util.Strings;
-
 public class MethodSynthesizer {
 
     /** The synthesized methods. */
@@ -36,14 +32,6 @@ public class MethodSynthesizer {
             // overload setter
             for (MethodInfo overload : m.findOverloadsFor(p)) {
                 add(overload);
-            }
-
-            // auto-expanded overload
-            if (p.autoExpandable) {
-                for (String name : Apty.enumConstantNames(p.element.getReturnType())) {
-                    add(new MethodInfo(Strings.decapitalize(name), Type.variable("Next"), List.of(), List
-                            .of(), "Set " + p.name + " property with " + name + "."));
-                }
             }
         } else {
             // rest propreties will accept pattern-matched overload methods only
