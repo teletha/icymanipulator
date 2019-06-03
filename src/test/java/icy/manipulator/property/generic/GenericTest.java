@@ -9,9 +9,6 @@
  */
 package icy.manipulator.property.generic;
 
-import java.util.ArrayList;
-
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -19,22 +16,16 @@ import apty.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
 import icy.manipulator.property.generic.model.Generic;
 import icy.manipulator.property.generic.model.GenericModel;
-import icy.manipulator.property.generic.model.Wildcard;
 
-@Disabled
 class GenericTest {
 
     @RegisterExtension
     static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, GenericModel.class);
 
     @Test
-    void extendType() {
-        Wildcard o = Wildcard.with.create().extendType(ArrayList.class);
-        assert o.extendType == ArrayList.class;
-    }
-
-    @Test
-    void superType() {
-        Generic<String, Integer> generic = Generic.<String, Integer> with().value("ok").number(10);
+    void generic() {
+        Generic<String, Integer> o = Generic.<String, Integer> with().value("ok").number(10);
+        assert o.value.equals("ok");
+        assert o.number == 10;
     }
 }

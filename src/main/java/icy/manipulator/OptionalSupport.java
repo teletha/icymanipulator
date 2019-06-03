@@ -30,16 +30,16 @@ class OptionalSupport {
     private static final Map<Type, OptionalSupport> supports = new HashMap();
 
     static {
-        new OptionalSupport(Type.of(Optional.class), p -> p.type.variables.get(0), "empty", "of");
+        new OptionalSupport(Type.of(Optional.class), p -> p.type.variables.head(), "empty", "of");
         new OptionalSupport(Type.of(OptionalInt.class), p -> Type.of(int.class), "empty", "of");
         new OptionalSupport(Type.of(OptionalLong.class), p -> Type.of(long.class), "empty", "of");
         new OptionalSupport(Type.of(OptionalDouble.class), p -> Type.of(double.class), "empty", "of");
-        new OptionalSupport(Type.of("com.google.common.base.Optional"), p -> p.type.variables.get(0), "absent", "of");
-        new OptionalSupport(Type.of("com.atlassian.fugue.Option"), p -> p.type.variables.get(0), "none", "some");
-        new OptionalSupport(Type.of("io.atlassian.fugue.Option"), p -> p.type.variables.get(0), "none", "some");
-        new OptionalSupport(Type.of("fj.data.Option"), p -> p.type.variables.get(0), "none", "some");
-        new OptionalSupport(Type.of("io.vavr.control.Option"), p -> p.type.variables.get(0), "none", "some");
-        new OptionalSupport(Type.of("kiss.Variable"), p -> p.type.variables.get(0), "empty", "of");
+        new OptionalSupport(Type.of("com.google.common.base.Optional"), p -> p.type.variables.head(), "absent", "of");
+        new OptionalSupport(Type.of("com.atlassian.fugue.Option"), p -> p.type.variables.head(), "none", "some");
+        new OptionalSupport(Type.of("io.atlassian.fugue.Option"), p -> p.type.variables.head(), "none", "some");
+        new OptionalSupport(Type.of("fj.data.Option"), p -> p.type.variables.head(), "none", "some");
+        new OptionalSupport(Type.of("io.vavr.control.Option"), p -> p.type.variables.head(), "none", "some");
+        new OptionalSupport(Type.of("kiss.Variable"), p -> p.type.variables.head(), "empty", "of");
     }
 
     /**

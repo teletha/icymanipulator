@@ -10,7 +10,6 @@
 package apty.code;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -23,8 +22,6 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.WildcardType;
 
-import icy.manipulator.util.Lists;
-
 public class Type implements Codable {
 
     /** The package name. */
@@ -34,7 +31,7 @@ public class Type implements Codable {
     private final String base;
 
     /** The managed variables. */
-    public final List<Type> variables;
+    public final Types variables;
 
     /** The type kind. */
     public final TypeKind kind;
@@ -46,7 +43,7 @@ public class Type implements Codable {
      * @param variables
      * @param kind
      */
-    private Type(String fqcn, List<Type> variables, TypeKind kind) {
+    private Type(String fqcn, Types variables, TypeKind kind) {
         this(computePackage(fqcn), computeName(fqcn), variables, kind);
     }
 
@@ -82,10 +79,10 @@ public class Type implements Codable {
      * @param variables
      * @param kind
      */
-    private Type(String packageName, String base, List<Type> variables, TypeKind kind) {
+    private Type(String packageName, String base, Types variables, TypeKind kind) {
         this.packagee = packageName;
         this.base = base;
-        this.variables = Collections.unmodifiableList(variables);
+        this.variables = variables;
         this.kind = kind;
     }
 
@@ -228,7 +225,17 @@ public class Type implements Codable {
      * @return
      */
     public Type variables(List<Type> variables) {
-        return new Type(packagee, base, Lists.merge(this.variables, variables), kind);
+        return variables(new Types(variables));
+    }
+
+    /**
+     * Create {@link Type} with additional type variables.
+     * 
+     * @param variables
+     * @return
+     */
+    public Type variables(Types variables) {
+        return new Type(packagee, base, this.variables.tail(variables), kind);
     }
 
     /**
@@ -237,7 +244,7 @@ public class Type implements Codable {
      * @return
      */
     public Type raw() {
-        return new Type(packagee, base, List.of(), kind);
+        return new Type(packagee, base, variables, kind);
     }
 
     /**
@@ -255,7 +262,7 @@ public class Type implements Codable {
 
     public Type stripWild() {
         if (kind == TypeKind.WILDCARD) {
-            return variables.get(0);
+            return variables.head();
         } else {
             return this;
         }
@@ -280,19 +287,17 @@ public class Type implements Codable {
 
         case INTERSECTION:
             StringJoiner vars = new StringJoiner(" & ", " extends ", "").setEmptyValue("");
-            variables.forEach(v -> vars.add(v.write(coder)));
+            variables.stream().forEach(v -> vars.add(v.write(coder)));
             return base.concat(vars.toString());
 
         case WILDCARD:
             vars = new StringJoiner(" & ", base, "");
-            variables.forEach(v -> vars.add(v.write(coder)));
+            variables.stream().forEach(v -> vars.add(v.write(coder)));
             return vars.toString();
 
         default:
             vars = new StringJoiner(", ", "<", ">").setEmptyValue("");
-            for (Type type : variables) {
-                vars.add(type.write(coder));
-            }
+            variables.stream().forEach(v -> vars.add(v.write(coder)));
             return coder.imports(packagee, base).concat(vars.toString());
         }
     }
@@ -324,7 +329,7 @@ public class Type implements Codable {
             return false;
         }
 
-        if (!variables.toString().equals(other.variables.toString())) {
+        if (!variables.equals(other.variables)) {
             return false;
         }
 
@@ -349,7 +354,7 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type var(String name) {
-        return new Type("", name, List.of(), TypeKind.INTERSECTION);
+        return new Type("", name, new Types(), TypeKind.INTERSECTION);
     }
 
     /**
@@ -359,7 +364,7 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type wildcardExtend(Type type) {
-        return new Type("", "? extends ", List.of(type), TypeKind.WILDCARD);
+        return new Type("", "? extends ", new Types(type), TypeKind.WILDCARD);
     }
 
     /**
@@ -369,9 +374,8 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type wildcardSuper(Type type) {
-        return new Type("", "? super ", List.of(type), TypeKind.WILDCARD);
+        return new Type("", "? super ", new Types(type), TypeKind.WILDCARD);
     }
-
 
     /**
      * Build {@link Type} from the class name.
@@ -381,7 +385,7 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type of(String fqcn) {
-        return new Type(fqcn, List.of(), TypeKind.DECLARED);
+        return new Type(fqcn, new Types(), TypeKind.DECLARED);
     }
 
     /**
@@ -393,9 +397,9 @@ public class Type implements Codable {
      */
     public static final Type of(Class type) {
         if (type.isPrimitive()) {
-            return new Type(type.getName(), List.of(), TypeKind.valueOf(type.getName().toUpperCase()));
+            return new Type(type.getName(), new Types(), TypeKind.valueOf(type.getName().toUpperCase()));
         } else {
-            return new Type(type.getName(), List.of(), TypeKind.DECLARED);
+            return new Type(type.getName(), new Types(), TypeKind.DECLARED);
         }
     }
 
@@ -439,25 +443,25 @@ public class Type implements Codable {
         case BYTE:
         case SHORT:
         case VOID:
-            return new Type(type.toString(), List.of(), kind);
+            return new Type(type.toString(), new Types(), kind);
 
         case ARRAY:
-            return new Type(type.toString(), List.of(), kind);
+            return new Type(type.toString(), new Types(), kind);
 
         case TYPEVAR:
-            return new Type("", type.toString(), List.of(), kind);
+            return new Type("", type.toString(), new Types(), kind);
 
         case WILDCARD:
             WildcardType wild = (WildcardType) type;
-            if (wild.getExtendsBound() != null) return new Type("", "? extends ", List.of(of(wild.getExtendsBound())), kind);
-            if (wild.getSuperBound() != null) return new Type("", "? super ", List.of(of(wild.getSuperBound())), kind);
-            return new Type("", "?", List.of(), kind);
+            if (wild.getExtendsBound() != null) return new Type("", "? extends ", new Types(of(wild.getExtendsBound())), kind);
+            if (wild.getSuperBound() != null) return new Type("", "? super ", new Types(of(wild.getSuperBound())), kind);
+            return new Type("", "?", new Types(), kind);
 
         case DECLARED:
             DeclaredType declared = (DeclaredType) type;
             String fqcn = ((TypeElement) declared.asElement()).getQualifiedName().toString();
             if (variables == null) variables = declared.getTypeArguments().stream().map(Type::of).collect(Collectors.toList());
-            return new Type(fqcn, variables, TypeKind.DECLARED);
+            return new Type(fqcn, new Types(variables), TypeKind.DECLARED);
 
         default:
             throw new Error("Bug! " + type);

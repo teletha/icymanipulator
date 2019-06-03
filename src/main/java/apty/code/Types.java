@@ -13,10 +13,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import icy.manipulator.util.Lists;
 
 public class Types implements Codable {
 
     private final List<Type> types;
+
+    /**
+     * @param types
+     */
+    public Types(Type... types) {
+        this(List.of(types));
+    }
 
     /**
      * @param types
@@ -26,12 +36,48 @@ public class Types implements Codable {
     }
 
     /**
+     * List up all types.
+     * 
+     * @return
+     */
+    public Stream<Type> stream() {
+        return types.stream();
+    }
+
+    /**
      * Create new {@link Types} which all variables are raw.
      * 
      * @return A new {@link Types}.
      */
     public Types raw() {
         return new Types(types.stream().map(Type::raw).collect(Collectors.toUnmodifiableList()));
+    }
+
+    /**
+     * Get type variable at head.
+     * 
+     * @return
+     */
+    public Type head() {
+        return types.get(0);
+    }
+
+    /**
+     * Create merged variable types at head.
+     * 
+     * @return
+     */
+    public Types head(Types types) {
+        return new Types(Lists.merge(types.types, this.types));
+    }
+
+    /**
+     * Create merged variable types at tail.
+     * 
+     * @return
+     */
+    public Types tail(Types types) {
+        return new Types(Lists.merge(this.types, types.types));
     }
 
     /**
@@ -80,5 +126,19 @@ public class Types implements Codable {
         StringJoiner builder = new StringJoiner(", ", "<", ">").setEmptyValue("");
         types.forEach(v -> builder.add(coder.use(v)));
         return builder.toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Types == false) {
+            return false;
+        }
+
+        Types other = (Types) obj;
+
+        return types.toString().equals(other.types.toString());
     }
 }
