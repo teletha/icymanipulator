@@ -495,8 +495,7 @@ public class IcyManipulator extends AptyProcessor {
             write("public static final  ", Instantiator, "<?> ", icy.builder(), " = new ", Instantiator, "();");
 
             String parentInstantiator = m.parent.map(p -> " extends " + Type.of(Apty.parent(m.e)) + "." + Instantiator).orElse("");
-            Type self = Type.variable("Self", List
-                    .of(m.implType, Type.of(m.implType.name() + "." + ArbitraryInterface, List.of(Type.variable("Self")))));
+            Type self = Type.var("Self").variables(m.implType, Type.of(m.implType + "." + ArbitraryInterface).variables("Self"));
 
             write();
             write("/**");
@@ -591,18 +590,6 @@ public class IcyManipulator extends AptyProcessor {
         }
 
         /**
-         * Define mutable model class.
-         */
-        private void defineMutableClass() {
-            write();
-            write("/**");
-            write(" * Mutable Model.");
-            write(" */");
-            write("private static final class ", Assignable, " extends ", m.implType, " implements ", AssignableAll, ", ", ArbitraryInterface, () -> {
-            });
-        }
-
-        /**
          * Define assignable interfaces.
          */
         private void defineAssignableInterfaces() {
@@ -624,7 +611,7 @@ public class IcyManipulator extends AptyProcessor {
             Optional<String> extend = m.findNearestArbitraryModel()
                     .map(m -> " extends " + use(m.implType) + "." + ArbitraryInterface + "<Next>");
 
-            Type next = Type.variable("Next", List.of(m.implType));
+            Type next = Type.var("Next").variables(m.implType);
 
             write();
             write("/**");
@@ -715,6 +702,18 @@ public class IcyManipulator extends AptyProcessor {
             write(" * Internal aggregated API.");
             write(" */");
             write("protected static interface ", AssignableAll, apis, () -> {
+            });
+        }
+
+        /**
+         * Define mutable model class.
+         */
+        private void defineMutableClass() {
+            write();
+            write("/**");
+            write(" * Mutable Model.");
+            write(" */");
+            write("private static final class ", Assignable, " extends ", m.implType, " implements ", AssignableAll, ", ", ArbitraryInterface, () -> {
             });
         }
 

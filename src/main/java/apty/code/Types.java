@@ -41,7 +41,7 @@ public class Types implements Codable {
      * @return A new {@link Types}.
      */
     public Types prepend(String variable) {
-        return prepend(Type.variable(variable));
+        return prepend(Type.var(variable));
     }
 
     /**
@@ -67,7 +67,7 @@ public class Types implements Codable {
     public Types append(String variable) {
         List<Type> list = new ArrayList();
         list.addAll(types);
-        list.add(Type.variable(variable));
+        list.add(Type.var(variable));
 
         return new Types(list);
     }

@@ -9,6 +9,7 @@
  */
 package apty.code;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +22,8 @@ import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.WildcardType;
+
+import icy.manipulator.util.Lists;
 
 public class Type implements Codable {
 
@@ -199,6 +202,36 @@ public class Type implements Codable {
     }
 
     /**
+     * Create {@link Type} with additional type variables.
+     * 
+     * @param variables
+     * @return
+     */
+    public Type variables(String... variables) {
+        return variables(Arrays.stream(variables).map(Type::var).collect(Collectors.toUnmodifiableList()));
+    }
+
+    /**
+     * Create {@link Type} with additional type variables.
+     * 
+     * @param variables
+     * @return
+     */
+    public Type variables(Type... variables) {
+        return variables(List.of(variables));
+    }
+
+    /**
+     * Create {@link Type} with additional type variables.
+     * 
+     * @param variables
+     * @return
+     */
+    public Type variables(List<Type> variables) {
+        return new Type(packagee, base, Lists.merge(this.variables, variables), kind);
+    }
+
+    /**
      * Create raw type, all variables are removed.
      * 
      * @return
@@ -315,19 +348,8 @@ public class Type implements Codable {
      * @param name A variable name.
      * @return The created {@link Type}.
      */
-    public static final Type variable(String name) {
-        return variable(name, List.of());
-    }
-
-    /**
-     * Build {@link Type} from the variable name.
-     * 
-     * @param name A variable name.
-     * @param bounds The upper bound types.
-     * @return The created {@link Type}.
-     */
-    public static final Type variable(String name, List<Type> bounds) {
-        return new Type("", name, bounds, TypeKind.INTERSECTION);
+    public static final Type var(String name) {
+        return new Type("", name, List.of(), TypeKind.INTERSECTION);
     }
 
     /**
@@ -350,16 +372,6 @@ public class Type implements Codable {
         return new Type("", "? super ", List.of(type), TypeKind.WILDCARD);
     }
 
-    /**
-     * Build {@link Type} from the class name.
-     * 
-     * @param fqcn A fully qualified class name.
-     * @param variables A list of type variables.
-     * @return The created {@link Type}.
-     */
-    public static final Type of(String fqcn, Type... variables) {
-        return of(fqcn, List.of(variables));
-    }
 
     /**
      * Build {@link Type} from the class name.
@@ -368,20 +380,8 @@ public class Type implements Codable {
      * @param variables A list of type variables.
      * @return The created {@link Type}.
      */
-    public static final Type of(String fqcn, List<Type> variables) {
-        return new Type(fqcn, variables, TypeKind.DECLARED);
-    }
-
-    /**
-     * Build {@link Type} from the class name.
-     * 
-     * @param packageName A name of package.
-     * @param className A name of type.
-     * @param variables A list of type variables.
-     * @return The created {@link Type}.
-     */
-    public static final Type of(String packageName, String className, List<Type> variables) {
-        return new Type(packageName, className, variables, TypeKind.DECLARED);
+    public static final Type of(String fqcn) {
+        return new Type(fqcn, List.of(), TypeKind.DECLARED);
     }
 
     /**
@@ -391,22 +391,11 @@ public class Type implements Codable {
      * @param variables A list of type variables.
      * @return The created {@link Type}.
      */
-    public static final Type of(Class type, Type... variables) {
-        return of(type, List.of(variables));
-    }
-
-    /**
-     * Build {@link Type} from {@link Class}.
-     * 
-     * @param type A base type.
-     * @param variables A list of type variables.
-     * @return The created {@link Type}.
-     */
-    public static final Type of(Class type, List<Type> variables) {
+    public static final Type of(Class type) {
         if (type.isPrimitive()) {
-            return new Type(type.getName(), variables, TypeKind.valueOf(type.getName().toUpperCase()));
+            return new Type(type.getName(), List.of(), TypeKind.valueOf(type.getName().toUpperCase()));
         } else {
-            return new Type(type.getName(), variables, TypeKind.DECLARED);
+            return new Type(type.getName(), List.of(), TypeKind.DECLARED);
         }
     }
 
