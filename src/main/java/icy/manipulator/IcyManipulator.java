@@ -19,6 +19,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 
 import javax.annotation.processing.Generated;
 
@@ -67,9 +68,6 @@ public class IcyManipulator extends AptyProcessor {
         /** The fully qualified type variables on the model. */
         private final List<Type> declarations;
 
-        /** The reusable ArbitraryInterface type. */
-        private final Type ArbitraryInterfaceType;
-
         /**
          * @param model
          */
@@ -77,8 +75,7 @@ public class IcyManipulator extends AptyProcessor {
             super(model.implType.name());
             this.m = model;
             this.icy = model.e.getAnnotation(Icy.class);
-            this.declarations = model.type.declaredVariables();
-            this.ArbitraryInterfaceType = Type.of(m.implType + "." + ArbitraryInterface);
+            this.declarations = model.type.variables.stream().map(Type::declared).collect(Collectors.toUnmodifiableList());
 
             String visibility = icy.packagePrivate() ? "" : "public ";
             String inheritance = Apty.isInterface(model.e) ? " implements " : " extends ";
@@ -510,7 +507,7 @@ public class IcyManipulator extends AptyProcessor {
 
             String parentInstantiator = m.parent.map(p -> " extends " + Type.of(Apty.parent(m.e)) + "." + Instantiator).orElse("");
 
-            Type Self = Type.var("Self", m.implType, ArbitraryInterfaceType.params("Self", m.type.variables));
+            Type Self = Type.var("Self", m.implType, Type.of(m.implType + "." + ArbitraryInterface, "Self", m.type.variables));
 
             write();
             write("/**");

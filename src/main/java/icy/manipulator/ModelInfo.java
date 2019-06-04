@@ -105,8 +105,7 @@ public class ModelInfo {
             // by defined model
             this.name = e.getSimpleName().toString();
             this.type = Type.of(e);
-            this.implType = Type.of(e.getQualifiedName().toString().replaceAll(icy.modelNamePattern() + "$", "$1"))
-                    .params(type.variables);
+            this.implType = Type.of(e.getQualifiedName().toString().replaceAll(icy.modelNamePattern() + "$", "$1"), type.variables);
             this.hasToString = Apty.methods(e).stream().anyMatch(Apty.ToString);
             this.hasHashCode = Apty.methods(e).stream().anyMatch(Apty.HashCode);
             this.hasEquals = Apty.methods(e).stream().anyMatch(Apty.Equals);
