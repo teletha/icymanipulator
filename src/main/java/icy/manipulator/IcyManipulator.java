@@ -510,7 +510,7 @@ public class IcyManipulator extends AptyProcessor {
 
             String parentInstantiator = m.parent.map(p -> " extends " + Type.of(Apty.parent(m.e)) + "." + Instantiator).orElse("");
 
-            Type Self = Type.var("Self").extend(m.implType, ArbitraryInterfaceType.params("Self", m.type.variables));
+            Type Self = Type.var("Self", m.implType, ArbitraryInterfaceType.params("Self", m.type.variables));
 
             write();
             write("/**");
@@ -628,7 +628,7 @@ public class IcyManipulator extends AptyProcessor {
             Optional<String> extend = m.findNearestArbitraryModel()
                     .map(m -> " extends " + use(m.implType) + "." + ArbitraryInterface + "<Next>");
 
-            Type Next = Type.var("Next").extend(m.implType);
+            Type Next = Type.var("Next", m.implType);
 
             write();
             write("/**");

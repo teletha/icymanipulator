@@ -215,7 +215,7 @@ public class Type implements Codable {
      * @return
      */
     public Type params(Object... parameters) {
-        return new Type(packagee, base, Lists.merge(this.variables, flat(parameters)), kind);
+        return new Type(packagee, base, Lists.merge(this.variables, flatten(parameters)), kind);
     }
 
     /**
@@ -266,24 +266,26 @@ public class Type implements Codable {
         }
     }
 
-    public Type extend(Object... types) {
-        return new Type(packagee, base, Lists.merge(variables, flat(types)), kind);
-    }
-
-    public List<Type> with(Object... types) {
-        List<Type> list = new ArrayList();
-        list.add(this);
-        list.addAll(flat(types));
-        return list;
-    }
-
     /**
-     * Flatten
+     * Create {@link Type} list with this and the specifieds.
      * 
      * @param types
      * @return
      */
-    private List<Type> flat(Object... types) {
+    public List<Type> with(Object... types) {
+        List<Type> list = new ArrayList();
+        list.add(this);
+        list.addAll(flatten(types));
+        return list;
+    }
+
+    /**
+     * Flatten all types.
+     * 
+     * @param types
+     * @return
+     */
+    private List<Type> flatten(Object... types) {
         List<Type> list = new ArrayList();
 
         for (Object type : types) {
@@ -294,7 +296,7 @@ public class Type implements Codable {
             } else if (type instanceof Type) {
                 list.add((Type) type);
             } else if (type instanceof List) {
-                ((List) type).stream().forEach(item -> list.addAll(flat(item)));
+                ((List) type).stream().forEach(item -> list.addAll(flatten(item)));
             } else {
                 throw new Error("Bug!");
             }
@@ -385,10 +387,11 @@ public class Type implements Codable {
      * Build {@link Type} from the variable name.
      * 
      * @param name A variable name.
+     * @param parameters A list of parameter variables.
      * @return The created {@link Type}.
      */
-    public static final Type var(String name) {
-        return new Type("", name, List.of(), TypeKind.INTERSECTION);
+    public static final Type var(String name, Type... parameters) {
+        return new Type("", name, List.of(parameters), TypeKind.INTERSECTION);
     }
 
     /**
