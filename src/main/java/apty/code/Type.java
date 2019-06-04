@@ -27,6 +27,7 @@ import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.WildcardType;
 
 import apty.Apty;
+import icy.manipulator.util.Lists;
 
 public class Type implements Codable {
 
@@ -40,7 +41,7 @@ public class Type implements Codable {
     private final String base;
 
     /** The managed variables. */
-    public final TypeParams variables;
+    public final List<Type> variables;
 
     /** The type kind. */
     public final TypeKind kind;
@@ -52,7 +53,7 @@ public class Type implements Codable {
      * @param variables
      * @param kind
      */
-    private Type(String fqcn, TypeParams variables, TypeKind kind) {
+    private Type(String fqcn, List<Type> variables, TypeKind kind) {
         this(computePackage(fqcn), computeName(fqcn), variables, kind);
     }
 
@@ -88,7 +89,7 @@ public class Type implements Codable {
      * @param variables
      * @param kind
      */
-    private Type(String packageName, String base, TypeParams variables, TypeKind kind) {
+    private Type(String packageName, String base, List<Type> variables, TypeKind kind) {
         this.packagee = packageName;
         this.base = base;
         this.variables = variables;
@@ -214,22 +215,7 @@ public class Type implements Codable {
      * @return
      */
     public Type params(Object... parameters) {
-        List<Type> list = new ArrayList();
-
-        for (Object parameter : parameters) {
-            if (parameter instanceof String) {
-                list.add(Type.var((String) parameter));
-            } else if (parameter instanceof Class) {
-                list.add(Type.of((Class) parameter));
-            } else if (parameter instanceof Type) {
-                list.add((Type) parameter);
-            } else if (parameter instanceof TypeParams) {
-                ((TypeParams) parameter).stream().forEach(list::add);
-            } else {
-                throw new Error("Bug!");
-            }
-        }
-        return new Type(packagee, base, this.variables.tail(new TypeParams(list)), kind);
+        return new Type(packagee, base, Lists.merge(this.variables, flat(parameters)), kind);
     }
 
     /**
@@ -238,16 +224,25 @@ public class Type implements Codable {
      * @return
      */
     public Type raw() {
-        return new Type(packagee, base, new TypeParams(), kind);
+        return new Type(packagee, base, List.of(), kind);
     }
 
     /**
-     * Create raw type, all variables are removed.
+     * Create declared type, all variables are viewable.
      * 
      * @return
      */
     public Type declared() {
         return new Type(packagee, base, variables, TypeKind.INTERSECTION);
+    }
+
+    /**
+     * Create declared type parameters, all parameters are viewable.
+     * 
+     * @return
+     */
+    public List<Type> declaredVariables() {
+        return variables.stream().map(Type::declared).collect(Collectors.toUnmodifiableList());
     }
 
     /**
@@ -265,14 +260,14 @@ public class Type implements Codable {
 
     public Type stripWild() {
         if (kind == TypeKind.WILDCARD) {
-            return variables.head();
+            return variables.get(0);
         } else {
             return this;
         }
     }
 
     public Type extend(Object... types) {
-        return new Type(packagee, base, variables.tail(new TypeParams(flat(types))), kind);
+        return new Type(packagee, base, Lists.merge(variables, flat(types)), kind);
     }
 
     public List<Type> with(Object... types) {
@@ -294,10 +289,12 @@ public class Type implements Codable {
         for (Object type : types) {
             if (type instanceof String) {
                 list.add(Type.var((String) type));
+            } else if (type instanceof Class) {
+                list.add(Type.of((Class) type));
             } else if (type instanceof Type) {
                 list.add((Type) type);
-            } else if (type instanceof TypeParams) {
-                ((TypeParams) type).stream().forEach(list::add);
+            } else if (type instanceof List) {
+                ((List) type).stream().forEach(item -> list.addAll(flat(item)));
             } else {
                 throw new Error("Bug!");
             }
@@ -391,7 +388,7 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type var(String name) {
-        return new Type("", name, new TypeParams(), TypeKind.INTERSECTION);
+        return new Type("", name, List.of(), TypeKind.INTERSECTION);
     }
 
     /**
@@ -401,7 +398,7 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type wildcardExtend(Type type) {
-        return new Type("", "? extends ", new TypeParams(type), TypeKind.WILDCARD);
+        return new Type("", "? extends ", List.of(type), TypeKind.WILDCARD);
     }
 
     /**
@@ -411,7 +408,7 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type wildcardSuper(Type type) {
-        return new Type("", "? super ", new TypeParams(type), TypeKind.WILDCARD);
+        return new Type("", "? super ", List.of(type), TypeKind.WILDCARD);
     }
 
     /**
@@ -422,7 +419,7 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type of(String fqcn) {
-        return new Type(fqcn, new TypeParams(), TypeKind.DECLARED);
+        return new Type(fqcn, List.of(), TypeKind.DECLARED);
     }
 
     /**
@@ -434,9 +431,9 @@ public class Type implements Codable {
      */
     public static final Type of(Class type) {
         if (type.isPrimitive()) {
-            return new Type(type.getName(), new TypeParams(), TypeKind.valueOf(type.getName().toUpperCase()));
+            return new Type(type.getName(), List.of(), TypeKind.valueOf(type.getName().toUpperCase()));
         } else {
-            return new Type(type.getName(), new TypeParams(), TypeKind.DECLARED);
+            return new Type(type.getName(), List.of(), TypeKind.DECLARED);
         }
     }
 
@@ -480,30 +477,30 @@ public class Type implements Codable {
         case BYTE:
         case SHORT:
         case VOID:
-            return new Type(type.toString(), new TypeParams(), kind);
+            return new Type(type.toString(), List.of(), kind);
 
         case ARRAY:
-            return new Type(type.toString(), new TypeParams(), kind);
+            return new Type(type.toString(), List.of(), kind);
 
         case TYPEVAR:
             TypeVariable var = (TypeVariable) type;
             TypeMirror upper = var.getUpperBound();
             if (Apty.diff(upper, Object.class)) {
-                return new Type("", type.toString(), new TypeParams(of(upper)), kind);
+                return new Type("", type.toString(), List.of(of(upper)), kind);
             }
-            return new Type("", type.toString(), new TypeParams(), kind);
+            return new Type("", type.toString(), List.of(), kind);
 
         case WILDCARD:
             WildcardType wild = (WildcardType) type;
-            if (wild.getExtendsBound() != null) return new Type("", "? extends ", new TypeParams(of(wild.getExtendsBound())), kind);
-            if (wild.getSuperBound() != null) return new Type("", "? super ", new TypeParams(of(wild.getSuperBound())), kind);
-            return new Type("", "?", new TypeParams(), kind);
+            if (wild.getExtendsBound() != null) return new Type("", "? extends ", List.of(of(wild.getExtendsBound())), kind);
+            if (wild.getSuperBound() != null) return new Type("", "? super ", List.of(of(wild.getSuperBound())), kind);
+            return new Type("", "?", List.of(), kind);
 
         case DECLARED:
             DeclaredType declared = (DeclaredType) type;
             String fqcn = ((TypeElement) declared.asElement()).getQualifiedName().toString();
             if (variables == null) variables = declared.getTypeArguments().stream().map(Type::of).collect(Collectors.toList());
-            return new Type(fqcn, new TypeParams(variables), TypeKind.DECLARED);
+            return new Type(fqcn, variables, TypeKind.DECLARED);
 
         default:
             throw new Error("Bug! " + type);
@@ -531,8 +528,6 @@ public class Type implements Codable {
                     parse((String) literal);
                 } else if (literal instanceof Type) {
                     parse((Type) literal);
-                } else if (literal instanceof TypeParams) {
-                    parse((TypeParams) literal);
                 } else {
                     throw new Error(Type.class.getSimpleName() + " accepts String, Type and TypeParams only.");
                 }
@@ -619,15 +614,6 @@ public class Type implements Codable {
             } else {
                 this.type = composer.peekLast().apply(literal);
             }
-        }
-
-        /**
-         * Analyze type literal.
-         * 
-         * @param literal A user input.
-         */
-        private void parse(TypeParams literal) {
-
         }
     }
 }

@@ -48,7 +48,7 @@ public abstract class ThrowOriginalError extends ThrowOriginalErrorModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle validateSize$800379583= invoker("validateSize", int.class);
+    private static final MethodHandle validateSize$101354429= invoker("validateSize", int.class);
 
     /**
      * Create special property updater.
@@ -106,7 +106,7 @@ public abstract class ThrowOriginalError extends ThrowOriginalErrorModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, validateSize$800379583.invoke(this, value));
+            sizeUpdater.invoke(this, validateSize$101354429.invoke(this, value));
         } catch (Throwable e) {
             throw quiet(e);
         }

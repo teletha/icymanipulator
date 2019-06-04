@@ -340,6 +340,18 @@ public class Coder {
     }
 
     /**
+     * Write declaration of type prameters.
+     * 
+     * @param types
+     * @return
+     */
+    public final String declare(List<Type> types) {
+        StringJoiner builder = new StringJoiner(", ", "<", ">").setEmptyValue("");
+        types.stream().forEach(type -> builder.add(use(type.declared())));
+        return builder.toString();
+    }
+
+    /**
      * Make the latest expression or block to statement by inserting semicolon.
      */
     public final void asStatement() {

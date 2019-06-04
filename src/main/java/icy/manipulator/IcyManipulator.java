@@ -27,7 +27,6 @@ import apty.AptyProcessor;
 import apty.Modifiers;
 import apty.code.Coder;
 import apty.code.Type;
-import apty.code.TypeParams;
 import icy.manipulator.util.Lists;
 import icy.manipulator.util.Strings;
 
@@ -66,7 +65,7 @@ public class IcyManipulator extends AptyProcessor {
         private final Icy icy;
 
         /** The fully qualified type variables on the model. */
-        private final TypeParams declarations;
+        private final List<Type> declarations;
 
         /** The reusable ArbitraryInterface type. */
         private final Type ArbitraryInterfaceType;
@@ -78,7 +77,7 @@ public class IcyManipulator extends AptyProcessor {
             super(model.implType.name());
             this.m = model;
             this.icy = model.e.getAnnotation(Icy.class);
-            this.declarations = model.type.variables.declared();
+            this.declarations = model.type.declaredVariables();
             this.ArbitraryInterfaceType = Type.of(m.implType + "." + ArbitraryInterface);
 
             String visibility = icy.packagePrivate() ? "" : "public ";
@@ -88,7 +87,7 @@ public class IcyManipulator extends AptyProcessor {
             write(" * Generated model for {@link ", model.type, "}.");
             write(" */");
             write("@", Generated.class, "(`Icy Manipulator`)");
-            write(visibility, "abstract class ", model.implType.raw(), declarations, inheritance, model.type, () -> {
+            write(visibility, "abstract class ", model.implType.raw(), declare(declarations), inheritance, model.type, () -> {
                 defineErrorHandler();
                 defineMethodInvokerBuilder();
                 defineMethodInvoker();
@@ -504,7 +503,7 @@ public class IcyManipulator extends AptyProcessor {
                 write("/** The singleton builder. */");
                 write("public static final  ", Instantiator, "<?> ", icy.builder(), " = new ", Instantiator, "();");
             } else {
-                write("public static ", declarations, " ", Instantiator, "<", Type.WILD.with(m.type.variables), "> with()", () -> {
+                write("public static ", declare(declarations), " ", Instantiator, "<", Type.WILD.with(m.type.variables), "> with()", () -> {
                     write("return new ", Instantiator, "();");
                 });
             }
@@ -731,7 +730,7 @@ public class IcyManipulator extends AptyProcessor {
             write("/**");
             write(" * Mutable Model.");
             write(" */");
-            write("private static final class ", Assignable, declarations, " extends ", m.implType, " implements ", AssignableAll, ", ", ArbitraryInterface, () -> {
+            write("private static final class ", Assignable, declare(declarations), " extends ", m.implType, " implements ", AssignableAll, ", ", ArbitraryInterface, () -> {
             });
         }
 
