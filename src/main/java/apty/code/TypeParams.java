@@ -72,43 +72,6 @@ public class TypeParams implements Codable {
     }
 
     /**
-     * Create new {@link TypeParams} which the specified variable is prepended at head.
-     * 
-     * @param variable A variable to prepend.
-     * @return A new {@link TypeParams}.
-     */
-    public TypeParams head(Type type) {
-        List<Type> list = new ArrayList();
-        list.add(type);
-        list.addAll(types);
-
-        return new TypeParams(list);
-    }
-
-    /**
-     * Create merged variable types at head.
-     * 
-     * @return
-     */
-    public TypeParams head(TypeParams types) {
-        return new TypeParams(Lists.merge(types.types, this.types));
-    }
-
-    /**
-     * Create new {@link TypeParams} which the specified variable is appended at tail.
-     * 
-     * @param variable A variable to append.
-     * @return A new {@link TypeParams}.
-     */
-    public TypeParams tail(Type variable) {
-        List<Type> list = new ArrayList();
-        list.addAll(types);
-        list.add(variable);
-
-        return new TypeParams(list);
-    }
-
-    /**
      * Create merged variable types at tail.
      * 
      * @return

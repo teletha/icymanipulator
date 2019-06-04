@@ -11,14 +11,12 @@ package apty.code;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
@@ -32,6 +30,9 @@ import apty.Apty;
 
 public class Type implements Codable {
 
+    /** The reusable wild card type. */
+    public static final Type WILD = Type.var("?");
+
     /** The package name. */
     private final String packagee;
 
@@ -43,8 +44,6 @@ public class Type implements Codable {
 
     /** The type kind. */
     public final TypeKind kind;
-
-    public final Type ᐳ = this;
 
     /**
      * Build Type.
@@ -214,70 +213,23 @@ public class Type implements Codable {
      * @param variables
      * @return
      */
-    public Type variables(String... variables) {
-        return variables(Arrays.stream(variables).map(Type::var).collect(Collectors.toUnmodifiableList()));
-    }
-
-    /**
-     * Create {@link Type} with additional type variables.
-     * 
-     * @param variables
-     * @return
-     */
-    public Type variables(Type... variables) {
-        return variables(List.of(variables));
-    }
-
-    /**
-     * Create {@link Type} with additional type variables.
-     * 
-     * @param variables
-     * @return
-     */
-    public Type variables(List<Type> variables) {
-        return variables(new TypeParams(variables));
-    }
-
-    /**
-     * Create {@link Type} with additional type variables.
-     * 
-     * @param variables
-     * @return
-     */
-    public Type variables(TypeParams variables) {
-        return new Type(packagee, base, this.variables.tail(variables), kind);
-    }
-
-    /**
-     * Create {@link Type} with additional type variables.
-     * 
-     * @param variables
-     * @return
-     */
-    public Type ᐸ(Object... parameters) {
-        List<Type> types = new ArrayList();
+    public Type params(Object... parameters) {
+        List<Type> list = new ArrayList();
 
         for (Object parameter : parameters) {
             if (parameter instanceof String) {
-                types.add(Type.var((String) parameter));
+                list.add(Type.var((String) parameter));
             } else if (parameter instanceof Class) {
-                types.add(Type.of((Class) parameter));
+                list.add(Type.of((Class) parameter));
             } else if (parameter instanceof Type) {
-                types.add((Type) parameter);
+                list.add((Type) parameter);
             } else if (parameter instanceof TypeParams) {
-                ((TypeParams) parameter).stream().forEach(types::add);
-            } else if (parameter instanceof Iterable) {
-                StreamSupport.stream(((Iterable) parameter).spliterator(), false).forEach(item -> {
-
-                });
-                Iterable list = (Iterable) parameter;
-
-                for (Object item : list) {
-
-                }
+                ((TypeParams) parameter).stream().forEach(list::add);
+            } else {
+                throw new Error("Bug!");
             }
         }
-        return new Type(packagee, base, this.variables.tail(variables), kind);
+        return new Type(packagee, base, this.variables.tail(new TypeParams(list)), kind);
     }
 
     /**
@@ -317,6 +269,40 @@ public class Type implements Codable {
         } else {
             return this;
         }
+    }
+
+    public Type extend(Object... types) {
+        return new Type(packagee, base, variables.tail(new TypeParams(flat(types))), kind);
+    }
+
+    public List<Type> with(Object... types) {
+        List<Type> list = new ArrayList();
+        list.add(this);
+        list.addAll(flat(types));
+        return list;
+    }
+
+    /**
+     * Flatten
+     * 
+     * @param types
+     * @return
+     */
+    private List<Type> flat(Object... types) {
+        List<Type> list = new ArrayList();
+
+        for (Object type : types) {
+            if (type instanceof String) {
+                list.add(Type.var((String) type));
+            } else if (type instanceof Type) {
+                list.add((Type) type);
+            } else if (type instanceof TypeParams) {
+                ((TypeParams) type).stream().forEach(list::add);
+            } else {
+                throw new Error("Bug!");
+            }
+        }
+        return list;
     }
 
     /**
@@ -572,7 +558,7 @@ public class Type implements Codable {
 
                 case '<':
                     parseToken(buffer);
-                    composer.add(param -> type.variables(param));
+                    composer.add(param -> type.params(param));
                     break;
 
                 case '>':
@@ -607,7 +593,7 @@ public class Type implements Codable {
 
             switch (token) {
             case "extends":
-                composer.add(parent -> type.variables(parent));
+                composer.add(parent -> type.params(parent));
                 break;
 
             case "super":

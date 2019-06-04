@@ -68,6 +68,9 @@ public class IcyManipulator extends AptyProcessor {
         /** The fully qualified type variables on the model. */
         private final TypeParams declarations;
 
+        /** The reusable ArbitraryInterface type. */
+        private final Type ArbitraryInterfaceType;
+
         /**
          * @param model
          */
@@ -76,6 +79,7 @@ public class IcyManipulator extends AptyProcessor {
             this.m = model;
             this.icy = model.e.getAnnotation(Icy.class);
             this.declarations = model.type.variables.declared();
+            this.ArbitraryInterfaceType = Type.of(m.implType + "." + ArbitraryInterface);
 
             String visibility = icy.packagePrivate() ? "" : "public ";
             String inheritance = Apty.isInterface(model.e) ? " implements " : " extends ";
@@ -500,22 +504,20 @@ public class IcyManipulator extends AptyProcessor {
                 write("/** The singleton builder. */");
                 write("public static final  ", Instantiator, "<?> ", icy.builder(), " = new ", Instantiator, "();");
             } else {
-                write("public static ", declarations, " ", Instantiator, TypeParams.var("?").tail(m.type.variables), " with()", () -> {
+                write("public static ", declarations, " ", Instantiator, "<", Type.WILD.with(m.type.variables), "> with()", () -> {
                     write("return new ", Instantiator, "();");
                 });
             }
 
             String parentInstantiator = m.parent.map(p -> " extends " + Type.of(Apty.parent(m.e)) + "." + Instantiator).orElse("");
 
-            Type self = Type.var("Self")
-                    .variables(m.implType, Type.of(m.implType + "." + ArbitraryInterface).variables("Self").variables(m.type.variables));
-            TypeParams types = new TypeParams(self).tail(declarations);
+            Type Self = Type.var("Self").extend(m.implType, ArbitraryInterfaceType.params("Self", m.type.variables));
 
             write();
             write("/**");
             write(" * Namespace for {@link ", m.implType, "}  builder methods.");
             write(" */");
-            write("public static class ", Instantiator, types, parentInstantiator, () -> {
+            write("public static class ", Instantiator, "<", Self.with(declarations), ">", parentInstantiator, () -> {
                 m.firstRequiredProperty().ifPresentOrElse(p -> {
                     int group = icy.grouping();
                     List<PropertyInfo> requireds = m.requiredProperties().subList(0, group);
@@ -607,14 +609,14 @@ public class IcyManipulator extends AptyProcessor {
          * Define assignable interfaces.
          */
         private void defineAssignableInterfaces() {
-            TypeParams next = TypeParams.var("Next").tail(declarations);
+            Type Next = Type.var("Next");
 
             for (PropertyInfo property : m.ownRequiredProperties()) {
                 write();
                 write("/**");
                 write(" * Property assignment API.");
                 write(" */");
-                write("public static interface ", property.assignableInterfaceName(), next, () -> {
+                write("public static interface ", property.assignableInterfaceName(), "<", Next.with(declarations), ">", () -> {
                     defineAssignableSetter(property);
                 });
             }
@@ -627,13 +629,13 @@ public class IcyManipulator extends AptyProcessor {
             Optional<String> extend = m.findNearestArbitraryModel()
                     .map(m -> " extends " + use(m.implType) + "." + ArbitraryInterface + "<Next>");
 
-            TypeParams next = new TypeParams(Type.var("Next").variables(m.implType)).tail(declarations);
+            Type Next = Type.var("Next").extend(m.implType);
 
             write();
             write("/**");
             write(" * Property assignment API.");
             write(" */");
-            write("public static interface ", ArbitraryInterface, next, extend, () -> {
+            write("public static interface ", ArbitraryInterface, "<", Next.with(declarations), ">", extend, () -> {
                 m.ownArbitraryProperties().forEach(this::defineAssignableSetter);
             });
         }
