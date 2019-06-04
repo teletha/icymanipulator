@@ -277,31 +277,6 @@ public class Apty {
     }
 
     /**
-     * Check whether the specified type is enum or not.
-     * 
-     * @param type A target type to check.
-     * @return A result.
-     */
-    public static boolean isEnum(TypeMirror type) {
-        Element e = types.asElement(type);
-
-        if (e == null) {
-            return false;
-        }
-        return e.getKind() == ElementKind.ENUM;
-    }
-
-    /**
-     * Check whether the specified type is enum or not.
-     * 
-     * @param type A target type to check.
-     * @return A result.
-     */
-    public static boolean isNotEnum(TypeMirror type) {
-        return !isEnum(type);
-    }
-
-    /**
      * Check whether the specified type is interface or not.
      * 
      * @param e A target type to check.

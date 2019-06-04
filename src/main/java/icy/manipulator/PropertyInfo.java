@@ -77,8 +77,7 @@ public class PropertyInfo {
             this.nullable = annotation.nullable();
             this.mutable = annotation.mutable();
             this.copiable = annotation.copiable();
-            this.autoExpandable = Apty.isEnum(method.getReturnType()) ? annotation.overloadEnum() : true;
-
+            this.autoExpandable = annotation.overloadEnum();
             Icy icy = method.getEnclosingElement().getAnnotation(Icy.class);
             this.getterModifier = validate(method, annotation.getterModifier(), icy.getterModifier());
             this.setterModifier = validate(method, annotation.setterModifier(), icy.setterModifier());
