@@ -17,6 +17,7 @@ import icy.manipulator.IcyManipulator;
 import icy.manipulator.property.overload.model.AutoExpandEnum;
 import icy.manipulator.property.overload.model.AutoExpandEnumModel;
 import icy.manipulator.property.overload.model.AutoExpandEnumModel.Answer;
+import icy.manipulator.property.overload.model.AutoExpandEnumModel.Visible;
 
 class AutoExpandEnumTest {
 
@@ -25,13 +26,15 @@ class AutoExpandEnumTest {
 
     @Test
     void normal() {
-        AutoExpandEnum o = AutoExpandEnum.with.answer(Answer.Yes);
+        AutoExpandEnum o = AutoExpandEnum.with.answer(Answer.Yes).visible(Visible.HIDDEN);
         assert o.answer == Answer.Yes;
+        assert o.visible == Visible.HIDDEN;
     }
 
     @Test
     void overloadAutomatically() {
-        AutoExpandEnum o = AutoExpandEnum.with.no();
+        AutoExpandEnum o = AutoExpandEnum.with.no().expose();
         assert o.answer == Answer.No;
+        assert o.visible == Visible.EXPOSE;
     }
 }

@@ -14,10 +14,17 @@ import icy.manipulator.Icy;
 @Icy
 public abstract class AutoExpandEnumModel {
 
-    @Icy.Property(overloadEnum = true)
+    @Icy.Property
     public abstract Answer answer();
 
     public static enum Answer {
         Yes, No;
+    }
+
+    @Icy.Property
+    public abstract Visible visible();
+
+    public static enum Visible {
+        EXPOSE, HIDDEN;
     }
 }

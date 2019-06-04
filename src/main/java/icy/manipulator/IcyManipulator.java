@@ -29,7 +29,6 @@ import apty.Modifiers;
 import apty.code.Coder;
 import apty.code.Type;
 import icy.manipulator.util.Lists;
-import icy.manipulator.util.Strings;
 
 public class IcyManipulator extends AptyProcessor {
 
@@ -686,7 +685,7 @@ public class IcyManipulator extends AptyProcessor {
                 write("return ", p.name, "(", s.type, ".", s.someMethod, "(", m.paramNames.get(0), "));");
             }, () -> {
                 if (Apty.isEnum(p.element.getReturnType())) {
-                    write("return ", p.name, "(", p.type, ".", Strings.capitalize(m.name), ");");
+                    write("return ", p.name, "(", p.type, ".", Apty.enumConstantName(p.element.getReturnType(), m.name), ");");
                 } else {
                     List<String> names = m.withFirst(Type.of(Object.class), "this").paramNames;
 
