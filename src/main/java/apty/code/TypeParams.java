@@ -17,21 +17,21 @@ import java.util.stream.Stream;
 
 import icy.manipulator.util.Lists;
 
-public class Types implements Codable {
+public class TypeParams implements Codable {
 
     private final List<Type> types;
 
     /**
      * @param types
      */
-    public Types(Type... types) {
+    public TypeParams(Type... types) {
         this(List.of(types));
     }
 
     /**
      * @param types
      */
-    public Types(List<Type> types) {
+    public TypeParams(List<Type> types) {
         this.types = types;
     }
 
@@ -54,21 +54,12 @@ public class Types implements Codable {
     }
 
     /**
-     * Create new {@link Types} which all variables are raw.
+     * Create new {@link TypeParams} which all variables are raw.
      * 
-     * @return A new {@link Types}.
+     * @return A new {@link TypeParams}.
      */
-    public Types raw() {
-        return new Types(types.stream().map(Type::raw).collect(Collectors.toUnmodifiableList()));
-    }
-
-    /**
-     * Create new {@link Types} which all variables are raw.
-     * 
-     * @return A new {@link Types}.
-     */
-    public Types typed() {
-        return new Types(types.stream().map(Type::typed).collect(Collectors.toUnmodifiableList()));
+    public TypeParams declared() {
+        return new TypeParams(types.stream().map(Type::declared).collect(Collectors.toUnmodifiableList()));
     }
 
     /**
@@ -81,27 +72,17 @@ public class Types implements Codable {
     }
 
     /**
-     * Create new {@link Types} which the specified variable is prepended at head.
+     * Create new {@link TypeParams} which the specified variable is prepended at head.
      * 
      * @param variable A variable to prepend.
-     * @return A new {@link Types}.
+     * @return A new {@link TypeParams}.
      */
-    public Types head(String variable) {
-        return head(Type.var(variable));
-    }
-
-    /**
-     * Create new {@link Types} which the specified variable is prepended at head.
-     * 
-     * @param variable A variable to prepend.
-     * @return A new {@link Types}.
-     */
-    public Types head(Type type) {
+    public TypeParams head(Type type) {
         List<Type> list = new ArrayList();
         list.add(type);
         list.addAll(types);
 
-        return new Types(list);
+        return new TypeParams(list);
     }
 
     /**
@@ -109,32 +90,22 @@ public class Types implements Codable {
      * 
      * @return
      */
-    public Types head(Types types) {
-        return new Types(Lists.merge(types.types, this.types));
+    public TypeParams head(TypeParams types) {
+        return new TypeParams(Lists.merge(types.types, this.types));
     }
 
     /**
-     * Create new {@link Types} which the specified variable is appended at tail.
+     * Create new {@link TypeParams} which the specified variable is appended at tail.
      * 
      * @param variable A variable to append.
-     * @return A new {@link Types}.
+     * @return A new {@link TypeParams}.
      */
-    public Types tail(String variable) {
-        return tail(Type.var(variable));
-    }
-
-    /**
-     * Create new {@link Types} which the specified variable is appended at tail.
-     * 
-     * @param variable A variable to append.
-     * @return A new {@link Types}.
-     */
-    public Types tail(Type variable) {
+    public TypeParams tail(Type variable) {
         List<Type> list = new ArrayList();
         list.addAll(types);
         list.add(variable);
 
-        return new Types(list);
+        return new TypeParams(list);
     }
 
     /**
@@ -142,8 +113,8 @@ public class Types implements Codable {
      * 
      * @return
      */
-    public Types tail(Types types) {
-        return new Types(Lists.merge(this.types, types.types));
+    public TypeParams tail(TypeParams types) {
+        return new TypeParams(Lists.merge(this.types, types.types));
     }
 
     /**
@@ -161,22 +132,22 @@ public class Types implements Codable {
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Types == false) {
+        if (obj instanceof TypeParams == false) {
             return false;
         }
 
-        Types other = (Types) obj;
+        TypeParams other = (TypeParams) obj;
 
         return types.toString().equals(other.types.toString());
     }
 
     /**
-     * Create new variable {@link Types}.
+     * Create new variable {@link TypeParams}.
      * 
      * @param variable
      * @return
      */
-    public static Types var(String variable) {
-        return new Types(Type.var(variable));
+    public static TypeParams var(String variable) {
+        return new TypeParams(Type.var(variable));
     }
 }

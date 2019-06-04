@@ -9,11 +9,16 @@
  */
 package apty.code;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
@@ -34,10 +39,12 @@ public class Type implements Codable {
     private final String base;
 
     /** The managed variables. */
-    public final Types variables;
+    public final TypeParams variables;
 
     /** The type kind. */
     public final TypeKind kind;
+
+    public final Type ᐳ = this;
 
     /**
      * Build Type.
@@ -46,7 +53,7 @@ public class Type implements Codable {
      * @param variables
      * @param kind
      */
-    private Type(String fqcn, Types variables, TypeKind kind) {
+    private Type(String fqcn, TypeParams variables, TypeKind kind) {
         this(computePackage(fqcn), computeName(fqcn), variables, kind);
     }
 
@@ -82,7 +89,7 @@ public class Type implements Codable {
      * @param variables
      * @param kind
      */
-    private Type(String packageName, String base, Types variables, TypeKind kind) {
+    private Type(String packageName, String base, TypeParams variables, TypeKind kind) {
         this.packagee = packageName;
         this.base = base;
         this.variables = variables;
@@ -228,7 +235,7 @@ public class Type implements Codable {
      * @return
      */
     public Type variables(List<Type> variables) {
-        return variables(new Types(variables));
+        return variables(new TypeParams(variables));
     }
 
     /**
@@ -237,7 +244,39 @@ public class Type implements Codable {
      * @param variables
      * @return
      */
-    public Type variables(Types variables) {
+    public Type variables(TypeParams variables) {
+        return new Type(packagee, base, this.variables.tail(variables), kind);
+    }
+
+    /**
+     * Create {@link Type} with additional type variables.
+     * 
+     * @param variables
+     * @return
+     */
+    public Type ᐸ(Object... parameters) {
+        List<Type> types = new ArrayList();
+
+        for (Object parameter : parameters) {
+            if (parameter instanceof String) {
+                types.add(Type.var((String) parameter));
+            } else if (parameter instanceof Class) {
+                types.add(Type.of((Class) parameter));
+            } else if (parameter instanceof Type) {
+                types.add((Type) parameter);
+            } else if (parameter instanceof TypeParams) {
+                ((TypeParams) parameter).stream().forEach(types::add);
+            } else if (parameter instanceof Iterable) {
+                StreamSupport.stream(((Iterable) parameter).spliterator(), false).forEach(item -> {
+
+                });
+                Iterable list = (Iterable) parameter;
+
+                for (Object item : list) {
+
+                }
+            }
+        }
         return new Type(packagee, base, this.variables.tail(variables), kind);
     }
 
@@ -247,7 +286,7 @@ public class Type implements Codable {
      * @return
      */
     public Type raw() {
-        return new Type(packagee, base, new Types(), kind);
+        return new Type(packagee, base, new TypeParams(), kind);
     }
 
     /**
@@ -255,7 +294,7 @@ public class Type implements Codable {
      * 
      * @return
      */
-    public Type typed() {
+    public Type declared() {
         return new Type(packagee, base, variables, TypeKind.INTERSECTION);
     }
 
@@ -366,7 +405,7 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type var(String name) {
-        return new Type("", name, new Types(), TypeKind.INTERSECTION);
+        return new Type("", name, new TypeParams(), TypeKind.INTERSECTION);
     }
 
     /**
@@ -376,7 +415,7 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type wildcardExtend(Type type) {
-        return new Type("", "? extends ", new Types(type), TypeKind.WILDCARD);
+        return new Type("", "? extends ", new TypeParams(type), TypeKind.WILDCARD);
     }
 
     /**
@@ -386,7 +425,7 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type wildcardSuper(Type type) {
-        return new Type("", "? super ", new Types(type), TypeKind.WILDCARD);
+        return new Type("", "? super ", new TypeParams(type), TypeKind.WILDCARD);
     }
 
     /**
@@ -397,7 +436,7 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type of(String fqcn) {
-        return new Type(fqcn, new Types(), TypeKind.DECLARED);
+        return new Type(fqcn, new TypeParams(), TypeKind.DECLARED);
     }
 
     /**
@@ -409,9 +448,9 @@ public class Type implements Codable {
      */
     public static final Type of(Class type) {
         if (type.isPrimitive()) {
-            return new Type(type.getName(), new Types(), TypeKind.valueOf(type.getName().toUpperCase()));
+            return new Type(type.getName(), new TypeParams(), TypeKind.valueOf(type.getName().toUpperCase()));
         } else {
-            return new Type(type.getName(), new Types(), TypeKind.DECLARED);
+            return new Type(type.getName(), new TypeParams(), TypeKind.DECLARED);
         }
     }
 
@@ -455,33 +494,154 @@ public class Type implements Codable {
         case BYTE:
         case SHORT:
         case VOID:
-            return new Type(type.toString(), new Types(), kind);
+            return new Type(type.toString(), new TypeParams(), kind);
 
         case ARRAY:
-            return new Type(type.toString(), new Types(), kind);
+            return new Type(type.toString(), new TypeParams(), kind);
 
         case TYPEVAR:
             TypeVariable var = (TypeVariable) type;
             TypeMirror upper = var.getUpperBound();
             if (Apty.diff(upper, Object.class)) {
-                return new Type("", type.toString(), new Types(of(upper)), kind);
+                return new Type("", type.toString(), new TypeParams(of(upper)), kind);
             }
-            return new Type("", type.toString(), new Types(), kind);
+            return new Type("", type.toString(), new TypeParams(), kind);
 
         case WILDCARD:
             WildcardType wild = (WildcardType) type;
-            if (wild.getExtendsBound() != null) return new Type("", "? extends ", new Types(of(wild.getExtendsBound())), kind);
-            if (wild.getSuperBound() != null) return new Type("", "? super ", new Types(of(wild.getSuperBound())), kind);
-            return new Type("", "?", new Types(), kind);
+            if (wild.getExtendsBound() != null) return new Type("", "? extends ", new TypeParams(of(wild.getExtendsBound())), kind);
+            if (wild.getSuperBound() != null) return new Type("", "? super ", new TypeParams(of(wild.getSuperBound())), kind);
+            return new Type("", "?", new TypeParams(), kind);
 
         case DECLARED:
             DeclaredType declared = (DeclaredType) type;
             String fqcn = ((TypeElement) declared.asElement()).getQualifiedName().toString();
             if (variables == null) variables = declared.getTypeArguments().stream().map(Type::of).collect(Collectors.toList());
-            return new Type(fqcn, new Types(variables), TypeKind.DECLARED);
+            return new Type(fqcn, new TypeParams(variables), TypeKind.DECLARED);
 
         default:
             throw new Error("Bug! " + type);
+        }
+    }
+
+    public static final Type literal(Object... literals) {
+        return new Parser(literals).type;
+    }
+
+    /**
+     * 
+     */
+    private static final class Parser {
+
+        private Type type;
+
+        private Deque<Function<Type, Type>> composer = new ArrayDeque();
+
+        private Parser(Object... literals) {
+            composer.add(Function.identity());
+
+            for (Object literal : literals) {
+                if (literal instanceof String) {
+                    parse((String) literal);
+                } else if (literal instanceof Type) {
+                    parse((Type) literal);
+                } else if (literal instanceof TypeParams) {
+                    parse((TypeParams) literal);
+                } else {
+                    throw new Error(Type.class.getSimpleName() + " accepts String, Type and TypeParams only.");
+                }
+            }
+        }
+
+        /**
+         * Analyze string literal.
+         * 
+         * @param literal A user input.
+         */
+        private void parse(String literal) {
+            literal = literal.trim();
+
+            StringBuilder buffer = new StringBuilder();
+            for (int i = 0; i < literal.length(); i++) {
+                char c = literal.charAt(i);
+
+                switch (c) {
+                case ' ':
+                    parseToken(buffer);
+                    break;
+
+                case '<':
+                    parseToken(buffer);
+                    composer.add(param -> type.variables(param));
+                    break;
+
+                case '>':
+                    parseToken(buffer);
+                    composer.pollLast();
+                    break;
+
+                case ',':
+                    break;
+
+                default:
+                    buffer.append(c);
+                    break;
+                }
+            }
+            parseToken(buffer);
+        }
+
+        /**
+         * Analyze string token.
+         * 
+         * @param buffer
+         */
+        private void parseToken(StringBuilder buffer) {
+            String token = buffer.toString();
+
+            if (token.isEmpty()) {
+                return;
+            }
+
+            buffer.delete(0, buffer.length());
+
+            switch (token) {
+            case "extends":
+                composer.add(parent -> type.variables(parent));
+                break;
+
+            case "super":
+                break;
+
+            case "?":
+                break;
+
+            default:
+                type = composer.peekLast().apply(Type.var(token));
+                break;
+            }
+        }
+
+        /**
+         * Analyze type literal.
+         * 
+         * @param literal A user input.
+         */
+        private void parse(Type literal) {
+            if (composer.size() == 1) {
+                this.type = literal;
+            } else {
+                this.type = composer.peekLast().apply(literal);
+            }
+        }
+
+        /**
+         * Analyze type literal.
+         * 
+         * @param literal A user input.
+         */
+        private void parse(TypeParams literal) {
+
         }
     }
 }

@@ -27,7 +27,7 @@ import apty.AptyProcessor;
 import apty.Modifiers;
 import apty.code.Coder;
 import apty.code.Type;
-import apty.code.Types;
+import apty.code.TypeParams;
 import icy.manipulator.util.Lists;
 import icy.manipulator.util.Strings;
 
@@ -65,6 +65,9 @@ public class IcyManipulator extends AptyProcessor {
         /** The {@link Icy} info on the model class. */
         private final Icy icy;
 
+        /** The fully qualified type variables on the model. */
+        private final TypeParams declarations;
+
         /**
          * @param model
          */
@@ -72,6 +75,7 @@ public class IcyManipulator extends AptyProcessor {
             super(model.implType.name());
             this.m = model;
             this.icy = model.e.getAnnotation(Icy.class);
+            this.declarations = model.type.variables.declared();
 
             String visibility = icy.packagePrivate() ? "" : "public ";
             String inheritance = Apty.isInterface(model.e) ? " implements " : " extends ";
@@ -80,7 +84,7 @@ public class IcyManipulator extends AptyProcessor {
             write(" * Generated model for {@link ", model.type, "}.");
             write(" */");
             write("@", Generated.class, "(`Icy Manipulator`)");
-            write(visibility, "abstract class ", model.implType.raw(), model.type.variables.typed(), inheritance, model.type, () -> {
+            write(visibility, "abstract class ", model.implType.raw(), declarations, inheritance, model.type, () -> {
                 defineErrorHandler();
                 defineMethodInvokerBuilder();
                 defineMethodInvoker();
@@ -496,15 +500,16 @@ public class IcyManipulator extends AptyProcessor {
                 write("/** The singleton builder. */");
                 write("public static final  ", Instantiator, "<?> ", icy.builder(), " = new ", Instantiator, "();");
             } else {
-                write("public static ", m.variables(), " ", Instantiator, Types.var("?").tail(m.type.variables), " with()", () -> {
+                write("public static ", declarations, " ", Instantiator, TypeParams.var("?").tail(m.type.variables), " with()", () -> {
                     write("return new ", Instantiator, "();");
                 });
             }
 
             String parentInstantiator = m.parent.map(p -> " extends " + Type.of(Apty.parent(m.e)) + "." + Instantiator).orElse("");
+
             Type self = Type.var("Self")
                     .variables(m.implType, Type.of(m.implType + "." + ArbitraryInterface).variables("Self").variables(m.type.variables));
-            Types types = new Types(self).tail(m.variables());
+            TypeParams types = new TypeParams(self).tail(declarations);
 
             write();
             write("/**");
@@ -602,7 +607,7 @@ public class IcyManipulator extends AptyProcessor {
          * Define assignable interfaces.
          */
         private void defineAssignableInterfaces() {
-            Types next = Types.var("Next").tail(m.variables());
+            TypeParams next = TypeParams.var("Next").tail(declarations);
 
             for (PropertyInfo property : m.ownRequiredProperties()) {
                 write();
@@ -622,7 +627,7 @@ public class IcyManipulator extends AptyProcessor {
             Optional<String> extend = m.findNearestArbitraryModel()
                     .map(m -> " extends " + use(m.implType) + "." + ArbitraryInterface + "<Next>");
 
-            Types next = new Types(Type.var("Next").variables(m.implType)).tail(m.variables());
+            TypeParams next = new TypeParams(Type.var("Next").variables(m.implType)).tail(declarations);
 
             write();
             write("/**");
@@ -724,9 +729,8 @@ public class IcyManipulator extends AptyProcessor {
             write("/**");
             write(" * Mutable Model.");
             write(" */");
-            write("private static final class ", Assignable, m
-                    .variables(), " extends ", m.implType, " implements ", AssignableAll, ", ", ArbitraryInterface, () -> {
-                    });
+            write("private static final class ", Assignable, declarations, " extends ", m.implType, " implements ", AssignableAll, ", ", ArbitraryInterface, () -> {
+            });
         }
 
         /**

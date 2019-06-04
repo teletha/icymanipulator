@@ -34,7 +34,6 @@ import apty.Apty;
 import apty.Fail;
 import apty.Modifiers;
 import apty.code.Type;
-import apty.code.Types;
 import icy.manipulator.Icy.Intercept;
 import icy.manipulator.Icy.Overload;
 import icy.manipulator.util.Lists;
@@ -233,15 +232,6 @@ public class ModelInfo {
             }
             interceptForProperty.add(property, new MethodInfo(m));
         }
-    }
-
-    /**
-     * The fully calculated type variables of this model.
-     * 
-     * @return
-     */
-    public Types variables() {
-        return type.variables.typed();
     }
 
     /**
