@@ -11,8 +11,6 @@ package icy.manipulator.util;
 
 import org.junit.jupiter.api.Test;
 
-import icy.manipulator.util.Strings;
-
 class StringsTest {
 
     @Test

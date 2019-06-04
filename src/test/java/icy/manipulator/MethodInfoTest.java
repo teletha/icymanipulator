@@ -11,7 +11,7 @@ package icy.manipulator;
 
 import org.junit.jupiter.api.Test;
 
-class MethodClassInfoTest {
+class MethodInfoTest {
 
     @Test
     void constructor() {
