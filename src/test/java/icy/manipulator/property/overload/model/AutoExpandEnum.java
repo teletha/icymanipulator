@@ -1,10 +1,16 @@
 package icy.manipulator.property.overload.model;
 
+import icy.manipulator.property.overload.model.AutoExpandEnum;
+import icy.manipulator.property.overload.model.AutoExpandEnumModel;
+import icy.manipulator.property.overload.model.AutoExpandEnumModel.Answer;
+import icy.manipulator.property.overload.model.AutoExpandEnumModel.Visible;
+import java.lang.Override;
+import java.lang.StringBuilder;
+import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-
 import javax.annotation.processing.Generated;
 
 /**
@@ -31,7 +37,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name) {
+    private static final MethodHandle updater(String name)  {
         try {
             Field field = AutoExpandEnum.class.getDeclaredField(name);
             field.setAccessible(true);
@@ -147,9 +153,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
     }
 
     /**
-     * Generates a hash code for a sequence of property values. The hash code is generated as if all
-     * the property values were placed into an array, and that array were hashed by calling
-     * Arrays.hashCode(Object[]).
+     * Generates a hash code for a sequence of property values. The hash code is generated as if all the property values were placed into an array, and that array were hashed by calling Arrays.hashCode(Object[]). 
      *
      * @return A hash value of the sequence of property values.
      */
@@ -159,9 +163,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
     }
 
     /**
-     * Returns true if the all properties are equal to each other and false otherwise. Consequently,
-     * if both properties are null, true is returned and if exactly one property is null, false is
-     * returned. Otherwise, equality is determined by using the equals method of the base model.
+     * Returns true if the all properties are equal to each other and false otherwise. Consequently, if both properties are null, true is returned and if exactly one property is null, false is returned. Otherwise, equality is determined by using the equals method of the base model. 
      *
      * @return true if the all properties are equal to each other and false otherwise.
      */
@@ -178,10 +180,10 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
     }
 
     /** The singleton builder. */
-    public static final Ìnstantiator<?> with = new Ìnstantiator();
+    public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Namespace for {@link AutoExpandEnum} builder methods.
+     * Namespace for {@link AutoExpandEnum}  builder methods.
      */
     public static class Ìnstantiator<Self extends AutoExpandEnum & ÅssignableÅrbitrary<Self>> {
 
@@ -312,7 +314,6 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
      */
     static final class My {
         static final String Answer = "answer";
-
         static final String Visible = "visible";
     }
 }

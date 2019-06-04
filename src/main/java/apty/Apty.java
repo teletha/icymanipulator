@@ -19,6 +19,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.AnnotationMirror;
@@ -362,30 +363,17 @@ public class Apty {
      * @param enumType A target type.
      * @return A result.
      */
-    public static List<String> enumConstantNames(TypeMirror enumType) {
-        List<String> names = new ArrayList();
-        Element e = types.asElement(enumType);
+    public static Stream<String> enumConstantNames(TypeMirror enumType) {
+        Element element = types.asElement(enumType);
 
-        if (e == null) {
-            return names;
+        if (element == null) {
+            return Stream.empty();
         }
 
-        for (Element element : e.getEnclosedElements()) {
-            if (element.getKind() == ElementKind.ENUM_CONSTANT) {
-                names.add(element.getSimpleName().toString());
-            }
-        }
-        return names;
-    }
-
-    /**
-     * Check whether the specified type is enum or not.
-     * 
-     * @param enumType A target type.
-     * @return A result.
-     */
-    public static Optional<String> enumConstantName(TypeMirror enumType, String name) {
-        return enumConstantNames(enumType).stream().filter(n -> n.equalsIgnoreCase(name)).findFirst();
+        return element.getEnclosedElements()
+                .stream()
+                .filter(e -> e.getKind() == ElementKind.ENUM_CONSTANT)
+                .map(e -> e.getSimpleName().toString());
     }
 
     /**

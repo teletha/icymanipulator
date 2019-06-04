@@ -684,17 +684,20 @@ public class IcyManipulator extends AptyProcessor {
             OptionalSupport.by(p.type).ifPresentOrElse(s -> {
                 write("return ", p.name, "(", s.type, ".", s.someMethod, "(", m.paramNames.get(0), "));");
             }, () -> {
-                if (Apty.isEnum(p.element.getReturnType())) {
-                    write("return ", p.name, "(", p.type, ".", Apty.enumConstantName(p.element.getReturnType(), m.name), ");");
-                } else {
-                    List<String> names = m.withFirst(Type.of(Object.class), "this").paramNames;
+                Apty.enumConstantNames(p.element.getReturnType())
+                        .filter(name -> name.equalsIgnoreCase(m.name))
+                        .findFirst()
+                        .ifPresentOrElse(name -> {
+                            write("return ", p.name, "(", p.type, ".", name, ");");
+                        }, () -> {
+                            List<String> names = m.withFirst(Type.of(Object.class), "this").paramNames;
 
-                    writeTry(() -> {
-                        write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", names, "));");
-                    }, Throwable.class, e -> {
-                        write("throw quiet(", e, ");");
-                    });
-                }
+                            writeTry(() -> {
+                                write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", names, "));");
+                            }, Throwable.class, e -> {
+                                write("throw quiet(", e, ");");
+                            });
+                        });
             });
         }
 
