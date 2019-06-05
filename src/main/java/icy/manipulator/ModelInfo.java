@@ -593,7 +593,7 @@ public class ModelInfo {
                             for (ExecutableElement method : Apty.methods(interfaceType)) {
                                 List<? extends VariableElement> parameters = method.getParameters();
 
-                                if (parameters.size() != 1 || Apty.diff(getter.getReturnType(), parameters.get(0))) {
+                                if (parameters.size() != 1 || !Apty.same(getter.getReturnType(), parameters.get(0))) {
                                     overloadForProperty.add(property, new MethodInfo(method));
                                 }
                             }

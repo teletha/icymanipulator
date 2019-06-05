@@ -445,7 +445,7 @@ public class Type implements Codable {
         case TYPEVAR:
             TypeVariable var = (TypeVariable) type;
             TypeMirror upper = var.getUpperBound();
-            if (Apty.diff(upper, Object.class)) {
+            if (!Apty.same(upper, Object.class)) {
                 return new Type("", type.toString(), List.of(of(upper)), kind);
             }
             return new Type("", type.toString(), List.of(), kind);

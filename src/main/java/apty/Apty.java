@@ -229,28 +229,6 @@ public class Apty {
     }
 
     /**
-     * Check type equality.
-     * 
-     * @param type
-     * @param clazz
-     * @return
-     */
-    public static boolean diff(TypeMirror type, Class clazz) {
-        return !same(type, clazz);
-    }
-
-    /**
-     * Check type equality.
-     * 
-     * @param type
-     * @param element
-     * @return
-     */
-    public static boolean diff(TypeMirror type, Element element) {
-        return !types.isSameType(type, element.asType());
-    }
-
-    /**
      * Check whether the specified type is interface or not.
      * 
      * @param e A target type to check.
