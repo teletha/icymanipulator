@@ -82,8 +82,8 @@ public class PropertyInfo {
             this.getterModifier = validate(method, annotation.getterModifier(), icy.getterModifier());
             this.setterModifier = validate(method, annotation.setterModifier(), icy.setterModifier());
             this.custom = Apty.annotationClassValue(method, Icy.Property.class, "custom")
-                    .filter(Apty::isNotInterface)
-                    .map(Apty::cast)
+                    .filter(e -> !Apty.isInterface(e))
+                    .map(e -> Apty.cast(e))
                     .map(customizer -> new CustomizerInfo(this, customizer))
                     .orElse(null);
         }

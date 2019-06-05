@@ -199,6 +199,17 @@ public class Apty {
      * Check type equality.
      * 
      * @param type
+     * @param clazz
+     * @return
+     */
+    public static boolean same(TypeMirror type, Class clazz) {
+        return same(type, elements.getTypeElement(clazz.getCanonicalName()));
+    }
+
+    /**
+     * Check type equality.
+     * 
+     * @param type
      * @param element
      * @return
      */
@@ -215,17 +226,6 @@ public class Apty {
      */
     public static boolean same(TypeMirror type, TypeMirror other) {
         return types.isSameType(types.erasure(type), types.erasure(other));
-    }
-
-    /**
-     * Check type equality.
-     * 
-     * @param type
-     * @param clazz
-     * @return
-     */
-    public static boolean same(TypeMirror type, Class clazz) {
-        return same(type, elements.getTypeElement(clazz.getCanonicalName()));
     }
 
     /**
@@ -249,26 +249,6 @@ public class Apty {
      */
     public static boolean isInterface(DeclaredType type) {
         return isInterface(cast(type));
-    }
-
-    /**
-     * Check whether the specified type is interface or not.
-     * 
-     * @param e A target type to check.
-     * @return A result.
-     */
-    public static boolean isNotInterface(TypeElement e) {
-        return !isInterface(e);
-    }
-
-    /**
-     * Check whether the specified type is interface or not.
-     * 
-     * @param type A target type to check.
-     * @return A result.
-     */
-    public static boolean isNotInterface(DeclaredType type) {
-        return !isInterface(type);
     }
 
     /**
