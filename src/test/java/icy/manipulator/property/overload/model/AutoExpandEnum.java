@@ -3,10 +3,10 @@ package icy.manipulator.property.overload.model;
 import icy.manipulator.property.overload.model.AutoExpandEnum;
 import icy.manipulator.property.overload.model.AutoExpandEnumModel;
 import icy.manipulator.property.overload.model.AutoExpandEnumModel.Answer;
-import icy.manipulator.property.overload.model.AutoExpandEnumModel.Visible;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -51,20 +51,20 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
     private static final MethodHandle answerUpdater = updater("answer");
 
     /** The final property updater. */
-    private static final MethodHandle visibleUpdater = updater("visible");
+    private static final MethodHandle policyUpdater = updater("policy");
 
     /** The exposed property. */
     public final Answer answer;
 
     /** The exposed property. */
-    public final Visible visible;
+    public final RetentionPolicy policy;
 
     /**
      * HIDE CONSTRUCTOR
      */
     protected AutoExpandEnum() {
         this.answer = null;
-        this.visible = null;
+        this.policy = null;
     }
 
     /**
@@ -104,36 +104,36 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
     }
 
     /**
-     * Return the visible property.
+     * Return the policy property.
      *
-     * @return A value of visible property.
+     * @return A value of policy property.
      */
     @Override
-    public final Visible visible() {
-        return this.visible;
+    public final RetentionPolicy policy() {
+        return this.policy;
     }
 
     /**
      * Provide classic getter API.
      *
-     * @return A value of visible property.
+     * @return A value of policy property.
      */
     @SuppressWarnings("unused")
-    private final Visible getVisible() {
-        return this.visible;
+    private final RetentionPolicy getPolicy() {
+        return this.policy;
     }
 
     /**
      * Provide classic setter API.
      *
-     * @paran value A new value of visible property to assign.
+     * @paran value A new value of policy property to assign.
      */
-    private final void setVisible(Visible value) {
+    private final void setPolicy(RetentionPolicy value) {
         if (value == null) {
-            throw new IllegalArgumentException("The visible property requires non-null value.");
+            throw new IllegalArgumentException("The policy property requires non-null value.");
         }
         try {
-            visibleUpdater.invoke(this, value);
+            policyUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -148,7 +148,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
     public String toString() {
         StringBuilder builder = new StringBuilder("AutoExpandEnum [");
         builder.append("answer=").append(answer).append(", ");
-        builder.append("visible=").append(visible).append("]");
+        builder.append("policy=").append(policy).append("]");
         return builder.toString();
     }
 
@@ -159,7 +159,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(answer, visible);
+        return Objects.hash(answer, policy);
     }
 
     /**
@@ -175,7 +175,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
 
         AutoExpandEnum other = (AutoExpandEnum) o;
         if (!Objects.equals(answer, other.answer)) return false;
-        if (!Objects.equals(visible, other.visible)) return false;
+        if (!Objects.equals(policy, other.policy)) return false;
         return true;
     }
 
@@ -192,7 +192,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
          * 
          * @return The next assignable model.
          */
-        public ÅssignableVisible<Self> answer(Answer answer) {
+        public ÅssignablePolicy<Self> answer(Answer answer) {
             Åssignable o = new Åssignable();
             o.answer(answer);
             return o;
@@ -203,7 +203,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
          * 
          * @return The next assignable model.
          */
-        public ÅssignableVisible<Self> yes() {
+        public ÅssignablePolicy<Self> yes() {
             Åssignable o = new Åssignable();
             o.yes();
             return o;
@@ -214,7 +214,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
          * 
          * @return The next assignable model.
          */
-        public ÅssignableVisible<Self> no() {
+        public ÅssignablePolicy<Self> no() {
             Åssignable o = new Åssignable();
             o.no();
             return o;
@@ -259,35 +259,44 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableVisible<Next> {
+    public static interface ÅssignablePolicy<Next> {
 
         /**
-         * Assign visible property.
+         * Assign policy property.
          * 
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next visible(Visible value) {
-            ((AutoExpandEnum) this).setVisible(value);
+        default Next policy(RetentionPolicy value) {
+            ((AutoExpandEnum) this).setPolicy(value);
             return (Next) this;
         }
 
         /**
-         * Assign visible property.
+         * Assign policy property.
          * 
          * @return The next assignable model.
          */
-        default Next expose() {
-            return visible(Visible.EXPOSE);
+        default Next source() {
+            return policy(RetentionPolicy.SOURCE);
         }
 
         /**
-         * Assign visible property.
+         * Assign policy property.
          * 
          * @return The next assignable model.
          */
-        default Next hidden() {
-            return visible(Visible.HIDDEN);
+        default Next CLASS() {
+            return policy(RetentionPolicy.CLASS);
+        }
+
+        /**
+         * Assign policy property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next runtime() {
+            return policy(RetentionPolicy.RUNTIME);
         }
     }
 
@@ -300,7 +309,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableAnswer, ÅssignableVisible {
+    protected static interface ÅssignableAll extends ÅssignableAnswer, ÅssignablePolicy {
     }
 
     /**
@@ -314,6 +323,6 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
      */
     static final class My {
         static final String Answer = "answer";
-        static final String Visible = "visible";
+        static final String Policy = "policy";
     }
 }

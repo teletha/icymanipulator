@@ -19,7 +19,6 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.AnnotationMirror;
@@ -705,5 +704,37 @@ public class Apty {
                 return list.toArray(DeclaredType[]::new);
             }
         };
+    }
+
+    /**
+     * 
+     */
+    private class ClassLikeClass implements ClassLike {
+
+        /** The type. */
+        private final Class type;
+
+        /**
+         * @param type
+         */
+        private ClassLikeClass(Class type) {
+            this.type = type;
+        }
+    }
+
+    /**
+     * 
+     */
+    private class ClassLikeElement implements ClassLike {
+
+        /** The type. */
+        private final TypeElement type;
+
+        /**
+         * @param type
+         */
+        private ClassLikeElement(TypeElement type) {
+            this.type = type;
+        }
     }
 }

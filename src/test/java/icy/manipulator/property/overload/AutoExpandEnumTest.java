@@ -9,6 +9,8 @@
  */
 package icy.manipulator.property.overload;
 
+import java.lang.annotation.RetentionPolicy;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -17,7 +19,6 @@ import icy.manipulator.IcyManipulator;
 import icy.manipulator.property.overload.model.AutoExpandEnum;
 import icy.manipulator.property.overload.model.AutoExpandEnumModel;
 import icy.manipulator.property.overload.model.AutoExpandEnumModel.Answer;
-import icy.manipulator.property.overload.model.AutoExpandEnumModel.Visible;
 
 class AutoExpandEnumTest {
 
@@ -26,15 +27,15 @@ class AutoExpandEnumTest {
 
     @Test
     void normal() {
-        AutoExpandEnum o = AutoExpandEnum.with.answer(Answer.Yes).visible(Visible.HIDDEN);
+        AutoExpandEnum o = AutoExpandEnum.with.answer(Answer.Yes).policy(RetentionPolicy.CLASS);
         assert o.answer == Answer.Yes;
-        assert o.visible == Visible.HIDDEN;
+        assert o.policy == RetentionPolicy.CLASS;
     }
 
     @Test
     void overloadAutomatically() {
-        AutoExpandEnum o = AutoExpandEnum.with.no().expose();
+        AutoExpandEnum o = AutoExpandEnum.with.no().runtime();
         assert o.answer == Answer.No;
-        assert o.visible == Visible.EXPOSE;
+        assert o.policy == RetentionPolicy.RUNTIME;
     }
 }

@@ -9,6 +9,8 @@
  */
 package icy.manipulator;
 
+import static icy.manipulator.util.Strings.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -162,7 +164,7 @@ public class ModelInfo {
 
         if (p.autoExpandable) {
             Apty.detect(p.element.getReturnType()).getEnumConstants().forEach(name -> {
-                overloadForProperty.add(p, new MethodInfo(Strings.decapitalize(name), Type.var("Next"), List.of(), List.of(), ""));
+                overloadForProperty.add(p, new MethodInfo(sanitize(decapitalize(name)), Type.var("Next"), List.of(), List.of(), ""));
             });
         }
     }

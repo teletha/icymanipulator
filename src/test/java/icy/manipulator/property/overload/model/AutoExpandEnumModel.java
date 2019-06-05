@@ -9,6 +9,8 @@
  */
 package icy.manipulator.property.overload.model;
 
+import java.lang.annotation.RetentionPolicy;
+
 import icy.manipulator.Icy;
 
 @Icy
@@ -22,9 +24,5 @@ public abstract class AutoExpandEnumModel {
     }
 
     @Icy.Property
-    public abstract Visible visible();
-
-    public static enum Visible {
-        EXPOSE, HIDDEN;
-    }
+    public abstract RetentionPolicy policy();
 }
