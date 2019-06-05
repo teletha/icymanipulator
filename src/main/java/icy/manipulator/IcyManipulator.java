@@ -77,7 +77,7 @@ public class IcyManipulator extends AptyProcessor {
             this.declarations = model.type.variables.stream().map(Type::declared).collect(Collectors.toUnmodifiableList());
 
             String visibility = icy.packagePrivate() ? "" : "public ";
-            String inheritance = Apty.isInterface(model.e) ? " implements " : " extends ";
+            String inheritance = Apty.detect(model.e).isInterface() ? " implements " : " extends ";
 
             write("/**");
             write(" * Generated model for {@link ", model.type, "}.");

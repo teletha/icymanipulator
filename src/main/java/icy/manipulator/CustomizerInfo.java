@@ -42,10 +42,10 @@ public class CustomizerInfo {
      * @param customizer
      */
     public CustomizerInfo(PropertyInfo property, TypeElement customizer) {
-        this.variable = Apty.variables(customizer, Supplier.class).get(0);
+        this.variable = Apty.typeParameter(customizer, Supplier.class).get(0);
         this.e = customizer;
         this.property = property;
-        this.requireSetter = Apty.check(customizer, Apty.implement(Consumer.class));
+        this.requireSetter = Apty.detect(customizer).isAssignableFrom(Consumer.class);
         this.methods = Apty.methodsInHierarchy(customizer, m -> m.getSimpleName().toString().contains("$")).stream().map(m -> {
             List<Type> types = ((ExecutableType) m.asType()).getParameterTypes()
                     .stream()

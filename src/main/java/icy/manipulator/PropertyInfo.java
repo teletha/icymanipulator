@@ -9,6 +9,8 @@
  */
 package icy.manipulator;
 
+import java.util.function.Supplier;
+
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
@@ -82,7 +84,7 @@ public class PropertyInfo {
             this.getterModifier = validate(method, annotation.getterModifier(), icy.getterModifier());
             this.setterModifier = validate(method, annotation.setterModifier(), icy.setterModifier());
             this.custom = Apty.annotationClassValue(method, Icy.Property.class, "custom")
-                    .filter(e -> !Apty.isInterface(e))
+                    .filter(e -> !Apty.same(e, Supplier.class))
                     .map(e -> Apty.cast(e))
                     .map(customizer -> new CustomizerInfo(this, customizer))
                     .orElse(null);

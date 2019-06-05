@@ -98,6 +98,26 @@ public class Apty {
     }
 
     /**
+     * Create type detector.
+     * 
+     * @param target A target to check.
+     * @return A type detector.
+     */
+    public static Detector detect(Element target) {
+        return detect(target.asType());
+    }
+
+    /**
+     * Create type detector.
+     * 
+     * @param target A target to check.
+     * @return A type detector.
+     */
+    public static Detector detect(TypeMirror target) {
+        return new Detector(target, types, elements);
+    }
+
+    /**
      * Find parent {@link TypeElement}.
      * 
      * @param e
@@ -229,29 +249,6 @@ public class Apty {
     }
 
     /**
-     * Check whether the specified type is interface or not.
-     * 
-     * @param e A target type to check.
-     * @return A result.
-     */
-    public static boolean isInterface(TypeElement e) {
-        if (e == null) {
-            return false;
-        }
-        return e.getKind() == ElementKind.INTERFACE;
-    }
-
-    /**
-     * Check whether the specified type is interface or not.
-     * 
-     * @param type A target type to check.
-     * @return A result.
-     */
-    public static boolean isInterface(DeclaredType type) {
-        return isInterface(cast(type));
-    }
-
-    /**
      * Check whether the specified type is enum or not.
      * 
      * @param enumType A target type.
@@ -288,8 +285,8 @@ public class Apty {
      * @param type A target type which has variable list.
      * @return
      */
-    public static List<? extends TypeMirror> variables(TypeElement target, Class type) {
-        return variables(target, type, Apty::same);
+    public static List<? extends TypeMirror> typeParameter(TypeElement target, Class type) {
+        return typeParameter(target, type, Apty::same);
     }
 
     /**
@@ -299,8 +296,8 @@ public class Apty {
      * @param type A target type which has variable list.
      * @return
      */
-    public static List<? extends TypeMirror> variables(TypeElement target, DeclaredType type) {
-        return variables(target, type, Apty::same);
+    public static List<? extends TypeMirror> typeParameter(TypeElement target, DeclaredType type) {
+        return typeParameter(target, type, Apty::same);
     }
 
     /**
@@ -310,8 +307,8 @@ public class Apty {
      * @param type A target type which has variable list.
      * @return
      */
-    public static List<? extends TypeMirror> variables(DeclaredType target, Class type) {
-        return variables(cast(target.asElement(), TypeElement.class), type, Apty::same);
+    public static List<? extends TypeMirror> typeParameter(DeclaredType target, Class type) {
+        return typeParameter(cast(target.asElement(), TypeElement.class), type, Apty::same);
     }
 
     /**
@@ -321,8 +318,8 @@ public class Apty {
      * @param type A target type which has variable list.
      * @return
      */
-    public static List<? extends TypeMirror> variables(DeclaredType target, DeclaredType type) {
-        return variables(cast(target.asElement(), TypeElement.class), type, Apty::same);
+    public static List<? extends TypeMirror> typeParameter(DeclaredType target, DeclaredType type) {
+        return typeParameter(cast(target.asElement(), TypeElement.class), type, Apty::same);
     }
 
     /**
@@ -334,7 +331,7 @@ public class Apty {
      * @param equality
      * @return
      */
-    private static <Q> List<? extends TypeMirror> variables(TypeElement target, Q type, BiPredicate<TypeMirror, Q> equality) {
+    private static <Q> List<? extends TypeMirror> typeParameter(TypeElement target, Q type, BiPredicate<TypeMirror, Q> equality) {
         while (target != null) {
             for (TypeMirror interfaceType : target.getInterfaces()) {
                 if (equality.test(interfaceType, type)) {
@@ -422,40 +419,6 @@ public class Apty {
         return annotationValue(e, annotationType, name).map(value -> cast(value, DeclaredType.class));
     }
 
-    public static boolean check(Element target, Predicate<TypeMirror> condition) {
-        return condition.test(target.asType());
-    }
-
-    /**
-     * Create implementation validator.
-     * 
-     * @param type A type to implmenet or extend.
-     * @return A new validator.
-     */
-    public static Predicate<TypeMirror> implement(Class type) {
-        return implement(cast(type));
-    }
-
-    /**
-     * Create implementation validator.
-     * 
-     * @param type A type to implmenet or extend.
-     * @return A new validator.
-     */
-    public static Predicate<TypeMirror> implement(TypeElement type) {
-        return implement(type.asType());
-    }
-
-    /**
-     * Create implementation validator.
-     * 
-     * @param type A type to implmenet or extend.
-     * @return A new validator.
-     */
-    public static Predicate<TypeMirror> implement(TypeMirror type) {
-        return target -> types.isSubtype(target, types.erasure(type));
-    }
-
     /**
      * Cast {@link DeclaredType} to {@link TypeElement}.
      * 
@@ -464,16 +427,6 @@ public class Apty {
      */
     public static TypeElement cast(DeclaredType type) {
         return cast(type.asElement(), TypeElement.class);
-    }
-
-    /**
-     * Cast {@link Class} to {@link TypeElement}.
-     * 
-     * @param type A type to cast.
-     * @return A casted type.
-     */
-    private static TypeElement cast(Class type) {
-        return elements.getTypeElement(type.getName());
     }
 
     /**
