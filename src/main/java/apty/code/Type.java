@@ -24,6 +24,8 @@ import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.WildcardType;
 
 import apty.Apty;
+import apty.Detector;
+import apty.UnknownDetector;
 
 public class Type implements Codable {
 
@@ -42,6 +44,9 @@ public class Type implements Codable {
     /** The type kind. */
     public final TypeKind kind;
 
+    /** The actual type holder. */
+    private final Detector detector;
+
     /**
      * Build Type.
      * 
@@ -49,8 +54,8 @@ public class Type implements Codable {
      * @param variables
      * @param kind
      */
-    private Type(String fqcn, List<Type> variables, TypeKind kind) {
-        this(computePackage(fqcn), computeName(fqcn), variables, kind);
+    private Type(String fqcn, List<Type> variables, TypeKind kind, Detector detector) {
+        this(computePackage(fqcn), computeName(fqcn), variables, kind, detector);
     }
 
     /**
@@ -85,11 +90,12 @@ public class Type implements Codable {
      * @param variables
      * @param kind
      */
-    private Type(String packageName, String base, List<Type> variables, TypeKind kind) {
+    private Type(String packageName, String base, List<Type> variables, TypeKind kind, Detector detector) {
         this.packageName = packageName;
         this.base = base;
         this.variables = variables;
         this.kind = kind;
+        this.detector = detector;
     }
 
     /**
@@ -156,6 +162,15 @@ public class Type implements Codable {
     }
 
     /**
+     * Check whether this is enum type or not.
+     * 
+     * @return A result.
+     */
+    public boolean isEnum() {
+        return kind == TypeKind.ARRAY;
+    }
+
+    /**
      * Check whether this is void type or not.
      * 
      * @return A result.
@@ -210,7 +225,7 @@ public class Type implements Codable {
      * @return
      */
     public Type raw() {
-        return new Type(packageName, base, List.of(), kind);
+        return new Type(packageName, base, List.of(), kind, detector);
     }
 
     /**
@@ -219,7 +234,7 @@ public class Type implements Codable {
      * @return
      */
     public Type declared() {
-        return new Type(packageName, base, variables, TypeKind.INTERSECTION);
+        return new Type(packageName, base, variables, TypeKind.INTERSECTION, detector);
     }
 
     /**
@@ -229,7 +244,7 @@ public class Type implements Codable {
      */
     public Type varargnize() {
         if (kind == TypeKind.ARRAY) {
-            return new Type(packageName, base.replaceAll("\\[\\]$", "..."), variables, TypeKind.DECLARED);
+            return new Type(packageName, base.replaceAll("\\[\\]$", "..."), variables, TypeKind.DECLARED, detector);
         } else {
             return this;
         }
@@ -368,7 +383,7 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type var(String name, Object... parameters) {
-        return new Type("", name, flatten(parameters), TypeKind.INTERSECTION);
+        return new Type("", name, flatten(parameters), TypeKind.INTERSECTION, new UnknownDetector());
     }
 
     /**
@@ -379,7 +394,7 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type of(String fqcn, Object... parameter) {
-        return new Type(fqcn, flatten(parameter), TypeKind.DECLARED);
+        return new Type(fqcn, flatten(parameter), TypeKind.DECLARED, Apty.detect(fqcn));
     }
 
     /**
@@ -391,9 +406,9 @@ public class Type implements Codable {
      */
     public static final Type of(Class type, Object... parameters) {
         if (type.isPrimitive()) {
-            return new Type(type.getName(), flatten(parameters), TypeKind.valueOf(type.getName().toUpperCase()));
+            return new Type(type.getName(), flatten(parameters), TypeKind.valueOf(type.getName().toUpperCase()), Apty.detect(type));
         } else {
-            return new Type(type.getName(), flatten(parameters), TypeKind.DECLARED);
+            return new Type(type.getName(), flatten(parameters), TypeKind.DECLARED, Apty.detect(type));
         }
     }
 
@@ -437,30 +452,31 @@ public class Type implements Codable {
         case BYTE:
         case SHORT:
         case VOID:
-            return new Type(type.toString(), List.of(), kind);
+            return new Type(type.toString(), List.of(), kind, Apty.detect(type));
 
         case ARRAY:
-            return new Type(type.toString(), List.of(), kind);
+            return new Type(type.toString(), List.of(), kind, Apty.detect(type));
 
         case TYPEVAR:
             TypeVariable var = (TypeVariable) type;
             TypeMirror upper = var.getUpperBound();
             if (!Apty.same(upper, Object.class)) {
-                return new Type("", type.toString(), List.of(of(upper)), kind);
+                return new Type("", type.toString(), List.of(of(upper)), kind, Apty.detect(type));
             }
-            return new Type("", type.toString(), List.of(), kind);
+            return new Type("", type.toString(), List.of(), kind, Apty.detect(type));
 
         case WILDCARD:
             WildcardType wild = (WildcardType) type;
-            if (wild.getExtendsBound() != null) return new Type("", "? extends ", List.of(of(wild.getExtendsBound())), kind);
-            if (wild.getSuperBound() != null) return new Type("", "? super ", List.of(of(wild.getSuperBound())), kind);
-            return new Type("", "?", List.of(), kind);
+            if (wild.getExtendsBound() != null)
+                return new Type("", "? extends ", List.of(of(wild.getExtendsBound())), kind, Apty.detect(type));
+            if (wild.getSuperBound() != null) return new Type("", "? super ", List.of(of(wild.getSuperBound())), kind, Apty.detect(type));
+            return new Type("", "?", List.of(), kind, Apty.detect(type));
 
         case DECLARED:
             DeclaredType declared = (DeclaredType) type;
             String fqcn = ((TypeElement) declared.asElement()).getQualifiedName().toString();
             if (variables == null) variables = declared.getTypeArguments().stream().map(Type::of).collect(Collectors.toList());
-            return new Type(fqcn, variables, TypeKind.DECLARED);
+            return new Type(fqcn, variables, TypeKind.DECLARED, Apty.detect(type));
 
         default:
             throw new Error("Bug! " + type);

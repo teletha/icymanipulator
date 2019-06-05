@@ -102,6 +102,38 @@ public class Apty {
      * @param target A target to check.
      * @return A type detector.
      */
+    public static Detector detect(String target) {
+        try {
+            TypeElement e = elements.getTypeElement(target);
+
+            if (e == null) {
+                Class<?> clazz = Class.forName(target);
+
+                return new ClassDetector(clazz);
+            } else {
+                return new TypeElementDetector(e, types, elements);
+            }
+        } catch (ClassNotFoundException e) {
+            throw new Error(e);
+        }
+    }
+
+    /**
+     * Create type detector.
+     * 
+     * @param target A target to check.
+     * @return A type detector.
+     */
+    public static Detector detect(Class target) {
+        return new ClassDetector(target);
+    }
+
+    /**
+     * Create type detector.
+     * 
+     * @param target A target to check.
+     * @return A type detector.
+     */
     public static Detector detect(Element target) {
         return detect(target.asType());
     }
@@ -113,7 +145,7 @@ public class Apty {
      * @return A type detector.
      */
     public static Detector detect(TypeMirror target) {
-        return new Detector(target, types, elements);
+        return new TypeMirrorDetector(target, types, elements);
     }
 
     /**
