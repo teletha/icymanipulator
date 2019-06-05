@@ -161,7 +161,7 @@ public class ModelInfo {
         });
 
         if (p.autoExpandable) {
-            Apty.enumConstantNames(p.element.getReturnType()).forEach(name -> {
+            Apty.detect(p.element.getReturnType()).getEnumConstants().forEach(name -> {
                 overloadForProperty.add(p, new MethodInfo(Strings.decapitalize(name), Type.var("Next"), List.of(), List.of(), ""));
             });
         }

@@ -9,6 +9,9 @@
  */
 package apty;
 
+import java.util.stream.Stream;
+
+import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeKind;
@@ -111,5 +114,25 @@ public class Detector {
      */
     public boolean isAssignableFrom(TypeMirror parent) {
         return types.isSubtype(types.erasure(type), types.erasure(parent));
+    }
+
+    /**
+     * Returns the elements of this enum class or empty if this Class object does not represent an
+     * enum type.
+     * 
+     * @return A stream containing the values comprising the enum class represented by this type in
+     *         the order they're declared, or empty if this type does not represent an enum type.
+     */
+    public Stream<String> getEnumConstants() {
+        Element element = types.asElement(type);
+
+        if (element == null) {
+            return Stream.empty();
+        }
+
+        return element.getEnclosedElements()
+                .stream()
+                .filter(e -> e.getKind() == ElementKind.ENUM_CONSTANT)
+                .map(e -> e.getSimpleName().toString());
     }
 }

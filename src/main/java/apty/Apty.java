@@ -249,25 +249,6 @@ public class Apty {
     }
 
     /**
-     * Check whether the specified type is enum or not.
-     * 
-     * @param enumType A target type.
-     * @return A result.
-     */
-    public static Stream<String> enumConstantNames(TypeMirror enumType) {
-        Element element = types.asElement(enumType);
-
-        if (element == null) {
-            return Stream.empty();
-        }
-
-        return element.getEnclosedElements()
-                .stream()
-                .filter(e -> e.getKind() == ElementKind.ENUM_CONSTANT)
-                .map(e -> e.getSimpleName().toString());
-    }
-
-    /**
      * Retrieve the documentation comment from the specified {@link Element}.
      * 
      * @param e The target element.

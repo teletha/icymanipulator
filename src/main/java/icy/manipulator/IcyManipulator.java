@@ -684,7 +684,8 @@ public class IcyManipulator extends AptyProcessor {
             OptionalSupport.by(p.type).ifPresentOrElse(s -> {
                 write("return ", p.name, "(", s.type, ".", s.someMethod, "(", m.paramNames.get(0), "));");
             }, () -> {
-                Apty.enumConstantNames(p.element.getReturnType())
+                Apty.detect(p.element.getReturnType())
+                        .getEnumConstants()
                         .filter(name -> name.equalsIgnoreCase(m.name))
                         .findFirst()
                         .ifPresentOrElse(name -> {
