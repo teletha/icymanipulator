@@ -108,22 +108,6 @@ public class Apty {
     }
 
     /**
-     * Cast to {@link TypeElement} if you can.
-     * 
-     * @param type
-     * @return
-     */
-    public static TypeElement type(TypeMirror type) {
-        switch (type.getKind()) {
-        case DECLARED:
-            return (TypeElement) ((DeclaredType) type).asElement();
-
-        default:
-            throw new Fail(types.asElement(type), "Need DeclaredType.");
-        }
-    }
-
-    /**
      * Find all declared getter-like methods.
      * 
      * @param e A target type.
@@ -148,7 +132,7 @@ public class Apty {
      * @return
      */
     public static List<ExecutableElement> methods(TypeMirror e) {
-        return methods(type(e));
+        return methods(cast(types.asElement(e), TypeElement.class));
     }
 
     /**
