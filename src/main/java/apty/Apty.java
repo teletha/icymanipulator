@@ -124,16 +124,6 @@ public class Apty {
     }
 
     /**
-     * Compute the simple type name.
-     * 
-     * @param type A target.
-     * @return A simple name of type.
-     */
-    public static String simpleName(TypeMirror type) {
-        return type(type).getSimpleName().toString();
-    }
-
-    /**
      * Find all declared getter-like methods.
      * 
      * @param e A target type.

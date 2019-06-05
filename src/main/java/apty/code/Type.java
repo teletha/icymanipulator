@@ -31,10 +31,10 @@ public class Type implements Codable {
     public static final Type WILD = Type.var("?");
 
     /** The package name. */
-    private final String packageName;
+    public final String packageName;
 
     /** The base name. */
-    private final String base;
+    public final String base;
 
     /** The managed variables. */
     public final List<Type> variables;

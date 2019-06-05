@@ -576,7 +576,7 @@ public class ModelInfo {
             if (name.equals(IcyManipulator.AssignableAll)) {
                 root: for (TypeMirror interfaceType : type.getInterfaces()) {
                     // estimate property name
-                    String interfaceName = Apty.simpleName(interfaceType);
+                    String interfaceName = Type.of(interfaceType).base;
 
                     if (interfaceName.startsWith(IcyManipulator.Assignable)) {
                         String proerptyName = Strings.decapitalize(interfaceName.substring(IcyManipulator.Assignable.length()));
