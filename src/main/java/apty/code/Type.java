@@ -16,7 +16,6 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
@@ -43,9 +42,6 @@ public class Type implements Codable {
     /** The type kind. */
     public final TypeKind kind;
 
-    /** The detector. */
-    private final Detector detector;
-
     /**
      * Build Type.
      * 
@@ -53,8 +49,8 @@ public class Type implements Codable {
      * @param variables
      * @param kind
      */
-    private Type(String fqcn, List<Type> variables, TypeKind kind, Detector detector) {
-        this(computePackage(fqcn), computeName(fqcn), variables, kind, detector);
+    private Type(String fqcn, List<Type> variables, TypeKind kind) {
+        this(computePackage(fqcn), computeName(fqcn), variables, kind);
     }
 
     /**
@@ -89,12 +85,11 @@ public class Type implements Codable {
      * @param variables
      * @param kind
      */
-    private Type(String packageName, String base, List<Type> variables, TypeKind kind, Detector detector) {
+    private Type(String packageName, String base, List<Type> variables, TypeKind kind) {
         this.packageName = packageName;
         this.base = base;
         this.variables = variables;
         this.kind = kind;
-        this.detector = detector;
     }
 
     /**
@@ -215,7 +210,7 @@ public class Type implements Codable {
      * @return
      */
     public Type raw() {
-        return new Type(packageName, base, List.of(), kind, detector);
+        return new Type(packageName, base, List.of(), kind);
     }
 
     /**
@@ -224,7 +219,7 @@ public class Type implements Codable {
      * @return
      */
     public Type declared() {
-        return new Type(packageName, base, variables, TypeKind.INTERSECTION, detector);
+        return new Type(packageName, base, variables, TypeKind.INTERSECTION);
     }
 
     /**
@@ -234,7 +229,7 @@ public class Type implements Codable {
      */
     public Type varargnize() {
         if (kind == TypeKind.ARRAY) {
-            return new Type(packageName, base.replaceAll("\\[\\]$", "..."), variables, TypeKind.DECLARED, detector);
+            return new Type(packageName, base.replaceAll("\\[\\]$", "..."), variables, TypeKind.DECLARED);
         } else {
             return this;
         }
@@ -469,100 +464,6 @@ public class Type implements Codable {
 
         default:
             throw new Error("Bug! " + type);
-        }
-    }
-
-    /**
-     * 
-     */
-    private interface Detector {
-
-        /**
-         * Detect whether this is interface type or not.
-         * 
-         * @return A result.
-         */
-        boolean isInterface();
-
-        /**
-         * Detect whether this is interface type or not.
-         * 
-         * @return A result.
-         */
-        default boolean isNotInterface() {
-            return !isInterface();
-        }
-    }
-
-    /**
-     * 
-     */
-    private static class ClassDetector implements Detector {
-
-        /** The target. */
-        private final Class type;
-
-        /**
-         * Build {@link Detector}.
-         */
-        private ClassDetector(Class type) {
-            this.type = type;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isInterface() {
-            return type.isInterface();
-        }
-    }
-
-    /**
-     * 
-     */
-    private static class ElementDetector implements Detector {
-
-        /** The target. */
-        private final Element type;
-
-        /**
-         * Build {@link Detector}.
-         */
-        private ElementDetector(Element type) {
-            this.type = type;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isInterface() {
-            return type.getKind() == ElementKind.INTERFACE;
-        }
-    }
-
-    /**
-     * 
-     */
-    private static class TypeMirrorDetector implements Detector {
-
-        /** The target. */
-        private final DeclaredType type;
-
-        /**
-         * Build {@link Detector}.
-         */
-        private TypeMirrorDetector(DeclaredType type) {
-            this.type = type;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isInterface() {
-            return Apty.cast(type).getKind() == ElementKind.INTERFACE;
         }
     }
 }

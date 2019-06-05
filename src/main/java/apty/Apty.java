@@ -320,19 +320,6 @@ public class Apty {
     }
 
     /**
-     * Tests whether one type is a subtype of another. Any type is considered to be a subtype of
-     * itself.
-     *
-     * @param child A child type.
-     * @param parent A parent type.
-     * @return A result.
-     * @throws IllegalArgumentException if given a type for an executable, package, or module
-     */
-    public static boolean isSubType(TypeMirror child, TypeMirror parent) {
-        return types.isSubtype(child, parent);
-    }
-
-    /**
      * Check whether the specified type is enum or not.
      * 
      * @param enumType A target type.
@@ -553,7 +540,7 @@ public class Apty {
      * @param type A type to cast.
      * @return A casted type.
      */
-    public static TypeElement cast(Class type) {
+    private static TypeElement cast(Class type) {
         return elements.getTypeElement(type.getName());
     }
 
