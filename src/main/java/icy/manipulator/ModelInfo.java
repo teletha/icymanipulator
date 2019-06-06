@@ -97,10 +97,9 @@ public class ModelInfo {
 
         if (icy == null) {
             // by generated implementation
-            TypeElement model = Apty.parent(e);
-            this.name = model.getSimpleName().toString();
-            this.type = Type.of(model);
             this.implType = Type.of(e);
+            this.type = implType.getParent();
+            this.name = type.base;
             this.hasToString = type.getDeclaredMethods().anyMatch(MethodLike.ToString);
             this.hasHashCode = type.getDeclaredMethods().anyMatch(MethodLike.HashCode);
             this.hasEquals = type.getDeclaredMethods().anyMatch(MethodLike.Equals);
