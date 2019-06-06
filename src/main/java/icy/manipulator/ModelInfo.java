@@ -34,6 +34,7 @@ import javax.lang.model.type.TypeMirror;
 
 import apty.Apty;
 import apty.Fail;
+import apty.MethodLike;
 import apty.Modifiers;
 import apty.code.Type;
 import icy.manipulator.Icy.Intercept;
@@ -77,10 +78,10 @@ public class ModelInfo {
     private final List<PropertyInfo> copiableProperties = new LinkedList();
 
     /** The overload method for each property */
-    private final Items<MethodInfo> overloadForProperty = new Items();
+    private final Items<MethodLike> overloadForProperty = new Items();
 
     /** The intercept method for each property */
-    private final Items<MethodInfo> interceptForProperty = new Items();
+    private final Items<MethodLike> interceptForProperty = new Items();
 
     /**
      * 
@@ -159,12 +160,12 @@ public class ModelInfo {
 
         OptionalSupport.by(p.type).ifPresent(support -> {
             overloadForProperty
-                    .add(p, new MethodInfo(p.name, p.type, List.of(support.extractor.apply(p).stripWild()), List.of("value"), ""));
+                    .add(p, new MethodLike(p.name, p.type, List.of(support.extractor.apply(p).stripWild()), List.of("value"), ""));
         });
 
         if (p.autoExpandable) {
             p.type.getEnumConstants().forEach(name -> {
-                overloadForProperty.add(p, new MethodInfo(sanitize(decapitalize(name)), Type.var("Next"), List.of(), List.of(), ""));
+                overloadForProperty.add(p, new MethodLike(sanitize(decapitalize(name)), Type.var("Next"), List.of(), List.of(), ""));
             });
         }
     }
@@ -176,7 +177,7 @@ public class ModelInfo {
         Overload overload = m.getAnnotation(Icy.Overload.class);
 
         if (overload != null) {
-            MethodInfo method = new MethodInfo(m);
+            MethodLike method = new MethodLike(m);
             String targetProperty = overload.value().isEmpty() ? method.name : overload.value();
 
             PropertyInfo property = findPropertyByName(targetProperty);
@@ -199,7 +200,7 @@ public class ModelInfo {
         Intercept intercept = m.getAnnotation(Icy.Intercept.class);
 
         if (intercept != null) {
-            MethodInfo method = new MethodInfo(m);
+            MethodLike method = new MethodLike(m);
             String targetProperty = intercept.value().isEmpty() ? method.name : intercept.value();
 
             PropertyInfo property = findPropertyByName(targetProperty);
@@ -231,7 +232,7 @@ public class ModelInfo {
                 findPropertyByName(propertyName, m, "Although intercept method [" + method + "] references a setter of the property [" + propertyName + "] at " + Strings
                         .ordinal(i + 1) + " argument, the property is not defined in " + name + " model. Define new [" + propertyName + "] property or specify a collect property name.");
             }
-            interceptForProperty.add(property, new MethodInfo(m));
+            interceptForProperty.add(property, new MethodLike(m));
         }
     }
 
@@ -504,7 +505,7 @@ public class ModelInfo {
      * @param property A target property.
      * @return A list of overload methods.
      */
-    public List<MethodInfo> findOverloadsFor(PropertyInfo property) {
+    public List<MethodLike> findOverloadsFor(PropertyInfo property) {
         if (overloadForProperty.holder.containsKey(property)) {
             return overloadForProperty.find(property);
         } else {
@@ -522,7 +523,7 @@ public class ModelInfo {
      * @param property A target property.
      * @return A list of overload methods.
      */
-    public List<MethodInfo> findUserDefinedOverloadsFor(PropertyInfo property) {
+    public List<MethodLike> findUserDefinedOverloadsFor(PropertyInfo property) {
         if (overloadForProperty.holder.containsKey(property)) {
             return overloadForProperty.find(property).stream().filter(m -> m.userDefiend).collect(Collectors.toList());
         } else {
@@ -540,7 +541,7 @@ public class ModelInfo {
      * @param property A target property.
      * @return A list of intercept methods.
      */
-    public List<MethodInfo> findInterceptsFor(PropertyInfo property) {
+    public List<MethodLike> findInterceptsFor(PropertyInfo property) {
         return interceptForProperty.find(property);
     }
 
@@ -596,7 +597,7 @@ public class ModelInfo {
                                 List<? extends VariableElement> parameters = method.getParameters();
 
                                 if (parameters.size() != 1 || !Apty.same(getter.getReturnType(), parameters.get(0))) {
-                                    overloadForProperty.add(property, new MethodInfo(method));
+                                    overloadForProperty.add(property, new MethodLike(method));
                                 }
                             }
                             continue root;

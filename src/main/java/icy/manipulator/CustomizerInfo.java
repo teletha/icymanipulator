@@ -22,6 +22,7 @@ import javax.lang.model.type.ExecutableType;
 import javax.lang.model.type.TypeMirror;
 
 import apty.Apty;
+import apty.MethodLike;
 import apty.code.Type;
 
 public class CustomizerInfo {
@@ -35,7 +36,7 @@ public class CustomizerInfo {
 
     public boolean requireSetter;
 
-    public List<MethodInfo> methods;
+    public List<MethodLike> methods;
 
     /**
      * @param property
@@ -56,7 +57,7 @@ public class CustomizerInfo {
                     .map(element -> element.getSimpleName().toString())
                     .collect(Collectors.toUnmodifiableList());
 
-            return new MethodInfo(name(m, property), convert(m.getReturnType()), types, names, Apty.doc(m));
+            return new MethodLike(name(m, property), convert(m.getReturnType()), types, names, Apty.doc(m));
         }).collect(Collectors.toUnmodifiableList());
     }
 

@@ -49,7 +49,7 @@ public class MethodLike implements Codable {
     /**
      * @param element
      */
-    protected MethodLike(ExecutableElement element) {
+    public MethodLike(ExecutableElement element) {
         this.name = element.getSimpleName().toString();
         this.returnType = Type.of(element.getReturnType());
         this.paramTypes = ((ExecutableType) element.asType()).getParameterTypes()
@@ -74,24 +74,24 @@ public class MethodLike implements Codable {
     }
 
     /**
-     * Create {@link MethodInfo}.
+     * Create {@link MethodLike}.
      * 
      * @param name
      * @param returnType
      */
-    protected MethodLike(String name, Type returnType) {
+    public MethodLike(String name, Type returnType) {
         this(name, returnType, List.of(), List.of(), "");
     }
 
     /**
-     * Create {@link MethodInfo}.
+     * Create {@link MethodLike}.
      * 
      * @param name
      * @param returnType
      * @param types
      * @param names
      */
-    protected MethodLike(String name, Type returnType, List<Type> types, List<String> names, String doc) {
+    public MethodLike(String name, Type returnType, List<Type> types, List<String> names, String doc) {
         this.name = name;
         this.returnType = returnType;
         this.paramTypes = types;
@@ -110,7 +110,7 @@ public class MethodLike implements Codable {
     }
 
     /**
-     * Create {@link MethodInfo} with additional parameter.
+     * Create {@link MethodLike} with additional parameter.
      * 
      * @param type
      * @param name
@@ -121,7 +121,7 @@ public class MethodLike implements Codable {
     }
 
     /**
-     * Create {@link MethodInfo} with additional parameter.
+     * Create {@link MethodLike} with additional parameter.
      * 
      * @param type
      * @param name
@@ -132,7 +132,7 @@ public class MethodLike implements Codable {
     }
 
     /**
-     * Create {@link MethodInfo} with additional parameter.
+     * Create {@link MethodLike} with additional parameter.
      * 
      * @param type
      * @param name
@@ -143,7 +143,7 @@ public class MethodLike implements Codable {
     }
 
     /**
-     * Create {@link MethodInfo} with additional parameter.
+     * Create {@link MethodLike} with additional parameter.
      * 
      * @param type
      * @param name

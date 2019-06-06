@@ -13,10 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import apty.MethodLike;
+
 public class MethodSynthesizer {
 
     /** The synthesized methods. */
-    public final List<MethodInfo> methods = new ArrayList();
+    public final List<MethodLike> methods = new ArrayList();
 
     /**
      * @param m
@@ -24,20 +26,20 @@ public class MethodSynthesizer {
      */
     public MethodSynthesizer(ModelInfo m, PropertyInfo p) {
         // basic setter
-        add(new MethodInfo(p.name, m.implType).withLast(p.type, p.name));
+        add(new MethodLike(p.name, m.implType).withLast(p.type, p.name));
 
         if (m.firstRequiredProperty().equals(Optional.of(p))) {
             // first property will accept all overload methods unconditionally
 
             // overload setter
-            for (MethodInfo overload : m.findOverloadsFor(p)) {
+            for (MethodLike overload : m.findOverloadsFor(p)) {
                 add(overload);
             }
         } else {
             // rest propreties will accept pattern-matched overload methods only
 
             // overload setter
-            for (MethodInfo overload : m.findOverloadsFor(p)) {
+            for (MethodLike overload : m.findOverloadsFor(p)) {
                 // check name
                 if (!overload.name.equals(p.name)) {
                     continue;
@@ -60,13 +62,13 @@ public class MethodSynthesizer {
     /**
      * @param methods
      */
-    MethodSynthesizer(MethodInfo... definitions) {
-        for (MethodInfo method : definitions) {
+    MethodSynthesizer(MethodLike... definitions) {
+        for (MethodLike method : definitions) {
             add(method);
         }
     }
 
-    private void add(MethodInfo definition) {
+    private void add(MethodLike definition) {
         if (!methods.contains(definition)) {
             methods.add(definition);
         }
@@ -81,8 +83,8 @@ public class MethodSynthesizer {
     public MethodSynthesizer synthesize(MethodSynthesizer other) {
         MethodSynthesizer synthesized = new MethodSynthesizer();
 
-        for (MethodInfo method : methods) {
-            for (MethodInfo otherMethod : other.methods) {
+        for (MethodLike method : methods) {
+            for (MethodLike otherMethod : other.methods) {
                 String otherName = otherMethod.paramNames.get(0);
 
                 // check name duplication

@@ -25,6 +25,7 @@ import javax.annotation.processing.Generated;
 
 import apty.Apty;
 import apty.AptyProcessor;
+import apty.MethodLike;
 import apty.Modifiers;
 import apty.code.Coder;
 import apty.code.Type;
@@ -159,7 +160,7 @@ public class IcyManipulator extends AptyProcessor {
          */
         private void defineMethodInvoker() {
             for (PropertyInfo property : m.ownProperties()) {
-                for (MethodInfo method : Lists.merge(m.findUserDefinedOverloadsFor(property), m.findInterceptsFor(property))) {
+                for (MethodLike method : Lists.merge(m.findUserDefinedOverloadsFor(property), m.findInterceptsFor(property))) {
                     StringJoiner types = new StringJoiner(", ", ", ", "").setEmptyValue("");
                     method.paramTypes.forEach(t -> types.add(classLiteral(t)));
 
@@ -328,7 +329,7 @@ public class IcyManipulator extends AptyProcessor {
 
                     writeTry(() -> {
                         String value = "value";
-                        for (MethodInfo inter : m.findInterceptsFor(property)) {
+                        for (MethodLike inter : m.findInterceptsFor(property)) {
                             value = inter.id() + ".invoke(this, " + value;
                             for (int i = 1; i < inter.paramTypes.size(); i++) {
                                 String name = m.findPropertyByName(inter.paramNames.get(i)).name;
@@ -348,7 +349,7 @@ public class IcyManipulator extends AptyProcessor {
 
                 // customizer's methods
                 if (property.custom != null) {
-                    for (MethodInfo m : property.custom.methods) {
+                    for (MethodLike m : property.custom.methods) {
                         write();
                         javadoc(m.doc, () -> {
                         });
@@ -581,7 +582,7 @@ public class IcyManipulator extends AptyProcessor {
                         // =========================================
                         // Overload
                         // =========================================
-                        for (MethodInfo m : m.findOverloadsFor(p)) {
+                        for (MethodLike m : m.findOverloadsFor(p)) {
                             write();
                             javadoc(m.doc, () -> {
                                 write("/**");
@@ -659,7 +660,7 @@ public class IcyManipulator extends AptyProcessor {
             // =========================================
             // Overload Setter
             // =========================================
-            for (MethodInfo m : m.findOverloadsFor(p)) {
+            for (MethodLike m : m.findOverloadsFor(p)) {
                 write();
                 javadoc(m.doc, () -> {
                     write("/**");
@@ -680,7 +681,7 @@ public class IcyManipulator extends AptyProcessor {
          * @param p A property info.
          * @param m A method info.
          */
-        private void overload(PropertyInfo p, MethodInfo m) {
+        private void overload(PropertyInfo p, MethodLike m) {
             OptionalSupport.by(p.type).ifPresentOrElse(s -> {
                 write("return ", p.name, "(", s.type, ".", s.someMethod, "(", m.paramNames.get(0), "));");
             }, () -> {
