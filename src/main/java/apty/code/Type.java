@@ -303,22 +303,6 @@ public class Type implements Codable, ClassLike {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isEqualTo(Class type) {
-        return detector.isEqualTo(type);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isEqualTo(TypeMirror type) {
-        return detector.isEqualTo(type);
-    }
-
-    /**
      * Create raw type, all variables are removed.
      * 
      * @return

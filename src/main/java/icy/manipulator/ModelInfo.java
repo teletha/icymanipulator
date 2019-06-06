@@ -594,7 +594,7 @@ public class ModelInfo {
                             requiredProperties.add(property);
 
                             interfaceT.getDeclaredMethods().forEach(method -> {
-                                if (method.paramTypes.size() != 1 || !method.paramTypes.get(0).isEqualTo(getter.getReturnType())) {
+                                if (method.paramTypes.size() != 1 || !method.paramTypes.get(0).is(getter.getReturnType())) {
                                     overloadForProperty.add(property, method);
                                 }
                             });

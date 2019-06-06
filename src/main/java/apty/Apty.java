@@ -839,22 +839,6 @@ public class Apty {
         }
 
         /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isEqualTo(Class type) {
-            return this.type.equals(type);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isEqualTo(TypeMirror type) {
-            return this.type.getCanonicalName().equals(types.erasure(type).toString());
-        }
-
-        /**
          * Returns the elements of this enum class or empty if this Class object does not represent
          * an enum type.
          * 
@@ -992,22 +976,6 @@ public class Apty {
         }
 
         /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isEqualTo(Class type) {
-            return types.erasure(this.type.asType()).toString().equals(type.getCanonicalName());
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isEqualTo(TypeMirror type) {
-            return types.isSameType(types.erasure(this.type.asType()), types.erasure(type));
-        }
-
-        /**
          * Returns the elements of this enum class or empty if this Class object does not represent
          * an enum type.
          * 
@@ -1108,22 +1076,6 @@ public class Apty {
          */
         @Override
         public boolean isAssignableFrom(TypeMirror parent) {
-            return false;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isEqualTo(Class type) {
-            return false;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isEqualTo(TypeMirror type) {
             return false;
         }
 
