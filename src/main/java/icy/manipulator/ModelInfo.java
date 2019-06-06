@@ -101,17 +101,17 @@ public class ModelInfo {
             this.name = model.getSimpleName().toString();
             this.type = Type.of(model);
             this.implType = Type.of(e);
-            this.hasToString = Apty.methods(model).stream().anyMatch(Apty.ToString);
-            this.hasHashCode = Apty.methods(model).stream().anyMatch(Apty.HashCode);
-            this.hasEquals = Apty.methods(model).stream().anyMatch(Apty.Equals);
+            this.hasToString = type.getDeclaredMethods().anyMatch(MethodLike.ToString);
+            this.hasHashCode = type.getDeclaredMethods().anyMatch(MethodLike.HashCode);
+            this.hasEquals = type.getDeclaredMethods().anyMatch(MethodLike.Equals);
         } else {
             // by defined model
             this.name = e.getSimpleName().toString();
             this.type = Type.of(e);
             this.implType = Type.of(e.getQualifiedName().toString().replaceAll(icy.modelNamePattern() + "$", "$1"), type.variables);
-            this.hasToString = Apty.methods(e).stream().anyMatch(Apty.ToString);
-            this.hasHashCode = Apty.methods(e).stream().anyMatch(Apty.HashCode);
-            this.hasEquals = Apty.methods(e).stream().anyMatch(Apty.Equals);
+            this.hasToString = type.getDeclaredMethods().anyMatch(MethodLike.ToString);
+            this.hasHashCode = type.getDeclaredMethods().anyMatch(MethodLike.HashCode);
+            this.hasEquals = type.getDeclaredMethods().anyMatch(MethodLike.Equals);
 
             // validate in 3 times, don't validate all once
             Apty.methods(e).forEach(this::validateProperty);

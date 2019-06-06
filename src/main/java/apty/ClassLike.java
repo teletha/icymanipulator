@@ -14,6 +14,8 @@ import java.util.stream.Stream;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
+import apty.code.Type;
+
 public interface ClassLike {
 
     /**
@@ -76,6 +78,8 @@ public interface ClassLike {
      * @return
      */
     boolean isAssignableFrom(TypeMirror parent);
+
+    Type getParent();
 
     /**
      * Returns the elements of this enum class or empty if this Class object does not represent an

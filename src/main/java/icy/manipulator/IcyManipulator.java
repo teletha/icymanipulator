@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 
 import javax.annotation.processing.Generated;
 
-import apty.Apty;
 import apty.AptyProcessor;
 import apty.MethodLike;
 import apty.Modifiers;
@@ -505,7 +504,7 @@ public class IcyManipulator extends AptyProcessor {
                 });
             }
 
-            String parentInstantiator = m.parent.map(p -> " extends " + Type.of(Apty.parent(m.e)) + "." + Instantiator).orElse("");
+            String parentInstantiator = m.parent.map(p -> " extends " + m.type.getParent() + "." + Instantiator).orElse("");
 
             Type Self = Type.var("Self", m.implType, Type.of(m.implType + "." + ArbitraryInterface, "Self", m.type.variables));
 

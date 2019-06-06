@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,6 +28,22 @@ import apty.code.Coder;
 import apty.code.Type;
 
 public class MethodLike implements Codable {
+
+    /** The {@link Object#toString()} method pattern. */
+    public static final Predicate<MethodLike> ToString = m -> {
+        return m.paramTypes.size() == 0 && m.returnType.is(String.class) && m.name.equals("toString");
+    };
+
+    /** The {@link Object#hashCode()} method pattern. */
+    public static final Predicate<MethodLike> HashCode = m -> {
+        return m.paramTypes.size() == 0 && m.returnType.is(int.class) && m.name.equals("hashCode");
+    };
+
+    /** The {@link Object#equals(Object)} method pattern. */
+    public static final Predicate<MethodLike> Equals = m -> {
+        return m.paramTypes.size() == 1 && m.paramTypes.get(0).is(Object.class) && m.returnType.is(boolean.class) && m.name
+                .equals("equals");
+    };
 
     /** The method name. */
     public final String name;

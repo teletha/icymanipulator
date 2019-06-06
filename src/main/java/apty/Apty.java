@@ -53,28 +53,12 @@ import javax.lang.model.util.SimpleElementVisitor9;
 import javax.lang.model.util.SimpleTypeVisitor9;
 import javax.lang.model.util.Types;
 
+import apty.code.Type;
+
 public class Apty {
 
     /** The reusable detector. */
     public static final ClassLike Unknown = new UnknownDetector();
-
-    /** The {@link Object#toString()} method pattern. */
-    public static final Predicate<ExecutableElement> ToString = m -> {
-        return m.getParameters().size() == 0 && m.getReturnType().toString().equals("java.lang.String") && m.getSimpleName()
-                .contentEquals("toString");
-    };
-
-    /** The {@link Object#hashCode()} method pattern. */
-    public static final Predicate<ExecutableElement> HashCode = m -> {
-        return m.getParameters().size() == 0 && m.getReturnType().toString().equals("int") && m.getSimpleName().contentEquals("hashCode");
-    };
-
-    /** The {@link Object#equals(Object)} method pattern. */
-    public static final Predicate<ExecutableElement> Equals = m -> {
-        return m.getParameters().size() == 1 && m.getParameters().get(0).asType().toString().equals("java.lang.Object") && m.getReturnType()
-                .toString()
-                .equals("boolean") && m.getSimpleName().contentEquals("equals");
-    };
 
     /** The getter pattern. */
     private static final Predicate<ExecutableElement> getter = m -> {
@@ -839,6 +823,16 @@ public class Apty {
         }
 
         /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type getParent() {
+            Class superclass = type.getSuperclass();
+
+            return superclass == null ? null : Type.of(superclass);
+        }
+
+        /**
          * Returns the elements of this enum class or empty if this Class object does not represent
          * an enum type.
          * 
@@ -976,6 +970,16 @@ public class Apty {
         }
 
         /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type getParent() {
+            TypeMirror superclass = type.getSuperclass();
+
+            return superclass.getKind() == TypeKind.NONE ? null : Type.of(superclass);
+        }
+
+        /**
          * Returns the elements of this enum class or empty if this Class object does not represent
          * an enum type.
          * 
@@ -1077,6 +1081,14 @@ public class Apty {
         @Override
         public boolean isAssignableFrom(TypeMirror parent) {
             return false;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Type getParent() {
+            return null;
         }
 
         /**

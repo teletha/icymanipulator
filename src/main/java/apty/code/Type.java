@@ -145,6 +145,14 @@ public class Type implements Codable, ClassLike {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Type getParent() {
+        return detector.getParent();
+    }
+
+    /**
      * Returns the elements of this enum class or empty if this Class object does not represent an
      * enum type.
      * 
