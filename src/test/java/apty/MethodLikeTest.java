@@ -7,13 +7,13 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package icy.manipulator;
+package apty;
 
 import org.junit.jupiter.api.Test;
 
 import apty.MethodLike;
 
-class MethodInfoTest {
+class MethodLikeTest {
 
     @Test
     void constructor() {

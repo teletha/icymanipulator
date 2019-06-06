@@ -12,6 +12,7 @@ package icy.manipulator;
 import org.junit.jupiter.api.Test;
 
 import apty.MethodLike;
+import apty.TestableMethodLike;
 
 class MethodSynthesizerTest {
 

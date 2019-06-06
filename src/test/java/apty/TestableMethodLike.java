@@ -7,15 +7,14 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package icy.manipulator;
+package apty;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import apty.MethodLike;
 import apty.code.Type;
 
-class TestableMethodLike extends MethodLike {
+public class TestableMethodLike extends MethodLike {
 
     /**
      * Create {@link MethodLike}.
@@ -23,7 +22,7 @@ class TestableMethodLike extends MethodLike {
      * @param name
      * @param returnType
      */
-    TestableMethodLike(String name, Class returnType) {
+    public TestableMethodLike(String name, Class returnType) {
         this(name, returnType, List.of(), List.of());
     }
 
@@ -35,7 +34,7 @@ class TestableMethodLike extends MethodLike {
      * @param type1
      * @param name1
      */
-    TestableMethodLike(String name, Class returnType, Class type1, String name1) {
+    public TestableMethodLike(String name, Class returnType, Class type1, String name1) {
         this(name, returnType, List.of(type1), List.of(name1));
     }
 
@@ -47,7 +46,7 @@ class TestableMethodLike extends MethodLike {
      * @param type1
      * @param name1
      */
-    TestableMethodLike(String name, Class returnType, Class type1, String name1, Class type2, String name2) {
+    public TestableMethodLike(String name, Class returnType, Class type1, String name1, Class type2, String name2) {
         this(name, returnType, List.of(type1, type2), List.of(name1, name2));
     }
 
