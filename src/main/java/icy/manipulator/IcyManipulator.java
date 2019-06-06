@@ -77,7 +77,7 @@ public class IcyManipulator extends AptyProcessor {
             this.declarations = model.type.variables.stream().map(Type::declared).collect(Collectors.toUnmodifiableList());
 
             String visibility = icy.packagePrivate() ? "" : "public ";
-            String inheritance = Apty.detect(model.e).isInterface() ? " implements " : " extends ";
+            String inheritance = model.type.isInterface() ? " implements " : " extends ";
 
             write("/**");
             write(" * Generated model for {@link ", model.type, "}.");
@@ -684,21 +684,17 @@ public class IcyManipulator extends AptyProcessor {
             OptionalSupport.by(p.type).ifPresentOrElse(s -> {
                 write("return ", p.name, "(", s.type, ".", s.someMethod, "(", m.paramNames.get(0), "));");
             }, () -> {
-                Apty.detect(p.element.getReturnType())
-                        .getEnumConstants()
-                        .filter(name -> name.equalsIgnoreCase(m.name))
-                        .findFirst()
-                        .ifPresentOrElse(name -> {
-                            write("return ", p.name, "(", p.type, ".", name, ");");
-                        }, () -> {
-                            List<String> names = m.withFirst(Type.of(Object.class), "this").paramNames;
+                p.type.getEnumConstants().filter(name -> name.equalsIgnoreCase(m.name)).findFirst().ifPresentOrElse(name -> {
+                    write("return ", p.name, "(", p.type, ".", name, ");");
+                }, () -> {
+                    List<String> names = m.withFirst(Type.of(Object.class), "this").paramNames;
 
-                            writeTry(() -> {
-                                write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", names, "));");
-                            }, Throwable.class, e -> {
-                                write("throw quiet(", e, ");");
-                            });
-                        });
+                    writeTry(() -> {
+                        write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", names, "));");
+                    }, Throwable.class, e -> {
+                        write("throw quiet(", e, ");");
+                    });
+                });
             });
         }
 

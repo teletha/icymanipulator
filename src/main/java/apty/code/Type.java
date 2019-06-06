@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
@@ -25,7 +26,6 @@ import javax.lang.model.type.WildcardType;
 
 import apty.Apty;
 import apty.Detector;
-import apty.UnknownDetector;
 
 public class Type implements Codable {
 
@@ -144,6 +144,17 @@ public class Type implements Codable {
     }
 
     /**
+     * Returns the elements of this enum class or empty if this Class object does not represent an
+     * enum type.
+     * 
+     * @return A stream containing the values comprising the enum class represented by this type in
+     *         the order they're declared, or empty if this type does not represent an enum type.
+     */
+    public Stream<String> getEnumConstants() {
+        return detector.getEnumConstants();
+    }
+
+    /**
      * Check whether this is primitive type or not.
      * 
      * @return A result.
@@ -167,7 +178,16 @@ public class Type implements Codable {
      * @return A result.
      */
     public boolean isEnum() {
-        return kind == TypeKind.ARRAY;
+        return detector.isEnum();
+    }
+
+    /**
+     * Check whether this type is interface or not.
+     * 
+     * @return A result.
+     */
+    public boolean isInterface() {
+        return detector.isInterface();
     }
 
     /**
@@ -217,6 +237,36 @@ public class Type implements Codable {
      */
     public boolean is(TypeMirror type) {
         return is(Type.of(type));
+    }
+
+    /**
+     * Check whether this type is subtype of the specified type.
+     * 
+     * @param parent A parent type to check.
+     * @return
+     */
+    public boolean isAssignableFrom(Class parent) {
+        return detector.isAssignableFrom(parent);
+    }
+
+    /**
+     * Check whether this type is subtype of the specified type.
+     * 
+     * @param parent A parent type to check.
+     * @return
+     */
+    public boolean isAssignableFrom(TypeElement parent) {
+        return detector.isAssignableFrom(parent);
+    }
+
+    /**
+     * Check whether this type is subtype of the specified type.
+     * 
+     * @param parent A parent type to check.
+     * @return
+     */
+    public boolean isAssignableFrom(TypeMirror parent) {
+        return detector.isAssignableFrom(parent);
     }
 
     /**
@@ -383,7 +433,7 @@ public class Type implements Codable {
      * @return The created {@link Type}.
      */
     public static final Type var(String name, Object... parameters) {
-        return new Type("", name, flatten(parameters), TypeKind.INTERSECTION, new UnknownDetector());
+        return new Type("", name, flatten(parameters), TypeKind.INTERSECTION, Apty.Unknown);
     }
 
     /**
@@ -482,4 +532,5 @@ public class Type implements Codable {
             throw new Error("Bug! " + type);
         }
     }
+
 }

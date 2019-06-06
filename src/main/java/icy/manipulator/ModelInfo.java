@@ -163,7 +163,7 @@ public class ModelInfo {
         });
 
         if (p.autoExpandable) {
-            Apty.detect(p.element.getReturnType()).getEnumConstants().forEach(name -> {
+            p.type.getEnumConstants().forEach(name -> {
                 overloadForProperty.add(p, new MethodInfo(sanitize(decapitalize(name)), Type.var("Next"), List.of(), List.of(), ""));
             });
         }

@@ -45,7 +45,7 @@ public class CustomizerInfo {
         this.variable = Apty.typeParameter(customizer, Supplier.class).get(0);
         this.e = customizer;
         this.property = property;
-        this.requireSetter = Apty.detect(customizer).isAssignableFrom(Consumer.class);
+        this.requireSetter = Type.of(customizer).isAssignableFrom(Consumer.class);
         this.methods = Apty.methodsInHierarchy(customizer, m -> m.getSimpleName().toString().contains("$")).stream().map(m -> {
             List<Type> types = ((ExecutableType) m.asType()).getParameterTypes()
                     .stream()

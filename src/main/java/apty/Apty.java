@@ -11,6 +11,7 @@ package apty;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.AnnotationMirror;
@@ -51,6 +53,9 @@ import javax.lang.model.util.SimpleTypeVisitor9;
 import javax.lang.model.util.Types;
 
 public class Apty {
+
+    /** The reusable detector. */
+    public static final Detector Unknown = new UnknownDetector();
 
     /** The {@link Object#toString()} method pattern. */
     public static final Predicate<ExecutableElement> ToString = m -> {
@@ -114,7 +119,7 @@ public class Apty {
                 return new TypeElementDetector(e, types, elements);
             }
         } catch (ClassNotFoundException e) {
-            throw new Error(e);
+            return new UnknownDetector();
         }
     }
 
@@ -741,32 +746,463 @@ public class Apty {
     /**
      * 
      */
-    private class ClassLikeClass implements ClassLike {
+    private static class ClassDetector extends Detector {
 
-        /** The type. */
+        /** The target type. */
         private final Class type;
 
         /**
+         * Type detector.
+         * 
          * @param type
          */
-        private ClassLikeClass(Class type) {
+        public ClassDetector(Class type) {
             this.type = type;
+        }
+
+        /**
+         * Check whether this type is annotation or not.
+         * 
+         * @return
+         */
+        @Override
+        public boolean isAnnotation() {
+            return type.isAnnotation();
+        }
+
+        /**
+         * Check whether this type is array or not.
+         * 
+         * @return
+         */
+        @Override
+        public boolean isArray() {
+            return type.isArray();
+        }
+
+        /**
+         * Check whether this type is enum or not.
+         * 
+         * @return
+         */
+        @Override
+        public boolean isEnum() {
+            return type.isEnum();
+        }
+
+        /**
+         * Check whether this type is interface or not.
+         * 
+         * @return
+         */
+        @Override
+        public boolean isInterface() {
+            return type.isInterface();
+        }
+
+        /**
+         * Check whether this type is primitive or not.
+         * 
+         * @return
+         */
+        @Override
+        public boolean isPrimitive() {
+            return type.isPrimitive();
+        }
+
+        /**
+         * Check whether this type is subtype of the specified type.
+         * 
+         * @param parent A parent type to check.
+         * @return
+         */
+        @Override
+        public boolean isAssignableFrom(Class parent) {
+            return type.isAssignableFrom(parent);
+        }
+
+        /**
+         * Check whether this type is subtype of the specified type.
+         * 
+         * @param parent A parent type to check.
+         * @return
+         */
+        @Override
+        public boolean isAssignableFrom(TypeElement parent) {
+            return isAssignableFrom(parent.asType());
+        }
+
+        /**
+         * Check whether this type is subtype of the specified type.
+         * 
+         * @param parent A parent type to check.
+         * @return
+         */
+        @Override
+        public boolean isAssignableFrom(TypeMirror parent) {
+            return false;
+        }
+
+        /**
+         * Returns the elements of this enum class or empty if this Class object does not represent
+         * an enum type.
+         * 
+         * @return A stream containing the values comprising the enum class represented by this type
+         *         in the order they're declared, or empty if this type does not represent an enum
+         *         type.
+         */
+        @Override
+        public Stream<String> getEnumConstants() {
+            if (isEnum()) {
+                return Arrays.stream(type.getEnumConstants()).map(e -> {
+                    try {
+                        return (String) e.getClass().getMethod("name").invoke(e);
+                    } catch (Exception error) {
+                        throw new Error(error);
+                    }
+                });
+            } else {
+                return Stream.empty();
+            }
         }
     }
 
     /**
      * 
      */
-    private class ClassLikeElement implements ClassLike {
+    private static class TypeElementDetector extends Detector {
 
-        /** The type. */
+        /** The target type. */
         private final TypeElement type;
 
+        /** The utility. */
+        private final Types types;
+
+        /** The utility. */
+        private final Elements elements;
+
         /**
+         * Type detector.
+         * 
          * @param type
          */
-        private ClassLikeElement(TypeElement type) {
+        public TypeElementDetector(TypeElement type, Types types, Elements elements) {
             this.type = type;
+            this.types = types;
+            this.elements = elements;
+        }
+
+        /**
+         * Check whether this type is annotation or not.
+         * 
+         * @return
+         */
+        @Override
+        public boolean isAnnotation() {
+            return type.getKind() == ElementKind.ANNOTATION_TYPE;
+        }
+
+        /**
+         * Check whether this type is array or not.
+         * 
+         * @return
+         */
+        @Override
+        public boolean isArray() {
+            return type.asType().getKind() == TypeKind.ARRAY;
+        }
+
+        /**
+         * Check whether this type is enum or not.
+         * 
+         * @return
+         */
+        @Override
+        public boolean isEnum() {
+            return type.getKind() == ElementKind.ENUM;
+        }
+
+        /**
+         * Check whether this type is interface or not.
+         * 
+         * @return
+         */
+        @Override
+        public boolean isInterface() {
+            return type.getKind() == ElementKind.INTERFACE;
+        }
+
+        /**
+         * Check whether this type is primitive or not.
+         * 
+         * @return
+         */
+        @Override
+        public boolean isPrimitive() {
+            return type.asType().getKind().isPrimitive();
+        }
+
+        /**
+         * Check whether this type is subtype of the specified type.
+         * 
+         * @param parent A parent type to check.
+         * @return
+         */
+        @Override
+        public boolean isAssignableFrom(Class parent) {
+            return isAssignableFrom(elements.getTypeElement(parent.getCanonicalName()));
+        }
+
+        /**
+         * Check whether this type is subtype of the specified type.
+         * 
+         * @param parent A parent type to check.
+         * @return
+         */
+        @Override
+        public boolean isAssignableFrom(TypeElement parent) {
+            return isAssignableFrom(parent.asType());
+        }
+
+        /**
+         * Check whether this type is subtype of the specified type.
+         * 
+         * @param parent A parent type to check.
+         * @return
+         */
+        @Override
+        public boolean isAssignableFrom(TypeMirror parent) {
+            return types.isSubtype(types.erasure(type.asType()), types.erasure(parent));
+        }
+
+        /**
+         * Returns the elements of this enum class or empty if this Class object does not represent
+         * an enum type.
+         * 
+         * @return A stream containing the values comprising the enum class represented by this type
+         *         in the order they're declared, or empty if this type does not represent an enum
+         *         type.
+         */
+        @Override
+        public Stream<String> getEnumConstants() {
+            if (type == null) {
+                return Stream.empty();
+            }
+
+            return type.getEnclosedElements()
+                    .stream()
+                    .filter(e -> e.getKind() == ElementKind.ENUM_CONSTANT)
+                    .map(e -> e.getSimpleName().toString());
         }
     }
+
+    /**
+     * 
+     */
+    private static class TypeMirrorDetector extends Detector {
+
+        /** The target type. */
+        private final TypeMirror type;
+
+        /** The utility. */
+        private final Types types;
+
+        /** The utility. */
+        private final Elements elements;
+
+        /**
+         * Type detector.
+         * 
+         * @param type
+         */
+        public TypeMirrorDetector(TypeMirror type, Types types, Elements elements) {
+            this.type = type;
+            this.types = types;
+            this.elements = elements;
+        }
+
+        /**
+         * Check whether this type is annotation or not.
+         * 
+         * @return
+         */
+        @Override
+        public boolean isAnnotation() {
+            return types.asElement(type).getKind() == ElementKind.ANNOTATION_TYPE;
+        }
+
+        /**
+         * Check whether this type is array or not.
+         * 
+         * @return
+         */
+        @Override
+        public boolean isArray() {
+            return type.getKind() == TypeKind.ARRAY;
+        }
+
+        /**
+         * Check whether this type is enum or not.
+         * 
+         * @return
+         */
+        @Override
+        public boolean isEnum() {
+            return types.asElement(type).getKind() == ElementKind.ENUM;
+        }
+
+        /**
+         * Check whether this type is interface or not.
+         * 
+         * @return
+         */
+        @Override
+        public boolean isInterface() {
+            return types.asElement(type).getKind() == ElementKind.INTERFACE;
+        }
+
+        /**
+         * Check whether this type is primitive or not.
+         * 
+         * @return
+         */
+        @Override
+        public boolean isPrimitive() {
+            return type.getKind().isPrimitive();
+        }
+
+        /**
+         * Check whether this type is subtype of the specified type.
+         * 
+         * @param parent A parent type to check.
+         * @return
+         */
+        @Override
+        public boolean isAssignableFrom(Class parent) {
+            return isAssignableFrom(elements.getTypeElement(parent.getCanonicalName()));
+        }
+
+        /**
+         * Check whether this type is subtype of the specified type.
+         * 
+         * @param parent A parent type to check.
+         * @return
+         */
+        @Override
+        public boolean isAssignableFrom(TypeElement parent) {
+            return isAssignableFrom(parent.asType());
+        }
+
+        /**
+         * Check whether this type is subtype of the specified type.
+         * 
+         * @param parent A parent type to check.
+         * @return
+         */
+        @Override
+        public boolean isAssignableFrom(TypeMirror parent) {
+            return types.isSubtype(types.erasure(type), types.erasure(parent));
+        }
+
+        /**
+         * Returns the elements of this enum class or empty if this Class object does not represent
+         * an enum type.
+         * 
+         * @return A stream containing the values comprising the enum class represented by this type
+         *         in the order they're declared, or empty if this type does not represent an enum
+         *         type.
+         */
+        @Override
+        public Stream<String> getEnumConstants() {
+            Element element = types.asElement(type);
+
+            if (element == null) {
+                return Stream.empty();
+            }
+
+            return element.getEnclosedElements()
+                    .stream()
+                    .filter(e -> e.getKind() == ElementKind.ENUM_CONSTANT)
+                    .map(e -> e.getSimpleName().toString());
+        }
+    }
+
+    /**
+     * 
+     */
+    private static class UnknownDetector extends Detector {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean isAnnotation() {
+            return false;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean isArray() {
+            return false;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean isEnum() {
+            return false;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean isInterface() {
+            return false;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean isPrimitive() {
+            return false;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean isAssignableFrom(Class parent) {
+            return false;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean isAssignableFrom(TypeElement parent) {
+            return false;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean isAssignableFrom(TypeMirror parent) {
+            return false;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Stream<String> getEnumConstants() {
+            return Stream.empty();
+        }
+    }
+
 }
