@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
-public interface Detectable {
+public interface ClassLike {
 
     /**
      * Check whether this type is annotation or not.
@@ -85,4 +85,6 @@ public interface Detectable {
      *         the order they're declared, or empty if this type does not represent an enum type.
      */
     Stream<String> getEnumConstants();
+
+    Stream<MethodLike> getMethod();
 }

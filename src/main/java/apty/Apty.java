@@ -10,6 +10,7 @@
 package apty;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,6 +29,7 @@ import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.TypeParameterElement;
@@ -55,7 +57,7 @@ import javax.lang.model.util.Types;
 public class Apty {
 
     /** The reusable detector. */
-    public static final Detectable Unknown = new UnknownDetector();
+    public static final ClassLike Unknown = new UnknownDetector();
 
     /** The {@link Object#toString()} method pattern. */
     public static final Predicate<ExecutableElement> ToString = m -> {
@@ -107,7 +109,7 @@ public class Apty {
      * @param target A target to check.
      * @return A type detector.
      */
-    public static Detectable detect(String target) {
+    public static ClassLike detect(String target) {
         try {
             TypeElement e = elements.getTypeElement(target);
 
@@ -129,7 +131,7 @@ public class Apty {
      * @param target A target to check.
      * @return A type detector.
      */
-    public static Detectable detect(Class target) {
+    public static ClassLike detect(Class target) {
         return new ClassDetector(target);
     }
 
@@ -139,7 +141,7 @@ public class Apty {
      * @param target A target to check.
      * @return A type detector.
      */
-    public static Detectable detect(Element target) {
+    public static ClassLike detect(Element target) {
         return detect(target.asType());
     }
 
@@ -149,8 +151,13 @@ public class Apty {
      * @param target A target to check.
      * @return A type detector.
      */
-    public static Detectable detect(TypeMirror target) {
-        return new TypeMirrorDetector(target, types, elements);
+    public static ClassLike detect(TypeMirror target) {
+        Element element = types.asElement(target);
+
+        if (element instanceof TypeElement) {
+            return new TypeElementDetector((TypeElement) element, types, elements);
+        }
+        return detect(types.erasure(target).toString());
     }
 
     /**
@@ -746,7 +753,7 @@ public class Apty {
     /**
      * 
      */
-    private static class ClassDetector implements Detectable {
+    private static class ClassDetector implements ClassLike {
 
         /** The target type. */
         private final Class type;
@@ -854,12 +861,35 @@ public class Apty {
                 return Stream.empty();
             }
         }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Stream<MethodLike> getMethod() {
+            return Stream.of(type.getMethods()).map(m -> new MethodLikeMethod(m));
+        }
     }
 
     /**
      * 
      */
-    private static class TypeElementDetector implements Detectable {
+    private static class MethodLikeMethod implements MethodLike {
+
+        private final Method method;
+
+        /**
+         * @param method
+         */
+        private MethodLikeMethod(Method method) {
+            this.method = method;
+        }
+    }
+
+    /**
+     * 
+     */
+    private static class TypeElementDetector implements ClassLike {
 
         /** The target type. */
         private final TypeElement type;
@@ -972,132 +1002,38 @@ public class Apty {
                     .filter(e -> e.getKind() == ElementKind.ENUM_CONSTANT)
                     .map(e -> e.getSimpleName().toString());
         }
-    }
-
-    /**
-     * 
-     */
-    private static class TypeMirrorDetector implements Detectable {
-
-        /** The target type. */
-        private final TypeMirror type;
-
-        /** The utility. */
-        private final Types types;
-
-        /** The utility. */
-        private final Elements elements;
 
         /**
-         * Type detector.
-         * 
-         * @param type
-         */
-        public TypeMirrorDetector(TypeMirror type, Types types, Elements elements) {
-            this.type = type;
-            this.types = types;
-            this.elements = elements;
-        }
-
-        /**
-         * Check whether this type is annotation or not.
-         * 
-         * @return
+         * {@inheritDoc}
          */
         @Override
-        public boolean isAnnotation() {
-            return types.asElement(type).getKind() == ElementKind.ANNOTATION_TYPE;
-        }
-
-        /**
-         * Check whether this type is array or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isArray() {
-            return type.getKind() == TypeKind.ARRAY;
-        }
-
-        /**
-         * Check whether this type is enum or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isEnum() {
-            return types.asElement(type).getKind() == ElementKind.ENUM;
-        }
-
-        /**
-         * Check whether this type is interface or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isInterface() {
-            return types.asElement(type).getKind() == ElementKind.INTERFACE;
-        }
-
-        /**
-         * Check whether this type is primitive or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isPrimitive() {
-            return type.getKind().isPrimitive();
-        }
-
-        /**
-         * Check whether this type is subtype of the specified type.
-         * 
-         * @param parent A parent type to check.
-         * @return
-         */
-        @Override
-        public boolean isAssignableFrom(Class parent) {
-            return isAssignableFrom(elements.getTypeElement(parent.getCanonicalName()));
-        }
-
-        /**
-         * Check whether this type is subtype of the specified type.
-         * 
-         * @param parent A parent type to check.
-         * @return
-         */
-        @Override
-        public boolean isAssignableFrom(TypeMirror parent) {
-            return types.isSubtype(types.erasure(type), types.erasure(parent));
-        }
-
-        /**
-         * Returns the elements of this enum class or empty if this Class object does not represent
-         * an enum type.
-         * 
-         * @return A stream containing the values comprising the enum class represented by this type
-         *         in the order they're declared, or empty if this type does not represent an enum
-         *         type.
-         */
-        @Override
-        public Stream<String> getEnumConstants() {
-            Element element = types.asElement(type);
-
-            if (element == null) {
-                return Stream.empty();
-            }
-
-            return element.getEnclosedElements()
+        public Stream<MethodLike> getMethod() {
+            return type.getEnclosedElements()
                     .stream()
-                    .filter(e -> e.getKind() == ElementKind.ENUM_CONSTANT)
-                    .map(e -> e.getSimpleName().toString());
+                    .filter(e -> e.getKind() == ElementKind.METHOD && e.getModifiers().contains(Modifier.PUBLIC))
+                    .map(e -> new MethodLikeElement((ExecutableElement) e));
         }
     }
 
     /**
      * 
      */
-    private static class UnknownDetector implements Detectable {
+    private static class MethodLikeElement implements MethodLike {
+
+        private final ExecutableElement method;
+
+        /**
+         * @param method
+         */
+        private MethodLikeElement(ExecutableElement method) {
+            this.method = method;
+        }
+    }
+
+    /**
+     * 
+     */
+    private static class UnknownDetector implements ClassLike {
 
         /**
          * {@inheritDoc}
@@ -1160,6 +1096,14 @@ public class Apty {
          */
         @Override
         public Stream<String> getEnumConstants() {
+            return Stream.empty();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Stream<MethodLike> getMethod() {
             return Stream.empty();
         }
     }

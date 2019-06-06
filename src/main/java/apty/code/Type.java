@@ -25,9 +25,10 @@ import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.WildcardType;
 
 import apty.Apty;
-import apty.Detectable;
+import apty.ClassLike;
+import apty.MethodLike;
 
-public class Type implements Codable, Detectable {
+public class Type implements Codable, ClassLike {
 
     /** The reusable wild card type. */
     public static final Type WILD = Type.var("?");
@@ -45,7 +46,7 @@ public class Type implements Codable, Detectable {
     public final TypeKind kind;
 
     /** The actual type holder. */
-    private final Detectable detector;
+    private final ClassLike detector;
 
     /**
      * Build Type.
@@ -54,7 +55,7 @@ public class Type implements Codable, Detectable {
      * @param variables
      * @param kind
      */
-    private Type(String fqcn, List<Type> variables, TypeKind kind, Detectable detector) {
+    private Type(String fqcn, List<Type> variables, TypeKind kind, ClassLike detector) {
         this(computePackage(fqcn), computeName(fqcn), variables, kind, detector);
     }
 
@@ -90,7 +91,7 @@ public class Type implements Codable, Detectable {
      * @param variables
      * @param kind
      */
-    private Type(String packageName, String base, List<Type> variables, TypeKind kind, Detectable detector) {
+    private Type(String packageName, String base, List<Type> variables, TypeKind kind, ClassLike detector) {
         this.packageName = packageName;
         this.base = base;
         this.variables = variables;
@@ -153,6 +154,14 @@ public class Type implements Codable, Detectable {
     @Override
     public Stream<String> getEnumConstants() {
         return detector.getEnumConstants();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Stream<MethodLike> getMethod() {
+        return detector.getMethod();
     }
 
     /**
