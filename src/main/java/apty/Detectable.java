@@ -14,42 +14,42 @@ import java.util.stream.Stream;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
-public abstract class Detector {
+public interface Detectable {
 
     /**
      * Check whether this type is annotation or not.
      * 
      * @return
      */
-    public abstract boolean isAnnotation();
+    boolean isAnnotation();
 
     /**
      * Check whether this type is array or not.
      * 
      * @return
      */
-    public abstract boolean isArray();
+    boolean isArray();
 
     /**
      * Check whether this type is enum or not.
      * 
      * @return
      */
-    public abstract boolean isEnum();
+    boolean isEnum();
 
     /**
      * Check whether this type is interface or not.
      * 
      * @return
      */
-    public abstract boolean isInterface();
+    boolean isInterface();
 
     /**
      * Check whether this type is primitive or not.
      * 
      * @return
      */
-    public abstract boolean isPrimitive();
+    boolean isPrimitive();
 
     /**
      * Check whether this type is subtype of the specified type.
@@ -57,7 +57,7 @@ public abstract class Detector {
      * @param parent A parent type to check.
      * @return
      */
-    public abstract boolean isAssignableFrom(Class parent);
+    boolean isAssignableFrom(Class parent);
 
     /**
      * Check whether this type is subtype of the specified type.
@@ -65,7 +65,9 @@ public abstract class Detector {
      * @param parent A parent type to check.
      * @return
      */
-    public abstract boolean isAssignableFrom(TypeElement parent);
+    default boolean isAssignableFrom(TypeElement parent) {
+        return isAssignableFrom(parent.asType());
+    }
 
     /**
      * Check whether this type is subtype of the specified type.
@@ -73,7 +75,7 @@ public abstract class Detector {
      * @param parent A parent type to check.
      * @return
      */
-    public abstract boolean isAssignableFrom(TypeMirror parent);
+    boolean isAssignableFrom(TypeMirror parent);
 
     /**
      * Returns the elements of this enum class or empty if this Class object does not represent an
@@ -82,5 +84,5 @@ public abstract class Detector {
      * @return A stream containing the values comprising the enum class represented by this type in
      *         the order they're declared, or empty if this type does not represent an enum type.
      */
-    public abstract Stream<String> getEnumConstants();
+    Stream<String> getEnumConstants();
 }

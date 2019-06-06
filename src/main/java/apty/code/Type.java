@@ -25,9 +25,9 @@ import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.WildcardType;
 
 import apty.Apty;
-import apty.Detector;
+import apty.Detectable;
 
-public class Type implements Codable {
+public class Type implements Codable, Detectable {
 
     /** The reusable wild card type. */
     public static final Type WILD = Type.var("?");
@@ -45,7 +45,7 @@ public class Type implements Codable {
     public final TypeKind kind;
 
     /** The actual type holder. */
-    private final Detector detector;
+    private final Detectable detector;
 
     /**
      * Build Type.
@@ -54,7 +54,7 @@ public class Type implements Codable {
      * @param variables
      * @param kind
      */
-    private Type(String fqcn, List<Type> variables, TypeKind kind, Detector detector) {
+    private Type(String fqcn, List<Type> variables, TypeKind kind, Detectable detector) {
         this(computePackage(fqcn), computeName(fqcn), variables, kind, detector);
     }
 
@@ -90,7 +90,7 @@ public class Type implements Codable {
      * @param variables
      * @param kind
      */
-    private Type(String packageName, String base, List<Type> variables, TypeKind kind, Detector detector) {
+    private Type(String packageName, String base, List<Type> variables, TypeKind kind, Detectable detector) {
         this.packageName = packageName;
         this.base = base;
         this.variables = variables;
@@ -150,6 +150,7 @@ public class Type implements Codable {
      * @return A stream containing the values comprising the enum class represented by this type in
      *         the order they're declared, or empty if this type does not represent an enum type.
      */
+    @Override
     public Stream<String> getEnumConstants() {
         return detector.getEnumConstants();
     }
@@ -159,6 +160,7 @@ public class Type implements Codable {
      * 
      * @return A result.
      */
+    @Override
     public boolean isPrimitive() {
         return kind.isPrimitive();
     }
@@ -168,8 +170,17 @@ public class Type implements Codable {
      * 
      * @return A result.
      */
+    @Override
     public boolean isArray() {
         return kind == TypeKind.ARRAY;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isAnnotation() {
+        return detector.isAnnotation();
     }
 
     /**
@@ -177,6 +188,7 @@ public class Type implements Codable {
      * 
      * @return A result.
      */
+    @Override
     public boolean isEnum() {
         return detector.isEnum();
     }
@@ -186,6 +198,7 @@ public class Type implements Codable {
      * 
      * @return A result.
      */
+    @Override
     public boolean isInterface() {
         return detector.isInterface();
     }
@@ -245,6 +258,7 @@ public class Type implements Codable {
      * @param parent A parent type to check.
      * @return
      */
+    @Override
     public boolean isAssignableFrom(Class parent) {
         return detector.isAssignableFrom(parent);
     }
@@ -255,6 +269,7 @@ public class Type implements Codable {
      * @param parent A parent type to check.
      * @return
      */
+    @Override
     public boolean isAssignableFrom(TypeElement parent) {
         return detector.isAssignableFrom(parent);
     }
@@ -265,6 +280,7 @@ public class Type implements Codable {
      * @param parent A parent type to check.
      * @return
      */
+    @Override
     public boolean isAssignableFrom(TypeMirror parent) {
         return detector.isAssignableFrom(parent);
     }

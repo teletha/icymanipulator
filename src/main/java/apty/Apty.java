@@ -55,7 +55,7 @@ import javax.lang.model.util.Types;
 public class Apty {
 
     /** The reusable detector. */
-    public static final Detector Unknown = new UnknownDetector();
+    public static final Detectable Unknown = new UnknownDetector();
 
     /** The {@link Object#toString()} method pattern. */
     public static final Predicate<ExecutableElement> ToString = m -> {
@@ -107,7 +107,7 @@ public class Apty {
      * @param target A target to check.
      * @return A type detector.
      */
-    public static Detector detect(String target) {
+    public static Detectable detect(String target) {
         try {
             TypeElement e = elements.getTypeElement(target);
 
@@ -129,7 +129,7 @@ public class Apty {
      * @param target A target to check.
      * @return A type detector.
      */
-    public static Detector detect(Class target) {
+    public static Detectable detect(Class target) {
         return new ClassDetector(target);
     }
 
@@ -139,7 +139,7 @@ public class Apty {
      * @param target A target to check.
      * @return A type detector.
      */
-    public static Detector detect(Element target) {
+    public static Detectable detect(Element target) {
         return detect(target.asType());
     }
 
@@ -149,7 +149,7 @@ public class Apty {
      * @param target A target to check.
      * @return A type detector.
      */
-    public static Detector detect(TypeMirror target) {
+    public static Detectable detect(TypeMirror target) {
         return new TypeMirrorDetector(target, types, elements);
     }
 
@@ -746,7 +746,7 @@ public class Apty {
     /**
      * 
      */
-    private static class ClassDetector extends Detector {
+    private static class ClassDetector implements Detectable {
 
         /** The target type. */
         private final Class type;
@@ -828,17 +828,6 @@ public class Apty {
          * @return
          */
         @Override
-        public boolean isAssignableFrom(TypeElement parent) {
-            return isAssignableFrom(parent.asType());
-        }
-
-        /**
-         * Check whether this type is subtype of the specified type.
-         * 
-         * @param parent A parent type to check.
-         * @return
-         */
-        @Override
         public boolean isAssignableFrom(TypeMirror parent) {
             return false;
         }
@@ -870,7 +859,7 @@ public class Apty {
     /**
      * 
      */
-    private static class TypeElementDetector extends Detector {
+    private static class TypeElementDetector implements Detectable {
 
         /** The target type. */
         private final TypeElement type;
@@ -960,17 +949,6 @@ public class Apty {
          * @return
          */
         @Override
-        public boolean isAssignableFrom(TypeElement parent) {
-            return isAssignableFrom(parent.asType());
-        }
-
-        /**
-         * Check whether this type is subtype of the specified type.
-         * 
-         * @param parent A parent type to check.
-         * @return
-         */
-        @Override
         public boolean isAssignableFrom(TypeMirror parent) {
             return types.isSubtype(types.erasure(type.asType()), types.erasure(parent));
         }
@@ -999,7 +977,7 @@ public class Apty {
     /**
      * 
      */
-    private static class TypeMirrorDetector extends Detector {
+    private static class TypeMirrorDetector implements Detectable {
 
         /** The target type. */
         private final TypeMirror type;
@@ -1089,17 +1067,6 @@ public class Apty {
          * @return
          */
         @Override
-        public boolean isAssignableFrom(TypeElement parent) {
-            return isAssignableFrom(parent.asType());
-        }
-
-        /**
-         * Check whether this type is subtype of the specified type.
-         * 
-         * @param parent A parent type to check.
-         * @return
-         */
-        @Override
         public boolean isAssignableFrom(TypeMirror parent) {
             return types.isSubtype(types.erasure(type), types.erasure(parent));
         }
@@ -1130,7 +1097,7 @@ public class Apty {
     /**
      * 
      */
-    private static class UnknownDetector extends Detector {
+    private static class UnknownDetector implements Detectable {
 
         /**
          * {@inheritDoc}
@@ -1184,14 +1151,6 @@ public class Apty {
          * {@inheritDoc}
          */
         @Override
-        public boolean isAssignableFrom(TypeElement parent) {
-            return false;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
         public boolean isAssignableFrom(TypeMirror parent) {
             return false;
         }
@@ -1204,5 +1163,4 @@ public class Apty {
             return Stream.empty();
         }
     }
-
 }
