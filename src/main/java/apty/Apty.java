@@ -101,7 +101,7 @@ public class Apty {
 
                 return new ClassDetector(clazz);
             } else {
-                return new TypeElementDetector(e, types, elements);
+                return new TypeElementDetector(e);
             }
         } catch (ClassNotFoundException e) {
             return new UnknownDetector();
@@ -138,7 +138,7 @@ public class Apty {
         Element element = types.asElement(target);
 
         if (element instanceof TypeElement) {
-            return new TypeElementDetector((TypeElement) element, types, elements);
+            return new TypeElementDetector((TypeElement) element);
         }
         return detect(types.erasure(target).toString());
     }
@@ -833,6 +833,14 @@ public class Apty {
         }
 
         /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Stream<Type> getInterfaces() {
+            return Stream.of(type.getInterfaces()).map(Type::of);
+        }
+
+        /**
          * Returns the elements of this enum class or empty if this Class object does not represent
          * an enum type.
          * 
@@ -880,21 +888,13 @@ public class Apty {
         /** The target type. */
         private final TypeElement type;
 
-        /** The utility. */
-        private final Types types;
-
-        /** The utility. */
-        private final Elements elements;
-
         /**
          * Type detector.
          * 
          * @param type
          */
-        public TypeElementDetector(TypeElement type, Types types, Elements elements) {
+        public TypeElementDetector(TypeElement type) {
             this.type = type;
-            this.types = types;
-            this.elements = elements;
         }
 
         /**
@@ -977,6 +977,14 @@ public class Apty {
             TypeMirror superclass = type.getSuperclass();
 
             return superclass.getKind() == TypeKind.NONE ? null : Type.of(superclass);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Stream<Type> getInterfaces() {
+            return type.getInterfaces().stream().map(Type::of);
         }
 
         /**
@@ -1089,6 +1097,14 @@ public class Apty {
         @Override
         public Type getParent() {
             return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Stream<Type> getInterfaces() {
+            return Stream.empty();
         }
 
         /**

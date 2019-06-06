@@ -9,6 +9,8 @@
  */
 package apty;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import javax.lang.model.element.TypeElement;
@@ -80,6 +82,41 @@ public interface ClassLike {
     boolean isAssignableFrom(TypeMirror parent);
 
     Type getParent();
+
+    /**
+     * Returns the interfaces directly implemented by the class or interface represented by this
+     * object.
+     * 
+     * @return
+     */
+    Stream<Type> getInterfaces();
+
+    /**
+     * List up all types that this type implements or extends. (including itself)
+     * 
+     * @return
+     */
+    default Stream<Type> getAllTypes() {
+        LinkedHashSet<Type> types = new LinkedHashSet();
+        collect((Type) this, types);
+        return types.stream();
+    }
+
+    /**
+     * Collect types recursively.
+     * 
+     * @param type
+     * @param types
+     */
+    private void collect(Type type, Set<Type> types) {
+        if (type == null) {
+            return;
+        }
+
+        types.add(type);
+        collect(type.getParent(), types);
+        type.getInterfaces().forEach(interfaceType -> collect(interfaceType, types));
+    }
 
     /**
      * Returns the elements of this enum class or empty if this Class object does not represent an
