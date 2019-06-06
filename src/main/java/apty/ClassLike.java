@@ -78,6 +78,32 @@ public interface ClassLike {
     boolean isAssignableFrom(TypeMirror parent);
 
     /**
+     * Check whether this type is equals to the specified type.
+     * 
+     * @param parent A type to check.
+     * @return A result.
+     */
+    boolean isEqualTo(Class type);
+
+    /**
+     * Check whether this type is equals to the specified type.
+     * 
+     * @param parent A type to check.
+     * @return A result.
+     */
+    default boolean isEqualTo(TypeElement parent) {
+        return isAssignableFrom(parent.asType());
+    }
+
+    /**
+     * Check whether this type is equals to the specified type.
+     * 
+     * @param parent A type to check.
+     * @return A result.
+     */
+    boolean isEqualTo(TypeMirror type);
+
+    /**
      * Returns the elements of this enum class or empty if this Class object does not represent an
      * enum type.
      * 

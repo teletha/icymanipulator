@@ -578,11 +578,11 @@ public class ModelInfo {
 
             if (name.equals(IcyManipulator.AssignableAll)) {
                 root: for (TypeMirror interfaceType : type.getInterfaces()) {
-                    // estimate property name
-                    String interfaceName = Type.of(interfaceType).base;
+                    Type interfaceT = Type.of(interfaceType);
 
-                    if (interfaceName.startsWith(IcyManipulator.Assignable)) {
-                        String proerptyName = Strings.decapitalize(interfaceName.substring(IcyManipulator.Assignable.length()));
+                    // estimate property name
+                    if (interfaceT.base.startsWith(IcyManipulator.Assignable)) {
+                        String proerptyName = Strings.decapitalize(interfaceT.base.substring(IcyManipulator.Assignable.length()));
 
                         for (ExecutableElement getter : parentMethods) {
                             // check name
@@ -593,13 +593,11 @@ public class ModelInfo {
                             PropertyInfo property = new PropertyInfo(getter);
                             requiredProperties.add(property);
 
-                            for (ExecutableElement method : Apty.methods(interfaceType)) {
-                                List<? extends VariableElement> parameters = method.getParameters();
-
-                                if (parameters.size() != 1 || !Apty.same(getter.getReturnType(), parameters.get(0))) {
-                                    overloadForProperty.add(property, new MethodLike(method));
+                            interfaceT.getDeclaredMethods().forEach(method -> {
+                                if (method.paramTypes.size() != 1 || !method.paramTypes.get(0).isEqualTo(getter.getReturnType())) {
+                                    overloadForProperty.add(property, method);
                                 }
-                            }
+                            });
                             continue root;
                         }
                     }
