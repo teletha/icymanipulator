@@ -25,9 +25,9 @@ import javax.annotation.processing.Generated;
 
 import apty.Apty;
 import apty.AptyProcessor;
-import apty.Coder;
 import apty.Modifiers;
-import apty.Type;
+import apty.code.Coder;
+import apty.code.Type;
 import icy.manipulator.util.Lists;
 
 public class IcyManipulator extends AptyProcessor {

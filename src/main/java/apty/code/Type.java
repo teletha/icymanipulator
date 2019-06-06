@@ -7,10 +7,9 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package apty;
+package apty.code;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -18,13 +17,15 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.WildcardType;
+
+import apty.Apty;
+import apty.Detectable;
 
 public class Type implements Codable, Detectable {
 
@@ -448,7 +449,7 @@ public class Type implements Codable, Detectable {
      * @return The created {@link Type}.
      */
     public static final Type var(String name, Object... parameters) {
-        return new Type("", name, flatten(parameters), TypeKind.INTERSECTION, UnknownDetector.SINGLETON);
+        return new Type("", name, flatten(parameters), TypeKind.INTERSECTION, Apty.Unknown);
     }
 
     /**
@@ -459,29 +460,7 @@ public class Type implements Codable, Detectable {
      * @return The created {@link Type}.
      */
     public static final Type of(String fqcn, Object... parameter) {
-        return new Type(fqcn, flatten(parameter), TypeKind.DECLARED, detect(fqcn));
-    }
-
-    /**
-     * Create type detector.
-     * 
-     * @param target A target to check.
-     * @return A type detector.
-     */
-    private static Detectable detect(String target) {
-        try {
-            TypeElement e = Apty.elements.getTypeElement(target);
-    
-            if (e == null) {
-                Class<?> clazz = Class.forName(target);
-    
-                return new ClassDetector(clazz);
-            } else {
-                return new TypeElementDetector(e);
-            }
-        } catch (ClassNotFoundException e) {
-            return new UnknownDetector();
-        }
+        return new Type(fqcn, flatten(parameter), TypeKind.DECLARED, Apty.detect(fqcn));
     }
 
     /**
@@ -493,9 +472,9 @@ public class Type implements Codable, Detectable {
      */
     public static final Type of(Class type, Object... parameters) {
         if (type.isPrimitive()) {
-            return new Type(type.getName(), flatten(parameters), TypeKind.valueOf(type.getName().toUpperCase()), new ClassDetector(type));
+            return new Type(type.getName(), flatten(parameters), TypeKind.valueOf(type.getName().toUpperCase()), Apty.detect(type));
         } else {
-            return new Type(type.getName(), flatten(parameters), TypeKind.DECLARED, new ClassDetector(type));
+            return new Type(type.getName(), flatten(parameters), TypeKind.DECLARED, Apty.detect(type));
         }
     }
 
@@ -539,443 +518,35 @@ public class Type implements Codable, Detectable {
         case BYTE:
         case SHORT:
         case VOID:
-            return new Type(type.toString(), List.of(), kind, new TypeMirrorDetector(type));
+            return new Type(type.toString(), List.of(), kind, Apty.detect(type));
 
         case ARRAY:
-            return new Type(type.toString(), List.of(), kind, new TypeMirrorDetector(type));
+            return new Type(type.toString(), List.of(), kind, Apty.detect(type));
 
         case TYPEVAR:
             TypeVariable var = (TypeVariable) type;
             TypeMirror upper = var.getUpperBound();
             if (!Apty.same(upper, Object.class)) {
-                return new Type("", type.toString(), List.of(of(upper)), kind, new TypeMirrorDetector(type));
+                return new Type("", type.toString(), List.of(of(upper)), kind, Apty.detect(type));
             }
-            return new Type("", type.toString(), List.of(), kind, new TypeMirrorDetector(type));
+            return new Type("", type.toString(), List.of(), kind, Apty.detect(type));
 
         case WILDCARD:
             WildcardType wild = (WildcardType) type;
             if (wild.getExtendsBound() != null)
-                return new Type("", "? extends ", List.of(of(wild.getExtendsBound())), kind, new TypeMirrorDetector(type));
-            if (wild.getSuperBound() != null)
-                return new Type("", "? super ", List.of(of(wild.getSuperBound())), kind, new TypeMirrorDetector(type));
-            return new Type("", "?", List.of(), kind, new TypeMirrorDetector(type));
+                return new Type("", "? extends ", List.of(of(wild.getExtendsBound())), kind, Apty.detect(type));
+            if (wild.getSuperBound() != null) return new Type("", "? super ", List.of(of(wild.getSuperBound())), kind, Apty.detect(type));
+            return new Type("", "?", List.of(), kind, Apty.detect(type));
 
         case DECLARED:
             DeclaredType declared = (DeclaredType) type;
             String fqcn = ((TypeElement) declared.asElement()).getQualifiedName().toString();
             if (variables == null) variables = declared.getTypeArguments().stream().map(Type::of).collect(Collectors.toList());
-            return new Type(fqcn, variables, TypeKind.DECLARED, new TypeMirrorDetector(type));
+            return new Type(fqcn, variables, TypeKind.DECLARED, Apty.detect(type));
 
         default:
             throw new Error("Bug! " + type);
         }
     }
 
-    /**
-     * 
-     */
-    private static class ClassDetector implements Detectable {
-
-        /** The target type. */
-        private final Class type;
-
-        /**
-         * Type detector.
-         * 
-         * @param type
-         */
-        public ClassDetector(Class type) {
-            this.type = type;
-        }
-
-        /**
-         * Check whether this type is annotation or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isAnnotation() {
-            return type.isAnnotation();
-        }
-
-        /**
-         * Check whether this type is array or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isArray() {
-            return type.isArray();
-        }
-
-        /**
-         * Check whether this type is enum or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isEnum() {
-            return type.isEnum();
-        }
-
-        /**
-         * Check whether this type is interface or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isInterface() {
-            return type.isInterface();
-        }
-
-        /**
-         * Check whether this type is primitive or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isPrimitive() {
-            return type.isPrimitive();
-        }
-
-        /**
-         * Check whether this type is subtype of the specified type.
-         * 
-         * @param parent A parent type to check.
-         * @return
-         */
-        @Override
-        public boolean isAssignableFrom(Class parent) {
-            return type.isAssignableFrom(parent);
-        }
-
-        /**
-         * Check whether this type is subtype of the specified type.
-         * 
-         * @param parent A parent type to check.
-         * @return
-         */
-        @Override
-        public boolean isAssignableFrom(TypeMirror parent) {
-            return false;
-        }
-
-        /**
-         * Returns the elements of this enum class or empty if this Class object does not represent
-         * an enum type.
-         * 
-         * @return A stream containing the values comprising the enum class represented by this type
-         *         in the order they're declared, or empty if this type does not represent an enum
-         *         type.
-         */
-        @Override
-        public Stream<String> getEnumConstants() {
-            if (isEnum()) {
-                return Arrays.stream(type.getEnumConstants()).map(e -> {
-                    try {
-                        return (String) e.getClass().getMethod("name").invoke(e);
-                    } catch (Exception error) {
-                        throw new Error(error);
-                    }
-                });
-            } else {
-                return Stream.empty();
-            }
-        }
-    }
-
-    /**
-     * 
-     */
-    private static class TypeElementDetector implements Detectable {
-
-        /** The target type. */
-        private final TypeElement type;
-
-        /**
-         * Type detector.
-         * 
-         * @param type
-         */
-        public TypeElementDetector(TypeElement type) {
-            this.type = type;
-        }
-
-        /**
-         * Check whether this type is annotation or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isAnnotation() {
-            return type.getKind() == ElementKind.ANNOTATION_TYPE;
-        }
-
-        /**
-         * Check whether this type is array or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isArray() {
-            return type.asType().getKind() == TypeKind.ARRAY;
-        }
-
-        /**
-         * Check whether this type is enum or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isEnum() {
-            return type.getKind() == ElementKind.ENUM;
-        }
-
-        /**
-         * Check whether this type is interface or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isInterface() {
-            return type.getKind() == ElementKind.INTERFACE;
-        }
-
-        /**
-         * Check whether this type is primitive or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isPrimitive() {
-            return type.asType().getKind().isPrimitive();
-        }
-
-        /**
-         * Check whether this type is subtype of the specified type.
-         * 
-         * @param parent A parent type to check.
-         * @return
-         */
-        @Override
-        public boolean isAssignableFrom(Class parent) {
-            return isAssignableFrom(Apty.elements.getTypeElement(parent.getCanonicalName()));
-        }
-
-        /**
-         * Check whether this type is subtype of the specified type.
-         * 
-         * @param parent A parent type to check.
-         * @return
-         */
-        @Override
-        public boolean isAssignableFrom(TypeMirror parent) {
-            return Apty.types.isSubtype(Apty.types.erasure(type.asType()), Apty.types.erasure(parent));
-        }
-
-        /**
-         * Returns the elements of this enum class or empty if this Class object does not represent
-         * an enum type.
-         * 
-         * @return A stream containing the values comprising the enum class represented by this type
-         *         in the order they're declared, or empty if this type does not represent an enum
-         *         type.
-         */
-        @Override
-        public Stream<String> getEnumConstants() {
-            if (type == null) {
-                return Stream.empty();
-            }
-
-            return type.getEnclosedElements()
-                    .stream()
-                    .filter(e -> e.getKind() == ElementKind.ENUM_CONSTANT)
-                    .map(e -> e.getSimpleName().toString());
-        }
-    }
-
-    /**
-     * 
-     */
-    private static class TypeMirrorDetector implements Detectable {
-
-        /** The target type. */
-        private final TypeMirror type;
-
-        /**
-         * Type detector.
-         * 
-         * @param type
-         */
-        public TypeMirrorDetector(TypeMirror type) {
-            this.type = type;
-        }
-
-        /**
-         * Check whether this type is annotation or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isAnnotation() {
-            return Apty.types.asElement(type).getKind() == ElementKind.ANNOTATION_TYPE;
-        }
-
-        /**
-         * Check whether this type is array or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isArray() {
-            return type.getKind() == TypeKind.ARRAY;
-        }
-
-        /**
-         * Check whether this type is enum or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isEnum() {
-            return Apty.types.asElement(type).getKind() == ElementKind.ENUM;
-        }
-
-        /**
-         * Check whether this type is interface or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isInterface() {
-            return Apty.types.asElement(type).getKind() == ElementKind.INTERFACE;
-        }
-
-        /**
-         * Check whether this type is primitive or not.
-         * 
-         * @return
-         */
-        @Override
-        public boolean isPrimitive() {
-            return type.getKind().isPrimitive();
-        }
-
-        /**
-         * Check whether this type is subtype of the specified type.
-         * 
-         * @param parent A parent type to check.
-         * @return
-         */
-        @Override
-        public boolean isAssignableFrom(Class parent) {
-            return isAssignableFrom(Apty.elements.getTypeElement(parent.getCanonicalName()));
-        }
-
-        /**
-         * Check whether this type is subtype of the specified type.
-         * 
-         * @param parent A parent type to check.
-         * @return
-         */
-        @Override
-        public boolean isAssignableFrom(TypeMirror parent) {
-            return Apty.types.isSubtype(Apty.types.erasure(type), Apty.types.erasure(parent));
-        }
-
-        /**
-         * Returns the elements of this enum class or empty if this Class object does not represent
-         * an enum type.
-         * 
-         * @return A stream containing the values comprising the enum class represented by this type
-         *         in the order they're declared, or empty if this type does not represent an enum
-         *         type.
-         */
-        @Override
-        public Stream<String> getEnumConstants() {
-            Element element = Apty.types.asElement(type);
-
-            if (element == null) {
-                return Stream.empty();
-            }
-
-            return element.getEnclosedElements()
-                    .stream()
-                    .filter(e -> e.getKind() == ElementKind.ENUM_CONSTANT)
-                    .map(e -> e.getSimpleName().toString());
-        }
-    }
-
-    /**
-     * 
-     */
-    private static class UnknownDetector implements Detectable {
-
-        /** The singleton detector. */
-        private static final Detectable SINGLETON = new UnknownDetector();
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isAnnotation() {
-            return false;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isArray() {
-            return false;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isEnum() {
-            return false;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isInterface() {
-            return false;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isPrimitive() {
-            return false;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isAssignableFrom(Class parent) {
-            return false;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isAssignableFrom(TypeMirror parent) {
-            return false;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Stream<String> getEnumConstants() {
-            return Stream.empty();
-        }
-    }
 }

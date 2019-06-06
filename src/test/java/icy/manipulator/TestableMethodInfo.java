@@ -12,7 +12,7 @@ package icy.manipulator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import apty.Type;
+import apty.code.Type;
 
 class TestableMethodInfo extends MethodInfo {
 

@@ -7,7 +7,7 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package apty;
+package apty.code;
 
 import java.util.HashSet;
 import java.util.List;
@@ -19,6 +19,7 @@ import java.util.function.Consumer;
 
 import javax.lang.model.element.Element;
 
+import apty.Apty;
 import icy.manipulator.util.Strings;
 
 public class Coder {
