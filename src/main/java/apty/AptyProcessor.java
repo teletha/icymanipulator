@@ -34,8 +34,6 @@ import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 
-import apty.code.Coder;
-
 public abstract class AptyProcessor implements Processor {
 
     /** The file manager. */

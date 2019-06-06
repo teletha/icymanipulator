@@ -7,7 +7,7 @@
  *
  *          http://opensource.org/licenses/mit-license.php
  */
-package apty.code;
+package apty;
 
 /**
  * Code fragment.

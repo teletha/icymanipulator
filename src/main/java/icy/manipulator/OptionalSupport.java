@@ -19,7 +19,7 @@ import java.util.OptionalInt;
 import java.util.OptionalLong;
 import java.util.function.Function;
 
-import apty.code.Type;
+import apty.Type;
 
 /**
  * Built-in support for {@link Optional} like classes.

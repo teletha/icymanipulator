@@ -20,9 +20,9 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.type.ExecutableType;
 
 import apty.Apty;
-import apty.code.Codable;
-import apty.code.Coder;
-import apty.code.Type;
+import apty.Codable;
+import apty.Coder;
+import apty.Type;
 
 public class MethodInfo implements Codable {
 
