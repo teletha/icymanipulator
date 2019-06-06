@@ -10,7 +10,6 @@
 package apty;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -866,23 +865,16 @@ public class Apty {
          * {@inheritDoc}
          */
         @Override
-        public Stream<MethodLike> getMethod() {
-            return Stream.of(type.getMethods()).map(m -> new MethodLikeMethod(m));
+        public Stream<MethodLike> getMethods() {
+            return Stream.of(type.getMethods()).map(m -> new MethodLike(m));
         }
-    }
-
-    /**
-     * 
-     */
-    private static class MethodLikeMethod implements MethodLike {
-
-        private final Method method;
 
         /**
-         * @param method
+         * {@inheritDoc}
          */
-        private MethodLikeMethod(Method method) {
-            this.method = method;
+        @Override
+        public Stream<MethodLike> getDeclaredMethods() {
+            return Stream.of(type.getDeclaredMethods()).map(m -> new MethodLike(m));
         }
     }
 
@@ -1007,26 +999,22 @@ public class Apty {
          * {@inheritDoc}
          */
         @Override
-        public Stream<MethodLike> getMethod() {
+        public Stream<MethodLike> getMethods() {
             return type.getEnclosedElements()
                     .stream()
                     .filter(e -> e.getKind() == ElementKind.METHOD && e.getModifiers().contains(Modifier.PUBLIC))
-                    .map(e -> new MethodLikeElement((ExecutableElement) e));
+                    .map(e -> new MethodLike((ExecutableElement) e));
         }
-    }
-
-    /**
-     * 
-     */
-    private static class MethodLikeElement implements MethodLike {
-
-        private final ExecutableElement method;
 
         /**
-         * @param method
+         * {@inheritDoc}
          */
-        private MethodLikeElement(ExecutableElement method) {
-            this.method = method;
+        @Override
+        public Stream<MethodLike> getDeclaredMethods() {
+            return type.getEnclosedElements()
+                    .stream()
+                    .filter(e -> e.getKind() == ElementKind.METHOD)
+                    .map(e -> new MethodLike((ExecutableElement) e));
         }
     }
 
@@ -1103,7 +1091,15 @@ public class Apty {
          * {@inheritDoc}
          */
         @Override
-        public Stream<MethodLike> getMethod() {
+        public Stream<MethodLike> getMethods() {
+            return Stream.empty();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Stream<MethodLike> getDeclaredMethods() {
             return Stream.empty();
         }
     }

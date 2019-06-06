@@ -160,8 +160,16 @@ public class Type implements Codable, ClassLike {
      * {@inheritDoc}
      */
     @Override
-    public Stream<MethodLike> getMethod() {
-        return detector.getMethod();
+    public Stream<MethodLike> getMethods() {
+        return detector.getMethods();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Stream<MethodLike> getDeclaredMethods() {
+        return detector.getDeclaredMethods();
     }
 
     /**

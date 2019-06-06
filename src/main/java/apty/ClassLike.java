@@ -86,5 +86,7 @@ public interface ClassLike {
      */
     Stream<String> getEnumConstants();
 
-    Stream<MethodLike> getMethod();
+    Stream<MethodLike> getMethods();
+
+    Stream<MethodLike> getDeclaredMethods();
 }
