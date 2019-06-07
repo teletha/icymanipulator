@@ -715,7 +715,7 @@ public class IcyManipulator extends AptyProcessor {
                 apis.add(property.assignableInterfaceName());
             }
             if (m.hasParent()) {
-                apis.add(use(m.parent.get().implType) + "." + AssignableAll);
+                apis.add(use(m.parent.get().implType.raw()) + "." + AssignableAll);
             }
 
             write();

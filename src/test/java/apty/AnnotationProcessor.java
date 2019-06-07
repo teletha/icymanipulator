@@ -28,6 +28,7 @@ import javax.tools.Diagnostic.Kind;
 import javax.tools.DiagnosticListener;
 import javax.tools.JavaFileObject;
 
+import org.junit.jupiter.api.extension.Extension;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import antibug.CleanRoom;
@@ -39,7 +40,7 @@ import kiss.I;
 import psychopath.File;
 import psychopath.Locator;
 
-public class AnnotationProcessor {
+public class AnnotationProcessor implements Extension {
 
     static {
         I.load(Bee.class);
