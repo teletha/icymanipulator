@@ -97,8 +97,40 @@ public class Apty {
             TypeElement e = elements.getTypeElement(target);
 
             if (e == null) {
-                Class<?> clazz = Class.forName(target);
+                Class clazz;
 
+                switch (target) {
+                case "int":
+                    clazz = int.class;
+                    break;
+                case "long":
+                    clazz = long.class;
+                    break;
+                case "float":
+                    clazz = float.class;
+                    break;
+                case "double":
+                    clazz = double.class;
+                    break;
+                case "short":
+                    clazz = short.class;
+                    break;
+                case "byte":
+                    clazz = byte.class;
+                    break;
+                case "boolean":
+                    clazz = boolean.class;
+                    break;
+                case "char":
+                    clazz = char.class;
+                    break;
+                case "void":
+                    clazz = void.class;
+                    break;
+                default:
+                    clazz = Class.forName(target);
+                    break;
+                }
                 return new ClassDetector(clazz);
             } else {
                 return new TypeElementDetector(e);

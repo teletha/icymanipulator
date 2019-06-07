@@ -169,11 +169,7 @@ public class Type implements Codable, ClassLike {
     }
 
     /**
-     * Returns the elements of this enum class or empty if this Class object does not represent an
-     * enum type.
-     * 
-     * @return A stream containing the values comprising the enum class represented by this type in
-     *         the order they're declared, or empty if this type does not represent an enum type.
+     * {@inheritDoc}
      */
     @Override
     public Stream<String> getEnumConstants() {
@@ -197,13 +193,12 @@ public class Type implements Codable, ClassLike {
     }
 
     /**
-     * Check whether this is primitive type or not.
-     * 
-     * @return A result.
+     * {@inheritDoc}
      */
     @Override
     public boolean isPrimitive() {
-        return kind.isPrimitive();
+        System.out.println(name() + "  " + detector.isPrimitive() + "  " + kind.isPrimitive());
+        return detector.isPrimitive();
     }
 
     /**
