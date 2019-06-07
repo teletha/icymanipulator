@@ -556,5 +556,4 @@ public class Type implements Codable, ClassLike {
             throw new Error("Bug! " + type);
         }
     }
-
 }

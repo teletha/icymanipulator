@@ -81,7 +81,7 @@ public class MethodLike implements Codable {
     /**
      * @param element
      */
-    protected MethodLike(Method element) {
+    public MethodLike(Method element) {
         this.name = element.getName();
         this.returnType = Type.of(element.getReturnType());
         this.paramTypes = Stream.of(element.getParameterTypes()).map(Type::of).collect(Collectors.toUnmodifiableList());
