@@ -99,9 +99,7 @@ public class Type implements Codable, ClassLike {
     }
 
     /**
-     * Compute fully qualified class name.
-     * 
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public String name() {
@@ -109,38 +107,6 @@ public class Type implements Codable, ClassLike {
             return base;
         } else {
             return packageName + "." + base;
-        }
-    }
-
-    /**
-     * Compute default value literal.
-     * 
-     * @return
-     */
-    public String defaultValue() {
-        switch (kind) {
-        case INT:
-        case BYTE:
-        case SHORT:
-            return "0";
-
-        case LONG:
-            return "0L";
-
-        case FLOAT:
-            return "0";
-
-        case DOUBLE:
-            return "0D";
-
-        case CHAR:
-            return "' '";
-
-        case BOOLEAN:
-            return "false";
-
-        default:
-            return "null";
         }
     }
 
@@ -275,19 +241,6 @@ public class Type implements Codable, ClassLike {
         } else {
             return this;
         }
-    }
-
-    /**
-     * Create {@link Type} list with this and the specifieds.
-     * 
-     * @param types
-     * @return
-     */
-    public List<Type> with(Object... types) {
-        List<Type> list = new ArrayList();
-        list.add(this);
-        list.addAll(flatten(types));
-        return list;
     }
 
     /**

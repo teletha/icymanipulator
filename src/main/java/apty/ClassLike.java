@@ -9,7 +9,9 @@
  */
 package apty;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -198,4 +200,74 @@ public interface ClassLike {
     Stream<MethodLike> getMethods();
 
     Stream<MethodLike> getDeclaredMethods();
+
+    /**
+     * Compute default value literal.
+     * 
+     * @return
+     */
+    default String defaultValue() {
+        switch (name()) {
+        case "int":
+        case "byte":
+        case "short":
+            return "0";
+
+        case "long":
+            return "0L";
+
+        case "float":
+            return "0";
+
+        case "double":
+            return "0D";
+
+        case "char":
+            return "' '";
+
+        case "boolean":
+            return "false";
+
+        default:
+            return "null";
+        }
+    }
+
+    /**
+     * Create {@link Type} list with this and the specifieds.
+     * 
+     * @param types
+     * @return
+     */
+    default List<Type> with(Object... types) {
+        List<Type> list = new ArrayList();
+        if (this instanceof Type) list.add((Type) this);
+        list.addAll(flatten(types));
+        return list;
+    }
+
+    /**
+     * Flatten all types.
+     * 
+     * @param types
+     * @return
+     */
+    private static List<Type> flatten(Object... types) {
+        List<Type> list = new ArrayList();
+
+        for (Object type : types) {
+            if (type instanceof String) {
+                list.add(Type.var((String) type));
+            } else if (type instanceof Class) {
+                list.add(Type.of((Class) type));
+            } else if (type instanceof Type) {
+                list.add((Type) type);
+            } else if (type instanceof List) {
+                ((List) type).stream().forEach(item -> list.addAll(flatten(item)));
+            } else {
+                throw new Error("Bug!");
+            }
+        }
+        return list;
+    }
 }
