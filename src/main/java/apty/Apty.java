@@ -841,6 +841,14 @@ public class Apty {
         }
 
         /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Stream<Type> getDeclaredClasses() {
+            return Stream.of(type.getDeclaredClasses()).map(Type::of);
+        }
+
+        /**
          * Returns the elements of this enum class or empty if this Class object does not represent
          * an enum type.
          * 
@@ -988,6 +996,33 @@ public class Apty {
         }
 
         /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Stream<Type> getDeclaredClasses() {
+            return type.getEnclosedElements().stream().filter(this::isClass).map(e -> Type.of((TypeElement) e));
+        }
+
+        /**
+         * Detect type.
+         * 
+         * @param e
+         * @return
+         */
+        private boolean isClass(Element e) {
+            switch (e.getKind()) {
+            case ANNOTATION_TYPE:
+            case CLASS:
+            case INTERFACE:
+            case ENUM:
+                return true;
+
+            default:
+                return false;
+            }
+        }
+
+        /**
          * Returns the elements of this enum class or empty if this Class object does not represent
          * an enum type.
          * 
@@ -1104,6 +1139,14 @@ public class Apty {
          */
         @Override
         public Stream<Type> getInterfaces() {
+            return Stream.empty();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Stream<Type> getDeclaredClasses() {
             return Stream.empty();
         }
 

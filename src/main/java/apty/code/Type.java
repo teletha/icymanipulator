@@ -161,6 +161,14 @@ public class Type implements Codable, ClassLike {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Stream<Type> getDeclaredClasses() {
+        return detector.getDeclaredClasses();
+    }
+
+    /**
      * Returns the elements of this enum class or empty if this Class object does not represent an
      * enum type.
      * 

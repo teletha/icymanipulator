@@ -119,6 +119,20 @@ public interface ClassLike {
     }
 
     /**
+     * Returns an {@link Stream} of {@code Type} objects reflecting all the classes and interfaces
+     * declared as members of the class represented by this {@code ClassLike} object. This includes
+     * public, protected, default (package) access, and private classes and interfaces declared by
+     * the class, but excludes inherited classes and interfaces. This method returns an array of
+     * length 0 if the class declares no classes or interfaces as members, or if this {@code Class}
+     * object represents a primitive type, an array class, or void.
+     *
+     * @return A {@link Stream} of {@code Type} objects representing all the declared members of
+     *         this class.
+     * @return
+     */
+    Stream<Type> getDeclaredClasses();
+
+    /**
      * Returns the elements of this enum class or empty if this Class object does not represent an
      * enum type.
      * 
