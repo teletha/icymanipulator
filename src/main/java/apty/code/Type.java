@@ -294,39 +294,6 @@ public class Type implements Codable, ClassLike {
     }
 
     /**
-     * Check whether this type is subtype of the specified type.
-     * 
-     * @param parent A parent type to check.
-     * @return
-     */
-    @Override
-    public boolean isAssignableFrom(Class parent) {
-        return detector.isAssignableFrom(parent);
-    }
-
-    /**
-     * Check whether this type is subtype of the specified type.
-     * 
-     * @param parent A parent type to check.
-     * @return
-     */
-    @Override
-    public boolean isAssignableFrom(TypeElement parent) {
-        return detector.isAssignableFrom(parent);
-    }
-
-    /**
-     * Check whether this type is subtype of the specified type.
-     * 
-     * @param parent A parent type to check.
-     * @return
-     */
-    @Override
-    public boolean isAssignableFrom(TypeMirror parent) {
-        return detector.isAssignableFrom(parent);
-    }
-
-    /**
      * Create raw type, all variables are removed.
      * 
      * @return

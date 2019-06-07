@@ -61,7 +61,9 @@ public interface ClassLike {
      * @param parent A parent type to check.
      * @return
      */
-    boolean isAssignableFrom(Class parent);
+    default boolean isAssignableFrom(Class parent) {
+        return getAllTypes().anyMatch(e -> e.is(parent));
+    }
 
     /**
      * Check whether this type is subtype of the specified type.
@@ -79,7 +81,9 @@ public interface ClassLike {
      * @param parent A parent type to check.
      * @return
      */
-    boolean isAssignableFrom(TypeMirror parent);
+    default boolean isAssignableFrom(TypeMirror parent) {
+        return getAllTypes().anyMatch(e -> e.is(parent));
+    }
 
     Type getParent();
 

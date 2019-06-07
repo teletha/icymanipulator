@@ -812,17 +812,6 @@ public class Apty {
         }
 
         /**
-         * Check whether this type is subtype of the specified type.
-         * 
-         * @param parent A parent type to check.
-         * @return
-         */
-        @Override
-        public boolean isAssignableFrom(TypeMirror parent) {
-            return false;
-        }
-
-        /**
          * {@inheritDoc}
          */
         @Override
@@ -953,17 +942,6 @@ public class Apty {
         @Override
         public boolean isPrimitive() {
             return type.asType().getKind().isPrimitive();
-        }
-
-        /**
-         * Check whether this type is subtype of the specified type.
-         * 
-         * @param parent A parent type to check.
-         * @return
-         */
-        @Override
-        public boolean isAssignableFrom(Class parent) {
-            return isAssignableFrom(elements.getTypeElement(parent.getCanonicalName()));
         }
 
         /**
@@ -1107,22 +1085,6 @@ public class Apty {
          */
         @Override
         public boolean isPrimitive() {
-            return false;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isAssignableFrom(Class parent) {
-            return false;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean isAssignableFrom(TypeMirror parent) {
             return false;
         }
 
