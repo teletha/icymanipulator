@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
@@ -26,7 +25,6 @@ import javax.lang.model.type.WildcardType;
 
 import apty.Apty;
 import apty.ClassLike;
-import apty.MethodLike;
 
 public class Type implements Codable, ClassLike {
 
@@ -45,9 +43,6 @@ public class Type implements Codable, ClassLike {
     /** The type kind. */
     public final TypeKind kind;
 
-    /** The actual type holder. */
-    private final ClassLike detector;
-
     /**
      * Build Type.
      * 
@@ -55,8 +50,8 @@ public class Type implements Codable, ClassLike {
      * @param variables
      * @param kind
      */
-    private Type(String fqcn, List<Type> variables, TypeKind kind, ClassLike detector) {
-        this(computePackage(fqcn), computeName(fqcn), variables, kind, detector);
+    protected Type(String fqcn, List<Type> variables, TypeKind kind) {
+        this(computePackage(fqcn), computeName(fqcn), variables, kind);
     }
 
     /**
@@ -91,12 +86,11 @@ public class Type implements Codable, ClassLike {
      * @param variables
      * @param kind
      */
-    private Type(String packageName, String base, List<Type> variables, TypeKind kind, ClassLike detector) {
+    protected Type(String packageName, String base, List<Type> variables, TypeKind kind) {
         this.packageName = packageName;
         this.base = base;
         this.variables = variables;
         this.kind = kind;
-        this.detector = detector;
     }
 
     /**
@@ -145,58 +139,6 @@ public class Type implements Codable, ClassLike {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Type getParent() {
-        return detector.getParent();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Stream<Type> getInterfaces() {
-        return detector.getInterfaces();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Stream<Type> getDeclaredClasses() {
-        return detector.getDeclaredClasses();
-    }
-
-    /**
-     * Returns the elements of this enum class or empty if this Class object does not represent an
-     * enum type.
-     * 
-     * @return A stream containing the values comprising the enum class represented by this type in
-     *         the order they're declared, or empty if this type does not represent an enum type.
-     */
-    @Override
-    public Stream<String> getEnumConstants() {
-        return detector.getEnumConstants();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Stream<MethodLike> getMethods() {
-        return detector.getMethods();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Stream<MethodLike> getDeclaredMethods() {
-        return detector.getDeclaredMethods();
-    }
-
-    /**
      * Check whether this is primitive type or not.
      * 
      * @return A result.
@@ -214,34 +156,6 @@ public class Type implements Codable, ClassLike {
     @Override
     public boolean isArray() {
         return kind == TypeKind.ARRAY;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isAnnotation() {
-        return detector.isAnnotation();
-    }
-
-    /**
-     * Check whether this is enum type or not.
-     * 
-     * @return A result.
-     */
-    @Override
-    public boolean isEnum() {
-        return detector.isEnum();
-    }
-
-    /**
-     * Check whether this type is interface or not.
-     * 
-     * @return A result.
-     */
-    @Override
-    public boolean isInterface() {
-        return detector.isInterface();
     }
 
     /**
