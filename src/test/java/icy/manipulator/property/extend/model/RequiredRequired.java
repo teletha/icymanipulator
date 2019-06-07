@@ -135,7 +135,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
         RequiredRequired other = (RequiredRequired) o;
         if (!Objects.equals(name, other.name)) return false;
         if (!Objects.equals(stand, other.stand)) return false;
-        if (!Objects.equals(age, other.age)) return false;
+        if (age != other.age) return false;
         if (!Objects.equals(nickname, other.nickname)) return false;
         return true;
     }

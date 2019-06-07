@@ -133,7 +133,7 @@ public abstract class CopySub extends CopySubModel {
 
         CopySub other = (CopySub) o;
         if (!Objects.equals(name, other.name)) return false;
-        if (!Objects.equals(age, other.age)) return false;
+        if (age != other.age) return false;
         if (!Objects.equals(address, other.address)) return false;
         return true;
     }

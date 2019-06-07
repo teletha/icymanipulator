@@ -135,7 +135,7 @@ public abstract class MixedRequired extends MixedRequiredModel {
 
         MixedRequired other = (MixedRequired) o;
         if (!Objects.equals(name, other.name)) return false;
-        if (!Objects.equals(age, other.age)) return false;
+        if (age != other.age) return false;
         if (!Objects.equals(zip, other.zip)) return false;
         if (!Objects.equals(optionAddress, other.optionAddress)) return false;
         if (!Objects.equals(optionCommnet, other.optionCommnet)) return false;

@@ -57,7 +57,7 @@ public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
 
         EnumGroupSubclass other = (EnumGroupSubclass) o;
         if (!Objects.equals(color, other.color)) return false;
-        if (!Objects.equals(size, other.size)) return false;
+        if (size != other.size) return false;
         return true;
     }
 

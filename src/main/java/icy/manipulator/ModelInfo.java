@@ -141,7 +141,7 @@ public class ModelInfo {
 
         Type returnType = Type.of(method.getReturnType());
 
-        if (returnType.isVoid()) {
+        if (returnType.is(void.class)) {
             throw new Fail(method, "Property declaring method must return something.");
         }
 

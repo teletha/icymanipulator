@@ -135,7 +135,7 @@ public abstract class MixedArbitrary extends MixedArbitraryModel {
 
         MixedArbitrary other = (MixedArbitrary) o;
         if (!Objects.equals(name, other.name)) return false;
-        if (!Objects.equals(age, other.age)) return false;
+        if (age != other.age) return false;
         if (!Objects.equals(optionAddress, other.optionAddress)) return false;
         if (!Objects.equals(optionCommnet, other.optionCommnet)) return false;
         if (!Objects.equals(optionZip, other.optionZip)) return false;

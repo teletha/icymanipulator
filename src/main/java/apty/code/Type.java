@@ -240,15 +240,6 @@ public class Type implements Codable, ClassLike {
     }
 
     /**
-     * Check whether this is void type or not.
-     * 
-     * @return A result.
-     */
-    public boolean isVoid() {
-        return kind == TypeKind.VOID;
-    }
-
-    /**
      * Chech type equality.
      * 
      * @param type
