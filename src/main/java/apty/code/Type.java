@@ -16,7 +16,6 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
@@ -104,6 +103,7 @@ public class Type implements Codable, ClassLike {
      * 
      * @return
      */
+    @Override
     public String name() {
         if (packageName.isEmpty()) {
             return base;
@@ -197,7 +197,6 @@ public class Type implements Codable, ClassLike {
      */
     @Override
     public boolean isPrimitive() {
-        System.out.println(name() + "  " + detector.isPrimitive() + "  " + kind.isPrimitive());
         return detector.isPrimitive();
     }
 
@@ -237,46 +236,6 @@ public class Type implements Codable, ClassLike {
     @Override
     public boolean isInterface() {
         return detector.isInterface();
-    }
-
-    /**
-     * Chech type equality.
-     * 
-     * @param type
-     * @return
-     */
-    public boolean is(Class type) {
-        return name().equals(type.getName());
-    }
-
-    /**
-     * Chech type equality.
-     * 
-     * @param type
-     * @return
-     */
-    public boolean is(Type type) {
-        return name().equals(type.name());
-    }
-
-    /**
-     * Chech type equality.
-     * 
-     * @param type
-     * @return
-     */
-    public boolean is(Element type) {
-        return is(type.asType());
-    }
-
-    /**
-     * Chech type equality.
-     * 
-     * @param type
-     * @return
-     */
-    public boolean is(TypeMirror type) {
-        return is(Type.of(type));
     }
 
     /**

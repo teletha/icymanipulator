@@ -13,12 +13,62 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
 import apty.code.Type;
 
 public interface ClassLike {
+
+    /**
+     * Compute the fully qualified type name.
+     * 
+     * @return
+     */
+    default String name() {
+        throw new UnsupportedOperationException("Implement it!");
+    }
+
+    /**
+     * Check type equality.
+     * 
+     * @param type A type which is equals to this type.
+     * @return A reulst.
+     */
+    default boolean is(Class type) {
+        return is(Type.of(type));
+    }
+
+    /**
+     * Check type equality.
+     * 
+     * @param type A type which is equals to this type.
+     * @return A reulst.
+     */
+    default boolean is(Element type) {
+        return is(type.asType());
+    }
+
+    /**
+     * Check type equality.
+     * 
+     * @param type A type which is equals to this type.
+     * @return A reulst.
+     */
+    default boolean is(TypeMirror type) {
+        return is(Type.of(type));
+    }
+
+    /**
+     * Check type equality.
+     * 
+     * @param type A type which is equals to this type.
+     * @return A reulst.
+     */
+    default boolean is(Type type) {
+        return name().equals(type.name());
+    }
 
     /**
      * Check whether this type is annotation or not.
