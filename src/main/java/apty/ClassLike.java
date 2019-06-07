@@ -173,8 +173,20 @@ public interface ClassLike {
         type.getInterfaces().forEach(interfaceType -> collect(interfaceType, types));
     }
 
+    /**
+     * Returns the {@code Type} representing the component type of an array. If this type does not
+     * represent an array type this method returns empty.
+     *
+     * @return The {@code Type} representing the component type of this type if this class is an
+     *         array.
+     */
     Optional<Type> getComponentType();
 
+    /**
+     * Return the root type.
+     * 
+     * @return
+     */
     default Type getRootComponentType() {
         Type current = (Type) this;
         Optional<Type> component = getComponentType();
@@ -208,8 +220,6 @@ public interface ClassLike {
      *         the order they're declared, or empty if this type does not represent an enum type.
      */
     Stream<String> getEnumConstants();
-
-    Stream<MethodLike> getMethods();
 
     Stream<MethodLike> getDeclaredMethods();
 }

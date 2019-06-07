@@ -21,7 +21,6 @@ import java.util.stream.Stream;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
@@ -155,14 +154,6 @@ public class Type implements Codable, ClassLike {
     @Override
     public Stream<String> getEnumConstants() {
         return detector.getEnumConstants();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Stream<MethodLike> getMethods() {
-        return detector.getMethods();
     }
 
     /**
@@ -725,14 +716,6 @@ public class Type implements Codable, ClassLike {
          * {@inheritDoc}
          */
         @Override
-        public Stream<MethodLike> getMethods() {
-            return Stream.of(type.getMethods()).map(m -> new MethodLike(m));
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
         public Stream<MethodLike> getDeclaredMethods() {
             return Stream.of(type.getDeclaredMethods()).map(m -> new MethodLike(m));
         }
@@ -887,17 +870,6 @@ public class Type implements Codable, ClassLike {
          * {@inheritDoc}
          */
         @Override
-        public Stream<MethodLike> getMethods() {
-            return type.getEnclosedElements()
-                    .stream()
-                    .filter(e -> e.getKind() == ElementKind.METHOD && e.getModifiers().contains(Modifier.PUBLIC))
-                    .map(e -> new MethodLike((ExecutableElement) e));
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
         public Stream<MethodLike> getDeclaredMethods() {
             return type.getEnclosedElements()
                     .stream()
@@ -991,14 +963,6 @@ public class Type implements Codable, ClassLike {
          */
         @Override
         public Stream<String> getEnumConstants() {
-            return Stream.empty();
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public Stream<MethodLike> getMethods() {
             return Stream.empty();
         }
 
