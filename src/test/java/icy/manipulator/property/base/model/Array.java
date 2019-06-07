@@ -9,7 +9,6 @@ import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.Objects;
 import javax.annotation.processing.Generated;
 
@@ -104,7 +103,7 @@ public abstract class Array extends ArrayModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Array [");
-        builder.append("names=").append(Arrays.deepToString(names)).append("]");
+        builder.append("names=").append(names).append("]");
         return builder.toString();
     }
 
@@ -115,7 +114,7 @@ public abstract class Array extends ArrayModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(Arrays.deepHashCode(names));
+        return Objects.hash(names);
     }
 
     /**
@@ -130,7 +129,7 @@ public abstract class Array extends ArrayModel {
         }
 
         Array other = (Array) o;
-        if (!Objects.deepEquals(names, other.names)) return false;
+        if (!Objects.equals(names, other.names)) return false;
         return true;
     }
 

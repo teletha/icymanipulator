@@ -85,7 +85,7 @@ public class PropertyInfo {
             this.setterModifier = validate(method, annotation.setterModifier(), icy.setterModifier());
             this.custom = Apty.annotationClassValue(method, Icy.Property.class, "custom")
                     .filter(e -> !Apty.same(e, Supplier.class))
-                    .map(e -> Apty.cast(e))
+                    .flatMap(e -> Apty.asTypeElement(e))
                     .map(customizer -> new CustomizerInfo(this, customizer))
                     .orElse(null);
         }
