@@ -10,6 +10,7 @@
 package apty;
 
 import java.util.LinkedHashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -170,6 +171,19 @@ public interface ClassLike {
         types.add(type);
         collect(type.getParent(), types);
         type.getInterfaces().forEach(interfaceType -> collect(interfaceType, types));
+    }
+
+    Optional<Type> getComponentType();
+
+    default Type getRootComponentType() {
+        Type current = (Type) this;
+        Optional<Type> component = getComponentType();
+
+        while (!component.isEmpty()) {
+            current = component.get();
+            component = current.getComponentType();
+        }
+        return current;
     }
 
     /**

@@ -24,15 +24,19 @@ class ArrayTest {
 
     @Test
     void array() {
-        Array o = Array.with.names(new String[] {"one", "two"});
-        assert o.names[0].equals("one");
-        assert o.names[1].equals("two");
+        Array o = Array.with.array(new String[] {"one", "two"}).nest(new String[][] {{"a"}, {"b"}});
+        assert o.array[0].equals("one");
+        assert o.array[1].equals("two");
+        assert o.nest[0][0].equals("a");
+        assert o.nest[1][0].endsWith("b");
     }
 
     @Test
     void vararg() {
-        Array o = Array.with.names("one", "two");
-        assert o.names[0].equals("one");
-        assert o.names[1].equals("two");
+        Array o = Array.with.array("one", "two").nest(new String[] {"a"}, new String[] {"b"});
+        assert o.array[0].equals("one");
+        assert o.array[1].equals("two");
+        assert o.nest[0][0].equals("a");
+        assert o.nest[1][0].endsWith("b");
     }
 }

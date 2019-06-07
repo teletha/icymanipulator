@@ -395,7 +395,11 @@ public class IcyManipulator extends AptyProcessor {
                         String tail = i == properties.size() - 1 ? "]" : ", ";
 
                         if (p.type.isArray()) {
-                            write("builder.append(`", p.name, "=`).append(", Arrays.class, ".deepToString(", p.name, ")).append(`", tail, "`);");
+                            if (p.type.getRootComponentType().isPrimitive()) {
+                                write("builder.append(`", p.name, "=`).append(", Arrays.class, ".toString(", p.name, ")).append(`", tail, "`);");
+                            } else {
+                                write("builder.append(`", p.name, "=`).append(", Arrays.class, ".deepToString(", p.name, ")).append(`", tail, "`);");
+                            }
                         } else {
                             write("builder.append(`", p.name, "=`).append(", p.name, ").append(`", tail, "`);");
                         }
@@ -421,7 +425,11 @@ public class IcyManipulator extends AptyProcessor {
                     StringJoiner values = new StringJoiner(", ");
                     for (PropertyInfo p : m.properties()) {
                         if (p.type.isArray()) {
-                            values.add(use(Arrays.class) + ".deepHashCode(" + p.name + ")");
+                            if (p.type.getRootComponentType().isPrimitive()) {
+                                values.add(use(Arrays.class) + ".hashCode(" + p.name + ")");
+                            } else {
+                                values.add(use(Arrays.class) + ".deepHashCode(" + p.name + ")");
+                            }
                         } else {
                             values.add(p.name);
                         }

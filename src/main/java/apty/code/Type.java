@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -22,6 +23,7 @@ import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
@@ -129,6 +131,14 @@ public class Type implements Codable, ClassLike {
     @Override
     public Stream<Type> getInterfaces() {
         return detector.getInterfaces();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Type> getComponentType() {
+        return detector.getComponentType();
     }
 
     /**
@@ -507,38 +517,55 @@ public class Type implements Codable, ClassLike {
     /**
      * Create type detector.
      * 
-     * @param target A target to check.
+     * @param fqcn A target to check.
      * @return A type detector.
      */
-    private static ClassLike detect(String target) {
-        return Apty.asTypeElement(target).<ClassLike> map(TypeElementDetector::new).orElseGet(() -> {
-            switch (target) {
-            case "int":
-                return new ClassDetector(int.class);
-            case "long":
-                return new ClassDetector(long.class);
-            case "float":
-                return new ClassDetector(float.class);
-            case "double":
-                return new ClassDetector(double.class);
-            case "short":
-                return new ClassDetector(short.class);
-            case "byte":
-                return new ClassDetector(byte.class);
-            case "boolean":
-                return new ClassDetector(boolean.class);
-            case "char":
-                return new ClassDetector(char.class);
-            case "void":
-                return new ClassDetector(void.class);
-            default:
-                try {
-                    return new ClassDetector(Class.forName(target));
-                } catch (ClassNotFoundException e) {
-                    return UnknownDetector.Singleton;
-                }
+    private static ClassLike detect(String fqcn) {
+        return Apty.asTypeElement(fqcn).<ClassLike> map(TypeElementDetector::new).orElseGet(() -> {
+            try {
+                return new ClassDetector(resolve(fqcn));
+            } catch (ClassNotFoundException e) {
+                return UnknownDetector.Singleton;
             }
         });
+    }
+
+    /**
+     * Resolve Class by its name.
+     * 
+     * @param fqcn A fully qualified class name.
+     * @return A resolved class.
+     * @throws ClassNotFoundException
+     */
+    static Class resolve(String fqcn) throws ClassNotFoundException {
+        String array = "";
+        while (fqcn.endsWith("[]")) {
+            fqcn = fqcn.substring(0, fqcn.length() - 2);
+            array += "[";
+        }
+
+        switch (fqcn) {
+        case "int":
+            return array.isEmpty() ? int.class : Class.forName(array + "I");
+        case "long":
+            return array.isEmpty() ? long.class : Class.forName(array + "J");
+        case "float":
+            return array.isEmpty() ? float.class : Class.forName(array + "F");
+        case "double":
+            return array.isEmpty() ? double.class : Class.forName(array + "D");
+        case "short":
+            return array.isEmpty() ? short.class : Class.forName(array + "S");
+        case "byte":
+            return array.isEmpty() ? byte.class : Class.forName(array + "B");
+        case "boolean":
+            return array.isEmpty() ? boolean.class : Class.forName(array + "Z");
+        case "char":
+            return array.isEmpty() ? char.class : Class.forName(array + "C");
+        case "void":
+            return void.class;
+        default:
+            return Class.forName(array.isEmpty() ? fqcn : array + "L" + fqcn + ";");
+        }
     }
 
     /**
@@ -647,6 +674,20 @@ public class Type implements Codable, ClassLike {
         @Override
         public Stream<Type> getInterfaces() {
             return Stream.of(type.getInterfaces()).map(Type::of);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Optional<Type> getComponentType() {
+            Class component = type.getComponentType();
+
+            if (component == null) {
+                return Optional.empty();
+            } else {
+                return Optional.of(Type.of(component));
+            }
         }
 
         /**
@@ -786,6 +827,19 @@ public class Type implements Codable, ClassLike {
          * {@inheritDoc}
          */
         @Override
+        public Optional<Type> getComponentType() {
+            TypeMirror mirror = type.asType();
+
+            if (mirror.getKind() != TypeKind.ARRAY) {
+                return Optional.empty();
+            }
+            return Optional.of(Type.of(((ArrayType) mirror).getComponentType()));
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
         public Stream<Type> getDeclaredClasses() {
             return type.getEnclosedElements().stream().filter(this::isClass).map(e -> Type.of((TypeElement) e));
         }
@@ -914,6 +968,14 @@ public class Type implements Codable, ClassLike {
         @Override
         public Stream<Type> getInterfaces() {
             return Stream.empty();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Optional<Type> getComponentType() {
+            return Optional.empty();
         }
 
         /**

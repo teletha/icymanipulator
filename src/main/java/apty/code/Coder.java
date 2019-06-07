@@ -17,10 +17,10 @@ import java.util.StringJoiner;
 import java.util.TreeSet;
 import java.util.function.Consumer;
 
+import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 
 import apty.Apty;
-import icy.manipulator.util.Strings;
 
 public class Coder {
 
@@ -401,7 +401,13 @@ public class Coder {
             return className;
         }
 
-        String sanitizedClassName = Strings.sanitize(className);
+        String sanitizedClassName = className.replaceAll("[\\[\\]]", "").replace("...", "");
+
+        // ignore keyword
+        if (SourceVersion.isKeyword(sanitizedClassName)) {
+            return className;
+        }
+
         String sanitizedFQCN = packageName == null ? sanitizedClassName : packageName + "." + sanitizedClassName;
 
         // ignore the class which is already imported

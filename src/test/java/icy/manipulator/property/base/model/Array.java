@@ -9,6 +9,7 @@ import java.lang.Throwable;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Objects;
 import javax.annotation.processing.Generated;
 
@@ -16,7 +17,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link ArrayModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class Array extends ArrayModel {
+public abstract class Array implements ArrayModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -47,49 +48,92 @@ public abstract class Array extends ArrayModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle namesUpdater = updater("names");
+    private static final MethodHandle arrayUpdater = updater("array");
+
+    /** The final property updater. */
+    private static final MethodHandle nestUpdater = updater("nest");
 
     /** The exposed property. */
-    public final String[] names;
+    public final String[] array;
+
+    /** The exposed property. */
+    public final String[][] nest;
 
     /**
      * HIDE CONSTRUCTOR
      */
     protected Array() {
-        this.names = null;
+        this.array = null;
+        this.nest = ArrayModel.super.nest();
     }
 
     /**
-     * Return the names property.
+     * Return the array property.
      *
-     * @return A value of names property.
+     * @return A value of array property.
      */
     @Override
-    public final String[] names() {
-        return this.names;
+    public final String[] array() {
+        return this.array;
     }
 
     /**
      * Provide classic getter API.
      *
-     * @return A value of names property.
+     * @return A value of array property.
      */
     @SuppressWarnings("unused")
-    private final String[] getNames() {
-        return this.names;
+    private final String[] getArray() {
+        return this.array;
     }
 
     /**
      * Provide classic setter API.
      *
-     * @paran value A new value of names property to assign.
+     * @paran value A new value of array property to assign.
      */
-    private final void setNames(String[] value) {
+    private final void setArray(String[] value) {
         if (value == null) {
-            throw new IllegalArgumentException("The names property requires non-null value.");
+            throw new IllegalArgumentException("The array property requires non-null value.");
         }
         try {
-            namesUpdater.invoke(this, value);
+            arrayUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Return the nest property.
+     *
+     * @return A value of nest property.
+     */
+    @Override
+    public final String[][] nest() {
+        return this.nest;
+    }
+
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of nest property.
+     */
+    @SuppressWarnings("unused")
+    private final String[][] getNest() {
+        return this.nest;
+    }
+
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of nest property to assign.
+     */
+    private final void setNest(String[][] value) {
+        if (value == null) {
+            value = ArrayModel.super.nest();
+        }
+        try {
+            nestUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -103,7 +147,8 @@ public abstract class Array extends ArrayModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Array [");
-        builder.append("names=").append(names).append("]");
+        builder.append("array=").append(Arrays.deepToString(array)).append(", ");
+        builder.append("nest=").append(Arrays.deepToString(nest)).append("]");
         return builder.toString();
     }
 
@@ -114,7 +159,7 @@ public abstract class Array extends ArrayModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(names);
+        return Objects.hash(Arrays.deepHashCode(array), Arrays.deepHashCode(nest));
     }
 
     /**
@@ -129,7 +174,8 @@ public abstract class Array extends ArrayModel {
         }
 
         Array other = (Array) o;
-        if (!Objects.equals(names, other.names)) return false;
+        if (!Objects.deepEquals(array, other.array)) return false;
+        if (!Objects.deepEquals(nest, other.nest)) return false;
         return true;
     }
 
@@ -142,13 +188,13 @@ public abstract class Array extends ArrayModel {
     public static class Ìnstantiator<Self extends Array & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new {@link Array} with the specified names property.
+         * Create new {@link Array} with the specified array property.
          * 
          * @return The next assignable model.
          */
-        public Self names(String... names) {
+        public Self array(String... array) {
             Åssignable o = new Åssignable();
-            o.names(names);
+            o.array(array);
             return (Self)o;
         }
     }
@@ -156,16 +202,16 @@ public abstract class Array extends ArrayModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableNames<Next> {
+    public static interface ÅssignableArray<Next> {
 
         /**
-         * Assign names property.
+         * Assign array property.
          * 
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next names(String... value) {
-            ((Array) this).setNames(value);
+        default Next array(String... value) {
+            ((Array) this).setArray(value);
             return (Next) this;
         }
     }
@@ -174,12 +220,23 @@ public abstract class Array extends ArrayModel {
      * Property assignment API.
      */
     public static interface ÅssignableÅrbitrary<Next extends Array> {
+
+        /**
+         * Assign nest property.
+         * 
+         * @param value A new value to assign.
+         * @return The next assignable model.
+         */
+        default Next nest(String[]... value) {
+            ((Array) this).setNest(value);
+            return (Next) this;
+        }
     }
 
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableNames {
+    protected static interface ÅssignableAll extends ÅssignableArray {
     }
 
     /**
@@ -192,6 +249,7 @@ public abstract class Array extends ArrayModel {
      * The identifier for properties.
      */
     static final class My {
-        static final String Names = "names";
+        static final String Array = "array";
+        static final String Nest = "nest";
     }
 }

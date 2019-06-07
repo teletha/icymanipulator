@@ -12,8 +12,13 @@ package icy.manipulator.property.base.model;
 import icy.manipulator.Icy;
 
 @Icy
-public abstract class ArrayModel {
+public interface ArrayModel {
 
     @Icy.Property
-    public abstract String[] names();
+    public abstract String[] array();
+
+    @Icy.Property
+    public default String[][] nest() {
+        return new String[][] {{"one"}, {"ONE"}};
+    }
 }
