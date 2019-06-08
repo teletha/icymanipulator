@@ -73,6 +73,17 @@ public abstract class Mutable extends MutableModel {
     /**
      * Assign the new value of value property.
      *
+     * @paran value The new value property value to assign.
+     * @return Chainable API.
+     */
+    public final Mutable value(String value) {
+        setValue(value);
+        return this;
+    }
+
+    /**
+     * Assign the new value of value property.
+     *
      * @paran value The value property assigner which accepts the current value and returns new value.
      * @return Chainable API.
      */

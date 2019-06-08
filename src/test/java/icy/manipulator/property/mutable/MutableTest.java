@@ -23,7 +23,16 @@ class MutableTest {
     static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, MutableModel.class);
 
     @Test
-    void property() {
+    void setter() {
+        Mutable o = Mutable.with.value("value");
+        assert o.value.equals("value");
+
+        o.value("updated");
+        assert o.value.equals("updated");
+    }
+
+    @Test
+    void mutator() {
         Mutable o = Mutable.with.value("value");
         assert o.value.equals("value");
 

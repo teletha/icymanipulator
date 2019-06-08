@@ -287,6 +287,18 @@ public class IcyManipulator extends AptyProcessor {
                     write("/**");
                     write(" * Assign the new value of ", property.name, " property.");
                     write(" *");
+                    write(" * @paran value The new ", property.name, " property value to assign.");
+                    write(" * @return Chainable API.");
+                    write(" */");
+                    write("public final ", m.implType, " ", property.name, "(", property.type, " value)", () -> {
+                        write("set", property.capitalizeName(), "(value);");
+                        write("return this;");
+                    });
+
+                    write();
+                    write("/**");
+                    write(" * Assign the new value of ", property.name, " property.");
+                    write(" *");
                     write(" * @paran value The ", property.name, " property assigner which accepts the current value and returns new value.");
                     write(" * @return Chainable API.");
                     write(" */");
