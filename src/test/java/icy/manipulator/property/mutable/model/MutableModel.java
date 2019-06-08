@@ -16,4 +16,16 @@ public abstract class MutableModel {
 
     @Icy.Property(mutable = true)
     public abstract String value();
+
+    @Icy.Property(mutable = true)
+    public abstract int intNum();
+
+    @Icy.Property(mutable = true)
+    public abstract long longNum();
+
+    @Icy.Property(mutable = true)
+    public abstract float floatNum();
+
+    @Icy.Property(mutable = true)
+    public abstract double doubleNum();
 }

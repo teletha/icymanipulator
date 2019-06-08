@@ -18,6 +18,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.StringJoiner;
+import java.util.function.DoubleUnaryOperator;
+import java.util.function.IntUnaryOperator;
+import java.util.function.LongUnaryOperator;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
@@ -283,6 +286,23 @@ public class IcyManipulator extends AptyProcessor {
 
                 // Exposed setter
                 if (property.mutable) {
+                    Object[] operator;
+                    String operatorMethod;
+
+                    if (property.type.is(int.class)) {
+                        operator = new Object[] {IntUnaryOperator.class};
+                        operatorMethod = "applyAsInt";
+                    } else if (property.type.is(long.class)) {
+                        operator = new Object[] {LongUnaryOperator.class};
+                        operatorMethod = "applyAsLong";
+                    } else if (property.type.is(double.class)) {
+                        operator = new Object[] {DoubleUnaryOperator.class};
+                        operatorMethod = "applyAsDouble";
+                    } else {
+                        operator = new Object[] {UnaryOperator.class, "<", property.type.wrapped(), ">"};
+                        operatorMethod = "apply";
+                    }
+
                     write();
                     write("/**");
                     write(" * Assign the new value of ", property.name, " property.");
@@ -290,7 +310,7 @@ public class IcyManipulator extends AptyProcessor {
                     write(" * @paran value The new ", property.name, " property value to assign.");
                     write(" * @return Chainable API.");
                     write(" */");
-                    write("public final ", m.implType, " ", property.name, "(", property.type, " value)", () -> {
+                    write("public final ", m.implType, " assign", property.capitalizeName(), "(", property.type, " value)", () -> {
                         write("set", property.capitalizeName(), "(value);");
                         write("return this;");
                     });
@@ -302,8 +322,8 @@ public class IcyManipulator extends AptyProcessor {
                     write(" * @paran value The ", property.name, " property assigner which accepts the current value and returns new value.");
                     write(" * @return Chainable API.");
                     write(" */");
-                    write("public final ", m.implType, " ", property.name, "(", UnaryOperator.class, "<", property.type, "> value)", () -> {
-                        write("set", property.capitalizeName(), "(value.apply(this.", property.name, "));");
+                    write("public final ", m.implType, " assign", property.capitalizeName(), "(", operator, " value)", () -> {
+                        write("set", property.capitalizeName(), "(value.", operatorMethod, "(this.", property.name, "));");
                         write("return this;");
                     });
                 }

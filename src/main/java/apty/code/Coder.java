@@ -294,12 +294,17 @@ public class Coder {
         if (code instanceof Optional) {
             return ((Optional<?>) code).map(v -> String.valueOf(v)).orElse("");
         } else if (code instanceof List) {
-            List list = (List) code;
             StringJoiner joiner = new StringJoiner(", ");
-            for (Object object : list) {
+            for (Object object : ((List) code)) {
                 joiner.add(code(object));
             }
             return joiner.toString();
+        } else if (code instanceof Object[]) {
+            StringBuilder builder = new StringBuilder();
+            for (Object object : ((Object[]) code)) {
+                builder.append(code(object));
+            }
+            return builder.toString();
         } else if (code instanceof Codable) {
             return ((Codable) code).write(this);
         } else if (code instanceof Class) {

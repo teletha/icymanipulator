@@ -282,6 +282,42 @@ public class Type implements Codable, ClassLike {
     }
 
     /**
+     * Compute the wrapped type.
+     * 
+     * @return
+     */
+    public Type wrapped() {
+        switch (name()) {
+        case "int":
+            return Type.of(Integer.class);
+
+        case "long":
+            return Type.of(Long.class);
+
+        case "float":
+            return Type.of(Float.class);
+
+        case "double":
+            return Type.of(Double.class);
+
+        case "byte":
+            return Type.of(Byte.class);
+
+        case "short":
+            return Type.of(Short.class);
+
+        case "boolean":
+            return Type.of(Boolean.class);
+
+        case "char":
+            return Type.of(Character.class);
+
+        default:
+            return this;
+        }
+    }
+
+    /**
      * Create {@link Type} list with this and the specifieds.
      * 
      * @param types
