@@ -15,12 +15,12 @@ import icy.manipulator.Icy;
 public abstract class ArbitraryModel {
 
     @Icy.Property
-    int optionNum() {
+    public int optionNum() {
         return 10;
     }
 
     @Icy.Property
-    String optionComment() {
+    public String optionComment() {
         return "";
     }
 }

@@ -7,26 +7,16 @@
  *
  *          https://opensource.org/licenses/MIT
  */
-package icy.manipulator.property.base.model;
+package icy.manipulator.property.config;
 
 import icy.manipulator.Icy;
 
-@Icy
-public abstract class MixedModel {
+@Icy(packagePrivate = true)
+abstract class PropertyVisibilityModel {
 
     @Icy.Property
-    public abstract String name();
+    abstract String packagePrivateProperty();
 
     @Icy.Property
-    public String optionAddress() {
-        return "";
-    }
-
-    @Icy.Property
-    public abstract int age();
-
-    @Icy.Property
-    public String optionCommnet() {
-        return "";
-    }
+    protected abstract String protectedProperty();
 }

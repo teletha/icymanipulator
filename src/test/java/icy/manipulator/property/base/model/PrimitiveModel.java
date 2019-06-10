@@ -15,26 +15,26 @@ import icy.manipulator.Icy;
 public abstract class PrimitiveModel {
 
     @Icy.Property
-    abstract int intX();
+    public abstract int intX();
 
     @Icy.Property
-    abstract long longX();
+    public abstract long longX();
 
     @Icy.Property
-    abstract float floatX();
+    public abstract float floatX();
 
     @Icy.Property
-    abstract double doubleX();
+    public abstract double doubleX();
 
     @Icy.Property
-    abstract byte byteX();
+    public abstract byte byteX();
 
     @Icy.Property
-    abstract short shortX();
+    public abstract short shortX();
 
     @Icy.Property
-    abstract char charX();
+    public abstract char charX();
 
     @Icy.Property
-    abstract boolean booleanX();
+    public abstract boolean booleanX();
 }

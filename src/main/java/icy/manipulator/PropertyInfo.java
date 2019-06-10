@@ -9,6 +9,7 @@
  */
 package icy.manipulator;
 
+import java.util.Set;
 import java.util.function.Supplier;
 
 import javax.lang.model.element.Element;
@@ -47,6 +48,9 @@ public class PropertyInfo {
     /** The proeprty type. */
     public final boolean autoExpandable;
 
+    /** The property modifier. */
+    public final String modifier;
+
     /** The classic getter modifier. */
     public final String getterModifier;
 
@@ -63,6 +67,7 @@ public class PropertyInfo {
         this.element = method;
         this.name = method.getSimpleName().toString();
         this.type = Type.of(method.getReturnType());
+        this.modifier = validatePropertyModifier(method);
         this.arbitrary = !method.getModifiers().contains(Modifier.ABSTRACT) || OptionalSupport.by(type).isPresent();
 
         Property annotation = method.getAnnotation(Icy.Property.class);
@@ -88,6 +93,26 @@ public class PropertyInfo {
                     .flatMap(e -> Apty.asTypeElement(e))
                     .map(customizer -> new CustomizerInfo(this, customizer))
                     .orElse(null);
+        }
+    }
+
+    /**
+     * Validate property modifier.
+     * 
+     * @param e
+     * @return
+     */
+    private String validatePropertyModifier(Element e) {
+        Set<Modifier> modifiers = e.getModifiers();
+
+        if (modifiers.contains(Modifier.PUBLIC)) {
+            return "public final ";
+        } else if (modifiers.contains(Modifier.PROTECTED)) {
+            return "protected final ";
+        } else if (modifiers.contains(Modifier.PRIVATE)) {
+            throw new Fail(e, "Modifier [private] is not accepted on property.");
+        } else {
+            return "final ";
         }
     }
 

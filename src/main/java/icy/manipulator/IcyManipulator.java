@@ -217,7 +217,7 @@ public class IcyManipulator extends AptyProcessor {
             for (PropertyInfo p : m.ownProperties()) {
                 write();
                 write("/** The exposed property. */");
-                write("public final ", p.type, " ", p.name, ";");
+                write(p.modifier, p.type, " ", p.name, ";");
 
                 if (p.custom != null) {
                     write();
@@ -280,7 +280,7 @@ public class IcyManipulator extends AptyProcessor {
                     write(" */");
                 });
                 write("@Override");
-                write("public final ", property.type, " ", property.name, "()", () -> {
+                write(property.modifier, property.type, " ", property.name, "()", () -> {
                     write("return this.", property.name, ";");
                 });
 

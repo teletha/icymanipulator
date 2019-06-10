@@ -74,7 +74,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
     private static final MethodHandle timeUpdater = updater("time");
 
     /** The exposed property. */
-    public final LocalTime time;
+    final LocalTime time;
 
     /**
      * HIDE CONSTRUCTOR
@@ -89,7 +89,7 @@ public abstract class RequiredRequired extends RequiredRequiredModel {
      * @return A value of time property.
      */
     @Override
-    public final LocalTime time() {
+    final LocalTime time() {
         return this.time;
     }
 
