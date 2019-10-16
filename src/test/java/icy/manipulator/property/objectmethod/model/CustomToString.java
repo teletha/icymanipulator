@@ -15,7 +15,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link CustomToStringModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class CustomToString extends CustomToStringModel {
+public class CustomToString extends CustomToStringModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

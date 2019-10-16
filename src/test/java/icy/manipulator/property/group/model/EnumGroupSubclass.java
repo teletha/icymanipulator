@@ -13,7 +13,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link EnumGroupSubclassModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class EnumGroupSubclass extends EnumGroupSubclassModel {
+public class EnumGroupSubclass extends EnumGroupSubclassModel {
 
     /**
      * HIDE CONSTRUCTOR

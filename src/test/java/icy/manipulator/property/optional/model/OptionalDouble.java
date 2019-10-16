@@ -15,7 +15,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link OptionalDoubleModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class OptionalDouble implements OptionalDoubleModel {
+public class OptionalDouble implements OptionalDoubleModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

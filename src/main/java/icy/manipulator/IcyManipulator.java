@@ -86,7 +86,7 @@ public class IcyManipulator extends AptyProcessor {
             write(" * Generated model for {@link ", model.type, "}.");
             write(" */");
             write("@", Generated.class, "(`Icy Manipulator`)");
-            write(visibility, "abstract class ", model.implType.raw(), declare(declarations), inheritance, model.type, () -> {
+            write(visibility, "class ", model.implType.raw(), declare(declarations), inheritance, model.type, () -> {
                 defineErrorHandler();
                 defineMethodInvokerBuilder();
                 defineMethodInvoker();

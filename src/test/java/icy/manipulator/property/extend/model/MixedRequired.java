@@ -17,7 +17,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link MixedRequiredModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class MixedRequired extends MixedRequiredModel {
+public class MixedRequired extends MixedRequiredModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

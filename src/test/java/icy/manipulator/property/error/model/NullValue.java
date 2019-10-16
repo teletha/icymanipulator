@@ -16,7 +16,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link NullValueModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class NullValue extends NullValueModel {
+public class NullValue extends NullValueModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

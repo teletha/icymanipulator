@@ -16,7 +16,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link EnumGroupModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class EnumGroup extends EnumGroupModel {
+public class EnumGroup extends EnumGroupModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

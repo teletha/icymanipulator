@@ -19,7 +19,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link OverloadModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class Overload extends OverloadModel {
+public class Overload extends OverloadModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

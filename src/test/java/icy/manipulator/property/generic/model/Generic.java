@@ -17,7 +17,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link GenericModel<P, Q>}.
  */
 @Generated("Icy Manipulator")
-public abstract class Generic<P, Q extends Number> implements GenericModel<P, Q> {
+public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
