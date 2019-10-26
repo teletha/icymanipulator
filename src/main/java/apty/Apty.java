@@ -9,7 +9,11 @@
  */
 package apty;
 
+import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -693,5 +697,26 @@ public class Apty {
                 return list.toArray(DeclaredType[]::new);
             }
         };
+    }
+
+    /**
+     * Write log.
+     * 
+     * @param message
+     */
+    public static void log(String message) {
+        try {
+            Path log = Path.of("annotation-processor.log");
+
+            if (Files.notExists(log)) {
+                Files.createFile(log);
+            }
+
+            List<String> lines = new ArrayList(Files.readAllLines(log));
+            lines.add(message);
+            Files.write(log, lines, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new Error(e);
+        }
     }
 }

@@ -24,6 +24,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.ErrorType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
@@ -536,8 +537,23 @@ public class Type implements Codable, ClassLike {
             if (variables == null) variables = declared.getTypeArguments().stream().map(Type::of).collect(Collectors.toList());
             return new Type(fqcn, variables, TypeKind.DECLARED, detect(type));
 
+        case ERROR:
+            ErrorType errored = (ErrorType) type;
+            fqcn = ((TypeElement) errored.asElement()).getQualifiedName().toString();
+            if (variables == null) variables = errored.getTypeArguments().stream().map(Type::of).collect(Collectors.toList());
+
+            if (fqcn.contains(".")) {
+                return new Type(fqcn, variables, TypeKind.DECLARED, detect(type));
+            }
+
+            // The processing type is not recognized by APT.
+            // TODO Search actual fqcn from the import statements on the current processing source.
+            return new Type(fqcn, variables, TypeKind.DECLARED, detect(type));
+
+        case EXECUTABLE:
+
         default:
-            throw new Error("Bug! " + type);
+            throw new Error("Bug! " + type + " " + kind + "  " + variables);
         }
     }
 

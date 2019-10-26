@@ -9,7 +9,9 @@
  */
 package apty;
 
+import java.io.File;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.io.Writer;
 import java.lang.annotation.Annotation;
 import java.nio.charset.StandardCharsets;
@@ -104,15 +106,31 @@ public abstract class AptyProcessor implements Processor {
                 try {
                     processor.process(element);
                 } catch (Fail fail) {
+                    write(fail);
                     messager.printMessage(Kind.ERROR, fail.getMessage(), fail.e);
                     throw fail;
-                } catch (Exception e) {
+                } catch (Throwable e) {
+                    write(e);
                     messager.printMessage(Kind.ERROR, String.valueOf(e.getMessage()), element);
                     throw new Error(e);
                 }
             });
         });
         return true;
+    }
+
+    private void write(Throwable e) {
+        try {
+            File file = new File("annotation-processor-error.txt");
+            file.createNewFile();
+
+            PrintStream stream = new PrintStream(file);
+            stream.append(e.getLocalizedMessage() + "\r\n");
+            e.printStackTrace(stream);
+            stream.close();
+        } catch (Throwable x) {
+            throw new Error(x);
+        }
     }
 
     /**
