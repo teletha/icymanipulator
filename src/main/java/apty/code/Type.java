@@ -370,7 +370,11 @@ public class Type implements Codable, ClassLike {
         default:
             vars = new StringJoiner(", ", "<", ">").setEmptyValue("");
             variables.stream().forEach(v -> vars.add(v.write(coder)));
-            return coder.imports(packageName, base).concat(vars.toString());
+            if (base.endsWith("...")) {
+                return coder.imports(packageName, base.substring(0, base.length() - 3)).concat(vars.toString()).concat("...");
+            } else {
+                return coder.imports(packageName, base).concat(vars.toString());
+            }
         }
     }
 

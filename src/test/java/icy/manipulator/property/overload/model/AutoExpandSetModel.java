@@ -10,6 +10,7 @@
 package icy.manipulator.property.overload.model;
 
 import java.util.Set;
+import java.util.function.Supplier;
 
 import icy.manipulator.Icy;
 
@@ -18,4 +19,7 @@ public abstract class AutoExpandSetModel {
 
     @Icy.Property
     public abstract Set<String> values();
+
+    @Icy.Property
+    public abstract Set<Supplier<String>> lazy();
 }

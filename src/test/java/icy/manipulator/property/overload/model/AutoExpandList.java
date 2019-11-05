@@ -11,6 +11,7 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Supplier;
 import javax.annotation.processing.Generated;
 
 /**
@@ -50,14 +51,21 @@ public class AutoExpandList extends AutoExpandListModel {
     /** The final property updater. */
     private static final MethodHandle valuesUpdater = updater("values");
 
+    /** The final property updater. */
+    private static final MethodHandle lazyUpdater = updater("lazy");
+
     /** The exposed property. */
     public final List<String> values;
+
+    /** The exposed property. */
+    public final List<Supplier<String>> lazy;
 
     /**
      * HIDE CONSTRUCTOR
      */
     protected AutoExpandList() {
         this.values = null;
+        this.lazy = null;
     }
 
     /**
@@ -97,6 +105,42 @@ public class AutoExpandList extends AutoExpandListModel {
     }
 
     /**
+     * Return the lazy property.
+     *
+     * @return A value of lazy property.
+     */
+    @Override
+    public final List<Supplier<String>> lazy() {
+        return this.lazy;
+    }
+
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of lazy property.
+     */
+    @SuppressWarnings("unused")
+    private final List<Supplier<String>> getLazy() {
+        return this.lazy;
+    }
+
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of lazy property to assign.
+     */
+    private final void setLazy(List<Supplier<String>> value) {
+        if (value == null) {
+            throw new IllegalArgumentException("The lazy property requires non-null value.");
+        }
+        try {
+            lazyUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
      * Show all property values.
      *
      * @return All property values.
@@ -104,7 +148,8 @@ public class AutoExpandList extends AutoExpandListModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("AutoExpandList [");
-        builder.append("values=").append(values).append("]");
+        builder.append("values=").append(values).append(", ");
+        builder.append("lazy=").append(lazy).append("]");
         return builder.toString();
     }
 
@@ -115,7 +160,7 @@ public class AutoExpandList extends AutoExpandListModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(values);
+        return Objects.hash(values, lazy);
     }
 
     /**
@@ -131,6 +176,7 @@ public class AutoExpandList extends AutoExpandListModel {
 
         AutoExpandList other = (AutoExpandList) o;
         if (!Objects.equals(values, other.values)) return false;
+        if (!Objects.equals(lazy, other.lazy)) return false;
         return true;
     }
 
@@ -147,10 +193,10 @@ public class AutoExpandList extends AutoExpandListModel {
          * 
          * @return The next assignable model.
          */
-        public Self values(List<String> values) {
+        public ÅssignableLazy<Self> values(List<String> values) {
             Åssignable o = new Åssignable();
             o.values(values);
-            return (Self)o;
+            return o;
         }
 
         /**
@@ -158,10 +204,10 @@ public class AutoExpandList extends AutoExpandListModel {
          * 
          * @return The next assignable model.
          */
-        public Self values(String... values) {
+        public ÅssignableLazy<Self> values(String... values) {
             Åssignable o = new Åssignable();
             o.values(values);
-            return (Self)o;
+            return o;
         }
     }
 
@@ -194,13 +240,39 @@ public class AutoExpandList extends AutoExpandListModel {
     /**
      * Property assignment API.
      */
+    public static interface ÅssignableLazy<Next> {
+
+        /**
+         * Assign lazy property.
+         * 
+         * @param value A new value to assign.
+         * @return The next assignable model.
+         */
+        default Next lazy(List<Supplier<String>> value) {
+            ((AutoExpandList) this).setLazy(value);
+            return (Next) this;
+        }
+
+        /**
+         * Assign lazy property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next lazy(Supplier<String>... values) {
+            return lazy(List.of(values));
+        }
+    }
+
+    /**
+     * Property assignment API.
+     */
     public static interface ÅssignableÅrbitrary<Next extends AutoExpandList> {
     }
 
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableValues {
+    protected static interface ÅssignableAll extends ÅssignableValues, ÅssignableLazy {
     }
 
     /**
@@ -214,5 +286,6 @@ public class AutoExpandList extends AutoExpandListModel {
      */
     static final class My {
         static final String Values = "values";
+        static final String Lazy = "lazy";
     }
 }

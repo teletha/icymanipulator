@@ -10,6 +10,8 @@
 package icy.manipulator.property.overload;
 
 import java.util.Set;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -27,7 +29,8 @@ class AutoExpandSetTest {
 
     @Test
     void variableArguments() {
-        AutoExpandSet o = AutoExpandSet.with.values("one", "two", "three");
+        AutoExpandSet o = AutoExpandSet.with.values("one", "two", "three").lazy(() -> "ok");
         Assertions.assertIterableEquals(Set.of("one", "two", "three"), o.values);
+        Assertions.assertIterableEquals(Set.of("ok"), o.lazy.stream().map(Supplier<String>::get).collect(Collectors.toList()));
     }
 }

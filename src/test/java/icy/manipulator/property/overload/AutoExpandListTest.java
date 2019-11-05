@@ -24,9 +24,10 @@ class AutoExpandListTest {
 
     @Test
     void variableArguments() {
-        AutoExpandList o = AutoExpandList.with.values("one", "two", "three");
+        AutoExpandList o = AutoExpandList.with.values("one", "two", "three").lazy(() -> "ok");
         assert o.values.get(0).equals("one");
         assert o.values.get(1).equals("two");
         assert o.values.get(2).equals("three");
+        assert o.lazy.get(0).get().equals("ok");
     }
 }
