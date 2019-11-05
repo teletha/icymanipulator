@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.StringJoiner;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.IntUnaryOperator;
@@ -727,13 +728,17 @@ public class IcyManipulator extends AptyProcessor {
                 p.type.getEnumConstants().filter(name -> name.equalsIgnoreCase(m.name)).findFirst().ifPresentOrElse(name -> {
                     write("return ", p.name, "(", p.type, ".", name, ");");
                 }, () -> {
-                    List<String> names = m.withFirst(Type.of(Object.class), "this").paramNames;
+                    if (p.type.is(List.class) || p.type.is(Set.class)) {
+                        write("return ", p.name, "(", p.type.raw(), ".of(values));");
+                    } else {
+                        List<String> names = m.withFirst(Type.of(Object.class), "this").paramNames;
 
-                    writeTry(() -> {
-                        write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", names, "));");
-                    }, Throwable.class, e -> {
-                        write("throw quiet(", e, ");");
-                    });
+                        writeTry(() -> {
+                            write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", names, "));");
+                        }, Throwable.class, e -> {
+                            write("throw quiet(", e, ");");
+                        });
+                    }
                 });
             });
         }

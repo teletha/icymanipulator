@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.StringJoiner;
 import java.util.function.Consumer;
 import java.util.function.DoubleConsumer;
@@ -30,6 +31,7 @@ import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
+import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 
 import apty.Apty;
@@ -166,6 +168,15 @@ public class ModelInfo {
             p.type.getEnumConstants().forEach(name -> {
                 overloadForProperty.add(p, new MethodLike(sanitize(decapitalize(name)), Type.var("Next"), List.of(), List.of(), ""));
             });
+
+            if (p.type.is(List.class) || p.type.is(Set.class)) {
+                Type param = p.type.variables.get(0);
+
+                if (param.kind != TypeKind.WILDCARD) {
+                    Type varargnize = param.array().varargnize();
+                    overloadForProperty.add(p, new MethodLike(p.name, p.type, List.of(varargnize), List.of("values"), ""));
+                }
+            }
         }
     }
 

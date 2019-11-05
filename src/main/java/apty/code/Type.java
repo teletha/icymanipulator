@@ -221,6 +221,15 @@ public class Type implements Codable, ClassLike {
     }
 
     /**
+     * Create array type.
+     * 
+     * @return
+     */
+    public Type array() {
+        return new Type(packageName, base + "[]", variables, TypeKind.ARRAY, detector);
+    }
+
+    /**
      * Create declared type, all variables are viewable.
      * 
      * @return
