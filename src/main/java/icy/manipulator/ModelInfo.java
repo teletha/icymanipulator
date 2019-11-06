@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.StringJoiner;
@@ -174,7 +175,31 @@ public class ModelInfo {
 
                 if (param.kind != TypeKind.WILDCARD) {
                     Type varargnize = param.array().varargnize();
-                    overloadForProperty.add(p, new MethodLike(p.name, p.type, List.of(varargnize), List.of("values"), ""));
+                    overloadForProperty.add(p, new MethodLike(p.name, p.type, List.of(varargnize), List.of("values"), "", coder -> {
+                        return "return " + p.name + "(" + coder.use(p.type.raw()) + ".of(values));";
+                    }));
+                }
+            }
+
+            if (p.type.is(Map.class)) {
+                Type key = p.type.variables.get(0);
+                Type value = p.type.variables.get(1);
+
+                if (key.kind != TypeKind.WILDCARD && value.kind != TypeKind.WILDCARD) {
+                    List<Type> types = new ArrayList();
+                    List<String> names = new ArrayList();
+
+                    for (int i = 1; i <= 9; i++) {
+                        types.add(key);
+                        types.add(value);
+                        names.add("key" + i);
+                        names.add("value" + i);
+                        String parameters = names.stream().collect(Collectors.joining(", "));
+
+                        overloadForProperty.add(p, new MethodLike(p.name, p.type, List.copyOf(types), List.copyOf(names), "", coder -> {
+                            return "return " + p.name + "(" + coder.use(Map.class) + ".of(" + parameters + "));";
+                        }));
+                    }
                 }
             }
         }

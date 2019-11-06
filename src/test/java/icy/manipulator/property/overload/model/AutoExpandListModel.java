@@ -21,5 +21,7 @@ public abstract class AutoExpandListModel {
     public abstract List<String> values();
 
     @Icy.Property
-    public abstract List<Supplier<String>> lazy();
+    public List<Supplier<String>> generics() {
+        return List.of();
+    }
 }

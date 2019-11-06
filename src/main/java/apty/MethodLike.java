@@ -63,6 +63,9 @@ public class MethodLike implements Codable {
     /** The user defined overload method. */
     public final boolean userDefiend;
 
+    /** The code body. (OPTIONAL) */
+    public final Codable code;
+
     /**
      * @param element
      */
@@ -76,6 +79,7 @@ public class MethodLike implements Codable {
         this.paramNames = element.getParameters().stream().map(e -> e.getSimpleName().toString()).collect(Collectors.toUnmodifiableList());
         this.doc = Apty.doc(element);
         this.userDefiend = true;
+        this.code = null;
     }
 
     /**
@@ -88,6 +92,7 @@ public class MethodLike implements Codable {
         this.paramNames = Stream.of(element.getParameters()).map(Parameter::getName).collect(Collectors.toUnmodifiableList());
         this.doc = "";
         this.userDefiend = false;
+        this.code = null;
     }
 
     /**
@@ -109,12 +114,25 @@ public class MethodLike implements Codable {
      * @param names
      */
     public MethodLike(String name, Type returnType, List<Type> types, List<String> names, String doc) {
+        this(name, returnType, types, names, doc, null);
+    }
+
+    /**
+     * Create {@link MethodLike}.
+     * 
+     * @param name
+     * @param returnType
+     * @param types
+     * @param names
+     */
+    public MethodLike(String name, Type returnType, List<Type> types, List<String> names, String doc, Codable body) {
         this.name = name;
         this.returnType = returnType;
         this.paramTypes = types;
         this.paramNames = names;
         this.doc = doc;
         this.userDefiend = false;
+        this.code = body;
     }
 
     /**

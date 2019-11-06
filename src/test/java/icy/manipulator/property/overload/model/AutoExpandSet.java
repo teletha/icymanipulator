@@ -52,20 +52,20 @@ public class AutoExpandSet extends AutoExpandSetModel {
     private static final MethodHandle valuesUpdater = updater("values");
 
     /** The final property updater. */
-    private static final MethodHandle lazyUpdater = updater("lazy");
+    private static final MethodHandle genericsUpdater = updater("generics");
 
     /** The exposed property. */
     public final Set<String> values;
 
     /** The exposed property. */
-    public final Set<Supplier<String>> lazy;
+    public final Set<Supplier<String>> generics;
 
     /**
      * HIDE CONSTRUCTOR
      */
     protected AutoExpandSet() {
         this.values = null;
-        this.lazy = null;
+        this.generics = super.generics();
     }
 
     /**
@@ -105,36 +105,36 @@ public class AutoExpandSet extends AutoExpandSetModel {
     }
 
     /**
-     * Return the lazy property.
+     * Return the generics property.
      *
-     * @return A value of lazy property.
+     * @return A value of generics property.
      */
     @Override
-    public final Set<Supplier<String>> lazy() {
-        return this.lazy;
+    public final Set<Supplier<String>> generics() {
+        return this.generics;
     }
 
     /**
      * Provide classic getter API.
      *
-     * @return A value of lazy property.
+     * @return A value of generics property.
      */
     @SuppressWarnings("unused")
-    private final Set<Supplier<String>> getLazy() {
-        return this.lazy;
+    private final Set<Supplier<String>> getGenerics() {
+        return this.generics;
     }
 
     /**
      * Provide classic setter API.
      *
-     * @paran value A new value of lazy property to assign.
+     * @paran value A new value of generics property to assign.
      */
-    private final void setLazy(Set<Supplier<String>> value) {
+    private final void setGenerics(Set<Supplier<String>> value) {
         if (value == null) {
-            throw new IllegalArgumentException("The lazy property requires non-null value.");
+            value = super.generics();
         }
         try {
-            lazyUpdater.invoke(this, value);
+            genericsUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -149,7 +149,7 @@ public class AutoExpandSet extends AutoExpandSetModel {
     public String toString() {
         StringBuilder builder = new StringBuilder("AutoExpandSet [");
         builder.append("values=").append(values).append(", ");
-        builder.append("lazy=").append(lazy).append("]");
+        builder.append("generics=").append(generics).append("]");
         return builder.toString();
     }
 
@@ -160,7 +160,7 @@ public class AutoExpandSet extends AutoExpandSetModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(values, lazy);
+        return Objects.hash(values, generics);
     }
 
     /**
@@ -176,7 +176,7 @@ public class AutoExpandSet extends AutoExpandSetModel {
 
         AutoExpandSet other = (AutoExpandSet) o;
         if (!Objects.equals(values, other.values)) return false;
-        if (!Objects.equals(lazy, other.lazy)) return false;
+        if (!Objects.equals(generics, other.generics)) return false;
         return true;
     }
 
@@ -193,10 +193,10 @@ public class AutoExpandSet extends AutoExpandSetModel {
          * 
          * @return The next assignable model.
          */
-        public ÅssignableLazy<Self> values(Set<String> values) {
+        public Self values(Set<String> values) {
             Åssignable o = new Åssignable();
             o.values(values);
-            return o;
+            return (Self)o;
         }
 
         /**
@@ -204,10 +204,8 @@ public class AutoExpandSet extends AutoExpandSetModel {
          * 
          * @return The next assignable model.
          */
-        public ÅssignableLazy<Self> values(String... values) {
-            Åssignable o = new Åssignable();
-            o.values(values);
-            return o;
+        public Self values(String... values) {
+            return values(Set.of(values));
         }
     }
 
@@ -240,39 +238,33 @@ public class AutoExpandSet extends AutoExpandSetModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableLazy<Next> {
+    public static interface ÅssignableÅrbitrary<Next extends AutoExpandSet> {
 
         /**
-         * Assign lazy property.
+         * Assign generics property.
          * 
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next lazy(Set<Supplier<String>> value) {
-            ((AutoExpandSet) this).setLazy(value);
+        default Next generics(Set<Supplier<String>> value) {
+            ((AutoExpandSet) this).setGenerics(value);
             return (Next) this;
         }
 
         /**
-         * Assign lazy property.
+         * Assign generics property.
          * 
          * @return The next assignable model.
          */
-        default Next lazy(Supplier<String>... values) {
-            return lazy(Set.of(values));
+        default Next generics(Supplier<String>... values) {
+            return generics(Set.of(values));
         }
-    }
-
-    /**
-     * Property assignment API.
-     */
-    public static interface ÅssignableÅrbitrary<Next extends AutoExpandSet> {
     }
 
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableValues, ÅssignableLazy {
+    protected static interface ÅssignableAll extends ÅssignableValues {
     }
 
     /**
@@ -286,6 +278,6 @@ public class AutoExpandSet extends AutoExpandSetModel {
      */
     static final class My {
         static final String Values = "values";
-        static final String Lazy = "lazy";
+        static final String Generics = "generics";
     }
 }

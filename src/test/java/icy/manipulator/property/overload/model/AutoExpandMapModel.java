@@ -9,19 +9,19 @@
  */
 package icy.manipulator.property.overload.model;
 
-import java.util.Set;
+import java.util.Map;
 import java.util.function.Supplier;
 
 import icy.manipulator.Icy;
 
 @Icy
-public abstract class AutoExpandSetModel {
+public abstract class AutoExpandMapModel {
 
     @Icy.Property
-    public abstract Set<String> values();
+    public abstract Map<String, Integer> values();
 
     @Icy.Property
-    public Set<Supplier<String>> generics() {
-        return Set.of();
+    public Map<String, Supplier<String>> generics() {
+        return Map.of();
     }
 }

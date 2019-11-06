@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.StringJoiner;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.IntUnaryOperator;
@@ -575,22 +574,26 @@ public class IcyManipulator extends AptyProcessor {
                                     write(" */");
                                 });
                                 write("public ", type, " ", method, () -> {
-                                    write(Assignable, " o = new ", Assignable, "();");
+                                    if (method.code != null) {
+                                        write(method.code);
+                                    } else {
+                                        write(Assignable, " o = new ", Assignable, "();");
 
-                                    boolean skipFirst = requireds.size() != method.paramNames.size();
-                                    int parameterIndex = skipFirst ? -1 : 0;
-                                    int index = 0;
+                                        boolean skipFirst = requireds.size() != method.paramNames.size();
+                                        int parameterIndex = skipFirst ? -1 : 0;
+                                        int index = 0;
 
-                                    for (; index < requireds.size(); index++, parameterIndex++) {
-                                        String methodName = index == 0 ? method.name : requireds.get(index).name;
+                                        for (; index < requireds.size(); index++, parameterIndex++) {
+                                            String methodName = index == 0 ? method.name : requireds.get(index).name;
 
-                                        if (0 <= parameterIndex) {
-                                            write("o.", methodName, "(", method.paramNames.get(parameterIndex), ");");
-                                        } else {
-                                            write("o.", methodName, "();");
+                                            if (0 <= parameterIndex) {
+                                                write("o.", methodName, "(", method.paramNames.get(parameterIndex), ");");
+                                            } else {
+                                                write("o.", methodName, "();");
+                                            }
                                         }
+                                        write("return ", type.equals("Self") ? "(Self)" : "", "o;");
                                     }
-                                    write("return ", type.equals("Self") ? "(Self)" : "", "o;");
                                 });
                             });
                 }, () -> {
@@ -728,8 +731,8 @@ public class IcyManipulator extends AptyProcessor {
                 p.type.getEnumConstants().filter(name -> name.equalsIgnoreCase(m.name)).findFirst().ifPresentOrElse(name -> {
                     write("return ", p.name, "(", p.type, ".", name, ");");
                 }, () -> {
-                    if (p.type.is(List.class) || p.type.is(Set.class)) {
-                        write("return ", p.name, "(", p.type.raw(), ".of(values));");
+                    if (m.code != null) {
+                        write(m.code);
                     } else {
                         List<String> names = m.withFirst(Type.of(Object.class), "this").paramNames;
 

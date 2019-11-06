@@ -294,6 +294,87 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
             ((Generic<P, Q>) this).setMapper(value);
             return (Next) this;
         }
+
+        /**
+         * Assign mapper property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next mapper(P key1, Q value1) {
+            return mapper(Map.of(key1, value1));
+        }
+
+        /**
+         * Assign mapper property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next mapper(P key1, Q value1, P key2, Q value2) {
+            return mapper(Map.of(key1, value1, key2, value2));
+        }
+
+        /**
+         * Assign mapper property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next mapper(P key1, Q value1, P key2, Q value2, P key3, Q value3) {
+            return mapper(Map.of(key1, value1, key2, value2, key3, value3));
+        }
+
+        /**
+         * Assign mapper property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next mapper(P key1, Q value1, P key2, Q value2, P key3, Q value3, P key4, Q value4) {
+            return mapper(Map.of(key1, value1, key2, value2, key3, value3, key4, value4));
+        }
+
+        /**
+         * Assign mapper property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next mapper(P key1, Q value1, P key2, Q value2, P key3, Q value3, P key4, Q value4, P key5, Q value5) {
+            return mapper(Map.of(key1, value1, key2, value2, key3, value3, key4, value4, key5, value5));
+        }
+
+        /**
+         * Assign mapper property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next mapper(P key1, Q value1, P key2, Q value2, P key3, Q value3, P key4, Q value4, P key5, Q value5, P key6, Q value6) {
+            return mapper(Map.of(key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6));
+        }
+
+        /**
+         * Assign mapper property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next mapper(P key1, Q value1, P key2, Q value2, P key3, Q value3, P key4, Q value4, P key5, Q value5, P key6, Q value6, P key7, Q value7) {
+            return mapper(Map.of(key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7));
+        }
+
+        /**
+         * Assign mapper property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next mapper(P key1, Q value1, P key2, Q value2, P key3, Q value3, P key4, Q value4, P key5, Q value5, P key6, Q value6, P key7, Q value7, P key8, Q value8) {
+            return mapper(Map.of(key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8));
+        }
+
+        /**
+         * Assign mapper property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next mapper(P key1, Q value1, P key2, Q value2, P key3, Q value3, P key4, Q value4, P key5, Q value5, P key6, Q value6, P key7, Q value7, P key8, Q value8, P key9, Q value9) {
+            return mapper(Map.of(key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8, key9, value9));
+        }
     }
 
     /**

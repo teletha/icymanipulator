@@ -9,6 +9,8 @@
  */
 package icy.manipulator.property.overload;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -23,11 +25,18 @@ class AutoExpandListTest {
     static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, AutoExpandListModel.class);
 
     @Test
-    void variableArguments() {
-        AutoExpandList o = AutoExpandList.with.values("one", "two", "three").lazy(() -> "ok");
+    void autoExpand() {
+        AutoExpandList o = AutoExpandList.with.values("one", "two", "three");
         assert o.values.get(0).equals("one");
         assert o.values.get(1).equals("two");
         assert o.values.get(2).equals("three");
-        assert o.lazy.get(0).get().equals("ok");
+    }
+
+    @Test
+    void autoExpandWithGenerics() {
+        AutoExpandList o = AutoExpandList.with.values(List.of()).generics(() -> "a", () -> "b", () -> "c");
+        assert o.generics.get(0).get().equals("a");
+        assert o.generics.get(1).get().equals("b");
+        assert o.generics.get(2).get().equals("c");
     }
 }

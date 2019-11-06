@@ -10,10 +10,7 @@
 package icy.manipulator.property.overload;
 
 import java.util.Set;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -28,9 +25,16 @@ class AutoExpandSetTest {
     static AnnotationProcessor processor = new AnnotationProcessor(IcyManipulator.class, AutoExpandSetModel.class);
 
     @Test
-    void variableArguments() {
-        AutoExpandSet o = AutoExpandSet.with.values("one", "two", "three").lazy(() -> "ok");
-        Assertions.assertIterableEquals(Set.of("one", "two", "three"), o.values);
-        Assertions.assertIterableEquals(Set.of("ok"), o.lazy.stream().map(Supplier<String>::get).collect(Collectors.toList()));
+    void autoExpand() {
+        AutoExpandSet o = AutoExpandSet.with.values("one", "two", "three");
+        assert o.values.contains("one");
+        assert o.values.contains("two");
+        assert o.values.contains("three");
+    }
+
+    @Test
+    void autoExpandWithGenerics() {
+        AutoExpandSet o = AutoExpandSet.with.values(Set.of()).generics(() -> "one");
+        assert o.generics.iterator().next().get().equals("one");
     }
 }

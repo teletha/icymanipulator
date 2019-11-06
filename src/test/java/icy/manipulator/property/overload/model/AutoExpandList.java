@@ -52,20 +52,20 @@ public class AutoExpandList extends AutoExpandListModel {
     private static final MethodHandle valuesUpdater = updater("values");
 
     /** The final property updater. */
-    private static final MethodHandle lazyUpdater = updater("lazy");
+    private static final MethodHandle genericsUpdater = updater("generics");
 
     /** The exposed property. */
     public final List<String> values;
 
     /** The exposed property. */
-    public final List<Supplier<String>> lazy;
+    public final List<Supplier<String>> generics;
 
     /**
      * HIDE CONSTRUCTOR
      */
     protected AutoExpandList() {
         this.values = null;
-        this.lazy = null;
+        this.generics = super.generics();
     }
 
     /**
@@ -105,36 +105,36 @@ public class AutoExpandList extends AutoExpandListModel {
     }
 
     /**
-     * Return the lazy property.
+     * Return the generics property.
      *
-     * @return A value of lazy property.
+     * @return A value of generics property.
      */
     @Override
-    public final List<Supplier<String>> lazy() {
-        return this.lazy;
+    public final List<Supplier<String>> generics() {
+        return this.generics;
     }
 
     /**
      * Provide classic getter API.
      *
-     * @return A value of lazy property.
+     * @return A value of generics property.
      */
     @SuppressWarnings("unused")
-    private final List<Supplier<String>> getLazy() {
-        return this.lazy;
+    private final List<Supplier<String>> getGenerics() {
+        return this.generics;
     }
 
     /**
      * Provide classic setter API.
      *
-     * @paran value A new value of lazy property to assign.
+     * @paran value A new value of generics property to assign.
      */
-    private final void setLazy(List<Supplier<String>> value) {
+    private final void setGenerics(List<Supplier<String>> value) {
         if (value == null) {
-            throw new IllegalArgumentException("The lazy property requires non-null value.");
+            value = super.generics();
         }
         try {
-            lazyUpdater.invoke(this, value);
+            genericsUpdater.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -149,7 +149,7 @@ public class AutoExpandList extends AutoExpandListModel {
     public String toString() {
         StringBuilder builder = new StringBuilder("AutoExpandList [");
         builder.append("values=").append(values).append(", ");
-        builder.append("lazy=").append(lazy).append("]");
+        builder.append("generics=").append(generics).append("]");
         return builder.toString();
     }
 
@@ -160,7 +160,7 @@ public class AutoExpandList extends AutoExpandListModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(values, lazy);
+        return Objects.hash(values, generics);
     }
 
     /**
@@ -176,7 +176,7 @@ public class AutoExpandList extends AutoExpandListModel {
 
         AutoExpandList other = (AutoExpandList) o;
         if (!Objects.equals(values, other.values)) return false;
-        if (!Objects.equals(lazy, other.lazy)) return false;
+        if (!Objects.equals(generics, other.generics)) return false;
         return true;
     }
 
@@ -193,10 +193,10 @@ public class AutoExpandList extends AutoExpandListModel {
          * 
          * @return The next assignable model.
          */
-        public ÅssignableLazy<Self> values(List<String> values) {
+        public Self values(List<String> values) {
             Åssignable o = new Åssignable();
             o.values(values);
-            return o;
+            return (Self)o;
         }
 
         /**
@@ -204,10 +204,8 @@ public class AutoExpandList extends AutoExpandListModel {
          * 
          * @return The next assignable model.
          */
-        public ÅssignableLazy<Self> values(String... values) {
-            Åssignable o = new Åssignable();
-            o.values(values);
-            return o;
+        public Self values(String... values) {
+            return values(List.of(values));
         }
     }
 
@@ -240,39 +238,33 @@ public class AutoExpandList extends AutoExpandListModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableLazy<Next> {
+    public static interface ÅssignableÅrbitrary<Next extends AutoExpandList> {
 
         /**
-         * Assign lazy property.
+         * Assign generics property.
          * 
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next lazy(List<Supplier<String>> value) {
-            ((AutoExpandList) this).setLazy(value);
+        default Next generics(List<Supplier<String>> value) {
+            ((AutoExpandList) this).setGenerics(value);
             return (Next) this;
         }
 
         /**
-         * Assign lazy property.
+         * Assign generics property.
          * 
          * @return The next assignable model.
          */
-        default Next lazy(Supplier<String>... values) {
-            return lazy(List.of(values));
+        default Next generics(Supplier<String>... values) {
+            return generics(List.of(values));
         }
-    }
-
-    /**
-     * Property assignment API.
-     */
-    public static interface ÅssignableÅrbitrary<Next extends AutoExpandList> {
     }
 
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableValues, ÅssignableLazy {
+    protected static interface ÅssignableAll extends ÅssignableValues {
     }
 
     /**
@@ -286,6 +278,6 @@ public class AutoExpandList extends AutoExpandListModel {
      */
     static final class My {
         static final String Values = "values";
-        static final String Lazy = "lazy";
+        static final String Generics = "generics";
     }
 }
