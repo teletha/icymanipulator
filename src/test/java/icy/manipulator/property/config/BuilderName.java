@@ -16,7 +16,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link BuilderNameModel}.
  */
 @Generated("Icy Manipulator")
-public class BuilderName extends BuilderNameModel {
+public abstract class BuilderName extends BuilderNameModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

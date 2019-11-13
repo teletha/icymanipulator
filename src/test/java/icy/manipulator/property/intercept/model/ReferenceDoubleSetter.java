@@ -17,7 +17,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link ReferenceDoubleSetterModel}.
  */
 @Generated("Icy Manipulator")
-public class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
+public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

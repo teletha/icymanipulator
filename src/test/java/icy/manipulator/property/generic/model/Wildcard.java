@@ -23,7 +23,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link WildcardModel}.
  */
 @Generated("Icy Manipulator")
-public class Wildcard extends WildcardModel {
+public abstract class Wildcard extends WildcardModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

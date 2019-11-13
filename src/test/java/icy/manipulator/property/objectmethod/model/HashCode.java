@@ -16,7 +16,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link HashCodeModel}.
  */
 @Generated("Icy Manipulator")
-public class HashCode extends HashCodeModel {
+public abstract class HashCode extends HashCodeModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

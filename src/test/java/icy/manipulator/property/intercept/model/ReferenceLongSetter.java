@@ -17,7 +17,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link ReferenceLongSetterModel}.
  */
 @Generated("Icy Manipulator")
-public class ReferenceLongSetter extends ReferenceLongSetterModel {
+public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

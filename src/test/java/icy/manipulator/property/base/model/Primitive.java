@@ -15,7 +15,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link PrimitiveModel}.
  */
 @Generated("Icy Manipulator")
-public class Primitive extends PrimitiveModel {
+public abstract class Primitive extends PrimitiveModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

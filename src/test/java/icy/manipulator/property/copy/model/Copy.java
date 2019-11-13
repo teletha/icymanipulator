@@ -16,7 +16,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link CopyModel}.
  */
 @Generated("Icy Manipulator")
-public class Copy extends CopyModel {
+public abstract class Copy extends CopyModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

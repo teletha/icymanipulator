@@ -20,7 +20,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link RequiredRequiredModel}.
  */
 @Generated("Icy Manipulator")
-public class RequiredRequired extends RequiredRequiredModel {
+public abstract class RequiredRequired extends RequiredRequiredModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

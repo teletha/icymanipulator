@@ -17,7 +17,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link GuavaOptionalModel}.
  */
 @Generated("Icy Manipulator")
-public class GuavaOptional implements GuavaOptionalModel {
+public abstract class GuavaOptional implements GuavaOptionalModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

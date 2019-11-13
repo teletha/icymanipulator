@@ -16,7 +16,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link EqualsModel}.
  */
 @Generated("Icy Manipulator")
-public class Equals extends EqualsModel {
+public abstract class Equals extends EqualsModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

@@ -16,7 +16,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link ThrowOriginalErrorModel}.
  */
 @Generated("Icy Manipulator")
-public class ThrowOriginalError extends ThrowOriginalErrorModel {
+public abstract class ThrowOriginalError extends ThrowOriginalErrorModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

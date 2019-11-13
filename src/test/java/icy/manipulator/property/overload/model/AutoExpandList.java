@@ -18,7 +18,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link AutoExpandListModel}.
  */
 @Generated("Icy Manipulator")
-public class AutoExpandList extends AutoExpandListModel {
+public abstract class AutoExpandList extends AutoExpandListModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
