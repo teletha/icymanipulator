@@ -40,4 +40,12 @@ public abstract class WildcardModel {
     public Map<? extends CharSequence, List<Class<? extends Number>>> combine() {
         return new HashMap();
     }
+
+    @Icy.Property
+    public Class<? extends Member> memberType() {
+        return Member.class;
+    }
+
+    public static abstract class Member {
+    }
 }

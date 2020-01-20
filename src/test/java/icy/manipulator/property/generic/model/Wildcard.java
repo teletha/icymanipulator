@@ -2,6 +2,7 @@ package icy.manipulator.property.generic.model;
 
 import icy.manipulator.property.generic.model.Wildcard;
 import icy.manipulator.property.generic.model.WildcardModel;
+import icy.manipulator.property.generic.model.WildcardModel.Member;
 import java.lang.CharSequence;
 import java.lang.Class;
 import java.lang.Integer;
@@ -65,6 +66,9 @@ public abstract class Wildcard extends WildcardModel {
     /** The final property updater. */
     private static final MethodHandle combineUpdater = updater("combine");
 
+    /** The final property updater. */
+    private static final MethodHandle memberTypeUpdater = updater("memberType");
+
     /** The exposed property. */
     public final Class<? extends Collection> extendType;
 
@@ -77,6 +81,9 @@ public abstract class Wildcard extends WildcardModel {
     /** The exposed property. */
     public final Map<? extends CharSequence, List<Class<? extends Number>>> combine;
 
+    /** The exposed property. */
+    public final Class<? extends Member> memberType;
+
     /**
      * HIDE CONSTRUCTOR
      */
@@ -85,6 +92,7 @@ public abstract class Wildcard extends WildcardModel {
         this.superType = super.superType();
         this.wildcard = super.wildcard();
         this.combine = super.combine();
+        this.memberType = super.memberType();
     }
 
     /**
@@ -232,6 +240,42 @@ public abstract class Wildcard extends WildcardModel {
     }
 
     /**
+     * Return the memberType property.
+     *
+     * @return A value of memberType property.
+     */
+    @Override
+    public final Class<? extends Member> memberType() {
+        return this.memberType;
+    }
+
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of memberType property.
+     */
+    @SuppressWarnings("unused")
+    private final Class<? extends Member> getMemberType() {
+        return this.memberType;
+    }
+
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of memberType property to assign.
+     */
+    private final void setMemberType(Class<? extends Member> value) {
+        if (value == null) {
+            value = super.memberType();
+        }
+        try {
+            memberTypeUpdater.invoke(this, value);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
      * Show all property values.
      *
      * @return All property values.
@@ -242,7 +286,8 @@ public abstract class Wildcard extends WildcardModel {
         builder.append("extendType=").append(extendType).append(", ");
         builder.append("superType=").append(superType).append(", ");
         builder.append("wildcard=").append(wildcard).append(", ");
-        builder.append("combine=").append(combine).append("]");
+        builder.append("combine=").append(combine).append(", ");
+        builder.append("memberType=").append(memberType).append("]");
         return builder.toString();
     }
 
@@ -253,7 +298,7 @@ public abstract class Wildcard extends WildcardModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(extendType, superType, wildcard, combine);
+        return Objects.hash(extendType, superType, wildcard, combine, memberType);
     }
 
     /**
@@ -272,6 +317,7 @@ public abstract class Wildcard extends WildcardModel {
         if (!Objects.equals(superType, other.superType)) return false;
         if (!Objects.equals(wildcard, other.wildcard)) return false;
         if (!Objects.equals(combine, other.combine)) return false;
+        if (!Objects.equals(memberType, other.memberType)) return false;
         return true;
     }
 
@@ -331,6 +377,16 @@ public abstract class Wildcard extends WildcardModel {
         public Self combine(Map<? extends CharSequence, List<Class<? extends Number>>> value) {
             return create().combine(value);
         }
+
+        /**
+         * Create initialized {@link Wildcard} with memberType property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public Self memberType(Class<? extends Member> value) {
+            return create().memberType(value);
+        }
     }
 
     /**
@@ -381,6 +437,17 @@ public abstract class Wildcard extends WildcardModel {
             ((Wildcard) this).setCombine(value);
             return (Next) this;
         }
+
+        /**
+         * Assign memberType property.
+         * 
+         * @param value A new value to assign.
+         * @return The next assignable model.
+         */
+        default Next memberType(Class<? extends Member> value) {
+            ((Wildcard) this).setMemberType(value);
+            return (Next) this;
+        }
     }
 
     /**
@@ -403,5 +470,6 @@ public abstract class Wildcard extends WildcardModel {
         static final String SuperType = "superType";
         static final String Wildcard = "wildcard";
         static final String Combine = "combine";
+        static final String MemberType = "memberType";
     }
 }

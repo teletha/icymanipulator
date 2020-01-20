@@ -21,6 +21,7 @@ import apty.AnnotationProcessor;
 import icy.manipulator.IcyManipulator;
 import icy.manipulator.property.generic.model.Wildcard;
 import icy.manipulator.property.generic.model.WildcardModel;
+import icy.manipulator.property.generic.model.WildcardModel.Member;
 
 class WildcardTest {
 
@@ -55,5 +56,11 @@ class WildcardTest {
         Map<String, List<Class<? extends Number>>> map = new HashMap();
         Wildcard o = Wildcard.with.create().combine(map);
         assert o.combine == map;
+    }
+
+    @Test
+    void referMemberType() {
+        Wildcard o = Wildcard.with.create().memberType(Member.class);
+        assert o.memberType == Member.class;
     }
 }
