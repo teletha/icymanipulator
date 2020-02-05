@@ -114,7 +114,7 @@ public abstract class ReferenceLongSetter extends ReferenceLongSetterModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, deriveBySize$369667721.invoke(this, value, (LongConsumer) ((Åssignable) this)::square));
+            sizeUpdater.invoke(this, deriveBySize$369667721.invoke(this, value, (LongConsumer) this::setSquare));
         } catch (Throwable e) {
             throw quiet(e);
         }

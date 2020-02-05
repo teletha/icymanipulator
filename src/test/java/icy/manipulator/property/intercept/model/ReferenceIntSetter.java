@@ -114,7 +114,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, deriveBySize$71930602.invoke(this, value, (IntConsumer) ((Åssignable) this)::square));
+            sizeUpdater.invoke(this, deriveBySize$71930602.invoke(this, value, (IntConsumer) this::setSquare));
         } catch (Throwable e) {
             throw quiet(e);
         }

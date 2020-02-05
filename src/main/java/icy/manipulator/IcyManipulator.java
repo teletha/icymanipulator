@@ -363,8 +363,8 @@ public class IcyManipulator extends AptyProcessor {
                         for (MethodLike inter : m.findInterceptsFor(property)) {
                             value = inter.id() + ".invoke(this, " + value;
                             for (int i = 1; i < inter.paramTypes.size(); i++) {
-                                String name = m.findPropertyByName(inter.paramNames.get(i)).name;
-                                value += ", (" + use(inter.paramTypes.get(i)) + ") ((" + Assignable + ") this)::" + name;
+                                String name = m.findPropertyByName(inter.paramNames.get(i)).capitalizeName();
+                                value += ", (" + use(inter.paramTypes.get(i)) + ") this::set" + name;
                             }
                             value += ")";
                         }

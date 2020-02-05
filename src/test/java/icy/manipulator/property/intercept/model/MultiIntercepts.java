@@ -118,7 +118,7 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, stringlize$1978323892.invoke(this, checkLower$101354429.invoke(this, value), (Consumer<String>) ((Åssignable) this)::value));
+            sizeUpdater.invoke(this, stringlize$1978323892.invoke(this, checkLower$101354429.invoke(this, value), (Consumer<String>) this::setValue));
         } catch (Throwable e) {
             throw quiet(e);
         }

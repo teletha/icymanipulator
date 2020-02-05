@@ -114,7 +114,7 @@ public abstract class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, deriveBySize$1584752500.invoke(this, value, (DoubleConsumer) ((Åssignable) this)::square));
+            sizeUpdater.invoke(this, deriveBySize$1584752500.invoke(this, value, (DoubleConsumer) this::setSquare));
         } catch (Throwable e) {
             throw quiet(e);
         }
