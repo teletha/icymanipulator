@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 icymanipulator Development Team
+ * Copyright (C) 2020 icymanipulator Development Team
  *
  * Licensed under the MIT License (the "License");
  * you may not use this file except in compliance with the License.
@@ -10,7 +10,7 @@
 public class Project extends bee.api.Project {
 
     {
-        product("com.github.teletha", "icymanipulator", "0.9.7.0");
+        product("com.github.teletha", "icymanipulator", "1.0.0");
 
         require("com.github.teletha", "antibug").atTest();
         require("com.github.teletha", "bee", "0.5").atTest();
