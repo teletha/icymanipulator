@@ -17,7 +17,7 @@ import icy.manipulator.Icy;
 public abstract class RequiredRequiredModel extends Overload {
 
     @Icy.Property
-    abstract LocalTime time();
+    public abstract LocalTime time();
 
     @Icy.Overload("time")
     private LocalTime time(int hour, int minute, int second) {
