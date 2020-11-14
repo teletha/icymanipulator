@@ -6,6 +6,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
+import java.lang.UnsupportedOperationException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -119,6 +120,7 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
     private final void setSize(int value) {
         try {
             sizeUpdater.invoke(this, stringlize$1978323892.invoke(this, checkLower$101354429.invoke(this, value), (Consumer<String>) this::setValue));
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -155,6 +157,7 @@ public abstract class MultiIntercepts extends MultiInterceptsModel {
         }
         try {
             valueUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }

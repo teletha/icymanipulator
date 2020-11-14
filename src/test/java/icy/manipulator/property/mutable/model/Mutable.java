@@ -7,6 +7,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
+import java.lang.UnsupportedOperationException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -145,6 +146,7 @@ public abstract class Mutable extends MutableModel {
         }
         try {
             valueUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -200,6 +202,7 @@ public abstract class Mutable extends MutableModel {
     private final void setIntNum(int value) {
         try {
             intNumUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -255,6 +258,7 @@ public abstract class Mutable extends MutableModel {
     private final void setLongNum(long value) {
         try {
             longNumUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -310,6 +314,7 @@ public abstract class Mutable extends MutableModel {
     private final void setFloatNum(float value) {
         try {
             floatNumUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -365,6 +370,7 @@ public abstract class Mutable extends MutableModel {
     private final void setDoubleNum(double value) {
         try {
             doubleNumUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }

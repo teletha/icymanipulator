@@ -5,6 +5,7 @@ import icy.manipulator.property.intercept.model.ReferenceIntSetterModel;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
+import java.lang.UnsupportedOperationException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -115,6 +116,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
     private final void setSize(int value) {
         try {
             sizeUpdater.invoke(this, deriveBySize$71930602.invoke(this, value, (IntConsumer) this::setSquare));
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -148,6 +150,7 @@ public abstract class ReferenceIntSetter extends ReferenceIntSetterModel {
     private final void setSquare(int value) {
         try {
             squareUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }

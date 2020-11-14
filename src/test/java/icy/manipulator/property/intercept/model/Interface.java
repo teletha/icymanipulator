@@ -5,6 +5,7 @@ import icy.manipulator.property.intercept.model.InterfaceModel;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
+import java.lang.UnsupportedOperationException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -107,6 +108,7 @@ public abstract class Interface implements InterfaceModel {
     private final void setSize(int value) {
         try {
             sizeUpdater.invoke(this, normalizeSize$101354429.invoke(this, value));
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }

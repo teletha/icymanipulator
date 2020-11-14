@@ -5,6 +5,7 @@ import icy.manipulator.property.base.model.PrimitiveModel;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
+import java.lang.UnsupportedOperationException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -135,6 +136,7 @@ public abstract class Primitive extends PrimitiveModel {
     private final void setIntX(int value) {
         try {
             intXUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -168,6 +170,7 @@ public abstract class Primitive extends PrimitiveModel {
     private final void setLongX(long value) {
         try {
             longXUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -201,6 +204,7 @@ public abstract class Primitive extends PrimitiveModel {
     private final void setFloatX(float value) {
         try {
             floatXUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -234,6 +238,7 @@ public abstract class Primitive extends PrimitiveModel {
     private final void setDoubleX(double value) {
         try {
             doubleXUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -267,6 +272,7 @@ public abstract class Primitive extends PrimitiveModel {
     private final void setByteX(byte value) {
         try {
             byteXUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -300,6 +306,7 @@ public abstract class Primitive extends PrimitiveModel {
     private final void setShortX(short value) {
         try {
             shortXUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -333,6 +340,7 @@ public abstract class Primitive extends PrimitiveModel {
     private final void setCharX(char value) {
         try {
             charXUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -366,6 +374,7 @@ public abstract class Primitive extends PrimitiveModel {
     private final void setBooleanX(boolean value) {
         try {
             booleanXUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }

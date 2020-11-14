@@ -6,6 +6,7 @@ import icy.manipulator.property.extend.model.ArbitraryRequiredModel;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
+import java.lang.UnsupportedOperationException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -87,6 +88,7 @@ public abstract class ArbitraryRequired extends ArbitraryRequiredModel {
     private final void setId(long value) {
         try {
             idUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }

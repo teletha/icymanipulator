@@ -373,6 +373,8 @@ public class IcyManipulator extends AptyProcessor {
                         if (property.custom != null && property.custom.requireSetter) {
                             write(property.name, "Customizer.accept(this.", property.name, ");");
                         }
+                    }, UnsupportedOperationException.class, e -> {
+                        // ignore
                     }, Throwable.class, e -> {
                         write("throw quiet(", e, ");");
                     });

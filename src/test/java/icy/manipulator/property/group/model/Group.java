@@ -5,6 +5,7 @@ import icy.manipulator.property.group.model.GroupModel;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
+import java.lang.UnsupportedOperationException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -100,6 +101,7 @@ public abstract class Group extends GroupModel {
     private final void setX(int value) {
         try {
             xUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -133,6 +135,7 @@ public abstract class Group extends GroupModel {
     private final void setY(int value) {
         try {
             yUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -166,6 +169,7 @@ public abstract class Group extends GroupModel {
     private final void setZ(int value) {
         try {
             zUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }

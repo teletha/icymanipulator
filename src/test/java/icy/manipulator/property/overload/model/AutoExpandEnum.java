@@ -6,6 +6,7 @@ import icy.manipulator.property.overload.model.AutoExpandEnumModel.Answer;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
+import java.lang.UnsupportedOperationException;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -98,6 +99,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
         }
         try {
             answerUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -134,6 +136,7 @@ public abstract class AutoExpandEnum extends AutoExpandEnumModel {
         }
         try {
             policyUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }

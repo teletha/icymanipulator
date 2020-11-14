@@ -104,11 +104,35 @@ public class Coder {
         }
     }
 
+    /**
+     * Write try-catch block.
+     * 
+     * @param tryBlock
+     * @param errorType
+     * @param catchBlock
+     */
     public final void writeTry(Runnable tryBlock, Class<? extends Throwable> errorType, Consumer<String> catchBlock) {
         write("try {");
         write(tryBlock);
         write("} catch (", errorType, " e) {");
         write(() -> catchBlock.accept("e"));
+        write("}");
+    }
+
+    /**
+     * Write try-catch block.
+     * 
+     * @param tryBlock
+     * @param errorType
+     * @param catchBlock
+     */
+    public final void writeTry(Runnable tryBlock, Class<? extends Throwable> errorType1, Consumer<String> catchBlock1, Class<? extends Throwable> errorType2, Consumer<String> catchBlock2) {
+        write("try {");
+        write(tryBlock);
+        write("} catch (", errorType1, " e) {");
+        write(() -> catchBlock1.accept("e"));
+        write("} catch (", errorType2, " e) {");
+        write(() -> catchBlock2.accept("e"));
         write("}");
     }
 

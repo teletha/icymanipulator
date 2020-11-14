@@ -5,6 +5,7 @@ import icy.manipulator.property.base.model.PrimitiveArrayModel;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
+import java.lang.UnsupportedOperationException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
@@ -139,6 +140,7 @@ public abstract class PrimitiveArray extends PrimitiveArrayModel {
         }
         try {
             intXUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -175,6 +177,7 @@ public abstract class PrimitiveArray extends PrimitiveArrayModel {
         }
         try {
             longXUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -211,6 +214,7 @@ public abstract class PrimitiveArray extends PrimitiveArrayModel {
         }
         try {
             floatXUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -247,6 +251,7 @@ public abstract class PrimitiveArray extends PrimitiveArrayModel {
         }
         try {
             doubleXUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -283,6 +288,7 @@ public abstract class PrimitiveArray extends PrimitiveArrayModel {
         }
         try {
             byteXUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -319,6 +325,7 @@ public abstract class PrimitiveArray extends PrimitiveArrayModel {
         }
         try {
             shortXUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -355,6 +362,7 @@ public abstract class PrimitiveArray extends PrimitiveArrayModel {
         }
         try {
             charXUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -391,6 +399,7 @@ public abstract class PrimitiveArray extends PrimitiveArrayModel {
         }
         try {
             booleanXUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
         }
