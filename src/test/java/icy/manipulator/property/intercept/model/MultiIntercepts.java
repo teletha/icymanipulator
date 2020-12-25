@@ -19,7 +19,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link MultiInterceptsModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class MultiIntercepts extends MultiInterceptsModel {
+public class MultiIntercepts extends MultiInterceptsModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

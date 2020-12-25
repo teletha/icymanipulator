@@ -18,7 +18,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link ArrayModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class Array implements ArrayModel {
+public class Array implements ArrayModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

@@ -16,7 +16,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link OptionalLongModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class OptionalLong implements OptionalLongModel {
+public class OptionalLong implements OptionalLongModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

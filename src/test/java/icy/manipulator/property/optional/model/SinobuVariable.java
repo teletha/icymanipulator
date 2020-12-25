@@ -18,7 +18,7 @@ import kiss.Variable;
  * Generated model for {@link SinobuVariableModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class SinobuVariable implements SinobuVariableModel {
+public class SinobuVariable implements SinobuVariableModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

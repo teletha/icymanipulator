@@ -17,7 +17,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link ImplementationVisibilityModel}.
  */
 @Generated("Icy Manipulator")
-abstract class ImplementationVisibility extends ImplementationVisibilityModel {
+class ImplementationVisibility extends ImplementationVisibilityModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

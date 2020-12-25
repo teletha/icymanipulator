@@ -17,7 +17,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link InterfaceArbitraryModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class InterfaceArbitrary implements InterfaceArbitraryModel {
+public class InterfaceArbitrary implements InterfaceArbitraryModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

@@ -16,7 +16,7 @@ import javax.annotation.processing.Generated;
  * Generated model for {@link OptionalIntModel}.
  */
 @Generated("Icy Manipulator")
-public abstract class OptionalInt extends OptionalIntModel {
+public class OptionalInt extends OptionalIntModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
