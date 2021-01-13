@@ -523,11 +523,20 @@ public class IcyManipulator extends AptyProcessor {
                         write("return this;");
                     });
 
-                    StringJoiner code = new StringJoiner(".");
-                    for (PropertyInfo p : Lists.merge(m.requiredProperties(), m.arbitraryProperties())) {
-                        code.add(p.name + "(" + (property == p ? "value" : "this." + p.name) + ")");
+                    int group = icy.grouping();
+                    List<PropertyInfo> merged = Lists.merge(m.requiredProperties(), m.arbitraryProperties());
+                    StringJoiner head = new StringJoiner(", ", merged.get(0).name + "(", ")");
+                    for (int i = 0; i < group; i++) {
+                        PropertyInfo p = merged.get(i);
+                        head.add(property == p ? "value" : "this." + p.name);
                     }
-                    write("return ", icy.builder(), ".", code, ";");
+
+                    StringJoiner tail = new StringJoiner(".");
+                    for (int i = group; i < merged.size(); i++) {
+                        PropertyInfo p = merged.get(i);
+                        tail.add(p.name + "(" + (property == p ? "value" : "this." + p.name) + ")");
+                    }
+                    write("return ", icy.builder(), ".", head, tail.length() == 0 ? "" : ".", tail, ";");
                 });
             }
         }
