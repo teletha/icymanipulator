@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.3.1](https://www.github.com/Teletha/icymanipulator/compare/v1.3.0...v1.3.1) (2021-03-28)
+
+
+### Bug Fixes
+
+* Use latest version. ([1d2c510](https://www.github.com/Teletha/icymanipulator/commit/1d2c510a6e12a7545e60bc7c38aeb08b0765fcbe))
+
 ## [1.3.0](https://www.github.com/Teletha/icymanipulator/compare/v1.0.0...v1.3.0) (2021-03-28)
 
 
