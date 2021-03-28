@@ -13,7 +13,7 @@ public class Project extends bee.api.Project {
         product("com.github.teletha", "icymanipulator", ref("version.txt"));
 
         require("com.github.teletha", "antibug").atTest();
-        require("com.github.teletha", "bee", "0.8.0").atTest();
+        require("com.github.teletha", "bee").atTest();
         require("com.google.guava", "guava").atTest();
 
         versionControlSystem("https://github.com/Teletha/IcyManipulator");
