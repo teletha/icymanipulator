@@ -194,7 +194,7 @@ public class AnnotationProcessor implements Extension {
         File generator = Locator.directory("src/main/java").file(computeSourceFileName(IcyManipulator.class.getName()));
         File depend1 = Locator.directory("src/main/java").file(computeSourceFileName(ModelInfo.class.getName()));
         File temporaryGeneratedSource = Locator.directory(room.root).file(computeSourceFileName(generatedClass));
-        long date = generatedSource.lastModifiedMilli();
+        long date = generatedSource.lastModifiedMilli() + 3000;
 
         if (compilingSource.lastModifiedMilli() < date && annotaionProcessorSource.lastModifiedMilli() < date && generator
                 .lastModifiedMilli() < date && depend1.lastModifiedMilli() < date) {
