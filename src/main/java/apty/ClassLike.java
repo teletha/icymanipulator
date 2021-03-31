@@ -208,7 +208,6 @@ public interface ClassLike {
      *
      * @return A {@link Stream} of {@code Type} objects representing all the declared members of
      *         this class.
-     * @return
      */
     Stream<Type> getDeclaredClasses();
 

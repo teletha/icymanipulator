@@ -466,8 +466,8 @@ public class Type implements Codable, ClassLike {
      * @param parameters A list of parameter variables.
      * @return The created {@link Type}.
      */
-    public static final Type of(String fqcn, Object... parameter) {
-        return new Type(fqcn, flatten(parameter), TypeKind.DECLARED, detect(fqcn));
+    public static final Type of(String fqcn, Object... parameters) {
+        return new Type(fqcn, flatten(parameters), TypeKind.DECLARED, detect(fqcn));
     }
 
     /**

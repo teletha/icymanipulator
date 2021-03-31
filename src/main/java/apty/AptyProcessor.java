@@ -151,7 +151,7 @@ public abstract class AptyProcessor implements Processor {
      * Write new source file.
      * 
      * @param fqcn A fully qualified class name to write.
-     * @param coder Write your code.
+     * @param coding Write your code.
      * @throws Exception
      */
     protected final void writeSourceFile(String fqcn, AnnotationProcessing<Coder> coding) throws Exception {
@@ -164,7 +164,7 @@ public abstract class AptyProcessor implements Processor {
     /**
      * Write new source file.
      * 
-     * @param coder Write your code.
+     * @param coding Write your code.
      * @throws Exception
      */
     protected final void writeSourceFileBy(Coder coding) throws Exception {

@@ -111,7 +111,7 @@ public class Apty {
     /**
      * Returns the erasure of a type.
      *
-     * @param t the type to be erased
+     * @param type the type to be erased
      * @return the erasure of the given type
      * @throws IllegalArgumentException if given a type for a package or module
      */

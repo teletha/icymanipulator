@@ -71,9 +71,6 @@ public class Coder {
 
     /**
      * Copy javadoc from the specified {@link Element}.
-     * 
-     * @param e
-     * @param defaultComment
      */
     public final void javadoc(Element e, Runnable defaultDocument) {
         javadoc(Apty.doc(e), defaultDocument);
@@ -81,8 +78,6 @@ public class Coder {
 
     /**
      * Copy javadoc from the specified {@link Element}.
-     * 
-     * @param e
      */
     public final void javadoc(String doc, Runnable defaultDocument) {
         doc = doc.trim();
@@ -121,10 +116,6 @@ public class Coder {
 
     /**
      * Write try-catch block.
-     * 
-     * @param tryBlock
-     * @param errorType
-     * @param catchBlock
      */
     public final void writeTry(Runnable tryBlock, Class<? extends Throwable> errorType1, Consumer<String> catchBlock1, Class<? extends Throwable> errorType2, Consumer<String> catchBlock2) {
         write("try {");
@@ -163,8 +154,8 @@ public class Coder {
     /**
      * Write nested code.
      * 
-     * @param code A code1 fragment.
-     * @param code A code2 fragment.
+     * @param code1 A code1 fragment.
+     * @param code2 A code2 fragment.
      * @param nest A nested code.
      */
     public final Coder write(Object code1, Object code2, Runnable nest) {
@@ -177,9 +168,9 @@ public class Coder {
     /**
      * Write nested code.
      * 
-     * @param code A code1 fragment.
-     * @param code A code2 fragment.
-     * @param code A code3 fragment.
+     * @param code1 A code1 fragment.
+     * @param code2 A code2 fragment.
+     * @param code3 A code3 fragment.
      * @param nest A nested code.
      */
     public final Coder write(Object code1, Object code2, Object code3, Runnable nest) {
@@ -192,10 +183,10 @@ public class Coder {
     /**
      * Write nested code.
      * 
-     * @param code A code1 fragment.
-     * @param code A code2 fragment.
-     * @param code A code3 fragment.
-     * @param code A code4 fragment.
+     * @param code1 A code1 fragment.
+     * @param code2 A code2 fragment.
+     * @param code3 A code3 fragment.
+     * @param code4 A code4 fragment.
      * @param nest A nested code.
      */
     public final Coder write(Object code1, Object code2, Object code3, Object code4, Runnable nest) {
@@ -208,11 +199,11 @@ public class Coder {
     /**
      * Write nested code.
      * 
-     * @param code A code1 fragment.
-     * @param code A code2 fragment.
-     * @param code A code3 fragment.
-     * @param code A code4 fragment.
-     * @param code A code5 fragment.
+     * @param code1 A code1 fragment.
+     * @param code2 A code2 fragment.
+     * @param code3 A code3 fragment.
+     * @param code4 A code4 fragment.
+     * @param code5 A code5 fragment.
      * @param nest A nested code.
      */
     public final Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Runnable nest) {
@@ -225,12 +216,12 @@ public class Coder {
     /**
      * Write nested code.
      * 
-     * @param code A code1 fragment.
-     * @param code A code2 fragment.
-     * @param code A code3 fragment.
-     * @param code A code4 fragment.
-     * @param code A code5 fragment.
-     * @param code A code6 fragment.
+     * @param code1 A code1 fragment.
+     * @param code2 A code2 fragment.
+     * @param code3 A code3 fragment.
+     * @param code4 A code4 fragment.
+     * @param code5 A code5 fragment.
+     * @param code6 A code6 fragment.
      * @param nest A nested code.
      */
     public final Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Runnable nest) {
@@ -243,13 +234,13 @@ public class Coder {
     /**
      * Write nested code.
      * 
-     * @param code A code1 fragment.
-     * @param code A code2 fragment.
-     * @param code A code3 fragment.
-     * @param code A code4 fragment.
-     * @param code A code5 fragment.
-     * @param code A code6 fragment.
-     * @param code A code7 fragment.
+     * @param code1 A code1 fragment.
+     * @param code2 A code2 fragment.
+     * @param code3 A code3 fragment.
+     * @param code4 A code4 fragment.
+     * @param code5 A code5 fragment.
+     * @param code6 A code6 fragment.
+     * @param code7 A code7 fragment.
      * @param nest A nested code.
      */
     public final Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Object code7, Runnable nest) {
@@ -262,14 +253,14 @@ public class Coder {
     /**
      * Write nested code.
      * 
-     * @param code A code1 fragment.
-     * @param code A code2 fragment.
-     * @param code A code3 fragment.
-     * @param code A code4 fragment.
-     * @param code A code5 fragment.
-     * @param code A code6 fragment.
-     * @param code A code7 fragment.
-     * @param code A code8 fragment.
+     * @param code1 A code1 fragment.
+     * @param code2 A code2 fragment.
+     * @param code3 A code3 fragment.
+     * @param code4 A code4 fragment.
+     * @param code5 A code5 fragment.
+     * @param code6 A code6 fragment.
+     * @param code7 A code7 fragment.
+     * @param code8 A code8 fragment.
      * @param nest A nested code.
      */
     public final Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Object code7, Object code8, Runnable nest) {
@@ -282,15 +273,15 @@ public class Coder {
     /**
      * Write nested code.
      * 
-     * @param code A code1 fragment.
-     * @param code A code2 fragment.
-     * @param code A code3 fragment.
-     * @param code A code4 fragment.
-     * @param code A code5 fragment.
-     * @param code A code6 fragment.
-     * @param code A code7 fragment.
-     * @param code A code8 fragment.
-     * @param code A code9 fragment.
+     * @param code1 A code1 fragment.
+     * @param code2 A code2 fragment.
+     * @param code3 A code3 fragment.
+     * @param code4 A code4 fragment.
+     * @param code5 A code5 fragment.
+     * @param code6 A code6 fragment.
+     * @param code7 A code7 fragment.
+     * @param code8 A code8 fragment.
+     * @param code9 A code9 fragment.
      * @param nest A nested code.
      */
     public final Coder write(Object code1, Object code2, Object code3, Object code4, Object code5, Object code6, Object code7, Object code8, Object code9, Runnable nest) {

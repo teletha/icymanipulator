@@ -183,7 +183,7 @@ public class ArbitraryOverload extends ArbitraryOverloadModel {
         /**
          * Create initialized {@link ArbitraryOverload} with size property.
          *
-         * @param value A value to assign.
+         * @param number A value to assign.
          * @return A initialized model.
          */
         public Self size(String number) {

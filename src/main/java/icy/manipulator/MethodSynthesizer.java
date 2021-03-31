@@ -60,7 +60,7 @@ public class MethodSynthesizer {
     }
 
     /**
-     * @param methods
+     * @param definitions
      */
     MethodSynthesizer(MethodLike... definitions) {
         for (MethodLike method : definitions) {

@@ -15,7 +15,7 @@ import java.util.Objects;
 import javax.annotation.processing.Generated;
 
 /**
- * Generated model for {@link GenericModel<P, Q>}.
+ * Generated model for {@link GenericModel}.
  */
 @Generated("Icy Manipulator")
 public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
@@ -233,12 +233,12 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
     }
 
     /**
-     * Namespace for {@link Generic<P, Q>}  builder methods.
+     * Namespace for {@link Generic}  builder methods.
      */
     public static class Ìnstantiator<Self extends Generic<P, Q> & ÅssignableÅrbitrary<Self, P, Q>, P, Q extends Number> {
 
         /**
-         * Create new {@link Generic<P, Q>} with the specified value property.
+         * Create new {@link Generic} with the specified value property.
          * 
          * @return The next assignable model.
          */

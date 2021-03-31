@@ -83,7 +83,7 @@ public class IcyManipulator extends AptyProcessor {
             String inheritance = model.type.isInterface() ? " implements " : " extends ";
 
             write("/**");
-            write(" * Generated model for {@link ", model.type, "}.");
+            write(" * Generated model for {@link ", model.type.base, "}.");
             write(" */");
             write("@", Generated.class, "(`Icy Manipulator`)");
             write(visibility, "class ", model.implType.raw(), declare(declarations), inheritance, model.type, () -> {
@@ -561,7 +561,7 @@ public class IcyManipulator extends AptyProcessor {
 
             write();
             write("/**");
-            write(" * Namespace for {@link ", m.implType, "}  builder methods.");
+            write(" * Namespace for {@link ", m.implType.base, "}  builder methods.");
             write(" */");
             write("public static class ", Instantiator, "<", Self.with(declarations), ">", parentInstantiator, () -> {
                 m.firstRequiredProperty().ifPresentOrElse(p -> {
@@ -579,7 +579,7 @@ public class IcyManipulator extends AptyProcessor {
                                 write();
                                 javadoc(method.doc, () -> {
                                     write("/**");
-                                    write(" * Create new {@link ", m.implType, "} with the specified ", p.name, " property.");
+                                    write(" * Create new {@link ", m.implType.base, "} with the specified ", p.name, " property.");
                                     write(" * ");
                                     write(" * @return The next assignable model.");
                                     write(" */");
@@ -642,7 +642,9 @@ public class IcyManipulator extends AptyProcessor {
                                 write("/**");
                                 write(" * Create initialized {@link ", this.m.implType, "} with ", p.name, " property.");
                                 write(" *");
-                                write(" * @param value A value to assign.");
+                                for (String param : m.paramNames) {
+                                    write(" * @param ", param, " A value to assign.");
+                                }
                                 write(" * @return A initialized model.");
                                 write(" */");
                             });

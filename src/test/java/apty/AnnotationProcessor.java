@@ -54,7 +54,7 @@ public class AnnotationProcessor implements Extension {
 
     /**
      * @param processor
-     * @param room
+     * @param classes
      */
     public AnnotationProcessor(Class<? extends AptyProcessor> processor, Class... classes) {
         this.processor = processor;
