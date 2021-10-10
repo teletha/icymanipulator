@@ -10,21 +10,21 @@
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>antibug</artifactId>
-			<version>[1.0.3,)</version>
+			<version>[1.2.0,)</version>
 			<scope>test</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>bee</artifactId>
-			<version>[0.8.0,)</version>
+			<version>[0.8.1,)</version>
 			<scope>test</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>[30.1.1-jre,)</version>
+			<version>[31.0.1-jre,)</version>
 			<scope>test</scope>
 			<exclusions/>
 		</dependency>
