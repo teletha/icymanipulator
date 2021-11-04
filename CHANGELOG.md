@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.4.0](https://www.github.com/Teletha/icymanipulator/compare/v1.3.1...v1.4.0) (2021-11-04)
+
+
+### Features
+
+* Assignable API generates upper-bounded type for declared property. ([e5ba0a1](https://www.github.com/Teletha/icymanipulator/commit/e5ba0a1e9a89b1b0f4ce97163402ac6680b05825))
+* Support automatic bounded type for List. ([0bc93c5](https://www.github.com/Teletha/icymanipulator/commit/0bc93c5fc22626ea435ca2c40b8aa54bf8c73d87))
+
+
+### Bug Fixes
+
+* Generate valid javadoc. ([3a167b3](https://www.github.com/Teletha/icymanipulator/commit/3a167b37ab0d17cb77ef594e34b413b5f048be29))
+
 ### [1.3.1](https://www.github.com/Teletha/icymanipulator/compare/v1.3.0...v1.3.1) (2021-03-28)
 
 
