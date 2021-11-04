@@ -9,7 +9,6 @@
  */
 package icy.manipulator;
 
-import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -46,9 +45,6 @@ public class PropertyInfo {
     /** The property type. */
     public final boolean copiable;
 
-    /** The property type. */
-    public final boolean boundable;
-
     /** The proeprty type. */
     public final boolean autoExpandable;
 
@@ -73,7 +69,6 @@ public class PropertyInfo {
         this.type = Type.of(method.getReturnType());
         this.modifier = validatePropertyModifier(method);
         this.arbitrary = !method.getModifiers().contains(Modifier.ABSTRACT) || OptionalSupport.by(type).isPresent();
-        this.boundable = type.raw().is(List.class);
 
         Property annotation = method.getAnnotation(Icy.Property.class);
 

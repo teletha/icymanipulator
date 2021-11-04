@@ -24,4 +24,9 @@ public abstract class AutoExpandSetModel {
     public Set<Supplier<String>> generics() {
         return Set.of();
     }
+
+    @Icy.Property
+    public Set<CharSequence> upperBoundable() {
+        return Set.of("");
+    }
 }

@@ -407,7 +407,7 @@ public class Wildcard extends WildcardModel {
          * @return The next assignable model.
          */
         default Next extendType(Class<? extends Collection> value) {
-            ((Wildcard) this).setExtendType(value);
+            ((Wildcard) this).setExtendType((java.lang.Class)value);
             return (Next) this;
         }
 
@@ -418,7 +418,7 @@ public class Wildcard extends WildcardModel {
          * @return The next assignable model.
          */
         default Next superType(List<? super Integer> value) {
-            ((Wildcard) this).setSuperType(value);
+            ((Wildcard) this).setSuperType((java.util.List)value);
             return (Next) this;
         }
 
@@ -429,7 +429,7 @@ public class Wildcard extends WildcardModel {
          * @return The next assignable model.
          */
         default Next wildcard(Supplier<?> value) {
-            ((Wildcard) this).setWildcard(value);
+            ((Wildcard) this).setWildcard((java.util.function.Supplier)value);
             return (Next) this;
         }
 
@@ -439,8 +439,8 @@ public class Wildcard extends WildcardModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next combine(Map<? extends CharSequence, List<Class<? extends Number>>> value) {
-            ((Wildcard) this).setCombine(value);
+        default Next combine(Map<? extends CharSequence, ? extends List<Class<? extends Number>>> value) {
+            ((Wildcard) this).setCombine((java.util.Map)value);
             return (Next) this;
         }
 
@@ -451,7 +451,7 @@ public class Wildcard extends WildcardModel {
          * @return The next assignable model.
          */
         default Next memberType(Class<? extends Member> value) {
-            ((Wildcard) this).setMemberType(value);
+            ((Wildcard) this).setMemberType((java.lang.Class)value);
             return (Next) this;
         }
     }

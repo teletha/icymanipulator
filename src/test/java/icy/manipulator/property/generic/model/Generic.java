@@ -278,7 +278,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
          * @return The next assignable model.
          */
         default Next number(Q value) {
-            ((Generic<P, Q>) this).setNumber(value);
+            ((Generic<P, Q>) this).setNumber((Q)value);
             return (Next) this;
         }
     }
@@ -295,7 +295,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
          * @return The next assignable model.
          */
         default Next mapper(Map<P, Q> value) {
-            ((Generic<P, Q>) this).setMapper(value);
+            ((Generic<P, Q>) this).setMapper((java.util.Map)value);
             return (Next) this;
         }
 

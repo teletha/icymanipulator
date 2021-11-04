@@ -24,4 +24,9 @@ public abstract class AutoExpandMapModel {
     public Map<String, Supplier<String>> generics() {
         return Map.of();
     }
+
+    @Icy.Property
+    public Map<CharSequence, Number> upperBoundable() {
+        return Map.of();
+    }
 }

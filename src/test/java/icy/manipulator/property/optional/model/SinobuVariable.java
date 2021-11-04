@@ -185,8 +185,8 @@ public class SinobuVariable implements SinobuVariableModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next value(Variable<String> value) {
-            ((SinobuVariable) this).setValue(value);
+        default Next value(Variable<? extends String> value) {
+            ((SinobuVariable) this).setValue((kiss.Variable)value);
             return (Next) this;
         }
 

@@ -250,8 +250,8 @@ public class Optional implements OptionalModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next name(java.util.Optional<String> value) {
-            ((Optional) this).setName(value);
+        default Next name(java.util.Optional<? extends String> value) {
+            ((Optional) this).setName((java.util.Optional)value);
             return (Next) this;
         }
 
@@ -270,8 +270,8 @@ public class Optional implements OptionalModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next defaults(java.util.Optional<String> value) {
-            ((Optional) this).setDefaults(value);
+        default Next defaults(java.util.Optional<? extends String> value) {
+            ((Optional) this).setDefaults((java.util.Optional)value);
             return (Next) this;
         }
 

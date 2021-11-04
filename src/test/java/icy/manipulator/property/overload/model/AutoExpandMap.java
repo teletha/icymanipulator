@@ -2,7 +2,9 @@ package icy.manipulator.property.overload.model;
 
 import icy.manipulator.property.overload.model.AutoExpandMap;
 import icy.manipulator.property.overload.model.AutoExpandMapModel;
+import java.lang.CharSequence;
 import java.lang.Integer;
+import java.lang.Number;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -56,11 +58,17 @@ public class AutoExpandMap extends AutoExpandMapModel {
     /** The final property updater. */
     private static final MethodHandle genericsUpdater = updater("generics");
 
+    /** The final property updater. */
+    private static final MethodHandle upperBoundableUpdater = updater("upperBoundable");
+
     /** The exposed property. */
     public final Map<String, Integer> values;
 
     /** The exposed property. */
     public final Map<String, Supplier<String>> generics;
+
+    /** The exposed property. */
+    public final Map<CharSequence, Number> upperBoundable;
 
     /**
      * HIDE CONSTRUCTOR
@@ -68,6 +76,7 @@ public class AutoExpandMap extends AutoExpandMapModel {
     protected AutoExpandMap() {
         this.values = null;
         this.generics = super.generics();
+        this.upperBoundable = super.upperBoundable();
     }
 
     /**
@@ -145,6 +154,43 @@ public class AutoExpandMap extends AutoExpandMapModel {
     }
 
     /**
+     * Return the upperBoundable property.
+     *
+     * @return A value of upperBoundable property.
+     */
+    @Override
+    public final Map<CharSequence, Number> upperBoundable() {
+        return this.upperBoundable;
+    }
+
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of upperBoundable property.
+     */
+    @SuppressWarnings("unused")
+    private final Map<CharSequence, Number> getUpperBoundable() {
+        return this.upperBoundable;
+    }
+
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of upperBoundable property to assign.
+     */
+    private final void setUpperBoundable(Map<CharSequence, Number> value) {
+        if (value == null) {
+            value = super.upperBoundable();
+        }
+        try {
+            upperBoundableUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
      * Show all property values.
      *
      * @return All property values.
@@ -153,7 +199,8 @@ public class AutoExpandMap extends AutoExpandMapModel {
     public String toString() {
         StringBuilder builder = new StringBuilder("AutoExpandMap [");
         builder.append("values=").append(values).append(", ");
-        builder.append("generics=").append(generics).append("]");
+        builder.append("generics=").append(generics).append(", ");
+        builder.append("upperBoundable=").append(upperBoundable).append("]");
         return builder.toString();
     }
 
@@ -164,7 +211,7 @@ public class AutoExpandMap extends AutoExpandMapModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(values, generics);
+        return Objects.hash(values, generics, upperBoundable);
     }
 
     /**
@@ -181,6 +228,7 @@ public class AutoExpandMap extends AutoExpandMapModel {
         AutoExpandMap other = (AutoExpandMap) o;
         if (!Objects.equals(values, other.values)) return false;
         if (!Objects.equals(generics, other.generics)) return false;
+        if (!Objects.equals(upperBoundable, other.upperBoundable)) return false;
         return true;
     }
 
@@ -296,8 +344,8 @@ public class AutoExpandMap extends AutoExpandMapModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next values(Map<String, Integer> value) {
-            ((AutoExpandMap) this).setValues(value);
+        default Next values(Map<? extends String, ? extends Integer> value) {
+            ((AutoExpandMap) this).setValues((java.util.Map)value);
             return (Next) this;
         }
 
@@ -394,8 +442,8 @@ public class AutoExpandMap extends AutoExpandMapModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next generics(Map<String, Supplier<String>> value) {
-            ((AutoExpandMap) this).setGenerics(value);
+        default Next generics(Map<? extends String, ? extends Supplier<String>> value) {
+            ((AutoExpandMap) this).setGenerics((java.util.Map)value);
             return (Next) this;
         }
 
@@ -479,6 +527,98 @@ public class AutoExpandMap extends AutoExpandMapModel {
         default Next generics(String key1, Supplier<String> value1, String key2, Supplier<String> value2, String key3, Supplier<String> value3, String key4, Supplier<String> value4, String key5, Supplier<String> value5, String key6, Supplier<String> value6, String key7, Supplier<String> value7, String key8, Supplier<String> value8, String key9, Supplier<String> value9) {
             return generics(Map.of(key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8, key9, value9));
         }
+
+        /**
+         * Assign upperBoundable property.
+         * 
+         * @param value A new value to assign.
+         * @return The next assignable model.
+         */
+        default Next upperBoundable(Map<? extends CharSequence, ? extends Number> value) {
+            ((AutoExpandMap) this).setUpperBoundable((java.util.Map)value);
+            return (Next) this;
+        }
+
+        /**
+         * Assign upperBoundable property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next upperBoundable(CharSequence key1, Number value1) {
+            return upperBoundable(Map.of(key1, value1));
+        }
+
+        /**
+         * Assign upperBoundable property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next upperBoundable(CharSequence key1, Number value1, CharSequence key2, Number value2) {
+            return upperBoundable(Map.of(key1, value1, key2, value2));
+        }
+
+        /**
+         * Assign upperBoundable property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next upperBoundable(CharSequence key1, Number value1, CharSequence key2, Number value2, CharSequence key3, Number value3) {
+            return upperBoundable(Map.of(key1, value1, key2, value2, key3, value3));
+        }
+
+        /**
+         * Assign upperBoundable property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next upperBoundable(CharSequence key1, Number value1, CharSequence key2, Number value2, CharSequence key3, Number value3, CharSequence key4, Number value4) {
+            return upperBoundable(Map.of(key1, value1, key2, value2, key3, value3, key4, value4));
+        }
+
+        /**
+         * Assign upperBoundable property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next upperBoundable(CharSequence key1, Number value1, CharSequence key2, Number value2, CharSequence key3, Number value3, CharSequence key4, Number value4, CharSequence key5, Number value5) {
+            return upperBoundable(Map.of(key1, value1, key2, value2, key3, value3, key4, value4, key5, value5));
+        }
+
+        /**
+         * Assign upperBoundable property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next upperBoundable(CharSequence key1, Number value1, CharSequence key2, Number value2, CharSequence key3, Number value3, CharSequence key4, Number value4, CharSequence key5, Number value5, CharSequence key6, Number value6) {
+            return upperBoundable(Map.of(key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6));
+        }
+
+        /**
+         * Assign upperBoundable property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next upperBoundable(CharSequence key1, Number value1, CharSequence key2, Number value2, CharSequence key3, Number value3, CharSequence key4, Number value4, CharSequence key5, Number value5, CharSequence key6, Number value6, CharSequence key7, Number value7) {
+            return upperBoundable(Map.of(key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7));
+        }
+
+        /**
+         * Assign upperBoundable property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next upperBoundable(CharSequence key1, Number value1, CharSequence key2, Number value2, CharSequence key3, Number value3, CharSequence key4, Number value4, CharSequence key5, Number value5, CharSequence key6, Number value6, CharSequence key7, Number value7, CharSequence key8, Number value8) {
+            return upperBoundable(Map.of(key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8));
+        }
+
+        /**
+         * Assign upperBoundable property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next upperBoundable(CharSequence key1, Number value1, CharSequence key2, Number value2, CharSequence key3, Number value3, CharSequence key4, Number value4, CharSequence key5, Number value5, CharSequence key6, Number value6, CharSequence key7, Number value7, CharSequence key8, Number value8, CharSequence key9, Number value9) {
+            return upperBoundable(Map.of(key1, value1, key2, value2, key3, value3, key4, value4, key5, value5, key6, value6, key7, value7, key8, value8, key9, value9));
+        }
     }
 
     /**
@@ -499,5 +639,6 @@ public class AutoExpandMap extends AutoExpandMapModel {
     static final class My {
         static final String Values = "values";
         static final String Generics = "generics";
+        static final String UpperBoundable = "upperBoundable";
     }
 }

@@ -37,4 +37,14 @@ class AutoExpandSetTest {
         AutoExpandSet o = AutoExpandSet.with.values(Set.of()).generics(() -> "one");
         assert o.generics.iterator().next().get().equals("one");
     }
+
+    @Test
+    void autoUpperBound() {
+        Set<String> set = Set.of("a", "b", "c");
+
+        AutoExpandSet o = AutoExpandSet.with.values(Set.of()).upperBoundable(set);
+        assert o.upperBoundable.contains("a");
+        assert o.upperBoundable.contains("b");
+        assert o.upperBoundable.contains("c");
+    }
 }

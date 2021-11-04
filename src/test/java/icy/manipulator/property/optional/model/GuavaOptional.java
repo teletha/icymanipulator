@@ -185,8 +185,8 @@ public class GuavaOptional implements GuavaOptionalModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next value(Optional<String> value) {
-            ((GuavaOptional) this).setValue(value);
+        default Next value(Optional<? extends String> value) {
+            ((GuavaOptional) this).setValue((com.google.common.base.Optional)value);
             return (Next) this;
         }
 
