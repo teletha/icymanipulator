@@ -2,6 +2,7 @@ package icy.manipulator.property.overload.model;
 
 import icy.manipulator.property.overload.model.AutoExpandList;
 import icy.manipulator.property.overload.model.AutoExpandListModel;
+import java.lang.CharSequence;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -55,11 +56,17 @@ public class AutoExpandList extends AutoExpandListModel {
     /** The final property updater. */
     private static final MethodHandle genericsUpdater = updater("generics");
 
+    /** The final property updater. */
+    private static final MethodHandle upperBoundableUpdater = updater("upperBoundable");
+
     /** The exposed property. */
     public final List<String> values;
 
     /** The exposed property. */
     public final List<Supplier<String>> generics;
+
+    /** The exposed property. */
+    public final List<CharSequence> upperBoundable;
 
     /**
      * HIDE CONSTRUCTOR
@@ -67,6 +74,7 @@ public class AutoExpandList extends AutoExpandListModel {
     protected AutoExpandList() {
         this.values = null;
         this.generics = super.generics();
+        this.upperBoundable = super.upperBoundable();
     }
 
     /**
@@ -144,6 +152,43 @@ public class AutoExpandList extends AutoExpandListModel {
     }
 
     /**
+     * Return the upperBoundable property.
+     *
+     * @return A value of upperBoundable property.
+     */
+    @Override
+    public final List<CharSequence> upperBoundable() {
+        return this.upperBoundable;
+    }
+
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of upperBoundable property.
+     */
+    @SuppressWarnings("unused")
+    private final List<CharSequence> getUpperBoundable() {
+        return this.upperBoundable;
+    }
+
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of upperBoundable property to assign.
+     */
+    private final void setUpperBoundable(List<CharSequence> value) {
+        if (value == null) {
+            value = super.upperBoundable();
+        }
+        try {
+            upperBoundableUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
      * Show all property values.
      *
      * @return All property values.
@@ -152,7 +197,8 @@ public class AutoExpandList extends AutoExpandListModel {
     public String toString() {
         StringBuilder builder = new StringBuilder("AutoExpandList [");
         builder.append("values=").append(values).append(", ");
-        builder.append("generics=").append(generics).append("]");
+        builder.append("generics=").append(generics).append(", ");
+        builder.append("upperBoundable=").append(upperBoundable).append("]");
         return builder.toString();
     }
 
@@ -163,7 +209,7 @@ public class AutoExpandList extends AutoExpandListModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(values, generics);
+        return Objects.hash(values, generics, upperBoundable);
     }
 
     /**
@@ -180,6 +226,7 @@ public class AutoExpandList extends AutoExpandListModel {
         AutoExpandList other = (AutoExpandList) o;
         if (!Objects.equals(values, other.values)) return false;
         if (!Objects.equals(generics, other.generics)) return false;
+        if (!Objects.equals(upperBoundable, other.upperBoundable)) return false;
         return true;
     }
 
@@ -223,8 +270,8 @@ public class AutoExpandList extends AutoExpandListModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next values(List<String> value) {
-            ((AutoExpandList) this).setValues(value);
+        default Next values(List<? extends String> value) {
+            ((AutoExpandList) this).setValues((java.util.List)value);
             return (Next) this;
         }
 
@@ -249,8 +296,8 @@ public class AutoExpandList extends AutoExpandListModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next generics(List<Supplier<String>> value) {
-            ((AutoExpandList) this).setGenerics(value);
+        default Next generics(List<? extends Supplier<String>> value) {
+            ((AutoExpandList) this).setGenerics((java.util.List)value);
             return (Next) this;
         }
 
@@ -261,6 +308,26 @@ public class AutoExpandList extends AutoExpandListModel {
          */
         default Next generics(Supplier<String>... values) {
             return generics(List.of(values));
+        }
+
+        /**
+         * Assign upperBoundable property.
+         * 
+         * @param value A new value to assign.
+         * @return The next assignable model.
+         */
+        default Next upperBoundable(List<? extends CharSequence> value) {
+            ((AutoExpandList) this).setUpperBoundable((java.util.List)value);
+            return (Next) this;
+        }
+
+        /**
+         * Assign upperBoundable property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next upperBoundable(CharSequence... values) {
+            return upperBoundable(List.of(values));
         }
     }
 
@@ -282,5 +349,6 @@ public class AutoExpandList extends AutoExpandListModel {
     static final class My {
         static final String Values = "values";
         static final String Generics = "generics";
+        static final String UpperBoundable = "upperBoundable";
     }
 }

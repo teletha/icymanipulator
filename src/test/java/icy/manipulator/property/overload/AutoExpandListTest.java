@@ -39,4 +39,14 @@ class AutoExpandListTest {
         assert o.generics.get(1).get().equals("b");
         assert o.generics.get(2).get().equals("c");
     }
+
+    @Test
+    void autoUpperBound() {
+        List<String> list = List.of("a", "b", "c");
+
+        AutoExpandList o = AutoExpandList.with.values(List.of()).upperBoundable(list);
+        assert o.upperBoundable.get(0).equals("a");
+        assert o.upperBoundable.get(1).equals("b");
+        assert o.upperBoundable.get(2).equals("c");
+    }
 }

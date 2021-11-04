@@ -708,8 +708,8 @@ public class IcyManipulator extends AptyProcessor {
             write(" * @param value A new value to assign.");
             write(" * @return The next assignable model.");
             write(" */");
-            write("default Next ", p.name, "(", p.type.varargnize(), " value)", () -> {
-                write("((", m.implType, ") this).set", p.capitalizeName(), "(value);");
+            write("default Next ", p.name, "(", p.boundable ? p.type.bound() : p.type.varargnize(), " value)", () -> {
+                write("((", m.implType, ") this).set", p.capitalizeName(), "(", p.boundable ? "(" + p.type + ")" : "", "value);");
                 write("return (Next) this;");
             });
 

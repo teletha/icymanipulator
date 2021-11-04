@@ -229,6 +229,10 @@ public class Type implements Codable, ClassLike {
         return new Type(packageName, base + "[]", variables, TypeKind.ARRAY, detector);
     }
 
+    public Type upper() {
+        return new Type("", "? extends ", variables, TypeKind.WILDCARD, detector);
+    }
+
     /**
      * Create declared type, all variables are viewable.
      * 
@@ -249,6 +253,10 @@ public class Type implements Codable, ClassLike {
         } else {
             return this;
         }
+    }
+
+    public Type bound() {
+        return new Type(packageName, base, List.of(upper()), kind, detector);
     }
 
     public Type stripWild() {

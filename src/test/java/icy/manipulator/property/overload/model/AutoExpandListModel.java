@@ -24,4 +24,9 @@ public abstract class AutoExpandListModel {
     public List<Supplier<String>> generics() {
         return List.of();
     }
+
+    @Icy.Property
+    public List<CharSequence> upperBoundable() {
+        return List.of("");
+    }
 }
