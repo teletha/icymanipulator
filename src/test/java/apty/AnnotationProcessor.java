@@ -85,25 +85,25 @@ public class AnnotationProcessor implements Extension {
         File compilingSource = Locator.directory("src/test/java").file(computeSourceFileName(compilingClass));
         Filter filter = new Filter(processor, source);
 
-        JavaCompiler compiler = new JavaCompiler();
-        compiler.addCurrentClassPath();
-        compiler.addProcessor(filter);
-        compiler.addSource(compilingClass, compilingSource.text());
-        compiler.setOutput(room.root);
-        compiler.setErrorListener(new DiagnosticListener<>() {
+        JavaCompiler compiler = JavaCompiler.with()
+                .addCurrentClassPath()
+                .addProcessor(filter)
+                .addSource(compilingClass, compilingSource.text())
+                .setOutput(room.root)
+                .setListener(new DiagnosticListener<>() {
 
-            @Override
-            public void report(Diagnostic<? extends JavaFileObject> diagnostic) {
-                switch (diagnostic.getKind()) {
-                case ERROR:
-                    errors.add(diagnostic.getMessage(Locale.getDefault()));
-                    break;
+                    @Override
+                    public void report(Diagnostic<? extends JavaFileObject> diagnostic) {
+                        switch (diagnostic.getKind()) {
+                        case ERROR:
+                            errors.add(diagnostic.getMessage(Locale.getDefault()));
+                            break;
 
-                default:
-                    break;
-                }
-            }
-        });
+                        default:
+                            break;
+                        }
+                    }
+                });
 
         try {
             compiler.compile();
@@ -204,12 +204,12 @@ public class AnnotationProcessor implements Extension {
         Errors errors = new Errors();
 
         // compile class and generate source by annotation processor
-        JavaCompiler compiler = new JavaCompiler();
-        compiler.addCurrentClassPath();
-        compiler.addProcessor(processor);
-        compiler.addSource(compilingClass, compilingSource.text());
-        compiler.setOutput(room.root);
-        compiler.setErrorListener(errors);
+        JavaCompiler compiler = JavaCompiler.with()
+                .addCurrentClassPath()
+                .addProcessor(processor)
+                .addSource(compilingClass, compilingSource.text())
+                .setOutput(room.root)
+                .setListener(errors);
 
         try {
             compiler.compile();

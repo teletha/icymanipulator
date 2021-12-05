@@ -10,14 +10,14 @@
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>antibug</artifactId>
-			<version>[1.2.0,)</version>
+			<version>[1.2.5,)</version>
 			<scope>test</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>bee</artifactId>
-			<version>[0.10.0,)</version>
+			<version>[0.17.3,)</version>
 			<scope>test</scope>
 			<exclusions/>
 		</dependency>
@@ -54,10 +54,21 @@
 		<developerConnection>scm:git:https://github.com/Teletha/IcyManipulator.git</developerConnection>
 	</scm>
 	<issueManagement>
-		<system>GitHub</system>
+		<system>github</system>
 		<url>https://github.com/Teletha/IcyManipulator/issues</url>
 	</issueManagement>
-	<developers/>
+	<developers>
+		<developer>
+			<name>teletha</name>
+			<email/>
+			<url>https://github.com/teletha</url>
+		</developer>
+		<developer>
+			<name/>
+			<email/>
+			<url>https://github.com/apps/github-actions</url>
+		</developer>
+	</developers>
 	<build>
 		<plugins>
 			<plugin>

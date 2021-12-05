@@ -41,10 +41,7 @@ public class AptHelper implements BeforeAllCallback {
      */
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
-        JavaCompiler compiler = new JavaCompiler();
-        compiler.addProcessor(new Extractor());
-        compiler.addSource("Dummy", "class Dummy {}");
-        compiler.compile();
+        JavaCompiler.with().addProcessor(new Extractor()).addSource("Dummy", "class Dummy {}").compile();
     }
 
     /**
