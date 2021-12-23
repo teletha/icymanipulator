@@ -430,7 +430,7 @@ public class Coder {
         }
 
         // ignore same package (exclude self)
-        if (packageName.equals(basePackage) && !sanitizedClassName.equals(baseClass)) {
+        if (basePackage.equals(packageName) && !sanitizedClassName.equals(baseClass)) {
             return className;
         }
 
