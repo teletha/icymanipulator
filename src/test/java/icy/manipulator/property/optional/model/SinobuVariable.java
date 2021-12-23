@@ -1,7 +1,6 @@
 package icy.manipulator.property.optional.model;
 
 import icy.manipulator.property.optional.model.SinobuVariable;
-import icy.manipulator.property.optional.model.SinobuVariableModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -11,13 +10,13 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import javax.annotation.processing.Generated;
 import kiss.Variable;
 
 /**
  * Generated model for {@link SinobuVariableModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class SinobuVariable implements SinobuVariableModel {
 
     /**

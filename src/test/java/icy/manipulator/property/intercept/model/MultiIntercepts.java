@@ -1,7 +1,6 @@
 package icy.manipulator.property.intercept.model;
 
 import icy.manipulator.property.intercept.model.MultiIntercepts;
-import icy.manipulator.property.intercept.model.MultiInterceptsModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -13,12 +12,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.function.Consumer;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link MultiInterceptsModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class MultiIntercepts extends MultiInterceptsModel {
 
     /**
@@ -42,7 +41,7 @@ public class MultiIntercepts extends MultiInterceptsModel {
      */
     private static final MethodHandle invoker(String name, Class... parameterTypes)  {
         try {
-            Method method = MultiInterceptsModel.class.getDeclaredMethod(name, parameterTypes);
+            Method method = icy.manipulator.property.intercept.model.MultiInterceptsModel.class.getDeclaredMethod(name, parameterTypes);
             method.setAccessible(true);
             return MethodHandles.lookup().unreflect(method);
         } catch (Throwable e) {

@@ -1,7 +1,6 @@
 package icy.manipulator.property.base.model;
 
 import icy.manipulator.property.base.model.InterfaceArbitrary;
-import icy.manipulator.property.base.model.InterfaceArbitraryModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -11,12 +10,12 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link InterfaceArbitraryModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class InterfaceArbitrary implements InterfaceArbitraryModel {
 
     /**
@@ -57,7 +56,7 @@ public class InterfaceArbitrary implements InterfaceArbitraryModel {
      * HIDE CONSTRUCTOR
      */
     protected InterfaceArbitrary() {
-        this.optional = InterfaceArbitraryModel.super.optional();
+        this.optional = icy.manipulator.property.base.model.InterfaceArbitraryModel.super.optional();
     }
 
     /**
@@ -87,7 +86,7 @@ public class InterfaceArbitrary implements InterfaceArbitraryModel {
      */
     private final void setOptional(String value) {
         if (value == null) {
-            value = InterfaceArbitraryModel.super.optional();
+            value = icy.manipulator.property.base.model.InterfaceArbitraryModel.super.optional();
         }
         try {
             optionalUpdater.invoke(this, value);

@@ -1,7 +1,6 @@
 package icy.manipulator.property.group.model;
 
 import icy.manipulator.property.group.model.OverloadGroup;
-import icy.manipulator.property.group.model.OverloadGroupModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -12,12 +11,12 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link OverloadGroupModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class OverloadGroup extends OverloadGroupModel {
 
     /**
@@ -41,7 +40,7 @@ public class OverloadGroup extends OverloadGroupModel {
      */
     private static final MethodHandle invoker(String name, Class... parameterTypes)  {
         try {
-            Method method = OverloadGroupModel.class.getDeclaredMethod(name, parameterTypes);
+            Method method = icy.manipulator.property.group.model.OverloadGroupModel.class.getDeclaredMethod(name, parameterTypes);
             method.setAccessible(true);
             return MethodHandles.lookup().unreflect(method);
         } catch (Throwable e) {

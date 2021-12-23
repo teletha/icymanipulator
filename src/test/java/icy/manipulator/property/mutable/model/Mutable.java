@@ -1,7 +1,6 @@
 package icy.manipulator.property.mutable.model;
 
 import icy.manipulator.property.mutable.model.Mutable;
-import icy.manipulator.property.mutable.model.MutableModel;
 import java.lang.Float;
 import java.lang.Override;
 import java.lang.String;
@@ -16,12 +15,12 @@ import java.util.function.DoubleUnaryOperator;
 import java.util.function.IntUnaryOperator;
 import java.util.function.LongUnaryOperator;
 import java.util.function.UnaryOperator;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link MutableModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class Mutable extends MutableModel {
 
     /**

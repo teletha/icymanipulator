@@ -1,7 +1,6 @@
 package icy.manipulator.property.intercept.model;
 
 import icy.manipulator.property.intercept.model.Intercept;
-import icy.manipulator.property.intercept.model.InterceptModel;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
@@ -11,12 +10,12 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link InterceptModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class Intercept extends InterceptModel {
 
     /**
@@ -40,7 +39,7 @@ public class Intercept extends InterceptModel {
      */
     private static final MethodHandle invoker(String name, Class... parameterTypes)  {
         try {
-            Method method = InterceptModel.class.getDeclaredMethod(name, parameterTypes);
+            Method method = icy.manipulator.property.intercept.model.InterceptModel.class.getDeclaredMethod(name, parameterTypes);
             method.setAccessible(true);
             return MethodHandles.lookup().unreflect(method);
         } catch (Throwable e) {

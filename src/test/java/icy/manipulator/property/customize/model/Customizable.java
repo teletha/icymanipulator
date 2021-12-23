@@ -1,9 +1,6 @@
 package icy.manipulator.property.customize.model;
 
 import icy.manipulator.property.customize.model.Customizable;
-import icy.manipulator.property.customize.model.CustomizableModel;
-import icy.manipulator.property.customize.model.CustomizableModel.Customizer;
-import icy.manipulator.property.customize.model.CustomizableModel.SubCustomizer;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -14,12 +11,12 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
 import java.util.function.Supplier;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link CustomizableModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class Customizable extends CustomizableModel {
 
     /**
@@ -60,7 +57,7 @@ public class Customizable extends CustomizableModel {
     public final String name;
 
     /** The property customizer. */
-    private final Customizer<String> nameCustomizer = new Customizer<String>() {
+    private final Customizer<String> nameCustomizer = new icy.manipulator.property.customize.model.CustomizableModel.Customizer<String>() {
 
         @Override
         public String get() {
@@ -72,7 +69,7 @@ public class Customizable extends CustomizableModel {
     public final String value;
 
     /** The property customizer. */
-    private final SubCustomizer valueCustomizer = new SubCustomizer() {
+    private final SubCustomizer valueCustomizer = new icy.manipulator.property.customize.model.CustomizableModel.SubCustomizer() {
 
         @Override
         public String get() {

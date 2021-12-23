@@ -1,18 +1,15 @@
 package icy.manipulator.property.group.model;
 
-import icy.manipulator.property.group.model.EnumGroup;
-import icy.manipulator.property.group.model.EnumGroupModel.Color;
 import icy.manipulator.property.group.model.EnumGroupSubclass;
-import icy.manipulator.property.group.model.EnumGroupSubclassModel;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.util.Objects;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link EnumGroupSubclassModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class EnumGroupSubclass extends EnumGroupSubclassModel {
 
     /**

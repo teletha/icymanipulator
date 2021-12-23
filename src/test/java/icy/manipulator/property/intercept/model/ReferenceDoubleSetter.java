@@ -1,7 +1,6 @@
 package icy.manipulator.property.intercept.model;
 
 import icy.manipulator.property.intercept.model.ReferenceDoubleSetter;
-import icy.manipulator.property.intercept.model.ReferenceDoubleSetterModel;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
@@ -12,12 +11,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.function.DoubleConsumer;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link ReferenceDoubleSetterModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
 
     /**
@@ -41,7 +40,7 @@ public class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
      */
     private static final MethodHandle invoker(String name, Class... parameterTypes)  {
         try {
-            Method method = ReferenceDoubleSetterModel.class.getDeclaredMethod(name, parameterTypes);
+            Method method = icy.manipulator.property.intercept.model.ReferenceDoubleSetterModel.class.getDeclaredMethod(name, parameterTypes);
             method.setAccessible(true);
             return MethodHandles.lookup().unreflect(method);
         } catch (Throwable e) {

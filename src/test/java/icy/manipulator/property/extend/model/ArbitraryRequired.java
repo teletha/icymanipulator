@@ -2,7 +2,6 @@ package icy.manipulator.property.extend.model;
 
 import icy.manipulator.property.base.model.Arbitrary;
 import icy.manipulator.property.extend.model.ArbitraryRequired;
-import icy.manipulator.property.extend.model.ArbitraryRequiredModel;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
@@ -11,12 +10,12 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link ArbitraryRequiredModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class ArbitraryRequired extends ArbitraryRequiredModel {
 
     /**

@@ -1,7 +1,6 @@
 package icy.manipulator.property.overload.model;
 
 import icy.manipulator.property.overload.model.AutoExpandMap;
-import icy.manipulator.property.overload.model.AutoExpandMapModel;
 import java.lang.CharSequence;
 import java.lang.Integer;
 import java.lang.Number;
@@ -16,12 +15,12 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link AutoExpandMapModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class AutoExpandMap extends AutoExpandMapModel {
 
     /**

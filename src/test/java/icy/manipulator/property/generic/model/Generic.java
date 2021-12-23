@@ -1,7 +1,6 @@
 package icy.manipulator.property.generic.model;
 
 import icy.manipulator.property.generic.model.Generic;
-import icy.manipulator.property.generic.model.GenericModel;
 import java.lang.Number;
 import java.lang.Override;
 import java.lang.StringBuilder;
@@ -12,12 +11,12 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Objects;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link GenericModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
 
     /**

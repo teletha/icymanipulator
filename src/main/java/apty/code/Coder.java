@@ -409,18 +409,7 @@ public class Coder {
      * @return
      */
     final String imports(String packageName, String className) {
-        // ignore same package
-        if (packageName.equals(baseClass)) {
-            return className;
-        }
-
         String fqcn = packageName == null ? className : packageName + "." + className;
-
-        // ignore inner classes
-        if (fqcn.startsWith(basePackage + "." + baseClass + ".")) {
-            return className;
-        }
-
         String sanitizedClassName = className.replaceAll("[\\[\\]]", "").replace("...", "");
 
         // ignore keyword
@@ -436,12 +425,21 @@ public class Coder {
         }
 
         // ignore same class name
-        if (importNames.contains(sanitizedClassName)) {
+        if (!importNames.add(sanitizedClassName)) {
             return fqcn;
         }
 
+        // ignore same package (exclude self)
+        if (packageName.equals(basePackage) && !sanitizedClassName.equals(baseClass)) {
+            return className;
+        }
+
+        // ignore inner class
+        if (fqcn.matches("\\Q" + basePackage + "\\E(\\.\\p{javaUpperCase}[^\\.]*){2,}")) {
+            return className;
+        }
+
         imports.add(sanitizedFQCN);
-        importNames.add(sanitizedClassName);
 
         return className;
     }

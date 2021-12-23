@@ -1,8 +1,6 @@
 package icy.manipulator.property.overload.model;
 
 import icy.manipulator.property.overload.model.AutoExpandEnum;
-import icy.manipulator.property.overload.model.AutoExpandEnumModel;
-import icy.manipulator.property.overload.model.AutoExpandEnumModel.Answer;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
@@ -12,12 +10,12 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link AutoExpandEnumModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class AutoExpandEnum extends AutoExpandEnumModel {
 
     /**
@@ -74,7 +72,7 @@ public class AutoExpandEnum extends AutoExpandEnumModel {
      * @return A value of answer property.
      */
     @Override
-    public final Answer answer() {
+    public final icy.manipulator.property.overload.model.AutoExpandEnumModel.Answer answer() {
         return this.answer;
     }
 
@@ -84,7 +82,7 @@ public class AutoExpandEnum extends AutoExpandEnumModel {
      * @return A value of answer property.
      */
     @SuppressWarnings("unused")
-    private final Answer getAnswer() {
+    private final icy.manipulator.property.overload.model.AutoExpandEnumModel.Answer getAnswer() {
         return this.answer;
     }
 
@@ -93,7 +91,7 @@ public class AutoExpandEnum extends AutoExpandEnumModel {
      *
      * @paran value A new value of answer property to assign.
      */
-    private final void setAnswer(Answer value) {
+    private final void setAnswer(icy.manipulator.property.overload.model.AutoExpandEnumModel.Answer value) {
         if (value == null) {
             throw new IllegalArgumentException("The answer property requires non-null value.");
         }
@@ -195,7 +193,7 @@ public class AutoExpandEnum extends AutoExpandEnumModel {
          * 
          * @return The next assignable model.
          */
-        public ÅssignablePolicy<Self> answer(Answer answer) {
+        public ÅssignablePolicy<Self> answer(icy.manipulator.property.overload.model.AutoExpandEnumModel.Answer answer) {
             Åssignable o = new Åssignable();
             o.answer(answer);
             return o;
@@ -235,7 +233,7 @@ public class AutoExpandEnum extends AutoExpandEnumModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next answer(Answer value) {
+        default Next answer(icy.manipulator.property.overload.model.AutoExpandEnumModel.Answer value) {
             ((AutoExpandEnum) this).setAnswer(value);
             return (Next) this;
         }
@@ -246,7 +244,7 @@ public class AutoExpandEnum extends AutoExpandEnumModel {
          * @return The next assignable model.
          */
         default Next yes() {
-            return answer(Answer.Yes);
+            return answer(icy.manipulator.property.overload.model.AutoExpandEnumModel.Answer.Yes);
         }
 
         /**
@@ -255,7 +253,7 @@ public class AutoExpandEnum extends AutoExpandEnumModel {
          * @return The next assignable model.
          */
         default Next no() {
-            return answer(Answer.No);
+            return answer(icy.manipulator.property.overload.model.AutoExpandEnumModel.Answer.No);
         }
     }
 

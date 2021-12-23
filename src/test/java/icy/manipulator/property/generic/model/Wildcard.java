@@ -1,8 +1,6 @@
 package icy.manipulator.property.generic.model;
 
 import icy.manipulator.property.generic.model.Wildcard;
-import icy.manipulator.property.generic.model.WildcardModel;
-import icy.manipulator.property.generic.model.WildcardModel.Member;
 import java.lang.CharSequence;
 import java.lang.Class;
 import java.lang.Integer;
@@ -19,12 +17,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link WildcardModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class Wildcard extends WildcardModel {
 
     /**
@@ -250,7 +248,7 @@ public class Wildcard extends WildcardModel {
      * @return A value of memberType property.
      */
     @Override
-    public final Class<? extends Member> memberType() {
+    public final Class<? extends icy.manipulator.property.generic.model.WildcardModel.Member> memberType() {
         return this.memberType;
     }
 
@@ -260,7 +258,7 @@ public class Wildcard extends WildcardModel {
      * @return A value of memberType property.
      */
     @SuppressWarnings("unused")
-    private final Class<? extends Member> getMemberType() {
+    private final Class<? extends icy.manipulator.property.generic.model.WildcardModel.Member> getMemberType() {
         return this.memberType;
     }
 
@@ -269,7 +267,7 @@ public class Wildcard extends WildcardModel {
      *
      * @paran value A new value of memberType property to assign.
      */
-    private final void setMemberType(Class<? extends Member> value) {
+    private final void setMemberType(Class<? extends icy.manipulator.property.generic.model.WildcardModel.Member> value) {
         if (value == null) {
             value = super.memberType();
         }
@@ -390,7 +388,7 @@ public class Wildcard extends WildcardModel {
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public Self memberType(Class<? extends Member> value) {
+        public Self memberType(Class<? extends icy.manipulator.property.generic.model.WildcardModel.Member> value) {
             return create().memberType(value);
         }
     }
@@ -450,7 +448,7 @@ public class Wildcard extends WildcardModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next memberType(Class<? extends Member> value) {
+        default Next memberType(Class<? extends icy.manipulator.property.generic.model.WildcardModel.Member> value) {
             ((Wildcard) this).setMemberType((java.lang.Class)value);
             return (Next) this;
         }

@@ -1,8 +1,6 @@
 package icy.manipulator.property.group.model;
 
 import icy.manipulator.property.group.model.EnumGroup;
-import icy.manipulator.property.group.model.EnumGroupModel;
-import icy.manipulator.property.group.model.EnumGroupModel.Color;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
@@ -11,12 +9,12 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link EnumGroupModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class EnumGroup extends EnumGroupModel {
 
     /**
@@ -73,7 +71,7 @@ public class EnumGroup extends EnumGroupModel {
      * @return A value of color property.
      */
     @Override
-    public final Color color() {
+    public final icy.manipulator.property.group.model.EnumGroupModel.Color color() {
         return this.color;
     }
 
@@ -83,7 +81,7 @@ public class EnumGroup extends EnumGroupModel {
      * @return A value of color property.
      */
     @SuppressWarnings("unused")
-    private final Color getColor() {
+    private final icy.manipulator.property.group.model.EnumGroupModel.Color getColor() {
         return this.color;
     }
 
@@ -92,7 +90,7 @@ public class EnumGroup extends EnumGroupModel {
      *
      * @paran value A new value of color property to assign.
      */
-    private final void setColor(Color value) {
+    private final void setColor(icy.manipulator.property.group.model.EnumGroupModel.Color value) {
         if (value == null) {
             throw new IllegalArgumentException("The color property requires non-null value.");
         }
@@ -191,7 +189,7 @@ public class EnumGroup extends EnumGroupModel {
          * 
          * @return The next assignable model.
          */
-        public Self color(Color color, int size) {
+        public Self color(icy.manipulator.property.group.model.EnumGroupModel.Color color, int size) {
             Åssignable o = new Åssignable();
             o.color(color);
             o.size(size);
@@ -246,7 +244,7 @@ public class EnumGroup extends EnumGroupModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next color(Color value) {
+        default Next color(icy.manipulator.property.group.model.EnumGroupModel.Color value) {
             ((EnumGroup) this).setColor(value);
             return (Next) this;
         }
@@ -257,7 +255,7 @@ public class EnumGroup extends EnumGroupModel {
          * @return The next assignable model.
          */
         default Next red() {
-            return color(Color.Red);
+            return color(icy.manipulator.property.group.model.EnumGroupModel.Color.Red);
         }
 
         /**
@@ -266,7 +264,7 @@ public class EnumGroup extends EnumGroupModel {
          * @return The next assignable model.
          */
         default Next blue() {
-            return color(Color.Blue);
+            return color(icy.manipulator.property.group.model.EnumGroupModel.Color.Blue);
         }
 
         /**
@@ -275,7 +273,7 @@ public class EnumGroup extends EnumGroupModel {
          * @return The next assignable model.
          */
         default Next green() {
-            return color(Color.Green);
+            return color(icy.manipulator.property.group.model.EnumGroupModel.Color.Green);
         }
     }
 

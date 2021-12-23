@@ -1,7 +1,6 @@
 package icy.manipulator.property.overload.model;
 
 import icy.manipulator.property.overload.model.AutoExpandList;
-import icy.manipulator.property.overload.model.AutoExpandListModel;
 import java.lang.CharSequence;
 import java.lang.Override;
 import java.lang.String;
@@ -14,12 +13,12 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link AutoExpandListModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class AutoExpandList extends AutoExpandListModel {
 
     /**

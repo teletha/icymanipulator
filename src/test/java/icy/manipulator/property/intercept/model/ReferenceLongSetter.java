@@ -1,7 +1,6 @@
 package icy.manipulator.property.intercept.model;
 
 import icy.manipulator.property.intercept.model.ReferenceLongSetter;
-import icy.manipulator.property.intercept.model.ReferenceLongSetterModel;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
@@ -12,12 +11,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.function.LongConsumer;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link ReferenceLongSetterModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class ReferenceLongSetter extends ReferenceLongSetterModel {
 
     /**
@@ -41,7 +40,7 @@ public class ReferenceLongSetter extends ReferenceLongSetterModel {
      */
     private static final MethodHandle invoker(String name, Class... parameterTypes)  {
         try {
-            Method method = ReferenceLongSetterModel.class.getDeclaredMethod(name, parameterTypes);
+            Method method = icy.manipulator.property.intercept.model.ReferenceLongSetterModel.class.getDeclaredMethod(name, parameterTypes);
             method.setAccessible(true);
             return MethodHandles.lookup().unreflect(method);
         } catch (Throwable e) {

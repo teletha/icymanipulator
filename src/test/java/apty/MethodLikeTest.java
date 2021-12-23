@@ -11,8 +11,6 @@ package apty;
 
 import org.junit.jupiter.api.Test;
 
-import apty.MethodLike;
-
 class MethodLikeTest {
 
     @Test

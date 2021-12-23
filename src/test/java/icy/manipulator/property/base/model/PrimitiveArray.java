@@ -1,7 +1,6 @@
 package icy.manipulator.property.base.model;
 
 import icy.manipulator.property.base.model.PrimitiveArray;
-import icy.manipulator.property.base.model.PrimitiveArrayModel;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
@@ -11,12 +10,12 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Objects;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link PrimitiveArrayModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class PrimitiveArray extends PrimitiveArrayModel {
 
     /**

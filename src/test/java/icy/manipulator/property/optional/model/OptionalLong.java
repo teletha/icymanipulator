@@ -1,7 +1,6 @@
 package icy.manipulator.property.optional.model;
 
 import icy.manipulator.property.optional.model.OptionalLong;
-import icy.manipulator.property.optional.model.OptionalLongModel;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
@@ -10,12 +9,12 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link OptionalLongModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class OptionalLong implements OptionalLongModel {
 
     /**

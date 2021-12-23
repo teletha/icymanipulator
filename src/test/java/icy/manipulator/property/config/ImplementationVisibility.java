@@ -1,7 +1,6 @@
 package icy.manipulator.property.config;
 
 import icy.manipulator.property.config.ImplementationVisibility;
-import icy.manipulator.property.config.ImplementationVisibilityModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -11,12 +10,12 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link ImplementationVisibilityModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 class ImplementationVisibility extends ImplementationVisibilityModel {
 
     /**

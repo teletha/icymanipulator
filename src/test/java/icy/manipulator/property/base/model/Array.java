@@ -1,7 +1,6 @@
 package icy.manipulator.property.base.model;
 
 import icy.manipulator.property.base.model.Array;
-import icy.manipulator.property.base.model.ArrayModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -12,12 +11,12 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Objects;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link ArrayModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class Array implements ArrayModel {
 
     /**
@@ -65,7 +64,7 @@ public class Array implements ArrayModel {
      */
     protected Array() {
         this.array = null;
-        this.nest = ArrayModel.super.nest();
+        this.nest = icy.manipulator.property.base.model.ArrayModel.super.nest();
     }
 
     /**
@@ -132,7 +131,7 @@ public class Array implements ArrayModel {
      */
     private final void setNest(String[][] value) {
         if (value == null) {
-            value = ArrayModel.super.nest();
+            value = icy.manipulator.property.base.model.ArrayModel.super.nest();
         }
         try {
             nestUpdater.invoke(this, value);

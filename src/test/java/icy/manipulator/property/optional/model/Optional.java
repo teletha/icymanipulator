@@ -1,7 +1,6 @@
 package icy.manipulator.property.optional.model;
 
 import icy.manipulator.property.optional.model.Optional;
-import icy.manipulator.property.optional.model.OptionalModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -11,12 +10,12 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link OptionalModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class Optional implements OptionalModel {
 
     /**
@@ -64,7 +63,7 @@ public class Optional implements OptionalModel {
      */
     protected Optional() {
         this.name = java.util.Optional.empty();
-        this.defaults = OptionalModel.super.defaults();
+        this.defaults = icy.manipulator.property.optional.model.OptionalModel.super.defaults();
     }
 
     /**
@@ -131,7 +130,7 @@ public class Optional implements OptionalModel {
      */
     private final void setDefaults(java.util.Optional<String> value) {
         if (value == null) {
-            value = OptionalModel.super.defaults();
+            value = icy.manipulator.property.optional.model.OptionalModel.super.defaults();
         }
         try {
             defaultsUpdater.invoke(this, value);

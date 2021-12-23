@@ -1,8 +1,6 @@
 package icy.manipulator.property.overload.model;
 
-import icy.manipulator.property.overload.model.Overload;
 import icy.manipulator.property.overload.model.RequiredRequired;
-import icy.manipulator.property.overload.model.RequiredRequiredModel;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -15,12 +13,12 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.Objects;
-import javax.annotation.processing.Generated;
 
 /**
  * Generated model for {@link RequiredRequiredModel}.
+ * 
+ * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-@Generated("Icy Manipulator")
 public class RequiredRequired extends RequiredRequiredModel {
 
     /**
@@ -44,7 +42,7 @@ public class RequiredRequired extends RequiredRequiredModel {
      */
     private static final MethodHandle invoker(String name, Class... parameterTypes)  {
         try {
-            Method method = RequiredRequiredModel.class.getDeclaredMethod(name, parameterTypes);
+            Method method = icy.manipulator.property.overload.model.RequiredRequiredModel.class.getDeclaredMethod(name, parameterTypes);
             method.setAccessible(true);
             return MethodHandles.lookup().unreflect(method);
         } catch (Throwable e) {
