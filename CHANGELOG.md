@@ -1,5 +1,14 @@
 # Changelog
 
+### [1.4.1](https://www.github.com/teletha/icymanipulator/compare/v1.4.0...v1.4.1) (2021-12-23)
+
+
+### Bug Fixes
+
+* Avoid NPE. ([8305127](https://www.github.com/teletha/icymanipulator/commit/83051278232277a2eb3cb2fe51805d46984932a8))
+* Generated annotations are not necessary. ([6b2ef04](https://www.github.com/teletha/icymanipulator/commit/6b2ef04a8c555822d7c7f3b0bc42eb99020fc2d1))
+* Optimize import declarations. ([c3f2d04](https://www.github.com/teletha/icymanipulator/commit/c3f2d04bb3cda15758a15109f64c2e5e6d5faab7))
+
 ## [1.4.0](https://www.github.com/Teletha/icymanipulator/compare/v1.3.1...v1.4.0) (2021-11-04)
 
 
