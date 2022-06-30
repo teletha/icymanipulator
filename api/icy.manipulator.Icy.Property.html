@@ -4,15 +4,14 @@
 		<meta charset="UTF-8"/>
 		<title>Icymanipulator API</title>
 		<base href="../"/>
-		<link href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/zenburn.min.css" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<script async="true" src="highlight.js"></script>
+		<script async="true" src="highlight.js" type="module"></script>
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="I">
-		<header class="e">
-			<h1 class="T" date="2021-12-23" ver="1.4.0"><code>Icymanipulator</code></h1>
-			<nav class="J"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="N">
+		<header class="h">
+			<h1 class="O" date="2022-06-30" ver="1.4.1"><code>Icymanipulator</code></h1>
+			<nav class="i"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com//Teletha/IcyManipulator/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -21,7 +20,7 @@
 					</svg>Activity</a><a href="https://github.com//Teletha/IcyManipulator" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="V" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="K" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -29,85 +28,98 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="f">
-			<nav class="S">
+		<main class="L">
+			<nav class="R">
 				<div></div>
 			</nav>
-			<article class="h" id="Article">
-				<section class="H"><code class="c">icy.manipulator</code>
-					<h2 class="Annotation W"><code class="L">Icy.Property</code></h2>
-					<ul class="C F">
-						<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></li>
-					</ul>
+			<article class="k" id="Article">
+				<section class="g"><code class="V">icy.manipulator</code>
+					<h2 class="Annotation j"><code class="P">Icy.Property</code></h2>
+					<div class="S">
+						<ul class="C F">
+							<li><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></li>
+						</ul>
+					</div>
 				</section>
-				<section class="H" id="nullable()">
-					<h2 class="O"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="L">nullable</code><code class="Q">()</code><i class="Y"><code>boolean</code></i></h2>
-					<table class="R">
-						<tr class="U">
+				<section class="g" id="nullable()">
+					<h2 class="e"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="P">nullable</code><code class="J">()</code><i class="b"><code>boolean</code></i></h2>
+					<table class="H">
+						<tr class="Q">
 							<td><code>boolean</code></td>
-							<td><span>false</span></td>
+							<td><span><p>false</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Configure whther this property accepts null value or not.</span></section>
-				<section class="H" id="mutable()">
-					<h2 class="O"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="L">mutable</code><code class="Q">()</code><i class="Y"><code>boolean</code></i></h2>
-					<table class="R">
-						<tr class="U">
+					</table><span class="B"><p>Configure whther this property accepts null value or not.</p>
+					</span></section>
+				<section class="g" id="mutable()">
+					<h2 class="e"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="P">mutable</code><code class="J">()</code><i class="b"><code>boolean</code></i></h2>
+					<table class="H">
+						<tr class="Q">
 							<td><code>boolean</code></td>
-							<td><span>false</span></td>
+							<td><span><p>false</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Configure the mutability of property.</span></section>
-				<section class="H" id="copiable()">
-					<h2 class="O"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="L">copiable</code><code class="Q">()</code><i class="Y"><code>boolean</code></i></h2>
-					<table class="R">
-						<tr class="U">
+					</table><span class="B"><p>Configure the mutability of property.</p>
+					</span></section>
+				<section class="g" id="copiable()">
+					<h2 class="e"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="P">copiable</code><code class="J">()</code><i class="b"><code>boolean</code></i></h2>
+					<table class="H">
+						<tr class="Q">
 							<td><code>boolean</code></td>
-							<td><span>false</span></td>
+							<td><span><p>false</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Configure the copy functionaloty of property.</span></section>
-				<section class="H" id="overloadEnum()">
-					<h2 class="O"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="L">overloadEnum</code><code class="Q">()</code><i class="Y"><code>boolean</code></i></h2>
-					<table class="R">
-						<tr class="U">
+					</table><span class="B"><p>Configure the copy functionaloty of property.</p>
+					</span></section>
+				<section class="g" id="overloadEnum()">
+					<h2 class="e"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="P">overloadEnum</code><code class="J">()</code><i class="b"><code>boolean</code></i></h2>
+					<table class="H">
+						<tr class="Q">
 							<td><code>boolean</code></td>
-							<td><span>true</span></td>
+							<td><span><p>true</p>
+								</span></td>
 						</tr>
-					</table><span class="B">Configure whether enum values are overloaded automatically.</span></section>
-				<section class="H" id="getterModifier()">
-					<h2 class="O"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="L">getterModifier</code><code class="Q">()</code><i class="Y"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="R">
-						<tr class="U">
+					</table><span class="B"><p>Configure whether enum values are overloaded automatically.</p>
+					</span></section>
+				<section class="g" id="getterModifier()">
+					<h2 class="e"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="P">getterModifier</code><code class="J">()</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="H">
+						<tr class="Q">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></td>
 							<td><span><code><a href="api/icy.manipulator.Icy.html#setterModifier()">Icy#setterModifier()</a></code></span></td>
 						</tr>
-					</table><span class="B">Configure the modifier of classic style setter method.</span></section>
-				<section class="H" id="setterModifier()">
-					<h2 class="O"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="L">setterModifier</code><code class="Q">()</code><i class="Y"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="R">
-						<tr class="U">
+					</table><span class="B"><p>Configure the modifier of classic style setter method.</p>
+					</span></section>
+				<section class="g" id="setterModifier()">
+					<h2 class="e"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="P">setterModifier</code><code class="J">()</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="H">
+						<tr class="Q">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></td>
 							<td><span><code><a href="api/icy.manipulator.Icy.html#setterModifier()">Icy#setterModifier()</a></code></span></td>
 						</tr>
-					</table><span class="B">Configure the modifier of classic style setter method.</span></section>
-				<section class="H" id="custom()">
-					<h2 class="O"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="L">custom</code><code class="Q">()</code><i class="Y"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html">Supplier</a></code></code></code></code></i></h2>
-					<table class="R">
-						<tr class="U">
+					</table><span class="B"><p>Configure the modifier of classic style setter method.</p>
+					</span></section>
+				<section class="g" id="custom()">
+					<h2 class="e"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="P">custom</code><code class="J">()</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html">Supplier</a></code></code></code></code></i></h2>
+					<table class="H">
+						<tr class="Q">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html">Supplier</a></code></code></code></code></td>
 							<td></td>
 						</tr>
-					</table><span class="B">Customize property.</span></section>
+					</table><span class="B"><p>Customize property.</p>
+					</span></section>
 			</article>
-			<aside class="d" id="SubNavi">
-				<div class="M">
-					<h5 class="g">Methods</h5>
+			<aside class="T" id="SubNavi">
+				<div class="X">
+					<h5 class="f">Methods</h5>
 					<ul>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.Property.html#nullable()">nullable</a></code><code class="Q">()</code><i class="K"><code>boolean</code></i></li>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.Property.html#mutable()">mutable</a></code><code class="Q">()</code><i class="K"><code>boolean</code></i></li>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.Property.html#copiable()">copiable</a></code><code class="Q">()</code><i class="K"><code>boolean</code></i></li>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.Property.html#overloadEnum()">overloadEnum</a></code><code class="Q">()</code><i class="K"><code>boolean</code></i></li>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.Property.html#getterModifier()">getterModifier</a></code><code class="Q">()</code><i class="K"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.Property.html#setterModifier()">setterModifier</a></code><code class="Q">()</code><i class="K"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.Property.html#custom()">custom</a></code><code class="Q">()</code><i class="K"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html">Supplier</a></code></code></code></code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.Property.html#nullable()">nullable</a></code><code class="J">()</code><i class="M"><code>boolean</code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.Property.html#mutable()">mutable</a></code><code class="J">()</code><i class="M"><code>boolean</code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.Property.html#copiable()">copiable</a></code><code class="J">()</code><i class="M"><code>boolean</code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.Property.html#overloadEnum()">overloadEnum</a></code><code class="J">()</code><i class="M"><code>boolean</code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.Property.html#getterModifier()">getterModifier</a></code><code class="J">()</code><i class="M"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.Property.html#setterModifier()">setterModifier</a></code><code class="J">()</code><i class="M"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.Property.html#custom()">custom</a></code><code class="J">()</code><i class="M"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html">Supplier</a></code></code></code></code></i></li>
 					</ul>
 				</div>
 			</aside>
