@@ -9,6 +9,7 @@
  */
 package icy.manipulator.property.generic.model;
 
+import java.util.List;
 import java.util.Map;
 
 import icy.manipulator.Icy;
@@ -26,5 +27,5 @@ public interface GenericModel<P, Q extends Number> {
     Map<P, Q> mapper();
 
     @Icy.Property
-    String text();
+    List<P> list();
 }

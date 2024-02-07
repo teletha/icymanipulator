@@ -51,6 +51,9 @@ public class Type implements Codable, ClassLike {
     /** The type kind. */
     public final TypeKind kind;
 
+    /** The array type kind. */
+    private final TypeKind arrayKind;
+
     /** The actual type holder. */
     private final ClassLike detector;
 
@@ -62,7 +65,7 @@ public class Type implements Codable, ClassLike {
      * @param kind
      */
     private Type(String fqcn, List<Type> variables, TypeKind kind, ClassLike detector) {
-        this(computePackage(fqcn), computeName(fqcn), variables, kind, detector);
+        this(computePackage(fqcn), computeName(fqcn), variables, kind, null, detector);
     }
 
     /**
@@ -98,10 +101,23 @@ public class Type implements Codable, ClassLike {
      * @param kind
      */
     private Type(String packageName, String base, List<Type> variables, TypeKind kind, ClassLike detector) {
+        this(packageName, base, variables, kind, null, detector);
+    }
+
+    /**
+     * Build Type.
+     * 
+     * @param packageName
+     * @param base
+     * @param variables
+     * @param kind
+     */
+    private Type(String packageName, String base, List<Type> variables, TypeKind kind, TypeKind arrayKind, ClassLike detector) {
         this.packageName = packageName;
         this.base = base;
         this.variables = variables;
         this.kind = kind;
+        this.arrayKind = arrayKind;
         this.detector = detector;
     }
 
@@ -226,7 +242,7 @@ public class Type implements Codable, ClassLike {
      * @return
      */
     public Type array() {
-        return new Type(packageName, base + "[]", variables, TypeKind.ARRAY, detector);
+        return new Type(packageName, base + "[]", variables, TypeKind.ARRAY, kind, detector);
     }
 
     /**
@@ -245,7 +261,7 @@ public class Type implements Codable, ClassLike {
      */
     public Type varargnize() {
         if (kind == TypeKind.ARRAY) {
-            return new Type(packageName, base.replaceAll("\\[\\]$", "..."), variables, TypeKind.DECLARED, detector);
+            return new Type(packageName, base.replaceAll("\\[\\]$", "..."), variables, TypeKind.DECLARED, arrayKind, detector);
         } else {
             return this;
         }
@@ -382,7 +398,9 @@ public class Type implements Codable, ClassLike {
             vars = new StringJoiner(", ", "<", ">").setEmptyValue("");
             variables.stream().forEach(v -> vars.add(v.write(coder)));
             if (base.endsWith("...")) {
-                return coder.imports(packageName, base.substring(0, base.length() - 3)).concat(vars.toString()).concat("...");
+                String name = base.substring(0, base.length() - 3);
+                if (arrayKind != TypeKind.TYPEVAR) name = coder.imports(packageName, name);
+                return name.concat(vars.toString()).concat("...");
             } else {
                 return coder.imports(packageName, base).concat(vars.toString());
             }

@@ -3,13 +3,13 @@ package icy.manipulator.property.generic.model;
 import icy.manipulator.property.generic.model.Generic;
 import java.lang.Number;
 import java.lang.Override;
-import java.lang.String;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.UnsupportedOperationException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -58,7 +58,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
     private static final MethodHandle mapperUpdater = updater("mapper");
 
     /** The final property updater. */
-    private static final MethodHandle textUpdater = updater("text");
+    private static final MethodHandle listUpdater = updater("list");
 
     /** The exposed property. */
     public final P value;
@@ -70,7 +70,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
     public final Map<P, Q> mapper;
 
     /** The exposed property. */
-    public final String text;
+    public final List<P> list;
 
     /**
      * HIDE CONSTRUCTOR
@@ -79,7 +79,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
         this.value = null;
         this.number = null;
         this.mapper = null;
-        this.text = null;
+        this.list = null;
     }
 
     /**
@@ -194,36 +194,36 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
     }
 
     /**
-     * Return the text property.
+     * Return the list property.
      *
-     * @return A value of text property.
+     * @return A value of list property.
      */
     @Override
-    public final String text() {
-        return this.text;
+    public final List<P> list() {
+        return this.list;
     }
 
     /**
      * Provide classic getter API.
      *
-     * @return A value of text property.
+     * @return A value of list property.
      */
     @SuppressWarnings("unused")
-    private final String getText() {
-        return this.text;
+    private final List<P> getList() {
+        return this.list;
     }
 
     /**
      * Provide classic setter API.
      *
-     * @paran value A new value of text property to assign.
+     * @paran value A new value of list property to assign.
      */
-    private final void setText(String value) {
+    private final void setList(List<P> value) {
         if (value == null) {
-            throw new IllegalArgumentException("The text property requires non-null value.");
+            throw new IllegalArgumentException("The list property requires non-null value.");
         }
         try {
-            textUpdater.invoke(this, value);
+            listUpdater.invoke(this, value);
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -241,7 +241,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
         builder.append("value=").append(value).append(", ");
         builder.append("number=").append(number).append(", ");
         builder.append("mapper=").append(mapper).append(", ");
-        builder.append("text=").append(text).append("]");
+        builder.append("list=").append(list).append("]");
         return builder.toString();
     }
 
@@ -252,7 +252,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(value, number, mapper, text);
+        return Objects.hash(value, number, mapper, list);
     }
 
     /**
@@ -270,7 +270,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
         if (!Objects.equals(value, other.value)) return false;
         if (!Objects.equals(number, other.number)) return false;
         if (!Objects.equals(mapper, other.mapper)) return false;
-        if (!Objects.equals(text, other.text)) return false;
+        if (!Objects.equals(list, other.list)) return false;
         return true;
     }
 
@@ -288,7 +288,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
          * 
          * @return The next assignable model.
          */
-        public ΑssignableNumber<ΑssignableMapper<ΑssignableText<Self, P, Q>, P, Q>, P, Q> value(P value) {
+        public ΑssignableNumber<ΑssignableMapper<ΑssignableList<Self, P, Q>, P, Q>, P, Q> value(P value) {
             Αssignable o = new Αssignable();
             o.value(value);
             return o;
@@ -430,17 +430,26 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
     /**
      * Property assignment API.
      */
-    public static interface ΑssignableText<Next, P, Q extends Number> {
+    public static interface ΑssignableList<Next, P, Q extends Number> {
 
         /**
-         * Assign text property.
+         * Assign list property.
          * 
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next text(String value) {
-            ((Generic<P, Q>) this).setText(value);
+        default Next list(List<P> value) {
+            ((Generic<P, Q>) this).setList((java.util.List)value);
             return (Next) this;
+        }
+
+        /**
+         * Assign list property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next list(P... values) {
+            return list(List.of(values));
         }
     }
 
@@ -453,7 +462,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
     /**
      * Internal aggregated API.
      */
-    protected static interface ΑssignableAll extends ΑssignableValue, ΑssignableNumber, ΑssignableMapper, ΑssignableText {
+    protected static interface ΑssignableAll extends ΑssignableValue, ΑssignableNumber, ΑssignableMapper, ΑssignableList {
     }
 
     /**
@@ -469,6 +478,6 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
         static final String Value = "value";
         static final String Number = "number";
         static final String Mapper = "mapper";
-        static final String Text = "text";
+        static final String List = "list";
     }
 }
