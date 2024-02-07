@@ -26,9 +26,10 @@ class GenericTest {
 
     @Test
     void generic() {
-        Generic<String, Integer> o = Generic.<String, Integer> with().value("value").number(10).mapper(Map.of("key", 20));
+        Generic<String, Integer> o = Generic.<String, Integer> with().value("value").number(10).mapper(Map.of("key", 20)).text("X");
         assert o.value.equals("value");
         assert o.number == 10;
         assert o.mapper.get("key") == 20;
+
     }
 }

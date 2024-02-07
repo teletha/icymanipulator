@@ -3,6 +3,7 @@ package icy.manipulator.property.generic.model;
 import icy.manipulator.property.generic.model.Generic;
 import java.lang.Number;
 import java.lang.Override;
+import java.lang.String;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
 import java.lang.UnsupportedOperationException;
@@ -56,6 +57,9 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
     /** The final property updater. */
     private static final MethodHandle mapperUpdater = updater("mapper");
 
+    /** The final property updater. */
+    private static final MethodHandle textUpdater = updater("text");
+
     /** The exposed property. */
     public final P value;
 
@@ -65,6 +69,9 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
     /** The exposed property. */
     public final Map<P, Q> mapper;
 
+    /** The exposed property. */
+    public final String text;
+
     /**
      * HIDE CONSTRUCTOR
      */
@@ -72,6 +79,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
         this.value = null;
         this.number = null;
         this.mapper = null;
+        this.text = null;
     }
 
     /**
@@ -186,6 +194,43 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
     }
 
     /**
+     * Return the text property.
+     *
+     * @return A value of text property.
+     */
+    @Override
+    public final String text() {
+        return this.text;
+    }
+
+    /**
+     * Provide classic getter API.
+     *
+     * @return A value of text property.
+     */
+    @SuppressWarnings("unused")
+    private final String getText() {
+        return this.text;
+    }
+
+    /**
+     * Provide classic setter API.
+     *
+     * @paran value A new value of text property to assign.
+     */
+    private final void setText(String value) {
+        if (value == null) {
+            throw new IllegalArgumentException("The text property requires non-null value.");
+        }
+        try {
+            textUpdater.invoke(this, value);
+        } catch (UnsupportedOperationException e) {
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
      * Show all property values.
      *
      * @return All property values.
@@ -195,7 +240,8 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
         StringBuilder builder = new StringBuilder("Generic<P, Q> [");
         builder.append("value=").append(value).append(", ");
         builder.append("number=").append(number).append(", ");
-        builder.append("mapper=").append(mapper).append("]");
+        builder.append("mapper=").append(mapper).append(", ");
+        builder.append("text=").append(text).append("]");
         return builder.toString();
     }
 
@@ -206,7 +252,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(value, number, mapper);
+        return Objects.hash(value, number, mapper, text);
     }
 
     /**
@@ -224,25 +270,26 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
         if (!Objects.equals(value, other.value)) return false;
         if (!Objects.equals(number, other.number)) return false;
         if (!Objects.equals(mapper, other.mapper)) return false;
+        if (!Objects.equals(text, other.text)) return false;
         return true;
     }
 
-    public static <P, Q extends Number> Ìnstantiator<?, P, Q> with() {
-        return new Ìnstantiator();
+    public static <P, Q extends Number> Ιnstantiator<?, P, Q> with() {
+        return new Ιnstantiator();
     }
 
     /**
      * Namespace for {@link Generic}  builder methods.
      */
-    public static class Ìnstantiator<Self extends Generic<P, Q> & ÅssignableÅrbitrary<Self, P, Q>, P, Q extends Number> {
+    public static class Ιnstantiator<Self extends Generic<P, Q> & ΑssignableΑrbitrary<Self, P, Q>, P, Q extends Number> {
 
         /**
          * Create new {@link Generic} with the specified value property.
          * 
          * @return The next assignable model.
          */
-        public ÅssignableNumber<ÅssignableMapper<Self, P, Q>, P, Q> value(P value) {
-            Åssignable o = new Åssignable();
+        public ΑssignableNumber<ΑssignableMapper<ΑssignableText<Self, P, Q>, P, Q>, P, Q> value(P value) {
+            Αssignable o = new Αssignable();
             o.value(value);
             return o;
         }
@@ -251,7 +298,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableValue<Next, P, Q extends Number> {
+    public static interface ΑssignableValue<Next, P, Q extends Number> {
 
         /**
          * Assign value property.
@@ -268,7 +315,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableNumber<Next, P, Q extends Number> {
+    public static interface ΑssignableNumber<Next, P, Q extends Number> {
 
         /**
          * Assign number property.
@@ -285,7 +332,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableMapper<Next, P, Q extends Number> {
+    public static interface ΑssignableMapper<Next, P, Q extends Number> {
 
         /**
          * Assign mapper property.
@@ -383,19 +430,36 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends Generic<P, Q>, P, Q extends Number> {
+    public static interface ΑssignableText<Next, P, Q extends Number> {
+
+        /**
+         * Assign text property.
+         * 
+         * @param value A new value to assign.
+         * @return The next assignable model.
+         */
+        default Next text(String value) {
+            ((Generic<P, Q>) this).setText(value);
+            return (Next) this;
+        }
+    }
+
+    /**
+     * Property assignment API.
+     */
+    public static interface ΑssignableΑrbitrary<Next extends Generic<P, Q>, P, Q extends Number> {
     }
 
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends ÅssignableValue, ÅssignableNumber, ÅssignableMapper {
+    protected static interface ΑssignableAll extends ΑssignableValue, ΑssignableNumber, ΑssignableMapper, ΑssignableText {
     }
 
     /**
      * Mutable Model.
      */
-    private static final class Åssignable<P, Q extends Number> extends Generic<P, Q> implements ÅssignableAll, ÅssignableÅrbitrary {
+    private static final class Αssignable<P, Q extends Number> extends Generic<P, Q> implements ΑssignableAll, ΑssignableΑrbitrary {
     }
 
     /**
@@ -405,5 +469,6 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
         static final String Value = "value";
         static final String Number = "number";
         static final String Mapper = "mapper";
+        static final String Text = "text";
     }
 }

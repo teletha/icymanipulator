@@ -24,4 +24,7 @@ public interface GenericModel<P, Q extends Number> {
 
     @Icy.Property
     Map<P, Q> mapper();
+
+    @Icy.Property
+    String text();
 }

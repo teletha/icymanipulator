@@ -36,16 +36,16 @@ import icy.manipulator.util.Lists;
 public class IcyManipulator extends AptyProcessor {
 
     /** The prefix of assignable type. */
-    static final String Assignable = "Åssignable";
+    static final String Assignable = "Αssignable";
 
     /** The aggregated assignable interface name. */
     static final String AssignableAll = Assignable + "All";
 
     /** The instantiator class name. */
-    static final String Instantiator = "Ìnstantiator";
+    static final String Instantiator = "Ιnstantiator";
 
     /** The configuration interface name for arbitrary perperties. */
-    static final String ArbitraryInterface = Assignable + "Årbitrary";
+    static final String ArbitraryInterface = Assignable + "Αrbitrary";
 
     /**
      * 
