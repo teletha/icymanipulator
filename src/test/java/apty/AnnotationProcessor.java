@@ -9,6 +9,7 @@
  */
 package apty;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -89,6 +90,7 @@ public class AnnotationProcessor implements Extension {
                 .addCurrentClassPath()
                 .addProcessor(filter)
                 .addSource(compilingClass, compilingSource.text())
+                .setEncoding(StandardCharsets.UTF_8)
                 .setOutput(room.root)
                 .setListener(new DiagnosticListener<>() {
 
@@ -208,6 +210,7 @@ public class AnnotationProcessor implements Extension {
                 .addCurrentClassPath()
                 .addProcessor(processor)
                 .addSource(compilingClass, compilingSource.text())
+                .setEncoding(StandardCharsets.UTF_8)
                 .setOutput(room.root)
                 .setListener(errors);
 

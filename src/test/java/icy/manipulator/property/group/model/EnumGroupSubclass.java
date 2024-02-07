@@ -26,8 +26,6 @@ public class EnumGroupSubclass extends EnumGroupSubclassModel {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("EnumGroupSubclass [");
-        builder.append("color=").append(color).append(", ");
-        builder.append("size=").append(size).append("]");
         return builder.toString();
     }
 
@@ -38,7 +36,7 @@ public class EnumGroupSubclass extends EnumGroupSubclassModel {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(color, size);
+        return Objects.hash();
     }
 
     /**
@@ -53,8 +51,6 @@ public class EnumGroupSubclass extends EnumGroupSubclassModel {
         }
 
         EnumGroupSubclass other = (EnumGroupSubclass) o;
-        if (!Objects.equals(color, other.color)) return false;
-        if (size != other.size) return false;
         return true;
     }
 
@@ -64,54 +60,15 @@ public class EnumGroupSubclass extends EnumGroupSubclassModel {
     /**
      * Namespace for {@link EnumGroupSubclass}  builder methods.
      */
-    public static class Ìnstantiator<Self extends EnumGroupSubclass & ÅssignableÅrbitrary<Self>> extends icy.manipulator.property.group.model.EnumGroup.Ìnstantiator {
+    public static class Ìnstantiator<Self extends EnumGroupSubclass & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create new {@link EnumGroupSubclass} with the specified color property.
-         * 
-         * @return The next assignable model.
+         * Create initialized {@link EnumGroupSubclass}.
+         *
+         * @return A initialized model.
          */
-        public Self color(Color color, int size) {
-            Åssignable o = new Åssignable();
-            o.color(color);
-            o.size(size);
-            return (Self)o;
-        }
-
-        /**
-         * Create new {@link EnumGroupSubclass} with the specified color property.
-         * 
-         * @return The next assignable model.
-         */
-        public Self red(int size) {
-            Åssignable o = new Åssignable();
-            o.red();
-            o.size(size);
-            return (Self)o;
-        }
-
-        /**
-         * Create new {@link EnumGroupSubclass} with the specified color property.
-         * 
-         * @return The next assignable model.
-         */
-        public Self blue(int size) {
-            Åssignable o = new Åssignable();
-            o.blue();
-            o.size(size);
-            return (Self)o;
-        }
-
-        /**
-         * Create new {@link EnumGroupSubclass} with the specified color property.
-         * 
-         * @return The next assignable model.
-         */
-        public Self green(int size) {
-            Åssignable o = new Åssignable();
-            o.green();
-            o.size(size);
-            return (Self)o;
+        public Self create() {
+            return (Self) new Åssignable();
         }
     }
 
@@ -124,7 +81,7 @@ public class EnumGroupSubclass extends EnumGroupSubclassModel {
     /**
      * Internal aggregated API.
      */
-    protected static interface ÅssignableAll extends EnumGroup.ÅssignableAll {
+    protected static interface ÅssignableAll {
     }
 
     /**
