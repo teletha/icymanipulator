@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.2](https://github.com/teletha/icymanipulator/compare/v1.4.1...v1.4.2) (2024-02-07)
+
+
+### Bug Fixes
+
+* avoiding encoding problems by using more used characters on prefix ([3e45e8e](https://github.com/teletha/icymanipulator/commit/3e45e8e95b328c0685a864c26b1f5e38d98b5b6e))
+* unable to compile when type variables are used in a List ([21aabab](https://github.com/teletha/icymanipulator/commit/21aababcb6fdd5d80c7638a730736a1d5e8eddf2))
+* update ci process ([d3f4eb1](https://github.com/teletha/icymanipulator/commit/d3f4eb193cb18658fa9f3dfbcbd3a010bd6c6ad5))
+
 ### [1.4.1](https://www.github.com/teletha/icymanipulator/compare/v1.4.0...v1.4.1) (2021-12-23)
 
 
