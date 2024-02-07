@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3](https://github.com/teletha/icymanipulator/compare/v1.4.2...v1.4.3) (2024-02-07)
+
+
+### Bug Fixes
+
+* use correct java version ([770ce1d](https://github.com/teletha/icymanipulator/commit/770ce1d8e90aad6429e1a672959755007930c50b))
+
 ## [1.4.2](https://github.com/teletha/icymanipulator/compare/v1.4.1...v1.4.2) (2024-02-07)
 
 
