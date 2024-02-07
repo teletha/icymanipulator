@@ -20,7 +20,6 @@ tmp/
 *.swp
 *~.nib
 local.properties
-.settings/
 .loadpath
 .recommenders
 
@@ -40,7 +39,6 @@ local.properties
 .autotools
 
 # Java annotation processor (APT)
-.factorypath
 
 # PDT-specific (PHP Development Tools)
 .buildpath
@@ -156,10 +154,8 @@ fabric.properties
 ### Intellij Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
-# *.iml
 # modules.xml
 # .idea/misc.xml
-# *.ipr
 
 # Sonarlint plugin
 # https://plugins.jetbrains.com/plugin/7973-sonarlint
@@ -224,7 +220,6 @@ hs_err_pid*
 .nfs*
 
 ### Maven ###
-target/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
@@ -239,9 +234,7 @@ buildNumber.properties
 ### Maven Patch ###
 # Eclipse m2e generated files
 # Eclipse Core
-.project
 # JDT-specific (Eclipse Java Development Tools)
-.classpath
 
 ### Windows ###
 # Windows thumbnail cache files
@@ -270,3 +263,58 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/Java,Maven,Windows,Linux,Eclipse,IntelliJ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# SonarLint plugin
+.idea/sonarlint/
+
+
+
+
+
+
+
+
+
+
+
+# Azure Toolkit for IntelliJ plugin
+# https://plugins.jetbrains.com/plugin/8053-azure-toolkit-for-intellij
+.idea/**/azureSettings.xml
+
+
+
+
+
+
+replay_pid*
