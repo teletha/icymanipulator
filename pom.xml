@@ -10,21 +10,21 @@
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>antibug</artifactId>
-			<version>1.7.0</version>
+			<version>1.12.0</version>
 			<scope>test</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>bee</artifactId>
-			<version>0.45.0</version>
+			<version>0.57.0</version>
 			<scope>test</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>33.0.0-jre</version>
+			<version>33.3.1-jre</version>
 			<scope>test</scope>
 			<exclusions/>
 		</dependency>
@@ -63,28 +63,18 @@
 			<email/>
 			<url>https://github.com/teletha</url>
 		</developer>
-		<developer>
-			<name/>
-			<email/>
-			<url>https://github.com/apps/github-actions</url>
-		</developer>
 	</developers>
 	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
-					<release>21</release>
+					<release>23</release>
 					<compilerArgs>
 						<arg>-proc:none</arg>
 					</compilerArgs>
 				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M5</version>
 			</plugin>
 		</plugins>
 	</build>
