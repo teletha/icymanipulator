@@ -8,13 +8,10 @@
  *          https://opensource.org/licenses/MIT
  */
 
-import javax.lang.model.SourceVersion;
-
 public class Project extends bee.api.Project {
 
     {
         product("com.github.teletha", "icymanipulator", ref("version.txt"));
-        require(SourceVersion.RELEASE_21, SourceVersion.RELEASE_17);
 
         require("com.github.teletha", "antibug").atTest();
         require("com.github.teletha", "bee").atTest();
