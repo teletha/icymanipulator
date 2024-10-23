@@ -7,25 +7,14 @@
 </p>
 
 
-## Summary
-
-<p align="right"><a href="#top">back to top</a></p>
 
 
-## Usage
 
-<p align="right"><a href="#top">back to top</a></p>
 
 
 ## Prerequisites
 Icymanipulator runs on all major operating systems and requires only [Java version 17](https://docs.oracle.com/en/java/javase/17/) or later to run.
-To check, please run `java -version` from the command line interface. You should see something like this:
-```
-> java -version
-openjdk version "16" 2021-03-16
-OpenJDK Runtime Environment (build 16+36-2231)
-OpenJDK 64-Bit Server VM (build 16+36-2231, mixed mode, sharing)
-```
+To check, please run `java -version` on your terminal.
 <p align="right"><a href="#top">back to top</a></p>
 
 ## Install
