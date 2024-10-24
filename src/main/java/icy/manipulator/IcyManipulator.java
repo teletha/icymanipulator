@@ -108,6 +108,19 @@ public class IcyManipulator extends AptyProcessor {
                 defineMutableClass();
                 definePropertyEnum();
             });
+
+            // SELF reference replacer
+            if (model.type.variables.size() == 1) {
+                String name = model.type.variables.get(0).name();
+                if (name.equals("SELF")) {
+                    String original = model.type.base;
+                    String impl = model.implType.base;
+
+                    replaceAll("<" + name + " extends " + original + ">", "");
+                    replaceAll(impl + "<" + name + ">", impl);
+                    replaceAll("<" + name + ">", "<" + impl + ">");
+                }
+            }
         }
 
         /**

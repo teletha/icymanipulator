@@ -443,4 +443,19 @@ public class Coder {
 
         return className;
     }
+
+    /**
+     * Replace source code.
+     * 
+     * @param from
+     * @param to
+     */
+    protected final void replaceAll(String from, String to) {
+        int index = source.indexOf(from);
+        while (index != -1) {
+            source.replace(index, index + from.length(), to);
+            index += to.length();
+            index = source.indexOf(from, index);
+        }
+    }
 }

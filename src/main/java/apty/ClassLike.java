@@ -47,8 +47,28 @@ public interface ClassLike {
      * @param type A type which is equals to this type.
      * @return A reulst.
      */
+    default boolean isNot(Class type) {
+        return !is(type);
+    }
+
+    /**
+     * Check type equality.
+     * 
+     * @param type A type which is equals to this type.
+     * @return A reulst.
+     */
     default boolean is(Element type) {
         return is(type.asType());
+    }
+
+    /**
+     * Check type equality.
+     * 
+     * @param type A type which is equals to this type.
+     * @return A reulst.
+     */
+    default boolean isNot(Element type) {
+        return !is(type);
     }
 
     /**
@@ -67,8 +87,28 @@ public interface ClassLike {
      * @param type A type which is equals to this type.
      * @return A reulst.
      */
+    default boolean isNot(TypeMirror type) {
+        return !is(type);
+    }
+
+    /**
+     * Check type equality.
+     * 
+     * @param type A type which is equals to this type.
+     * @return A reulst.
+     */
     default boolean is(Type type) {
         return name().equals(type.name());
+    }
+
+    /**
+     * Check type equality.
+     * 
+     * @param type A type which is equals to this type.
+     * @return A reulst.
+     */
+    default boolean isNot(Type type) {
+        return !is(type);
     }
 
     /**
