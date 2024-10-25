@@ -81,9 +81,11 @@ public class IcyManipulator extends AptyProcessor {
             this.m = model;
             this.icy = m.e.getAnnotation(Icy.class);
 
+            Type parent = model.type.clone();
             Predicate<Type> self = type -> type.name().equals(icy.self());
             if (m.type.variables.removeIf(self)) {
                 m.implType.variables.removeIf(self);
+                parent.variables.replaceAll(type -> self.test(type) ? m.implType : type);
                 m.ownProperties().stream().forEach(info -> {
                     info.type.variables.replaceAll(type -> self.test(type) ? m.implType : type);
                 });
@@ -99,7 +101,7 @@ public class IcyManipulator extends AptyProcessor {
             write(" * ");
             write(" * @see <a href=\"https://github.com/teletha/icymanipulator\">Icy Manipulator (Code Generator)</a>");
             write(" */");
-            write(visibility, "class ", m.implType.raw(), declare(declarations), inheritance, m.type, () -> {
+            write(visibility, "class ", m.implType.raw(), declare(declarations), inheritance, parent, () -> {
                 defineErrorHandler();
                 defineMethodInvokerBuilder();
                 defineMethodInvoker();

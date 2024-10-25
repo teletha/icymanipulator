@@ -17,7 +17,7 @@ import java.util.function.ToIntFunction;
  * 
  * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-public class SelfRef implements SelfRefModel {
+public class SelfRef implements SelfRefModel<SelfRef> {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.

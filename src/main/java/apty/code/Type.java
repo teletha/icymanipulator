@@ -123,6 +123,16 @@ public class Type implements Codable, ClassLike {
     }
 
     /**
+     * Clone this {@link Type}.
+     * 
+     * {@inheritDoc}
+     */
+    @Override
+    public Type clone() {
+        return new Type(packageName, base, new ArrayList(variables), kind, arrayKind, detector);
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
