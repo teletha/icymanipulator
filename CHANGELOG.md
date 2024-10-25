@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/teletha/icymanipulator/compare/v1.5.0...v1.5.1) (2024-10-25)
+
+
+### Bug Fixes
+
+* correct generics ([a25a4c3](https://github.com/teletha/icymanipulator/commit/a25a4c378f164ae24dffb0d66a075598408b46be))
+
 ## [1.5.0](https://github.com/teletha/icymanipulator/compare/v1.4.3...v1.5.0) (2024-10-25)
 
 
