@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.5.0](https://github.com/teletha/icymanipulator/compare/v1.4.3...v1.5.0) (2024-10-25)
+
+
+### Features
+
+* self-reference type variable is configurable ([6ef032d](https://github.com/teletha/icymanipulator/commit/6ef032de0fbed58ec996d584563cfa5ef6cbb67f))
+* support special SELF reference ([f54dd21](https://github.com/teletha/icymanipulator/commit/f54dd214abc82d1f65ca92dccdf744f5eb449379))
+
+
+### Bug Fixes
+
+* support SELF reference with overload ([01cf63c](https://github.com/teletha/icymanipulator/commit/01cf63cef81c83a6676f655569371f150a9ac18b))
+
 ## [1.4.3](https://github.com/teletha/icymanipulator/compare/v1.4.2...v1.4.3) (2024-02-07)
 
 
