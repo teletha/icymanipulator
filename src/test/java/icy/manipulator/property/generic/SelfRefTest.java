@@ -24,7 +24,7 @@ class SelfRefTest {
 
     @Test
     void generic() {
-        SelfRef ref = SelfRef.with().value(10).calc(x -> x.value() * 2);
+        SelfRef ref = SelfRef.with.value(10).calc(x -> x.value() * 2);
         assert ref.value == 10;
         assert ref.calc.applyAsInt(ref) == 20;
     }

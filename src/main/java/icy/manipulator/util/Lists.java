@@ -28,4 +28,19 @@ public class Lists {
 
         return merged;
     }
+
+    /**
+     * Create modifiable list with initial values.
+     * 
+     * @param <T>
+     * @param items
+     * @return
+     */
+    public static <T> List<T> of(T... items) {
+        List list = new ArrayList();
+        for (T item : items) {
+            list.add(item);
+        }
+        return list;
+    }
 }

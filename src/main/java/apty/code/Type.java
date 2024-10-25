@@ -33,6 +33,7 @@ import javax.lang.model.type.WildcardType;
 import apty.Apty;
 import apty.ClassLike;
 import apty.MethodLike;
+import icy.manipulator.util.Lists;
 
 public class Type implements Codable, ClassLike {
 
@@ -554,24 +555,24 @@ public class Type implements Codable, ClassLike {
         case BYTE:
         case SHORT:
         case VOID:
-            return new Type(type.toString(), List.of(), kind, detect(type));
+            return new Type(type.toString(), Lists.of(), kind, detect(type));
 
         case ARRAY:
-            return new Type(type.toString(), List.of(), kind, detect(type));
+            return new Type(type.toString(), Lists.of(), kind, detect(type));
 
         case TYPEVAR:
             TypeVariable var = (TypeVariable) type;
             TypeMirror upper = var.getUpperBound();
             if (!Apty.same(upper, Object.class)) {
-                return new Type("", type.toString(), List.of(of(upper)), kind, detect(type));
+                return new Type("", type.toString(), Lists.of(of(upper)), kind, detect(type));
             }
-            return new Type("", type.toString(), List.of(), kind, detect(type));
+            return new Type("", type.toString(), Lists.of(), kind, detect(type));
 
         case WILDCARD:
             WildcardType wild = (WildcardType) type;
-            if (wild.getExtendsBound() != null) return new Type("", "? extends ", List.of(of(wild.getExtendsBound())), kind, detect(type));
-            if (wild.getSuperBound() != null) return new Type("", "? super ", List.of(of(wild.getSuperBound())), kind, detect(type));
-            return new Type("", "?", List.of(), kind, detect(type));
+            if (wild.getExtendsBound() != null) return new Type("", "? extends ", Lists.of(of(wild.getExtendsBound())), kind, detect(type));
+            if (wild.getSuperBound() != null) return new Type("", "? super ", Lists.of(of(wild.getSuperBound())), kind, detect(type));
+            return new Type("", "?", Lists.of(), kind, detect(type));
 
         case DECLARED:
             DeclaredType declared = (DeclaredType) type;

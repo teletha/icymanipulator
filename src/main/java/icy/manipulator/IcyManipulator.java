@@ -21,6 +21,7 @@ import java.util.StringJoiner;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.IntUnaryOperator;
 import java.util.function.LongUnaryOperator;
+import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
@@ -76,19 +77,29 @@ public class IcyManipulator extends AptyProcessor {
          */
         public IcyCoder(ModelInfo model) {
             super(model.implType.name());
+
             this.m = model;
-            this.icy = model.e.getAnnotation(Icy.class);
-            this.declarations = model.type.variables.stream().map(Type::declared).collect(Collectors.toUnmodifiableList());
+            this.icy = m.e.getAnnotation(Icy.class);
+
+            Predicate<Type> self = type -> type.name().equals(icy.self());
+            if (m.type.variables.removeIf(self)) {
+                m.implType.variables.removeIf(self);
+                m.ownProperties().stream().forEach(info -> {
+                    info.type.variables.replaceAll(type -> self.test(type) ? m.implType : type);
+                });
+            }
+
+            this.declarations = m.type.variables.stream().map(Type::declared).collect(Collectors.toUnmodifiableList());
 
             String visibility = icy.packagePrivate() ? "" : "public ";
-            String inheritance = model.type.isInterface() ? " implements " : " extends ";
+            String inheritance = m.type.isInterface() ? " implements " : " extends ";
 
             write("/**");
-            write(" * Generated model for {@link ", model.type.base, "}.");
+            write(" * Generated model for {@link ", m.type.base, "}.");
             write(" * ");
             write(" * @see <a href=\"https://github.com/teletha/icymanipulator\">Icy Manipulator (Code Generator)</a>");
             write(" */");
-            write(visibility, "class ", model.implType.raw(), declare(declarations), inheritance, model.type, () -> {
+            write(visibility, "class ", m.implType.raw(), declare(declarations), inheritance, m.type, () -> {
                 defineErrorHandler();
                 defineMethodInvokerBuilder();
                 defineMethodInvoker();
@@ -108,20 +119,6 @@ public class IcyManipulator extends AptyProcessor {
                 defineMutableClass();
                 definePropertyEnum();
             });
-
-            // SELF reference replacer
-            if (model.type.variables.size() == 1) {
-                String name = model.type.variables.get(0).name();
-                if (name.equals("SELF")) {
-                    String original = model.type.base;
-                    String impl = model.implType.base;
-
-                    replaceAll("<" + name + " extends " + original + ">", "");
-                    replaceAll(impl + "<" + name + ">", impl);
-                    replaceAll("<" + name + ">", "<" + impl + ">");
-                    replaceAll(original + "<" + impl + ">", original);
-                }
-            }
         }
 
         /**
@@ -164,7 +161,7 @@ public class IcyManipulator extends AptyProcessor {
             write(" */");
             write("private static final ", MethodHandle.class, " invoker(String name, Class... parameterTypes) ", () -> {
                 writeTry(() -> {
-                    write(Method.class, " method = ", m.type, ".class.getDeclaredMethod(name, parameterTypes);");
+                    write(Method.class, " method = ", m.type.raw(), ".class.getDeclaredMethod(name, parameterTypes);");
                     write("method.setAccessible(true);");
                     write("return ", MethodHandles.class, ".lookup().unreflect(method);");
                 }, Throwable.class, e -> {

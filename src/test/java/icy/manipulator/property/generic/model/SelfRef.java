@@ -17,7 +17,7 @@ import java.util.function.ToIntFunction;
  * 
  * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-public class SelfRef implements icy.manipulator.property.generic.model.SelfRefModel {
+public class SelfRef implements SelfRefModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -198,21 +198,20 @@ public class SelfRef implements icy.manipulator.property.generic.model.SelfRefMo
         return true;
     }
 
-    public static <SELF extends icy.manipulator.property.generic.model.SelfRefModel> Ìnstantiator<?, SELF> with() {
-        return new Ìnstantiator();
-    }
+    /** The singleton builder. */
+    public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
      * Namespace for {@link SelfRef}  builder methods.
      */
-    public static class Ìnstantiator<Self extends SelfRef & ÅssignableÅrbitrary<Self, SELF>, SELF extends icy.manipulator.property.generic.model.SelfRefModel> {
+    public static class Ìnstantiator<Self extends SelfRef & ÅssignableÅrbitrary<Self>> {
 
         /**
          * Create new {@link SelfRef} with the specified value property.
          * 
          * @return The next assignable model.
          */
-        public ÅssignableCalc<Self, SELF> value(int value) {
+        public ÅssignableCalc<Self> value(int value) {
             Åssignable o = new Åssignable();
             o.value(value);
             return o;
@@ -223,7 +222,7 @@ public class SelfRef implements icy.manipulator.property.generic.model.SelfRefMo
          * 
          * @return The next assignable model.
          */
-        public ÅssignableCalc<Self, SELF> values(double value) {
+        public ÅssignableCalc<Self> values(double value) {
             Åssignable o = new Åssignable();
             o.values(value);
             return o;
@@ -233,7 +232,7 @@ public class SelfRef implements icy.manipulator.property.generic.model.SelfRefMo
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableValue<Next, SELF extends icy.manipulator.property.generic.model.SelfRefModel> {
+    public static interface ÅssignableValue<Next> {
 
         /**
          * Assign value property.
@@ -263,7 +262,7 @@ public class SelfRef implements icy.manipulator.property.generic.model.SelfRefMo
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableCalc<Next, SELF extends icy.manipulator.property.generic.model.SelfRefModel> {
+    public static interface ÅssignableCalc<Next> {
 
         /**
          * Assign calc property.
@@ -271,7 +270,7 @@ public class SelfRef implements icy.manipulator.property.generic.model.SelfRefMo
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next calc(ToIntFunction<SelfRef> value) {
+        default Next calc(ToIntFunction<? extends SelfRef> value) {
             ((SelfRef) this).setCalc((java.util.function.ToIntFunction)value);
             return (Next) this;
         }
@@ -280,7 +279,7 @@ public class SelfRef implements icy.manipulator.property.generic.model.SelfRefMo
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends SelfRef, SELF extends icy.manipulator.property.generic.model.SelfRefModel> {
+    public static interface ÅssignableÅrbitrary<Next extends SelfRef> {
     }
 
     /**
@@ -292,7 +291,7 @@ public class SelfRef implements icy.manipulator.property.generic.model.SelfRefMo
     /**
      * Mutable Model.
      */
-    private static final class Åssignable<SELF extends icy.manipulator.property.generic.model.SelfRefModel> extends SelfRef implements ÅssignableAll, ÅssignableÅrbitrary {
+    private static final class Åssignable extends SelfRef implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**

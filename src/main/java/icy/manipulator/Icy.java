@@ -65,6 +65,13 @@ public @interface Icy {
      */
     int grouping() default 1;
 
+    /**
+     * Configure the self-reference variable type name.
+     * 
+     * @return
+     */
+    String self() default "SELF";
+
     @Documented
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.SOURCE)
