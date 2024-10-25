@@ -119,6 +119,7 @@ public class IcyManipulator extends AptyProcessor {
                     replaceAll("<" + name + " extends " + original + ">", "");
                     replaceAll(impl + "<" + name + ">", impl);
                     replaceAll("<" + name + ">", "<" + impl + ">");
+                    replaceAll(original + "<" + impl + ">", original);
                 }
             }
         }

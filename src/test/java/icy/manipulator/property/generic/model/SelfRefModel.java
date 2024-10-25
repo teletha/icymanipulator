@@ -19,6 +19,11 @@ public interface SelfRefModel<SELF extends SelfRefModel> {
     @Icy.Property
     int value();
 
+    @Icy.Overload("value")
+    private int values(double value) {
+        return (int) Math.round(value);
+    }
+
     @Icy.Property
     ToIntFunction<SELF> calc();
 }

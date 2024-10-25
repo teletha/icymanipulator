@@ -8,6 +8,7 @@ import java.lang.UnsupportedOperationException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.function.ToIntFunction;
 
@@ -16,7 +17,7 @@ import java.util.function.ToIntFunction;
  * 
  * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-public class SelfRef implements icy.manipulator.property.generic.model.SelfRefModel<SelfRef> {
+public class SelfRef implements icy.manipulator.property.generic.model.SelfRefModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -29,6 +30,26 @@ public class SelfRef implements icy.manipulator.property.generic.model.SelfRefMo
     private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
         throw (T) throwable;
     }
+
+    /**
+     * Create special method invoker.
+     *
+     * @param name A target method name.
+     * @param parameterTypes A list of method parameter types.
+     * @return A special method invoker.
+     */
+    private static final MethodHandle invoker(String name, Class... parameterTypes)  {
+        try {
+            Method method = icy.manipulator.property.generic.model.SelfRefModel.class.getDeclaredMethod(name, parameterTypes);
+            method.setAccessible(true);
+            return MethodHandles.lookup().unreflect(method);
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /** The overload or intercept method invoker. */
+    private static final MethodHandle values$912239839= invoker("values", double.class);
 
     /**
      * Create special property updater.
@@ -196,6 +217,17 @@ public class SelfRef implements icy.manipulator.property.generic.model.SelfRefMo
             o.value(value);
             return o;
         }
+
+        /**
+         * Create new {@link SelfRef} with the specified value property.
+         * 
+         * @return The next assignable model.
+         */
+        public ÅssignableCalc<Self, SELF> values(double value) {
+            Åssignable o = new Åssignable();
+            o.values(value);
+            return o;
+        }
     }
 
     /**
@@ -212,6 +244,19 @@ public class SelfRef implements icy.manipulator.property.generic.model.SelfRefMo
         default Next value(int value) {
             ((SelfRef) this).setValue(value);
             return (Next) this;
+        }
+
+        /**
+         * Assign value property.
+         * 
+         * @return The next assignable model.
+         */
+        default Next values(double value) {
+            try {
+                return value((int) values$912239839.invoke(this, value));
+            } catch (Throwable e) {
+                throw quiet(e);
+            }
         }
     }
 
