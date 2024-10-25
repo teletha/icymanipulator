@@ -11,10 +11,10 @@
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="T">
-		<header class="H">
-			<h1 class="U" date="2024-02-07" ver="1.4.3"><code>Icymanipulator</code></h1>
-			<nav class="I"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="N">
+		<header class="L">
+			<h1 class="O" date="2024-02-07" ver="1.4.3"><code>Icymanipulator</code></h1>
+			<nav class="g"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com/Teletha/IcyManipulator/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -23,7 +23,7 @@
 					</svg>Activity</a><a href="https://github.com/Teletha/IcyManipulator" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="Z" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="k" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -31,23 +31,23 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="J">
-			<nav class="V">
+		<main class="P">
+			<nav class="f">
 				<div></div>
 			</nav>
-			<article class="Y" id="Article">
-				<section class="m"><code class="K">icy.manipulator</code>
-					<h2 class="Annotation S"><code class="N">Icy</code></h2>
-					<div class="R">
+			<article class="M" id="Article">
+				<section class="d"><code class="U">icy.manipulator</code>
+					<h2 class="Annotation H"><code class="e">Icy</code></h2>
+					<div class="Y">
 						<ul class="C F">
 							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></li>
 						</ul>
 					</div>
 				</section>
-				<section class="m" id="packagePrivate()">
-					<h2 class="Q"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="N">packagePrivate</code><code class="h">()</code><i class="f"><code>boolean</code></i></h2>
-					<table class="j">
-						<tr class="k">
+				<section class="d" id="packagePrivate()">
+					<h2 class="R"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="e">packagePrivate</code><code class="c">()</code><i class="m"><code>boolean</code></i></h2>
+					<table class="S">
+						<tr class="J">
 							<td><code>boolean</code></td>
 							<td><span><p>false means public (default), true means package-private.</p>
 </span></td>
@@ -55,19 +55,19 @@
 					</table><span class="B"><p>Configure whether the generated class is package private or not. (default is false, the
 generated class has public visibility)</p>
 </span></section>
-				<section class="m" id="builder()">
-					<h2 class="Q"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="N">builder</code><code class="h">()</code><i class="f"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="j">
-						<tr class="k">
+				<section class="d" id="builder()">
+					<h2 class="R"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="e">builder</code><code class="c">()</code><i class="m"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="S">
+						<tr class="J">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Configure the name of model builder. (default is &#38;quot;with&#38;quot;).</p>
 </span></section>
-				<section class="m" id="modelNamePattern()">
-					<h2 class="Q"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="N">modelNamePattern</code><code class="h">()</code><i class="f"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="j">
-						<tr class="k">
+				<section class="d" id="modelNamePattern()">
+					<h2 class="R"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="e">modelNamePattern</code><code class="c">()</code><i class="m"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="S">
+						<tr class="J">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
 							<td><span><p>A default pattern is &#38;quot;(.+)Model&#38;quot;.</p>
 </span></td>
@@ -75,46 +75,56 @@ generated class has public visibility)</p>
 					</table><span class="B"><p>Configure the regular expression for model class naming. The first back reference ($1) will
 be used.</p>
 </span></section>
-				<section class="m" id="getterModifier()">
-					<h2 class="Q"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="N">getterModifier</code><code class="h">()</code><i class="f"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="j">
-						<tr class="k">
+				<section class="d" id="getterModifier()">
+					<h2 class="R"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="e">getterModifier</code><code class="c">()</code><i class="m"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="S">
+						<tr class="J">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
 							<td><span><p>&#38;quot;private&#38;quot;</p>
 </span></td>
 						</tr>
 					</table><span class="B"><p>Configure the modifier of classic style getter method.</p>
 </span></section>
-				<section class="m" id="setterModifier()">
-					<h2 class="Q"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="N">setterModifier</code><code class="h">()</code><i class="f"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="j">
-						<tr class="k">
+				<section class="d" id="setterModifier()">
+					<h2 class="R"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="e">setterModifier</code><code class="c">()</code><i class="m"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="S">
+						<tr class="J">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
 							<td><span><p>&#38;quot;private&#38;quot;</p>
 </span></td>
 						</tr>
 					</table><span class="B"><p>Configure the modifier of classic style setter method.</p>
 </span></section>
-				<section class="m" id="grouping()">
-					<h2 class="Q"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="N">grouping</code><code class="h">()</code><i class="f"><code>int</code></i></h2>
-					<table class="j">
-						<tr class="k">
+				<section class="d" id="grouping()">
+					<h2 class="R"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="e">grouping</code><code class="c">()</code><i class="m"><code>int</code></i></h2>
+					<table class="S">
+						<tr class="J">
 							<td><code>int</code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Configure the grouping size of first required properties.</p>
 </span></section>
+				<section class="d" id="self()">
+					<h2 class="R"><i class="ABSTRACT"><i class="PUBLIC"></i></i><code class="e">self</code><code class="c">()</code><i class="m"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="S">
+						<tr class="J">
+							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
+							<td></td>
+						</tr>
+					</table><span class="B"><p>Configure the self-reference variable type name.</p>
+</span></section>
 			</article>
-			<aside class="l" id="SubNavi">
-				<div class="L">
-					<h5 class="O">Methods</h5>
+			<aside class="Q" id="SubNavi">
+				<div class="b">
+					<h5 class="K">Methods</h5>
 					<ul>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.html#packagePrivate()">packagePrivate</a></code><code class="h">()</code><i class="i"><code>boolean</code></i></li>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.html#builder()">builder</a></code><code class="h">()</code><i class="i"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.html#modelNamePattern()">modelNamePattern</a></code><code class="h">()</code><i class="i"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.html#getterModifier()">getterModifier</a></code><code class="h">()</code><i class="i"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.html#setterModifier()">setterModifier</a></code><code class="h">()</code><i class="i"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.html#grouping()">grouping</a></code><code class="h">()</code><i class="i"><code>int</code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.html#packagePrivate()">packagePrivate</a></code><code class="c">()</code><i class="X"><code>boolean</code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.html#builder()">builder</a></code><code class="c">()</code><i class="X"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.html#modelNamePattern()">modelNamePattern</a></code><code class="c">()</code><i class="X"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.html#getterModifier()">getterModifier</a></code><code class="c">()</code><i class="X"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.html#setterModifier()">setterModifier</a></code><code class="c">()</code><i class="X"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.html#grouping()">grouping</a></code><code class="c">()</code><i class="X"><code>int</code></i></li>
+						<li><i class="ABSTRACT"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.Icy.html#self()">self</a></code><code class="c">()</code><i class="X"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
 					</ul>
 				</div>
 			</aside>
