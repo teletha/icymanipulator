@@ -70,16 +70,16 @@ public class Mutable extends MutableModel {
     public final String value;
 
     /** The exposed property. */
-    public final int intNum;
+    protected int intNum;
 
     /** The exposed property. */
-    public final long longNum;
+    protected long longNum;
 
     /** The exposed property. */
-    public final float floatNum;
+    protected float floatNum;
 
     /** The exposed property. */
-    public final double doubleNum;
+    protected double doubleNum;
 
     /**
      * HIDE CONSTRUCTOR
@@ -200,7 +200,7 @@ public class Mutable extends MutableModel {
      */
     private final void setIntNum(int value) {
         try {
-            intNumUpdater.invoke(this, value);
+            intNum = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -256,7 +256,7 @@ public class Mutable extends MutableModel {
      */
     private final void setLongNum(long value) {
         try {
-            longNumUpdater.invoke(this, value);
+            longNum = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -312,7 +312,7 @@ public class Mutable extends MutableModel {
      */
     private final void setFloatNum(float value) {
         try {
-            floatNumUpdater.invoke(this, value);
+            floatNum = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -368,7 +368,7 @@ public class Mutable extends MutableModel {
      */
     private final void setDoubleNum(double value) {
         try {
-            doubleNumUpdater.invoke(this, value);
+            doubleNum = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

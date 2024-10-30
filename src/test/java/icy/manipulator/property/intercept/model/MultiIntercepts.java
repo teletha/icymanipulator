@@ -78,7 +78,7 @@ public class MultiIntercepts extends MultiInterceptsModel {
     private static final MethodHandle valueUpdater = updater("value");
 
     /** The exposed property. */
-    public final int size;
+    protected int size;
 
     /** The exposed property. */
     public final String value;

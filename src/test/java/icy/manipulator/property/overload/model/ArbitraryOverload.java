@@ -71,7 +71,7 @@ public class ArbitraryOverload extends ArbitraryOverloadModel {
     private static final MethodHandle sizeUpdater = updater("size");
 
     /** The exposed property. */
-    public final int size;
+    protected int size;
 
     /**
      * HIDE CONSTRUCTOR
@@ -107,7 +107,7 @@ public class ArbitraryOverload extends ArbitraryOverloadModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, value);
+            size = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

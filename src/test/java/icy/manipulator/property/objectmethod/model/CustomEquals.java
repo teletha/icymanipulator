@@ -56,7 +56,7 @@ public class CustomEquals extends CustomEqualsModel {
     public final String name;
 
     /** The exposed property. */
-    public final int age;
+    protected int age;
 
     /**
      * HIDE CONSTRUCTOR
@@ -130,7 +130,7 @@ public class CustomEquals extends CustomEqualsModel {
      */
     private final void setAge(int value) {
         try {
-            ageUpdater.invoke(this, value);
+            age = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

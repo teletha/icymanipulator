@@ -70,28 +70,28 @@ public class Primitive extends PrimitiveModel {
     private static final MethodHandle booleanXUpdater = updater("booleanX");
 
     /** The exposed property. */
-    public final int intX;
+    protected int intX;
 
     /** The exposed property. */
-    public final long longX;
+    protected long longX;
 
     /** The exposed property. */
-    public final float floatX;
+    protected float floatX;
 
     /** The exposed property. */
-    public final double doubleX;
+    protected double doubleX;
 
     /** The exposed property. */
-    public final byte byteX;
+    protected byte byteX;
 
     /** The exposed property. */
-    public final short shortX;
+    protected short shortX;
 
     /** The exposed property. */
-    public final char charX;
+    protected char charX;
 
     /** The exposed property. */
-    public final boolean booleanX;
+    protected boolean booleanX;
 
     /**
      * HIDE CONSTRUCTOR
@@ -134,7 +134,7 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setIntX(int value) {
         try {
-            intXUpdater.invoke(this, value);
+            intX = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -168,7 +168,7 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setLongX(long value) {
         try {
-            longXUpdater.invoke(this, value);
+            longX = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -202,7 +202,7 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setFloatX(float value) {
         try {
-            floatXUpdater.invoke(this, value);
+            floatX = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -236,7 +236,7 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setDoubleX(double value) {
         try {
-            doubleXUpdater.invoke(this, value);
+            doubleX = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -270,7 +270,7 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setByteX(byte value) {
         try {
-            byteXUpdater.invoke(this, value);
+            byteX = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -304,7 +304,7 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setShortX(short value) {
         try {
-            shortXUpdater.invoke(this, value);
+            shortX = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -338,7 +338,7 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setCharX(char value) {
         try {
-            charXUpdater.invoke(this, value);
+            charX = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -372,7 +372,7 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setBooleanX(boolean value) {
         try {
-            booleanXUpdater.invoke(this, value);
+            booleanX = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

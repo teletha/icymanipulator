@@ -74,10 +74,10 @@ public class ReferenceLongSetter extends ReferenceLongSetterModel {
     private static final MethodHandle squareUpdater = updater("square");
 
     /** The exposed property. */
-    public final int size;
+    protected int size;
 
     /** The exposed property. */
-    public final long square;
+    protected long square;
 
     /**
      * HIDE CONSTRUCTOR

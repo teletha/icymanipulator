@@ -26,6 +26,6 @@ class OverloadGroupTest {
     void normal() {
         OverloadGroup o = OverloadGroup.with.name("ok", 10);
         assert o.name.equals("ok");
-        assert o.size == 10;
+        assert o.size() == 10;
     }
 }

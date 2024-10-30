@@ -70,7 +70,7 @@ public class Interface implements InterfaceModel {
     private static final MethodHandle sizeUpdater = updater("size");
 
     /** The exposed property. */
-    public final int size;
+    protected int size;
 
     /**
      * HIDE CONSTRUCTOR

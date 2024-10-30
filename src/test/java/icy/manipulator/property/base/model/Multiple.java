@@ -62,7 +62,7 @@ public class Multiple extends MultipleModel {
     public final String stand;
 
     /** The exposed property. */
-    public final int age;
+    protected int age;
 
     /**
      * HIDE CONSTRUCTOR
@@ -174,7 +174,7 @@ public class Multiple extends MultipleModel {
      */
     private final void setAge(int value) {
         try {
-            ageUpdater.invoke(this, value);
+            age = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

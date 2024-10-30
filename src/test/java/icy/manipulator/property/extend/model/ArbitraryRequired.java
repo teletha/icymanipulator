@@ -50,7 +50,7 @@ public class ArbitraryRequired extends ArbitraryRequiredModel {
     private static final MethodHandle idUpdater = updater("id");
 
     /** The exposed property. */
-    public final long id;
+    protected long id;
 
     /**
      * HIDE CONSTRUCTOR
@@ -86,7 +86,7 @@ public class ArbitraryRequired extends ArbitraryRequiredModel {
      */
     private final void setId(long value) {
         try {
-            idUpdater.invoke(this, value);
+            id = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

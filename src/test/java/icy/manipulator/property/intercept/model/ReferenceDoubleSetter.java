@@ -74,10 +74,10 @@ public class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
     private static final MethodHandle squareUpdater = updater("square");
 
     /** The exposed property. */
-    public final int size;
+    protected int size;
 
     /** The exposed property. */
-    public final double square;
+    protected double square;
 
     /**
      * HIDE CONSTRUCTOR

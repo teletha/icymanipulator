@@ -74,7 +74,7 @@ public class SelfRef implements SelfRefModel<SelfRef> {
     private static final MethodHandle calcUpdater = updater("calc");
 
     /** The exposed property. */
-    public final int value;
+    protected int value;
 
     /** The exposed property. */
     public final ToIntFunction<SelfRef> calc;
@@ -114,7 +114,7 @@ public class SelfRef implements SelfRefModel<SelfRef> {
      */
     private final void setValue(int value) {
         try {
-            valueUpdater.invoke(this, value);
+            value = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

@@ -33,19 +33,12 @@ class PrimitiveTest {
                 .charX('o')
                 .booleanX(true);
 
-        assert instance.intX == 10;
         assert instance.intX() == 10;
-        assert instance.longX == 20;
         assert instance.longX() == 20;
-        assert instance.floatX == 3.2F;
         assert instance.floatX() == 3.2F;
-        assert instance.doubleX == 0.12;
         assert instance.doubleX() == 0.12;
-        assert instance.byteX == 2;
         assert instance.byteX() == 2;
-        assert instance.shortX == 5;
         assert instance.shortX() == 5;
-        assert instance.booleanX == true;
         assert instance.booleanX() == true;
     }
 }

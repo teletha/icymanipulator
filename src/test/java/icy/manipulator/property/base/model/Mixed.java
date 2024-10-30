@@ -62,7 +62,7 @@ public class Mixed extends MixedModel {
     public final String name;
 
     /** The exposed property. */
-    public final int age;
+    protected int age;
 
     /** The exposed property. */
     public final String optionAddress;
@@ -144,7 +144,7 @@ public class Mixed extends MixedModel {
      */
     private final void setAge(int value) {
         try {
-            ageUpdater.invoke(this, value);
+            age = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

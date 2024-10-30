@@ -26,10 +26,10 @@ class CopiableGroupTest {
     void normal() {
         CopiableGroup o = CopiableGroup.with.name("ok", 10);
         assert o.name.equals("ok");
-        assert o.size == 10;
+        assert o.size() == 10;
 
         CopiableGroup copied = o.withSize(20);
         assert copied.name.equals("ok");
-        assert copied.size == 20;
+        assert copied.size() == 20;
     }
 }

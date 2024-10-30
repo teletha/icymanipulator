@@ -25,7 +25,7 @@ class ReferenceDoubleSetterTest {
     @Test
     void reference() {
         ReferenceDoubleSetter o = ReferenceDoubleSetter.with.size(10);
-        assert o.size == 10;
-        assert o.square == 100;
+        assert o.size() == 10;
+        assert o.square() == 100;
     }
 }

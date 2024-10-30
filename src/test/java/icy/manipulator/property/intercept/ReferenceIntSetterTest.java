@@ -25,7 +25,7 @@ class ReferenceIntSetterTest {
     @Test
     void reference() {
         ReferenceIntSetter o = ReferenceIntSetter.with.size(10);
-        assert o.size == 10;
-        assert o.square == 100;
+        assert o.size() == 10;
+        assert o.square() == 100;
     }
 }

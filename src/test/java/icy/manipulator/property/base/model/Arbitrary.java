@@ -53,7 +53,7 @@ public class Arbitrary extends ArbitraryModel {
     private static final MethodHandle optionCommentUpdater = updater("optionComment");
 
     /** The exposed property. */
-    public final int optionNum;
+    protected int optionNum;
 
     /** The exposed property. */
     public final String optionComment;
@@ -93,7 +93,7 @@ public class Arbitrary extends ArbitraryModel {
      */
     private final void setOptionNum(int value) {
         try {
-            optionNumUpdater.invoke(this, value);
+            optionNum = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

@@ -232,7 +232,7 @@ public class IcyManipulator extends AptyProcessor {
             for (PropertyInfo p : m.ownProperties()) {
                 write();
                 write("/** The exposed property. */");
-                write(p.modifier, p.type, " ", p.name, ";");
+                write(p.type.isPrimitive() ? "protected " : p.modifier, p.type, " ", p.name, ";");
 
                 if (p.custom != null) {
                     write();
@@ -383,7 +383,12 @@ public class IcyManipulator extends AptyProcessor {
                             }
                             value += ")";
                         }
-                        write(property.name, "Updater.invoke(this, ", value, ");");
+
+                        if (property.type.isPrimitive()) {
+                            write(property.name, " = ", value, ";");
+                        } else {
+                            write(property.name, "Updater.invoke(this, ", value, ");");
+                        }
 
                         if (property.custom != null && property.custom.requireSetter) {
                             write(property.name, "Customizer.accept(this.", property.name, ");");

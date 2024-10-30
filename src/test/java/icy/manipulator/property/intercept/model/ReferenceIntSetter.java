@@ -74,10 +74,10 @@ public class ReferenceIntSetter extends ReferenceIntSetterModel {
     private static final MethodHandle squareUpdater = updater("square");
 
     /** The exposed property. */
-    public final int size;
+    protected int size;
 
     /** The exposed property. */
-    public final int square;
+    protected int square;
 
     /**
      * HIDE CONSTRUCTOR

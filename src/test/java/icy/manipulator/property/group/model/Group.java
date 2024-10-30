@@ -55,13 +55,13 @@ public class Group extends GroupModel {
     private static final MethodHandle zUpdater = updater("z");
 
     /** The exposed property. */
-    public final int x;
+    protected int x;
 
     /** The exposed property. */
-    public final int y;
+    protected int y;
 
     /** The exposed property. */
-    public final int z;
+    protected int z;
 
     /**
      * HIDE CONSTRUCTOR
@@ -99,7 +99,7 @@ public class Group extends GroupModel {
      */
     private final void setX(int value) {
         try {
-            xUpdater.invoke(this, value);
+            x = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -133,7 +133,7 @@ public class Group extends GroupModel {
      */
     private final void setY(int value) {
         try {
-            yUpdater.invoke(this, value);
+            y = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -167,7 +167,7 @@ public class Group extends GroupModel {
      */
     private final void setZ(int value) {
         try {
-            zUpdater.invoke(this, value);
+            z = value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

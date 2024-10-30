@@ -25,6 +25,6 @@ class ArbitraryOverloadTest {
     @Test
     void overload() {
         ArbitraryOverload o = ArbitraryOverload.with.create().size("30");
-        assert o.size == 30;
+        assert o.size() == 30;
     }
 }
