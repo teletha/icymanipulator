@@ -66,10 +66,9 @@ public class Intercept extends InterceptModel {
         }
     }
 
-    /** The final property updater. */
-    private static final MethodHandle sizeUpdater = updater("size");
-
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected int size;
 
     /**
@@ -106,7 +105,7 @@ public class Intercept extends InterceptModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, normalizeSize$101354429.invoke(this, value));
+            this.size = (int) normalizeSize$101354429.invoke(this, value);
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

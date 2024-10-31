@@ -58,13 +58,13 @@ public class AutoExpandSet extends AutoExpandSetModel {
     /** The final property updater. */
     private static final MethodHandle upperBoundableUpdater = updater("upperBoundable");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final Set<String> values;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final Set<Supplier<String>> generics;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final Set<CharSequence> upperBoundable;
 
     /**

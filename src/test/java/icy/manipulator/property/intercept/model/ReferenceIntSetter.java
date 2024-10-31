@@ -67,16 +67,14 @@ public class ReferenceIntSetter extends ReferenceIntSetterModel {
         }
     }
 
-    /** The final property updater. */
-    private static final MethodHandle sizeUpdater = updater("size");
-
-    /** The final property updater. */
-    private static final MethodHandle squareUpdater = updater("square");
-
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected int size;
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected int square;
 
     /**
@@ -114,7 +112,7 @@ public class ReferenceIntSetter extends ReferenceIntSetterModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, deriveBySize$71930602.invoke(this, value, (IntConsumer) this::setSquare));
+            this.size = (int) deriveBySize$71930602.invoke(this, value, (IntConsumer) this::setSquare);
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -148,7 +146,7 @@ public class ReferenceIntSetter extends ReferenceIntSetterModel {
      */
     private final void setSquare(int value) {
         try {
-            squareUpdater.invoke(this, value);
+            this.square = (int) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

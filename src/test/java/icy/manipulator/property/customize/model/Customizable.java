@@ -53,7 +53,7 @@ public class Customizable extends CustomizableModel {
     /** The final property updater. */
     private static final MethodHandle valueUpdater = updater("value");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final String name;
 
     /** The property customizer. */
@@ -65,7 +65,7 @@ public class Customizable extends CustomizableModel {
         }
     };
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final String value;
 
     /** The property customizer. */

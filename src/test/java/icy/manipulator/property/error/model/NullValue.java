@@ -55,13 +55,13 @@ public class NullValue extends NullValueModel {
     /** The final property updater. */
     private static final MethodHandle defaultValueUpdater = updater("defaultValue");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final String rejectNull;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final String acceptNull;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final String defaultValue;
 
     /**

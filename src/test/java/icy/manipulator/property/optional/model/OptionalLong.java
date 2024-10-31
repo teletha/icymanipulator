@@ -48,7 +48,7 @@ public class OptionalLong implements OptionalLongModel {
     /** The final property updater. */
     private static final MethodHandle valueUpdater = updater("value");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final java.util.OptionalLong value;
 
     /**

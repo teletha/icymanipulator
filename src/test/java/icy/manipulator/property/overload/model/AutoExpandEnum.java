@@ -52,10 +52,10 @@ public class AutoExpandEnum extends AutoExpandEnumModel {
     /** The final property updater. */
     private static final MethodHandle policyUpdater = updater("policy");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final Answer answer;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final RetentionPolicy policy;
 
     /**

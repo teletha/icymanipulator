@@ -50,7 +50,7 @@ public class RequiredRequired extends RequiredRequiredModel {
     /** The final property updater. */
     private static final MethodHandle nicknameUpdater = updater("nickname");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final String nickname;
 
     /**

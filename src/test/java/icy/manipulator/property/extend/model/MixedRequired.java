@@ -50,7 +50,7 @@ public class MixedRequired extends MixedRequiredModel {
     /** The final property updater. */
     private static final MethodHandle zipUpdater = updater("zip");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final String zip;
 
     /**

@@ -50,7 +50,7 @@ public class GuavaOptional implements GuavaOptionalModel {
     /** The final property updater. */
     private static final MethodHandle valueUpdater = updater("value");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final Optional<String> value;
 
     /**

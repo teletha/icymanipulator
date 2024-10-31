@@ -60,16 +60,16 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
     /** The final property updater. */
     private static final MethodHandle listUpdater = updater("list");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final P value;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final Q number;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final Map<P, Q> mapper;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final List<P> list;
 
     /**

@@ -49,13 +49,12 @@ public class CustomHashCode extends CustomHashCodeModel {
     /** The final property updater. */
     private static final MethodHandle nameUpdater = updater("name");
 
-    /** The final property updater. */
-    private static final MethodHandle ageUpdater = updater("age");
-
-    /** The exposed property. */
+    /** The property holder.*/
     public final String name;
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected int age;
 
     /**
@@ -130,7 +129,7 @@ public class CustomHashCode extends CustomHashCodeModel {
      */
     private final void setAge(int value) {
         try {
-            age = value;
+            this.age = (int) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

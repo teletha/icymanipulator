@@ -50,7 +50,7 @@ public class SinobuVariable implements SinobuVariableModel {
     /** The final property updater. */
     private static final MethodHandle valueUpdater = updater("value");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final Variable<String> value;
 
     /**

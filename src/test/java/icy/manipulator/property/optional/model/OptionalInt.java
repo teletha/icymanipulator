@@ -51,10 +51,10 @@ public class OptionalInt extends OptionalIntModel {
     /** The final property updater. */
     private static final MethodHandle defaultsUpdater = updater("defaults");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final java.util.OptionalInt value;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final java.util.OptionalInt defaults;
 
     /**

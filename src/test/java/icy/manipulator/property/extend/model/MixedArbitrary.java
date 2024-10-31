@@ -50,7 +50,7 @@ public class MixedArbitrary extends MixedArbitraryModel {
     /** The final property updater. */
     private static final MethodHandle optionZipUpdater = updater("optionZip");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final String optionZip;
 
     /**

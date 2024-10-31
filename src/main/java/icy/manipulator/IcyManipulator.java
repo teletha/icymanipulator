@@ -219,9 +219,11 @@ public class IcyManipulator extends AptyProcessor {
          */
         private void defineFieldUpdater() {
             for (PropertyInfo property : m.ownProperties()) {
-                write();
-                write("/** The final property updater. */");
-                write("private static final ", MethodHandle.class, " ", property.name, "Updater = updater(`", property.name, "`);");
+                if (!property.type.isPrimitive()) {
+                    write();
+                    write("/** The final property updater. */");
+                    write("private static final ", MethodHandle.class, " ", property.name, "Updater = updater(`", property.name, "`);");
+                }
             }
         }
 
@@ -231,7 +233,11 @@ public class IcyManipulator extends AptyProcessor {
         private void defineField() {
             for (PropertyInfo p : m.ownProperties()) {
                 write();
-                write("/** The exposed property. */");
+                write("/** The property holder.*/");
+                if (p.type.isPrimitive()) {
+                    write("// A primitive property is hidden coz native-image builder can't cheat assigning to final field.");
+                    write("// If you want expose as public-final field, you must use the wrapper type instead of primitive type.");
+                }
                 write(p.type.isPrimitive() ? "protected " : p.modifier, p.type, " ", p.name, ";");
 
                 if (p.custom != null) {
@@ -385,7 +391,7 @@ public class IcyManipulator extends AptyProcessor {
                         }
 
                         if (property.type.isPrimitive()) {
-                            write(property.name, " = ", value, ";");
+                            write("this.", property.name, " = (", property.type.base, ") ", value, ";");
                         } else {
                             write(property.name, "Updater.invoke(this, ", value, ");");
                         }

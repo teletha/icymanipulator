@@ -72,7 +72,7 @@ public class RequiredRequired extends RequiredRequiredModel {
     /** The final property updater. */
     private static final MethodHandle timeUpdater = updater("time");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final LocalTime time;
 
     /**

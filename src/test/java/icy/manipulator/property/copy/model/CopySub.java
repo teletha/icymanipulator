@@ -49,7 +49,7 @@ public class CopySub extends CopySubModel {
     /** The final property updater. */
     private static final MethodHandle addressUpdater = updater("address");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final String address;
 
     /**

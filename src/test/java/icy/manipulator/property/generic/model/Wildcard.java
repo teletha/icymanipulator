@@ -68,19 +68,19 @@ public class Wildcard extends WildcardModel {
     /** The final property updater. */
     private static final MethodHandle memberTypeUpdater = updater("memberType");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final Class<? extends Collection> extendType;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final List<? super Integer> superType;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final Supplier<?> wildcard;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final Map<? extends CharSequence, List<Class<? extends Number>>> combine;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final Class<? extends Member> memberType;
 
     /**

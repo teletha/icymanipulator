@@ -45,52 +45,44 @@ public class Primitive extends PrimitiveModel {
         }
     }
 
-    /** The final property updater. */
-    private static final MethodHandle intXUpdater = updater("intX");
-
-    /** The final property updater. */
-    private static final MethodHandle longXUpdater = updater("longX");
-
-    /** The final property updater. */
-    private static final MethodHandle floatXUpdater = updater("floatX");
-
-    /** The final property updater. */
-    private static final MethodHandle doubleXUpdater = updater("doubleX");
-
-    /** The final property updater. */
-    private static final MethodHandle byteXUpdater = updater("byteX");
-
-    /** The final property updater. */
-    private static final MethodHandle shortXUpdater = updater("shortX");
-
-    /** The final property updater. */
-    private static final MethodHandle charXUpdater = updater("charX");
-
-    /** The final property updater. */
-    private static final MethodHandle booleanXUpdater = updater("booleanX");
-
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected int intX;
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected long longX;
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected float floatX;
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected double doubleX;
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected byte byteX;
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected short shortX;
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected char charX;
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected boolean booleanX;
 
     /**
@@ -134,7 +126,7 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setIntX(int value) {
         try {
-            intX = value;
+            this.intX = (int) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -168,7 +160,7 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setLongX(long value) {
         try {
-            longX = value;
+            this.longX = (long) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -202,7 +194,7 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setFloatX(float value) {
         try {
-            floatX = value;
+            this.floatX = (float) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -236,7 +228,7 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setDoubleX(double value) {
         try {
-            doubleX = value;
+            this.doubleX = (double) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -270,7 +262,7 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setByteX(byte value) {
         try {
-            byteX = value;
+            this.byteX = (byte) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -304,7 +296,7 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setShortX(short value) {
         try {
-            shortX = value;
+            this.shortX = (short) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -338,7 +330,7 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setCharX(char value) {
         try {
-            charX = value;
+            this.charX = (char) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -372,7 +364,7 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setBooleanX(boolean value) {
         try {
-            booleanX = value;
+            this.booleanX = (boolean) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

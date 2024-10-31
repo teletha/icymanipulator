@@ -72,15 +72,14 @@ public class MultiIntercepts extends MultiInterceptsModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle sizeUpdater = updater("size");
-
-    /** The final property updater. */
     private static final MethodHandle valueUpdater = updater("value");
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected int size;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final String value;
 
     /**
@@ -118,7 +117,7 @@ public class MultiIntercepts extends MultiInterceptsModel {
      */
     private final void setSize(int value) {
         try {
-            sizeUpdater.invoke(this, stringlize$1978323892.invoke(this, checkLower$101354429.invoke(this, value), (Consumer<String>) this::setValue));
+            this.size = (int) stringlize$1978323892.invoke(this, checkLower$101354429.invoke(this, value), (Consumer<String>) this::setValue);
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

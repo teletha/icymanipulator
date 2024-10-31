@@ -54,31 +54,27 @@ public class Mutable extends MutableModel {
     /** The final property updater. */
     private static final MethodHandle valueUpdater = updater("value");
 
-    /** The final property updater. */
-    private static final MethodHandle intNumUpdater = updater("intNum");
-
-    /** The final property updater. */
-    private static final MethodHandle longNumUpdater = updater("longNum");
-
-    /** The final property updater. */
-    private static final MethodHandle floatNumUpdater = updater("floatNum");
-
-    /** The final property updater. */
-    private static final MethodHandle doubleNumUpdater = updater("doubleNum");
-
-    /** The exposed property. */
+    /** The property holder.*/
     public final String value;
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected int intNum;
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected long longNum;
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected float floatNum;
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected double doubleNum;
 
     /**
@@ -200,7 +196,7 @@ public class Mutable extends MutableModel {
      */
     private final void setIntNum(int value) {
         try {
-            intNum = value;
+            this.intNum = (int) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -256,7 +252,7 @@ public class Mutable extends MutableModel {
      */
     private final void setLongNum(long value) {
         try {
-            longNum = value;
+            this.longNum = (long) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -312,7 +308,7 @@ public class Mutable extends MutableModel {
      */
     private final void setFloatNum(float value) {
         try {
-            floatNum = value;
+            this.floatNum = (float) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -368,7 +364,7 @@ public class Mutable extends MutableModel {
      */
     private final void setDoubleNum(double value) {
         try {
-            doubleNum = value;
+            this.doubleNum = (double) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

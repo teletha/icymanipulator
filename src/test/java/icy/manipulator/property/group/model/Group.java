@@ -45,22 +45,19 @@ public class Group extends GroupModel {
         }
     }
 
-    /** The final property updater. */
-    private static final MethodHandle xUpdater = updater("x");
-
-    /** The final property updater. */
-    private static final MethodHandle yUpdater = updater("y");
-
-    /** The final property updater. */
-    private static final MethodHandle zUpdater = updater("z");
-
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected int x;
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected int y;
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected int z;
 
     /**
@@ -99,7 +96,7 @@ public class Group extends GroupModel {
      */
     private final void setX(int value) {
         try {
-            x = value;
+            this.x = (int) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -133,7 +130,7 @@ public class Group extends GroupModel {
      */
     private final void setY(int value) {
         try {
-            y = value;
+            this.y = (int) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -167,7 +164,7 @@ public class Group extends GroupModel {
      */
     private final void setZ(int value) {
         try {
-            z = value;
+            this.z = (int) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

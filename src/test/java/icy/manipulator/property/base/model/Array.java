@@ -53,10 +53,10 @@ public class Array implements ArrayModel {
     /** The final property updater. */
     private static final MethodHandle nestUpdater = updater("nest");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final String[] array;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final String[][] nest;
 
     /**

@@ -58,13 +58,13 @@ public class AutoExpandList extends AutoExpandListModel {
     /** The final property updater. */
     private static final MethodHandle upperBoundableUpdater = updater("upperBoundable");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final List<String> values;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final List<Supplier<String>> generics;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final List<CharSequence> upperBoundable;
 
     /**

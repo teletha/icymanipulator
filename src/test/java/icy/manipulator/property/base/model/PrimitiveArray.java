@@ -70,28 +70,28 @@ public class PrimitiveArray extends PrimitiveArrayModel {
     /** The final property updater. */
     private static final MethodHandle booleanXUpdater = updater("booleanX");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final int[] intX;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final long[] longX;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final float[] floatX;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final double[] doubleX;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final byte[] byteX;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final short[] shortX;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final char[] charX;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final boolean[] booleanX;
 
     /**

@@ -68,15 +68,14 @@ public class SelfRef implements SelfRefModel<SelfRef> {
     }
 
     /** The final property updater. */
-    private static final MethodHandle valueUpdater = updater("value");
-
-    /** The final property updater. */
     private static final MethodHandle calcUpdater = updater("calc");
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected int value;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final ToIntFunction<SelfRef> calc;
 
     /**
@@ -114,7 +113,7 @@ public class SelfRef implements SelfRefModel<SelfRef> {
      */
     private final void setValue(int value) {
         try {
-            value = value;
+            this.value = (int) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

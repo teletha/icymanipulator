@@ -49,7 +49,7 @@ public class InterfaceArbitrary implements InterfaceArbitraryModel {
     /** The final property updater. */
     private static final MethodHandle optionalUpdater = updater("optional");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final String optional;
 
     /**

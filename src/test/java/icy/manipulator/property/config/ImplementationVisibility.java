@@ -49,7 +49,7 @@ class ImplementationVisibility extends ImplementationVisibilityModel {
     /** The final property updater. */
     private static final MethodHandle nameUpdater = updater("name");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final String name;
 
     /**

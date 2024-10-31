@@ -52,10 +52,10 @@ class PropertyVisibility extends PropertyVisibilityModel {
     /** The final property updater. */
     private static final MethodHandle protectedPropertyUpdater = updater("protectedProperty");
 
-    /** The exposed property. */
+    /** The property holder.*/
     final String packagePrivateProperty;
 
-    /** The exposed property. */
+    /** The property holder.*/
     protected final String protectedProperty;
 
     /**

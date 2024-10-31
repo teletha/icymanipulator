@@ -52,10 +52,10 @@ public class Optional implements OptionalModel {
     /** The final property updater. */
     private static final MethodHandle defaultsUpdater = updater("defaults");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final java.util.Optional<String> name;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final java.util.Optional<String> defaults;
 
     /**

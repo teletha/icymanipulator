@@ -60,13 +60,13 @@ public class AutoExpandMap extends AutoExpandMapModel {
     /** The final property updater. */
     private static final MethodHandle upperBoundableUpdater = updater("upperBoundable");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final Map<String, Integer> values;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final Map<String, Supplier<String>> generics;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final Map<CharSequence, Number> upperBoundable;
 
     /**

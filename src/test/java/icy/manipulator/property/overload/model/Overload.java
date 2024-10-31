@@ -84,10 +84,10 @@ public class Overload extends OverloadModel {
     /** The final property updater. */
     private static final MethodHandle dateUpdater = updater("date");
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final BigDecimal size;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final LocalDate date;
 
     /**

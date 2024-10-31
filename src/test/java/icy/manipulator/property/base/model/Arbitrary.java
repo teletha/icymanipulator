@@ -47,15 +47,14 @@ public class Arbitrary extends ArbitraryModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle optionNumUpdater = updater("optionNum");
-
-    /** The final property updater. */
     private static final MethodHandle optionCommentUpdater = updater("optionComment");
 
-    /** The exposed property. */
+    /** The property holder.*/
+    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
+    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
     protected int optionNum;
 
-    /** The exposed property. */
+    /** The property holder.*/
     public final String optionComment;
 
     /**
@@ -93,7 +92,7 @@ public class Arbitrary extends ArbitraryModel {
      */
     private final void setOptionNum(int value) {
         try {
-            optionNum = value;
+            this.optionNum = (int) value;
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
