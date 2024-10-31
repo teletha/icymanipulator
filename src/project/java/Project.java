@@ -57,61 +57,23 @@ public class Project extends bee.api.Project {
                 ### 5. Validation and Consistency
                 The Builder pattern enables validation before the object creation, allowing you to enforce consistency rules and constraints easily. Any required fields or constraints can be checked within the Builder before finalizing the object, preventing invalid objects from being created.
 
-                ### 6. Adaptability for Complex Objects
-                For objects with nested fields or other complex structures, the Builder pattern provides a flexible approach to handle these relationships. Builders can themselves have builders for nested objects, which keeps object creation structured and manageable, even for highly complex configurations.
-
-                ### Example: Builder Pattern for an Immutable Object
-                Here’s a simple example of an immutable `Person` class using the Builder pattern in Java:
-
+                ## Staging Builderless Builder
+                Normally, the Builder pattern used to create Immutable objects would look something like this.
                 ```java
-                public final class Person {
-                    private final String name;
-                    private final int age;
-                    private final String address;
-
-                    private Person(Builder builder) {
-                        this.name = builder.name;
-                        this.age = builder.age;
-                        this.address = builder.address;
-                    }
-
-                    public static class Builder {
-                        private String name;
-                        private int age;
-                        private String address;
-
-                        public Builder setName(String name) {
-                            this.name = name;
-                            return this;
-                        }
-
-                        public Builder setAge(int age) {
-                            this.age = age;
-                            return this;
-                        }
-
-                        public Builder setAddress(String address) {
-                            this.address = address;
-                            return this;
-                        }
-
-                        public Person build() {
-                            // Optional validation logic
-                            if (name == null || name.isEmpty()) {
-                                throw new IllegalArgumentException("Name is required");
-                            }
-                            return new Person(this);
-                        }
-                    }
-
-                    // Getters for the fields (no setters to ensure immutability)
-                    public String getName() { return name; }
-                    public int getAge() { return age; }
-                    public String getAddress() { return address; }
-                }
+                Order order = Order.builder()
+                    .setProduct("Laptop")
+                    .setQuantity(2)
+                    .setPrice(999.99)
+                    .build();
                 ```
 
-
+                If we were to write similar code in the Builderless Builder pattern, it would look like this.
+                ```java
+                Order order = Order.with
+                    .product("Laptop")
+                    .quantity(2)
+                    .price(999.99);
+                ```
                 """);
 
         require("com.github.teletha", "antibug").atTest();
