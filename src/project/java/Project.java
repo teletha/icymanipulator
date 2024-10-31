@@ -49,12 +49,9 @@ public class Project extends bee.api.Project {
                 The Builder pattern allows for the creation of fully-configured immutable objects. Once the object is constructed, it cannot be altered, ensuring immutability. The Builder itself is mutable during construction, but the final object it produces is immutable, providing the best of both flexibility and safety.
 
                 ### 3. Improved Readability and Usability
-                With the Builder pattern, each field in the object can be set using descriptive method calls, making the code more readable. This pattern allows code to more clearly reflect the intent, and it also eliminates the ambiguity and errors that can arise from having multiple overloaded constructors.
+                With the Builder pattern, each field in the object can be set using descriptive method calls, making the code more readable. In cases where objects have multiple optional fields, constructors can quickly multiply to cover all possible combinations, leading to excessive boilerplate code. The Builder pattern allows you to specify only the fields needed, keeping the codebase cleaner and reducing potential errors associated with too many constructors.
 
-                ### 4. Reduces the Need for Multiple Constructors
-                In cases where objects have multiple optional fields, constructors can quickly multiply to cover all possible combinations, leading to excessive boilerplate code. The Builder pattern allows you to specify only the fields needed, keeping the codebase cleaner and reducing potential errors associated with too many constructors.
-
-                ### 5. Validation and Consistency
+                ### 4. Validation and Consistency
                 The Builder pattern enables validation before the object creation, allowing you to enforce consistency rules and constraints easily. Any required fields or constraints can be checked within the Builder before finalizing the object, preventing invalid objects from being created.
 
                 ## Staging Builderless Builder
