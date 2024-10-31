@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.6.0](https://github.com/teletha/icymanipulator/compare/v1.5.1...v1.6.0) (2024-10-31)
+
+
+### Features
+
+* hide primitive field ([f23df13](https://github.com/teletha/icymanipulator/commit/f23df137d4c7b14d005b43fe4bd322d0e56c7078))
+* remove updater for primitive types ([aeece85](https://github.com/teletha/icymanipulator/commit/aeece8503f41acbb8d973ed67bcf0942ebf03462))
+* support native-image ([46bfd58](https://github.com/teletha/icymanipulator/commit/46bfd588e9c1c913904d22e8018a24f2e28531e0))
+
 ## [1.5.1](https://github.com/teletha/icymanipulator/compare/v1.5.0...v1.5.1) (2024-10-25)
 
 
