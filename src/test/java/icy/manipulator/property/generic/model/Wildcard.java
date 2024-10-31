@@ -25,6 +25,9 @@ import java.util.function.Supplier;
  */
 public class Wildcard extends WildcardModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -43,10 +46,24 @@ public class Wildcard extends WildcardModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = Wildcard.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
@@ -54,33 +71,48 @@ public class Wildcard extends WildcardModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle extendTypeUpdater = updater("extendType");
+    private static final Field extendTypeField = updater("extendType");
+
+    /** The fast final property updater. */
+    private static final MethodHandle extendTypeUpdater = handler(extendTypeField);
 
     /** The final property updater. */
-    private static final MethodHandle superTypeUpdater = updater("superType");
+    private static final Field superTypeField = updater("superType");
+
+    /** The fast final property updater. */
+    private static final MethodHandle superTypeUpdater = handler(superTypeField);
 
     /** The final property updater. */
-    private static final MethodHandle wildcardUpdater = updater("wildcard");
+    private static final Field wildcardField = updater("wildcard");
+
+    /** The fast final property updater. */
+    private static final MethodHandle wildcardUpdater = handler(wildcardField);
 
     /** The final property updater. */
-    private static final MethodHandle combineUpdater = updater("combine");
+    private static final Field combineField = updater("combine");
+
+    /** The fast final property updater. */
+    private static final MethodHandle combineUpdater = handler(combineField);
 
     /** The final property updater. */
-    private static final MethodHandle memberTypeUpdater = updater("memberType");
+    private static final Field memberTypeField = updater("memberType");
 
-    /** The property holder.*/
+    /** The fast final property updater. */
+    private static final MethodHandle memberTypeUpdater = handler(memberTypeField);
+
+    /** The exposed property. */
     public final Class<? extends Collection> extendType;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final List<? super Integer> superType;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final Supplier<?> wildcard;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final Map<? extends CharSequence, List<Class<? extends Number>>> combine;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final Class<? extends Member> memberType;
 
     /**

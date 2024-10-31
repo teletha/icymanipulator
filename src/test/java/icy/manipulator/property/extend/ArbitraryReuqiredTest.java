@@ -25,16 +25,16 @@ class ArbitraryReuqiredTest {
     @Test
     void defaults() {
         ArbitraryRequired o = ArbitraryRequired.with.id(10);
-        assert o.id() == 10;
-        assert o.optionNum() == 10;
+        assert o.id == 10;
+        assert o.optionNum == 10;
         assert o.optionComment.isEmpty();
     }
 
     @Test
     void override() {
         ArbitraryRequired o = ArbitraryRequired.with.id(10).optionNum(5).optionComment("Comment");
-        assert o.id() == 10;
-        assert o.optionNum() == 5;
+        assert o.id == 10;
+        assert o.optionNum == 5;
         assert o.optionComment.equals("Comment");
     }
 }

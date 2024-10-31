@@ -25,11 +25,11 @@ class MultiInterceptsTest {
     @Test
     void intercept() {
         MultiIntercepts normal = MultiIntercepts.with.size(10);
-        assert normal.size() == 10;
+        assert normal.size == 10;
         assert normal.value.equals("Size10");
 
         MultiIntercepts normalized = MultiIntercepts.with.size(-10);
-        assert normalized.size() == 0;
+        assert normalized.size == 0;
         assert normalized.value.equals("Size0");
     }
 }

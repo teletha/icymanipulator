@@ -23,6 +23,9 @@ import java.util.function.UnaryOperator;
  */
 public class Mutable extends MutableModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -41,10 +44,24 @@ public class Mutable extends MutableModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = Mutable.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
@@ -52,30 +69,49 @@ public class Mutable extends MutableModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle valueUpdater = updater("value");
+    private static final Field valueField = updater("value");
 
-    /** The property holder.*/
+    /** The fast final property updater. */
+    private static final MethodHandle valueUpdater = handler(valueField);
+
+    /** The final property updater. */
+    private static final Field intNumField = updater("intNum");
+
+    /** The fast final property updater. */
+    private static final MethodHandle intNumUpdater = handler(intNumField);
+
+    /** The final property updater. */
+    private static final Field longNumField = updater("longNum");
+
+    /** The fast final property updater. */
+    private static final MethodHandle longNumUpdater = handler(longNumField);
+
+    /** The final property updater. */
+    private static final Field floatNumField = updater("floatNum");
+
+    /** The fast final property updater. */
+    private static final MethodHandle floatNumUpdater = handler(floatNumField);
+
+    /** The final property updater. */
+    private static final Field doubleNumField = updater("doubleNum");
+
+    /** The fast final property updater. */
+    private static final MethodHandle doubleNumUpdater = handler(doubleNumField);
+
+    /** The exposed property. */
     public final String value;
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected int intNum;
+    /** The exposed property. */
+    public final int intNum;
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected long longNum;
+    /** The exposed property. */
+    public final long longNum;
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected float floatNum;
+    /** The exposed property. */
+    public final float floatNum;
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected double doubleNum;
+    /** The exposed property. */
+    public final double doubleNum;
 
     /**
      * HIDE CONSTRUCTOR
@@ -196,7 +232,11 @@ public class Mutable extends MutableModel {
      */
     private final void setIntNum(int value) {
         try {
-            this.intNum = (int) value;
+            if (NATIVE) {
+                intNumField.setInt(this, (int) value);
+            } else {
+                intNumUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -252,7 +292,11 @@ public class Mutable extends MutableModel {
      */
     private final void setLongNum(long value) {
         try {
-            this.longNum = (long) value;
+            if (NATIVE) {
+                longNumField.setLong(this, (long) value);
+            } else {
+                longNumUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -308,7 +352,11 @@ public class Mutable extends MutableModel {
      */
     private final void setFloatNum(float value) {
         try {
-            this.floatNum = (float) value;
+            if (NATIVE) {
+                floatNumField.setFloat(this, (float) value);
+            } else {
+                floatNumUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -364,7 +412,11 @@ public class Mutable extends MutableModel {
      */
     private final void setDoubleNum(double value) {
         try {
-            this.doubleNum = (double) value;
+            if (NATIVE) {
+                doubleNumField.setDouble(this, (double) value);
+            } else {
+                doubleNumUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

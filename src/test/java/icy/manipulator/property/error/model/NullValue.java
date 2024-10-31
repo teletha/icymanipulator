@@ -18,6 +18,9 @@ import java.util.Objects;
  */
 public class NullValue extends NullValueModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -36,10 +39,24 @@ public class NullValue extends NullValueModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = NullValue.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
@@ -47,21 +64,30 @@ public class NullValue extends NullValueModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle rejectNullUpdater = updater("rejectNull");
+    private static final Field rejectNullField = updater("rejectNull");
+
+    /** The fast final property updater. */
+    private static final MethodHandle rejectNullUpdater = handler(rejectNullField);
 
     /** The final property updater. */
-    private static final MethodHandle acceptNullUpdater = updater("acceptNull");
+    private static final Field acceptNullField = updater("acceptNull");
+
+    /** The fast final property updater. */
+    private static final MethodHandle acceptNullUpdater = handler(acceptNullField);
 
     /** The final property updater. */
-    private static final MethodHandle defaultValueUpdater = updater("defaultValue");
+    private static final Field defaultValueField = updater("defaultValue");
 
-    /** The property holder.*/
+    /** The fast final property updater. */
+    private static final MethodHandle defaultValueUpdater = handler(defaultValueField);
+
+    /** The exposed property. */
     public final String rejectNull;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final String acceptNull;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final String defaultValue;
 
     /**

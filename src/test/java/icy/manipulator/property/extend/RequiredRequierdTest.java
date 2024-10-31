@@ -27,7 +27,7 @@ class RequiredRequierdTest {
         RequiredRequired instance = RequiredRequired.with.name("Giorno Giovanna").stand("Gold Experience").age(15).nickname("jojo");
         assert instance.name.equals("Giorno Giovanna");
         assert instance.stand.equals("Gold Experience");
-        assert instance.age() == 15;
+        assert instance.age == 15;
         assert instance.nickname.equals("jojo");
     }
 }

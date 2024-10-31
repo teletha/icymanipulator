@@ -19,6 +19,9 @@ import java.util.Objects;
  */
 public class Array implements ArrayModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -37,10 +40,24 @@ public class Array implements ArrayModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = Array.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
@@ -48,15 +65,21 @@ public class Array implements ArrayModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle arrayUpdater = updater("array");
+    private static final Field arrayField = updater("array");
+
+    /** The fast final property updater. */
+    private static final MethodHandle arrayUpdater = handler(arrayField);
 
     /** The final property updater. */
-    private static final MethodHandle nestUpdater = updater("nest");
+    private static final Field nestField = updater("nest");
 
-    /** The property holder.*/
+    /** The fast final property updater. */
+    private static final MethodHandle nestUpdater = handler(nestField);
+
+    /** The exposed property. */
     public final String[] array;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final String[][] nest;
 
     /**

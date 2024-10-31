@@ -25,9 +25,9 @@ class InterceptTest {
     @Test
     void intercept() {
         Intercept normal = Intercept.with.size(10);
-        assert normal.size() == 10;
+        assert normal.size == 10;
 
         Intercept normalized = Intercept.with.size(-10);
-        assert normalized.size() == 0;
+        assert normalized.size == 0;
     }
 }

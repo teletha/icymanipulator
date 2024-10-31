@@ -20,6 +20,9 @@ import java.util.Objects;
  */
 public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -38,10 +41,24 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = Generic.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
@@ -49,27 +66,39 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
     }
 
     /** The final property updater. */
-    private static final MethodHandle valueUpdater = updater("value");
+    private static final Field valueField = updater("value");
+
+    /** The fast final property updater. */
+    private static final MethodHandle valueUpdater = handler(valueField);
 
     /** The final property updater. */
-    private static final MethodHandle numberUpdater = updater("number");
+    private static final Field numberField = updater("number");
+
+    /** The fast final property updater. */
+    private static final MethodHandle numberUpdater = handler(numberField);
 
     /** The final property updater. */
-    private static final MethodHandle mapperUpdater = updater("mapper");
+    private static final Field mapperField = updater("mapper");
+
+    /** The fast final property updater. */
+    private static final MethodHandle mapperUpdater = handler(mapperField);
 
     /** The final property updater. */
-    private static final MethodHandle listUpdater = updater("list");
+    private static final Field listField = updater("list");
 
-    /** The property holder.*/
+    /** The fast final property updater. */
+    private static final MethodHandle listUpdater = handler(listField);
+
+    /** The exposed property. */
     public final P value;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final Q number;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final Map<P, Q> mapper;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final List<P> list;
 
     /**

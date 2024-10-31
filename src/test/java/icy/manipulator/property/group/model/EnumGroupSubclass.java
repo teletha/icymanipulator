@@ -12,6 +12,9 @@ import java.util.Objects;
  */
 public class EnumGroupSubclass extends EnumGroupSubclassModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * HIDE CONSTRUCTOR
      */

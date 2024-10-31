@@ -17,6 +17,9 @@ import java.util.Objects;
  */
 public class Group extends GroupModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -35,30 +38,56 @@ public class Group extends GroupModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = Group.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
         }
     }
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected int x;
+    /** The final property updater. */
+    private static final Field xField = updater("x");
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected int y;
+    /** The fast final property updater. */
+    private static final MethodHandle xUpdater = handler(xField);
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected int z;
+    /** The final property updater. */
+    private static final Field yField = updater("y");
+
+    /** The fast final property updater. */
+    private static final MethodHandle yUpdater = handler(yField);
+
+    /** The final property updater. */
+    private static final Field zField = updater("z");
+
+    /** The fast final property updater. */
+    private static final MethodHandle zUpdater = handler(zField);
+
+    /** The exposed property. */
+    public final int x;
+
+    /** The exposed property. */
+    public final int y;
+
+    /** The exposed property. */
+    public final int z;
 
     /**
      * HIDE CONSTRUCTOR
@@ -96,7 +125,11 @@ public class Group extends GroupModel {
      */
     private final void setX(int value) {
         try {
-            this.x = (int) value;
+            if (NATIVE) {
+                xField.setInt(this, (int) value);
+            } else {
+                xUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -130,7 +163,11 @@ public class Group extends GroupModel {
      */
     private final void setY(int value) {
         try {
-            this.y = (int) value;
+            if (NATIVE) {
+                yField.setInt(this, (int) value);
+            } else {
+                yUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -164,7 +201,11 @@ public class Group extends GroupModel {
      */
     private final void setZ(int value) {
         try {
-            this.z = (int) value;
+            if (NATIVE) {
+                zField.setInt(this, (int) value);
+            } else {
+                zUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

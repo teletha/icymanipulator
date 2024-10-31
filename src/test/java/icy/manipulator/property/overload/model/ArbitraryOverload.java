@@ -19,6 +19,9 @@ import java.util.Objects;
  */
 public class ArbitraryOverload extends ArbitraryOverloadModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -57,20 +60,38 @@ public class ArbitraryOverload extends ArbitraryOverloadModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = ArbitraryOverload.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
         }
     }
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected int size;
+    /** The final property updater. */
+    private static final Field sizeField = updater("size");
+
+    /** The fast final property updater. */
+    private static final MethodHandle sizeUpdater = handler(sizeField);
+
+    /** The exposed property. */
+    public final int size;
 
     /**
      * HIDE CONSTRUCTOR
@@ -106,7 +127,11 @@ public class ArbitraryOverload extends ArbitraryOverloadModel {
      */
     private final void setSize(int value) {
         try {
-            this.size = (int) value;
+            if (NATIVE) {
+                sizeField.setInt(this, (int) value);
+            } else {
+                sizeUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

@@ -17,6 +17,9 @@ import java.util.Objects;
  */
 public class Primitive extends PrimitiveModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -35,55 +38,101 @@ public class Primitive extends PrimitiveModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = Primitive.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
         }
     }
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected int intX;
+    /** The final property updater. */
+    private static final Field intXField = updater("intX");
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected long longX;
+    /** The fast final property updater. */
+    private static final MethodHandle intXUpdater = handler(intXField);
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected float floatX;
+    /** The final property updater. */
+    private static final Field longXField = updater("longX");
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected double doubleX;
+    /** The fast final property updater. */
+    private static final MethodHandle longXUpdater = handler(longXField);
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected byte byteX;
+    /** The final property updater. */
+    private static final Field floatXField = updater("floatX");
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected short shortX;
+    /** The fast final property updater. */
+    private static final MethodHandle floatXUpdater = handler(floatXField);
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected char charX;
+    /** The final property updater. */
+    private static final Field doubleXField = updater("doubleX");
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected boolean booleanX;
+    /** The fast final property updater. */
+    private static final MethodHandle doubleXUpdater = handler(doubleXField);
+
+    /** The final property updater. */
+    private static final Field byteXField = updater("byteX");
+
+    /** The fast final property updater. */
+    private static final MethodHandle byteXUpdater = handler(byteXField);
+
+    /** The final property updater. */
+    private static final Field shortXField = updater("shortX");
+
+    /** The fast final property updater. */
+    private static final MethodHandle shortXUpdater = handler(shortXField);
+
+    /** The final property updater. */
+    private static final Field charXField = updater("charX");
+
+    /** The fast final property updater. */
+    private static final MethodHandle charXUpdater = handler(charXField);
+
+    /** The final property updater. */
+    private static final Field booleanXField = updater("booleanX");
+
+    /** The fast final property updater. */
+    private static final MethodHandle booleanXUpdater = handler(booleanXField);
+
+    /** The exposed property. */
+    public final int intX;
+
+    /** The exposed property. */
+    public final long longX;
+
+    /** The exposed property. */
+    public final float floatX;
+
+    /** The exposed property. */
+    public final double doubleX;
+
+    /** The exposed property. */
+    public final byte byteX;
+
+    /** The exposed property. */
+    public final short shortX;
+
+    /** The exposed property. */
+    public final char charX;
+
+    /** The exposed property. */
+    public final boolean booleanX;
 
     /**
      * HIDE CONSTRUCTOR
@@ -126,7 +175,11 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setIntX(int value) {
         try {
-            this.intX = (int) value;
+            if (NATIVE) {
+                intXField.setInt(this, (int) value);
+            } else {
+                intXUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -160,7 +213,11 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setLongX(long value) {
         try {
-            this.longX = (long) value;
+            if (NATIVE) {
+                longXField.setLong(this, (long) value);
+            } else {
+                longXUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -194,7 +251,11 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setFloatX(float value) {
         try {
-            this.floatX = (float) value;
+            if (NATIVE) {
+                floatXField.setFloat(this, (float) value);
+            } else {
+                floatXUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -228,7 +289,11 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setDoubleX(double value) {
         try {
-            this.doubleX = (double) value;
+            if (NATIVE) {
+                doubleXField.setDouble(this, (double) value);
+            } else {
+                doubleXUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -262,7 +327,11 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setByteX(byte value) {
         try {
-            this.byteX = (byte) value;
+            if (NATIVE) {
+                byteXField.setByte(this, (byte) value);
+            } else {
+                byteXUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -296,7 +365,11 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setShortX(short value) {
         try {
-            this.shortX = (short) value;
+            if (NATIVE) {
+                shortXField.setShort(this, (short) value);
+            } else {
+                shortXUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -330,7 +403,11 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setCharX(char value) {
         try {
-            this.charX = (char) value;
+            if (NATIVE) {
+                charXField.setChar(this, (char) value);
+            } else {
+                charXUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -364,7 +441,11 @@ public class Primitive extends PrimitiveModel {
      */
     private final void setBooleanX(boolean value) {
         try {
-            this.booleanX = (boolean) value;
+            if (NATIVE) {
+                booleanXField.setBoolean(this, (boolean) value);
+            } else {
+                booleanXUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

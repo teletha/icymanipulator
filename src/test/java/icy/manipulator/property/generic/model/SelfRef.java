@@ -19,6 +19,9 @@ import java.util.function.ToIntFunction;
  */
 public class SelfRef implements SelfRefModel<SelfRef> {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -57,10 +60,24 @@ public class SelfRef implements SelfRefModel<SelfRef> {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = SelfRef.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
@@ -68,14 +85,21 @@ public class SelfRef implements SelfRefModel<SelfRef> {
     }
 
     /** The final property updater. */
-    private static final MethodHandle calcUpdater = updater("calc");
+    private static final Field valueField = updater("value");
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected int value;
+    /** The fast final property updater. */
+    private static final MethodHandle valueUpdater = handler(valueField);
 
-    /** The property holder.*/
+    /** The final property updater. */
+    private static final Field calcField = updater("calc");
+
+    /** The fast final property updater. */
+    private static final MethodHandle calcUpdater = handler(calcField);
+
+    /** The exposed property. */
+    public final int value;
+
+    /** The exposed property. */
     public final ToIntFunction<SelfRef> calc;
 
     /**
@@ -113,7 +137,11 @@ public class SelfRef implements SelfRefModel<SelfRef> {
      */
     private final void setValue(int value) {
         try {
-            this.value = (int) value;
+            if (NATIVE) {
+                valueField.setInt(this, (int) value);
+            } else {
+                valueUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

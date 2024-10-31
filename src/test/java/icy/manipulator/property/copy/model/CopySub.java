@@ -18,6 +18,9 @@ import java.util.Objects;
  */
 public class CopySub extends CopySubModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -36,10 +39,24 @@ public class CopySub extends CopySubModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = CopySub.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
@@ -47,9 +64,12 @@ public class CopySub extends CopySubModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle addressUpdater = updater("address");
+    private static final Field addressField = updater("address");
 
-    /** The property holder.*/
+    /** The fast final property updater. */
+    private static final MethodHandle addressUpdater = handler(addressField);
+
+    /** The exposed property. */
     public final String address;
 
     /**

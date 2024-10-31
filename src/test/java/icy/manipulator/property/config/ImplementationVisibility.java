@@ -18,6 +18,9 @@ import java.util.Objects;
  */
 class ImplementationVisibility extends ImplementationVisibilityModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -36,10 +39,24 @@ class ImplementationVisibility extends ImplementationVisibilityModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = ImplementationVisibility.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
@@ -47,9 +64,12 @@ class ImplementationVisibility extends ImplementationVisibilityModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle nameUpdater = updater("name");
+    private static final Field nameField = updater("name");
 
-    /** The property holder.*/
+    /** The fast final property updater. */
+    private static final MethodHandle nameUpdater = handler(nameField);
+
+    /** The exposed property. */
     public final String name;
 
     /**

@@ -25,8 +25,8 @@ class GroupTest {
     @Test
     void normal() {
         Group o = Group.with.x(1, 5).z(3);
-        assert o.x() == 1;
-        assert o.y() == 5;
-        assert o.z() == 3;
+        assert o.x == 1;
+        assert o.y == 5;
+        assert o.z == 3;
     }
 }

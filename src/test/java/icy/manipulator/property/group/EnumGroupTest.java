@@ -26,6 +26,6 @@ class EnumGroupTest {
     void normal() {
         EnumGroup o = EnumGroup.with.blue(10);
         assert o.color == EnumGroupModel.Color.Blue;
-        assert o.size() == 10;
+        assert o.size == 10;
     }
 }

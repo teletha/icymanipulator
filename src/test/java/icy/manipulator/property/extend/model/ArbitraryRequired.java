@@ -18,6 +18,9 @@ import java.util.Objects;
  */
 public class ArbitraryRequired extends ArbitraryRequiredModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -36,20 +39,38 @@ public class ArbitraryRequired extends ArbitraryRequiredModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = ArbitraryRequired.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
         }
     }
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected long id;
+    /** The final property updater. */
+    private static final Field idField = updater("id");
+
+    /** The fast final property updater. */
+    private static final MethodHandle idUpdater = handler(idField);
+
+    /** The exposed property. */
+    public final long id;
 
     /**
      * HIDE CONSTRUCTOR
@@ -85,7 +106,11 @@ public class ArbitraryRequired extends ArbitraryRequiredModel {
      */
     private final void setId(long value) {
         try {
-            this.id = (long) value;
+            if (NATIVE) {
+                idField.setLong(this, (long) value);
+            } else {
+                idUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

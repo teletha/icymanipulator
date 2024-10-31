@@ -18,6 +18,9 @@ import java.util.Objects;
  */
 public class Mixed extends MixedModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -36,10 +39,24 @@ public class Mixed extends MixedModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = Mixed.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
@@ -47,26 +64,39 @@ public class Mixed extends MixedModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle nameUpdater = updater("name");
+    private static final Field nameField = updater("name");
+
+    /** The fast final property updater. */
+    private static final MethodHandle nameUpdater = handler(nameField);
 
     /** The final property updater. */
-    private static final MethodHandle optionAddressUpdater = updater("optionAddress");
+    private static final Field ageField = updater("age");
+
+    /** The fast final property updater. */
+    private static final MethodHandle ageUpdater = handler(ageField);
 
     /** The final property updater. */
-    private static final MethodHandle optionCommnetUpdater = updater("optionCommnet");
+    private static final Field optionAddressField = updater("optionAddress");
 
-    /** The property holder.*/
+    /** The fast final property updater. */
+    private static final MethodHandle optionAddressUpdater = handler(optionAddressField);
+
+    /** The final property updater. */
+    private static final Field optionCommnetField = updater("optionCommnet");
+
+    /** The fast final property updater. */
+    private static final MethodHandle optionCommnetUpdater = handler(optionCommnetField);
+
+    /** The exposed property. */
     public final String name;
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected int age;
+    /** The exposed property. */
+    public final int age;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final String optionAddress;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final String optionCommnet;
 
     /**
@@ -143,7 +173,11 @@ public class Mixed extends MixedModel {
      */
     private final void setAge(int value) {
         try {
-            this.age = (int) value;
+            if (NATIVE) {
+                ageField.setInt(this, (int) value);
+            } else {
+                ageUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

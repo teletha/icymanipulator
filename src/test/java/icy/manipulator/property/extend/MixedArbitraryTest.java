@@ -26,7 +26,7 @@ class MixedArbitraryTest {
     void property() {
         MixedArbitrary o = MixedArbitrary.with.name("Name").age(18).optionAddress("Address").optionZip("543210");
         assert o.name.equals("Name");
-        assert o.age() == 18;
+        assert o.age == 18;
         assert o.optionAddress.equals("Address");
         assert o.optionZip.equals("543210");
     }

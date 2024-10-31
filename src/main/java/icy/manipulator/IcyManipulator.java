@@ -33,6 +33,7 @@ import apty.Modifiers;
 import apty.code.Coder;
 import apty.code.Type;
 import icy.manipulator.util.Lists;
+import icy.manipulator.util.Strings;
 
 public class IcyManipulator extends AptyProcessor {
 
@@ -102,10 +103,12 @@ public class IcyManipulator extends AptyProcessor {
             write(" * @see <a href=\"https://github.com/teletha/icymanipulator\">Icy Manipulator (Code Generator)</a>");
             write(" */");
             write(visibility, "class ", m.implType.raw(), declare(declarations), inheritance, parent, () -> {
+                defineRuntimeEnvironment();
                 defineErrorHandler();
                 defineMethodInvokerBuilder();
                 defineMethodInvoker();
                 defineFiledUpdaterBuilder();
+                defineFiledUpdaterHandler();
                 defineFieldUpdater();
                 defineField();
                 defineConstructor();
@@ -121,6 +124,15 @@ public class IcyManipulator extends AptyProcessor {
                 defineMutableClass();
                 definePropertyEnum();
             });
+        }
+
+        /**
+         * Define runtime environment.
+         */
+        private void defineRuntimeEnvironment() {
+            write();
+            write(" /** Determines if the execution environment is a Native Image of GraalVM. */");
+            write("private static final boolean NATIVE = `runtime`.equals(System.getProperty(`org.graalvm.nativeimage.imagecode`));");
         }
 
         /**
@@ -203,10 +215,34 @@ public class IcyManipulator extends AptyProcessor {
             write(" * @param name A target property name.");
             write(" * @return A special property updater.");
             write(" */");
-            write("private static final ", MethodHandle.class, " updater(String name) ", () -> {
+            write("private static final ", Field.class, " updater(String name) ", () -> {
                 writeTry(() -> {
                     write(Field.class, " field = ", classLiteral(m.implType), ".getDeclaredField(name);");
                     write("field.setAccessible(true);");
+                    write("return field;");
+                }, Throwable.class, e -> {
+                    write("throw quiet(", e, ");");
+                });
+            });
+        }
+
+        /**
+         * Define query method for property updater.
+         */
+        private void defineFiledUpdaterHandler() {
+            if (m.ownProperties().isEmpty()) {
+                return;
+            }
+
+            write();
+            write("/**");
+            write(" * Create fast property updater.");
+            write(" *");
+            write(" * @param field A target field.");
+            write(" * @return A fast property updater.");
+            write(" */");
+            write("private static final ", MethodHandle.class, " handler(Field field) ", () -> {
+                writeTry(() -> {
                     write("return ", MethodHandles.class, ".lookup().unreflectSetter(field);");
                 }, Throwable.class, e -> {
                     write("throw quiet(", e, ");");
@@ -219,11 +255,13 @@ public class IcyManipulator extends AptyProcessor {
          */
         private void defineFieldUpdater() {
             for (PropertyInfo property : m.ownProperties()) {
-                if (!property.type.isPrimitive()) {
-                    write();
-                    write("/** The final property updater. */");
-                    write("private static final ", MethodHandle.class, " ", property.name, "Updater = updater(`", property.name, "`);");
-                }
+                write();
+                write("/** The final property updater. */");
+                write("private static final ", Field.class, " ", property.name, "Field = updater(`", property.name, "`);");
+
+                write();
+                write("/** The fast final property updater. */");
+                write("private static final ", MethodHandle.class, " ", property.name, "Updater = handler(", property.name, "Field);");
             }
         }
 
@@ -233,12 +271,8 @@ public class IcyManipulator extends AptyProcessor {
         private void defineField() {
             for (PropertyInfo p : m.ownProperties()) {
                 write();
-                write("/** The property holder.*/");
-                if (p.type.isPrimitive()) {
-                    write("// A primitive property is hidden coz native-image builder can't cheat assigning to final field.");
-                    write("// If you want expose as public-final field, you must use the wrapper type instead of primitive type.");
-                }
-                write(p.type.isPrimitive() ? "protected " : p.modifier, p.type, " ", p.name, ";");
+                write("/** The exposed property. */");
+                write(p.modifier, p.type, " ", p.name, ";");
 
                 if (p.custom != null) {
                     write();
@@ -391,7 +425,12 @@ public class IcyManipulator extends AptyProcessor {
                         }
 
                         if (property.type.isPrimitive()) {
-                            write("this.", property.name, " = (", property.type.base, ") ", value, ";");
+                            String name = property.type.name();
+                            write("if (NATIVE) {");
+                            write("    ", property.name, "Field.set", Strings.capitalize(name), "(this, (", name, ") ", value, ");");
+                            write("} else {");
+                            write("    ", property.name, "Updater.invoke(this, ", value, ");");
+                            write("}");
                         } else {
                             write(property.name, "Updater.invoke(this, ", value, ");");
                         }

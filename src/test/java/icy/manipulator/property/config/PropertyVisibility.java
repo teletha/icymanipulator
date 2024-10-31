@@ -18,6 +18,9 @@ import java.util.Objects;
  */
 class PropertyVisibility extends PropertyVisibilityModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -36,10 +39,24 @@ class PropertyVisibility extends PropertyVisibilityModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = PropertyVisibility.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
@@ -47,15 +64,21 @@ class PropertyVisibility extends PropertyVisibilityModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle packagePrivatePropertyUpdater = updater("packagePrivateProperty");
+    private static final Field packagePrivatePropertyField = updater("packagePrivateProperty");
+
+    /** The fast final property updater. */
+    private static final MethodHandle packagePrivatePropertyUpdater = handler(packagePrivatePropertyField);
 
     /** The final property updater. */
-    private static final MethodHandle protectedPropertyUpdater = updater("protectedProperty");
+    private static final Field protectedPropertyField = updater("protectedProperty");
 
-    /** The property holder.*/
+    /** The fast final property updater. */
+    private static final MethodHandle protectedPropertyUpdater = handler(protectedPropertyField);
+
+    /** The exposed property. */
     final String packagePrivateProperty;
 
-    /** The property holder.*/
+    /** The exposed property. */
     protected final String protectedProperty;
 
     /**

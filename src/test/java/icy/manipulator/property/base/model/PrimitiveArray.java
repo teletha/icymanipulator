@@ -18,6 +18,9 @@ import java.util.Objects;
  */
 public class PrimitiveArray extends PrimitiveArrayModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -36,10 +39,24 @@ public class PrimitiveArray extends PrimitiveArrayModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = PrimitiveArray.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
@@ -47,51 +64,75 @@ public class PrimitiveArray extends PrimitiveArrayModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle intXUpdater = updater("intX");
+    private static final Field intXField = updater("intX");
+
+    /** The fast final property updater. */
+    private static final MethodHandle intXUpdater = handler(intXField);
 
     /** The final property updater. */
-    private static final MethodHandle longXUpdater = updater("longX");
+    private static final Field longXField = updater("longX");
+
+    /** The fast final property updater. */
+    private static final MethodHandle longXUpdater = handler(longXField);
 
     /** The final property updater. */
-    private static final MethodHandle floatXUpdater = updater("floatX");
+    private static final Field floatXField = updater("floatX");
+
+    /** The fast final property updater. */
+    private static final MethodHandle floatXUpdater = handler(floatXField);
 
     /** The final property updater. */
-    private static final MethodHandle doubleXUpdater = updater("doubleX");
+    private static final Field doubleXField = updater("doubleX");
+
+    /** The fast final property updater. */
+    private static final MethodHandle doubleXUpdater = handler(doubleXField);
 
     /** The final property updater. */
-    private static final MethodHandle byteXUpdater = updater("byteX");
+    private static final Field byteXField = updater("byteX");
+
+    /** The fast final property updater. */
+    private static final MethodHandle byteXUpdater = handler(byteXField);
 
     /** The final property updater. */
-    private static final MethodHandle shortXUpdater = updater("shortX");
+    private static final Field shortXField = updater("shortX");
+
+    /** The fast final property updater. */
+    private static final MethodHandle shortXUpdater = handler(shortXField);
 
     /** The final property updater. */
-    private static final MethodHandle charXUpdater = updater("charX");
+    private static final Field charXField = updater("charX");
+
+    /** The fast final property updater. */
+    private static final MethodHandle charXUpdater = handler(charXField);
 
     /** The final property updater. */
-    private static final MethodHandle booleanXUpdater = updater("booleanX");
+    private static final Field booleanXField = updater("booleanX");
 
-    /** The property holder.*/
+    /** The fast final property updater. */
+    private static final MethodHandle booleanXUpdater = handler(booleanXField);
+
+    /** The exposed property. */
     public final int[] intX;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final long[] longX;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final float[] floatX;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final double[] doubleX;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final byte[] byteX;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final short[] shortX;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final char[] charX;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final boolean[] booleanX;
 
     /**

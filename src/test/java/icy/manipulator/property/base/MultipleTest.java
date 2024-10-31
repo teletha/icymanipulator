@@ -27,6 +27,6 @@ class MultipleTest {
         Multiple instance = Multiple.with.name("Giorno Giovanna").stand("Gold Experience").age(15);
         assert instance.name.equals("Giorno Giovanna");
         assert instance.stand().equals("Gold Experience");
-        assert instance.age() == 15;
+        assert instance.age == 15;
     }
 }

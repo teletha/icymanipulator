@@ -19,6 +19,9 @@ import java.util.function.DoubleConsumer;
  */
 public class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -57,25 +60,47 @@ public class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = ReferenceDoubleSetter.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
         }
     }
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected int size;
+    /** The final property updater. */
+    private static final Field sizeField = updater("size");
 
-    /** The property holder.*/
-    // A primitive property is hidden coz native-image builder can't cheat assigning to final field.
-    // If you want expose as public-final field, you must use the wrapper type instead of primitive type.
-    protected double square;
+    /** The fast final property updater. */
+    private static final MethodHandle sizeUpdater = handler(sizeField);
+
+    /** The final property updater. */
+    private static final Field squareField = updater("square");
+
+    /** The fast final property updater. */
+    private static final MethodHandle squareUpdater = handler(squareField);
+
+    /** The exposed property. */
+    public final int size;
+
+    /** The exposed property. */
+    public final double square;
 
     /**
      * HIDE CONSTRUCTOR
@@ -112,7 +137,11 @@ public class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
      */
     private final void setSize(int value) {
         try {
-            this.size = (int) deriveBySize$1584752500.invoke(this, value, (DoubleConsumer) this::setSquare);
+            if (NATIVE) {
+                sizeField.setInt(this, (int) deriveBySize$1584752500.invoke(this, value, (DoubleConsumer) this::setSquare));
+            } else {
+                sizeUpdater.invoke(this, deriveBySize$1584752500.invoke(this, value, (DoubleConsumer) this::setSquare));
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);
@@ -146,7 +175,11 @@ public class ReferenceDoubleSetter extends ReferenceDoubleSetterModel {
      */
     private final void setSquare(double value) {
         try {
-            this.square = (double) value;
+            if (NATIVE) {
+                squareField.setDouble(this, (double) value);
+            } else {
+                squareUpdater.invoke(this, value);
+            }
         } catch (UnsupportedOperationException e) {
         } catch (Throwable e) {
             throw quiet(e);

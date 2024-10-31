@@ -19,6 +19,9 @@ import java.util.function.Supplier;
  */
 public class Customizable extends CustomizableModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -37,10 +40,24 @@ public class Customizable extends CustomizableModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = Customizable.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
@@ -48,12 +65,18 @@ public class Customizable extends CustomizableModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle nameUpdater = updater("name");
+    private static final Field nameField = updater("name");
+
+    /** The fast final property updater. */
+    private static final MethodHandle nameUpdater = handler(nameField);
 
     /** The final property updater. */
-    private static final MethodHandle valueUpdater = updater("value");
+    private static final Field valueField = updater("value");
 
-    /** The property holder.*/
+    /** The fast final property updater. */
+    private static final MethodHandle valueUpdater = handler(valueField);
+
+    /** The exposed property. */
     public final String name;
 
     /** The property customizer. */
@@ -65,7 +88,7 @@ public class Customizable extends CustomizableModel {
         }
     };
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final String value;
 
     /** The property customizer. */

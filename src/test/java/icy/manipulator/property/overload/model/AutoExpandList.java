@@ -21,6 +21,9 @@ import java.util.function.Supplier;
  */
 public class AutoExpandList extends AutoExpandListModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -39,10 +42,24 @@ public class AutoExpandList extends AutoExpandListModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = AutoExpandList.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
@@ -50,21 +67,30 @@ public class AutoExpandList extends AutoExpandListModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle valuesUpdater = updater("values");
+    private static final Field valuesField = updater("values");
+
+    /** The fast final property updater. */
+    private static final MethodHandle valuesUpdater = handler(valuesField);
 
     /** The final property updater. */
-    private static final MethodHandle genericsUpdater = updater("generics");
+    private static final Field genericsField = updater("generics");
+
+    /** The fast final property updater. */
+    private static final MethodHandle genericsUpdater = handler(genericsField);
 
     /** The final property updater. */
-    private static final MethodHandle upperBoundableUpdater = updater("upperBoundable");
+    private static final Field upperBoundableField = updater("upperBoundable");
 
-    /** The property holder.*/
+    /** The fast final property updater. */
+    private static final MethodHandle upperBoundableUpdater = handler(upperBoundableField);
+
+    /** The exposed property. */
     public final List<String> values;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final List<Supplier<String>> generics;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final List<CharSequence> upperBoundable;
 
     /**

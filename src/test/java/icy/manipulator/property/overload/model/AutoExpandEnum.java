@@ -18,6 +18,9 @@ import java.util.Objects;
  */
 public class AutoExpandEnum extends AutoExpandEnumModel {
 
+     /** Determines if the execution environment is a Native Image of GraalVM. */
+    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
@@ -36,10 +39,24 @@ public class AutoExpandEnum extends AutoExpandEnumModel {
      * @param name A target property name.
      * @return A special property updater.
      */
-    private static final MethodHandle updater(String name)  {
+    private static final Field updater(String name)  {
         try {
             Field field = AutoExpandEnum.class.getDeclaredField(name);
             field.setAccessible(true);
+            return field;
+        } catch (Throwable e) {
+            throw quiet(e);
+        }
+    }
+
+    /**
+     * Create fast property updater.
+     *
+     * @param field A target field.
+     * @return A fast property updater.
+     */
+    private static final MethodHandle handler(Field field)  {
+        try {
             return MethodHandles.lookup().unreflectSetter(field);
         } catch (Throwable e) {
             throw quiet(e);
@@ -47,15 +64,21 @@ public class AutoExpandEnum extends AutoExpandEnumModel {
     }
 
     /** The final property updater. */
-    private static final MethodHandle answerUpdater = updater("answer");
+    private static final Field answerField = updater("answer");
+
+    /** The fast final property updater. */
+    private static final MethodHandle answerUpdater = handler(answerField);
 
     /** The final property updater. */
-    private static final MethodHandle policyUpdater = updater("policy");
+    private static final Field policyField = updater("policy");
 
-    /** The property holder.*/
+    /** The fast final property updater. */
+    private static final MethodHandle policyUpdater = handler(policyField);
+
+    /** The exposed property. */
     public final Answer answer;
 
-    /** The property holder.*/
+    /** The exposed property. */
     public final RetentionPolicy policy;
 
     /**
