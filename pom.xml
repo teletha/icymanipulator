@@ -66,14 +66,14 @@ Order order = Order.with
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>antibug</artifactId>
-			<version>1.12.0</version>
+			<version>1.12.1</version>
 			<scope>test</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>bee</artifactId>
-			<version>0.57.0</version>
+			<version>v0.60.0</version>
 			<scope>test</scope>
 			<exclusions/>
 		</dependency>
@@ -124,6 +124,7 @@ Order order = Order.with
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.13.0</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
 					<release>23</release>
@@ -131,6 +132,10 @@ Order order = Order.with
 						<arg>-proc:none</arg>
 					</compilerArgs>
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.5.1</version>
 			</plugin>
 		</plugins>
 	</build>
