@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/teletha/icymanipulator/compare/v1.6.0...v1.6.1) (2024-11-11)
+
+
+### Bug Fixes
+
+* require Java 21 ([336728e](https://github.com/teletha/icymanipulator/commit/336728e44049aad345422922beaba4dae3710ca6))
+
 ## [1.6.0](https://github.com/teletha/icymanipulator/compare/v1.5.1...v1.6.0) (2024-10-31)
 
 
