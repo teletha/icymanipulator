@@ -8,10 +8,15 @@
  *          https://opensource.org/licenses/MIT
  */
 
+import static bee.api.License.*;
+
+import javax.lang.model.SourceVersion;
+
 public class Project extends bee.api.Project {
 
     {
         product("com.github.teletha", "icymanipulator", ref("version.txt"));
+        license(MIT);
 
         describe("""
                 Icy Manipulator is the annotation processor to generate the immutable model builder with the builder-less staging builder pattern.
@@ -72,6 +77,8 @@ public class Project extends bee.api.Project {
                     .price(999.99);
                 ```
                 """);
+
+        require(SourceVersion.latest(), SourceVersion.RELEASE_21);
 
         require("com.github.teletha", "antibug").atTest();
         require("com.github.teletha", "bee").atTest();
