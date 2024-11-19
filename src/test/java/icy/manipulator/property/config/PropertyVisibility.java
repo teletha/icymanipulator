@@ -18,9 +18,6 @@ import java.util.Objects;
  */
 class PropertyVisibility extends PropertyVisibilityModel {
 
-     /** Determines if the execution environment is a Native Image of GraalVM. */
-    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
-
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *

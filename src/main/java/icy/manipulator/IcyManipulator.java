@@ -130,9 +130,11 @@ public class IcyManipulator extends AptyProcessor {
          * Define runtime environment.
          */
         private void defineRuntimeEnvironment() {
-            write();
-            write(" /** Determines if the execution environment is a Native Image of GraalVM. */");
-            write("private static final boolean NATIVE = `runtime`.equals(System.getProperty(`org.graalvm.nativeimage.imagecode`));");
+            if (m.ownProperties().stream().anyMatch(x -> x.type.isPrimitive())) {
+                write();
+                write(" /** Determines if the execution environment is a Native Image of GraalVM. */");
+                write("private static final boolean NATIVE = `runtime`.equals(System.getProperty(`org.graalvm.nativeimage.imagecode`));");
+            }
         }
 
         /**

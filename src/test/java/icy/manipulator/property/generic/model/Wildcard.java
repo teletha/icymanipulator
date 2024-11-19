@@ -25,9 +25,6 @@ import java.util.function.Supplier;
  */
 public class Wildcard extends WildcardModel {
 
-     /** Determines if the execution environment is a Native Image of GraalVM. */
-    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
-
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
      *
