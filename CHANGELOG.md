@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.2](https://github.com/teletha/icymanipulator/compare/v1.6.1...v1.6.2) (2024-11-19)
+
+
+### Bug Fixes
+
+* define runtime environment only when necessary ([40595cc](https://github.com/teletha/icymanipulator/commit/40595cc8af9a08762f212d2f16ce608f8733a5ce))
+
 ## [1.6.1](https://github.com/teletha/icymanipulator/compare/v1.6.0...v1.6.1) (2024-11-11)
 
 
