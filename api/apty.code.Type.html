@@ -4,17 +4,26 @@
 		<meta charset="UTF-8"/>
 		<meta content="width=device-width, initial-scale=1" name="viewport"/>
 		<meta content="Explains how to use Icymanipulator and its API. " name="description"/>
-		<link href="https://fonts.googleapis.com" rel="preconnect"/>
 		<link href="https://cdn.jsdelivr.net" rel="preconnect"/>
+		<link href="https://fonts.googleapis.com" rel="preconnect"/>
+		<link crossorigin="null" href="https://fonts.gstatic.com" rel="preconnect"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Inter" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Inter" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
+		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
+		<link as="style" fetchpriority="high" href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="preload"/>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<title>Icymanipulator API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="T">
-		<header class="S">
-			<h1 class="J" date="2024-11-11" ver="1.6.2"><code>Icymanipulator</code></h1>
-			<nav class="M"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="f">
+		<header class="T">
+			<h1 class="S" date="2024-11-19" ver="1.6.2"><code>Icymanipulator</code></h1>
+			<nav class="J"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
 					</svg><code>API</code></a><a href="https://github.com/Teletha/IcyManipulator/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#user"/>
@@ -23,7 +32,7 @@
 					</svg>Activity</a><a href="https://github.com/Teletha/IcyManipulator" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#github"/>
 					</svg>Repository</a></nav>
-			<div class="e" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
+			<div class="N" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
 						<use href="main.svg#sun"/>
 					</svg>
 				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
@@ -31,403 +40,403 @@
 					</svg>
 				</a></div>
 		</header>
-		<main class="P">
-			<nav class="i">
+		<main class="b">
+			<nav class="Q">
 				<div></div>
 			</nav>
-			<article class="I" id="Article">
-				<section class="Y"><code class="Q">apty.code</code>
-					<h2 class="Class c"><code class="H">Type</code></h2>
-					<div class="g">
+			<article class="j" id="Article">
+				<section class="m"><code class="g">apty.code</code>
+					<h2 class="Class R"><code class="Z">Type</code></h2>
+					<div class="V">
 						<ul class="C F">
 							<li><code><a href="api/apty.ClassLike.html">ClassLike</a></code></li>
 							<li><code><a href="api/apty.code.Codable.html">Codable</a></code></li>
 						</ul>
 					</div>
 				</section>
-				<section class="Y" id="WILD">
-					<h2 class="Z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="H">WILD</code><i class="d"><code class="return"><a href="api/apty.code.Type.html">Type</a></code></i></h2><span class="B"><p>The reusable wild card type.</p></span></section>
-				<section class="Y" id="packageName">
-					<h2 class="Z"><i class="FINAL"><i class="PUBLIC"></i></i><code class="H">packageName</code><i class="d"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="B"><p>The package name.</p></span></section>
-				<section class="Y" id="base">
-					<h2 class="Z"><i class="FINAL"><i class="PUBLIC"></i></i><code class="H">base</code><i class="d"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="B"><p>The base name.</p></span></section>
-				<section class="Y" id="variables">
-					<h2 class="Z"><i class="FINAL"><i class="PUBLIC"></i></i><code class="H">variables</code><i class="d"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></h2><span class="B"><p>The managed variables.</p></span></section>
-				<section class="Y" id="kind">
-					<h2 class="Z"><i class="FINAL"><i class="PUBLIC"></i></i><code class="H">kind</code><i class="d"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeKind.html">TypeKind</a></code></i></h2><span class="B"><p>The type kind.</p></span></section>
-				<section class="Y" id="clone()">
-					<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="H">clone</code><code class="j">()</code><i class="d"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="WILD">
+					<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="Z">WILD</code><i class="H"><code class="return"><a href="api/apty.code.Type.html">Type</a></code></i></h2><span class="B"><p>The reusable wild card type.</p></span></section>
+				<section class="m" id="packageName">
+					<h2 class="d"><i class="FINAL"><i class="PUBLIC"></i></i><code class="Z">packageName</code><i class="H"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="B"><p>The package name.</p></span></section>
+				<section class="m" id="base">
+					<h2 class="d"><i class="FINAL"><i class="PUBLIC"></i></i><code class="Z">base</code><i class="H"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="B"><p>The base name.</p></span></section>
+				<section class="m" id="variables">
+					<h2 class="d"><i class="FINAL"><i class="PUBLIC"></i></i><code class="Z">variables</code><i class="H"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></h2><span class="B"><p>The managed variables.</p></span></section>
+				<section class="m" id="kind">
+					<h2 class="d"><i class="FINAL"><i class="PUBLIC"></i></i><code class="Z">kind</code><i class="H"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeKind.html">TypeKind</a></code></i></h2><span class="B"><p>The type kind.</p></span></section>
+				<section class="m" id="clone()">
+					<h2 class="d"><i class="OVERRIDE PUBLIC"></i><code class="Z">clone</code><code class="Y">()</code><i class="H"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code><a href="api/apty.code.Type.html">Type</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Clone this <code><a href="api/apty.code.Type.html">Type</a></code>.</p></span></section>
-				<section class="Y" id="name()">
-					<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="H">name</code><code class="j">()</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="name()">
+					<h2 class="d"><i class="OVERRIDE PUBLIC"></i><code class="Z">name</code><code class="Y">()</code><i class="H"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Y" id="getParent()">
-					<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="H">getParent</code><code class="j">()</code><i class="d"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="getParent()">
+					<h2 class="d"><i class="OVERRIDE PUBLIC"></i><code class="Z">getParent</code><code class="Y">()</code><i class="H"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code><a href="api/apty.code.Type.html">Type</a></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Y" id="getInterfaces()">
-					<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="H">getInterfaces</code><code class="j">()</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="getInterfaces()">
+					<h2 class="d"><i class="OVERRIDE PUBLIC"></i><code class="Z">getInterfaces</code><code class="Y">()</code><i class="H"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Y" id="getComponentType()">
-					<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="H">getComponentType</code><code class="j">()</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="getComponentType()">
+					<h2 class="d"><i class="OVERRIDE PUBLIC"></i><code class="Z">getComponentType</code><code class="Y">()</code><i class="H"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Y" id="getDeclaredClasses()">
-					<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="H">getDeclaredClasses</code><code class="j">()</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="getDeclaredClasses()">
+					<h2 class="d"><i class="OVERRIDE PUBLIC"></i><code class="Z">getDeclaredClasses</code><code class="Y">()</code><i class="H"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Y" id="getEnumConstants()">
-					<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="H">getEnumConstants</code><code class="j">()</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="getEnumConstants()">
+					<h2 class="d"><i class="OVERRIDE PUBLIC"></i><code class="Z">getEnumConstants</code><code class="Y">()</code><i class="H"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Y" id="getDeclaredMethods()">
-					<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="H">getDeclaredMethods</code><code class="j">()</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="api/apty.MethodLike.html">MethodLike</a></code></code></code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="getDeclaredMethods()">
+					<h2 class="d"><i class="OVERRIDE PUBLIC"></i><code class="Z">getDeclaredMethods</code><code class="Y">()</code><i class="H"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="api/apty.MethodLike.html">MethodLike</a></code></code></code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="api/apty.MethodLike.html">MethodLike</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Y" id="isPrimitive()">
-					<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="H">isPrimitive</code><code class="j">()</code><i class="d"><code>boolean</code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="isPrimitive()">
+					<h2 class="d"><i class="OVERRIDE PUBLIC"></i><code class="Z">isPrimitive</code><code class="Y">()</code><i class="H"><code>boolean</code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code>boolean</code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Y" id="isArray()">
-					<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="H">isArray</code><code class="j">()</code><i class="d"><code>boolean</code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="isArray()">
+					<h2 class="d"><i class="OVERRIDE PUBLIC"></i><code class="Z">isArray</code><code class="Y">()</code><i class="H"><code>boolean</code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code>boolean</code></td>
 							<td><span><p>A result.</p></span></td>
 						</tr>
 					</table><span class="B"><p>Check whether this is array type or not.</p></span></section>
-				<section class="Y" id="isAnnotation()">
-					<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="H">isAnnotation</code><code class="j">()</code><i class="d"><code>boolean</code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="isAnnotation()">
+					<h2 class="d"><i class="OVERRIDE PUBLIC"></i><code class="Z">isAnnotation</code><code class="Y">()</code><i class="H"><code>boolean</code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code>boolean</code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Y" id="isEnum()">
-					<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="H">isEnum</code><code class="j">()</code><i class="d"><code>boolean</code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="isEnum()">
+					<h2 class="d"><i class="OVERRIDE PUBLIC"></i><code class="Z">isEnum</code><code class="Y">()</code><i class="H"><code>boolean</code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code>boolean</code></td>
 							<td><span><p>A result.</p></span></td>
 						</tr>
 					</table><span class="B"><p>Check whether this is enum type or not.</p></span></section>
-				<section class="Y" id="isInterface()">
-					<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="H">isInterface</code><code class="j">()</code><i class="d"><code>boolean</code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="isInterface()">
+					<h2 class="d"><i class="OVERRIDE PUBLIC"></i><code class="Z">isInterface</code><code class="Y">()</code><i class="H"><code>boolean</code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code>boolean</code></td>
 							<td><span><p>A result.</p></span></td>
 						</tr>
 					</table><span class="B"><p>Check whether this type is interface or not.</p></span></section>
-				<section class="Y" id="raw()">
-					<h2 class="Z"><i class="PUBLIC"></i><code class="H">raw</code><code class="j">()</code><i class="d"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="raw()">
+					<h2 class="d"><i class="PUBLIC"></i><code class="Z">raw</code><code class="Y">()</code><i class="H"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code><a href="api/apty.code.Type.html">Type</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Create raw type, all variables are removed.</p></span></section>
-				<section class="Y" id="array()">
-					<h2 class="Z"><i class="PUBLIC"></i><code class="H">array</code><code class="j">()</code><i class="d"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="array()">
+					<h2 class="d"><i class="PUBLIC"></i><code class="Z">array</code><code class="Y">()</code><i class="H"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code><a href="api/apty.code.Type.html">Type</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Create array type.</p></span></section>
-				<section class="Y" id="declared()">
-					<h2 class="Z"><i class="PUBLIC"></i><code class="H">declared</code><code class="j">()</code><i class="d"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="declared()">
+					<h2 class="d"><i class="PUBLIC"></i><code class="Z">declared</code><code class="Y">()</code><i class="H"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code><a href="api/apty.code.Type.html">Type</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Create declared type, all variables are viewable.</p></span></section>
-				<section class="Y" id="varargnize()">
-					<h2 class="Z"><i class="PUBLIC"></i><code class="H">varargnize</code><code class="j">()</code><i class="d"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="varargnize()">
+					<h2 class="d"><i class="PUBLIC"></i><code class="Z">varargnize</code><code class="Y">()</code><i class="H"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code><a href="api/apty.code.Type.html">Type</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Create vararged type if this type is array.</p></span></section>
-				<section class="Y" id="bounded()">
-					<h2 class="Z"><i class="PUBLIC"></i><code class="H">bounded</code><code class="j">()</code><i class="d"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="bounded()">
+					<h2 class="d"><i class="PUBLIC"></i><code class="Z">bounded</code><code class="Y">()</code><i class="H"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code><a href="api/apty.code.Type.html">Type</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Create new type with bounded parameter types.</p></span></section>
-				<section class="Y" id="stripWild()">
-					<h2 class="Z"><i class="PUBLIC"></i><code class="H">stripWild</code><code class="j">()</code><i class="d"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="stripWild()">
+					<h2 class="d"><i class="PUBLIC"></i><code class="Z">stripWild</code><code class="Y">()</code><i class="H"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code><a href="api/apty.code.Type.html">Type</a></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Y" id="defaultValue()">
-					<h2 class="Z"><i class="PUBLIC"></i><code class="H">defaultValue</code><code class="j">()</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="defaultValue()">
+					<h2 class="d"><i class="PUBLIC"></i><code class="Z">defaultValue</code><code class="Y">()</code><i class="H"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Compute default value literal.</p></span></section>
-				<section class="Y" id="wrapped()">
-					<h2 class="Z"><i class="PUBLIC"></i><code class="H">wrapped</code><code class="j">()</code><i class="d"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="wrapped()">
+					<h2 class="d"><i class="PUBLIC"></i><code class="Z">wrapped</code><code class="Y">()</code><i class="H"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code><a href="api/apty.code.Type.html">Type</a></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Compute the wrapped type.</p></span></section>
-				<section class="Y" id="with(java.lang.Object...)">
-					<h2 class="Z"><i class="PUBLIC"></i><code class="H">with</code><code class="j">(<code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">types</code>)</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></h2>
-					<table class="h">
-						<tr class="U">
+				<section class="m" id="with(java.lang.Object...)">
+					<h2 class="d"><i class="PUBLIC"></i><code class="Z">with</code><code class="Y">(<code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">types</code>)</code><i class="H"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></h2>
+					<table class="e">
+						<tr class="W">
 							<td><code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code>types</code></td>
 							<td></td>
 						</tr>
-						<tr class="L">
+						<tr class="U">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></td>
 							<td></td>
 						</tr>
 					</table><span class="B"><p>Create <code><a href="api/apty.code.Type.html">Type</a></code> list with this and the specifieds.</p></span></section>
-				<section class="Y" id="write(apty.code.Coder)">
-					<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="H">write</code><code class="j">(<code><a href="api/apty.code.Coder.html">Coder</a></code><code class="parameterName">coder</code>)</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="h">
-						<tr class="U">
+				<section class="m" id="write(apty.code.Coder)">
+					<h2 class="d"><i class="OVERRIDE PUBLIC"></i><code class="Z">write</code><code class="Y">(<code><a href="api/apty.code.Coder.html">Coder</a></code><code class="parameterName">coder</code>)</code><i class="H"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="e">
+						<tr class="W">
 							<td><code><a href="api/apty.code.Coder.html">Coder</a></code><code>coder</code></td>
 							<td></td>
 						</tr>
-						<tr class="L">
+						<tr class="U">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Y" id="hashCode()">
-					<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="H">hashCode</code><code class="j">()</code><i class="d"><code>int</code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="hashCode()">
+					<h2 class="d"><i class="OVERRIDE PUBLIC"></i><code class="Z">hashCode</code><code class="Y">()</code><i class="H"><code>int</code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code>int</code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Y" id="equals(java.lang.Object)">
-					<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="H">equals</code><code class="j">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">obj</code>)</code><i class="d"><code>boolean</code></i></h2>
-					<table class="h">
-						<tr class="U">
+				<section class="m" id="equals(java.lang.Object)">
+					<h2 class="d"><i class="OVERRIDE PUBLIC"></i><code class="Z">equals</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">obj</code>)</code><i class="H"><code>boolean</code></i></h2>
+					<table class="e">
+						<tr class="W">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code>obj</code></td>
 							<td></td>
 						</tr>
-						<tr class="L">
+						<tr class="U">
 							<td><code>boolean</code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Y" id="toString()">
-					<h2 class="Z"><i class="OVERRIDE PUBLIC"></i><code class="H">toString</code><code class="j">()</code><i class="d"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="h">
-						<tr class="L">
+				<section class="m" id="toString()">
+					<h2 class="d"><i class="OVERRIDE PUBLIC"></i><code class="Z">toString</code><code class="Y">()</code><i class="H"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+					<table class="e">
+						<tr class="U">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
 							<td></td>
 						</tr>
 					</table>
 				</section>
-				<section class="Y" id="var(java.lang.String,java.lang.Object...)">
-					<h2 class="Z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="H">var</code><code class="j">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">parameters</code>)</code><i class="d"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
-					<table class="h">
-						<tr class="U">
+				<section class="m" id="var(java.lang.String,java.lang.Object...)">
+					<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="Z">var</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">parameters</code>)</code><i class="H"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
+					<table class="e">
+						<tr class="W">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>name</code></td>
 							<td><span><p>A variable name.</p></span></td>
 						</tr>
-						<tr class="U">
+						<tr class="W">
 							<td><code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code>parameters</code></td>
 							<td><span><p>A list of parameter variables.</p></span></td>
 						</tr>
-						<tr class="L">
+						<tr class="U">
 							<td><code><a href="api/apty.code.Type.html">Type</a></code></td>
 							<td><span><p>The created <code><a href="api/apty.code.Type.html">Type</a></code>.</p></span></td>
 						</tr>
 					</table><span class="B"><p>Build <code><a href="api/apty.code.Type.html">Type</a></code> from the variable name.</p></span></section>
-				<section class="Y" id="of(java.lang.String,java.lang.Object...)">
-					<h2 class="Z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="H">of</code><code class="j">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">fqcn</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">parameters</code>)</code><i class="d"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
-					<table class="h">
-						<tr class="U">
+				<section class="m" id="of(java.lang.String,java.lang.Object...)">
+					<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="Z">of</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">fqcn</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">parameters</code>)</code><i class="H"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
+					<table class="e">
+						<tr class="W">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>fqcn</code></td>
 							<td><span><p>A fully qualified class name.</p></span></td>
 						</tr>
-						<tr class="U">
+						<tr class="W">
 							<td><code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code>parameters</code></td>
 							<td><span><p>A list of parameter variables.</p></span></td>
 						</tr>
-						<tr class="L">
+						<tr class="U">
 							<td><code><a href="api/apty.code.Type.html">Type</a></code></td>
 							<td><span><p>The created <code><a href="api/apty.code.Type.html">Type</a></code>.</p></span></td>
 						</tr>
 					</table><span class="B"><p>Build <code><a href="api/apty.code.Type.html">Type</a></code> from the class name.</p></span></section>
-				<section class="Y" id="of(java.lang.Class,java.lang.Object...)">
-					<h2 class="Z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="H">of</code><code class="j">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">type</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">parameters</code>)</code><i class="d"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
-					<table class="h">
-						<tr class="U">
+				<section class="m" id="of(java.lang.Class,java.lang.Object...)">
+					<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="Z">of</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">type</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">parameters</code>)</code><i class="H"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
+					<table class="e">
+						<tr class="W">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code>type</code></td>
 							<td><span><p>A base type.</p></span></td>
 						</tr>
-						<tr class="U">
+						<tr class="W">
 							<td><code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code>parameters</code></td>
 							<td><span><p>A list of parameter variables.</p></span></td>
 						</tr>
-						<tr class="L">
+						<tr class="U">
 							<td><code><a href="api/apty.code.Type.html">Type</a></code></td>
 							<td><span><p>The created <code><a href="api/apty.code.Type.html">Type</a></code>.</p></span></td>
 						</tr>
 					</table><span class="B"><p>Build <code><a href="api/apty.code.Type.html">Type</a></code> from <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code>.</p></span></section>
-				<section class="Y" id="of(javax.lang.model.element.TypeElement)">
-					<h2 class="Z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="H">of</code><code class="j">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">type</code>)</code><i class="d"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
-					<table class="h">
-						<tr class="U">
+				<section class="m" id="of(javax.lang.model.element.TypeElement)">
+					<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="Z">of</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">type</code>)</code><i class="H"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
+					<table class="e">
+						<tr class="W">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code>type</code></td>
 							<td><span><p>A base type.</p></span></td>
 						</tr>
-						<tr class="L">
+						<tr class="U">
 							<td><code><a href="api/apty.code.Type.html">Type</a></code></td>
 							<td><span><p>The created <code><a href="api/apty.code.Type.html">Type</a></code>.</p></span></td>
 						</tr>
 					</table><span class="B"><p>Build <code><a href="api/apty.code.Type.html">Type</a></code> from <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></p></span></section>
-				<section class="Y" id="of(javax.lang.model.type.TypeMirror)">
-					<h2 class="Z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="H">of</code><code class="j">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>)</code><i class="d"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
-					<table class="h">
-						<tr class="U">
+				<section class="m" id="of(javax.lang.model.type.TypeMirror)">
+					<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="Z">of</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>)</code><i class="H"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
+					<table class="e">
+						<tr class="W">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code>type</code></td>
 							<td><span><p>A base type.</p></span></td>
 						</tr>
-						<tr class="L">
+						<tr class="U">
 							<td><code><a href="api/apty.code.Type.html">Type</a></code></td>
 							<td><span><p>The created <code><a href="api/apty.code.Type.html">Type</a></code>.</p></span></td>
 						</tr>
 					</table><span class="B"><p>Build <code><a href="api/apty.code.Type.html">Type</a></code> from <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code>.</p></span></section>
-				<section class="Y" id="of(javax.lang.model.type.TypeMirror,java.util.List)">
-					<h2 class="Z"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="H">of</code><code class="j">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code><code class="parameterName">variables</code>)</code><i class="d"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
-					<table class="h">
-						<tr class="U">
+				<section class="m" id="of(javax.lang.model.type.TypeMirror,java.util.List)">
+					<h2 class="d"><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code class="Z">of</code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code><code class="parameterName">variables</code>)</code><i class="H"><code><a href="api/apty.code.Type.html">Type</a></code></i></h2>
+					<table class="e">
+						<tr class="W">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code>type</code></td>
 							<td><span><p>A base type.</p></span></td>
 						</tr>
-						<tr class="U">
+						<tr class="W">
 							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code><code>variables</code></td>
 							<td><span><p>A list of type variables.</p></span></td>
 						</tr>
-						<tr class="L">
+						<tr class="U">
 							<td><code><a href="api/apty.code.Type.html">Type</a></code></td>
 							<td><span><p>The created <code><a href="api/apty.code.Type.html">Type</a></code>.</p></span></td>
 						</tr>
 					</table><span class="B"><p>Build <code><a href="api/apty.code.Type.html">Type</a></code> from <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code> and its type variables.</p></span></section>
 			</article>
-			<aside class="X" id="SubNavi">
-				<div class="R">
-					<h5 class="O">Static Fields</h5>
+			<aside class="I" id="SubNavi">
+				<div class="X">
+					<h5 class="h">Static Fields</h5>
 					<ul>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/apty.code.Type.html#WILD">WILD</a></code><i class="b"><code class="return"><a href="api/apty.code.Type.html">Type</a></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/apty.code.Type.html#WILD">WILD</a></code><i class="P"><code class="return"><a href="api/apty.code.Type.html">Type</a></code></i></li>
 					</ul>
-					<h5 class="O">Fields</h5>
+					<h5 class="h">Fields</h5>
 					<ul>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/apty.code.Type.html#packageName">packageName</a></code><i class="b"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/apty.code.Type.html#base">base</a></code><i class="b"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/apty.code.Type.html#variables">variables</a></code><i class="b"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/apty.code.Type.html#kind">kind</a></code><i class="b"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeKind.html">TypeKind</a></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/apty.code.Type.html#packageName">packageName</a></code><i class="P"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/apty.code.Type.html#base">base</a></code><i class="P"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/apty.code.Type.html#variables">variables</a></code><i class="P"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/apty.code.Type.html#kind">kind</a></code><i class="P"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeKind.html">TypeKind</a></code></i></li>
 					</ul>
-					<h5 class="O">Static Methods</h5>
+					<h5 class="h">Static Methods</h5>
 					<ul>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/apty.code.Type.html#var(java.lang.String,java.lang.Object...)">var</a></code><code class="j">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">parameters</code>)</code><i class="b"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/apty.code.Type.html#of(java.lang.String,java.lang.Object...)">of</a></code><code class="j">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">fqcn</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">parameters</code>)</code><i class="b"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/apty.code.Type.html#of(java.lang.Class,java.lang.Object...)">of</a></code><code class="j">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">type</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">parameters</code>)</code><i class="b"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/apty.code.Type.html#of(javax.lang.model.element.TypeElement)">of</a></code><code class="j">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">type</code>)</code><i class="b"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/apty.code.Type.html#of(javax.lang.model.type.TypeMirror)">of</a></code><code class="j">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>)</code><i class="b"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/apty.code.Type.html#of(javax.lang.model.type.TypeMirror,java.util.List)">of</a></code><code class="j">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code><code class="parameterName">variables</code>)</code><i class="b"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/apty.code.Type.html#var(java.lang.String,java.lang.Object...)">var</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">parameters</code>)</code><i class="P"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/apty.code.Type.html#of(java.lang.String,java.lang.Object...)">of</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">fqcn</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">parameters</code>)</code><i class="P"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/apty.code.Type.html#of(java.lang.Class,java.lang.Object...)">of</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">type</code>, <code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">parameters</code>)</code><i class="P"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/apty.code.Type.html#of(javax.lang.model.element.TypeElement)">of</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">type</code>)</code><i class="P"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/apty.code.Type.html#of(javax.lang.model.type.TypeMirror)">of</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>)</code><i class="P"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
+						<li><i class="FINAL"><i class="PUBLIC STATIC"></i></i><code><a href="api/apty.code.Type.html#of(javax.lang.model.type.TypeMirror,java.util.List)">of</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code><code class="parameterName">variables</code>)</code><i class="P"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
 					</ul>
-					<h5 class="O">Methods</h5>
+					<h5 class="h">Methods</h5>
 					<ul>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#clone()">clone</a></code><code class="j">()</code><i class="b"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#name()">name</a></code><code class="j">()</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#getParent()">getParent</a></code><code class="j">()</code><i class="b"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#getInterfaces()">getInterfaces</a></code><code class="j">()</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#getComponentType()">getComponentType</a></code><code class="j">()</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#getDeclaredClasses()">getDeclaredClasses</a></code><code class="j">()</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#getEnumConstants()">getEnumConstants</a></code><code class="j">()</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#getDeclaredMethods()">getDeclaredMethods</a></code><code class="j">()</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="api/apty.MethodLike.html">MethodLike</a></code></code></code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#isPrimitive()">isPrimitive</a></code><code class="j">()</code><i class="b"><code>boolean</code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#isArray()">isArray</a></code><code class="j">()</code><i class="b"><code>boolean</code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#isAnnotation()">isAnnotation</a></code><code class="j">()</code><i class="b"><code>boolean</code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#isEnum()">isEnum</a></code><code class="j">()</code><i class="b"><code>boolean</code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#isInterface()">isInterface</a></code><code class="j">()</code><i class="b"><code>boolean</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#raw()">raw</a></code><code class="j">()</code><i class="b"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#array()">array</a></code><code class="j">()</code><i class="b"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#declared()">declared</a></code><code class="j">()</code><i class="b"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#varargnize()">varargnize</a></code><code class="j">()</code><i class="b"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#bounded()">bounded</a></code><code class="j">()</code><i class="b"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#stripWild()">stripWild</a></code><code class="j">()</code><i class="b"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#defaultValue()">defaultValue</a></code><code class="j">()</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#wrapped()">wrapped</a></code><code class="j">()</code><i class="b"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#with(java.lang.Object...)">with</a></code><code class="j">(<code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">types</code>)</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#write(apty.code.Coder)">write</a></code><code class="j">(<code><a href="api/apty.code.Coder.html">Coder</a></code><code class="parameterName">coder</code>)</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#hashCode()">hashCode</a></code><code class="j">()</code><i class="b"><code>int</code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#equals(java.lang.Object)">equals</a></code><code class="j">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">obj</code>)</code><i class="b"><code>boolean</code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#toString()">toString</a></code><code class="j">()</code><i class="b"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#clone()">clone</a></code><code class="Y">()</code><i class="P"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#name()">name</a></code><code class="Y">()</code><i class="P"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#getParent()">getParent</a></code><code class="Y">()</code><i class="P"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#getInterfaces()">getInterfaces</a></code><code class="Y">()</code><i class="P"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#getComponentType()">getComponentType</a></code><code class="Y">()</code><i class="P"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#getDeclaredClasses()">getDeclaredClasses</a></code><code class="Y">()</code><i class="P"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#getEnumConstants()">getEnumConstants</a></code><code class="Y">()</code><i class="P"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#getDeclaredMethods()">getDeclaredMethods</a></code><code class="Y">()</code><i class="P"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/stream/Stream.html">Stream</a><code class="parameters"><code><a href="api/apty.MethodLike.html">MethodLike</a></code></code></code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#isPrimitive()">isPrimitive</a></code><code class="Y">()</code><i class="P"><code>boolean</code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#isArray()">isArray</a></code><code class="Y">()</code><i class="P"><code>boolean</code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#isAnnotation()">isAnnotation</a></code><code class="Y">()</code><i class="P"><code>boolean</code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#isEnum()">isEnum</a></code><code class="Y">()</code><i class="P"><code>boolean</code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#isInterface()">isInterface</a></code><code class="Y">()</code><i class="P"><code>boolean</code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#raw()">raw</a></code><code class="Y">()</code><i class="P"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#array()">array</a></code><code class="Y">()</code><i class="P"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#declared()">declared</a></code><code class="Y">()</code><i class="P"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#varargnize()">varargnize</a></code><code class="Y">()</code><i class="P"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#bounded()">bounded</a></code><code class="Y">()</code><i class="P"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#stripWild()">stripWild</a></code><code class="Y">()</code><i class="P"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#defaultValue()">defaultValue</a></code><code class="Y">()</code><i class="P"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#wrapped()">wrapped</a></code><code class="Y">()</code><i class="P"><code><a href="api/apty.code.Type.html">Type</a></code></i></li>
+						<li><i class="PUBLIC"></i><code><a href="api/apty.code.Type.html#with(java.lang.Object...)">with</a></code><code class="Y">(<code array="var"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">types</code>)</code><i class="P"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="api/apty.code.Type.html">Type</a></code></code></code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#write(apty.code.Coder)">write</a></code><code class="Y">(<code><a href="api/apty.code.Coder.html">Coder</a></code><code class="parameterName">coder</code>)</code><i class="P"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#hashCode()">hashCode</a></code><code class="Y">()</code><i class="P"><code>int</code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#equals(java.lang.Object)">equals</a></code><code class="Y">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Object.html">Object</a></code><code class="parameterName">obj</code>)</code><i class="P"><code>boolean</code></i></li>
+						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.code.Type.html#toString()">toString</a></code><code class="Y">()</code><i class="P"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
 					</ul>
 				</div>
 			</aside>
