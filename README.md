@@ -161,7 +161,7 @@ Icymanipulator depends on the following products on runtime.
 
 
 ## License
-Copyright (C) 2024 The ICYMANIPULATOR Development Team
+Copyright (C) 2025 The ICYMANIPULATOR Development Team
 
 MIT License
 
