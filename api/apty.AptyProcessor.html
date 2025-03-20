@@ -13,209 +13,208 @@
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
 		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<link as="style" fetchpriority="high" href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="preload"/>
-		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<title>Icymanipulator API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="S">
-		<header class="J">
-			<h1 class="M" date="2024-11-19" ver="1.6.2"><code>Icymanipulator</code></h1>
-			<nav class="f"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="c">
+		<header class="d" date="2024-11-19" ver="1.6.2">
+			<h1 class="P"><code>Icymanipulator</code></h1>
+			<nav class="K"><a href="api/" id="API"><svg class="package A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
-					</svg><code>API</code></a><a href="https://github.com/Teletha/IcyManipulator/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#user"/>
-					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#activity"/>
-					</svg>Activity</a><a href="https://github.com/Teletha/IcyManipulator" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#github"/>
-					</svg>Repository</a></nav>
-			<div class="a" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#sun"/>
 					</svg>
-				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+				</a><a href="https://github.com/Teletha/IcyManipulator/discussions" id="Community" target="_blank"><svg class="user A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/Teletha/IcyManipulator" id="Repository" target="_blank"><svg class="github A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="l"><a aria-label="Change color scheme" id="theme"><svg class="sun A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon A svg" viewBox="0 0 24 24">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<main class="k">
-			<nav class="I">
-				<div></div>
-			</nav>
-			<article class="X" id="Article">
-				<section class="l"><code class="c">apty</code>
-					<h2 class="AbstractClass Y"><code class="e">AptyProcessor</code></h2>
-					<div class="O">
-						<ul class="C F">
-							<li><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/Processor.html">Processor</a></code></li>
-						</ul>
-						<ul class="C G">
-							<li><code><a href="api/icy.manipulator.IcyManipulator.html">IcyManipulator</a></code></li>
-						</ul>
-					</div>
-				</section>
-				<section class="l" id="filer">
-					<h2 class="H"><i class="PROTECTED"></i><code class="e">filer</code><i class="j"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/Filer.html">Filer</a></code></i></h2><span class="B"><p>The file manager.</p></span></section>
-				<section class="l" id="messager">
-					<h2 class="H"><i class="PROTECTED"></i><code class="e">messager</code><i class="j"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/Messager.html">Messager</a></code></i></h2><span class="B"><p>The notifier.</p></span></section>
-				<section class="l" id="processors">
-					<h2 class="H"><i class="FINAL"><i class="PROTECTED"></i></i><code class="e">processors</code><i class="j"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Map.html">Map</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code>, <code><a href="api/apty.AnnotationProcessing.html">AnnotationProcessing</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code></code></code></code></code></i></h2><span class="B"><p>The registered processors.</p></span></section>
-				<section class="l" id="AptyProcessor()">
-					<h2 class="H"><i class="PUBLIC"></i><code class="e">AptyProcessor</code><code class="d">()</code></h2>
-				</section>
-				<section class="l" id="getSupportedAnnotationTypes()">
-					<h2 class="H"><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code class="e">getSupportedAnnotationTypes</code><code class="d">()</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
-				<section class="l" id="getSupportedOptions()">
-					<h2 class="H"><i class="OVERRIDE PUBLIC"></i><code class="e">getSupportedOptions</code><code class="d">()</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
-				<section class="l" id="getSupportedSourceVersion()">
-					<h2 class="H"><i class="OVERRIDE PUBLIC"></i><code class="e">getSupportedSourceVersion</code><code class="d">()</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/SourceVersion.html">SourceVersion</a></code></i></h2>
-					<table class="N">
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/SourceVersion.html">SourceVersion</a></code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
-				<section class="l" id="getCompletions(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,javax.lang.model.element.ExecutableElement,java.lang.String)">
-					<h2 class="H"><i class="OVERRIDE PUBLIC"></i><code class="e">getCompletions</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">element</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code><code class="parameterName">annotation</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code><code class="parameterName">member</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">userText</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/Completion.html">Completion</a></code></code></code></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code>element</code></td>
-							<td></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code><code>annotation</code></td>
-							<td></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code><code>member</code></td>
-							<td></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>userText</code></td>
-							<td></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/Completion.html">Completion</a></code></code></code></code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
-				<section class="l" id="init(javax.annotation.processing.ProcessingEnvironment)">
-					<h2 class="H"><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code class="e">init</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/ProcessingEnvironment.html">ProcessingEnvironment</a></code><code class="parameterName">process</code>)</code><i class="j"><code>void</code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/ProcessingEnvironment.html">ProcessingEnvironment</a></code><code>process</code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
-				<section class="l" id="process(java.util.Set,javax.annotation.processing.RoundEnvironment)">
-					<h2 class="H"><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code class="e">process</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></code><code class="parameterName">annotations</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/RoundEnvironment.html">RoundEnvironment</a></code><code class="parameterName">round</code>)</code><i class="j"><code>boolean</code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></code><code>annotations</code></td>
-							<td></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/RoundEnvironment.html">RoundEnvironment</a></code><code>round</code></td>
-							<td></td>
-						</tr>
-						<tr class="U">
-							<td><code>boolean</code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
-				<section class="l" id="process(java.lang.Class,apty.AnnotationProcessing)">
-					<h2 class="H"><i class="FINAL"><i class="PROTECTED"></i></i><code class="e">process</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>A</code></code></code><code class="parameterName">annotation</code>, <code><a href="api/apty.AnnotationProcessing.html">AnnotationProcessing</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code></code></code><code class="parameterName">yourOwnProcess</code>)</code><i class="j"><code>void</code></i></h2>
-					<table class="N">
-						<tr class="T">
-							<td><code>A</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></td>
-							<td></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>A</code></code></code><code>annotation</code></td>
-							<td></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="api/apty.AnnotationProcessing.html">AnnotationProcessing</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code></code></code><code>yourOwnProcess</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Register your process by type.</p></span></section>
-				<section class="l" id="writeSourceFile(java.lang.String,apty.AnnotationProcessing)">
-					<h2 class="H"><i class="FINAL"><i class="PROTECTED"></i></i><code class="e">writeSourceFile</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">fqcn</code>, <code><a href="api/apty.AnnotationProcessing.html">AnnotationProcessing</a><code class="parameters"><code><a href="api/apty.code.Coder.html">Coder</a></code></code></code><code class="parameterName">coding</code>)</code><i class="j"><code>void</code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>fqcn</code></td>
-							<td><span><p>A fully qualified class name to write.</p></span></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="api/apty.AnnotationProcessing.html">AnnotationProcessing</a><code class="parameters"><code><a href="api/apty.code.Coder.html">Coder</a></code></code></code><code>coding</code></td>
-							<td><span><p>Write your code.</p></span></td>
-						</tr>
-						<tr class="i">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Exception.html">Exception</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Write new source file.</p></span></section>
-				<section class="l" id="writeSourceFileBy(apty.code.Coder)">
-					<h2 class="H"><i class="FINAL"><i class="PROTECTED"></i></i><code class="e">writeSourceFileBy</code><code class="d">(<code><a href="api/apty.code.Coder.html">Coder</a></code><code class="parameterName">coding</code>)</code><i class="j"><code>void</code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="api/apty.code.Coder.html">Coder</a></code><code>coding</code></td>
-							<td><span><p>Write your code.</p></span></td>
-						</tr>
-						<tr class="i">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Exception.html">Exception</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Write new source file.</p></span></section>
-			</article>
-			<aside class="P" id="SubNavi">
-				<div class="Z">
-					<h5 class="b">Constructors</h5>
-					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/apty.AptyProcessor.html#AptyProcessor()">AptyProcessor</a></code><code class="d">()</code></li>
+		<nav class="f"></nav>
+		<article class="e" id="Article">
+			<section class="k"><code class="q">apty</code>
+				<h2 class="AbstractClass M"><code class="I">AptyProcessor</code></h2>
+				<div class="X">
+					<ul class="C F">
+						<li><code><a aria-label="javax.annotation.processing.Processor 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/Processor.html">Processor</a></code></li>
 					</ul>
-					<h5 class="b">Fields</h5>
-					<ul>
-						<li><i class="PROTECTED"></i><code><a href="api/apty.AptyProcessor.html#filer">filer</a></code><i class="h"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/Filer.html">Filer</a></code></i></li>
-						<li><i class="PROTECTED"></i><code><a href="api/apty.AptyProcessor.html#messager">messager</a></code><i class="h"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/Messager.html">Messager</a></code></i></li>
-						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/apty.AptyProcessor.html#processors">processors</a></code><i class="h"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Map.html">Map</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code>, <code><a href="api/apty.AnnotationProcessing.html">AnnotationProcessing</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code></code></code></code></code></i></li>
-					</ul>
-					<h5 class="b">Methods</h5>
-					<ul>
-						<li><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code><a href="api/apty.AptyProcessor.html#getSupportedAnnotationTypes()">getSupportedAnnotationTypes</a></code><code class="d">()</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.AptyProcessor.html#getSupportedOptions()">getSupportedOptions</a></code><code class="d">()</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.AptyProcessor.html#getSupportedSourceVersion()">getSupportedSourceVersion</a></code><code class="d">()</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/SourceVersion.html">SourceVersion</a></code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.AptyProcessor.html#getCompletions(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,javax.lang.model.element.ExecutableElement,java.lang.String)">getCompletions</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">element</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code><code class="parameterName">annotation</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code><code class="parameterName">member</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">userText</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/Completion.html">Completion</a></code></code></code></code></i></li>
-						<li><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code><a href="api/apty.AptyProcessor.html#init(javax.annotation.processing.ProcessingEnvironment)">init</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/ProcessingEnvironment.html">ProcessingEnvironment</a></code><code class="parameterName">process</code>)</code><i class="h"><code>void</code></i></li>
-						<li><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code><a href="api/apty.AptyProcessor.html#process(java.util.Set,javax.annotation.processing.RoundEnvironment)">process</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></code><code class="parameterName">annotations</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/RoundEnvironment.html">RoundEnvironment</a></code><code class="parameterName">round</code>)</code><i class="h"><code>boolean</code></i></li>
-						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/apty.AptyProcessor.html#process(java.lang.Class,apty.AnnotationProcessing)">process</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>A</code></code></code><code class="parameterName">annotation</code>, <code><a href="api/apty.AnnotationProcessing.html">AnnotationProcessing</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code></code></code><code class="parameterName">yourOwnProcess</code>)</code><i class="h"><code>void</code></i></li>
-						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/apty.AptyProcessor.html#writeSourceFile(java.lang.String,apty.AnnotationProcessing)">writeSourceFile</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">fqcn</code>, <code><a href="api/apty.AnnotationProcessing.html">AnnotationProcessing</a><code class="parameters"><code><a href="api/apty.code.Coder.html">Coder</a></code></code></code><code class="parameterName">coding</code>)</code><i class="h"><code>void</code></i></li>
-						<li><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/apty.AptyProcessor.html#writeSourceFileBy(apty.code.Coder)">writeSourceFileBy</a></code><code class="d">(<code><a href="api/apty.code.Coder.html">Coder</a></code><code class="parameterName">coding</code>)</code><i class="h"><code>void</code></i></li>
+					<ul class="C G">
+						<li><code><a aria-label="icy.manipulator.IcyManipulator" href="api/icy.manipulator.IcyManipulator.html">IcyManipulator</a></code></li>
 					</ul>
 				</div>
-			</aside>
-		</main>
-		<script src="root.js"></script>
-		<script src="main.js" type="module"></script>
+			</section>
+			<section class="k" id="filer">
+				<h2 class="S"><i class="PROTECTED"></i><code class="I">filer</code><i class="Z"><code class="return"><a aria-label="javax.annotation.processing.Filer 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/Filer.html">Filer</a></code></i></h2><span class="B"><p>The file manager.</p></span></section>
+			<section class="k" id="messager">
+				<h2 class="S"><i class="PROTECTED"></i><code class="I">messager</code><i class="Z"><code class="return"><a aria-label="javax.annotation.processing.Messager 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/Messager.html">Messager</a></code></i></h2><span class="B"><p>The notifier.</p></span></section>
+			<section class="k" id="processors">
+				<h2 class="S"><i class="FINAL"><i class="PROTECTED"></i></i><code class="I">processors</code><i class="Z"><code class="return"><a aria-label="java.util.Map 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Map.html">Map</a><code class="parameters"><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="java.lang.annotation.Annotation 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code>, <code><a aria-label="apty.AnnotationProcessing" href="api/apty.AnnotationProcessing.html">AnnotationProcessing</a><code class="parameters"><code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code></code></code></code></code></i></h2><span class="B"><p>The registered processors.</p></span></section>
+			<section class="k" id="AptyProcessor()">
+				<h2 class="S"><i class="PUBLIC"></i><code class="I">AptyProcessor</code><code class="R">()</code></h2>
+			</section>
+			<section class="k" id="getSupportedAnnotationTypes()">
+				<h2 class="S"><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code class="I">getSupportedAnnotationTypes</code><code class="R">()</code><i class="Z"><code><a aria-label="java.util.Set 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
+				<table class="W">
+					<tr class="o">
+						<td><code><a aria-label="java.util.Set 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="k" id="getSupportedOptions()">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="I">getSupportedOptions</code><code class="R">()</code><i class="Z"><code><a aria-label="java.util.Set 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></h2>
+				<table class="W">
+					<tr class="o">
+						<td><code><a aria-label="java.util.Set 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="k" id="getSupportedSourceVersion()">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="I">getSupportedSourceVersion</code><code class="R">()</code><i class="Z"><code><a aria-label="javax.lang.model.SourceVersion 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/SourceVersion.html">SourceVersion</a></code></i></h2>
+				<table class="W">
+					<tr class="o">
+						<td><code><a aria-label="javax.lang.model.SourceVersion 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/SourceVersion.html">SourceVersion</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="k" id="getCompletions(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,javax.lang.model.element.ExecutableElement,java.lang.String)">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="I">getCompletions</code><code class="R">(<code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">element</code>, <code><a aria-label="javax.lang.model.element.AnnotationMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code><code class="parameterName">annotation</code>, <code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code><code class="parameterName">member</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">userText</code>)</code><i class="Z"><code><a aria-label="java.lang.Iterable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.annotation.processing.Completion 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/Completion.html">Completion</a></code></code></code></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">element</code></td>
+						<td></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.AnnotationMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code><code class="parameterName">annotation</code></td>
+						<td></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code><code class="parameterName">member</code></td>
+						<td></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">userText</code></td>
+						<td></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.lang.Iterable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.annotation.processing.Completion 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/Completion.html">Completion</a></code></code></code></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="k" id="init(javax.annotation.processing.ProcessingEnvironment)">
+				<h2 class="S"><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code class="I">init</code><code class="R">(<code><a aria-label="javax.annotation.processing.ProcessingEnvironment 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/ProcessingEnvironment.html">ProcessingEnvironment</a></code><code class="parameterName">process</code>)</code><i class="Z"><code>void</code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.annotation.processing.ProcessingEnvironment 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/ProcessingEnvironment.html">ProcessingEnvironment</a></code><code class="parameterName">process</code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="k" id="process(java.util.Set,javax.annotation.processing.RoundEnvironment)">
+				<h2 class="S"><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code class="I">process</code><code class="R">(<code><a aria-label="java.util.Set 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></code><code class="parameterName">annotations</code>, <code><a aria-label="javax.annotation.processing.RoundEnvironment 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/RoundEnvironment.html">RoundEnvironment</a></code><code class="parameterName">round</code>)</code><i class="Z"><code>boolean</code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="java.util.Set 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></code><code class="parameterName">annotations</code></td>
+						<td></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="javax.annotation.processing.RoundEnvironment 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/RoundEnvironment.html">RoundEnvironment</a></code><code class="parameterName">round</code></td>
+						<td></td>
+					</tr>
+					<tr class="o">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="k" id="process(java.lang.Class,apty.AnnotationProcessing)">
+				<h2 class="S"><i class="FINAL"><i class="PROTECTED"></i></i><code class="I">process</code><code class="R">(<code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>A</code></code></code><code class="parameterName">annotation</code>, <code><a aria-label="apty.AnnotationProcessing" href="api/apty.AnnotationProcessing.html">AnnotationProcessing</a><code class="parameters"><code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code></code></code><code class="parameterName">yourOwnProcess</code>)</code><i class="Z"><code>void</code></i></h2>
+				<table class="W">
+					<tr class="m">
+						<td><code>A</code><code class="extends"><code><a aria-label="java.lang.annotation.Annotation 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></td>
+						<td></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>A</code></code></code><code class="parameterName">annotation</code></td>
+						<td></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="apty.AnnotationProcessing" href="api/apty.AnnotationProcessing.html">AnnotationProcessing</a><code class="parameters"><code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code></code></code><code class="parameterName">yourOwnProcess</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Register your process by type.</p></span></section>
+			<section class="k" id="writeSourceFile(java.lang.String,apty.AnnotationProcessing)">
+				<h2 class="S"><i class="FINAL"><i class="PROTECTED"></i></i><code class="I">writeSourceFile</code><code class="R">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">fqcn</code>, <code><a aria-label="apty.AnnotationProcessing" href="api/apty.AnnotationProcessing.html">AnnotationProcessing</a><code class="parameters"><code><a aria-label="apty.code.Coder" href="api/apty.code.Coder.html">Coder</a></code></code></code><code class="parameterName">coding</code>)</code><i class="Z"><code>void</code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">fqcn</code></td>
+						<td><span><p>A fully qualified class name to write.</p></span></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="apty.AnnotationProcessing" href="api/apty.AnnotationProcessing.html">AnnotationProcessing</a><code class="parameters"><code><a aria-label="apty.code.Coder" href="api/apty.code.Coder.html">Coder</a></code></code></code><code class="parameterName">coding</code></td>
+						<td><span><p>Write your code.</p></span></td>
+					</tr>
+					<tr class="J">
+						<td><code><a aria-label="java.lang.Exception 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Exception.html">Exception</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Write new source file.</p></span></section>
+			<section class="k" id="writeSourceFileBy(apty.code.Coder)">
+				<h2 class="S"><i class="FINAL"><i class="PROTECTED"></i></i><code class="I">writeSourceFileBy</code><code class="R">(<code><a aria-label="apty.code.Coder" href="api/apty.code.Coder.html">Coder</a></code><code class="parameterName">coding</code>)</code><i class="Z"><code>void</code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="apty.code.Coder" href="api/apty.code.Coder.html">Coder</a></code><code class="parameterName">coding</code></td>
+						<td><span><p>Write your code.</p></span></td>
+					</tr>
+					<tr class="J">
+						<td><code><a aria-label="java.lang.Exception 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Exception.html">Exception</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Write new source file.</p></span></section>
+		</article>
+		<aside class="g">
+			<div class="h">
+				<h5 class="n">Constructors</h5>
+				<ul>
+					<li class="Y"><i class="PUBLIC"></i><code><a href="api/apty.AptyProcessor.html#AptyProcessor()">AptyProcessor</a></code><code class="R">()</code></li>
+				</ul>
+				<h5 class="n">Fields</h5>
+				<ul>
+					<li class="Y"><i class="PROTECTED"></i><code><a href="api/apty.AptyProcessor.html#filer">filer</a></code><i class="p"><code class="return"><a aria-label="javax.annotation.processing.Filer 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/Filer.html">Filer</a></code></i></li>
+					<li class="Y"><i class="PROTECTED"></i><code><a href="api/apty.AptyProcessor.html#messager">messager</a></code><i class="p"><code class="return"><a aria-label="javax.annotation.processing.Messager 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/Messager.html">Messager</a></code></i></li>
+					<li class="Y"><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/apty.AptyProcessor.html#processors">processors</a></code><i class="p"><code class="return"><a aria-label="java.util.Map 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Map.html">Map</a><code class="parameters"><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="java.lang.annotation.Annotation 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code>, <code><a aria-label="apty.AnnotationProcessing" href="api/apty.AnnotationProcessing.html">AnnotationProcessing</a><code class="parameters"><code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code></code></code></code></code></i></li>
+				</ul>
+				<h5 class="n">Methods</h5>
+				<ul>
+					<li class="Y"><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code><a href="api/apty.AptyProcessor.html#getSupportedAnnotationTypes()">getSupportedAnnotationTypes</a></code><code class="R">()</code><i class="p"><code><a aria-label="java.util.Set 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
+					<li class="Y"><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.AptyProcessor.html#getSupportedOptions()">getSupportedOptions</a></code><code class="R">()</code><i class="p"><code><a aria-label="java.util.Set 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></code></code></i></li>
+					<li class="Y"><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.AptyProcessor.html#getSupportedSourceVersion()">getSupportedSourceVersion</a></code><code class="R">()</code><i class="p"><code><a aria-label="javax.lang.model.SourceVersion 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/SourceVersion.html">SourceVersion</a></code></i></li>
+					<li class="Y"><i class="OVERRIDE PUBLIC"></i><code><a href="api/apty.AptyProcessor.html#getCompletions(javax.lang.model.element.Element,javax.lang.model.element.AnnotationMirror,javax.lang.model.element.ExecutableElement,java.lang.String)">getCompletions</a></code><code class="R">(<code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">element</code>, <code><a aria-label="javax.lang.model.element.AnnotationMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code><code class="parameterName">annotation</code>, <code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code><code class="parameterName">member</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">userText</code>)</code><i class="p"><code><a aria-label="java.lang.Iterable 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Iterable.html">Iterable</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.annotation.processing.Completion 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/Completion.html">Completion</a></code></code></code></code></i></li>
+					<li class="Y"><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code><a href="api/apty.AptyProcessor.html#init(javax.annotation.processing.ProcessingEnvironment)">init</a></code><code class="R">(<code><a aria-label="javax.annotation.processing.ProcessingEnvironment 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/ProcessingEnvironment.html">ProcessingEnvironment</a></code><code class="parameterName">process</code>)</code><i class="p"><code>void</code></i></li>
+					<li class="Y"><i class="FINAL"><i class="OVERRIDE PUBLIC"></i></i><code><a href="api/apty.AptyProcessor.html#process(java.util.Set,javax.annotation.processing.RoundEnvironment)">process</a></code><code class="R">(<code><a aria-label="java.util.Set 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Set.html">Set</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></code><code class="parameterName">annotations</code>, <code><a aria-label="javax.annotation.processing.RoundEnvironment 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/annotation/processing/RoundEnvironment.html">RoundEnvironment</a></code><code class="parameterName">round</code>)</code><i class="p"><code>boolean</code></i></li>
+					<li class="Y"><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/apty.AptyProcessor.html#process(java.lang.Class,apty.AnnotationProcessing)">process</a></code><code class="R">(<code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>A</code></code></code><code class="parameterName">annotation</code>, <code><a aria-label="apty.AnnotationProcessing" href="api/apty.AnnotationProcessing.html">AnnotationProcessing</a><code class="parameters"><code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code></code></code><code class="parameterName">yourOwnProcess</code>)</code><i class="p"><code>void</code></i></li>
+					<li class="Y"><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/apty.AptyProcessor.html#writeSourceFile(java.lang.String,apty.AnnotationProcessing)">writeSourceFile</a></code><code class="R">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">fqcn</code>, <code><a aria-label="apty.AnnotationProcessing" href="api/apty.AnnotationProcessing.html">AnnotationProcessing</a><code class="parameters"><code><a aria-label="apty.code.Coder" href="api/apty.code.Coder.html">Coder</a></code></code></code><code class="parameterName">coding</code>)</code><i class="p"><code>void</code></i></li>
+					<li class="Y"><i class="FINAL"><i class="PROTECTED"></i></i><code><a href="api/apty.AptyProcessor.html#writeSourceFileBy(apty.code.Coder)">writeSourceFileBy</a></code><code class="R">(<code><a aria-label="apty.code.Coder" href="api/apty.code.Coder.html">Coder</a></code><code class="parameterName">coding</code>)</code><i class="p"><code>void</code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="a"/>
 	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
 </html>

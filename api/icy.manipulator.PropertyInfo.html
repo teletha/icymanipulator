@@ -13,150 +13,149 @@
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
 		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<link as="style" fetchpriority="high" href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="preload"/>
-		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<title>Icymanipulator API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="S">
-		<header class="J">
-			<h1 class="M" date="2024-11-19" ver="1.6.2"><code>Icymanipulator</code></h1>
-			<nav class="f"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="c">
+		<header class="d" date="2024-11-19" ver="1.6.2">
+			<h1 class="P"><code>Icymanipulator</code></h1>
+			<nav class="K"><a href="api/" id="API"><svg class="package A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
-					</svg><code>API</code></a><a href="https://github.com/Teletha/IcyManipulator/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#user"/>
-					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#activity"/>
-					</svg>Activity</a><a href="https://github.com/Teletha/IcyManipulator" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#github"/>
-					</svg>Repository</a></nav>
-			<div class="a" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#sun"/>
 					</svg>
-				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+				</a><a href="https://github.com/Teletha/IcyManipulator/discussions" id="Community" target="_blank"><svg class="user A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/Teletha/IcyManipulator" id="Repository" target="_blank"><svg class="github A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="l"><a aria-label="Change color scheme" id="theme"><svg class="sun A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon A svg" viewBox="0 0 24 24">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<main class="k">
-			<nav class="I">
-				<div></div>
-			</nav>
-			<article class="X" id="Article">
-				<section class="l"><code class="c">icy.manipulator</code>
-					<h2 class="Class Y"><code class="e">PropertyInfo</code></h2>
-					<div class="O"></div>
-				</section>
-				<section class="l" id="element">
-					<h2 class="H"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">element</code><i class="j"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></i></h2><span class="B"><p>The actual source element.</p></span></section>
-				<section class="l" id="name">
-					<h2 class="H"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">name</code><i class="j"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="B"><p>The property name.</p></span></section>
-				<section class="l" id="type">
-					<h2 class="H"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">type</code><i class="j"><code class="return"><a href="api/apty.code.Type.html">Type</a></code></i></h2><span class="B"><p>The type name.</p></span></section>
-				<section class="l" id="arbitrary">
-					<h2 class="H"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">arbitrary</code><i class="j"><code class="return">boolean</code></i></h2><span class="B"><p>The property state.</p></span></section>
-				<section class="l" id="nullable">
-					<h2 class="H"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">nullable</code><i class="j"><code class="return">boolean</code></i></h2><span class="B"><p>The property type.</p></span></section>
-				<section class="l" id="mutable">
-					<h2 class="H"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">mutable</code><i class="j"><code class="return">boolean</code></i></h2><span class="B"><p>The property type.</p></span></section>
-				<section class="l" id="copiable">
-					<h2 class="H"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">copiable</code><i class="j"><code class="return">boolean</code></i></h2><span class="B"><p>The property type.</p></span></section>
-				<section class="l" id="autoExpandable">
-					<h2 class="H"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">autoExpandable</code><i class="j"><code class="return">boolean</code></i></h2><span class="B"><p>The proeprty type.</p></span></section>
-				<section class="l" id="modifier">
-					<h2 class="H"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">modifier</code><i class="j"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="B"><p>The property modifier.</p></span></section>
-				<section class="l" id="getterModifier">
-					<h2 class="H"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">getterModifier</code><i class="j"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="B"><p>The classic getter modifier.</p></span></section>
-				<section class="l" id="setterModifier">
-					<h2 class="H"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">setterModifier</code><i class="j"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="B"><p>The classic setter modifier.</p></span></section>
-				<section class="l" id="custom">
-					<h2 class="H"><i class="FINAL"><i class="PUBLIC"></i></i><code class="e">custom</code><i class="j"><code class="return"><a href="api/icy.manipulator.CustomizerInfo.html">CustomizerInfo</a></code></i></h2><span class="B"><p>The customizer definition.</p></span></section>
-				<section class="l" id="PropertyInfo(javax.lang.model.element.ExecutableElement)">
-					<h2 class="H"><i class="PUBLIC"></i><code class="e">PropertyInfo</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code><code class="parameterName">method</code>)</code></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code><code>method</code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
-				<section class="l" id="assignableInterfaceName()">
-					<h2 class="H"><i class="PUBLIC"></i><code class="e">assignableInterfaceName</code><code class="d">()</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="N">
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
-							<td><span><p>An interface name.</p></span></td>
-						</tr>
-					</table><span class="B"><p>Compute assignable interface name of this property.</p></span></section>
-				<section class="l" id="capitalizeName()">
-					<h2 class="H"><i class="PUBLIC"></i><code class="e">capitalizeName</code><code class="d">()</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="N">
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Compute capitalized property name.</p></span></section>
-				<section class="l" id="isPrivateGetter()">
-					<h2 class="H"><i class="PUBLIC"></i><code class="e">isPrivateGetter</code><code class="d">()</code><i class="j"><code>boolean</code></i></h2>
-					<table class="N">
-						<tr class="U">
-							<td><code>boolean</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Detect getter modifier.</p></span></section>
-				<section class="l" id="isPrivateSetter()">
-					<h2 class="H"><i class="PUBLIC"></i><code class="e">isPrivateSetter</code><code class="d">()</code><i class="j"><code>boolean</code></i></h2>
-					<table class="N">
-						<tr class="U">
-							<td><code>boolean</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Detect setter modifier.</p></span></section>
-				<section class="l" id="toString()">
-					<h2 class="H"><i class="OVERRIDE PUBLIC"></i><code class="e">toString</code><code class="d">()</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="N">
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
-							<td></td>
-						</tr>
-					</table>
-				</section>
-			</article>
-			<aside class="P" id="SubNavi">
-				<div class="Z">
-					<h5 class="b">Constructors</h5>
-					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/icy.manipulator.PropertyInfo.html#PropertyInfo(javax.lang.model.element.ExecutableElement)">PropertyInfo</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code><code class="parameterName">method</code>)</code></li>
-					</ul>
-					<h5 class="b">Fields</h5>
-					<ul>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#element">element</a></code><i class="h"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#name">name</a></code><i class="h"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#type">type</a></code><i class="h"><code class="return"><a href="api/apty.code.Type.html">Type</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#arbitrary">arbitrary</a></code><i class="h"><code class="return">boolean</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#nullable">nullable</a></code><i class="h"><code class="return">boolean</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#mutable">mutable</a></code><i class="h"><code class="return">boolean</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#copiable">copiable</a></code><i class="h"><code class="return">boolean</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#autoExpandable">autoExpandable</a></code><i class="h"><code class="return">boolean</code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#modifier">modifier</a></code><i class="h"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#getterModifier">getterModifier</a></code><i class="h"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#setterModifier">setterModifier</a></code><i class="h"><code class="return"><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#custom">custom</a></code><i class="h"><code class="return"><a href="api/icy.manipulator.CustomizerInfo.html">CustomizerInfo</a></code></i></li>
-					</ul>
-					<h5 class="b">Methods</h5>
-					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/icy.manipulator.PropertyInfo.html#assignableInterfaceName()">assignableInterfaceName</a></code><code class="d">()</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/icy.manipulator.PropertyInfo.html#capitalizeName()">capitalizeName</a></code><code class="d">()</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/icy.manipulator.PropertyInfo.html#isPrivateGetter()">isPrivateGetter</a></code><code class="d">()</code><i class="h"><code>boolean</code></i></li>
-						<li><i class="PUBLIC"></i><code><a href="api/icy.manipulator.PropertyInfo.html#isPrivateSetter()">isPrivateSetter</a></code><code class="d">()</code><i class="h"><code>boolean</code></i></li>
-						<li><i class="OVERRIDE PUBLIC"></i><code><a href="api/icy.manipulator.PropertyInfo.html#toString()">toString</a></code><code class="d">()</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-					</ul>
-				</div>
-			</aside>
-		</main>
-		<script src="root.js"></script>
-		<script src="main.js" type="module"></script>
+		<nav class="f"></nav>
+		<article class="e" id="Article">
+			<section class="k"><code class="q">icy.manipulator</code>
+				<h2 class="Class M"><code class="I">PropertyInfo</code></h2>
+				<div class="X"></div>
+			</section>
+			<section class="k" id="element">
+				<h2 class="S"><i class="FINAL"><i class="PUBLIC"></i></i><code class="I">element</code><i class="Z"><code class="return"><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></i></h2><span class="B"><p>The actual source element.</p></span></section>
+			<section class="k" id="name">
+				<h2 class="S"><i class="FINAL"><i class="PUBLIC"></i></i><code class="I">name</code><i class="Z"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="B"><p>The property name.</p></span></section>
+			<section class="k" id="type">
+				<h2 class="S"><i class="FINAL"><i class="PUBLIC"></i></i><code class="I">type</code><i class="Z"><code class="return"><a aria-label="apty.code.Type" href="api/apty.code.Type.html">Type</a></code></i></h2><span class="B"><p>The type name.</p></span></section>
+			<section class="k" id="arbitrary">
+				<h2 class="S"><i class="FINAL"><i class="PUBLIC"></i></i><code class="I">arbitrary</code><i class="Z"><code class="return">boolean</code></i></h2><span class="B"><p>The property state.</p></span></section>
+			<section class="k" id="nullable">
+				<h2 class="S"><i class="FINAL"><i class="PUBLIC"></i></i><code class="I">nullable</code><i class="Z"><code class="return">boolean</code></i></h2><span class="B"><p>The property type.</p></span></section>
+			<section class="k" id="mutable">
+				<h2 class="S"><i class="FINAL"><i class="PUBLIC"></i></i><code class="I">mutable</code><i class="Z"><code class="return">boolean</code></i></h2><span class="B"><p>The property type.</p></span></section>
+			<section class="k" id="copiable">
+				<h2 class="S"><i class="FINAL"><i class="PUBLIC"></i></i><code class="I">copiable</code><i class="Z"><code class="return">boolean</code></i></h2><span class="B"><p>The property type.</p></span></section>
+			<section class="k" id="autoExpandable">
+				<h2 class="S"><i class="FINAL"><i class="PUBLIC"></i></i><code class="I">autoExpandable</code><i class="Z"><code class="return">boolean</code></i></h2><span class="B"><p>The proeprty type.</p></span></section>
+			<section class="k" id="modifier">
+				<h2 class="S"><i class="FINAL"><i class="PUBLIC"></i></i><code class="I">modifier</code><i class="Z"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="B"><p>The property modifier.</p></span></section>
+			<section class="k" id="getterModifier">
+				<h2 class="S"><i class="FINAL"><i class="PUBLIC"></i></i><code class="I">getterModifier</code><i class="Z"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="B"><p>The classic getter modifier.</p></span></section>
+			<section class="k" id="setterModifier">
+				<h2 class="S"><i class="FINAL"><i class="PUBLIC"></i></i><code class="I">setterModifier</code><i class="Z"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2><span class="B"><p>The classic setter modifier.</p></span></section>
+			<section class="k" id="custom">
+				<h2 class="S"><i class="FINAL"><i class="PUBLIC"></i></i><code class="I">custom</code><i class="Z"><code class="return"><a aria-label="icy.manipulator.CustomizerInfo" href="api/icy.manipulator.CustomizerInfo.html">CustomizerInfo</a></code></i></h2><span class="B"><p>The customizer definition.</p></span></section>
+			<section class="k" id="PropertyInfo(javax.lang.model.element.ExecutableElement)">
+				<h2 class="S"><i class="PUBLIC"></i><code class="I">PropertyInfo</code><code class="R">(<code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code><code class="parameterName">method</code>)</code></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code><code class="parameterName">method</code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section class="k" id="assignableInterfaceName()">
+				<h2 class="S"><i class="PUBLIC"></i><code class="I">assignableInterfaceName</code><code class="R">()</code><i class="Z"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="W">
+					<tr class="o">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
+						<td><span><p>An interface name.</p></span></td>
+					</tr>
+				</table><span class="B"><p>Compute assignable interface name of this property.</p></span></section>
+			<section class="k" id="capitalizeName()">
+				<h2 class="S"><i class="PUBLIC"></i><code class="I">capitalizeName</code><code class="R">()</code><i class="Z"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="W">
+					<tr class="o">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Compute capitalized property name.</p></span></section>
+			<section class="k" id="isPrivateGetter()">
+				<h2 class="S"><i class="PUBLIC"></i><code class="I">isPrivateGetter</code><code class="R">()</code><i class="Z"><code>boolean</code></i></h2>
+				<table class="W">
+					<tr class="o">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Detect getter modifier.</p></span></section>
+			<section class="k" id="isPrivateSetter()">
+				<h2 class="S"><i class="PUBLIC"></i><code class="I">isPrivateSetter</code><code class="R">()</code><i class="Z"><code>boolean</code></i></h2>
+				<table class="W">
+					<tr class="o">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Detect setter modifier.</p></span></section>
+			<section class="k" id="toString()">
+				<h2 class="S"><i class="OVERRIDE PUBLIC"></i><code class="I">toString</code><code class="R">()</code><i class="Z"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="W">
+					<tr class="o">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+		</article>
+		<aside class="g">
+			<div class="h">
+				<h5 class="n">Constructors</h5>
+				<ul>
+					<li class="Y"><i class="PUBLIC"></i><code><a href="api/icy.manipulator.PropertyInfo.html#PropertyInfo(javax.lang.model.element.ExecutableElement)">PropertyInfo</a></code><code class="R">(<code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code><code class="parameterName">method</code>)</code></li>
+				</ul>
+				<h5 class="n">Fields</h5>
+				<ul>
+					<li class="Y"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#element">element</a></code><i class="p"><code class="return"><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></i></li>
+					<li class="Y"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#name">name</a></code><i class="p"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="Y"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#type">type</a></code><i class="p"><code class="return"><a aria-label="apty.code.Type" href="api/apty.code.Type.html">Type</a></code></i></li>
+					<li class="Y"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#arbitrary">arbitrary</a></code><i class="p"><code class="return">boolean</code></i></li>
+					<li class="Y"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#nullable">nullable</a></code><i class="p"><code class="return">boolean</code></i></li>
+					<li class="Y"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#mutable">mutable</a></code><i class="p"><code class="return">boolean</code></i></li>
+					<li class="Y"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#copiable">copiable</a></code><i class="p"><code class="return">boolean</code></i></li>
+					<li class="Y"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#autoExpandable">autoExpandable</a></code><i class="p"><code class="return">boolean</code></i></li>
+					<li class="Y"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#modifier">modifier</a></code><i class="p"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="Y"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#getterModifier">getterModifier</a></code><i class="p"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="Y"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#setterModifier">setterModifier</a></code><i class="p"><code class="return"><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="Y"><i class="FINAL"><i class="PUBLIC"></i></i><code><a href="api/icy.manipulator.PropertyInfo.html#custom">custom</a></code><i class="p"><code class="return"><a aria-label="icy.manipulator.CustomizerInfo" href="api/icy.manipulator.CustomizerInfo.html">CustomizerInfo</a></code></i></li>
+				</ul>
+				<h5 class="n">Methods</h5>
+				<ul>
+					<li class="Y"><i class="PUBLIC"></i><code><a href="api/icy.manipulator.PropertyInfo.html#assignableInterfaceName()">assignableInterfaceName</a></code><code class="R">()</code><i class="p"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="Y"><i class="PUBLIC"></i><code><a href="api/icy.manipulator.PropertyInfo.html#capitalizeName()">capitalizeName</a></code><code class="R">()</code><i class="p"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="Y"><i class="PUBLIC"></i><code><a href="api/icy.manipulator.PropertyInfo.html#isPrivateGetter()">isPrivateGetter</a></code><code class="R">()</code><i class="p"><code>boolean</code></i></li>
+					<li class="Y"><i class="PUBLIC"></i><code><a href="api/icy.manipulator.PropertyInfo.html#isPrivateSetter()">isPrivateSetter</a></code><code class="R">()</code><i class="p"><code>boolean</code></i></li>
+					<li class="Y"><i class="OVERRIDE PUBLIC"></i><code><a href="api/icy.manipulator.PropertyInfo.html#toString()">toString</a></code><code class="R">()</code><i class="p"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="a"/>
 	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
 </html>

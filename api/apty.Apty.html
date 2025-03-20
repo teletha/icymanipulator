@@ -13,419 +13,418 @@
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Material+Icons" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
 		<link as="style" fetchpriority="high" href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" rel="preload"/>
 		<link href="https://fonts.googleapis.com/css2?display=swap&#38;family=Vollkorn" media="print" onload="this.media=&#39;all&#39;" rel="stylesheet"/>
-		<link as="style" fetchpriority="high" href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="preload"/>
-		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<title>Icymanipulator API</title>
 		<base href="../"/>
 		<script src="mimic.js" type="module"></script>
+		<link href="https://cdn.jsdelivr.net/npm/ress@4.0.0/dist/ress.min.css" rel="stylesheet"/>
 		<link href="main.css" rel="stylesheet"/>
 	</head>
-	<body class="S">
-		<header class="J">
-			<h1 class="M" date="2024-11-19" ver="1.6.2"><code>Icymanipulator</code></h1>
-			<nav class="f"><a href="api/"><svg class="A svg" viewBox="0 0 24 24">
+	<body class="c">
+		<header class="d" date="2024-11-19" ver="1.6.2">
+			<h1 class="P"><code>Icymanipulator</code></h1>
+			<nav class="K"><a href="api/" id="API"><svg class="package A svg" viewBox="0 0 24 24">
 						<use href="main.svg#package"/>
-					</svg><code>API</code></a><a href="https://github.com/Teletha/IcyManipulator/discussions" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#user"/>
-					</svg>Community</a><a href="doc/changelog.html"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#activity"/>
-					</svg>Activity</a><a href="https://github.com/Teletha/IcyManipulator" target="_blank"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#github"/>
-					</svg>Repository</a></nav>
-			<div class="a" id="ViewMode"><a id="light" title="Change to a brighter color scheme"><svg class="A svg" viewBox="0 0 24 24">
-						<use href="main.svg#sun"/>
 					</svg>
-				</a><a id="dark" title="Change to a darker color scheme"><svg class="A svg" viewBox="0 0 24 24">
+				</a><a href="https://github.com/Teletha/IcyManipulator/discussions" id="Community" target="_blank"><svg class="user A svg" viewBox="0 0 24 24">
+						<use href="main.svg#user"/>
+					</svg>
+				</a><a href="doc/changelog.html" id="Activity"><svg class="activity A svg" viewBox="0 0 24 24">
+						<use href="main.svg#activity"/>
+					</svg>
+				</a><a href="https://github.com/Teletha/IcyManipulator" id="Repository" target="_blank"><svg class="github A svg" viewBox="0 0 24 24">
+						<use href="main.svg#github"/>
+					</svg>
+				</a></nav>
+			<div class="l"><a aria-label="Change color scheme" id="theme"><svg class="sun A svg" viewBox="0 0 24 24">
+						<use href="main.svg#sun"/>
+					</svg><svg class="moon A svg" viewBox="0 0 24 24">
 						<use href="main.svg#moon"/>
 					</svg>
 				</a></div>
 		</header>
-		<main class="k">
-			<nav class="I">
-				<div></div>
-			</nav>
-			<article class="X" id="Article">
-				<section class="l"><code class="c">apty</code>
-					<h2 class="Class Y"><code class="e">Apty</code></h2>
-					<div class="O"></div>
-				</section>
-				<section class="l" id="Apty()">
-					<h2 class="H"><i class="PUBLIC"></i><code class="e">Apty</code><code class="d">()</code></h2>
-				</section>
-				<section class="l" id="asTypeElement(java.lang.String)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">asTypeElement</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">type</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>type</code></td>
-							<td><span><p>A type to convert.</p></span></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></td>
-							<td><span><p>A converted <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code>.</p></span></td>
-						</tr>
-					</table><span class="B"><p>Convert type name to <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code> if we can.</p></span></section>
-				<section class="l" id="asTypeElement(javax.lang.model.type.TypeMirror)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">asTypeElement</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code>type</code></td>
-							<td><span><p>A type to convert.</p></span></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></td>
-							<td><span><p>A converted <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code>.</p></span></td>
-						</tr>
-					</table><span class="B"><p>Convert <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code> to <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code> if we can.</p></span></section>
-				<section class="l" id="erasure(javax.lang.model.type.TypeMirror)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">erasure</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code>type</code></td>
-							<td><span><p>the type to be erased</p></span></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></td>
-							<td><span><p>the erasure of the given type</p></span></td>
-						</tr>
-					</table><span class="B"><p>Returns the erasure of a type.</p></span></section>
-				<section class="l" id="parent(javax.lang.model.element.TypeElement)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">parent</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code>e</code></td>
-							<td></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Find parent <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code>.</p></span></section>
-				<section class="l" id="getters(javax.lang.model.element.TypeElement)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">getters</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code>e</code></td>
-							<td><span><p>A target type.</p></span></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Find all declared getter-like methods.</p></span></section>
-				<section class="l" id="setters(javax.lang.model.element.TypeElement)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">setters</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code>e</code></td>
-							<td><span><p>A target type.</p></span></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Find all declared setter-like methods.</p></span></section>
-				<section class="l" id="methods(javax.lang.model.type.TypeMirror)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">methods</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">e</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code>e</code></td>
-							<td><span><p>A target type.</p></span></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Find all declared methods.</p></span></section>
-				<section class="l" id="methods(javax.lang.model.element.TypeElement)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">methods</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code>e</code></td>
-							<td><span><p>A target type.</p></span></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Find all declared methods.</p></span></section>
-				<section class="l" id="methods(javax.lang.model.element.TypeElement,java.util.function.Predicate)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">methods</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code><code class="parameterName">filter</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code>e</code></td>
-							<td><span><p>A target type.</p></span></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code><code>filter</code></td>
-							<td><span><p>A including filer.</p></span></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Find the matching declared methods.</p></span></section>
-				<section class="l" id="methodsInHierarchy(javax.lang.model.element.TypeElement,java.util.function.Predicate)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">methodsInHierarchy</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code><code class="parameterName">filter</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code>e</code></td>
-							<td><span><p>A target type.</p></span></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code><code>filter</code></td>
-							<td><span><p>A including filer.</p></span></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Find the matching declared methods.</p></span></section>
-				<section class="l" id="same(javax.lang.model.type.TypeMirror,java.lang.Class)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">same</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">clazz</code>)</code><i class="j"><code>boolean</code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code>type</code></td>
-							<td></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code>clazz</code></td>
-							<td></td>
-						</tr>
-						<tr class="U">
-							<td><code>boolean</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Check type equality.</p></span></section>
-				<section class="l" id="same(javax.lang.model.type.TypeMirror,javax.lang.model.element.Element)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">same</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">element</code>)</code><i class="j"><code>boolean</code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code>type</code></td>
-							<td></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code>element</code></td>
-							<td></td>
-						</tr>
-						<tr class="U">
-							<td><code>boolean</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Check type equality.</p></span></section>
-				<section class="l" id="same(javax.lang.model.type.TypeMirror,javax.lang.model.type.TypeMirror)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">same</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">other</code>)</code><i class="j"><code>boolean</code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code>type</code></td>
-							<td></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code>other</code></td>
-							<td></td>
-						</tr>
-						<tr class="U">
-							<td><code>boolean</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Check type equality.</p></span></section>
-				<section class="l" id="doc(javax.lang.model.element.Element)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">doc</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code>e</code></td>
-							<td><span><p>The target element.</p></span></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
-							<td><span><p>A documentation comment</p></span></td>
-						</tr>
-					</table><span class="B"><p>Retrieve the documentation comment from the specified <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code>.</p></span></section>
-				<section class="l" id="typeParameter(javax.lang.model.element.TypeElement,java.lang.Class)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">typeParameter</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">target</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">type</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code>target</code></td>
-							<td><span><p>A target base type.</p></span></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code>type</code></td>
-							<td><span><p>A target type which has variable list.</p></span></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Reteieve the variables from the specified base target.</p></span></section>
-				<section class="l" id="typeParameter(javax.lang.model.element.TypeElement,javax.lang.model.type.DeclaredType)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">typeParameter</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">target</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">type</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code>target</code></td>
-							<td><span><p>A target base type.</p></span></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code>type</code></td>
-							<td><span><p>A target type which has variable list.</p></span></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Reteieve the variables from the specified base target.</p></span></section>
-				<section class="l" id="typeParameter(javax.lang.model.type.DeclaredType,java.lang.Class)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">typeParameter</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">target</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">type</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code>target</code></td>
-							<td><span><p>A target base type.</p></span></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code>type</code></td>
-							<td><span><p>A target type which has variable list.</p></span></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Reteieve the variables from the specified base target.</p></span></section>
-				<section class="l" id="typeParameter(javax.lang.model.type.DeclaredType,javax.lang.model.type.DeclaredType)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">typeParameter</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">target</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">type</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code>target</code></td>
-							<td><span><p>A target base type.</p></span></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code>type</code></td>
-							<td><span><p>A target type which has variable list.</p></span></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Reteieve the variables from the specified base target.</p></span></section>
-				<section class="l" id="annotation(javax.lang.model.element.Element,java.lang.Class)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">annotation</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code class="parameterName">annotationType</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code>e</code></td>
-							<td><span><p>An annotated <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code>.</p></span></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code>annotationType</code></td>
-							<td><span><p>An annotation type.</p></span></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Retrieve annotation info by its type.</p></span></section>
-				<section class="l" id="annotationValues(javax.lang.model.element.AnnotationMirror)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">annotationValues</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code><code class="parameterName">annotation</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Map.html">Map</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationValue.html">AnnotationValue</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code><code>annotation</code></td>
-							<td></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Map.html">Map</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationValue.html">AnnotationValue</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Returns the <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code>&#39;s map of <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationValue.html">AnnotationValue</a></code> indexed by
-<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code>, supplying default values from the annotation if the annotation
+		<nav class="f"></nav>
+		<article class="e" id="Article">
+			<section class="k"><code class="q">apty</code>
+				<h2 class="Class M"><code class="I">Apty</code></h2>
+				<div class="X"></div>
+			</section>
+			<section class="k" id="Apty()">
+				<h2 class="S"><i class="PUBLIC"></i><code class="I">Apty</code><code class="R">()</code></h2>
+			</section>
+			<section class="k" id="asTypeElement(java.lang.String)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">asTypeElement</code><code class="R">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">type</code>)</code><i class="Z"><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">type</code></td>
+						<td><span><p>A type to convert.</p></span></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></td>
+						<td><span><p>A converted <code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code>.</p></span></td>
+					</tr>
+				</table><span class="B"><p>Convert type name to <code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code> if we can.</p></span></section>
+			<section class="k" id="asTypeElement(javax.lang.model.type.TypeMirror)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">asTypeElement</code><code class="R">(<code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>)</code><i class="Z"><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code></td>
+						<td><span><p>A type to convert.</p></span></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></td>
+						<td><span><p>A converted <code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code>.</p></span></td>
+					</tr>
+				</table><span class="B"><p>Convert <code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code> to <code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code> if we can.</p></span></section>
+			<section class="k" id="erasure(javax.lang.model.type.TypeMirror)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">erasure</code><code class="R">(<code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>)</code><i class="Z"><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code></td>
+						<td><span><p>the type to be erased</p></span></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></td>
+						<td><span><p>the erasure of the given type</p></span></td>
+					</tr>
+				</table><span class="B"><p>Returns the erasure of a type.</p></span></section>
+			<section class="k" id="parent(javax.lang.model.element.TypeElement)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">parent</code><code class="R">(<code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>)</code><i class="Z"><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code></td>
+						<td></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Find parent <code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code>.</p></span></section>
+			<section class="k" id="getters(javax.lang.model.element.TypeElement)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">getters</code><code class="R">(<code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>)</code><i class="Z"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code></td>
+						<td><span><p>A target type.</p></span></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Find all declared getter-like methods.</p></span></section>
+			<section class="k" id="setters(javax.lang.model.element.TypeElement)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">setters</code><code class="R">(<code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>)</code><i class="Z"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code></td>
+						<td><span><p>A target type.</p></span></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Find all declared setter-like methods.</p></span></section>
+			<section class="k" id="methods(javax.lang.model.type.TypeMirror)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">methods</code><code class="R">(<code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">e</code>)</code><i class="Z"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">e</code></td>
+						<td><span><p>A target type.</p></span></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Find all declared methods.</p></span></section>
+			<section class="k" id="methods(javax.lang.model.element.TypeElement)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">methods</code><code class="R">(<code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>)</code><i class="Z"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code></td>
+						<td><span><p>A target type.</p></span></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Find all declared methods.</p></span></section>
+			<section class="k" id="methods(javax.lang.model.element.TypeElement,java.util.function.Predicate)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">methods</code><code class="R">(<code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>, <code><a aria-label="java.util.function.Predicate 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code><code class="parameterName">filter</code>)</code><i class="Z"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code></td>
+						<td><span><p>A target type.</p></span></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="java.util.function.Predicate 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code><code class="parameterName">filter</code></td>
+						<td><span><p>A including filer.</p></span></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Find the matching declared methods.</p></span></section>
+			<section class="k" id="methodsInHierarchy(javax.lang.model.element.TypeElement,java.util.function.Predicate)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">methodsInHierarchy</code><code class="R">(<code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>, <code><a aria-label="java.util.function.Predicate 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code><code class="parameterName">filter</code>)</code><i class="Z"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code></td>
+						<td><span><p>A target type.</p></span></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="java.util.function.Predicate 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code><code class="parameterName">filter</code></td>
+						<td><span><p>A including filer.</p></span></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Find the matching declared methods.</p></span></section>
+			<section class="k" id="same(javax.lang.model.type.TypeMirror,java.lang.Class)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">same</code><code class="R">(<code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>, <code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">clazz</code>)</code><i class="Z"><code>boolean</code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code></td>
+						<td></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">clazz</code></td>
+						<td></td>
+					</tr>
+					<tr class="o">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Check type equality.</p></span></section>
+			<section class="k" id="same(javax.lang.model.type.TypeMirror,javax.lang.model.element.Element)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">same</code><code class="R">(<code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>, <code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">element</code>)</code><i class="Z"><code>boolean</code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code></td>
+						<td></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">element</code></td>
+						<td></td>
+					</tr>
+					<tr class="o">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Check type equality.</p></span></section>
+			<section class="k" id="same(javax.lang.model.type.TypeMirror,javax.lang.model.type.TypeMirror)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">same</code><code class="R">(<code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>, <code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">other</code>)</code><i class="Z"><code>boolean</code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code></td>
+						<td></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">other</code></td>
+						<td></td>
+					</tr>
+					<tr class="o">
+						<td><code>boolean</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Check type equality.</p></span></section>
+			<section class="k" id="doc(javax.lang.model.element.Element)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">doc</code><code class="R">(<code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code>)</code><i class="Z"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code></td>
+						<td><span><p>The target element.</p></span></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></td>
+						<td><span><p>A documentation comment</p></span></td>
+					</tr>
+				</table><span class="B"><p>Retrieve the documentation comment from the specified <code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code>.</p></span></section>
+			<section class="k" id="typeParameter(javax.lang.model.element.TypeElement,java.lang.Class)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">typeParameter</code><code class="R">(<code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">target</code>, <code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">type</code>)</code><i class="Z"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">target</code></td>
+						<td><span><p>A target base type.</p></span></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">type</code></td>
+						<td><span><p>A target type which has variable list.</p></span></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Reteieve the variables from the specified base target.</p></span></section>
+			<section class="k" id="typeParameter(javax.lang.model.element.TypeElement,javax.lang.model.type.DeclaredType)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">typeParameter</code><code class="R">(<code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">target</code>, <code><a aria-label="javax.lang.model.type.DeclaredType 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">type</code>)</code><i class="Z"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">target</code></td>
+						<td><span><p>A target base type.</p></span></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.type.DeclaredType 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">type</code></td>
+						<td><span><p>A target type which has variable list.</p></span></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Reteieve the variables from the specified base target.</p></span></section>
+			<section class="k" id="typeParameter(javax.lang.model.type.DeclaredType,java.lang.Class)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">typeParameter</code><code class="R">(<code><a aria-label="javax.lang.model.type.DeclaredType 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">target</code>, <code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">type</code>)</code><i class="Z"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.type.DeclaredType 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">target</code></td>
+						<td><span><p>A target base type.</p></span></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">type</code></td>
+						<td><span><p>A target type which has variable list.</p></span></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Reteieve the variables from the specified base target.</p></span></section>
+			<section class="k" id="typeParameter(javax.lang.model.type.DeclaredType,javax.lang.model.type.DeclaredType)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">typeParameter</code><code class="R">(<code><a aria-label="javax.lang.model.type.DeclaredType 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">target</code>, <code><a aria-label="javax.lang.model.type.DeclaredType 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">type</code>)</code><i class="Z"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.type.DeclaredType 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">target</code></td>
+						<td><span><p>A target base type.</p></span></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.type.DeclaredType 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">type</code></td>
+						<td><span><p>A target type which has variable list.</p></span></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Reteieve the variables from the specified base target.</p></span></section>
+			<section class="k" id="annotation(javax.lang.model.element.Element,java.lang.Class)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">annotation</code><code class="R">(<code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code>, <code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="java.lang.annotation.Annotation 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code class="parameterName">annotationType</code>)</code><i class="Z"><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a aria-label="javax.lang.model.element.AnnotationMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code></code></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code></td>
+						<td><span><p>An annotated <code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code>.</p></span></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="java.lang.annotation.Annotation 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code class="parameterName">annotationType</code></td>
+						<td><span><p>An annotation type.</p></span></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a aria-label="javax.lang.model.element.AnnotationMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Retrieve annotation info by its type.</p></span></section>
+			<section class="k" id="annotationValues(javax.lang.model.element.AnnotationMirror)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">annotationValues</code><code class="R">(<code><a aria-label="javax.lang.model.element.AnnotationMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code><code class="parameterName">annotation</code>)</code><i class="Z"><code><a aria-label="java.util.Map 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Map.html">Map</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code>, <code><a aria-label="javax.lang.model.element.AnnotationValue 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationValue.html">AnnotationValue</a></code></code></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.AnnotationMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code><code class="parameterName">annotation</code></td>
+						<td></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.util.Map 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Map.html">Map</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code>, <code><a aria-label="javax.lang.model.element.AnnotationValue 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationValue.html">AnnotationValue</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Returns the <code><a aria-label="javax.lang.model.element.AnnotationMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code>&#39;s map of <code><a aria-label="javax.lang.model.element.AnnotationValue 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationValue.html">AnnotationValue</a></code> indexed by
+<code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code>, supplying default values from the annotation if the annotation
 property has not been set. This is equivalent to
-<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/util/Elements.html#getElementValuesWithDefaults(javax.lang.model.element.AnnotationMirror)">Elements#getElementValuesWithDefaults(AnnotationMirror)</a></code> but can be called statically
-without an <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/util/Elements.html">Elements</a></code> instance.</p><p>
+<code><a aria-label="javax.lang.model.util.Elements 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/util/Elements.html#getElementValuesWithDefaults(javax.lang.model.element.AnnotationMirror)">Elements#getElementValuesWithDefaults(AnnotationMirror)</a></code> but can be called statically
+without an <code><a aria-label="javax.lang.model.util.Elements 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/util/Elements.html">Elements</a></code> instance.</p><p>
  The iteration order of elements of the returned map will be the order in which the
- <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code>s are defined in <code>annotation</code>&#39;s
- <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html#getAnnotationType()">AnnotationMirror#getAnnotationType()</a></code>.
+ <code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code>s are defined in <code>annotation</code>&#39;s
+ <code><a aria-label="javax.lang.model.element.AnnotationMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html#getAnnotationType()">AnnotationMirror#getAnnotationType()</a></code>.
 </p>
-					</span></section>
-				<section class="l" id="annotationValue(javax.lang.model.element.Element,java.lang.Class,java.lang.String)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">annotationValue</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code class="parameterName">annotationType</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationValue.html">AnnotationValue</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code>e</code></td>
-							<td><span><p>A target element.</p></span></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code>annotationType</code></td>
-							<td><span><p>An annotation type.</p></span></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>name</code></td>
-							<td><span><p>A value name.</p></span></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationValue.html">AnnotationValue</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Retrieve annotation value by annotation type and value name.</p></span></section>
-				<section class="l" id="annotationClassValue(javax.lang.model.element.Element,java.lang.Class,java.lang.String)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">annotationClassValue</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code class="parameterName">annotationType</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="j"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code></code></code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code>e</code></td>
-							<td><span><p>A target element.</p></span></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code>annotationType</code></td>
-							<td><span><p>An annotation type.</p></span></td>
-						</tr>
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>name</code></td>
-							<td><span><p>A value name.</p></span></td>
-						</tr>
-						<tr class="U">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code></code></code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Retrieve annotation class value by annotation type and value name.</p></span></section>
-				<section class="l" id="log(java.lang.String)">
-					<h2 class="H"><i class="STATIC PUBLIC"></i><code class="e">log</code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code>)</code><i class="j"><code>void</code></i></h2>
-					<table class="N">
-						<tr class="L">
-							<td><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code>message</code></td>
-							<td></td>
-						</tr>
-					</table><span class="B"><p>Write log.</p></span></section>
-			</article>
-			<aside class="P" id="SubNavi">
-				<div class="Z">
-					<h5 class="b">Constructors</h5>
-					<ul>
-						<li><i class="PUBLIC"></i><code><a href="api/apty.Apty.html#Apty()">Apty</a></code><code class="d">()</code></li>
-					</ul>
-					<h5 class="b">Static Methods</h5>
-					<ul>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#asTypeElement(java.lang.String)">asTypeElement</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">type</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#asTypeElement(javax.lang.model.type.TypeMirror)">asTypeElement</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#erasure(javax.lang.model.type.TypeMirror)">erasure</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#parent(javax.lang.model.element.TypeElement)">parent</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#getters(javax.lang.model.element.TypeElement)">getters</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#setters(javax.lang.model.element.TypeElement)">setters</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#methods(javax.lang.model.type.TypeMirror)">methods</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">e</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#methods(javax.lang.model.element.TypeElement)">methods</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#methods(javax.lang.model.element.TypeElement,java.util.function.Predicate)">methods</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code><code class="parameterName">filter</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#methodsInHierarchy(javax.lang.model.element.TypeElement,java.util.function.Predicate)">methodsInHierarchy</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code><code class="parameterName">filter</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#same(javax.lang.model.type.TypeMirror,java.lang.Class)">same</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">clazz</code>)</code><i class="h"><code>boolean</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#same(javax.lang.model.type.TypeMirror,javax.lang.model.element.Element)">same</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">element</code>)</code><i class="h"><code>boolean</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#same(javax.lang.model.type.TypeMirror,javax.lang.model.type.TypeMirror)">same</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">other</code>)</code><i class="h"><code>boolean</code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#doc(javax.lang.model.element.Element)">doc</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#typeParameter(javax.lang.model.element.TypeElement,java.lang.Class)">typeParameter</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">target</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">type</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#typeParameter(javax.lang.model.element.TypeElement,javax.lang.model.type.DeclaredType)">typeParameter</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">target</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">type</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#typeParameter(javax.lang.model.type.DeclaredType,java.lang.Class)">typeParameter</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">target</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">type</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#typeParameter(javax.lang.model.type.DeclaredType,javax.lang.model.type.DeclaredType)">typeParameter</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">target</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">type</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#annotation(javax.lang.model.element.Element,java.lang.Class)">annotation</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code class="parameterName">annotationType</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#annotationValues(javax.lang.model.element.AnnotationMirror)">annotationValues</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code><code class="parameterName">annotation</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Map.html">Map</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationValue.html">AnnotationValue</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#annotationValue(javax.lang.model.element.Element,java.lang.Class,java.lang.String)">annotationValue</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code class="parameterName">annotationType</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationValue.html">AnnotationValue</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#annotationClassValue(javax.lang.model.element.Element,java.lang.Class,java.lang.String)">annotationClassValue</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code class="parameterName">annotationType</code>, <code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="h"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code></code></code></i></li>
-						<li><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#log(java.lang.String)">log</a></code><code class="d">(<code><a href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code>)</code><i class="h"><code>void</code></i></li>
-					</ul>
-				</div>
-			</aside>
-		</main>
-		<script src="root.js"></script>
-		<script src="main.js" type="module"></script>
+				</span></section>
+			<section class="k" id="annotationValue(javax.lang.model.element.Element,java.lang.Class,java.lang.String)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">annotationValue</code><code class="R">(<code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code>, <code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="java.lang.annotation.Annotation 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code class="parameterName">annotationType</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="Z"><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a aria-label="javax.lang.model.element.AnnotationValue 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationValue.html">AnnotationValue</a></code></code></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code></td>
+						<td><span><p>A target element.</p></span></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="java.lang.annotation.Annotation 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code class="parameterName">annotationType</code></td>
+						<td><span><p>An annotation type.</p></span></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code></td>
+						<td><span><p>A value name.</p></span></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a aria-label="javax.lang.model.element.AnnotationValue 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationValue.html">AnnotationValue</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Retrieve annotation value by annotation type and value name.</p></span></section>
+			<section class="k" id="annotationClassValue(javax.lang.model.element.Element,java.lang.Class,java.lang.String)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">annotationClassValue</code><code class="R">(<code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code>, <code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="java.lang.annotation.Annotation 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code class="parameterName">annotationType</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="Z"><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a aria-label="javax.lang.model.type.DeclaredType 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code></code></code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code></td>
+						<td><span><p>A target element.</p></span></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="java.lang.annotation.Annotation 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code class="parameterName">annotationType</code></td>
+						<td><span><p>An annotation type.</p></span></td>
+					</tr>
+					<tr class="Q">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code></td>
+						<td><span><p>A value name.</p></span></td>
+					</tr>
+					<tr class="o">
+						<td><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a aria-label="javax.lang.model.type.DeclaredType 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code></code></code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Retrieve annotation class value by annotation type and value name.</p></span></section>
+			<section class="k" id="log(java.lang.String)">
+				<h2 class="S"><i class="STATIC PUBLIC"></i><code class="I">log</code><code class="R">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code>)</code><i class="Z"><code>void</code></i></h2>
+				<table class="W">
+					<tr class="Q">
+						<td><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code></td>
+						<td></td>
+					</tr>
+				</table><span class="B"><p>Write log.</p></span></section>
+		</article>
+		<aside class="g">
+			<div class="h">
+				<h5 class="n">Constructors</h5>
+				<ul>
+					<li class="Y"><i class="PUBLIC"></i><code><a href="api/apty.Apty.html#Apty()">Apty</a></code><code class="R">()</code></li>
+				</ul>
+				<h5 class="n">Static Methods</h5>
+				<ul>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#asTypeElement(java.lang.String)">asTypeElement</a></code><code class="R">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">type</code>)</code><i class="p"><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#asTypeElement(javax.lang.model.type.TypeMirror)">asTypeElement</a></code><code class="R">(<code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>)</code><i class="p"><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></code></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#erasure(javax.lang.model.type.TypeMirror)">erasure</a></code><code class="R">(<code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>)</code><i class="p"><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#parent(javax.lang.model.element.TypeElement)">parent</a></code><code class="R">(<code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>)</code><i class="p"><code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#getters(javax.lang.model.element.TypeElement)">getters</a></code><code class="R">(<code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>)</code><i class="p"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#setters(javax.lang.model.element.TypeElement)">setters</a></code><code class="R">(<code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>)</code><i class="p"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#methods(javax.lang.model.type.TypeMirror)">methods</a></code><code class="R">(<code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">e</code>)</code><i class="p"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#methods(javax.lang.model.element.TypeElement)">methods</a></code><code class="R">(<code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>)</code><i class="p"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#methods(javax.lang.model.element.TypeElement,java.util.function.Predicate)">methods</a></code><code class="R">(<code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>, <code><a aria-label="java.util.function.Predicate 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code><code class="parameterName">filter</code>)</code><i class="p"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#methodsInHierarchy(javax.lang.model.element.TypeElement,java.util.function.Predicate)">methodsInHierarchy</a></code><code class="R">(<code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">e</code>, <code><a aria-label="java.util.function.Predicate 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/function/Predicate.html">Predicate</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code><code class="parameterName">filter</code>)</code><i class="p"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code></code></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#same(javax.lang.model.type.TypeMirror,java.lang.Class)">same</a></code><code class="R">(<code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>, <code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">clazz</code>)</code><i class="p"><code>boolean</code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#same(javax.lang.model.type.TypeMirror,javax.lang.model.element.Element)">same</a></code><code class="R">(<code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>, <code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">element</code>)</code><i class="p"><code>boolean</code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#same(javax.lang.model.type.TypeMirror,javax.lang.model.type.TypeMirror)">same</a></code><code class="R">(<code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">type</code>, <code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code><code class="parameterName">other</code>)</code><i class="p"><code>boolean</code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#doc(javax.lang.model.element.Element)">doc</a></code><code class="R">(<code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code>)</code><i class="p"><code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#typeParameter(javax.lang.model.element.TypeElement,java.lang.Class)">typeParameter</a></code><code class="R">(<code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">target</code>, <code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">type</code>)</code><i class="p"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#typeParameter(javax.lang.model.element.TypeElement,javax.lang.model.type.DeclaredType)">typeParameter</a></code><code class="R">(<code><a aria-label="javax.lang.model.element.TypeElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/TypeElement.html">TypeElement</a></code><code class="parameterName">target</code>, <code><a aria-label="javax.lang.model.type.DeclaredType 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">type</code>)</code><i class="p"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#typeParameter(javax.lang.model.type.DeclaredType,java.lang.Class)">typeParameter</a></code><code class="R">(<code><a aria-label="javax.lang.model.type.DeclaredType 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">target</code>, <code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a></code><code class="parameterName">type</code>)</code><i class="p"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#typeParameter(javax.lang.model.type.DeclaredType,javax.lang.model.type.DeclaredType)">typeParameter</a></code><code class="R">(<code><a aria-label="javax.lang.model.type.DeclaredType 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">target</code>, <code><a aria-label="javax.lang.model.type.DeclaredType 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code><code class="parameterName">type</code>)</code><i class="p"><code><a aria-label="java.util.List 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/List.html">List</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="javax.lang.model.type.TypeMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html">TypeMirror</a></code></code></code></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#annotation(javax.lang.model.element.Element,java.lang.Class)">annotation</a></code><code class="R">(<code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code>, <code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="java.lang.annotation.Annotation 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code class="parameterName">annotationType</code>)</code><i class="p"><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a aria-label="javax.lang.model.element.AnnotationMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code></code></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#annotationValues(javax.lang.model.element.AnnotationMirror)">annotationValues</a></code><code class="R">(<code><a aria-label="javax.lang.model.element.AnnotationMirror 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationMirror.html">AnnotationMirror</a></code><code class="parameterName">annotation</code>)</code><i class="p"><code><a aria-label="java.util.Map 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Map.html">Map</a><code class="parameters"><code><a aria-label="javax.lang.model.element.ExecutableElement 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html">ExecutableElement</a></code>, <code><a aria-label="javax.lang.model.element.AnnotationValue 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationValue.html">AnnotationValue</a></code></code></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#annotationValue(javax.lang.model.element.Element,java.lang.Class,java.lang.String)">annotationValue</a></code><code class="R">(<code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code>, <code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="java.lang.annotation.Annotation 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code class="parameterName">annotationType</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="p"><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a aria-label="javax.lang.model.element.AnnotationValue 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/AnnotationValue.html">AnnotationValue</a></code></code></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#annotationClassValue(javax.lang.model.element.Element,java.lang.Class,java.lang.String)">annotationClassValue</a></code><code class="R">(<code><a aria-label="javax.lang.model.element.Element 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/element/Element.html">Element</a></code><code class="parameterName">e</code>, <code><a aria-label="java.lang.Class 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/Class.html">Class</a><code class="parameters"><code>?</code><code class="extends"><code><a aria-label="java.lang.annotation.Annotation 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/annotation/Annotation.html">Annotation</a></code></code></code></code><code class="parameterName">annotationType</code>, <code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">name</code>)</code><i class="p"><code><a aria-label="java.util.Optional 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/util/Optional.html">Optional</a><code class="parameters"><code><a aria-label="javax.lang.model.type.DeclaredType 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.compiler/javax/lang/model/type/DeclaredType.html">DeclaredType</a></code></code></code></i></li>
+					<li class="Y"><i class="STATIC PUBLIC"></i><code><a href="api/apty.Apty.html#log(java.lang.String)">log</a></code><code class="R">(<code><a aria-label="java.lang.String 🚀" href="https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/String.html">String</a></code><code class="parameterName">message</code>)</code><i class="p"><code>void</code></i></li>
+				</ul>
+			</div>
+		</aside>
+		<footer class="a"/>
 	</body>
+	<script src="root.js"></script>
+	<script src="main.js" type="module"></script>
 </html>
