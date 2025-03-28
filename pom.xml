@@ -72,21 +72,21 @@ Order order = Order.with
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>antibug</artifactId>
-			<version>1.12.2</version>
+			<version>1.13.0</version>
 			<scope>test</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>bee</artifactId>
-			<version>0.70.0</version>
+			<version>0.74.0</version>
 			<scope>test</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>33.4.5-jre</version>
+			<version>33.4.6-jre</version>
 			<scope>test</scope>
 			<exclusions/>
 		</dependency>
