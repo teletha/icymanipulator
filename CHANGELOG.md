@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.3](https://github.com/teletha/icymanipulator/compare/v1.6.2...1.6.3) (2025-04-27)
+
+
+### Bug Fixes
+
+* optional type can't overload property ([dd5fd9c](https://github.com/teletha/icymanipulator/commit/dd5fd9c54b3168ee3bf1f32ef7df9fba8b146473))
+
 ## [1.6.2](https://github.com/teletha/icymanipulator/compare/v1.6.1...v1.6.2) (2024-11-19)
 
 
