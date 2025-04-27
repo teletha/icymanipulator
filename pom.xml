@@ -49,7 +49,7 @@ The Builder pattern enables validation before the object creation, allowing you 
 Normally, the Builder pattern used to create Immutable objects would look something like this.
 ```java
 Order order = Order.builder()
-    .setProduct(&#34;Laptop&#34;)
+    .setProduct(&quot;Laptop&quot;)
     .setQuantity(2)
     .setPrice(999.99)
     .build();
@@ -58,7 +58,7 @@ Order order = Order.builder()
 If we were to write similar code in the Builderless Builder pattern, it would look like this.
 ```java
 Order order = Order.with
-    .product(&#34;Laptop&#34;)
+    .product(&quot;Laptop&quot;)
     .quantity(2)
     .price(999.99);
 ```</description>
@@ -72,21 +72,21 @@ Order order = Order.with
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>antibug</artifactId>
-			<version>1.13.0</version>
+			<version>1.13.1</version>
 			<scope>test</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>com.github.teletha</groupId>
 			<artifactId>bee</artifactId>
-			<version>0.74.0</version>
+			<version>0.77.1</version>
 			<scope>test</scope>
 			<exclusions/>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>33.4.6-jre</version>
+			<version>33.4.8-jre</version>
 			<scope>test</scope>
 			<exclusions/>
 		</dependency>
