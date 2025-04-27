@@ -24,7 +24,25 @@ class VariableOverloadTest {
 
     @Test
     void overload() {
+        VariableOverload o = VariableOverload.with.num(1);
+        assert o.num.is("1");
+    }
+
+    @Test
+    void noParam() {
         VariableOverload o = VariableOverload.with.one();
+        assert o.num.is("1");
+    }
+
+    @Test
+    void createOverload() {
+        VariableOverload o = VariableOverload.with.create().num(1);
+        assert o.num.is("1");
+    }
+
+    @Test
+    void createNoParam() {
+        VariableOverload o = VariableOverload.with.create().one();
         assert o.num.is("1");
     }
 }

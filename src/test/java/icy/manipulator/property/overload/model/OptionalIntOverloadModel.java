@@ -9,22 +9,23 @@
  */
 package icy.manipulator.property.overload.model;
 
+import java.util.OptionalInt;
+
 import icy.manipulator.Icy;
-import kiss.Variable;
 
 @Icy
-public abstract class VariableOverloadModel {
+public abstract class OptionalIntOverloadModel {
 
     @Icy.Property
-    public abstract Variable<String> num();
+    public abstract OptionalInt num();
 
     @Icy.Overload("num")
-    private Variable<String> num(int value) {
-        return Variable.of(String.valueOf(value));
+    private OptionalInt num(String value) {
+        return OptionalInt.of(Integer.parseInt(value));
     }
 
     @Icy.Overload("num")
-    private Variable<String> one() {
-        return Variable.of("1");
+    private OptionalInt one() {
+        return OptionalInt.of(1);
     }
 }

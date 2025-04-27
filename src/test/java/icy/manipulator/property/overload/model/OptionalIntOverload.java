@@ -1,6 +1,6 @@
 package icy.manipulator.property.overload.model;
 
-import icy.manipulator.property.overload.model.VariableOverload;
+import icy.manipulator.property.overload.model.OptionalIntOverload;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
@@ -11,14 +11,14 @@ import java.lang.invoke.MethodHandles;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
-import kiss.Variable;
+import java.util.OptionalInt;
 
 /**
- * Generated model for {@link VariableOverloadModel}.
+ * Generated model for {@link OptionalIntOverloadModel}.
  * 
  * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
-public class VariableOverload extends VariableOverloadModel {
+public class OptionalIntOverload extends OptionalIntOverloadModel {
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -41,7 +41,7 @@ public class VariableOverload extends VariableOverloadModel {
      */
     private static final MethodHandle invoker(String name, Class... parameterTypes)  {
         try {
-            Method method = icy.manipulator.property.overload.model.VariableOverloadModel.class.getDeclaredMethod(name, parameterTypes);
+            Method method = icy.manipulator.property.overload.model.OptionalIntOverloadModel.class.getDeclaredMethod(name, parameterTypes);
             method.setAccessible(true);
             return MethodHandles.lookup().unreflect(method);
         } catch (Throwable e) {
@@ -50,7 +50,7 @@ public class VariableOverload extends VariableOverloadModel {
     }
 
     /** The overload or intercept method invoker. */
-    private static final MethodHandle num$101354429= invoker("num", int.class);
+    private static final MethodHandle num$927011984= invoker("num", String.class);
 
     /** The overload or intercept method invoker. */
     private static final MethodHandle one$1= invoker("one");
@@ -63,7 +63,7 @@ public class VariableOverload extends VariableOverloadModel {
      */
     private static final Field updater(String name)  {
         try {
-            Field field = VariableOverload.class.getDeclaredField(name);
+            Field field = OptionalIntOverload.class.getDeclaredField(name);
             field.setAccessible(true);
             return field;
         } catch (Throwable e) {
@@ -92,13 +92,13 @@ public class VariableOverload extends VariableOverloadModel {
     private static final MethodHandle numUpdater = handler(numField);
 
     /** The exposed property. */
-    public final Variable<String> num;
+    public final OptionalInt num;
 
     /**
      * HIDE CONSTRUCTOR
      */
-    protected VariableOverload() {
-        this.num = Variable.empty();
+    protected OptionalIntOverload() {
+        this.num = OptionalInt.empty();
     }
 
     /**
@@ -107,7 +107,7 @@ public class VariableOverload extends VariableOverloadModel {
      * @return A value of num property.
      */
     @Override
-    public final Variable<String> num() {
+    public final OptionalInt num() {
         return this.num;
     }
 
@@ -117,7 +117,7 @@ public class VariableOverload extends VariableOverloadModel {
      * @return A value of num property.
      */
     @SuppressWarnings("unused")
-    private final Variable<String> getNum() {
+    private final OptionalInt getNum() {
         return this.num;
     }
 
@@ -126,9 +126,9 @@ public class VariableOverload extends VariableOverloadModel {
      *
      * @paran value A new value of num property to assign.
      */
-    private final void setNum(Variable<String> value) {
+    private final void setNum(OptionalInt value) {
         if (value == null) {
-            value = Variable.empty();
+            value = OptionalInt.empty();
         }
         try {
             numUpdater.invoke(this, value);
@@ -145,7 +145,7 @@ public class VariableOverload extends VariableOverloadModel {
      */
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder("VariableOverload [");
+        StringBuilder builder = new StringBuilder("OptionalIntOverload [");
         builder.append("num=").append(num).append("]");
         return builder.toString();
     }
@@ -167,11 +167,11 @@ public class VariableOverload extends VariableOverloadModel {
      */
     @Override
     public boolean equals(Object o) {
-        if (o instanceof VariableOverload == false) {
+        if (o instanceof OptionalIntOverload == false) {
             return false;
         }
 
-        VariableOverload other = (VariableOverload) o;
+        OptionalIntOverload other = (OptionalIntOverload) o;
         if (!Objects.equals(num, other.num)) return false;
         return true;
     }
@@ -180,12 +180,12 @@ public class VariableOverload extends VariableOverloadModel {
     public static final  Ìnstantiator<?> with = new Ìnstantiator();
 
     /**
-     * Namespace for {@link VariableOverload}  builder methods.
+     * Namespace for {@link OptionalIntOverload}  builder methods.
      */
-    public static class Ìnstantiator<Self extends VariableOverload & ÅssignableÅrbitrary<Self>> {
+    public static class Ìnstantiator<Self extends OptionalIntOverload & ÅssignableÅrbitrary<Self>> {
 
         /**
-         * Create initialized {@link VariableOverload}.
+         * Create initialized {@link OptionalIntOverload}.
          *
          * @return A initialized model.
          */
@@ -194,47 +194,47 @@ public class VariableOverload extends VariableOverloadModel {
         }
 
         /**
-         * Create initialized {@link VariableOverload} with num property.
+         * Create initialized {@link OptionalIntOverload} with num property.
          *
          * @param value A value to assign.
          * @return A initialized model.
          */
-        public Self num(Variable<String> value) {
+        public Self num(OptionalInt value) {
             return create().num(value);
         }
 
         /**
-         * Create initialized {@link VariableOverload} with num property.
-         *
-         * @param value A value to assign.
-         * @return A initialized model.
-         */
-        public Self num(String value) {
-            return num(Variable.of(value));
-        }
-
-        /**
-         * Create initialized {@link VariableOverload} with num property.
+         * Create initialized {@link OptionalIntOverload} with num property.
          *
          * @param value A value to assign.
          * @return A initialized model.
          */
         public Self num(int value) {
+            return num(OptionalInt.of(value));
+        }
+
+        /**
+         * Create initialized {@link OptionalIntOverload} with num property.
+         *
+         * @param value A value to assign.
+         * @return A initialized model.
+         */
+        public Self num(String value) {
             try {
-                return num((Variable<String>) num$101354429.invoke(create(), value));
+                return num((OptionalInt) num$927011984.invoke(create(), value));
             } catch (Throwable e) {
                 throw quiet(e);
             }
         }
 
         /**
-         * Create initialized {@link VariableOverload} with num property.
+         * Create initialized {@link OptionalIntOverload} with num property.
          *
          * @return A initialized model.
          */
         public Self one() {
             try {
-                return num((Variable<String>) one$1.invoke(create()));
+                return num((OptionalInt) one$1.invoke(create()));
             } catch (Throwable e) {
                 throw quiet(e);
             }
@@ -244,7 +244,7 @@ public class VariableOverload extends VariableOverloadModel {
     /**
      * Property assignment API.
      */
-    public static interface ÅssignableÅrbitrary<Next extends VariableOverload> {
+    public static interface ÅssignableÅrbitrary<Next extends OptionalIntOverload> {
 
         /**
          * Assign num property.
@@ -252,8 +252,8 @@ public class VariableOverload extends VariableOverloadModel {
          * @param value A new value to assign.
          * @return The next assignable model.
          */
-        default Next num(Variable<? extends String> value) {
-            ((VariableOverload) this).setNum((kiss.Variable)value);
+        default Next num(OptionalInt value) {
+            ((OptionalIntOverload) this).setNum(value);
             return (Next) this;
         }
 
@@ -262,8 +262,8 @@ public class VariableOverload extends VariableOverloadModel {
          * 
          * @return The next assignable model.
          */
-        default Next num(String value) {
-            return num(Variable.of(value));
+        default Next num(int value) {
+            return num(OptionalInt.of(value));
         }
 
         /**
@@ -271,9 +271,9 @@ public class VariableOverload extends VariableOverloadModel {
          * 
          * @return The next assignable model.
          */
-        default Next num(int value) {
+        default Next num(String value) {
             try {
-                return num((Variable<String>) num$101354429.invoke(this, value));
+                return num((OptionalInt) num$927011984.invoke(this, value));
             } catch (Throwable e) {
                 throw quiet(e);
             }
@@ -286,7 +286,7 @@ public class VariableOverload extends VariableOverloadModel {
          */
         default Next one() {
             try {
-                return num((Variable<String>) one$1.invoke(this));
+                return num((OptionalInt) one$1.invoke(this));
             } catch (Throwable e) {
                 throw quiet(e);
             }
@@ -302,7 +302,7 @@ public class VariableOverload extends VariableOverloadModel {
     /**
      * Mutable Model.
      */
-    private static final class Åssignable extends VariableOverload implements ÅssignableAll, ÅssignableÅrbitrary {
+    private static final class Åssignable extends OptionalIntOverload implements ÅssignableAll, ÅssignableÅrbitrary {
     }
 
     /**

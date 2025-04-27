@@ -716,7 +716,7 @@ public class IcyManipulator extends AptyProcessor {
                                 write(" */");
                             });
                             write("public Self ", m, () -> {
-                                overload(p, m);
+                                overload(p, m, true);
                             });
                         }
                     }
@@ -795,7 +795,7 @@ public class IcyManipulator extends AptyProcessor {
                     write(" */");
                 });
                 write("default Next ", m, () -> {
-                    overload(p, m);
+                    overload(p, m, false);
                 });
             }
         }
@@ -806,32 +806,28 @@ public class IcyManipulator extends AptyProcessor {
          * @param p A property info.
          * @param m A method info.
          */
-        private void overload(PropertyInfo p, MethodLike m) {
-            OptionalSupport.by(p.type).filter(sup -> {
-                if (m.paramTypes.size() == 1 && m.returnType.variables.size() == 1) {
-                    return m.paramTypes.get(0).equals(m.returnType.variables.get(0));
-                } else {
-                    return false;
-                }
-            }).ifPresentOrElse(s -> {
-                write("return ", p.name, "(", s.type, ".", s.someMethod, "(", m.paramNames.get(0), "));");
-            }, () -> {
-                p.type.getEnumConstants().filter(name -> name.equalsIgnoreCase(m.name)).findFirst().ifPresentOrElse(name -> {
-                    write("return ", p.name, "(", p.type, ".", name, ");");
-                }, () -> {
-                    if (m.code != null) {
-                        write(m.code);
-                    } else {
-                        List<String> names = m.withFirst(Type.of(Object.class), "this").paramNames;
+        private void overload(PropertyInfo p, MethodLike m, boolean builder) {
+            OptionalSupport.by(p.type)
+                    .filter(s -> m.paramTypes.size() == 1 && s.extractor.apply(p).equals(m.paramTypes.get(0)))
+                    .ifPresentOrElse(s -> {
+                        write("return ", p.name, "(", s.type, ".", s.someMethod, "(", m.paramNames.get(0), "));");
+                    }, () -> {
+                        p.type.getEnumConstants().filter(name -> name.equalsIgnoreCase(m.name)).findFirst().ifPresentOrElse(name -> {
+                            write("return ", p.name, "(", p.type, ".", name, ");");
+                        }, () -> {
+                            if (m.code != null) {
+                                write(m.code);
+                            } else {
+                                List<String> names = m.withFirst(Type.of(Object.class), builder ? "create()" : "this").paramNames;
 
-                        writeTry(() -> {
-                            write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", names, "));");
-                        }, Throwable.class, e -> {
-                            write("throw quiet(", e, ");");
+                                writeTry(() -> {
+                                    write("return ", p.name, "((", m.returnType, ") ", m.id(), ".invoke(", names, "));");
+                                }, Throwable.class, e -> {
+                                    write("throw quiet(", e, ");");
+                                });
+                            }
                         });
-                    }
-                });
-            });
+                    });
         }
 
         /**
