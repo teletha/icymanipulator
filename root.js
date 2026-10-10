@@ -9,150 +9,108 @@ const root = {
 	],
 	"types": [
 		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "AnnotationProcessing",
-			"packageName": "apty",
-			"type": "Functional"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Apty",
-			"packageName": "apty",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "AptyProcessor",
-			"packageName": "apty",
-			"type": "AbstractClass"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "ClassLike",
-			"packageName": "apty",
-			"type": "Interface"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Codable",
-			"packageName": "apty.code",
-			"type": "Functional"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Coder",
-			"packageName": "apty.code",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "CustomizerInfo",
-			"packageName": "icy.manipulator",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Fail",
-			"packageName": "apty",
-			"type": "Exception"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Icy",
-			"packageName": "icy.manipulator",
-			"type": "Annotation"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Icy.Intercept",
-			"packageName": "icy.manipulator",
-			"type": "Annotation"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Icy.Overload",
-			"packageName": "icy.manipulator",
-			"type": "Annotation"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Icy.Property",
-			"packageName": "icy.manipulator",
-			"type": "Annotation"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "IcyManipulator",
-			"packageName": "icy.manipulator",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Lists",
-			"packageName": "icy.manipulator.util",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "MethodLike",
-			"packageName": "apty",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "MethodSynthesizer",
-			"packageName": "icy.manipulator",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "ModelInfo",
-			"packageName": "icy.manipulator",
-			"type": "Class"
-		},
-		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
 			"name": "Modifiers",
 			"packageName": "apty",
 			"type": "Class"
 		},
 		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
+			"name": "AptyProcessor",
+			"packageName": "apty",
+			"type": "AbstractClass"
+		},
+		{
+			"name": "Type",
+			"packageName": "apty.code",
+			"type": "Class"
+		},
+		{
+			"name": "Coder",
+			"packageName": "apty.code",
+			"type": "Class"
+		},
+		{
+			"name": "Codable",
+			"packageName": "apty.code",
+			"type": "Functional"
+		},
+		{
+			"name": "Fail",
+			"packageName": "apty",
+			"type": "Exception"
+		},
+		{
+			"name": "Apty",
+			"packageName": "apty",
+			"type": "Class"
+		},
+		{
+			"name": "AnnotationProcessing",
+			"packageName": "apty",
+			"type": "Functional"
+		},
+		{
+			"name": "ClassLike",
+			"packageName": "apty",
+			"type": "Interface"
+		},
+		{
+			"name": "MethodLike",
+			"packageName": "apty",
+			"type": "Class"
+		},
+		{
+			"name": "Icy",
+			"packageName": "icy.manipulator",
+			"type": "Annotation"
+		},
+		{
+			"name": "Icy.Overload",
+			"packageName": "icy.manipulator",
+			"type": "Annotation"
+		},
+		{
+			"name": "Icy.Intercept",
+			"packageName": "icy.manipulator",
+			"type": "Annotation"
+		},
+		{
+			"name": "Icy.Property",
+			"packageName": "icy.manipulator",
+			"type": "Annotation"
+		},
+		{
+			"name": "CustomizerInfo",
+			"packageName": "icy.manipulator",
+			"type": "Class"
+		},
+		{
+			"name": "IcyManipulator",
+			"packageName": "icy.manipulator",
+			"type": "Class"
+		},
+		{
+			"name": "ModelInfo",
+			"packageName": "icy.manipulator",
+			"type": "Class"
+		},
+		{
+			"name": "MethodSynthesizer",
+			"packageName": "icy.manipulator",
+			"type": "Class"
+		},
+		{
 			"name": "PropertyInfo",
 			"packageName": "icy.manipulator",
 			"type": "Class"
 		},
 		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Strings",
+			"name": "Lists",
 			"packageName": "icy.manipulator.util",
 			"type": "Class"
 		},
 		{
-			"modifiers": {
-				"#": "java.util.Collections$UnmodifiableSet",},
-			"name": "Type",
-			"packageName": "apty.code",
+			"name": "Strings",
+			"packageName": "icy.manipulator.util",
 			"type": "Class"
 		}
 	]
