@@ -15,7 +15,7 @@ import javax.lang.model.SourceVersion;
 public class Project extends bee.api.Project {
 
     {
-        product("com.github.teletha", "icymanipulator", ref("version.txt"));
+        product("io.github.teletha", "icymanipulator", ref("version.txt"));
         license(MIT);
 
         describe("""
@@ -80,8 +80,8 @@ public class Project extends bee.api.Project {
 
         require(SourceVersion.latest(), SourceVersion.RELEASE_21);
 
-        require("com.github.teletha", "antibug").atTest();
-        require("com.github.teletha", "bee").atTest();
+        require("io.github.teletha", "antibug").atTest();
+        require("io.github.teletha", "bee").atTest();
         require("com.google.guava", "guava").atTest();
 
         versionControlSystem("https://github.com/Teletha/IcyManipulator");
