@@ -78,7 +78,7 @@ public class Project extends bee.api.Project {
                 ```
                 """);
 
-        require(SourceVersion.latest(), SourceVersion.RELEASE_21);
+        require(SourceVersion.latest(), SourceVersion.RELEASE_25);
 
         require("io.github.teletha", "antibug").atTest();
         require("io.github.teletha", "bee").atTest();
