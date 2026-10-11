@@ -5,11 +5,6 @@ import icy.manipulator.property.extend.model.MixedRequired;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
-import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.Objects;
 
 /**
@@ -19,56 +14,8 @@ import java.util.Objects;
  */
 public class MixedRequired extends MixedRequiredModel {
 
-    /**
-     * Deceive complier that the specified checked exception is unchecked exception.
-     *
-     * @param <T> A dummy type for {@link RuntimeException}.
-     * @param throwable Any error.
-     * @return A runtime error.
-     * @throws T Dummy error to deceive compiler.
-     */
-    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
-        throw (T) throwable;
-    }
-
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = MixedRequired.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field zipField = updater("zip");
-
-    /** The fast final property updater. */
-    private static final MethodHandle zipUpdater = handler(zipField);
-
-    /** The exposed property. */
-    public final String zip;
+    /** The property. */
+    protected String zip;
 
     /**
      * HIDE CONSTRUCTOR
@@ -106,12 +53,7 @@ public class MixedRequired extends MixedRequiredModel {
         if (value == null) {
             throw new IllegalArgumentException("The zip property requires non-null value.");
         }
-        try {
-            zipUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.zip = value;
     }
 
     /**

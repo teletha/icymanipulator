@@ -27,14 +27,14 @@ class OverloadTest {
     @Test
     void overload() {
         Overload o = Overload.with.sizeByText("12").date(2015, 7, 12);
-        assert o.size.intValue() == 12;
-        assert o.date.isEqual(LocalDate.of(2015, 7, 12));
+        assert o.size().intValue() == 12;
+        assert o.date().isEqual(LocalDate.of(2015, 7, 12));
     }
 
     @Test
     void overloadNoParameter() {
         Overload o = Overload.with.size(12).today();
-        assert o.size.intValue() == 12;
-        assert o.date.isEqual(LocalDate.now());
+        assert o.size().intValue() == 12;
+        assert o.date().isEqual(LocalDate.now());
     }
 }

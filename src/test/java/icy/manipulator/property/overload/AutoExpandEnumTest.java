@@ -28,14 +28,14 @@ class AutoExpandEnumTest {
     @Test
     void normal() {
         AutoExpandEnum o = AutoExpandEnum.with.answer(Answer.Yes).policy(RetentionPolicy.CLASS);
-        assert o.answer == Answer.Yes;
-        assert o.policy == RetentionPolicy.CLASS;
+        assert o.answer() == Answer.Yes;
+        assert o.policy() == RetentionPolicy.CLASS;
     }
 
     @Test
     void overloadAutomatically() {
         AutoExpandEnum o = AutoExpandEnum.with.no().runtime();
-        assert o.answer == Answer.No;
-        assert o.policy == RetentionPolicy.RUNTIME;
+        assert o.answer() == Answer.No;
+        assert o.policy() == RetentionPolicy.RUNTIME;
     }
 }

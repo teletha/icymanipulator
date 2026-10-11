@@ -25,23 +25,23 @@ class CopyTest {
     @Test
     void copy() {
         Copy original = Copy.with.name("name").age(15);
-        assert original.name.equals("name");
-        assert original.age == 15;
+        assert original.name().equals("name");
+        assert original.age() == 15;
 
         Copy copied = original.withAge(17);
-        assert copied.name.equals("name");
-        assert copied.age == 17;
+        assert copied.name().equals("name");
+        assert copied.age() == 17;
 
         assert original != copied;
-        assert original.name.equals("name");
-        assert original.age == 15;
+        assert original.name().equals("name");
+        assert original.age() == 15;
     }
 
     @Test
     void same() {
         Copy original = Copy.with.name("name").age(15);
-        assert original.name.equals("name");
-        assert original.age == 15;
+        assert original.name().equals("name");
+        assert original.age() == 15;
 
         Copy copied = original.withAge(15);
         assert original == copied;

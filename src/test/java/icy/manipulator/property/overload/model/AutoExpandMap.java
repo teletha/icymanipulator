@@ -7,11 +7,6 @@ import java.lang.Number;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
-import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -23,74 +18,14 @@ import java.util.function.Supplier;
  */
 public class AutoExpandMap extends AutoExpandMapModel {
 
-    /**
-     * Deceive complier that the specified checked exception is unchecked exception.
-     *
-     * @param <T> A dummy type for {@link RuntimeException}.
-     * @param throwable Any error.
-     * @return A runtime error.
-     * @throws T Dummy error to deceive compiler.
-     */
-    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
-        throw (T) throwable;
-    }
+    /** The property. */
+    protected Map<String, Integer> values;
 
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = AutoExpandMap.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
+    /** The property. */
+    protected Map<String, Supplier<String>> generics;
 
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field valuesField = updater("values");
-
-    /** The fast final property updater. */
-    private static final MethodHandle valuesUpdater = handler(valuesField);
-
-    /** The final property updater. */
-    private static final Field genericsField = updater("generics");
-
-    /** The fast final property updater. */
-    private static final MethodHandle genericsUpdater = handler(genericsField);
-
-    /** The final property updater. */
-    private static final Field upperBoundableField = updater("upperBoundable");
-
-    /** The fast final property updater. */
-    private static final MethodHandle upperBoundableUpdater = handler(upperBoundableField);
-
-    /** The exposed property. */
-    public final Map<String, Integer> values;
-
-    /** The exposed property. */
-    public final Map<String, Supplier<String>> generics;
-
-    /** The exposed property. */
-    public final Map<CharSequence, Number> upperBoundable;
+    /** The property. */
+    protected Map<CharSequence, Number> upperBoundable;
 
     /**
      * HIDE CONSTRUCTOR
@@ -130,12 +65,7 @@ public class AutoExpandMap extends AutoExpandMapModel {
         if (value == null) {
             throw new IllegalArgumentException("The values property requires non-null value.");
         }
-        try {
-            valuesUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.values = value;
     }
 
     /**
@@ -167,12 +97,7 @@ public class AutoExpandMap extends AutoExpandMapModel {
         if (value == null) {
             value = super.generics();
         }
-        try {
-            genericsUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.generics = value;
     }
 
     /**
@@ -204,12 +129,7 @@ public class AutoExpandMap extends AutoExpandMapModel {
         if (value == null) {
             value = super.upperBoundable();
         }
-        try {
-            upperBoundableUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.upperBoundable = value;
     }
 
     /**

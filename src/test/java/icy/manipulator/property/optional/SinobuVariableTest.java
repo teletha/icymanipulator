@@ -25,6 +25,6 @@ class SinobuVariableTest {
     @Test
     void property() {
         SinobuVariable o = SinobuVariable.with.value("value");
-        assert o.value.get().equals("value");
+        assert o.value().get().equals("value");
     }
 }

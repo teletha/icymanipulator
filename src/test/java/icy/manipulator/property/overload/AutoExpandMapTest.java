@@ -27,18 +27,18 @@ class AutoExpandMapTest {
     @Test
     void autoExpand() {
         AutoExpandMap o = AutoExpandMap.with.values("one", 1, "two", 2, "three", 3, "four", 4, "five", 5);
-        assert o.values.get("one") == 1;
-        assert o.values.get("two") == 2;
-        assert o.values.get("three") == 3;
-        assert o.values.get("four") == 4;
-        assert o.values.get("five") == 5;
+        assert o.values().get("one") == 1;
+        assert o.values().get("two") == 2;
+        assert o.values().get("three") == 3;
+        assert o.values().get("four") == 4;
+        assert o.values().get("five") == 5;
     }
 
     @Test
     void autoExpandWithGenerics() {
         AutoExpandMap o = AutoExpandMap.with.values(Map.of()).generics("one", () -> "1", "two", () -> "2");
-        assert o.generics.get("one").get().equals("1");
-        assert o.generics.get("two").get().equals("2");
+        assert o.generics().get("one").get().equals("1");
+        assert o.generics().get("two").get().equals("2");
     }
 
     @Test
@@ -46,8 +46,8 @@ class AutoExpandMapTest {
         Map<String, Integer> map = Map.of("one", 1, "two", 2, "three", 3);
 
         AutoExpandMap o = AutoExpandMap.with.values(Map.of()).upperBoundable(map);
-        assert o.upperBoundable.get("one").intValue() == 1;
-        assert o.upperBoundable.get("two").intValue() == 2;
-        assert o.upperBoundable.get("three").intValue() == 3;
+        assert o.upperBoundable().get("one").intValue() == 1;
+        assert o.upperBoundable().get("two").intValue() == 2;
+        assert o.upperBoundable().get("three").intValue() == 3;
     }
 }

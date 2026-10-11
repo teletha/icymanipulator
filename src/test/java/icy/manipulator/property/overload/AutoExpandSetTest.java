@@ -27,15 +27,15 @@ class AutoExpandSetTest {
     @Test
     void autoExpand() {
         AutoExpandSet o = AutoExpandSet.with.values("one", "two", "three");
-        assert o.values.contains("one");
-        assert o.values.contains("two");
-        assert o.values.contains("three");
+        assert o.values().contains("one");
+        assert o.values().contains("two");
+        assert o.values().contains("three");
     }
 
     @Test
     void autoExpandWithGenerics() {
         AutoExpandSet o = AutoExpandSet.with.values(Set.of()).generics(() -> "one");
-        assert o.generics.iterator().next().get().equals("one");
+        assert o.generics().iterator().next().get().equals("one");
     }
 
     @Test
@@ -43,8 +43,8 @@ class AutoExpandSetTest {
         Set<String> set = Set.of("a", "b", "c");
 
         AutoExpandSet o = AutoExpandSet.with.values(Set.of()).upperBoundable(set);
-        assert o.upperBoundable.contains("a");
-        assert o.upperBoundable.contains("b");
-        assert o.upperBoundable.contains("c");
+        assert o.upperBoundable().contains("a");
+        assert o.upperBoundable().contains("b");
+        assert o.upperBoundable().contains("c");
     }
 }

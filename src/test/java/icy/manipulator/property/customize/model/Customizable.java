@@ -4,11 +4,6 @@ import icy.manipulator.property.customize.model.Customizable;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
-import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.Objects;
 import java.util.function.Supplier;
 
@@ -19,62 +14,8 @@ import java.util.function.Supplier;
  */
 public class Customizable extends CustomizableModel {
 
-    /**
-     * Deceive complier that the specified checked exception is unchecked exception.
-     *
-     * @param <T> A dummy type for {@link RuntimeException}.
-     * @param throwable Any error.
-     * @return A runtime error.
-     * @throws T Dummy error to deceive compiler.
-     */
-    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
-        throw (T) throwable;
-    }
-
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = Customizable.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field nameField = updater("name");
-
-    /** The fast final property updater. */
-    private static final MethodHandle nameUpdater = handler(nameField);
-
-    /** The final property updater. */
-    private static final Field valueField = updater("value");
-
-    /** The fast final property updater. */
-    private static final MethodHandle valueUpdater = handler(valueField);
-
-    /** The exposed property. */
-    public final String name;
+    /** The property. */
+    protected String name;
 
     /** The property customizer. */
     private final Customizer<String> nameCustomizer = new icy.manipulator.property.customize.model.CustomizableModel.Customizer<String>() {
@@ -85,8 +26,8 @@ public class Customizable extends CustomizableModel {
         }
     };
 
-    /** The exposed property. */
-    public final String value;
+    /** The property. */
+    protected String value;
 
     /** The property customizer. */
     private final SubCustomizer valueCustomizer = new icy.manipulator.property.customize.model.CustomizableModel.SubCustomizer() {
@@ -134,13 +75,8 @@ public class Customizable extends CustomizableModel {
         if (value == null) {
             throw new IllegalArgumentException("The name property requires non-null value.");
         }
-        try {
-            nameUpdater.invoke(this, value);
-            nameCustomizer.accept(this.name);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.name = value;
+        nameCustomizer.accept(this.name);
     }
 
     /**
@@ -199,13 +135,8 @@ public class Customizable extends CustomizableModel {
         if (value == null) {
             throw new IllegalArgumentException("The value property requires non-null value.");
         }
-        try {
-            valueUpdater.invoke(this, value);
-            valueCustomizer.accept(this.value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.value = value;
+        valueCustomizer.accept(this.value);
     }
 
     /**

@@ -25,24 +25,24 @@ class OptionalIntOverloadTest {
     @Test
     void overload() {
         OptionalIntOverload o = OptionalIntOverload.with.num("1");
-        assert o.num.getAsInt() == 1;
+        assert o.num().getAsInt() == 1;
     }
 
     @Test
     void noParam() {
         OptionalIntOverload o = OptionalIntOverload.with.one();
-        assert o.num.getAsInt() == 1;
+        assert o.num().getAsInt() == 1;
     }
 
     @Test
     void createOverload() {
         OptionalIntOverload o = OptionalIntOverload.with.create().num(1);
-        assert o.num.getAsInt() == 1;
+        assert o.num().getAsInt() == 1;
     }
 
     @Test
     void createNoParam() {
         OptionalIntOverload o = OptionalIntOverload.with.create().one();
-        assert o.num.getAsInt() == 1;
+        assert o.num().getAsInt() == 1;
     }
 }

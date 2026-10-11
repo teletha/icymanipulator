@@ -4,11 +4,6 @@ import icy.manipulator.property.base.model.Arbitrary;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
-import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.Objects;
 
 /**
@@ -18,68 +13,11 @@ import java.util.Objects;
  */
 public class Arbitrary extends ArbitraryModel {
 
-     /** Determines if the execution environment is a Native Image of GraalVM. */
-    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+    /** The property. */
+    protected int optionNum;
 
-    /**
-     * Deceive complier that the specified checked exception is unchecked exception.
-     *
-     * @param <T> A dummy type for {@link RuntimeException}.
-     * @param throwable Any error.
-     * @return A runtime error.
-     * @throws T Dummy error to deceive compiler.
-     */
-    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
-        throw (T) throwable;
-    }
-
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = Arbitrary.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field optionNumField = updater("optionNum");
-
-    /** The fast final property updater. */
-    private static final MethodHandle optionNumUpdater = handler(optionNumField);
-
-    /** The final property updater. */
-    private static final Field optionCommentField = updater("optionComment");
-
-    /** The fast final property updater. */
-    private static final MethodHandle optionCommentUpdater = handler(optionCommentField);
-
-    /** The exposed property. */
-    public final int optionNum;
-
-    /** The exposed property. */
-    public final String optionComment;
+    /** The property. */
+    protected String optionComment;
 
     /**
      * HIDE CONSTRUCTOR
@@ -115,16 +53,7 @@ public class Arbitrary extends ArbitraryModel {
      * @paran value A new value of optionNum property to assign.
      */
     private final void setOptionNum(int value) {
-        try {
-            if (NATIVE) {
-                optionNumField.setInt(this, (int) value);
-            } else {
-                optionNumUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.optionNum = value;
     }
 
     /**
@@ -156,12 +85,7 @@ public class Arbitrary extends ArbitraryModel {
         if (value == null) {
             value = super.optionComment();
         }
-        try {
-            optionCommentUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.optionComment = value;
     }
 
     /**

@@ -25,26 +25,26 @@ class CopySubTest {
     @Test
     void copy() {
         CopySub original = CopySub.with.name("name").age(15).address("address");
-        assert original.name.equals("name");
-        assert original.age == 15;
-        assert original.address.equals("address");
+        assert original.name().equals("name");
+        assert original.age() == 15;
+        assert original.address().equals("address");
 
         CopySub copied = original.withAge(17);
-        assert copied.name.equals("name");
-        assert copied.age == 17;
-        assert copied.address.equals("address");
+        assert copied.name().equals("name");
+        assert copied.age() == 17;
+        assert copied.address().equals("address");
 
         assert original != copied;
-        assert original.name.equals("name");
-        assert original.age == 15;
-        assert original.address.equals("address");
+        assert original.name().equals("name");
+        assert original.age() == 15;
+        assert original.address().equals("address");
     }
 
     @Test
     void same() {
         CopySub original = CopySub.with.name("name").age(15).address("address");
-        assert original.name.equals("name");
-        assert original.age == 15;
+        assert original.name().equals("name");
+        assert original.age() == 15;
 
         CopySub copied = original.withAge(15);
         assert original == copied;

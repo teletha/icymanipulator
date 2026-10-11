@@ -33,7 +33,7 @@ class PropertyVisibilityTest {
 
         Field field = PropertyVisibility.class.getDeclaredField("packagePrivateProperty");
         assert Modifier.isPublic(field.getModifiers()) == false;
-        assert Modifier.isProtected(field.getModifiers()) == false;
+        assert Modifier.isProtected(field.getModifiers()) == true;
         assert Modifier.isPrivate(field.getModifiers()) == false;
     }
 

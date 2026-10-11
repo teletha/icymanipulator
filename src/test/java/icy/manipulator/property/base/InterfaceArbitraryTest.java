@@ -25,9 +25,9 @@ class InterfaceArbitraryTest {
     @Test
     void property() {
         InterfaceArbitrary o = InterfaceArbitrary.with.create();
-        assert o.optional.equals("default");
+        assert o.optional().equals("default");
 
         o = InterfaceArbitrary.with.create().optional("assign");
-        assert o.optional.equals("assign");
+        assert o.optional().equals("assign");
     }
 }

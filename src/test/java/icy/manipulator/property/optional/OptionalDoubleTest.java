@@ -25,6 +25,6 @@ class OptionalDoubleTest {
     @Test
     void property() {
         OptionalDouble o = OptionalDouble.with.value(10);
-        assert o.value.getAsDouble() == 10;
+        assert o.value().getAsDouble() == 10;
     }
 }

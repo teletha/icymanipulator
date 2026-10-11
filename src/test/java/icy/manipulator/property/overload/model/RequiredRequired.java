@@ -5,10 +5,8 @@ import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.time.LocalTime;
@@ -53,44 +51,8 @@ public class RequiredRequired extends RequiredRequiredModel {
     /** The overload or intercept method invoker. */
     private static final MethodHandle time$1860699197= invoker("time", int.class, int.class, int.class);
 
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = RequiredRequired.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field timeField = updater("time");
-
-    /** The fast final property updater. */
-    private static final MethodHandle timeUpdater = handler(timeField);
-
-    /** The exposed property. */
-    public final LocalTime time;
+    /** The property. */
+    protected LocalTime time;
 
     /**
      * HIDE CONSTRUCTOR
@@ -128,12 +90,7 @@ public class RequiredRequired extends RequiredRequiredModel {
         if (value == null) {
             throw new IllegalArgumentException("The time property requires non-null value.");
         }
-        try {
-            timeUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.time = value;
     }
 
     /**

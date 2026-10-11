@@ -5,10 +5,8 @@ import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -19,9 +17,6 @@ import java.util.function.Consumer;
  * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
 public class MultiIntercepts extends MultiInterceptsModel {
-
-     /** Determines if the execution environment is a Native Image of GraalVM. */
-    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -58,53 +53,11 @@ public class MultiIntercepts extends MultiInterceptsModel {
     /** The overload or intercept method invoker. */
     private static final MethodHandle stringlize$1978323892= invoker("stringlize", int.class, Consumer.class);
 
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = MultiIntercepts.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
+    /** The property. */
+    protected int size;
 
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field sizeField = updater("size");
-
-    /** The fast final property updater. */
-    private static final MethodHandle sizeUpdater = handler(sizeField);
-
-    /** The final property updater. */
-    private static final Field valueField = updater("value");
-
-    /** The fast final property updater. */
-    private static final MethodHandle valueUpdater = handler(valueField);
-
-    /** The exposed property. */
-    public final int size;
-
-    /** The exposed property. */
-    public final String value;
+    /** The property. */
+    protected String value;
 
     /**
      * HIDE CONSTRUCTOR
@@ -141,12 +94,7 @@ public class MultiIntercepts extends MultiInterceptsModel {
      */
     private final void setSize(int value) {
         try {
-            if (NATIVE) {
-                sizeField.setInt(this, (int) stringlize$1978323892.invoke(this, checkLower$101354429.invoke(this, value), (Consumer<String>) this::setValue));
-            } else {
-                sizeUpdater.invoke(this, stringlize$1978323892.invoke(this, checkLower$101354429.invoke(this, value), (Consumer<String>) this::setValue));
-            }
-        } catch (UnsupportedOperationException e) {
+            this.size = (int) stringlize$1978323892.invoke(this, (int) checkLower$101354429.invoke(this, value), (Consumer<String>) this::setValue);
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -181,12 +129,7 @@ public class MultiIntercepts extends MultiInterceptsModel {
         if (value == null) {
             value = super.value();
         }
-        try {
-            valueUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.value = value;
     }
 
     /**

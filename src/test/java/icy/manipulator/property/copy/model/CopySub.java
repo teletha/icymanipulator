@@ -4,11 +4,6 @@ import icy.manipulator.property.copy.model.CopySub;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
-import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.Objects;
 
 /**
@@ -18,62 +13,23 @@ import java.util.Objects;
  */
 public class CopySub extends CopySubModel {
 
-    /**
-     * Deceive complier that the specified checked exception is unchecked exception.
-     *
-     * @param <T> A dummy type for {@link RuntimeException}.
-     * @param throwable Any error.
-     * @return A runtime error.
-     * @throws T Dummy error to deceive compiler.
-     */
-    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
-        throw (T) throwable;
-    }
-
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = CopySub.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field addressField = updater("address");
-
-    /** The fast final property updater. */
-    private static final MethodHandle addressUpdater = handler(addressField);
-
-    /** The exposed property. */
-    public final String address;
+    /** The property. */
+    protected String address;
 
     /**
      * HIDE CONSTRUCTOR
      */
     protected CopySub() {
         this.address = null;
+    }
+
+    /**
+     * Construct with all properties.
+     */
+    private CopySub(String name, int age, String address) {
+        this.name = name;
+        this.age = age;
+        this.address = address;
     }
 
     /**
@@ -105,12 +61,7 @@ public class CopySub extends CopySubModel {
         if (value == null) {
             throw new IllegalArgumentException("The address property requires non-null value.");
         }
-        try {
-            addressUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.address = value;
     }
 
     /**
@@ -165,7 +116,7 @@ public class CopySub extends CopySubModel {
         if (this.age == value) {
             return this;
         }
-        return with.name(this.name).age(value).address(this.address);
+        return new CopySub(this.name, value, this.address);
     }
 
     /** The singleton builder. */

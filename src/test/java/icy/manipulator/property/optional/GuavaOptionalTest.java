@@ -25,6 +25,6 @@ class GuavaOptionalTest {
     @Test
     void property() {
         GuavaOptional o = GuavaOptional.with.value("value");
-        assert o.value.get().equals("value");
+        assert o.value().get().equals("value");
     }
 }

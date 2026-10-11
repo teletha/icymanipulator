@@ -4,10 +4,8 @@ import icy.manipulator.property.intercept.model.ReferenceIntSetter;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.function.IntConsumer;
@@ -18,9 +16,6 @@ import java.util.function.IntConsumer;
  * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
 public class ReferenceIntSetter extends ReferenceIntSetterModel {
-
-     /** Determines if the execution environment is a Native Image of GraalVM. */
-    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -54,53 +49,11 @@ public class ReferenceIntSetter extends ReferenceIntSetterModel {
     /** The overload or intercept method invoker. */
     private static final MethodHandle deriveBySize$71930602= invoker("deriveBySize", int.class, IntConsumer.class);
 
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = ReferenceIntSetter.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
+    /** The property. */
+    protected int size;
 
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field sizeField = updater("size");
-
-    /** The fast final property updater. */
-    private static final MethodHandle sizeUpdater = handler(sizeField);
-
-    /** The final property updater. */
-    private static final Field squareField = updater("square");
-
-    /** The fast final property updater. */
-    private static final MethodHandle squareUpdater = handler(squareField);
-
-    /** The exposed property. */
-    public final int size;
-
-    /** The exposed property. */
-    public final int square;
+    /** The property. */
+    protected int square;
 
     /**
      * HIDE CONSTRUCTOR
@@ -137,12 +90,7 @@ public class ReferenceIntSetter extends ReferenceIntSetterModel {
      */
     private final void setSize(int value) {
         try {
-            if (NATIVE) {
-                sizeField.setInt(this, (int) deriveBySize$71930602.invoke(this, value, (IntConsumer) this::setSquare));
-            } else {
-                sizeUpdater.invoke(this, deriveBySize$71930602.invoke(this, value, (IntConsumer) this::setSquare));
-            }
-        } catch (UnsupportedOperationException e) {
+            this.size = (int) deriveBySize$71930602.invoke(this, value, (IntConsumer) this::setSquare);
         } catch (Throwable e) {
             throw quiet(e);
         }
@@ -174,16 +122,7 @@ public class ReferenceIntSetter extends ReferenceIntSetterModel {
      * @paran value A new value of square property to assign.
      */
     private final void setSquare(int value) {
-        try {
-            if (NATIVE) {
-                squareField.setInt(this, (int) value);
-            } else {
-                squareUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.square = value;
     }
 
     /**

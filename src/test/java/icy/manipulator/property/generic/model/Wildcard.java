@@ -7,11 +7,6 @@ import java.lang.Integer;
 import java.lang.Number;
 import java.lang.Override;
 import java.lang.StringBuilder;
-import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -25,92 +20,20 @@ import java.util.function.Supplier;
  */
 public class Wildcard extends WildcardModel {
 
-    /**
-     * Deceive complier that the specified checked exception is unchecked exception.
-     *
-     * @param <T> A dummy type for {@link RuntimeException}.
-     * @param throwable Any error.
-     * @return A runtime error.
-     * @throws T Dummy error to deceive compiler.
-     */
-    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
-        throw (T) throwable;
-    }
+    /** The property. */
+    protected Class<? extends Collection> extendType;
 
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = Wildcard.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
+    /** The property. */
+    protected List<? super Integer> superType;
 
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
+    /** The property. */
+    protected Supplier<?> wildcard;
 
-    /** The final property updater. */
-    private static final Field extendTypeField = updater("extendType");
+    /** The property. */
+    protected Map<? extends CharSequence, List<Class<? extends Number>>> combine;
 
-    /** The fast final property updater. */
-    private static final MethodHandle extendTypeUpdater = handler(extendTypeField);
-
-    /** The final property updater. */
-    private static final Field superTypeField = updater("superType");
-
-    /** The fast final property updater. */
-    private static final MethodHandle superTypeUpdater = handler(superTypeField);
-
-    /** The final property updater. */
-    private static final Field wildcardField = updater("wildcard");
-
-    /** The fast final property updater. */
-    private static final MethodHandle wildcardUpdater = handler(wildcardField);
-
-    /** The final property updater. */
-    private static final Field combineField = updater("combine");
-
-    /** The fast final property updater. */
-    private static final MethodHandle combineUpdater = handler(combineField);
-
-    /** The final property updater. */
-    private static final Field memberTypeField = updater("memberType");
-
-    /** The fast final property updater. */
-    private static final MethodHandle memberTypeUpdater = handler(memberTypeField);
-
-    /** The exposed property. */
-    public final Class<? extends Collection> extendType;
-
-    /** The exposed property. */
-    public final List<? super Integer> superType;
-
-    /** The exposed property. */
-    public final Supplier<?> wildcard;
-
-    /** The exposed property. */
-    public final Map<? extends CharSequence, List<Class<? extends Number>>> combine;
-
-    /** The exposed property. */
-    public final Class<? extends Member> memberType;
+    /** The property. */
+    protected Class<? extends Member> memberType;
 
     /**
      * HIDE CONSTRUCTOR
@@ -152,12 +75,7 @@ public class Wildcard extends WildcardModel {
         if (value == null) {
             value = super.extendType();
         }
-        try {
-            extendTypeUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.extendType = value;
     }
 
     /**
@@ -189,12 +107,7 @@ public class Wildcard extends WildcardModel {
         if (value == null) {
             value = super.superType();
         }
-        try {
-            superTypeUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.superType = value;
     }
 
     /**
@@ -226,12 +139,7 @@ public class Wildcard extends WildcardModel {
         if (value == null) {
             value = super.wildcard();
         }
-        try {
-            wildcardUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.wildcard = value;
     }
 
     /**
@@ -263,12 +171,7 @@ public class Wildcard extends WildcardModel {
         if (value == null) {
             value = super.combine();
         }
-        try {
-            combineUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.combine = value;
     }
 
     /**
@@ -300,12 +203,7 @@ public class Wildcard extends WildcardModel {
         if (value == null) {
             value = super.memberType();
         }
-        try {
-            memberTypeUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.memberType = value;
     }
 
     /**

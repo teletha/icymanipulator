@@ -3,11 +3,6 @@ package icy.manipulator.property.base.model;
 import icy.manipulator.property.base.model.PrimitiveArray;
 import java.lang.Override;
 import java.lang.StringBuilder;
-import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -18,119 +13,29 @@ import java.util.Objects;
  */
 public class PrimitiveArray extends PrimitiveArrayModel {
 
-    /**
-     * Deceive complier that the specified checked exception is unchecked exception.
-     *
-     * @param <T> A dummy type for {@link RuntimeException}.
-     * @param throwable Any error.
-     * @return A runtime error.
-     * @throws T Dummy error to deceive compiler.
-     */
-    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
-        throw (T) throwable;
-    }
+    /** The property. */
+    protected int[] intX;
 
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = PrimitiveArray.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
+    /** The property. */
+    protected long[] longX;
 
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
+    /** The property. */
+    protected float[] floatX;
 
-    /** The final property updater. */
-    private static final Field intXField = updater("intX");
+    /** The property. */
+    protected double[] doubleX;
 
-    /** The fast final property updater. */
-    private static final MethodHandle intXUpdater = handler(intXField);
+    /** The property. */
+    protected byte[] byteX;
 
-    /** The final property updater. */
-    private static final Field longXField = updater("longX");
+    /** The property. */
+    protected short[] shortX;
 
-    /** The fast final property updater. */
-    private static final MethodHandle longXUpdater = handler(longXField);
+    /** The property. */
+    protected char[] charX;
 
-    /** The final property updater. */
-    private static final Field floatXField = updater("floatX");
-
-    /** The fast final property updater. */
-    private static final MethodHandle floatXUpdater = handler(floatXField);
-
-    /** The final property updater. */
-    private static final Field doubleXField = updater("doubleX");
-
-    /** The fast final property updater. */
-    private static final MethodHandle doubleXUpdater = handler(doubleXField);
-
-    /** The final property updater. */
-    private static final Field byteXField = updater("byteX");
-
-    /** The fast final property updater. */
-    private static final MethodHandle byteXUpdater = handler(byteXField);
-
-    /** The final property updater. */
-    private static final Field shortXField = updater("shortX");
-
-    /** The fast final property updater. */
-    private static final MethodHandle shortXUpdater = handler(shortXField);
-
-    /** The final property updater. */
-    private static final Field charXField = updater("charX");
-
-    /** The fast final property updater. */
-    private static final MethodHandle charXUpdater = handler(charXField);
-
-    /** The final property updater. */
-    private static final Field booleanXField = updater("booleanX");
-
-    /** The fast final property updater. */
-    private static final MethodHandle booleanXUpdater = handler(booleanXField);
-
-    /** The exposed property. */
-    public final int[] intX;
-
-    /** The exposed property. */
-    public final long[] longX;
-
-    /** The exposed property. */
-    public final float[] floatX;
-
-    /** The exposed property. */
-    public final double[] doubleX;
-
-    /** The exposed property. */
-    public final byte[] byteX;
-
-    /** The exposed property. */
-    public final short[] shortX;
-
-    /** The exposed property. */
-    public final char[] charX;
-
-    /** The exposed property. */
-    public final boolean[] booleanX;
+    /** The property. */
+    protected boolean[] booleanX;
 
     /**
      * HIDE CONSTRUCTOR
@@ -175,12 +80,7 @@ public class PrimitiveArray extends PrimitiveArrayModel {
         if (value == null) {
             throw new IllegalArgumentException("The intX property requires non-null value.");
         }
-        try {
-            intXUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.intX = value;
     }
 
     /**
@@ -212,12 +112,7 @@ public class PrimitiveArray extends PrimitiveArrayModel {
         if (value == null) {
             throw new IllegalArgumentException("The longX property requires non-null value.");
         }
-        try {
-            longXUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.longX = value;
     }
 
     /**
@@ -249,12 +144,7 @@ public class PrimitiveArray extends PrimitiveArrayModel {
         if (value == null) {
             throw new IllegalArgumentException("The floatX property requires non-null value.");
         }
-        try {
-            floatXUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.floatX = value;
     }
 
     /**
@@ -286,12 +176,7 @@ public class PrimitiveArray extends PrimitiveArrayModel {
         if (value == null) {
             throw new IllegalArgumentException("The doubleX property requires non-null value.");
         }
-        try {
-            doubleXUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.doubleX = value;
     }
 
     /**
@@ -323,12 +208,7 @@ public class PrimitiveArray extends PrimitiveArrayModel {
         if (value == null) {
             throw new IllegalArgumentException("The byteX property requires non-null value.");
         }
-        try {
-            byteXUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.byteX = value;
     }
 
     /**
@@ -360,12 +240,7 @@ public class PrimitiveArray extends PrimitiveArrayModel {
         if (value == null) {
             throw new IllegalArgumentException("The shortX property requires non-null value.");
         }
-        try {
-            shortXUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.shortX = value;
     }
 
     /**
@@ -397,12 +272,7 @@ public class PrimitiveArray extends PrimitiveArrayModel {
         if (value == null) {
             throw new IllegalArgumentException("The charX property requires non-null value.");
         }
-        try {
-            charXUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.charX = value;
     }
 
     /**
@@ -434,12 +304,7 @@ public class PrimitiveArray extends PrimitiveArrayModel {
         if (value == null) {
             throw new IllegalArgumentException("The booleanX property requires non-null value.");
         }
-        try {
-            booleanXUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.booleanX = value;
     }
 
     /**

@@ -31,12 +31,12 @@ class NullValueTest {
     @Test
     void acceptNull() {
         NullValue o = NullValue.with.rejectNull("ok").acceptNull(null);
-        assert o.acceptNull == null;
+        assert o.acceptNull() == null;
     }
 
     @Test
     void defaultNull() {
         NullValue o = NullValue.with.rejectNull("ok").acceptNull("ok").defaultValue(null);
-        assert o.defaultValue.equals("default");
+        assert o.defaultValue().equals("default");
     }
 }

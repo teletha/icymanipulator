@@ -4,11 +4,6 @@ import icy.manipulator.property.objectmethod.model.CustomHashCode;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
-import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.Objects;
 
 /**
@@ -18,68 +13,11 @@ import java.util.Objects;
  */
 public class CustomHashCode extends CustomHashCodeModel {
 
-     /** Determines if the execution environment is a Native Image of GraalVM. */
-    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+    /** The property. */
+    protected String name;
 
-    /**
-     * Deceive complier that the specified checked exception is unchecked exception.
-     *
-     * @param <T> A dummy type for {@link RuntimeException}.
-     * @param throwable Any error.
-     * @return A runtime error.
-     * @throws T Dummy error to deceive compiler.
-     */
-    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
-        throw (T) throwable;
-    }
-
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = CustomHashCode.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field nameField = updater("name");
-
-    /** The fast final property updater. */
-    private static final MethodHandle nameUpdater = handler(nameField);
-
-    /** The final property updater. */
-    private static final Field ageField = updater("age");
-
-    /** The fast final property updater. */
-    private static final MethodHandle ageUpdater = handler(ageField);
-
-    /** The exposed property. */
-    public final String name;
-
-    /** The exposed property. */
-    public final int age;
+    /** The property. */
+    protected int age;
 
     /**
      * HIDE CONSTRUCTOR
@@ -118,12 +56,7 @@ public class CustomHashCode extends CustomHashCodeModel {
         if (value == null) {
             throw new IllegalArgumentException("The name property requires non-null value.");
         }
-        try {
-            nameUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.name = value;
     }
 
     /**
@@ -152,16 +85,7 @@ public class CustomHashCode extends CustomHashCodeModel {
      * @paran value A new value of age property to assign.
      */
     private final void setAge(int value) {
-        try {
-            if (NATIVE) {
-                ageField.setInt(this, (int) value);
-            } else {
-                ageUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.age = value;
     }
 
     /**

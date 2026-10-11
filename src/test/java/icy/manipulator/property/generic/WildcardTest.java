@@ -31,36 +31,36 @@ class WildcardTest {
     @Test
     void extendType() {
         Wildcard o = Wildcard.with.create().extendType(ArrayList.class);
-        assert o.extendType == ArrayList.class;
+        assert o.extendType() == ArrayList.class;
     }
 
     @Test
     void superType() {
         List<Integer> integers = new ArrayList();
         Wildcard o = Wildcard.with.create().superType(integers);
-        assert o.superType == integers;
+        assert o.superType() == integers;
 
         List<Number> numbers = new ArrayList();
         o = Wildcard.with.create().superType(numbers);
-        assert o.superType == numbers;
+        assert o.superType() == numbers;
     }
 
     @Test
     void wildcard() {
         Wildcard o = Wildcard.with.create().wildcard(() -> "10");
-        assert o.wildcard.get().equals("10");
+        assert o.wildcard().get().equals("10");
     }
 
     @Test
     void combine() {
         Map<String, List<Class<? extends Number>>> map = new HashMap();
         Wildcard o = Wildcard.with.create().combine(map);
-        assert o.combine == map;
+        assert o.combine() == map;
     }
 
     @Test
     void referMemberType() {
         Wildcard o = Wildcard.with.create().memberType(Member.class);
-        assert o.memberType == Member.class;
+        assert o.memberType() == Member.class;
     }
 }

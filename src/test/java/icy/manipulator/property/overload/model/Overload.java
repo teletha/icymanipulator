@@ -5,10 +5,8 @@ import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -62,53 +60,11 @@ public class Overload extends OverloadModel {
     /** The overload or intercept method invoker. */
     private static final MethodHandle today$1= invoker("today");
 
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = Overload.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
+    /** The property. */
+    protected BigDecimal size;
 
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field sizeField = updater("size");
-
-    /** The fast final property updater. */
-    private static final MethodHandle sizeUpdater = handler(sizeField);
-
-    /** The final property updater. */
-    private static final Field dateField = updater("date");
-
-    /** The fast final property updater. */
-    private static final MethodHandle dateUpdater = handler(dateField);
-
-    /** The exposed property. */
-    public final BigDecimal size;
-
-    /** The exposed property. */
-    public final LocalDate date;
+    /** The property. */
+    protected LocalDate date;
 
     /**
      * HIDE CONSTRUCTOR
@@ -147,12 +103,7 @@ public class Overload extends OverloadModel {
         if (value == null) {
             throw new IllegalArgumentException("The size property requires non-null value.");
         }
-        try {
-            sizeUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.size = value;
     }
 
     /**
@@ -184,12 +135,7 @@ public class Overload extends OverloadModel {
         if (value == null) {
             throw new IllegalArgumentException("The date property requires non-null value.");
         }
-        try {
-            dateUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.date = value;
     }
 
     /**

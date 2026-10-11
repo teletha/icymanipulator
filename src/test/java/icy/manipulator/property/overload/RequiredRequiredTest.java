@@ -28,8 +28,8 @@ class RequiredRequiredTest {
     @Test
     void overload() {
         RequiredRequired o = RequiredRequired.with.size(10).date(2019, 5, 14).time(12, 51, 34);
-        assert o.size.intValue() == 10;
-        assert o.date.isEqual(LocalDate.of(2019, 5, 14));
-        assert o.time.equals(LocalTime.of(12, 51, 34));
+        assert o.size().intValue() == 10;
+        assert o.date().isEqual(LocalDate.of(2019, 5, 14));
+        assert o.time().equals(LocalTime.of(12, 51, 34));
     }
 }

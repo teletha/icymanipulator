@@ -5,11 +5,6 @@ import java.lang.CharSequence;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
-import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -21,74 +16,14 @@ import java.util.function.Supplier;
  */
 public class AutoExpandList extends AutoExpandListModel {
 
-    /**
-     * Deceive complier that the specified checked exception is unchecked exception.
-     *
-     * @param <T> A dummy type for {@link RuntimeException}.
-     * @param throwable Any error.
-     * @return A runtime error.
-     * @throws T Dummy error to deceive compiler.
-     */
-    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
-        throw (T) throwable;
-    }
+    /** The property. */
+    protected List<String> values;
 
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = AutoExpandList.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
+    /** The property. */
+    protected List<Supplier<String>> generics;
 
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field valuesField = updater("values");
-
-    /** The fast final property updater. */
-    private static final MethodHandle valuesUpdater = handler(valuesField);
-
-    /** The final property updater. */
-    private static final Field genericsField = updater("generics");
-
-    /** The fast final property updater. */
-    private static final MethodHandle genericsUpdater = handler(genericsField);
-
-    /** The final property updater. */
-    private static final Field upperBoundableField = updater("upperBoundable");
-
-    /** The fast final property updater. */
-    private static final MethodHandle upperBoundableUpdater = handler(upperBoundableField);
-
-    /** The exposed property. */
-    public final List<String> values;
-
-    /** The exposed property. */
-    public final List<Supplier<String>> generics;
-
-    /** The exposed property. */
-    public final List<CharSequence> upperBoundable;
+    /** The property. */
+    protected List<CharSequence> upperBoundable;
 
     /**
      * HIDE CONSTRUCTOR
@@ -128,12 +63,7 @@ public class AutoExpandList extends AutoExpandListModel {
         if (value == null) {
             throw new IllegalArgumentException("The values property requires non-null value.");
         }
-        try {
-            valuesUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.values = value;
     }
 
     /**
@@ -165,12 +95,7 @@ public class AutoExpandList extends AutoExpandListModel {
         if (value == null) {
             value = super.generics();
         }
-        try {
-            genericsUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.generics = value;
     }
 
     /**
@@ -202,12 +127,7 @@ public class AutoExpandList extends AutoExpandListModel {
         if (value == null) {
             value = super.upperBoundable();
         }
-        try {
-            upperBoundableUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.upperBoundable = value;
     }
 
     /**

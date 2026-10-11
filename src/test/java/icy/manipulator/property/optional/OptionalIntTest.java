@@ -25,12 +25,12 @@ class OptionalIntTest {
     @Test
     void property() {
         OptionalInt o = OptionalInt.with.value(10);
-        assert o.value.getAsInt() == 10;
+        assert o.value().getAsInt() == 10;
     }
 
     @Test
     void defaultValue() {
         OptionalInt o = OptionalInt.with.create();
-        assert o.defaults.getAsInt() == 10;
+        assert o.defaults().getAsInt() == 10;
     }
 }

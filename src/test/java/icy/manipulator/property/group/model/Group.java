@@ -3,11 +3,6 @@ package icy.manipulator.property.group.model;
 import icy.manipulator.property.group.model.Group;
 import java.lang.Override;
 import java.lang.StringBuilder;
-import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.Objects;
 
 /**
@@ -17,77 +12,14 @@ import java.util.Objects;
  */
 public class Group extends GroupModel {
 
-     /** Determines if the execution environment is a Native Image of GraalVM. */
-    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+    /** The property. */
+    protected int x;
 
-    /**
-     * Deceive complier that the specified checked exception is unchecked exception.
-     *
-     * @param <T> A dummy type for {@link RuntimeException}.
-     * @param throwable Any error.
-     * @return A runtime error.
-     * @throws T Dummy error to deceive compiler.
-     */
-    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
-        throw (T) throwable;
-    }
+    /** The property. */
+    protected int y;
 
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = Group.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field xField = updater("x");
-
-    /** The fast final property updater. */
-    private static final MethodHandle xUpdater = handler(xField);
-
-    /** The final property updater. */
-    private static final Field yField = updater("y");
-
-    /** The fast final property updater. */
-    private static final MethodHandle yUpdater = handler(yField);
-
-    /** The final property updater. */
-    private static final Field zField = updater("z");
-
-    /** The fast final property updater. */
-    private static final MethodHandle zUpdater = handler(zField);
-
-    /** The exposed property. */
-    public final int x;
-
-    /** The exposed property. */
-    public final int y;
-
-    /** The exposed property. */
-    public final int z;
+    /** The property. */
+    protected int z;
 
     /**
      * HIDE CONSTRUCTOR
@@ -124,16 +56,7 @@ public class Group extends GroupModel {
      * @paran value A new value of x property to assign.
      */
     private final void setX(int value) {
-        try {
-            if (NATIVE) {
-                xField.setInt(this, (int) value);
-            } else {
-                xUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.x = value;
     }
 
     /**
@@ -162,16 +85,7 @@ public class Group extends GroupModel {
      * @paran value A new value of y property to assign.
      */
     private final void setY(int value) {
-        try {
-            if (NATIVE) {
-                yField.setInt(this, (int) value);
-            } else {
-                yUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.y = value;
     }
 
     /**
@@ -200,16 +114,7 @@ public class Group extends GroupModel {
      * @paran value A new value of z property to assign.
      */
     private final void setZ(int value) {
-        try {
-            if (NATIVE) {
-                zField.setInt(this, (int) value);
-            } else {
-                zUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.z = value;
     }
 
     /**

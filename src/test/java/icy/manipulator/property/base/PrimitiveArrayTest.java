@@ -34,12 +34,12 @@ class PrimitiveArrayTest {
                 .charX('o')
                 .booleanX(true);
 
-        assert instance.intX[0] == 10;
-        assert instance.longX[0] == 20;
-        assert instance.floatX[0] == 3.2F;
-        assert instance.doubleX[0] == 0.12;
-        assert instance.byteX[0] == 2;
-        assert instance.shortX[0] == 5;
-        assert instance.booleanX[0] == true;
+        assert instance.intX()[0] == 10;
+        assert instance.longX()[0] == 20;
+        assert instance.floatX()[0] == 3.2F;
+        assert instance.doubleX()[0] == 0.12;
+        assert instance.byteX()[0] == 2;
+        assert instance.shortX()[0] == 5;
+        assert instance.booleanX()[0] == true;
     }
 }

@@ -25,6 +25,6 @@ class InterfaceTest {
     @Test
     void property() {
         Interface o = Interface.with.name("Giorno Giovanna");
-        assert o.name.equals("Giorno Giovanna");
+        assert o.name().equals("Giorno Giovanna");
     }
 }

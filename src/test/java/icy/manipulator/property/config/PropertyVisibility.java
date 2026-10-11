@@ -4,11 +4,6 @@ import icy.manipulator.property.config.PropertyVisibility;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
-import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.Objects;
 
 /**
@@ -18,65 +13,11 @@ import java.util.Objects;
  */
 class PropertyVisibility extends PropertyVisibilityModel {
 
-    /**
-     * Deceive complier that the specified checked exception is unchecked exception.
-     *
-     * @param <T> A dummy type for {@link RuntimeException}.
-     * @param throwable Any error.
-     * @return A runtime error.
-     * @throws T Dummy error to deceive compiler.
-     */
-    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
-        throw (T) throwable;
-    }
+    /** The property. */
+    protected String packagePrivateProperty;
 
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = PropertyVisibility.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field packagePrivatePropertyField = updater("packagePrivateProperty");
-
-    /** The fast final property updater. */
-    private static final MethodHandle packagePrivatePropertyUpdater = handler(packagePrivatePropertyField);
-
-    /** The final property updater. */
-    private static final Field protectedPropertyField = updater("protectedProperty");
-
-    /** The fast final property updater. */
-    private static final MethodHandle protectedPropertyUpdater = handler(protectedPropertyField);
-
-    /** The exposed property. */
-    final String packagePrivateProperty;
-
-    /** The exposed property. */
-    protected final String protectedProperty;
+    /** The property. */
+    protected String protectedProperty;
 
     /**
      * HIDE CONSTRUCTOR
@@ -115,12 +56,7 @@ class PropertyVisibility extends PropertyVisibilityModel {
         if (value == null) {
             throw new IllegalArgumentException("The packagePrivateProperty property requires non-null value.");
         }
-        try {
-            packagePrivatePropertyUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.packagePrivateProperty = value;
     }
 
     /**
@@ -152,12 +88,7 @@ class PropertyVisibility extends PropertyVisibilityModel {
         if (value == null) {
             throw new IllegalArgumentException("The protectedProperty property requires non-null value.");
         }
-        try {
-            protectedPropertyUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.protectedProperty = value;
     }
 
     /**

@@ -25,6 +25,6 @@ class SingleTest {
     @Test
     void property() {
         Single instance = Single.with.name("Giorno Giovanna");
-        assert instance.name.equals("Giorno Giovanna");
+        assert instance.name().equals("Giorno Giovanna");
     }
 }

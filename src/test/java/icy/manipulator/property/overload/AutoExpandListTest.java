@@ -27,17 +27,17 @@ class AutoExpandListTest {
     @Test
     void autoExpand() {
         AutoExpandList o = AutoExpandList.with.values("one", "two", "three");
-        assert o.values.get(0).equals("one");
-        assert o.values.get(1).equals("two");
-        assert o.values.get(2).equals("three");
+        assert o.values().get(0).equals("one");
+        assert o.values().get(1).equals("two");
+        assert o.values().get(2).equals("three");
     }
 
     @Test
     void autoExpandWithGenerics() {
         AutoExpandList o = AutoExpandList.with.values(List.of()).generics(() -> "a", () -> "b", () -> "c");
-        assert o.generics.get(0).get().equals("a");
-        assert o.generics.get(1).get().equals("b");
-        assert o.generics.get(2).get().equals("c");
+        assert o.generics().get(0).get().equals("a");
+        assert o.generics().get(1).get().equals("b");
+        assert o.generics().get(2).get().equals("c");
     }
 
     @Test
@@ -45,8 +45,8 @@ class AutoExpandListTest {
         List<String> list = List.of("a", "b", "c");
 
         AutoExpandList o = AutoExpandList.with.values(List.of()).upperBoundable(list);
-        assert o.upperBoundable.get(0).equals("a");
-        assert o.upperBoundable.get(1).equals("b");
-        assert o.upperBoundable.get(2).equals("c");
+        assert o.upperBoundable().get(0).equals("a");
+        assert o.upperBoundable().get(1).equals("b");
+        assert o.upperBoundable().get(2).equals("c");
     }
 }

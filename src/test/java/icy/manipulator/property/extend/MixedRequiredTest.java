@@ -25,9 +25,9 @@ class MixedRequiredTest {
     @Test
     void property() {
         MixedRequired o = MixedRequired.with.name("Name").age(18).zip("543210").optionAddress("Address");
-        assert o.name.equals("Name");
-        assert o.age == 18;
-        assert o.optionAddress.equals("Address");
-        assert o.zip.equals("543210");
+        assert o.name().equals("Name");
+        assert o.age() == 18;
+        assert o.optionAddress().equals("Address");
+        assert o.zip().equals("543210");
     }
 }

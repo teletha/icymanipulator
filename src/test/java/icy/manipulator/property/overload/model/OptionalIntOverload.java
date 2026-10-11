@@ -5,10 +5,8 @@ import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.OptionalInt;
@@ -55,44 +53,8 @@ public class OptionalIntOverload extends OptionalIntOverloadModel {
     /** The overload or intercept method invoker. */
     private static final MethodHandle one$1= invoker("one");
 
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = OptionalIntOverload.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field numField = updater("num");
-
-    /** The fast final property updater. */
-    private static final MethodHandle numUpdater = handler(numField);
-
-    /** The exposed property. */
-    public final OptionalInt num;
+    /** The property. */
+    protected OptionalInt num;
 
     /**
      * HIDE CONSTRUCTOR
@@ -130,12 +92,7 @@ public class OptionalIntOverload extends OptionalIntOverloadModel {
         if (value == null) {
             value = OptionalInt.empty();
         }
-        try {
-            numUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.num = value;
     }
 
     /**

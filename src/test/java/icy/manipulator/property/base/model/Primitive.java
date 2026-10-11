@@ -3,11 +3,6 @@ package icy.manipulator.property.base.model;
 import icy.manipulator.property.base.model.Primitive;
 import java.lang.Override;
 import java.lang.StringBuilder;
-import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.Objects;
 
 /**
@@ -17,122 +12,29 @@ import java.util.Objects;
  */
 public class Primitive extends PrimitiveModel {
 
-     /** Determines if the execution environment is a Native Image of GraalVM. */
-    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+    /** The property. */
+    protected int intX;
 
-    /**
-     * Deceive complier that the specified checked exception is unchecked exception.
-     *
-     * @param <T> A dummy type for {@link RuntimeException}.
-     * @param throwable Any error.
-     * @return A runtime error.
-     * @throws T Dummy error to deceive compiler.
-     */
-    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
-        throw (T) throwable;
-    }
+    /** The property. */
+    protected long longX;
 
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = Primitive.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
+    /** The property. */
+    protected float floatX;
 
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
+    /** The property. */
+    protected double doubleX;
 
-    /** The final property updater. */
-    private static final Field intXField = updater("intX");
+    /** The property. */
+    protected byte byteX;
 
-    /** The fast final property updater. */
-    private static final MethodHandle intXUpdater = handler(intXField);
+    /** The property. */
+    protected short shortX;
 
-    /** The final property updater. */
-    private static final Field longXField = updater("longX");
+    /** The property. */
+    protected char charX;
 
-    /** The fast final property updater. */
-    private static final MethodHandle longXUpdater = handler(longXField);
-
-    /** The final property updater. */
-    private static final Field floatXField = updater("floatX");
-
-    /** The fast final property updater. */
-    private static final MethodHandle floatXUpdater = handler(floatXField);
-
-    /** The final property updater. */
-    private static final Field doubleXField = updater("doubleX");
-
-    /** The fast final property updater. */
-    private static final MethodHandle doubleXUpdater = handler(doubleXField);
-
-    /** The final property updater. */
-    private static final Field byteXField = updater("byteX");
-
-    /** The fast final property updater. */
-    private static final MethodHandle byteXUpdater = handler(byteXField);
-
-    /** The final property updater. */
-    private static final Field shortXField = updater("shortX");
-
-    /** The fast final property updater. */
-    private static final MethodHandle shortXUpdater = handler(shortXField);
-
-    /** The final property updater. */
-    private static final Field charXField = updater("charX");
-
-    /** The fast final property updater. */
-    private static final MethodHandle charXUpdater = handler(charXField);
-
-    /** The final property updater. */
-    private static final Field booleanXField = updater("booleanX");
-
-    /** The fast final property updater. */
-    private static final MethodHandle booleanXUpdater = handler(booleanXField);
-
-    /** The exposed property. */
-    public final int intX;
-
-    /** The exposed property. */
-    public final long longX;
-
-    /** The exposed property. */
-    public final float floatX;
-
-    /** The exposed property. */
-    public final double doubleX;
-
-    /** The exposed property. */
-    public final byte byteX;
-
-    /** The exposed property. */
-    public final short shortX;
-
-    /** The exposed property. */
-    public final char charX;
-
-    /** The exposed property. */
-    public final boolean booleanX;
+    /** The property. */
+    protected boolean booleanX;
 
     /**
      * HIDE CONSTRUCTOR
@@ -174,16 +76,7 @@ public class Primitive extends PrimitiveModel {
      * @paran value A new value of intX property to assign.
      */
     private final void setIntX(int value) {
-        try {
-            if (NATIVE) {
-                intXField.setInt(this, (int) value);
-            } else {
-                intXUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.intX = value;
     }
 
     /**
@@ -212,16 +105,7 @@ public class Primitive extends PrimitiveModel {
      * @paran value A new value of longX property to assign.
      */
     private final void setLongX(long value) {
-        try {
-            if (NATIVE) {
-                longXField.setLong(this, (long) value);
-            } else {
-                longXUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.longX = value;
     }
 
     /**
@@ -250,16 +134,7 @@ public class Primitive extends PrimitiveModel {
      * @paran value A new value of floatX property to assign.
      */
     private final void setFloatX(float value) {
-        try {
-            if (NATIVE) {
-                floatXField.setFloat(this, (float) value);
-            } else {
-                floatXUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.floatX = value;
     }
 
     /**
@@ -288,16 +163,7 @@ public class Primitive extends PrimitiveModel {
      * @paran value A new value of doubleX property to assign.
      */
     private final void setDoubleX(double value) {
-        try {
-            if (NATIVE) {
-                doubleXField.setDouble(this, (double) value);
-            } else {
-                doubleXUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.doubleX = value;
     }
 
     /**
@@ -326,16 +192,7 @@ public class Primitive extends PrimitiveModel {
      * @paran value A new value of byteX property to assign.
      */
     private final void setByteX(byte value) {
-        try {
-            if (NATIVE) {
-                byteXField.setByte(this, (byte) value);
-            } else {
-                byteXUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.byteX = value;
     }
 
     /**
@@ -364,16 +221,7 @@ public class Primitive extends PrimitiveModel {
      * @paran value A new value of shortX property to assign.
      */
     private final void setShortX(short value) {
-        try {
-            if (NATIVE) {
-                shortXField.setShort(this, (short) value);
-            } else {
-                shortXUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.shortX = value;
     }
 
     /**
@@ -402,16 +250,7 @@ public class Primitive extends PrimitiveModel {
      * @paran value A new value of charX property to assign.
      */
     private final void setCharX(char value) {
-        try {
-            if (NATIVE) {
-                charXField.setChar(this, (char) value);
-            } else {
-                charXUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.charX = value;
     }
 
     /**
@@ -440,16 +279,7 @@ public class Primitive extends PrimitiveModel {
      * @paran value A new value of booleanX property to assign.
      */
     private final void setBooleanX(boolean value) {
-        try {
-            if (NATIVE) {
-                booleanXField.setBoolean(this, (boolean) value);
-            } else {
-                booleanXUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.booleanX = value;
     }
 
     /**

@@ -4,11 +4,6 @@ import icy.manipulator.property.error.model.NullValue;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
-import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.Objects;
 
 /**
@@ -18,74 +13,14 @@ import java.util.Objects;
  */
 public class NullValue extends NullValueModel {
 
-    /**
-     * Deceive complier that the specified checked exception is unchecked exception.
-     *
-     * @param <T> A dummy type for {@link RuntimeException}.
-     * @param throwable Any error.
-     * @return A runtime error.
-     * @throws T Dummy error to deceive compiler.
-     */
-    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
-        throw (T) throwable;
-    }
+    /** The property. */
+    protected String rejectNull;
 
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = NullValue.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
+    /** The property. */
+    protected String acceptNull;
 
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field rejectNullField = updater("rejectNull");
-
-    /** The fast final property updater. */
-    private static final MethodHandle rejectNullUpdater = handler(rejectNullField);
-
-    /** The final property updater. */
-    private static final Field acceptNullField = updater("acceptNull");
-
-    /** The fast final property updater. */
-    private static final MethodHandle acceptNullUpdater = handler(acceptNullField);
-
-    /** The final property updater. */
-    private static final Field defaultValueField = updater("defaultValue");
-
-    /** The fast final property updater. */
-    private static final MethodHandle defaultValueUpdater = handler(defaultValueField);
-
-    /** The exposed property. */
-    public final String rejectNull;
-
-    /** The exposed property. */
-    public final String acceptNull;
-
-    /** The exposed property. */
-    public final String defaultValue;
+    /** The property. */
+    protected String defaultValue;
 
     /**
      * HIDE CONSTRUCTOR
@@ -125,12 +60,7 @@ public class NullValue extends NullValueModel {
         if (value == null) {
             throw new IllegalArgumentException("The rejectNull property requires non-null value.");
         }
-        try {
-            rejectNullUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.rejectNull = value;
     }
 
     /**
@@ -159,12 +89,7 @@ public class NullValue extends NullValueModel {
      * @paran value A new value of acceptNull property to assign.
      */
     private final void setAcceptNull(String value) {
-        try {
-            acceptNullUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.acceptNull = value;
     }
 
     /**
@@ -196,12 +121,7 @@ public class NullValue extends NullValueModel {
         if (value == null) {
             value = super.defaultValue();
         }
-        try {
-            defaultValueUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.defaultValue = value;
     }
 
     /**

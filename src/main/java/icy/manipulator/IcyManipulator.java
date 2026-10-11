@@ -11,8 +11,8 @@ package icy.manipulator;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -33,7 +33,6 @@ import apty.Modifiers;
 import apty.code.Coder;
 import apty.code.Type;
 import icy.manipulator.util.Lists;
-import icy.manipulator.util.Strings;
 
 public class IcyManipulator extends AptyProcessor {
 
@@ -103,13 +102,9 @@ public class IcyManipulator extends AptyProcessor {
             write(" * @see <a href=\"https://github.com/teletha/icymanipulator\">Icy Manipulator (Code Generator)</a>");
             write(" */");
             write(visibility, "class ", m.implType.raw(), declare(declarations), inheritance, parent, () -> {
-                defineRuntimeEnvironment();
                 defineErrorHandler();
                 defineMethodInvokerBuilder();
                 defineMethodInvoker();
-                defineFiledUpdaterBuilder();
-                defineFiledUpdaterHandler();
-                defineFieldUpdater();
                 defineField();
                 defineConstructor();
                 defineAccessors();
@@ -127,21 +122,10 @@ public class IcyManipulator extends AptyProcessor {
         }
 
         /**
-         * Define runtime environment.
-         */
-        private void defineRuntimeEnvironment() {
-            if (m.ownProperties().stream().anyMatch(x -> x.type.isPrimitive())) {
-                write();
-                write(" /** Determines if the execution environment is a Native Image of GraalVM. */");
-                write("private static final boolean NATIVE = `runtime`.equals(System.getProperty(`org.graalvm.nativeimage.imagecode`));");
-            }
-        }
-
-        /**
          * Define transparent error handler.
          */
         private void defineErrorHandler() {
-            if (m.ownProperties().isEmpty()) {
+            if (!m.hasOwnUserDefinedOverload() && !m.hasIntercept()) {
                 return;
             }
 
@@ -203,78 +187,13 @@ public class IcyManipulator extends AptyProcessor {
         }
 
         /**
-         * Define query method for property updater.
-         */
-        private void defineFiledUpdaterBuilder() {
-            if (m.ownProperties().isEmpty()) {
-                return;
-            }
-
-            write();
-            write("/**");
-            write(" * Create special property updater.");
-            write(" *");
-            write(" * @param name A target property name.");
-            write(" * @return A special property updater.");
-            write(" */");
-            write("private static final ", Field.class, " updater(String name) ", () -> {
-                writeTry(() -> {
-                    write(Field.class, " field = ", classLiteral(m.implType), ".getDeclaredField(name);");
-                    write("field.setAccessible(true);");
-                    write("return field;");
-                }, Throwable.class, e -> {
-                    write("throw quiet(", e, ");");
-                });
-            });
-        }
-
-        /**
-         * Define query method for property updater.
-         */
-        private void defineFiledUpdaterHandler() {
-            if (m.ownProperties().isEmpty()) {
-                return;
-            }
-
-            write();
-            write("/**");
-            write(" * Create fast property updater.");
-            write(" *");
-            write(" * @param field A target field.");
-            write(" * @return A fast property updater.");
-            write(" */");
-            write("private static final ", MethodHandle.class, " handler(Field field) ", () -> {
-                writeTry(() -> {
-                    write("return ", MethodHandles.class, ".lookup().unreflectSetter(field);");
-                }, Throwable.class, e -> {
-                    write("throw quiet(", e, ");");
-                });
-            });
-        }
-
-        /**
-         * Define property updater.
-         */
-        private void defineFieldUpdater() {
-            for (PropertyInfo property : m.ownProperties()) {
-                write();
-                write("/** The final property updater. */");
-                write("private static final ", Field.class, " ", property.name, "Field = updater(`", property.name, "`);");
-
-                write();
-                write("/** The fast final property updater. */");
-                write("private static final ", MethodHandle.class, " ", property.name, "Updater = handler(", property.name, "Field);");
-            }
-        }
-
-        /**
          * Define property field.
          */
         private void defineField() {
             for (PropertyInfo p : m.ownProperties()) {
                 write();
-                write("/** The exposed property. */");
-                write(p.modifier, p.type, " ", p.name, ";");
+                write("/** The property. */");
+                write("protected ", p.type, " ", p.name, ";");
 
                 if (p.custom != null) {
                     write();
@@ -304,6 +223,35 @@ public class IcyManipulator extends AptyProcessor {
                     write("this.", p.name, " = ", (p.arbitrary ? defaultValueCallFor(p) : p.type.defaultValue()), ";");
                 }
             });
+
+            List<PropertyInfo> properties = m.properties();
+            if (m.copiablePoroperties().isEmpty()) {
+                return;
+            }
+
+            write();
+            write("/**");
+            write(" * Construct with all properties.");
+            write(" */");
+            write("private ", m.implType.raw(), "(", parameterize(properties), ")", () -> {
+                for (PropertyInfo p : properties) {
+                    write("this.", p.name, " = ", p.name, ";");
+                }
+            });
+        }
+
+        /**
+         * Compute the parameter list for the specified properties.
+         * 
+         * @param properties A list of properties.
+         * @return A parameter list source.
+         */
+        private List<Object> parameterize(List<PropertyInfo> properties) {
+            List<Object> parameters = new ArrayList();
+            for (PropertyInfo p : properties) {
+                parameters.add(new Object[] {p.type, " ", p.name});
+            }
+            return parameters;
         }
 
         /**
@@ -415,36 +363,28 @@ public class IcyManipulator extends AptyProcessor {
                         });
                     }
 
-                    writeTry(() -> {
-                        String value = "value";
-                        for (MethodLike inter : m.findInterceptsFor(property)) {
-                            value = inter.id() + ".invoke(this, " + value;
-                            for (int i = 1; i < inter.paramTypes.size(); i++) {
-                                String name = m.findPropertyByName(inter.paramNames.get(i)).capitalizeName();
-                                value += ", (" + use(inter.paramTypes.get(i)) + ") this::set" + name;
+                    if (m.findInterceptsFor(property).isEmpty()) {
+                        write("this.", property.name, " = value;");
+                    } else {
+                        writeTry(() -> {
+                            String value = "value";
+                            for (MethodLike inter : m.findInterceptsFor(property)) {
+                                value = "(" + use(property.type) + ") " + inter.id() + ".invoke(this, " + value;
+                                for (int i = 1; i < inter.paramTypes.size(); i++) {
+                                    String name = m.findPropertyByName(inter.paramNames.get(i)).capitalizeName();
+                                    value += ", (" + use(inter.paramTypes.get(i)) + ") this::set" + name;
+                                }
+                                value += ")";
                             }
-                            value += ")";
-                        }
+                            write("this.", property.name, " = ", value, ";");
+                        }, Throwable.class, e -> {
+                            write("throw quiet(", e, ");");
+                        });
+                    }
 
-                        if (property.type.isPrimitive()) {
-                            String name = property.type.name();
-                            write("if (NATIVE) {");
-                            write("    ", property.name, "Field.set", Strings.capitalize(name), "(this, (", name, ") ", value, ");");
-                            write("} else {");
-                            write("    ", property.name, "Updater.invoke(this, ", value, ");");
-                            write("}");
-                        } else {
-                            write(property.name, "Updater.invoke(this, ", value, ");");
-                        }
-
-                        if (property.custom != null && property.custom.requireSetter) {
-                            write(property.name, "Customizer.accept(this.", property.name, ");");
-                        }
-                    }, UnsupportedOperationException.class, e -> {
-                        // ignore
-                    }, Throwable.class, e -> {
-                        write("throw quiet(", e, ");");
-                    });
+                    if (property.custom != null && property.custom.requireSetter) {
+                        write(property.name, "Customizer.accept(this.", property.name, ");");
+                    }
                 });
 
                 // customizer's methods
@@ -590,20 +530,11 @@ public class IcyManipulator extends AptyProcessor {
                         write("return this;");
                     });
 
-                    int group = icy.grouping();
-                    List<PropertyInfo> merged = Lists.merge(m.requiredProperties(), m.arbitraryProperties());
-                    StringJoiner head = new StringJoiner(", ", merged.get(0).name + "(", ")");
-                    for (int i = 0; i < group; i++) {
-                        PropertyInfo p = merged.get(i);
-                        head.add(property == p ? "value" : "this." + p.name);
+                    StringJoiner arguments = new StringJoiner(", ");
+                    for (PropertyInfo p : m.properties()) {
+                        arguments.add(property == p ? "value" : "this." + p.name);
                     }
-
-                    StringJoiner tail = new StringJoiner(".");
-                    for (int i = group; i < merged.size(); i++) {
-                        PropertyInfo p = merged.get(i);
-                        tail.add(p.name + "(" + (property == p ? "value" : "this." + p.name) + ")");
-                    }
-                    write("return ", icy.builder(), ".", head, tail.length() == 0 ? "" : ".", tail, ";");
+                    write("return new ", m.implType, "(", arguments, ");");
                 });
             }
         }

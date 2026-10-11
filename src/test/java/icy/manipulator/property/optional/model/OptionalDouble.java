@@ -3,11 +3,6 @@ package icy.manipulator.property.optional.model;
 import icy.manipulator.property.optional.model.OptionalDouble;
 import java.lang.Override;
 import java.lang.StringBuilder;
-import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.Objects;
 
 /**
@@ -17,56 +12,8 @@ import java.util.Objects;
  */
 public class OptionalDouble implements OptionalDoubleModel {
 
-    /**
-     * Deceive complier that the specified checked exception is unchecked exception.
-     *
-     * @param <T> A dummy type for {@link RuntimeException}.
-     * @param throwable Any error.
-     * @return A runtime error.
-     * @throws T Dummy error to deceive compiler.
-     */
-    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
-        throw (T) throwable;
-    }
-
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = OptionalDouble.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field valueField = updater("value");
-
-    /** The fast final property updater. */
-    private static final MethodHandle valueUpdater = handler(valueField);
-
-    /** The exposed property. */
-    public final java.util.OptionalDouble value;
+    /** The property. */
+    protected java.util.OptionalDouble value;
 
     /**
      * HIDE CONSTRUCTOR
@@ -104,12 +51,7 @@ public class OptionalDouble implements OptionalDoubleModel {
         if (value == null) {
             value = java.util.OptionalDouble.empty();
         }
-        try {
-            valueUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.value = value;
     }
 
     /**

@@ -25,18 +25,18 @@ class MixedTest {
     @Test
     void onlyRequired() {
         Mixed o = Mixed.with.name("Name").age(20);
-        assert o.name.equals("Name");
-        assert o.age == 20;
-        assert o.optionAddress.isEmpty();
-        assert o.optionCommnet.isEmpty();
+        assert o.name().equals("Name");
+        assert o.age() == 20;
+        assert o.optionAddress().isEmpty();
+        assert o.optionCommnet().isEmpty();
     }
 
     @Test
     void withOptions() {
         Mixed o = Mixed.with.name("Name").age(20).optionAddress("Address").optionCommnet("Comment");
-        assert o.name.equals("Name");
-        assert o.age == 20;
-        assert o.optionAddress.equals("Address");
-        assert o.optionCommnet.equals("Comment");
+        assert o.name().equals("Name");
+        assert o.age() == 20;
+        assert o.optionAddress().equals("Address");
+        assert o.optionCommnet().equals("Comment");
     }
 }

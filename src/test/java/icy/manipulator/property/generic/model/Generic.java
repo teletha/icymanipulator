@@ -4,11 +4,6 @@ import icy.manipulator.property.generic.model.Generic;
 import java.lang.Number;
 import java.lang.Override;
 import java.lang.StringBuilder;
-import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -20,83 +15,17 @@ import java.util.Objects;
  */
 public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
 
-    /**
-     * Deceive complier that the specified checked exception is unchecked exception.
-     *
-     * @param <T> A dummy type for {@link RuntimeException}.
-     * @param throwable Any error.
-     * @return A runtime error.
-     * @throws T Dummy error to deceive compiler.
-     */
-    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
-        throw (T) throwable;
-    }
+    /** The property. */
+    protected P value;
 
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = Generic.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
+    /** The property. */
+    protected Q number;
 
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
+    /** The property. */
+    protected Map<P, Q> mapper;
 
-    /** The final property updater. */
-    private static final Field valueField = updater("value");
-
-    /** The fast final property updater. */
-    private static final MethodHandle valueUpdater = handler(valueField);
-
-    /** The final property updater. */
-    private static final Field numberField = updater("number");
-
-    /** The fast final property updater. */
-    private static final MethodHandle numberUpdater = handler(numberField);
-
-    /** The final property updater. */
-    private static final Field mapperField = updater("mapper");
-
-    /** The fast final property updater. */
-    private static final MethodHandle mapperUpdater = handler(mapperField);
-
-    /** The final property updater. */
-    private static final Field listField = updater("list");
-
-    /** The fast final property updater. */
-    private static final MethodHandle listUpdater = handler(listField);
-
-    /** The exposed property. */
-    public final P value;
-
-    /** The exposed property. */
-    public final Q number;
-
-    /** The exposed property. */
-    public final Map<P, Q> mapper;
-
-    /** The exposed property. */
-    public final List<P> list;
+    /** The property. */
+    protected List<P> list;
 
     /**
      * HIDE CONSTRUCTOR
@@ -137,12 +66,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
         if (value == null) {
             throw new IllegalArgumentException("The value property requires non-null value.");
         }
-        try {
-            valueUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.value = value;
     }
 
     /**
@@ -174,12 +98,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
         if (value == null) {
             throw new IllegalArgumentException("The number property requires non-null value.");
         }
-        try {
-            numberUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.number = value;
     }
 
     /**
@@ -211,12 +130,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
         if (value == null) {
             throw new IllegalArgumentException("The mapper property requires non-null value.");
         }
-        try {
-            mapperUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.mapper = value;
     }
 
     /**
@@ -248,12 +162,7 @@ public class Generic<P, Q extends Number> implements GenericModel<P, Q> {
         if (value == null) {
             throw new IllegalArgumentException("The list property requires non-null value.");
         }
-        try {
-            listUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.list = value;
     }
 
     /**

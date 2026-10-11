@@ -4,10 +4,8 @@ import icy.manipulator.property.generic.model.SelfRef;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.function.ToIntFunction;
@@ -18,9 +16,6 @@ import java.util.function.ToIntFunction;
  * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
 public class SelfRef implements SelfRefModel<SelfRef> {
-
-     /** Determines if the execution environment is a Native Image of GraalVM. */
-    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -54,53 +49,11 @@ public class SelfRef implements SelfRefModel<SelfRef> {
     /** The overload or intercept method invoker. */
     private static final MethodHandle values$912239839= invoker("values", double.class);
 
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = SelfRef.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
+    /** The property. */
+    protected int value;
 
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field valueField = updater("value");
-
-    /** The fast final property updater. */
-    private static final MethodHandle valueUpdater = handler(valueField);
-
-    /** The final property updater. */
-    private static final Field calcField = updater("calc");
-
-    /** The fast final property updater. */
-    private static final MethodHandle calcUpdater = handler(calcField);
-
-    /** The exposed property. */
-    public final int value;
-
-    /** The exposed property. */
-    public final ToIntFunction<SelfRef> calc;
+    /** The property. */
+    protected ToIntFunction<SelfRef> calc;
 
     /**
      * HIDE CONSTRUCTOR
@@ -136,16 +89,7 @@ public class SelfRef implements SelfRefModel<SelfRef> {
      * @paran value A new value of value property to assign.
      */
     private final void setValue(int value) {
-        try {
-            if (NATIVE) {
-                valueField.setInt(this, (int) value);
-            } else {
-                valueUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.value = value;
     }
 
     /**
@@ -177,12 +121,7 @@ public class SelfRef implements SelfRefModel<SelfRef> {
         if (value == null) {
             throw new IllegalArgumentException("The calc property requires non-null value.");
         }
-        try {
-            calcUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.calc = value;
     }
 
     /**

@@ -25,9 +25,9 @@ class InterfaceTest {
     @Test
     void intercept() {
         Interface normal = Interface.with.size(10);
-        assert normal.size == 10;
+        assert normal.size() == 10;
 
         Interface normalized = Interface.with.size(-10);
-        assert normalized.size == 0;
+        assert normalized.size() == 0;
     }
 }

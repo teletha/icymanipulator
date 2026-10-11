@@ -5,11 +5,6 @@ import java.lang.Float;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.StringBuilder;
-import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.util.Objects;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.IntUnaryOperator;
@@ -23,95 +18,20 @@ import java.util.function.UnaryOperator;
  */
 public class Mutable extends MutableModel {
 
-     /** Determines if the execution environment is a Native Image of GraalVM. */
-    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
+    /** The property. */
+    protected String value;
 
-    /**
-     * Deceive complier that the specified checked exception is unchecked exception.
-     *
-     * @param <T> A dummy type for {@link RuntimeException}.
-     * @param throwable Any error.
-     * @return A runtime error.
-     * @throws T Dummy error to deceive compiler.
-     */
-    private static final <T extends Throwable> T quiet(Throwable throwable) throws T {
-        throw (T) throwable;
-    }
+    /** The property. */
+    protected int intNum;
 
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = Mutable.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
+    /** The property. */
+    protected long longNum;
 
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
+    /** The property. */
+    protected float floatNum;
 
-    /** The final property updater. */
-    private static final Field valueField = updater("value");
-
-    /** The fast final property updater. */
-    private static final MethodHandle valueUpdater = handler(valueField);
-
-    /** The final property updater. */
-    private static final Field intNumField = updater("intNum");
-
-    /** The fast final property updater. */
-    private static final MethodHandle intNumUpdater = handler(intNumField);
-
-    /** The final property updater. */
-    private static final Field longNumField = updater("longNum");
-
-    /** The fast final property updater. */
-    private static final MethodHandle longNumUpdater = handler(longNumField);
-
-    /** The final property updater. */
-    private static final Field floatNumField = updater("floatNum");
-
-    /** The fast final property updater. */
-    private static final MethodHandle floatNumUpdater = handler(floatNumField);
-
-    /** The final property updater. */
-    private static final Field doubleNumField = updater("doubleNum");
-
-    /** The fast final property updater. */
-    private static final MethodHandle doubleNumUpdater = handler(doubleNumField);
-
-    /** The exposed property. */
-    public final String value;
-
-    /** The exposed property. */
-    public final int intNum;
-
-    /** The exposed property. */
-    public final long longNum;
-
-    /** The exposed property. */
-    public final float floatNum;
-
-    /** The exposed property. */
-    public final double doubleNum;
+    /** The property. */
+    protected double doubleNum;
 
     /**
      * HIDE CONSTRUCTOR
@@ -175,12 +95,7 @@ public class Mutable extends MutableModel {
         if (value == null) {
             throw new IllegalArgumentException("The value property requires non-null value.");
         }
-        try {
-            valueUpdater.invoke(this, value);
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.value = value;
     }
 
     /**
@@ -231,16 +146,7 @@ public class Mutable extends MutableModel {
      * @paran value A new value of intNum property to assign.
      */
     private final void setIntNum(int value) {
-        try {
-            if (NATIVE) {
-                intNumField.setInt(this, (int) value);
-            } else {
-                intNumUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.intNum = value;
     }
 
     /**
@@ -291,16 +197,7 @@ public class Mutable extends MutableModel {
      * @paran value A new value of longNum property to assign.
      */
     private final void setLongNum(long value) {
-        try {
-            if (NATIVE) {
-                longNumField.setLong(this, (long) value);
-            } else {
-                longNumUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.longNum = value;
     }
 
     /**
@@ -351,16 +248,7 @@ public class Mutable extends MutableModel {
      * @paran value A new value of floatNum property to assign.
      */
     private final void setFloatNum(float value) {
-        try {
-            if (NATIVE) {
-                floatNumField.setFloat(this, (float) value);
-            } else {
-                floatNumUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.floatNum = value;
     }
 
     /**
@@ -411,16 +299,7 @@ public class Mutable extends MutableModel {
      * @paran value A new value of doubleNum property to assign.
      */
     private final void setDoubleNum(double value) {
-        try {
-            if (NATIVE) {
-                doubleNumField.setDouble(this, (double) value);
-            } else {
-                doubleNumUpdater.invoke(this, value);
-            }
-        } catch (UnsupportedOperationException e) {
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
+        this.doubleNum = value;
     }
 
     /**

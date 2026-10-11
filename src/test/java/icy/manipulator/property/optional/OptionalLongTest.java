@@ -25,6 +25,6 @@ class OptionalLongTest {
     @Test
     void property() {
         OptionalLong o = OptionalLong.with.value(10);
-        assert o.value.getAsLong() == 10;
+        assert o.value().getAsLong() == 10;
     }
 }

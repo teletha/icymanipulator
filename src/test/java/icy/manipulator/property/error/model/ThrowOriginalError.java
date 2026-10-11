@@ -4,10 +4,8 @@ import icy.manipulator.property.error.model.ThrowOriginalError;
 import java.lang.Override;
 import java.lang.StringBuilder;
 import java.lang.Throwable;
-import java.lang.UnsupportedOperationException;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
@@ -17,9 +15,6 @@ import java.util.Objects;
  * @see <a href="https://github.com/teletha/icymanipulator">Icy Manipulator (Code Generator)</a>
  */
 public class ThrowOriginalError extends ThrowOriginalErrorModel {
-
-     /** Determines if the execution environment is a Native Image of GraalVM. */
-    private static final boolean NATIVE = "runtime".equals(System.getProperty("org.graalvm.nativeimage.imagecode"));
 
     /**
      * Deceive complier that the specified checked exception is unchecked exception.
@@ -53,44 +48,8 @@ public class ThrowOriginalError extends ThrowOriginalErrorModel {
     /** The overload or intercept method invoker. */
     private static final MethodHandle validateSize$101354429= invoker("validateSize", int.class);
 
-    /**
-     * Create special property updater.
-     *
-     * @param name A target property name.
-     * @return A special property updater.
-     */
-    private static final Field updater(String name)  {
-        try {
-            Field field = ThrowOriginalError.class.getDeclaredField(name);
-            field.setAccessible(true);
-            return field;
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /**
-     * Create fast property updater.
-     *
-     * @param field A target field.
-     * @return A fast property updater.
-     */
-    private static final MethodHandle handler(Field field)  {
-        try {
-            return MethodHandles.lookup().unreflectSetter(field);
-        } catch (Throwable e) {
-            throw quiet(e);
-        }
-    }
-
-    /** The final property updater. */
-    private static final Field sizeField = updater("size");
-
-    /** The fast final property updater. */
-    private static final MethodHandle sizeUpdater = handler(sizeField);
-
-    /** The exposed property. */
-    public final int size;
+    /** The property. */
+    protected int size;
 
     /**
      * HIDE CONSTRUCTOR
@@ -126,12 +85,7 @@ public class ThrowOriginalError extends ThrowOriginalErrorModel {
      */
     private final void setSize(int value) {
         try {
-            if (NATIVE) {
-                sizeField.setInt(this, (int) validateSize$101354429.invoke(this, value));
-            } else {
-                sizeUpdater.invoke(this, validateSize$101354429.invoke(this, value));
-            }
-        } catch (UnsupportedOperationException e) {
+            this.size = (int) validateSize$101354429.invoke(this, value);
         } catch (Throwable e) {
             throw quiet(e);
         }
